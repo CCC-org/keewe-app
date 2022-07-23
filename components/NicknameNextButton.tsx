@@ -6,7 +6,7 @@ import {
 	Platform,
 } from 'react-native';
 import React, { useEffect } from 'react';
-import { Button } from 'react-native-paper';
+import { IconButton } from 'react-native-paper';
 
 interface Iprops {
 	isGreater: boolean;
@@ -14,7 +14,11 @@ interface Iprops {
 
 const NicknameNextButton = (props: Iprops) => {
 	const { isGreater } = props;
-	console.log(isGreater);
+
+	const handlePress = () => {
+		alert('handlePress');
+	};
+
 	return (
 		<View
 			style={{
@@ -22,7 +26,12 @@ const NicknameNextButton = (props: Iprops) => {
 				backgroundColor: isGreater ? 'black' : 'grey',
 			}}
 		>
-			<Button>NicknameNextButton</Button>
+			<IconButton
+				icon="arrow-right"
+				color="white"
+				size={24}
+				onPress={handlePress}
+			/>
 		</View>
 	);
 };
@@ -30,8 +39,14 @@ const NicknameNextButton = (props: Iprops) => {
 const styles = StyleSheet.create({
 	nextButtonContainer: {
 		position: 'absolute',
-		bottom: 100,
-		right: 0,
+		bottom: 20,
+		right: 20,
+		width: 64,
+		height: 64,
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 12,
 	},
 });
 
