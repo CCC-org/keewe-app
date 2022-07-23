@@ -1,32 +1,37 @@
-import { View, Text, StyleSheet } from 'react-native';
-import React from 'react';
+import {
+	View,
+	Text,
+	StyleSheet,
+	KeyboardAvoidingView,
+	Platform,
+} from 'react-native';
+import React, { useEffect } from 'react';
+import { Button } from 'react-native-paper';
 
-const NicknameNextButton = () => {
+interface Iprops {
+	isGreater: boolean;
+}
+
+const NicknameNextButton = (props: Iprops) => {
+	const { isGreater } = props;
+	console.log(isGreater);
 	return (
-		<View style={styles.nextButtonContainer}>
-			<Text>NicknameNextButton</Text>
+		<View
+			style={{
+				...styles.nextButtonContainer,
+				backgroundColor: isGreater ? 'black' : 'grey',
+			}}
+		>
+			<Button>NicknameNextButton</Button>
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
 	nextButtonContainer: {
-		// position the view to the bottom
 		position: 'absolute',
-		top: 600,
-		// align the view to the center
-		alignItems: 'center',
-		// justify the view to center
-		justifyContent: 'center',
-		// set the height of the view
-		height: 50,
-		// set the background color of the view
-		backgroundColor: '#486006',
-		// set the border radius of the view
-		borderRadius: 10,
-		// set the border width of the view
-		borderWidth: 1,
-		// set the border color of the view
+		bottom: 100,
+		right: 0,
 	},
 });
 
