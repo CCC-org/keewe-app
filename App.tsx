@@ -8,6 +8,7 @@ import { RootScreen } from './navigation';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from 'react-native-paper';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import SignUpScreen from './screens/SignUpScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ export default function App() {
           <Stack.Navigator>
             <Stack.Screen name="Root" component={RootScreen} />
             <Stack.Screen name="NicknameCreation" component={NicknameCreationScreen} />
+            <Stack.Screen name="SignUp" component={SignUpScreen} />
           </Stack.Navigator>
         </NavigationContainer>
         <StatusBar style="dark" />
