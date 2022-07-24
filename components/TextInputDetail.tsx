@@ -11,7 +11,7 @@ interface Iprops {
 	placeholder: string;
 }
 
-const TextInputWithDetailInfoText = (props: Iprops) => {
+const TextInputDetail = (props: Iprops) => {
 	const { setInputValue, inputValue, infoText, label, placeholder } = props;
 	return (
 		<>
@@ -41,4 +41,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default TextInputWithDetailInfoText;
+export default TextInputDetail;

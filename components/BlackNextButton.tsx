@@ -9,21 +9,20 @@ import React, { useEffect } from 'react';
 import { IconButton } from 'react-native-paper';
 
 interface Iprops {
-	isGreater: boolean;
+	isActive: boolean;
+	handlePress: () => void;
 }
 
-const NicknameNextButton = (props: Iprops) => {
-	const { isGreater } = props;
+const BlackNextButton = (props: Iprops) => {
+	const { isActive, handlePress } = props;
 
-	const handlePress = () => {
-		alert('handlePress');
-	};
+	
 
 	return (
 		<View
 			style={{
 				...styles.nextButtonContainer,
-				backgroundColor: isGreater ? 'black' : 'grey',
+				backgroundColor: isActive ? 'black' : 'grey',
 			}}
 		>
 			<IconButton
@@ -50,4 +49,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default NicknameNextButton;
+export default BlackNextButton;
