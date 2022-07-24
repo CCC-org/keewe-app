@@ -1,11 +1,15 @@
 import React from 'react';
-
-import {StatusBar} from 'expo-status-bar';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-
+import { StatusBar } from 'expo-status-bar';
+import { NavigationContainer } from '@react-navigation/native';
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
-import Navigation from './navigation';
+import NicknameCreationScreen from './screens/NicknameCreationScreen';
+import { RootScreen } from './navigation';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Text } from 'react-native-paper';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -15,10 +19,15 @@ export default function App() {
     return null;
   } else {
     return (
-      <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
-      </SafeAreaProvider>
+      <>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="Root" component={RootScreen} />
+            <Stack.Screen name="NicknameCreation" component={NicknameCreationScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+        <StatusBar style="dark" />
+      </>
     );
   }
 }
