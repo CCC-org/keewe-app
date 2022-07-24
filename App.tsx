@@ -7,6 +7,7 @@ import { RootScreen } from './navigation';
 import { Provider as PaperProvider } from 'react-native-paper';
 import light from './theme/light';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import SignUpScreen from './screens/SignUpScreen';
 
 const Stack = createNativeStackNavigator();
 
