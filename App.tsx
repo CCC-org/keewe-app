@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import NicknameCreationScreen from './screens/NicknameCreationScreen';
-import Navigation, { RootScreen } from './navigation';
+import { RootScreen } from './navigation';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from 'react-native-paper';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -19,12 +19,15 @@ export default function App() {
     return null;
   } else {
     return (
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Root" component={RootScreen} />
-          <Stack.Screen name="NicknameCreation" component={NicknameCreationScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="Root" component={RootScreen} />
+            <Stack.Screen name="NicknameCreation" component={NicknameCreationScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+        <StatusBar style="dark" />
+      </>
     );
   }
 }
