@@ -23,14 +23,14 @@ const SignUpScreen = () => {
             text="카카오로 시작하기"
             icon="facebook-messenger"
             color="#FEE500"
-            handlePress={handleKakaoPress}
+            onPress={handleKakaoPress}
           ></SocialLoginButton>
         </View>
         <View style={styles.other}>
           <SocialLoginButton
             text="다른 방법으로 시작하기"
             color="#E1E1D0"
-            handlePress={handleOtherPress}
+            onPress={handleOtherPress}
           ></SocialLoginButton>
         </View>
       </View>

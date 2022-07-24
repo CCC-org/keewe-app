@@ -6,12 +6,12 @@ interface SocialLoginButtonProps {
   text: string;
   icon?: string;
   color: string;
-  handlePress: () => void;
+  onPress: () => void;
 }
 
-const SocialLoginButton = ({ handlePress, color, icon, text }: SocialLoginButtonProps) => {
+const SocialLoginButton = ({ onPress, color, icon, text }: SocialLoginButtonProps) => {
   return (
-    <Button onPress={handlePress} mode="contained" color={color} icon={icon}>
+    <Button onPress={onPress} mode="contained" color={color} icon={icon}>
       <Text>{text}</Text>
     </Button>
   );
