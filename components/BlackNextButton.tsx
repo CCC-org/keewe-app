@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
-import React, { useEffect } from 'react';
-import { IconButton } from 'react-native-paper';
+import { View, StyleSheet } from 'react-native';
+import React from 'react';
+import { IconButton, useTheme } from 'react-native-paper';
 
 interface BlackNextBottonProps {
   isActive: boolean;
@@ -9,12 +9,14 @@ interface BlackNextBottonProps {
 
 const BlackNextButton = (props: BlackNextBottonProps) => {
   const { isActive, handlePress } = props;
-
+  const theme = useTheme();
+  
   return (
     <View
       style={{
         ...styles.nextButtonContainer,
-        backgroundColor: isActive ? 'black' : 'grey',
+        backgroundColor: theme.colors.graphic.black,
+        opacity: isActive ? 1 : 0.2,
       }}
     >
       <IconButton icon="arrow-right" color="white" size={24} onPress={handlePress} />
