@@ -3,7 +3,7 @@ import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput } from 'react-native-paper';
 
-interface Iprops {
+interface TextInputDetailProps {
 	setInputValue: (input: string) => void;
 	infoText: string;
 	inputValue: string;
@@ -11,7 +11,13 @@ interface Iprops {
 	placeholder: string;
 }
 
-const TextInputDetail = (props: Iprops) => {
+let name:string = 'jihoon'
+let count:number = 1;
+let isTrue:boolean = true;
+const arr:number[] = [1,2,3,4]
+
+
+const TextInputDetail = (props: TextInputDetailProps) => {
 	const { setInputValue, inputValue, infoText, label, placeholder } = props;
 	return (
 		<>

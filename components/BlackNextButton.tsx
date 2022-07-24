@@ -8,12 +8,12 @@ import {
 import React, { useEffect } from 'react';
 import { IconButton } from 'react-native-paper';
 
-interface Iprops {
+interface BlackNextBottonProps {
 	isActive: boolean;
 	handlePress: () => void;
 }
 
-const BlackNextButton = (props: Iprops) => {
+const BlackNextButton = (props: BlackNextBottonProps) => {
 	const { isActive, handlePress } = props;
 
 	
