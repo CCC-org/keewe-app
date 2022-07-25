@@ -1,13 +1,13 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
-import useCachedResources from './hooks/useCachedResources';
-import NicknameCreationScreen from './screens/NicknameCreationScreen';
-import { RootScreen } from './navigation';
+import useCachedResources from './src/hooks/useCachedResources';
+import NicknameCreationScreen from './src/screens/NicknameCreationScreen';
+import { RootScreen } from './src/navigation';
 import { Provider as PaperProvider } from 'react-native-paper';
-import light from './theme/light';
+import light from './src/theme/light';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import SignUpScreen from './screens/SignUpScreen';
+import SignUpScreen from './src/screens/SignUpScreen';
 
 const Stack = createNativeStackNavigator();
 
