@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text } from 'react-native';
 import React from 'react';
-import SocialLoginButton from '../components/SocialLoginButton';
+import SocialLoginButton from '../../components/buttons/SocialLoginButton';
 
 const SignUpScreen = () => {
   const handleKakaoPress = () => {
