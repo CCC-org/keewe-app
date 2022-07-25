@@ -1,8 +1,8 @@
 import { StyleSheet, View } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import TextInputDetail from '../components/TextInputDetail';
-import BlackNextButton from '../components/BlackNextButton';
+import TextInputDetail from '../components/texts/TextInputDetail';
+import BlackNextButton from '../components/buttons/BlackNextButton';
 const detailInfoTextProp = `반가워요 키위새님${'\n'}닉네임이 무엇인가요?`;
 
 const NicknameCreationScreen = () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
-import useCachedResources from './src/hooks/useCachedResources';
+import useCachedResources from './src/utils/hooks/useCachedResources';
 import NicknameCreationScreen from './src/screens/NicknameCreationScreen';
 import { RootScreen } from './src/navigation';
 import { Provider as PaperProvider } from 'react-native-paper';
@@ -24,6 +24,7 @@ export default function App() {
             <Stack.Navigator>
               <Stack.Screen name="Root" component={RootScreen} />
               <Stack.Screen name="NicknameCreation" component={NicknameCreationScreen} />
+              <Stack.Screen name="SignUp" component={SignUpScreen} />
             </Stack.Navigator>
           </NavigationContainer>
           <StatusBar style="dark" />

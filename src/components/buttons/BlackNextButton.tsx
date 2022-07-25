@@ -10,7 +10,7 @@ interface BlackNextBottonProps {
 const BlackNextButton = (props: BlackNextBottonProps) => {
   const { isActive, handlePress } = props;
   const theme = useTheme();
-  
+
   return (
     <View
       style={{
