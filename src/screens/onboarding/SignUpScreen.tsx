@@ -1,10 +1,13 @@
 import { StyleSheet, View, Text } from 'react-native';
 import React from 'react';
 import SocialLoginButton from '../../components/buttons/SocialLoginButton';
+import { useNavigation } from '@react-navigation/native';
 
 const SignUpScreen = () => {
+  const navigation = useNavigation();
+
   const handleKakaoPress = () => {
-    alert('카카오로 시작함.');
+    navigation.navigate('KaKaoLogin');
   };
 
   const handleOtherPress = () => {
