@@ -23,6 +23,7 @@ export type RootStackParamList = {
   SignUp: undefined;
   GetToken: undefined;
   KaKaoLogin: undefined;
+  ActivitySelection: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

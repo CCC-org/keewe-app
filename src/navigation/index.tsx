@@ -32,6 +32,18 @@ export function RootScreen() {
           <Text> SignUpScreen.tsx</Text>
         </View>
       </Pressable>
+
+      <Pressable onPress={() => navigation.navigate('ActivitySelection')}>
+        <View
+          style={{
+            backgroundColor: 'lightgreen',
+            width: 150,
+            height: 100,
+          }}
+        >
+          <Text> ActivitySelectionScreen.tsx</Text>
+        </View>
+      </Pressable>
     </>
     /*
     <Pressable onPress={() => navigation.navigate('Stack.screen.name String')}>
