@@ -1,18 +1,23 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { Text, StyleSheet, Pressable } from 'react-native';
 import React from 'react';
-import { Button, useTheme } from 'react-native-paper';
+import { useTheme } from 'react-native-paper';
 
 interface AccordianTagButtonProps {
   children: string;
+  genre: string;
 }
 
 const AccordianTagButton = (props: AccordianTagButtonProps) => {
-  const { children: activity } = props;
+  const { children: activity, genre } = props;
   const themeProp = useTheme();
   const styles = makeStyles(themeProp);
 
+  const handlePress = () => {
+    alert(activity);
+  };
+
   return (
-    <Pressable style={styles.activityContainer} onPress={() => alert(activity)}>
+    <Pressable style={styles.activityContainer} onPress={handlePress}>
       <Text style={styles.activityText}>{activity}</Text>
     </Pressable>
   );

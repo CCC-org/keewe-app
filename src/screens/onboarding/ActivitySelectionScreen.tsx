@@ -3,17 +3,18 @@ import { Text, useTheme } from 'react-native-paper';
 import React, { useState } from 'react';
 import ActivityAccordian from '../../components/accordian/ActivityAccordian';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { ActivityGroupInterface, ActivityTags } from '../../constants/ActivitySelection/tags';
 
 const ActivitySelectionScreen = ({ navigation, route }) => {
-  const [expanded, setExpanded] = useState<boolean>(false);
+  const [activities, setActivities] = useState<ActivityGroupInterface>(ActivityTags);
   const themeProp = useTheme();
   const styles = makeStyles(themeProp);
-
   return (
     <View style={styles.container}>
       <Text style={styles.screenTitle}>활동분야를 알려주세요</Text>
       <View style={styles.accordianContainer}>
-        <ActivityAccordian />
+        <ActivityAccordian title="실무/취업" genre="practical" activities={activities} />
+        <ActivityAccordian title="실무/취업" genre="practical" activities={activities} />
       </View>
     </View>
   );

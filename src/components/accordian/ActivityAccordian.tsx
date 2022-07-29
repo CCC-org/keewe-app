@@ -1,28 +1,42 @@
-import { View, Text, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import React, { Fragment, useState } from 'react';
 import { List, useTheme } from 'react-native-paper';
 import AccordianTagButton from '../buttons/AccordianTagButton';
+import {
+  ActivityGroupInterface,
+  ActivityTagInterface,
+} from '../../constants/ActivitySelection/tags';
 
-const ActivityAccordian = () => {
+interface ActivityAccordianProps {
+  activities: ActivityGroupInterface;
+  title: string;
+  genre: string;
+}
+
+const ActivityAccordian = ({ activities, title, genre }: ActivityAccordianProps) => {
   const [expanded, setExpanded] = useState<boolean>(false);
+
   const themeProp = useTheme();
   const styles = makeStyles(themeProp);
   const handlePress = () => {
     setExpanded(!expanded);
   };
-
   return (
     <List.Accordion
-      title="Controlled Accordion"
+      title={title}
       left={(props) => <List.Icon {...props} icon="folder" />}
       expanded={expanded}
       onPress={handlePress}
       style={styles.accordion}
     >
       <View style={styles.accordionContent}>
-        <AccordianTagButton>마케팅과 춤을</AccordianTagButton>
-        <AccordianTagButton>기획</AccordianTagButton>
-        <AccordianTagButton>디자인</AccordianTagButton>
+        {activities[genre].groupTags.map((tag: ActivityTagInterface) => {
+          return (
+            <Fragment key={tag.id}>
+              <AccordianTagButton genre={genre}>{tag.name}</AccordianTagButton>
+            </Fragment>
+          );
+        })}
       </View>
     </List.Accordion>
   );
@@ -39,14 +53,15 @@ function makeStyles(theme: ReactNativePaper.Theme) {
     accordionContent: {
       backgroundColor: theme.colors.graphic.white,
       flexDirection: 'row',
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       alignItems: 'center',
       width: 350,
-      minHeight: 112,
+      minHeight: 64,
       maxHeight: 256,
       borderBottomRightRadius: 12,
       borderBottomLeftRadius: 12,
-      paddingLeft: 0,
+      paddingLeft: 12,
+      flexWrap: 'wrap',
     },
   });
 }
