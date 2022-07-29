@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 import { List, useTheme } from 'react-native-paper';
+import AccordianTagButton from '../buttons/AccordianTagButton';
 
 const ActivityAccordian = () => {
   const [expanded, setExpanded] = useState<boolean>(false);
@@ -19,15 +20,9 @@ const ActivityAccordian = () => {
       style={styles.accordion}
     >
       <View style={styles.accordionContent}>
-        <Text>마케팅</Text>
-        <Text>기획</Text>
-        <Text>디자인</Text>
-        <Text>마케팅</Text>
-        <Text>기획</Text>
-        <Text>디자인</Text>
-        <Text>마케팅</Text>
-        <Text>기획</Text>
-        <Text>디자인</Text>
+        <AccordianTagButton>마케팅과 춤을</AccordianTagButton>
+        <AccordianTagButton>기획</AccordianTagButton>
+        <AccordianTagButton>디자인</AccordianTagButton>
       </View>
     </List.Accordion>
   );
@@ -47,9 +42,11 @@ function makeStyles(theme: ReactNativePaper.Theme) {
       justifyContent: 'center',
       alignItems: 'center',
       width: 350,
-      height: 200,
+      minHeight: 112,
+      maxHeight: 256,
       borderBottomRightRadius: 12,
       borderBottomLeftRadius: 12,
+      paddingLeft: 0,
     },
   });
 }
