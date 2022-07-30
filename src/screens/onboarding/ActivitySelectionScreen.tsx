@@ -2,7 +2,6 @@ import { StyleSheet, View } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import React, { useState } from 'react';
 import ActivityAccordian from '../../components/accordian/ActivityAccordian';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { ActivityGroupInterface, ActivityTags } from '../../constants/ActivitySelection/tags';
 
 const ActivitySelectionScreen = ({ navigation, route }) => {
