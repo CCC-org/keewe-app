@@ -1,10 +1,8 @@
+import axios from 'axios';
+
 export const kakaoLogin = async (code: string) => {
-  const options = {
-    method: 'GET',
-    params: {
-      code,
-    },
-  };
-  const data = await fetch('https://api-keewe.com/api/v1/user/kakao', options);
-  return data.json();
+  alert('hihi');
+  alert('naver');
+  const response = await axios.get(`https://api-keewe.com/api/v1/user/kakao?code=${code}`, {});
+  return undefined;
 };
