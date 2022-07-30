@@ -4,10 +4,11 @@ import React, { useState } from 'react';
 import ActivityAccordian from '../../components/accordian/ActivityAccordian';
 import { ActivityGroupInterface, ActivityTags } from '../../constants/ActivitySelection/tags';
 
-const ActivitySelectionScreen = ({ navigation, route }) => {
+const ActivitySelectionScreen = () => {
   const [activities, setActivities] = useState<ActivityGroupInterface>(ActivityTags);
   const themeProp = useTheme();
   const styles = makeStyles(themeProp);
+
   return (
     <View style={styles.container}>
       <Text style={styles.screenTitle}>활동분야를 알려주세요</Text>

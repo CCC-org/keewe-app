@@ -3,22 +3,21 @@ import React from 'react';
 import { useTheme } from 'react-native-paper';
 
 interface AccordianTagButtonProps {
-  children: string;
   genre: string;
 }
 
 const AccordianTagButton = (props: AccordianTagButtonProps) => {
-  const { children: activity, genre } = props;
+  const { genre } = props;
   const themeProp = useTheme();
   const styles = makeStyles(themeProp);
 
   const handlePress = () => {
-    alert(activity);
+    alert(genre);
   };
 
   return (
     <Pressable style={styles.activityContainer} onPress={handlePress}>
-      <Text style={styles.activityText}>{activity}</Text>
+      <Text style={styles.activityText}>asdasd</Text>
     </Pressable>
   );
 };

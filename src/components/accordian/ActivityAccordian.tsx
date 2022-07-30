@@ -33,7 +33,7 @@ const ActivityAccordian = ({ activities, title, genre }: ActivityAccordianProps)
         {activities[genre].groupTags.map((tag: ActivityTagInterface) => {
           return (
             <Fragment key={tag.id}>
-              <AccordianTagButton genre={genre}>{tag.name}</AccordianTagButton>
+              <AccordianTagButton genre={genre}></AccordianTagButton>
             </Fragment>
           );
         })}
