@@ -4,10 +4,12 @@ import { useTheme } from 'react-native-paper';
 
 interface AccordianTagButtonProps {
   genre: string;
+  isChecked: boolean;
+  tagName: string;
 }
 
 const AccordianTagButton = (props: AccordianTagButtonProps) => {
-  const { genre } = props;
+  const { genre, isChecked, tagName } = props;
   const themeProp = useTheme();
   const styles = makeStyles(themeProp);
 
@@ -17,7 +19,7 @@ const AccordianTagButton = (props: AccordianTagButtonProps) => {
 
   return (
     <Pressable style={styles.activityContainer} onPress={handlePress}>
-      <Text style={styles.activityText}>asdasd</Text>
+      <Text style={styles.activityText}>{tagName}</Text>
     </Pressable>
   );
 };

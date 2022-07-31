@@ -5,7 +5,6 @@ import ActivityAccordian from '../../components/accordian/ActivityAccordian';
 import { ActivityGroupInterface, ActivityTags } from '../../constants/ActivitySelection/tags';
 
 const ActivitySelectionScreen = () => {
-  const [activities, setActivities] = useState<ActivityGroupInterface>(ActivityTags);
   const themeProp = useTheme();
   const styles = makeStyles(themeProp);
 
@@ -13,8 +12,8 @@ const ActivitySelectionScreen = () => {
     <View style={styles.container}>
       <Text style={styles.screenTitle}>활동분야를 알려주세요</Text>
       <View style={styles.accordianContainer}>
-        <ActivityAccordian title="실무/취업" genre="practical" activities={activities} />
-        <ActivityAccordian title="실무/취업" genre="practical" activities={activities} />
+        <ActivityAccordian title="실무/취업" genre="practical" />
+        <ActivityAccordian title="실무/취업" genre="investment" />
       </View>
     </View>
   );

@@ -6,14 +6,15 @@ import {
   ActivityGroupInterface,
   ActivityTagInterface,
 } from '../../constants/ActivitySelection/tags';
+import { RootState, useAppSelector } from '../../redux/store';
 
 interface ActivityAccordianProps {
-  activities: ActivityGroupInterface;
   title: string;
   genre: string;
 }
 
-const ActivityAccordian = ({ activities, title, genre }: ActivityAccordianProps) => {
+const ActivityAccordian = (props: ActivityAccordianProps) => {
+  const { title, genre } = props;
   const [expanded, setExpanded] = useState<boolean>(false);
 
   const themeProp = useTheme();
@@ -21,6 +22,11 @@ const ActivityAccordian = ({ activities, title, genre }: ActivityAccordianProps)
   const handlePress = () => {
     setExpanded(!expanded);
   };
+
+  const activitiesPerGenreArray = useAppSelector((state: RootState) => {
+    return state.activity[genre].groupTags;
+  });
+
   return (
     <List.Accordion
       title={title}
@@ -30,10 +36,14 @@ const ActivityAccordian = ({ activities, title, genre }: ActivityAccordianProps)
       style={styles.accordion}
     >
       <View style={styles.accordionContent}>
-        {activities[genre].groupTags.map((tag: ActivityTagInterface) => {
+        {activitiesPerGenreArray.map((tag: ActivityTagInterface) => {
           return (
             <Fragment key={tag.id}>
-              <AccordianTagButton genre={genre}></AccordianTagButton>
+              <AccordianTagButton
+                genre={genre}
+                isChecked={tag.isChecked}
+                tagName={tag.name}
+              ></AccordianTagButton>
             </Fragment>
           );
         })}
