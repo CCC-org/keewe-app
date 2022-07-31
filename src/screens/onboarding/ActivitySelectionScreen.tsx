@@ -1,8 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
-import React, { useState } from 'react';
+import React from 'react';
 import ActivityAccordian from '../../components/accordian/ActivityAccordian';
-import { ActivityGroupInterface, ActivityTags } from '../../constants/ActivitySelection/tags';
 
 const ActivitySelectionScreen = () => {
   const themeProp = useTheme();

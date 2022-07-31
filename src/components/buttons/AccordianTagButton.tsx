@@ -1,4 +1,4 @@
-import { Text, StyleSheet, Pressable, View } from 'react-native';
+import { Text, StyleSheet, Pressable } from 'react-native';
 import React from 'react';
 import { useTheme } from 'react-native-paper';
 import { useAppDispatch } from '../../redux/store';

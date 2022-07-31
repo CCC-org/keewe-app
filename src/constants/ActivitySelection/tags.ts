@@ -1,4 +1,3 @@
-import { useTheme } from 'react-native-paper';
 import theme from '../../theme/light';
 
 export interface ActivityGroupInterface {
