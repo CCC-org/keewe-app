@@ -1,21 +1,25 @@
 import { Text, StyleSheet, Pressable } from 'react-native';
 import React from 'react';
 import { useTheme } from 'react-native-paper';
+import { useAppDispatch } from '../../redux/store';
+import { selectActivityTag } from '../../redux/slices/activitySlice/activitySlice';
 
 interface AccordianTagButtonProps {
   genre: string;
   isChecked: boolean;
   tagName: string;
   themeColor: string;
+  tagId: number;
 }
 
 const AccordianTagButton = (props: AccordianTagButtonProps) => {
-  const { genre, isChecked, tagName, themeColor } = props;
+  const { genre, isChecked, tagName, themeColor, tagId } = props;
   const themeProp = useTheme();
   const styles = makeStyles(themeProp, isChecked, themeColor);
+  const dispatch = useAppDispatch();
 
   const handlePress = () => {
-    alert(genre);
+    dispatch(selectActivityTag({ genre, tagId, isChecked }));
   };
 
   return (
@@ -29,6 +33,7 @@ function makeStyles(theme: ReactNativePaper.Theme, isChecked: boolean, themeColo
   return StyleSheet.create({
     activityContainer: {
       backgroundColor: isChecked ? themeColor : 'white',
+      opacity: isChecked ? 0.4 : 1,
       justifyContent: 'center',
       alignItems: 'center',
       height: 40,

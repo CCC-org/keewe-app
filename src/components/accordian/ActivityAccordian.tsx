@@ -41,6 +41,7 @@ const ActivityAccordian = (props: ActivityAccordianProps) => {
                 isChecked={tag.isChecked}
                 tagName={tag.name}
                 themeColor={activityTagGroups.groupColor}
+                tagId={tag.id}
               ></AccordianTagButton>
             </Fragment>
           );
