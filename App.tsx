@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import useCachedResources from './src/utils/hooks/useCachedResources';
 import NicknameCreationScreen from './src/screens/onboarding/NicknameCreationScreen';
 import SignUpScreen from './src/screens/onboarding/SignUpScreen';
-import KaKaoLoginScreen from './src/screens/login/KakaoLoginScreen';
+import LoginScreen from './src/screens/login/LoginScreen';
 import { RootScreen } from './src/navigation';
 import { Provider as PaperProvider } from 'react-native-paper';
 import light from './src/theme/light';
@@ -31,7 +31,7 @@ export default function App() {
                 <Stack.Screen name="NicknameCreation" component={NicknameCreationScreen} />
                 <Stack.Screen name="SignUp" component={SignUpScreen} />
                 <Stack.Screen name="GetToken" component={GetTokenScreen} />
-                <Stack.Screen name="KaKaoLogin" component={KaKaoLoginScreen} />
+                <Stack.Screen name="Login" component={LoginScreen} />
               </Stack.Navigator>
             </QueryClientProvider>
           </NavigationContainer>

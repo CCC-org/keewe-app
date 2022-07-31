@@ -22,7 +22,7 @@ export type RootStackParamList = {
   NicknameCreation: undefined;
   SignUp: undefined;
   GetToken: undefined;
-  KaKaoLogin: undefined;
+  Login: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

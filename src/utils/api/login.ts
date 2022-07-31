@@ -1,8 +1,16 @@
-import axios from 'axios';
+import httpClient from '../api/BaseHttpClient';
 
-export const kakaoLogin = async (code: string) => {
-  alert('hihi');
-  alert('naver');
-  const response = await axios.get(`https://api-keewe.com/api/v1/user/kakao?code=${code}`, {});
-  return undefined;
+export const LoginQueryKeys = {
+  login: (request: LoginRequest) => ['login', request],
+};
+
+export const LoginAPI = {
+  login: async (params: LoginRequest) => {
+    const { code, state, oauth } = params;
+    const { data } = await httpClient.get<LoginResponse>(
+      `https://api-keewe.com/api/v1/user/${oauth}`,
+      { params: { code, state } },
+    );
+    return data;
+  },
 };
