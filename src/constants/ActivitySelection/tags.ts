@@ -1,3 +1,6 @@
+import { useTheme } from 'react-native-paper';
+import theme from '../../theme/light';
+
 export interface ActivityGroupInterface {
   practical: ActivityTagGroupsInterface;
   investment: ActivityTagGroupsInterface;
@@ -5,6 +8,7 @@ export interface ActivityGroupInterface {
 
 export interface ActivityTagGroupsInterface {
   groupName: string;
+  groupColor: string;
   groupTags: ActivityTagInterface[];
 }
 
@@ -17,6 +21,7 @@ export interface ActivityTagInterface {
 export const ActivityTags: ActivityGroupInterface = {
   practical: {
     groupName: 'Practical',
+    groupColor: theme.colors.graphic.green,
     groupTags: [
       { id: 1, name: '마케팅', isChecked: false },
       {
@@ -53,6 +58,7 @@ export const ActivityTags: ActivityGroupInterface = {
   },
   investment: {
     groupName: 'Investment',
+    groupColor: theme.colors.graphic.orange,
     groupTags: [
       { id: 1, name: '제품', isChecked: false },
       { id: 2, name: '서비스', isChecked: false },

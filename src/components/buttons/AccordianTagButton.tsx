@@ -6,12 +6,13 @@ interface AccordianTagButtonProps {
   genre: string;
   isChecked: boolean;
   tagName: string;
+  themeColor: string;
 }
 
 const AccordianTagButton = (props: AccordianTagButtonProps) => {
-  const { genre, isChecked, tagName } = props;
+  const { genre, isChecked, tagName, themeColor } = props;
   const themeProp = useTheme();
-  const styles = makeStyles(themeProp);
+  const styles = makeStyles(themeProp, isChecked, themeColor);
 
   const handlePress = () => {
     alert(genre);
@@ -24,10 +25,10 @@ const AccordianTagButton = (props: AccordianTagButtonProps) => {
   );
 };
 
-function makeStyles(theme: ReactNativePaper.Theme) {
+function makeStyles(theme: ReactNativePaper.Theme, isChecked: boolean, themeColor: string) {
   return StyleSheet.create({
     activityContainer: {
-      backgroundColor: theme.colors.graphic.yellow,
+      backgroundColor: isChecked ? themeColor : 'white',
       justifyContent: 'center',
       alignItems: 'center',
       height: 40,

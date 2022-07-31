@@ -2,10 +2,7 @@ import { View, StyleSheet } from 'react-native';
 import React, { Fragment, useState } from 'react';
 import { List, useTheme } from 'react-native-paper';
 import AccordianTagButton from '../buttons/AccordianTagButton';
-import {
-  ActivityGroupInterface,
-  ActivityTagInterface,
-} from '../../constants/ActivitySelection/tags';
+import { ActivityTagInterface } from '../../constants/ActivitySelection/tags';
 import { RootState, useAppSelector } from '../../redux/store';
 
 interface ActivityAccordianProps {
@@ -23,8 +20,8 @@ const ActivityAccordian = (props: ActivityAccordianProps) => {
     setExpanded(!expanded);
   };
 
-  const activitiesPerGenreArray = useAppSelector((state: RootState) => {
-    return state.activity[genre].groupTags;
+  const activityTagGroups = useAppSelector((state: RootState) => {
+    return state.activity[genre];
   });
 
   return (
@@ -36,13 +33,14 @@ const ActivityAccordian = (props: ActivityAccordianProps) => {
       style={styles.accordion}
     >
       <View style={styles.accordionContent}>
-        {activitiesPerGenreArray.map((tag: ActivityTagInterface) => {
+        {activityTagGroups.groupTags.map((tag: ActivityTagInterface) => {
           return (
             <Fragment key={tag.id}>
               <AccordianTagButton
                 genre={genre}
                 isChecked={tag.isChecked}
                 tagName={tag.name}
+                themeColor={activityTagGroups.groupColor}
               ></AccordianTagButton>
             </Fragment>
           );
