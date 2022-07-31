@@ -12,7 +12,13 @@ const ActivitySelectionScreen = () => {
       <Text style={styles.screenTitle}>활동분야를 알려주세요</Text>
       <View style={styles.accordianContainer}>
         <ActivityAccordian title="실무/취업" genre="practical" />
-        <ActivityAccordian title="실무/취업" genre="investment" />
+        <ActivityAccordian title="재테크" genre="investment" />
+        <ActivityAccordian title="언어/외국어" genre="language" />
+        <ActivityAccordian title="문화/예술" genre="culture" />
+        <ActivityAccordian title="음악" genre="music" />
+        <ActivityAccordian title="운동/액티비티" genre="sport" />
+        <ActivityAccordian title="푸드" genre="food" />
+        <ActivityAccordian title="뷰티/패션" genre="beauty" />
       </View>
     </View>
   );
