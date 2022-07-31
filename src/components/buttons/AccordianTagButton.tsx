@@ -1,4 +1,4 @@
-import { Text, StyleSheet, Pressable } from 'react-native';
+import { Text, StyleSheet, Pressable, View } from 'react-native';
 import React from 'react';
 import { useTheme } from 'react-native-paper';
 import { useAppDispatch } from '../../redux/store';
@@ -34,6 +34,7 @@ function makeStyles(theme: ReactNativePaper.Theme, isChecked: boolean, themeColo
     activityContainer: {
       backgroundColor: isChecked ? themeColor : 'white',
       opacity: isChecked ? 0.4 : 1,
+      //TODO: pressable의 opacity가 child의 opacity를 결정함. 이를 방지하기 위해서 이를 수정해야함.
       justifyContent: 'center',
       alignItems: 'center',
       height: 40,
@@ -43,10 +44,16 @@ function makeStyles(theme: ReactNativePaper.Theme, isChecked: boolean, themeColo
       margin: 4,
       paddingHorizontal: 16,
       paddingVertical: 8,
+      zIndex: -1,
+      elevation: -1,
     },
     activityText: {
       fontSize: theme.fonts.text.body1.bold.fontSize,
       fontWeight: theme.fonts.text.body1.bold.fontWeight,
+      color: theme.colors.graphic.black,
+      zIndex: 500,
+      elevation: 500,
+      opacity: 1,
     },
   });
 }
