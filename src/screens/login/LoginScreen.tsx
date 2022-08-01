@@ -30,7 +30,9 @@ function Login({ navigation, route }) {
   return (
     <View style={{ flex: 1 }}>
       <WebView
-        userAgent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
+        userAgent="Chrome"
+        sharedCookiesEnabled={true}
+        thirdPartyCookiesEnabled={true}
         style={{ flex: 1 }}
         source={{
           uri: `https://api-keewe.com/api/v1/oauth/${route.params.oauth}`,
