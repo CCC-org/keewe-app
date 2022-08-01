@@ -17,7 +17,7 @@ function Login({ navigation, route }) {
     const stateExp = 'state=';
     const stateCondition = target.indexOf(stateExp);
     if (codeCondition !== -1) {
-      const requestCode = target.substring(codeCondition + codeExp.length);
+      const requestCode = target.substring(codeCondition + codeExp.length, stateCondition - 1);
       params.code = requestCode;
       if (stateCondition !== -1) {
         const requestState = target.substring(stateCondition + stateExp.length);
