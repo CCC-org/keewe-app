@@ -30,6 +30,7 @@ function makeStyles(theme: ReactNativePaper.Theme) {
       flex: 1,
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
+      // backgroundColor: theme.colors.brand.surface.main,
       backgroundColor: theme.colors.brand.surface.container,
       paddingLeft: 12,
       paddingRight: 12,
@@ -38,7 +39,8 @@ function makeStyles(theme: ReactNativePaper.Theme) {
       flex: 1,
       justifyContent: 'flex-start',
       alignItems: 'center',
-      backgroundColor: 'red',
+      // backgroundColor: theme.colors.brand.surface.main,
+      backgroundColor: theme.colors.brand.surface.container,
       width: '100%',
     },
     screenTitle: {

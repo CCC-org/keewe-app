@@ -51,26 +51,30 @@ const ActivityAccordian = (props: ActivityAccordianProps) => {
   );
 };
 
+// 아코디언 스타일링 존나 이상하다,
+
 function makeStyles(theme: ReactNativePaper.Theme) {
   return StyleSheet.create({
     accordion: {
-      backgroundColor: theme.colors.graphic.white,
       borderTopLeftRadius: 12,
       borderTopRightRadius: 12,
-      width: 350,
+      width: 320,
+      maxWidth: 340,
+      marginTop: 12,
     },
     accordionContent: {
       backgroundColor: theme.colors.graphic.white,
       flexDirection: 'row',
       justifyContent: 'flex-start',
       alignItems: 'center',
-      width: 350,
+      width: 320,
       minHeight: 64,
-      maxHeight: 256,
+      maxHeight: 240,
       borderBottomRightRadius: 12,
       borderBottomLeftRadius: 12,
       paddingLeft: 12,
       flexWrap: 'wrap',
+      marginBottom: 12,
     },
   });
 }
