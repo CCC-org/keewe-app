@@ -1,6 +1,5 @@
 import { StyleSheet, View } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import TextInputDetail from '../../components/texts/TextInputDetail';
 import BlackNextButton from '../../components/buttons/BlackNextButton';
 const detailInfoTextProp = `반가워요 키위새님${'\n'}닉네임이 무엇인가요?`;
@@ -19,7 +18,7 @@ const NicknameCreationScreen = () => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={{ backgroundColor: 'orange' }}>
         <TextInputDetail
           setInputValue={setNickname}
@@ -30,7 +29,7 @@ const NicknameCreationScreen = () => {
         />
       </View>
       <BlackNextButton isActive={isLengthGreaterThanFour} handlePress={handleNextButtonPress} />
-    </SafeAreaView>
+    </View>
   );
 };
 
