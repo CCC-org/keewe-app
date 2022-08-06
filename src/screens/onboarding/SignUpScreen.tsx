@@ -1,5 +1,6 @@
 import { StyleSheet, View, Text } from 'react-native';
 import React from 'react';
+
 import SocialLoginButton from '../../components/buttons/SocialLoginButton';
 import { useNavigation } from '@react-navigation/native';
 
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   other: {
-    margin: 10,
+    marginTop: 5,
   },
   greeny: {
     color: '#486006',

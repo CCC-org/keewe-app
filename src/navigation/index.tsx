@@ -32,6 +32,30 @@ export function RootScreen() {
           <Text> SignUpScreen.tsx</Text>
         </View>
       </Pressable>
+
+      <Pressable onPress={() => navigation.navigate('LinkCreation')}>
+        <View
+          style={{
+            backgroundColor: 'skyblue',
+            width: 150,
+            height: 100,
+          }}
+        >
+          <Text> LinkCreationScreen.tsx</Text>
+        </View>
+      </Pressable>
+
+      <Pressable onPress={() => navigation.navigate('SocialLink')}>
+        <View
+          style={{
+            backgroundColor: 'teal',
+            width: 150,
+            height: 100,
+          }}
+        >
+          <Text> SocialLinkScreen.tsx</Text>
+        </View>
+      </Pressable>
     </>
     /*
     <Pressable onPress={() => navigation.navigate('Stack.screen.name String')}>
