@@ -1,4 +1,5 @@
-import httpClient from '../api/BaseHttpClient';
+import { Alert } from 'react-native';
+import httpClient from './BaseHttpClient';
 
 export const LoginQueryKeys = {
   login: (request: LoginRequest) => ['login', request],

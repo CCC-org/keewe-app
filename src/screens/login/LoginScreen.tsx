@@ -1,17 +1,33 @@
 import React from 'react';
 import { WebView } from 'react-native-webview';
 import { View } from 'react-native';
+import { useQuery } from 'react-query';
+import { LoginQueryKeys, LoginAPI } from '../../utils/api/LoginAPI';
+import { setAccessToken } from '../../utils/hooks/asyncStorage/Login';
 
 // eslint-disable-next-line quotes
 const INJECTED_JAVASCRIPT = "window.ReactNativeWebView.postMessage('login start')";
 
 function Login({ navigation, route }) {
+  const params: LoginRequest = {
+    oauth: route.params.oauth,
+    code: undefined,
+    state: undefined,
+  };
+
+  const { refetch } = useQuery(LoginQueryKeys.login(params), () => LoginAPI.login(params), {
+    onSuccess: (response) => {
+      setAccessToken(response.data.accessToken);
+      navigation.navigate('NicknameCreation');
+    },
+    onError: (e) => {
+      alert('인증에 실패했습니다.');
+      navigation.navigate('SignUp');
+    },
+    enabled: params.code !== undefined,
+  });
+
   function getCode(target: string) {
-    const params: LoginRequest = {
-      oauth: route.params.oauth,
-      code: undefined,
-      state: undefined,
-    };
     const codeExp = 'code=';
     const codeCondition = target.indexOf(codeExp);
     const stateExp = 'state=';
@@ -26,7 +42,7 @@ function Login({ navigation, route }) {
         const requestState = target.substring(stateCondition + stateExp.length);
         params.state = requestState;
       }
-      navigation.navigate('GetToken', { params });
+      refetch();
     }
   }
 

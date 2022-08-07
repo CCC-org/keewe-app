@@ -10,7 +10,6 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import light from './src/theme/light';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import GetTokenScreen from './src/screens/login/GetTokenScreen';
 
 const Stack = createNativeStackNavigator();
 const queryClient = new QueryClient();
@@ -30,7 +29,6 @@ export default function App() {
                 <Stack.Screen name="Root" component={RootScreen} />
                 <Stack.Screen name="NicknameCreation" component={NicknameCreationScreen} />
                 <Stack.Screen name="SignUp" component={SignUpScreen} />
-                <Stack.Screen name="GetToken" component={GetTokenScreen} />
                 <Stack.Screen name="Login" component={LoginScreen} />
               </Stack.Navigator>
             </QueryClientProvider>
