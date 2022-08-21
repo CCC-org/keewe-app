@@ -24,5 +24,6 @@ module.exports = {
     semi: ['error', 'always'],
     'react/no-unescaped-entities': 0,
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
+    'react/prop-types': ['error', { ignore: ['navigation', 'route'] }],
   },
 };

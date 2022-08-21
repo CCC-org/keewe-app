@@ -1,10 +1,12 @@
 import { StyleSheet, View, Text } from 'react-native';
 import React from 'react';
 import SocialLoginButton from '../../components/buttons/SocialLoginButton';
+import { useTheme } from 'react-native-paper';
 
-const SignUpScreen = () => {
-  const handleKakaoPress = () => {
-    alert('카카오로 시작함.');
+const SignUpScreen = ({ navigation }) => {
+  const theme = useTheme();
+  const handleLoginPress = (oauth: string) => {
+    navigation.navigate('Login', { oauth });
   };
 
   const handleOtherPress = () => {
@@ -22,8 +24,24 @@ const SignUpScreen = () => {
           <SocialLoginButton
             text="카카오로 시작하기"
             icon="facebook-messenger"
-            color="#FEE500"
-            onPress={handleKakaoPress}
+            color={theme.colors.graphic.yellow}
+            onPress={() => handleLoginPress('kakao')}
+          ></SocialLoginButton>
+        </View>
+        <View style={styles.kakao}>
+          <SocialLoginButton
+            text="네이버로 시작하기"
+            icon="facebook-messenger"
+            color={theme.colors.graphic.green}
+            onPress={() => handleLoginPress('naver')}
+          ></SocialLoginButton>
+        </View>
+        <View style={styles.kakao}>
+          <SocialLoginButton
+            text="구글로 시작하기"
+            icon="facebook-messenger"
+            color={theme.colors.graphic.violet}
+            onPress={() => handleLoginPress('google')}
           ></SocialLoginButton>
         </View>
         <View style={styles.other}>
