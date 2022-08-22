@@ -53,7 +53,7 @@ const SocialLinkScreen = () => {
           isActive={isLengthGreaterThanFour}
           onPress={handleCompletePress}
           text="완료"
-        ></BlackBelowButton>
+        />
       </View>
     </View>
   );
@@ -64,7 +64,7 @@ export default SocialLinkScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'lightgreen',
   },
   upper: {
     flex: 1,

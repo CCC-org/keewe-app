@@ -1,5 +1,14 @@
-import { StyleSheet, Text, View, Pressable, KeyboardAvoidingView } from 'react-native';
-import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  KeyboardAvoidingView,
+  Platform,
+  Dimensions,
+  LayoutChangeEvent,
+} from 'react-native';
+import React, { useState } from 'react';
 import { useTheme } from 'react-native-paper';
 
 interface BlackBelowButtonProps {
@@ -8,13 +17,22 @@ interface BlackBelowButtonProps {
   onPress: () => void;
 }
 
-const BlackBelowButton = ({ isActive, onPress, text }: BlackBelowButtonProps) => {
-  const theme = useTheme();
+const fullHeightOfScreen = Dimensions.get('window').height;
 
+const BlackBelowButton = ({ isActive, onPress, text }: BlackBelowButtonProps) => {
+  const [offset, setOffset] = useState(0);
+
+  function handleLayout(event: LayoutChangeEvent) {
+    const { y: yCoordinate, height } = event.nativeEvent.layout;
+    setOffset(fullHeightOfScreen - yCoordinate - height);
+  }
+
+  const theme = useTheme();
   return (
     <KeyboardAvoidingView
-      behavior={'padding'}
-      keyboardVerticalOffset={250} // 기기마다 그에 맞는 높이를 적용하려면, native modules 라는 것을 써야 하는 것 같습니다. 우선은 제 휴대폰(Iphone11)에 맞춘 숫자를 넣어 두었습니다.
+      onLayout={handleLayout}
+      behavior={Platform.select({ ios: 'position' })} // position || padding
+      keyboardVerticalOffset={Platform.select({ ios: offset })}
       style={styles.container}
     >
       <View
@@ -37,7 +55,7 @@ export default BlackBelowButton;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginBottom: 40,
+    marginBottom: 25,
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
