@@ -29,9 +29,8 @@ export default function ChallengeGoalSettingBar({
       <View style={styles.InfoContainer}>
         <Text style={styles.infoText}>{infoText}</Text>
         <View>
-          <Text style={styles.challengeSettingAmount}>
-            {valueProp} <Text style={styles.challengeSettingUnit}>{unit}</Text>
-          </Text>
+          <Text style={styles.challengeSettingAmount}>{valueProp}</Text>
+          <Text style={styles.challengeSettingUnit}>{unit}</Text>
         </View>
         <View style={styles.slider}>
           <Slider
@@ -44,6 +43,16 @@ export default function ChallengeGoalSettingBar({
             trackStyle={styles.trackStyle}
           />
         </View>
+        <View style={styles.barInfo}>
+          <Text>
+            {minValue}
+            {unit}
+          </Text>
+          <Text>
+            {maxValue}
+            {unit}
+          </Text>
+        </View>
       </View>
     </View>
   );
@@ -55,14 +64,18 @@ function makeStyles(theme: ReactNativePaper.Theme) {
       marginLeft: 17,
       marginRight: 17,
       backgroundColor: 'white',
+      height: 150,
     },
     challengeSettingAmount: {
       fontSize: 30,
     },
     challengeSettingUnit: {
       fontSize: 16,
-      color: theme.colors.graphic.black,
       opacity: 0.5,
+      color: theme.colors.graphic.black,
+      position: 'absolute',
+      left: 20,
+      top: 9,
     },
     InfoContainer: {
       flexDirection: 'column',
@@ -79,12 +92,23 @@ function makeStyles(theme: ReactNativePaper.Theme) {
       width: '80%',
       alignItems: 'stretch',
       justifyContent: 'center',
+      position: 'relative',
     },
     thumbStyle: {
       backgroundColor: 'black',
     },
     trackStyle: {
       backgroundColor: 'gray',
+    },
+    barInfo: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      // 1px solid radius
+      width: '80%',
+      position: 'absolute',
+      bottom: -10,
+      fontSize: 14,
+      opacity: 0.8,
     },
   });
 }
