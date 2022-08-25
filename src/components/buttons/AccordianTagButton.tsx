@@ -59,3 +59,4 @@ function makeStyles(theme: ReactNativePaper.Theme, isChecked: boolean, themeColo
 }
 
 export default AccordianTagButton;
+

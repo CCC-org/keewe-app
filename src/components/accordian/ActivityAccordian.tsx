@@ -51,8 +51,6 @@ const ActivityAccordian = (props: ActivityAccordianProps) => {
   );
 };
 
-// 아코디언 스타일링 존나 이상하다,
-
 function makeStyles(theme: ReactNativePaper.Theme) {
   return StyleSheet.create({
     accordion: {
@@ -80,10 +78,3 @@ function makeStyles(theme: ReactNativePaper.Theme) {
 }
 
 export default ActivityAccordian;
-
-// accordian-content: {
-//    backgroundColor: theme.colors.graphic.black,
-//    width: 340,
-//    borderRadius: 12,
-//    height: 100,
-//  },
