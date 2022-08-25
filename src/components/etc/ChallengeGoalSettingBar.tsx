@@ -22,7 +22,7 @@ export default function ChallengeGoalSettingBar({
   unit,
 }: ChallengeGoalSettingBarProps) {
   const themeProp = useTheme();
-  const styles = makeStyles(themeProp);
+  const styles = makeStyles(themeProp, unit);
 
   return (
     <View style={styles.container}>
@@ -39,8 +39,11 @@ export default function ChallengeGoalSettingBar({
             maximumValue={maxValue}
             step={1}
             onValueChange={(val: number | number[]) => onChange(val)}
-            thumbStyle={styles.thumbStyle}
-            trackStyle={styles.trackStyle}
+            minimumTrackTintColor={
+              unit === '번' ? themeProp.colors.graphic.green : themeProp.colors.graphic.orange
+            }
+            thumbStyle={styles.thumb}
+            trackStyle={styles.track}
           />
         </View>
         <View style={styles.barInfo}>
@@ -58,7 +61,7 @@ export default function ChallengeGoalSettingBar({
   );
 }
 
-function makeStyles(theme: ReactNativePaper.Theme) {
+function makeStyles(theme: ReactNativePaper.Theme, unit: string) {
   return StyleSheet.create({
     container: {
       marginLeft: 17,
@@ -94,11 +97,34 @@ function makeStyles(theme: ReactNativePaper.Theme) {
       justifyContent: 'center',
       position: 'relative',
     },
-    thumbStyle: {
-      backgroundColor: 'black',
+    thumb: {
+      backgroundColor: unit === '번' ? theme.colors.graphic.green : theme.colors.graphic.orange,
+      borderColor: theme.colors.graphic.white,
+      borderRadius: 10,
+      borderWidth: 5,
+      height: 20,
+      shadowColor: theme.colors.graphic.black,
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.35,
+      shadowRadius: 2,
+      // android shadow
+      elevation: 4,
+      width: 20,
     },
-    trackStyle: {
-      backgroundColor: 'gray',
+    track: {
+      backgroundColor: 'rgba(18,19,20,0.1)',
+      borderRadius: 4,
+      height: 10,
+      shadowColor: theme.colors.graphic.black,
+      shadowOffset: {
+        width: 0,
+        height: 1,
+      },
+      shadowOpacity: 0.15,
+      shadowRadius: 1,
     },
     barInfo: {
       flexDirection: 'row',
