@@ -1,19 +1,51 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTheme } from 'react-native-paper';
+import { Slider } from '@miblanchard/react-native-slider';
 
-export default function ChallengeGoalSettingBar() {
+// create alias for interface
+interface ChallengeGoalSettingBarProps {
+  minValue: number;
+  maxValue: number;
+  value: number;
+  infoText: string;
+  onValueChange?: (value: number) => void;
+}
+
+export default function ChallengeGoalSettingBar({
+  value: valueProp,
+  minValue,
+  maxValue,
+  infoText,
+}: ChallengeGoalSettingBarProps) {
+  const [value, setValue] = useState<number | number[]>(valueProp);
+
   const themeProp = useTheme();
   const styles = makeStyles(themeProp);
+
+  const handleValueChange = (value: number | number[]) => {
+    setValue(value);
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.InfoContainer}>
-        <Text style={styles.infoText}>챌린지에 몇 주 동안 참여할까요?</Text>
+        <Text style={styles.infoText}>{infoText}</Text>
         <View>
           <Text style={styles.challengeSettingAmount}>
-            2 <Text style={styles.challengeSettingUnit}>주</Text>
+            {value} <Text style={styles.challengeSettingUnit}>주</Text>
           </Text>
+        </View>
+        <View style={styles.slider}>
+          <Slider
+            value={value}
+            minimumValue={minValue}
+            maximumValue={maxValue}
+            step={1}
+            onValueChange={handleValueChange}
+            thumbStyle={styles.thumbStyle}
+            trackStyle={styles.trackStyle}
+          />
         </View>
       </View>
     </View>
@@ -45,6 +77,17 @@ function makeStyles(theme: ReactNativePaper.Theme) {
       textAlign: 'center',
       color: theme.colors.graphic.black,
       opacity: 0.8,
+    },
+    slider: {
+      width: '80%',
+      alignItems: 'stretch',
+      justifyContent: 'center',
+    },
+    thumbStyle: {
+      backgroundColor: 'black',
+    },
+    trackStyle: {
+      backgroundColor: 'gray',
     },
   });
 }
