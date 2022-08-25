@@ -8,8 +8,9 @@ interface ChallengeGoalSettingBarProps {
   minValue: number;
   maxValue: number;
   value: number;
+  unit: string;
   infoText: string;
-  onValueChange?: (value: number) => void;
+  onChange: (value: number | number[]) => void;
 }
 
 export default function ChallengeGoalSettingBar({
@@ -17,15 +18,11 @@ export default function ChallengeGoalSettingBar({
   minValue,
   maxValue,
   infoText,
+  onChange,
+  unit,
 }: ChallengeGoalSettingBarProps) {
-  const [value, setValue] = useState<number | number[]>(valueProp);
-
   const themeProp = useTheme();
   const styles = makeStyles(themeProp);
-
-  const handleValueChange = (value: number | number[]) => {
-    setValue(value);
-  };
 
   return (
     <View style={styles.container}>
@@ -33,16 +30,16 @@ export default function ChallengeGoalSettingBar({
         <Text style={styles.infoText}>{infoText}</Text>
         <View>
           <Text style={styles.challengeSettingAmount}>
-            {value} <Text style={styles.challengeSettingUnit}>주</Text>
+            {valueProp} <Text style={styles.challengeSettingUnit}>{unit}</Text>
           </Text>
         </View>
         <View style={styles.slider}>
           <Slider
-            value={value}
+            value={valueProp}
             minimumValue={minValue}
             maximumValue={maxValue}
             step={1}
-            onValueChange={handleValueChange}
+            onValueChange={(val: number | number[]) => onChange(val)}
             thumbStyle={styles.thumbStyle}
             trackStyle={styles.trackStyle}
           />
