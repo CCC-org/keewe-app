@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import { useTheme } from 'react-native-paper';
 import { Slider } from '@miblanchard/react-native-slider';
 
