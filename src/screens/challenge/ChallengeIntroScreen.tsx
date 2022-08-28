@@ -1,11 +1,22 @@
 import { StyleSheet, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextInputDetail from '../../components/texts/TextInputDetail';
 import ChallengeIntroduction from '../../components/texts/ChallengeIntroduction';
+import BlackBelowButton from '../../components/buttons/BlackBelowButton';
 
 const ChallengeIntroScreen = () => {
   const [challengeName, setChallengeName] = useState<string>('');
   const [challengeIntro, setChallengeIntro] = useState<string>('');
+  const [isLengthGreaterThanFour, setIsLengthGreaterThanFour] = useState(false);
+
+  useEffect(() => {
+    if (challengeName.length > 4) setIsLengthGreaterThanFour(true);
+    else setIsLengthGreaterThanFour(false);
+  }, [challengeName]);
+
+  function handleBelowButtonPress() {
+    alert('next step');
+  }
 
   return (
     <View style={styles.container}>
@@ -27,6 +38,12 @@ const ChallengeIntroScreen = () => {
           inputValue={challengeIntro}
           setInputValue={setChallengeIntro}
           infoText="챌린지 소개(선택)"
+        />
+        <BlackBelowButton
+          isActive={isLengthGreaterThanFour}
+          onPress={handleBelowButtonPress}
+          text="다음"
+          width={200}
         />
       </View>
     </View>

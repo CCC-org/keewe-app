@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     margin: 10,
     backgroundColor: 'white',
     paddingBottom: 25,
-    height: 110,
+    height: 100,
   },
   letterNumber: {
     marginHorizontal: 15,
