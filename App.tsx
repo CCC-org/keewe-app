@@ -5,6 +5,7 @@ import useCachedResources from './src/utils/hooks/useCachedResources';
 import NicknameCreationScreen from './src/screens/onboarding/NicknameCreationScreen';
 import SignUpScreen from './src/screens/onboarding/SignUpScreen';
 import LoginScreen from './src/screens/login/LoginScreen';
+
 import { RootScreen } from './src/navigation';
 import { Provider as PaperProvider } from 'react-native-paper';
 import light from './src/theme/light';
@@ -25,7 +26,12 @@ export default function App() {
         <PaperProvider theme={light}>
           <NavigationContainer>
             <QueryClientProvider client={queryClient}>
-              <Stack.Navigator>
+              <Stack.Navigator
+              // screenOptions={{
+              // headerShown: false,
+              // }}
+              //위 주석을 없애면, navigation header가 없어집니다.
+              >
                 <Stack.Screen name="Root" component={RootScreen} />
                 <Stack.Screen name="NicknameCreation" component={NicknameCreationScreen} />
                 <Stack.Screen name="SignUp" component={SignUpScreen} />
