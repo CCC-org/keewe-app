@@ -2,14 +2,14 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { TextInput, useTheme } from 'react-native-paper';
 
-interface ChallengeIntroductionProps {
+interface CountingTextAreaProps {
   infoText: string;
   inputValue: string;
   placeholder: string;
   setInputValue: (input: string) => void;
 }
 
-const ChallengeIntroduction = (props: ChallengeIntroductionProps) => {
+const CountingTextArea = (props: CountingTextAreaProps) => {
   const { infoText, inputValue, placeholder, setInputValue } = props;
   const theme = useTheme();
   const [letterNumberColor, setLetterNumberColor] = useState<string>('grey');
@@ -46,7 +46,7 @@ const ChallengeIntroduction = (props: ChallengeIntroductionProps) => {
   );
 };
 
-export default ChallengeIntroduction;
+export default CountingTextArea;
 
 const styles = StyleSheet.create({
   intro: {
