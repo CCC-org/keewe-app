@@ -27,6 +27,7 @@ const NicknameCreationScreen = () => {
           inputValue={nickname}
           label="닉네임"
           placeholder="닉네임을 입력하세요"
+          letterLimit={20}
         />
       </View>
       <BlackNextButton isActive={isLengthGreaterThanFour} handlePress={handleNextButtonPress} />
