@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { StyleSheet, Animated } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 interface AccordionProps {
@@ -13,6 +14,7 @@ interface AccordionProps {
 
 const Accordion = ({ title, children, isOpen, onClick, openHeight }: AccordionProps) => {
   const height = useRef(new Animated.Value(0)).current;
+  const theme = useTheme();
 
   const open = () => {
     Animated.timing(height, {
@@ -42,7 +44,7 @@ const Accordion = ({ title, children, isOpen, onClick, openHeight }: AccordionPr
         <Icon
           name={isOpen ? 'chevron-up-outline' : 'chevron-down-outline'}
           size={18}
-          color="black"
+          color={`${theme.colors.graphic.black}80`}
         />
       </TouchableOpacity>
       <Animated.View style={{ overflow: 'hidden', height: height }}>{children}</Animated.View>
@@ -58,6 +60,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 10,
+    margin: 8,
   },
   list: { overflow: 'hidden' },
 });
