@@ -11,16 +11,17 @@ import {
 import React, { useState } from 'react';
 import { useTheme } from 'react-native-paper';
 
-interface BlackBelowButtonProps {
+interface ConditionalButtonProps {
   isActive: boolean;
   text: string;
+  color?: string;
   width: number;
   onPress: () => void;
 }
 
 const fullHeightOfScreen = Dimensions.get('window').height;
 
-const BlackBelowButton = ({ isActive, onPress, text, width }: BlackBelowButtonProps) => {
+const ConditionalButton = ({ isActive, onPress, text, width, color }: ConditionalButtonProps) => {
   const [offset, setOffset] = useState(0);
 
   function handleLayout(event: LayoutChangeEvent) {
@@ -40,7 +41,7 @@ const BlackBelowButton = ({ isActive, onPress, text, width }: BlackBelowButtonPr
         style={{
           ...styles.btn,
           width: width,
-          backgroundColor: theme.colors.graphic.black,
+          backgroundColor: color || theme.colors.graphic.black,
           opacity: isActive ? 1 : 0.2,
         }}
       >
@@ -55,7 +56,7 @@ const BlackBelowButton = ({ isActive, onPress, text, width }: BlackBelowButtonPr
   );
 };
 
-export default BlackBelowButton;
+export default ConditionalButton;
 
 const styles = StyleSheet.create({
   container: {
