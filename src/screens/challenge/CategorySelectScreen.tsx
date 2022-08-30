@@ -13,7 +13,7 @@ const CategorySelectScreen = ({ navigation, route }) => {
 
   const handleSelectTag = (tag: string) =>
     setSelectedCategory(selectedCategory === tag ? undefined : tag);
-  const addCategory = () => {
+  const handleCreateCategory = () => {
     setSelectedCategory(undefined);
     navigation.navigate('CategoryCreate', { customCategory });
   };
@@ -25,7 +25,7 @@ const CategorySelectScreen = ({ navigation, route }) => {
         totalCategory={[...customCategory, ...totalCategory]}
         selectedCategory={selectedCategory}
         onSelect={handleSelectTag}
-        onCreateCategory={addCategory}
+        onCreateCategory={handleCreateCategory}
       />
       <ConditionalButton
         isActive={isActive}
