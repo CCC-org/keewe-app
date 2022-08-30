@@ -6,6 +6,12 @@ const CategoryCreateScreen = ({ navigation, route }) => {
 
   const [input, setInput] = useState<string>('');
 
+  const handleCompleteClick = () => {
+    navigation.navigate('CategorySelect', {
+      selectedCategory: input,
+      customCategory: [input, ...customCategory],
+    });
+  };
   return (
     <>
       <TextInputDetail

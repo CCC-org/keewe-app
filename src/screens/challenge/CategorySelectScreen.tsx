@@ -7,25 +7,25 @@ const CategorySelectScreen = ({ navigation, route }) => {
   const customCategory: string[] = route.params?.category ?? [];
 
   const [totalCategory, setTotalCategory] = useState<string[]>(TOTAL_TAG);
-  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
+  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
+    route.params?.selectedCategory ?? undefined,
+  );
 
   const handleSelectTag = (tag: string) =>
     setSelectedCategory(selectedCategory === tag ? undefined : tag);
-  const addCategory = (value: string) => {
-    setTotalCategory([value, ...totalCategory]);
+  const addCategory = () => {
+    setSelectedCategory(undefined);
+    navigation.navigate('CategoryCreate', { customCategory });
   };
   const isActive = selectedCategory !== undefined;
 
   return (
     <>
       <ChallengeCategorySelectSection
-        totalCategory={totalCategory}
+        totalCategory={[...customCategory, ...totalCategory]}
         selectedCategory={selectedCategory}
         onSelect={handleSelectTag}
-        onCreateCategory={() => {
-          setSelectedCategory(undefined);
-          navigation.navigate('CategoryCreate', { customCategory });
-        }}
+        onCreateCategory={addCategory}
       />
       <ConditionalButton
         isActive={isActive}
