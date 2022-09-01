@@ -3,11 +3,37 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TextInputDetail from '../../components/texts/TextInputDetail';
 import BlackNextButton from '../../components/buttons/BlackNextButton';
+import HeaderRightButton from '../../components/header/HeaderRightButton';
+
 const detailInfoTextProp = `반가워요 키위새님${'\n'}닉네임이 무엇인가요?`;
 
-const NicknameCreationScreen = () => {
+const NicknameCreationScreen = ({ navigation }) => {
   const [nickname, setNickname] = useState<string>('');
   const [isLengthGreaterThanFour, setIsLengthGreaterThanFour] = useState(false);
+
+  //여기서 부터 HeaderRightButton 사용 예제입니다.
+  const [isHeaderButtonOn, setIsHeaderButtonOn] = useState(false);
+
+  useEffect(() => {
+    if (nickname.length > 4) setIsHeaderButtonOn(true);
+    else setIsHeaderButtonOn(false);
+  }, [nickname]);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderRightButton
+          text="Done"
+          backGroundColor={isHeaderButtonOn ? '#B0E817' : 'lightgrey'}
+          textColor={isHeaderButtonOn ? 'black' : 'white'}
+          borderLine={false}
+          disabled={isHeaderButtonOn ? false : true}
+          handlePress={() => navigation.goBack()}
+        />
+      ),
+    });
+  }, [navigation, nickname]);
+  //HeaderRightButton 사용 예제 끝입니다.
 
   useEffect(() => {
     if (nickname.length > 4) setIsLengthGreaterThanFour(true);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
+import HeaderBackButton from './src/components/header/HeaderBackButton';
 import { NavigationContainer } from '@react-navigation/native';
 import useCachedResources from './src/utils/hooks/useCachedResources';
 import NicknameCreationScreen from './src/screens/onboarding/NicknameCreationScreen';
@@ -17,7 +18,6 @@ const queryClient = new QueryClient();
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
-
   if (!isLoadingComplete) {
     return null;
   } else {
@@ -26,16 +26,32 @@ export default function App() {
         <PaperProvider theme={light}>
           <NavigationContainer>
             <QueryClientProvider client={queryClient}>
-              <Stack.Navigator
-              // screenOptions={{
-              // headerShown: false,
-              // }}
-              //위 주석을 없애면, navigation header가 없어집니다.
-              >
-                <Stack.Screen name="Root" component={RootScreen} />
-                <Stack.Screen name="NicknameCreation" component={NicknameCreationScreen} />
-                <Stack.Screen name="SignUp" component={SignUpScreen} />
-                <Stack.Screen name="Login" component={LoginScreen} />
+              <Stack.Navigator>
+                <Stack.Screen name="Root" component={RootScreen} options={{ title: 'Root' }} />
+                <Stack.Screen
+                  name="NicknameCreation"
+                  component={NicknameCreationScreen}
+                  options={{
+                    headerBackVisible: false,
+                    headerLeft: () => <HeaderBackButton />,
+                  }}
+                />
+                <Stack.Screen
+                  name="SignUp"
+                  component={SignUpScreen}
+                  options={{
+                    headerBackVisible: false,
+                    headerLeft: () => <HeaderBackButton />,
+                  }}
+                />
+                <Stack.Screen
+                  name="Login"
+                  component={LoginScreen}
+                  options={{
+                    headerBackVisible: false,
+                    headerLeft: () => <HeaderBackButton />,
+                  }}
+                />
               </Stack.Navigator>
             </QueryClientProvider>
           </NavigationContainer>
