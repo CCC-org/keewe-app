@@ -6,13 +6,15 @@ import useCachedResources from './src/utils/hooks/useCachedResources';
 import NicknameCreationScreen from './src/screens/onboarding/NicknameCreationScreen';
 import SignUpScreen from './src/screens/onboarding/SignUpScreen';
 import LoginScreen from './src/screens/login/LoginScreen';
+import CategorySelectScreen from './src/screens/challenge/CategorySelectScreen';
+import ChallengeInfoScreen from './src/screens/challenge/ChallengeInfoScreen';
 
 import { RootScreen } from './src/navigation';
 import { Provider as PaperProvider } from 'react-native-paper';
 import light from './src/theme/light';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ChallengeCreationApprovedScreen from './src/screens/challenge/ChallengeCreationApprovedScreen';
+import CategoryCreateScreen from './src/screens/challenge/CategoryCreateScreen';
 
 const queryClient = new QueryClient();
 
@@ -32,20 +34,33 @@ export default function App() {
           <NavigationContainer>
             <QueryClientProvider client={queryClient}>
               <Stack.Navigator screenOptions={{ contentStyle: { backgroundColor: 'white' } }}>
-                <Stack.Group>
-                  <Stack.Screen name="Root" component={RootScreen} options={{ title: 'Root' }} />
-                  <Stack.Screen
-                    name="NicknameCreation"
-                    component={NicknameCreationScreen}
-                    options={headerOptions}
-                  />
-                  <Stack.Screen name="SignUp" component={SignUpScreen} options={headerOptions} />
-                  <Stack.Screen name="Login" component={LoginScreen} options={headerOptions} />
-                  <Stack.Screen
-                    name="ChallengeCreationApproved"
-                    component={ChallengeCreationApprovedScreen}
-                  />
-                </Stack.Group>
+                <Stack.Screen name="Root" component={RootScreen} options={{ title: 'Root' }} />
+                <Stack.Screen
+                  name="NicknameCreation"
+                  component={NicknameCreationScreen}
+                  options={headerOptions}
+                />
+                <Stack.Screen name="SignUp" component={SignUpScreen} options={headerOptions} />
+                <Stack.Screen name="Login" component={LoginScreen} options={headerOptions} />
+                <Stack.Screen
+                  name="CategorySelect"
+                  component={CategorySelectScreen}
+                  options={headerOptions}
+                />
+                <Stack.Screen
+                  name="CategoryCreate"
+                  component={CategoryCreateScreen}
+                  options={headerOptions}
+                />
+                <Stack.Screen
+                  name="ChallengeInfo"
+                  component={ChallengeInfoScreen}
+                  options={headerOptions}
+                />
+                <Stack.Screen
+                  name="ChallengeCreationApproved"
+                  component={ChallengeCreationApprovedScreen}
+                />
               </Stack.Navigator>
             </QueryClientProvider>
           </NavigationContainer>
