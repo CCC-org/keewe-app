@@ -32,7 +32,6 @@ export function RootScreen() {
           <Text> SignUpScreen.tsx</Text>
         </View>
       </Pressable>
-
       <Pressable onPress={() => navigation.navigate('ChallengeCreationApproved')}>
         <View
           style={{
@@ -44,6 +43,7 @@ export function RootScreen() {
           <Text> ChallengeIntroScreen.tsx</Text>
         </View>
       </Pressable>
+
     </>
     /*
     <Pressable onPress={() => navigation.navigate('Stack.screen.name String')}>

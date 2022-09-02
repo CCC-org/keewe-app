@@ -2,12 +2,12 @@ import { View, StyleSheet } from 'react-native';
 import React from 'react';
 import { IconButton, useTheme } from 'react-native-paper';
 
-interface BlackNextBottonProps {
+interface BlackNextButtonProps {
   isActive: boolean;
   handlePress: () => void;
 }
 
-const BlackNextButton = (props: BlackNextBottonProps) => {
+const BlackNextButton = (props: BlackNextButtonProps) => {
   const { isActive, handlePress } = props;
   const theme = useTheme();
 
