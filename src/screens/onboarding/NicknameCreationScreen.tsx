@@ -10,8 +10,6 @@ const detailInfoTextProp = `반가워요 키위새님${'\n'}닉네임이 무엇�
 const NicknameCreationScreen = ({ navigation }) => {
   const [nickname, setNickname] = useState<string>('');
   const [isLengthGreaterThanFour, setIsLengthGreaterThanFour] = useState(false);
-
-  //여기서 부터 HeaderRightButton 사용 예제입니다.
   const [isHeaderButtonOn, setIsHeaderButtonOn] = useState(false);
 
   useEffect(() => {
@@ -33,7 +31,6 @@ const NicknameCreationScreen = ({ navigation }) => {
       ),
     });
   }, [navigation, nickname]);
-  //HeaderRightButton 사용 예제 끝입니다.
 
   useEffect(() => {
     if (nickname.length > 4) setIsLengthGreaterThanFour(true);

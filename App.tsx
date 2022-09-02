@@ -17,6 +17,10 @@ const Stack = createNativeStackNavigator();
 const queryClient = new QueryClient();
 
 export default function App() {
+  const headerOptions = {
+    headerBackVisible: false,
+    headerLeft: () => <HeaderBackButton />,
+  };
   const isLoadingComplete = useCachedResources();
   if (!isLoadingComplete) {
     return null;
@@ -31,27 +35,10 @@ export default function App() {
                 <Stack.Screen
                   name="NicknameCreation"
                   component={NicknameCreationScreen}
-                  options={{
-                    headerBackVisible: false,
-                    headerLeft: () => <HeaderBackButton />,
-                  }}
+                  options={headerOptions}
                 />
-                <Stack.Screen
-                  name="SignUp"
-                  component={SignUpScreen}
-                  options={{
-                    headerBackVisible: false,
-                    headerLeft: () => <HeaderBackButton />,
-                  }}
-                />
-                <Stack.Screen
-                  name="Login"
-                  component={LoginScreen}
-                  options={{
-                    headerBackVisible: false,
-                    headerLeft: () => <HeaderBackButton />,
-                  }}
-                />
+                <Stack.Screen name="SignUp" component={SignUpScreen} options={headerOptions} />
+                <Stack.Screen name="Login" component={LoginScreen} options={headerOptions} />
               </Stack.Navigator>
             </QueryClientProvider>
           </NavigationContainer>
