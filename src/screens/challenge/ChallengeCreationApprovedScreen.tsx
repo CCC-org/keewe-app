@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
 import React, { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import HeaderText from '../../components/texts/HeaderText';
 import { useTheme } from 'react-native-paper';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
+// import { SafeAreaView } from 'react-native-safe-area-context';
 /**
  * https://docs.expo.dev/versions/latest/sdk/safe-area-context/
- * SafeAreaView from 'react-native-safe-area-context' is a all platform compatable component.
+ * SafeAreaView from 'react-native-safe-area-context' is an all platform compatable component.
  */
 
 const ChallengeCreationApprovedScreen = () => {
