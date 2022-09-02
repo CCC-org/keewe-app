@@ -5,9 +5,9 @@ import TextInputDetail from '../../components/texts/TextInputDetail';
 
 interface ChallengeInfoSectionProps {
   challengeName: string;
-  setChallengeName: () => void;
+  setChallengeName: (value: string) => void;
   challengeInfo: string;
-  setChallengeInfo: () => void;
+  setChallengeInfo: (value: string) => void;
 }
 
 const ChallengeInfoSection = ({
