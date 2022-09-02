@@ -25,8 +25,8 @@ const ConditionalButton = ({ isActive, onPress, text, width, color }: Conditiona
   const [offset, setOffset] = useState(0);
 
   function handleLayout(event: LayoutChangeEvent) {
-    const { y: yCoordinate, height } = event.nativeEvent.layout;
-    setOffset(fullHeightOfScreen - yCoordinate - height);
+    // const { y: yCoordinate, height } = event.nativeEvent.layout;
+    // setOffset(fullHeightOfScreen - yCoordinate - height);
   }
 
   const theme = useTheme();
@@ -47,7 +47,10 @@ const ConditionalButton = ({ isActive, onPress, text, width, color }: Conditiona
       >
         <Pressable
           hitSlop={{ bottom: 25, left: width / 2, right: width / 2, top: 25 }}
-          onPress={onPress}
+          onPress={() => {
+            if (!isActive) return;
+            onPress();
+          }}
         >
           <Text style={styles.text}>{text}</Text>
         </Pressable>
