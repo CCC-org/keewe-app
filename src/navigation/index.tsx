@@ -47,14 +47,12 @@ export function RootScreen() {
         <View
           style={{
             backgroundColor: 'purple',
-            width: 150,
             height: 100,
+            width: 150,
           }}
-        >
-          <Text> ChallengeIntroScreen.tsx</Text>
-        </View>
+        ></View>
+        <Text> ChallengeIntroScreen.tsx</Text>
       </Pressable>
-
     </>
     /*
     <Pressable onPress={() => navigation.navigate('Stack.screen.name String')}>

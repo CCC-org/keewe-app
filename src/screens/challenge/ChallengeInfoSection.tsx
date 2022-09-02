@@ -3,19 +3,19 @@ import React from 'react';
 import CountingTextArea from '../../components/texts/CountingTextArea';
 import TextInputDetail from '../../components/texts/TextInputDetail';
 
-interface ChallengeIntroSectionProps {
+interface ChallengeInfoSectionProps {
   challengeName: string;
-  setChallengeName: () => void;
-  challengeIntro: string;
-  setChallengeIntro: () => void;
+  setChallengeName: (value: string) => void;
+  challengeInfo: string;
+  setChallengeInfo: (value: string) => void;
 }
 
-const ChallengeIntroSection = ({
+const ChallengeInfoSection = ({
   challengeName,
   setChallengeName,
-  challengeIntro,
-  setChallengeIntro,
-}: ChallengeIntroSectionProps) => {
+  challengeInfo,
+  setChallengeInfo,
+}: ChallengeInfoSectionProps) => {
   return (
     <>
       <View style={{ marginBottom: 20 }}>
@@ -30,12 +30,12 @@ const ChallengeIntroSection = ({
       </View>
       <CountingTextArea
         placeholder="간단한 챌린지 소개와 함께 사람들과 하고 싶은 챌린지에 대해 설명해주세요."
-        inputValue={challengeIntro}
-        setInputValue={setChallengeIntro}
+        inputValue={challengeInfo}
+        setInputValue={setChallengeInfo}
         infoText="챌린지 소개(선택)"
       />
     </>
   );
 };
 
-export default ChallengeIntroSection;
+export default ChallengeInfoSection;
