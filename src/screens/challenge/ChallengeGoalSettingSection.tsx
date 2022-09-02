@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Text, StyleSheet } from 'react-native';
 import Accordion from '../../components/accordions/Accordion';
 import ChallengeGoalSettingBar from './ChallengeGoalSettingBar';
