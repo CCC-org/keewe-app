@@ -7,6 +7,7 @@ import NicknameCreationScreen from './src/screens/onboarding/NicknameCreationScr
 import SignUpScreen from './src/screens/onboarding/SignUpScreen';
 import LoginScreen from './src/screens/login/LoginScreen';
 import CategorySelectScreen from './src/screens/challenge/CategorySelectScreen';
+import ChallengeInfoScreen from './src/screens/challenge/ChallengeInfoScreen';
 
 import { RootScreen } from './src/navigation';
 import { Provider as PaperProvider } from 'react-native-paper';
@@ -49,6 +50,11 @@ export default function App() {
                 <Stack.Screen
                   name="CategoryCreate"
                   component={CategoryCreateScreen}
+                  options={headerOptions}
+                />
+                <Stack.Screen
+                  name="ChallengeInfo"
+                  component={ChallengeInfoScreen}
                   options={headerOptions}
                 />
               </Stack.Navigator>
