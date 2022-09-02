@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HeaderText from '../../components/texts/HeaderText';
 import { useTheme } from 'react-native-paper';
+import ConditionalButton from '../../components/buttons/ConditionalButton';
 /**
  * https://docs.expo.dev/versions/latest/sdk/safe-area-context/
  * SafeAreaView from 'react-native-safe-area-context' is a all platform compatable component.
@@ -59,6 +60,22 @@ const ChallengeCreationApprovedScreen = () => {
           </Text>
         </View>
       </View>
+
+      <View style={styles.buttonContainer}>
+        <ConditionalButton
+          isActive={true}
+          text={'친구 초대하기'}
+          color={'#e0f6a2'}
+          width={168}
+          onPress={() => alert('pressed')}
+        />
+        <ConditionalButton
+          isActive={true}
+          text={'친구 초대하기'}
+          width={168}
+          onPress={() => alert('pressed')}
+        />
+      </View>
     </View>
   );
 };
@@ -81,6 +98,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  buttonContainer: {
+    marginTop: 32,
+    flexDirection: 'row',
   },
 });
 
