@@ -1,16 +1,21 @@
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import TextInputDetail from '../../components/texts/TextInputDetail';
-import BlackNextButton from '../../components/buttons/BlackNextButton';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
-
-const detailInfoTextProp = `반가워요 키위새님${'\n'}닉네임이 무엇인가요?`;
 
 const NicknameCreationScreen = ({ navigation }) => {
   const [nickname, setNickname] = useState<string>('');
-  const [isLengthGreaterThanFour, setIsLengthGreaterThanFour] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [isHeaderButtonOn, setIsHeaderButtonOn] = useState(false);
+  useEffect(() => {
+    if (nickname.length > 8) {
+      setErrorMessage('8자 이내로 입력하세요.');
+    } else if (nickname.includes(' ')) {
+      setErrorMessage('띄어쓰기는 입력할 수 없어요.');
+    } else if (!/^[a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]+$/.test(nickname))
+      setErrorMessage('한글, 영문만 입력할 수 있어요.');
+    else setErrorMessage('');
+  }, [nickname]);
 
   useEffect(() => {
     if (nickname.length > 4) setIsHeaderButtonOn(true);
@@ -32,37 +37,17 @@ const NicknameCreationScreen = ({ navigation }) => {
     });
   }, [navigation, nickname]);
 
-  useEffect(() => {
-    if (nickname.length > 4) setIsLengthGreaterThanFour(true);
-    else setIsLengthGreaterThanFour(false);
-  }, [nickname]);
-
-  function handleNextButtonPress() {
-    alert('다음으로 가기 검은색버튼 눌림. 닉네임: ' + nickname);
-  }
-
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ backgroundColor: 'orange' }}>
-        <TextInputDetail
-          setInputValue={setNickname}
-          infoText={detailInfoTextProp}
-          inputValue={nickname}
-          label="닉네임"
-          placeholder="닉네임을 입력하세요"
-          letterLimit={20}
-        />
-      </View>
-      <BlackNextButton isActive={isLengthGreaterThanFour} handlePress={handleNextButtonPress} />
-    </SafeAreaView>
+    <View>
+      <TextInputDetail
+        inputValue={nickname}
+        setInputValue={setNickname}
+        placeholder={'관심사를 입력해'}
+        letterLimit={8}
+        errorMessage={errorMessage}
+      />
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'orange',
-  },
-});
 
 export default NicknameCreationScreen;
