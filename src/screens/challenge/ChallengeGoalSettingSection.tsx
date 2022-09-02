@@ -20,7 +20,7 @@ const ChallengeGoalSettingSection = ({
   participationPerWeek,
   setParticipationPerWeek,
 }: ChallengeGoalSettingSectionProps) => {
-  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [currentStep, setCurrentStep] = useState<number>(UNSELECTED);
   function handleClickOpen(selectedStep: number) {
     if (currentStep !== selectedStep) setCurrentStep(selectedStep);
     else setCurrentStep(UNSELECTED);

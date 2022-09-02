@@ -5,11 +5,13 @@ import ConditionalButton from '../../components/buttons/ConditionalButton';
 import Stepper from '../../components/stepper/Stepper';
 import ChallengeGoalSettingSection from './ChallengeGoalSettingSection';
 
+const UNSELECTED = -1;
+
 const ChallengeGoalSettingScreen = ({ navigation, route }) => {
   const theme = useTheme();
   const [recordPerWeek, setRecordPerWeek] = useState<number | number[]>([1]);
   const [participationPerWeek, setParticipationPerWeek] = useState<number | number[]>([1]);
-  const [step, setStep] = useState<number>(1);
+  const [step, setStep] = useState<number>(UNSELECTED);
   const isNext = useMemo(() => {
     return step !== 2;
   }, [step]);
