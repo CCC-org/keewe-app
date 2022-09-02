@@ -15,13 +15,21 @@ interface ConditionalButtonProps {
   isActive: boolean;
   text: string;
   color?: string;
+  textColor?: string;
   width: number;
   onPress: () => void;
 }
 
 const fullHeightOfScreen = Dimensions.get('window').height;
 
-const ConditionalButton = ({ isActive, onPress, text, width, color }: ConditionalButtonProps) => {
+const ConditionalButton = ({
+  isActive,
+  onPress,
+  text,
+  width,
+  color,
+  textColor,
+}: ConditionalButtonProps) => {
   const [offset, setOffset] = useState(0);
 
   function handleLayout(event: LayoutChangeEvent) {
@@ -49,7 +57,7 @@ const ConditionalButton = ({ isActive, onPress, text, width, color }: Conditiona
           hitSlop={{ bottom: 25, left: width / 2, right: width / 2, top: 25 }}
           onPress={onPress}
         >
-          <Text style={styles.text}>{text}</Text>
+          <Text style={{ ...styles.text, color: textColor ? textColor : 'white' }}>{text}</Text>
         </Pressable>
       </View>
     </KeyboardAvoidingView>
