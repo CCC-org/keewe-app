@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useTheme } from 'react-native-paper';
 import TextInputDetail from '../../components/texts/TextInputDetail';
+import HeaderRightButton from '../../components/header/HeaderRightButton';
 
 const CategoryCreateScreen = ({ navigation, route }) => {
-  const customCategory: string[] = route.param?.category ?? [];
+  const [customCategory, setCustomCategory] = useState<string[]>([]);
 
+  const theme = useTheme();
   const [input, setInput] = useState<string>('');
 
   const handleComplete = () => {
@@ -12,6 +15,28 @@ const CategoryCreateScreen = ({ navigation, route }) => {
       customCategory: [input, ...customCategory],
     });
   };
+
+  useEffect(() => {
+    setCustomCategory(route.params?.customCategory ?? []);
+  }, [route.params]);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderRightButton
+          text="완료"
+          backGroundColor={
+            input !== '' ? theme.colors.brand.primary.main : `${theme.colors.graphic.black}10`
+          }
+          textColor={input !== '' ? theme.colors.graphic.black : theme.colors.graphic.white}
+          borderLine={false}
+          disabled={input !== '' ? false : true}
+          handlePress={() => handleComplete()}
+        />
+      ),
+    });
+  }, [navigation, input]);
+
   return (
     <>
       <TextInputDetail

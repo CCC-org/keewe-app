@@ -41,8 +41,16 @@ export default function App() {
                 />
                 <Stack.Screen name="SignUp" component={SignUpScreen} options={headerOptions} />
                 <Stack.Screen name="Login" component={LoginScreen} options={headerOptions} />
-                <Stack.Screen name="CategorySelect" component={CategorySelectScreen} />
-                <Stack.Screen name="CategoryCreate" component={CategoryCreateScreen} />
+                <Stack.Screen
+                  name="CategorySelect"
+                  component={CategorySelectScreen}
+                  options={headerOptions}
+                />
+                <Stack.Screen
+                  name="CategoryCreate"
+                  component={CategoryCreateScreen}
+                  options={headerOptions}
+                />
               </Stack.Navigator>
             </QueryClientProvider>
           </NavigationContainer>

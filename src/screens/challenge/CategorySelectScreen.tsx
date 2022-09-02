@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { TOTAL_TAG } from '../../constants/Interests';
@@ -7,20 +7,23 @@ import ConditionalButton from '../../components/buttons/ConditionalButton';
 import Stepper from '../../components/stepper/Stepper';
 
 const CategorySelectScreen = ({ navigation, route }) => {
-  const customCategory: string[] = route.params?.category ?? [];
   const theme = useTheme();
-  const [totalCategory, setTotalCategory] = useState<string[]>(TOTAL_TAG);
-  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
-    route.params?.selectedCategory ?? undefined,
-  );
+  const totalCategory = TOTAL_TAG;
+  const [customCategory, setCustomCategory] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
+
+  const isActive = selectedCategory !== undefined;
 
   const handleSelectTag = (tag: string) =>
     setSelectedCategory(selectedCategory === tag ? undefined : tag);
-  const handleCreateCategory = () => {
-    setSelectedCategory(undefined);
-    navigation.navigate('CategoryCreate', { customCategory });
-  };
-  const isActive = selectedCategory !== undefined;
+  const handleCreateCategory = () => navigation.navigate('CategoryCreate', { customCategory });
+  const handleNextClick = () =>
+    navigation.navigate('ChallengeIntroScreen', { form: { selectedCategory } });
+
+  useEffect(() => {
+    setCustomCategory(route.params?.customCategory ?? '');
+    setSelectedCategory(route.params?.selectedCategory ?? undefined);
+  }, [route.params]);
 
   return (
     <>
@@ -40,7 +43,7 @@ const CategorySelectScreen = ({ navigation, route }) => {
         text={isActive ? '다음' : '카테고리를 선택해주세요'}
         color={'black'}
         width={350}
-        onPress={() => console.log('다음으로')}
+        onPress={handleNextClick}
       />
     </>
   );

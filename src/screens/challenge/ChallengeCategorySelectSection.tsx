@@ -30,7 +30,7 @@ const ChallengeCategorySelectSection = ({
               title={category}
               isSelected={selectedCategory === category}
               onClick={() => onSelect(category)}
-            ></Tag>
+            />
           ))}
         </View>
       </Accordion>
