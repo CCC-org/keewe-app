@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
 interface TagProps {
@@ -15,12 +15,14 @@ const Tag = ({ title, isSelected, onClick }: TagProps) => {
       style={[
         styles.tag,
         {
-          backgroundColor: isSelected === true ? theme.colors.graphic.green : 'transparent',
+          backgroundColor: isSelected === true ? theme.colors.brand.primary.main : 'transparent',
           borderColor: `${theme.colors.graphic.black}10`,
         },
       ]}
     >
-      <Text style={theme.fonts.text.body2.bold}>{title}</Text>
+      <Pressable onPress={onClick}>
+        <Text style={theme.fonts.text.body2.bold}>{title}</Text>
+      </Pressable>
     </View>
   );
 };
