@@ -67,11 +67,12 @@ const ChallengeCreationApprovedScreen = () => {
           text={'친구 초대하기'}
           color={'#e0f6a2'}
           width={168}
+          textColor={'#486006'}
           onPress={() => alert('pressed')}
         />
         <ConditionalButton
           isActive={true}
-          text={'친구 초대하기'}
+          text={'확인'}
           width={168}
           onPress={() => alert('pressed')}
         />
