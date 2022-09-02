@@ -24,6 +24,7 @@ export type RootStackParamList = {
   GetToken: undefined;
   Login: undefined;
   ChallengeIntro: undefined;
+  ChallengeCreationApproved: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

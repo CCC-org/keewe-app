@@ -10,6 +10,7 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import light from './src/theme/light';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ChallengeCreationApprovedScreen from './src/screens/challenge/ChallengeCreationApprovedScreen';
 
 const Stack = createNativeStackNavigator();
 const queryClient = new QueryClient();
@@ -30,6 +31,10 @@ export default function App() {
                 <Stack.Screen name="NicknameCreation" component={NicknameCreationScreen} />
                 <Stack.Screen name="SignUp" component={SignUpScreen} />
                 <Stack.Screen name="Login" component={LoginScreen} />
+                <Stack.Screen
+                  name="ChallengeCreationApproved"
+                  component={ChallengeCreationApprovedScreen}
+                />
               </Stack.Navigator>
             </QueryClientProvider>
           </NavigationContainer>
