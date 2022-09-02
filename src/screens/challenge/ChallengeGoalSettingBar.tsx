@@ -3,7 +3,6 @@ import React from 'react';
 import { useTheme } from 'react-native-paper';
 import { Slider } from '@miblanchard/react-native-slider';
 
-// create alias for interface
 interface ChallengeGoalSettingBarProps {
   minValue: number;
   maxValue: number;

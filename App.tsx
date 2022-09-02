@@ -57,6 +57,10 @@ export default function App() {
                   component={ChallengeInfoScreen}
                   options={headerOptions}
                 />
+                <Stack.Screen
+                  name="ChallengeCreationApproved"
+                  component={ChallengeCreationApprovedScreen}
+                />
               </Stack.Navigator>
             </QueryClientProvider>
           </NavigationContainer>
