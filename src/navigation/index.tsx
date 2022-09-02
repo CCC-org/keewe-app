@@ -50,8 +50,20 @@ export function RootScreen() {
             height: 100,
             width: 150,
           }}
-        ></View>
-        <Text> ChallengeIntroScreen.tsx</Text>
+        >
+          <Text> ChallengeApprovedScreen.tsx</Text>
+        </View>
+      </Pressable>
+      <Pressable onPress={() => navigation.navigate('ChallengeSubject')}>
+        <View
+          style={{
+            backgroundColor: 'green',
+            height: 100,
+            width: 150,
+          }}
+        >
+          <Text> ChallengeSubjectScreen.tsx</Text>
+        </View>
       </Pressable>
     </>
     /*
