@@ -54,7 +54,7 @@ export function RootScreen() {
           <Text> ChallengeApprovedScreen.tsx</Text>
         </View>
       </Pressable>
-      <Pressable onPress={() => navigation.navigate('ChallengeSubject')}>
+      <Pressable onPress={() => navigation.navigate('ChallengeSubjectCreation')}>
         <View
           style={{
             backgroundColor: 'green',

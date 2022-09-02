@@ -4,7 +4,7 @@ import { TextInput, Text, useTheme } from 'react-native-paper';
 
 interface TextInputDetailProps {
   setInputValue: (input: string) => void;
-  infoText: string;
+  infoText?: string;
   inputValue: string;
   label: string;
   placeholder: string;
@@ -43,7 +43,8 @@ const TextInputDetail = (props: TextInputDetailProps) => {
         underlineColor={inputUnderlineColor}
         activeUnderlineColor={inputUnderlineColor}
         style={{
-          margin: 10,
+          fontWeight: '600',
+          fontSize: 22,
           backgroundColor: 'white',
         }}
         onFocus={() => setFocused(true)}
