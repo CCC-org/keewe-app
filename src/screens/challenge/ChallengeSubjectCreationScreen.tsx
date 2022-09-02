@@ -1,28 +1,29 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import HeaderText from '../../components/texts/HeaderText';
 import TextInputDetail from '../../components/texts/TextInputDetail';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 
-const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
+const ChallengeSubjectCreationScreen = ({ navigation }) => {
   const [subject, setSubject] = useState('');
-  navigation.setOptions({
-    headerShown: true,
-    headerTitle: '',
-    headerShadowVisible: false,
-    headerRight: () => (
-      <HeaderRightButton
-        text="건너뛰기"
-        backGroundColor="white"
-        textColor="black"
-        borderLine={true}
-        disabled={false}
-        handlePress={handleSkipPress}
-      />
-    ),
-  });
+  useEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      headerTitle: '',
+      headerShadowVisible: false,
+      headerRight: () => (
+        <HeaderRightButton
+          text="건너뛰기"
+          backGroundColor="white"
+          textColor="black"
+          borderLine={true}
+          disabled={false}
+          handlePress={handleSkipPress}
+        />
+      ),
+    });
+  }, []);
 
   const handleSkipPress = () => {
     alert('Skipp pressed');
