@@ -32,17 +32,7 @@ export function RootScreen() {
           <Text> SignUpScreen.tsx</Text>
         </View>
       </Pressable>
-      <Pressable onPress={() => navigation.navigate('ChallengeIntro')}>
-        <View
-          style={{
-            backgroundColor: 'teal',
-            width: 150,
-            height: 100,
-          }}
-        >
-          <Text> ChallengeIntroScreen.tsx</Text>
-        </View>
-      </Pressable>
+
       <Pressable onPress={() => navigation.navigate('ChallengeCreationApproved')}>
         <View
           style={{
