@@ -14,6 +14,7 @@ import light from './src/theme/light';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CategoryCreateScreen from './src/screens/challenge/CategoryCreateScreen';
+import ChallengeCreationApprovedScreen from './src/screens/challenge/ChallengeCreationApprovedScreen';
 
 const Stack = createNativeStackNavigator();
 const queryClient = new QueryClient();
@@ -50,6 +51,10 @@ export default function App() {
                   name="CategoryCreate"
                   component={CategoryCreateScreen}
                   options={headerOptions}
+                />
+                <Stack.Screen
+                  name="ChallengeCreationApproved"
+                  component={ChallengeCreationApprovedScreen}
                 />
               </Stack.Navigator>
             </QueryClientProvider>
