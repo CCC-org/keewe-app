@@ -16,7 +16,6 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CategoryCreateScreen from './src/screens/challenge/CategoryCreateScreen';
 
-const Stack = createNativeStackNavigator();
 const queryClient = new QueryClient();
 
 export default function App() {
@@ -24,6 +23,7 @@ export default function App() {
     headerBackVisible: false,
     headerLeft: () => <HeaderBackButton />,
   };
+  const Stack = createNativeStackNavigator();
   const isLoadingComplete = useCachedResources();
   if (!isLoadingComplete) {
     return null;
@@ -33,7 +33,7 @@ export default function App() {
         <PaperProvider theme={light}>
           <NavigationContainer>
             <QueryClientProvider client={queryClient}>
-              <Stack.Navigator>
+              <Stack.Navigator screenOptions={{ contentStyle: { backgroundColor: 'white' } }}>
                 <Stack.Screen name="Root" component={RootScreen} options={{ title: 'Root' }} />
                 <Stack.Screen
                   name="NicknameCreation"
