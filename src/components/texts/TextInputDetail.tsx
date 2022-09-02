@@ -4,7 +4,7 @@ import { TextInput, Text, useTheme } from 'react-native-paper';
 
 interface TextInputDetailProps {
   setInputValue: (input: string) => void;
-  infoText: string;
+  infoText?: string;
   inputValue: string;
   label: string;
   placeholder: string;
