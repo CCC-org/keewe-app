@@ -5,7 +5,7 @@ import HeaderRightButton from '../../components/header/HeaderRightButton';
 
 const CategoryCreateScreen = ({ navigation, route }) => {
   const [customCategory, setCustomCategory] = useState<string[]>([]);
-
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const theme = useTheme();
   const [input, setInput] = useState<string>('');
 
@@ -15,6 +15,15 @@ const CategoryCreateScreen = ({ navigation, route }) => {
       customCategory: [input, ...customCategory],
     });
   };
+  useEffect(() => {
+    if (input.length > 8) {
+      setErrorMessage('8자 이내로 입력하세요.');
+    } else if (input.includes(' ')) {
+      setErrorMessage('띄어쓰기는 입력할 수 없어요.');
+    } else if (!/^[a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]+$/.test(input))
+      setErrorMessage('한글, 영문만 입력할 수 있어요.');
+    else setErrorMessage('');
+  }, [input]);
 
   useEffect(() => {
     setCustomCategory(route.params?.customCategory ?? []);
@@ -45,6 +54,7 @@ const CategoryCreateScreen = ({ navigation, route }) => {
         label=""
         placeholder="관심사를 입력하세요"
         letterLimit={25}
+        errorMessage={errorMessage}
       />
     </>
   );
