@@ -41,7 +41,6 @@ const CategoryCreateScreen = ({ navigation, route }) => {
     <>
       <TextInputDetail
         setInputValue={setInput}
-        infoText="관심사"
         inputValue={input}
         label=""
         placeholder="관심사를 입력하세요"
