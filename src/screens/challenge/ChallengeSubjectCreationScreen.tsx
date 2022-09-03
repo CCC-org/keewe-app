@@ -5,7 +5,7 @@ import TextInputDetail from '../../components/texts/TextInputDetail';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 
-const ChallengeSubjectCreationScreen = ({ navigation }) => {
+const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
   const [subject, setSubject] = useState('');
   useEffect(() => {
     navigation.setOptions({
@@ -26,11 +26,11 @@ const ChallengeSubjectCreationScreen = ({ navigation }) => {
   }, []);
 
   const handleSkipPress = () => {
-    alert('Skipp pressed');
+    navigation.navigate('ChallengeCreationApproved', { subject, ...route.params.form });
   };
 
   const handleCompletePress = () => {
-    alert('pressed');
+    navigation.navigate('ChallengeCreationApproved', { ...route.params.form });
   };
 
   return (
