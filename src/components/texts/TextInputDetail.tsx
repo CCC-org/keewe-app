@@ -23,7 +23,7 @@ const TextInputDetail = (props: TextInputDetailProps) => {
   const handleTextInputButton = () => setInputValue('');
 
   useEffect(() => {
-    if (inputValue.length > 1 && errorMessage.length === 0) {
+    if (inputValue.length > 1) {
       setIsButtonEnabled(true);
     } else {
       setIsButtonEnabled(false);
