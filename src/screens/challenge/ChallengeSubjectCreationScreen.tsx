@@ -26,11 +26,13 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
   }, []);
 
   const handleSkipPress = () => {
-    navigation.navigate('ChallengeCreationApproved', { subject, ...route.params.form });
+    navigation.navigate('ChallengeCreationApproved', { form: { ...route.params.form } });
   };
 
   const handleCompletePress = () => {
-    navigation.navigate('ChallengeCreationApproved', { ...route.params.form });
+    navigation.navigate('ChallengeCreationApproved', {
+      form: { subject, ...route.params.form },
+    });
   };
 
   return (

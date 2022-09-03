@@ -5,8 +5,16 @@ import HeaderText from '../../components/texts/HeaderText';
 import { useTheme } from 'react-native-paper';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 
-const ChallengeCreationApprovedScreen = () => {
-  const navigation = useNavigation();
+const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
+  const {
+    challengeName,
+    challengeInfo,
+    selectedCategory,
+    subject,
+    recordPerWeek,
+    participationPerWeek,
+  } = route.params.form;
+
   const theme = useTheme();
   useEffect(() => {
     navigation.setOptions({
@@ -33,19 +41,21 @@ const ChallengeCreationApprovedScreen = () => {
         <View style={styles.info}>
           <Text style={{ fontSize: 16 }}>챌린지 이름</Text>
           <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
-            움파둠파 챌린지
+            {challengeName}
           </Text>
         </View>
-        <View style={styles.info}>
-          <Text style={{ fontSize: 16 }}>나의 주제</Text>
-          <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
-            굼바둠바 챌린지
-          </Text>
-        </View>
+        {subject && (
+          <View style={styles.info}>
+            <Text style={{ fontSize: 16 }}>나의 주제</Text>
+            <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
+              {subject}
+            </Text>
+          </View>
+        )}
         <View style={styles.info}>
           <Text style={{ fontSize: 16 }}>나의 목표</Text>
           <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
-            매주 3번 기록 x 4주
+            매주 {recordPerWeek}번 기록 x {participationPerWeek}주
           </Text>
         </View>
         <View style={styles.info}>
