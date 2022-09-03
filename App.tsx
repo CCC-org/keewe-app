@@ -8,14 +8,15 @@ import SignUpScreen from './src/screens/onboarding/SignUpScreen';
 import LoginScreen from './src/screens/login/LoginScreen';
 import CategorySelectScreen from './src/screens/challenge/CategorySelectScreen';
 import ChallengeInfoScreen from './src/screens/challenge/ChallengeInfoScreen';
+import CategoryCreateScreen from './src/screens/challenge/CategoryCreateScreen';
+import ChallengeCreationApprovedScreen from './src/screens/challenge/ChallengeCreationApprovedScreen';
+import ChallengeGoalSettingScreen from './src/screens/challenge/ChallengeGoalSettingScreen';
 
 import { RootScreen } from './src/navigation';
 import { Provider as PaperProvider } from 'react-native-paper';
 import light from './src/theme/light';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import CategoryCreateScreen from './src/screens/challenge/CategoryCreateScreen';
-import ChallengeCreationApprovedScreen from './src/screens/challenge/ChallengeCreationApprovedScreen';
 import ChallengeSubjectCreationScreen from './src/screens/challenge/ChallengeSubjectCreationScreen';
 
 const queryClient = new QueryClient();
@@ -66,6 +67,11 @@ export default function App() {
                 <Stack.Screen
                   name="ChallengeSubjectCreation"
                   component={ChallengeSubjectCreationScreen}
+                />
+                <Stack.Screen
+                  name="ChallengeGoalSetting"
+                  component={ChallengeGoalSettingScreen}
+                  options={headerOptions}
                 />
               </Stack.Navigator>
             </QueryClientProvider>
