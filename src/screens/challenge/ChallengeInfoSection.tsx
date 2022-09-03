@@ -8,6 +8,7 @@ interface ChallengeInfoSectionProps {
   setChallengeName: (value: string) => void;
   challengeInfo: string;
   setChallengeInfo: (value: string) => void;
+  errorMessage: string;
 }
 
 const ChallengeInfoSection = ({
@@ -15,6 +16,7 @@ const ChallengeInfoSection = ({
   setChallengeName,
   challengeInfo,
   setChallengeInfo,
+  errorMessage,
 }: ChallengeInfoSectionProps) => {
   return (
     <>
@@ -23,9 +25,9 @@ const ChallengeInfoSection = ({
           setInputValue={setChallengeName}
           infoText="챌린지 이름"
           inputValue={challengeName}
-          label=""
           placeholder="ex. 꾸준히 마케팅 인사이트 적기"
           letterLimit={25}
+          errorMessage={errorMessage}
         />
       </View>
       <CountingTextArea
