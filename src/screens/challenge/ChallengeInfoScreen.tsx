@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
@@ -9,7 +9,7 @@ const ChallengeInfoScreen = ({ navigation, route }) => {
   const theme = useTheme();
   const [challengeName, setChallengeName] = useState<string>('');
   const [challengeInfo, setChallengeInfo] = useState<string>('');
-
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const isActive = useMemo(
     () => challengeName !== '' && challengeInfo !== '',
     [challengeName, challengeInfo],
@@ -25,6 +25,12 @@ const ChallengeInfoScreen = ({ navigation, route }) => {
       form: { challengeName, challengeInfo, ...route.params.form },
     });
 
+  useEffect(() => {
+    if (challengeName.length > 25) {
+      setErrorMessage('25자 이내로 입력하세요.');
+    }
+  }, [challengeName]);
+
   return (
     <>
       <View style={{ margin: 10 }}>
@@ -35,6 +41,7 @@ const ChallengeInfoScreen = ({ navigation, route }) => {
           setChallengeName={setChallengeName}
           challengeInfo={challengeInfo}
           setChallengeInfo={setChallengeInfo}
+          errorMessage={errorMessage}
         />
         <ConditionalButton
           isActive={isActive && !hasError}

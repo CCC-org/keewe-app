@@ -9,6 +9,7 @@ import HeaderRightButton from '../../components/header/HeaderRightButton';
 
 const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
   const [subject, setSubject] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const createRequestParams = {
     participate: {
       duration: route.params.form.participationPerWeek[0],
@@ -16,7 +17,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
       myTopic: subject,
     },
     interest: route.params.form.selectedCategory,
-    name: route.params.form.challengeName,
+    name: route.params.form.subject,
     introduction: route.params.form.challengeInfo,
   };
   useEffect(() => {
@@ -36,7 +37,13 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
       ),
     });
   }, []);
-  
+
+  useEffect(() => {
+    if (subject.length > 25) {
+      setErrorMessage('25자 이내로 입력하세요.');
+    }
+  }, [subject]);
+
   const { mutate: createChallenge } = useMutation(ChallengeAPI.create, {
     onSuccess: (data) => {
       navigation.navigate('ChallengeCreationApproved', {
@@ -68,6 +75,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
           label={''}
           placeholder={'나의 주제'}
           letterLimit={100}
+          errorMessage={errorMessage}
         />
       </View>
       <View style={styles.buttonCtn}>
