@@ -66,7 +66,11 @@ const TextInputDetail = (props: TextInputDetailProps) => {
         onChangeText={(text) => handleChangeText(text)}
         underlineColor={inputUnderlineColor}
         activeUnderlineColor={inputUnderlineColor}
-        style={styles.input}
+        style={{
+          fontWeight: '600',
+          fontSize: 22,
+          backgroundColor: 'white',
+        }}
         onFocus={() => setFocused(true)}
         onEndEditing={() => setFocused(false)}
         theme={{
@@ -81,10 +85,6 @@ const TextInputDetail = (props: TextInputDetailProps) => {
 };
 
 const styles = StyleSheet.create({
-  input: {
-    margin: 10,
-    backgroundColor: 'white',
-  },
   error: {
     color: 'red',
     fontSize: 12,
