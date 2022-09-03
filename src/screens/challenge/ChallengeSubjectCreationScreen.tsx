@@ -41,6 +41,8 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
   useEffect(() => {
     if (subject.length > 25) {
       setErrorMessage('25자 이내로 입력하세요.');
+    } else {
+      setErrorMessage('');
     }
   }, [subject]);
 
