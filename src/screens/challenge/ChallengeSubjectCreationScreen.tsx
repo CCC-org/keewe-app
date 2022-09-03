@@ -19,7 +19,6 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
     name: route.params.form.challengeName,
     introduction: route.params.form.challengeInfo,
   };
-
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -37,7 +36,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
       ),
     });
   }, []);
-
+  
   const { mutate: createChallenge } = useMutation(ChallengeAPI.create, {
     onSuccess: (data) => {
       navigation.navigate('ChallengeCreationApproved', {
