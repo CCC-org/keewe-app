@@ -7,23 +7,32 @@ interface HeaderRightButtonProps {
   textColor: string;
   borderLine: boolean;
   disabled: boolean;
+  height?: number;
+  width?: number;
   handlePress: () => void;
 }
 
 const HeaderRightButton = (props: HeaderRightButtonProps) => {
-  const { text, backGroundColor, textColor, borderLine, disabled, handlePress } = props;
+  const { text, backGroundColor, textColor, borderLine, disabled, handlePress, height, width } =
+    props;
   return (
     <>
       <Pressable
         onPress={() => handlePress()}
         style={{
           ...styles.btn,
+          padding: 0,
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
           backgroundColor: backGroundColor,
           borderWidth: borderLine ? 1 : 0,
+          height: height ? height : 32,
+          width: width ? width : 73,
         }}
         disabled={disabled}
       >
-        <Text style={{ ...styles.text, color: textColor }}>{text}</Text>
+        <Text style={{ ...styles.text, color: textColor, fontSize: 14 }}>{text}</Text>
       </Pressable>
     </>
   );

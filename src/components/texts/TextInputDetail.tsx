@@ -43,7 +43,8 @@ const TextInputDetail = (props: TextInputDetailProps) => {
         underlineColor={inputUnderlineColor}
         activeUnderlineColor={inputUnderlineColor}
         style={{
-          margin: 10,
+          fontWeight: '600',
+          fontSize: 22,
           backgroundColor: 'white',
         }}
         onFocus={() => setFocused(true)}

@@ -28,6 +28,7 @@ export type RootStackParamList = {
   ChallengeIntro: undefined;
   ChallengeCreationApproved: undefined;
   ChallengeInfo: undefined;
+  ChallengeSubjectCreation: undefined;
   ChallengeGoalSetting: undefined;
 };
 

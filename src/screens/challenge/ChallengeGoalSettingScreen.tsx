@@ -21,7 +21,7 @@ const ChallengeGoalSettingScreen = ({ navigation, route }) => {
       setStep(step + 1);
       return;
     }
-    navigation.navigate('ChallengeSubjectCreationScreen', {
+    navigation.navigate('ChallengeSubjectCreation', {
       form: { recordPerWeek, participationPerWeek, ...route.params.form },
     });
   };

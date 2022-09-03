@@ -17,6 +17,7 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import light from './src/theme/light';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ChallengeSubjectCreationScreen from './src/screens/challenge/ChallengeSubjectCreationScreen';
 
 const queryClient = new QueryClient();
 
@@ -62,6 +63,10 @@ export default function App() {
                 <Stack.Screen
                   name="ChallengeCreationApproved"
                   component={ChallengeCreationApprovedScreen}
+                />
+                <Stack.Screen
+                  name="ChallengeSubjectCreation"
+                  component={ChallengeSubjectCreationScreen}
                 />
                 <Stack.Screen
                   name="ChallengeGoalSetting"
