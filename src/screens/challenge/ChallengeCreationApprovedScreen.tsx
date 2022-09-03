@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
 import React, { useEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
 import HeaderText from '../../components/texts/HeaderText';
 import { useTheme } from 'react-native-paper';
 import ConditionalButton from '../../components/buttons/ConditionalButton';

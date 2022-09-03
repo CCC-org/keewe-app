@@ -1,5 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import { useMutation } from 'react-query';
+import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
 import HeaderText from '../../components/texts/HeaderText';
 import TextInputDetail from '../../components/texts/TextInputDetail';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
@@ -7,6 +9,17 @@ import HeaderRightButton from '../../components/header/HeaderRightButton';
 
 const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
   const [subject, setSubject] = useState('');
+  const createRequestParams = {
+    participate: {
+      duration: route.params.form.participationPerWeek[0],
+      insightPerWeek: route.params.form.recordPerWeek[0],
+      myTopic: subject,
+    },
+    interest: route.params.form.selectedCategory,
+    name: route.params.form.challengeName,
+    introduction: route.params.form.challengeInfo,
+  };
+
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -25,14 +38,22 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
     });
   }, []);
 
+  const { mutate: createChallenge } = useMutation(ChallengeAPI.create, {
+    onSuccess: (data) => {
+      navigation.navigate('ChallengeCreationApproved', {
+        form: { data },
+      });
+    },
+  });
+
   const handleSkipPress = () => {
-    navigation.navigate('ChallengeCreationApproved', { form: { ...route.params.form } });
+    navigation.navigate('ChallengeCreationApproved', {
+      form: { ...route.params.form },
+    });
   };
 
   const handleCompletePress = () => {
-    navigation.navigate('ChallengeCreationApproved', {
-      form: { subject, ...route.params.form },
-    });
+    createChallenge(createRequestParams);
   };
 
   return (
