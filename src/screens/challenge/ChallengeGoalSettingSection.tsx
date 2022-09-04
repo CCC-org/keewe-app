@@ -40,6 +40,7 @@ const ChallengeGoalSettingSection = ({
         isOpen={currentStep === 1}
         onClick={() => handleClickOpen(1)}
         openHeight={120}
+        duration={200}
         title={<Text style={styles.accordianTitle}>기록 횟수</Text>}
       >
         <ChallengeGoalSettingBar
@@ -56,6 +57,7 @@ const ChallengeGoalSettingSection = ({
           isOpen={currentStep === 2}
           onClick={() => handleClickOpen(2)}
           openHeight={120}
+          duration={200}
           title={<Text style={styles.accordianTitle}>참여 주차</Text>}
         >
           <ChallengeGoalSettingBar

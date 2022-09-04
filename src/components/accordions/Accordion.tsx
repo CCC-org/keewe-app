@@ -10,16 +10,17 @@ interface AccordionProps {
   isOpen: boolean;
   onClick: () => void;
   openHeight: number;
+  duration: number;
 }
 
-const Accordion = ({ title, children, isOpen, onClick, openHeight }: AccordionProps) => {
+const Accordion = ({ title, children, isOpen, onClick, openHeight, duration }: AccordionProps) => {
   const height = useRef(new Animated.Value(0)).current;
   const theme = useTheme();
 
   const open = () => {
     Animated.timing(height, {
       toValue: openHeight,
-      duration: 500,
+      duration: duration,
       useNativeDriver: false,
     }).start();
   };
@@ -27,7 +28,7 @@ const Accordion = ({ title, children, isOpen, onClick, openHeight }: AccordionPr
   const close = () => {
     Animated.timing(height, {
       toValue: 0,
-      duration: 500,
+      duration: duration,
       useNativeDriver: false,
     }).start();
   };
