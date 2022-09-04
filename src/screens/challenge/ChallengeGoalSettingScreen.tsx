@@ -5,7 +5,7 @@ import ConditionalButton from '../../components/buttons/ConditionalButton';
 import Stepper from '../../components/stepper/Stepper';
 import ChallengeGoalSettingSection from './ChallengeGoalSettingSection';
 
-const UNSELECTED = -1;
+const UNSELECTED = 1;
 
 const ChallengeGoalSettingScreen = ({ navigation, route }) => {
   const theme = useTheme();

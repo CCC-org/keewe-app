@@ -11,7 +11,7 @@ interface ChallengeGoalSettingSectionProps {
   setParticipationPerWeek: (value: number | number[]) => void;
 }
 
-const UNSELECTED = -1;
+const UNSELECTED = 1;
 
 const ChallengeGoalSettingSection = ({
   step,
@@ -37,7 +37,7 @@ const ChallengeGoalSettingSection = ({
   return (
     <>
       <Accordion
-        isOpen={currentStep === 1}
+        isOpen={step === 1}
         onClick={() => handleClickOpen(1)}
         openHeight={120}
         duration={200}
@@ -54,7 +54,7 @@ const ChallengeGoalSettingSection = ({
       </Accordion>
       {step === 2 && (
         <Accordion
-          isOpen={currentStep === 2}
+          isOpen={step === 2}
           onClick={() => handleClickOpen(2)}
           openHeight={120}
           duration={200}
