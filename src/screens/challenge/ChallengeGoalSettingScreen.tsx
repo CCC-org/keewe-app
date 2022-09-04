@@ -9,8 +9,8 @@ const UNSELECTED = 1;
 
 const ChallengeGoalSettingScreen = ({ navigation, route }) => {
   const theme = useTheme();
-  const [recordPerWeek, setRecordPerWeek] = useState<number | number[]>([1]);
-  const [participationPerWeek, setParticipationPerWeek] = useState<number | number[]>([1]);
+  const [recordPerWeek, setRecordPerWeek] = useState<number | number[]>([2]);
+  const [participationPerWeek, setParticipationPerWeek] = useState<number | number[]>([2]);
   const [step, setStep] = useState<number>(UNSELECTED);
   const isNext = useMemo(() => {
     return step !== 2;

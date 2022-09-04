@@ -24,7 +24,7 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
       // headerLeft: () => null <- doesnt work.
     });
   }, []);
-
+  console.log(route.params.form);
   return (
     <View style={styles.container}>
       <HeaderText

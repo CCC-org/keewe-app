@@ -42,6 +42,7 @@ const ChallengeGoalSettingSection = ({
         openHeight={120}
         duration={200}
         title={<Text style={styles.accordianTitle}>기록 횟수</Text>}
+        subTitle={`매주 ${recordPerWeek}번`}
       >
         <ChallengeGoalSettingBar
           minValue={1}
@@ -59,6 +60,7 @@ const ChallengeGoalSettingSection = ({
           openHeight={120}
           duration={200}
           title={<Text style={styles.accordianTitle}>참여 주차</Text>}
+          subTitle={`${participationPerWeek}주 참여`}
         >
           <ChallengeGoalSettingBar
             minValue={1}
