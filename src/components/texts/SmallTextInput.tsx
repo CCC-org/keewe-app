@@ -16,7 +16,6 @@ const SmallTextInput = ({
   errorMessage,
 }: TextInputDetailProps) => {
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false);
-
   const handleChangeText = (inputValue: string) => {
     setInputValue(inputValue);
   };
@@ -36,6 +35,7 @@ const SmallTextInput = ({
             name="close-circle"
           />
         }
+        autoFocus={true}
         value={input}
         onChangeText={handleChangeText}
         placeholder={placeholder}

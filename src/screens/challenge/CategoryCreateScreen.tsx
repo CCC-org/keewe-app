@@ -1,6 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useTheme } from 'react-native-paper';
-import TextInputDetail from '../../components/texts/TextInputDetail';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import SmallTextInput from '../../components/texts/SmallTextInput';
 import { StyleSheet, View } from 'react-native';
