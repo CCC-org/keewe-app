@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useTheme } from 'react-native-paper';
 import TextInputDetail from '../../components/texts/TextInputDetail';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
+import SmallTextInput from '../../components/texts/SmallTextInput';
+import { StyleSheet, View } from 'react-native';
 
 const CategoryCreateScreen = ({ navigation, route }) => {
   const [customCategory, setCustomCategory] = useState<string[]>([]);
@@ -15,12 +17,19 @@ const CategoryCreateScreen = ({ navigation, route }) => {
       customCategory: [input, ...customCategory],
     });
   };
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: '직접 추가',
+    });
+  }, []);
+
   useEffect(() => {
     if (input.length > 8) {
       setErrorMessage('8자 이내로 입력하세요.');
     } else if (input.includes(' ')) {
       setErrorMessage('띄어쓰기는 입력할 수 없어요.');
-    } else if (!/^[a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]+$/.test(input))
+    } else if (!/^[a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]+$/.test(input) && input !== '')
       setErrorMessage('한글, 영문만 입력할 수 있어요.');
     else setErrorMessage('');
   }, [input]);
@@ -29,35 +38,46 @@ const CategoryCreateScreen = ({ navigation, route }) => {
     setCustomCategory(route.params?.customCategory ?? []);
   }, [route.params]);
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderRightButton
           text="완료"
           backGroundColor={
-            input !== '' ? theme.colors.brand.primary.main : `${theme.colors.graphic.black}10`
+            errorMessage.length === 0 && input.length > 0
+              ? theme.colors.brand.primary.main
+              : `${theme.colors.graphic.black}10`
           }
-          textColor={input !== '' ? theme.colors.graphic.black : theme.colors.graphic.white}
+          textColor={
+            errorMessage.length === 0 && input.length > 0
+              ? theme.colors.graphic.black
+              : theme.colors.graphic.white
+          }
           borderLine={false}
-          disabled={input !== '' ? false : true}
+          disabled={errorMessage.length === 0 || input.length === 0}
           handlePress={() => handleComplete()}
         />
       ),
     });
-  }, [navigation, input]);
+  }, [input, errorMessage]);
 
   return (
-    <>
-      <TextInputDetail
-        setInputValue={setInput}
+    <View style={styles.container}>
+      <SmallTextInput
         inputValue={input}
-        label=""
-        placeholder="관심사를 입력하세요"
-        letterLimit={25}
+        setInputValue={setInput}
+        placeholder={'관심사를 입력하세요'}
         errorMessage={errorMessage}
       />
-    </>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+    paddingTop: 20,
+  },
+});
 
 export default CategoryCreateScreen;
