@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { TOTAL_TAG } from '../../constants/Interests';
 import ChallengeCategorySelectSection from './ChallengeCategorySelectSection';
@@ -26,8 +26,8 @@ const CategorySelectScreen = ({ navigation, route }) => {
   }, [route.params]);
 
   return (
-    <>
-      <View style={{ margin: 10 }}>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View>
         <Text style={theme.fonts.text.display}>챌린지 카테고리를</Text>
         <Text style={theme.fonts.text.display}>1개 선택하세요</Text>
         <Stepper totalStep={3} currentStep={1} />
@@ -37,16 +37,24 @@ const CategorySelectScreen = ({ navigation, route }) => {
           onSelect={handleSelectTag}
           onCreateCategory={handleCreateCategory}
         />
-        <ConditionalButton
-          isActive={isActive}
-          text={isActive ? '다음' : '카테고리를 선택해주세요'}
-          color={'black'}
-          width={350}
-          onPress={handleNextClick}
-        />
       </View>
-    </>
+      <ConditionalButton
+        isActive={isActive}
+        text={isActive ? '다음' : '카테고리를 선택해주세요'}
+        color={'black'}
+        width={350}
+        onPress={handleNextClick}
+      />
+    </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    margin: 10,
+    flexGrow: 1,
+    justifyContent: 'space-between',
+  },
+});
 
 export default CategorySelectScreen;
