@@ -11,7 +11,6 @@ export function RootScreen() {
     getAccessToken().then((token) => {
       setAccessToken(token);
     });
-    console.log(accessToken);
   }, []);
 
   return (

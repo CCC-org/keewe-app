@@ -5,8 +5,7 @@ import { useTheme } from 'react-native-paper';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 
 const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
-  const { duration, endDate, insightPerWeek, myTopic } = route.params.form.data.data;
-  console.log('form log:', route.params.form.data.data);
+  const { duration, endDate, insightPerWeek, myTopic, challengeName } = route.params.form.data;
 
   const theme = useTheme();
   useEffect(() => {
@@ -39,7 +38,7 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
         <View style={styles.info}>
           <Text style={{ fontSize: 16 }}>챌린지 이름</Text>
           <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
-            {myTopic}
+            {challengeName}
           </Text>
         </View>
         {myTopic && (
@@ -103,7 +102,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   buttonContainer: {
-    marginTop: 32,
+    marginTop: 40,
     flexDirection: 'row',
   },
 });

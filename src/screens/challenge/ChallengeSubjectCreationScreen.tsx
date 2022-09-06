@@ -6,8 +6,6 @@ import HeaderText from '../../components/texts/HeaderText';
 import TextInputDetail from '../../components/texts/TextInputDetail';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
-import { Button } from 'react-native-paper';
-import { getAccessToken } from '../../utils/hooks/asyncStorage/Login';
 
 const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
   const [subject, setSubject] = useState('');
@@ -19,7 +17,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
       myTopic: subject,
     },
     interest: route.params.form.selectedCategory,
-    name: route.params.form.subject,
+    name: route.params.form.challengeName,
     introduction: route.params.form.challengeInfo,
   };
   useEffect(() => {
@@ -49,9 +47,9 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
   }, [subject]);
 
   const { mutate: createChallenge } = useMutation(ChallengeAPI.create, {
-    onSuccess: (data) => {
+    onSuccess: (response) => {
       navigation.navigate('ChallengeCreationApproved', {
-        form: { data },
+        form: response,
       });
     },
     onError: (error) => {
@@ -66,12 +64,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
   };
 
   const handleCompletePress = () => {
-    // console.log('handleCompletePress: ', createRequestParams);
     createChallenge(createRequestParams);
-  };
-
-  const handlePress = () => {
-    getAccessToken().then((e) => console.log(e));
   };
 
   return (
@@ -97,9 +90,6 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
           width={343}
           onPress={handleCompletePress}
         />
-      </View>
-      <View>
-        <Button onPress={handlePress}>Button</Button>
       </View>
     </View>
   );
