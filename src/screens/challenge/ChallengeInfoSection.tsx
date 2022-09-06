@@ -20,7 +20,7 @@ const ChallengeInfoSection = ({
 }: ChallengeInfoSectionProps) => {
   return (
     <>
-      <View style={{ marginBottom: 20 }}>
+      <View style={{ marginVertical: 30 }}>
         <TextInputDetail
           setInputValue={setChallengeName}
           infoText="챌린지 이름"
@@ -31,7 +31,7 @@ const ChallengeInfoSection = ({
         />
       </View>
       <CountingTextArea
-        placeholder="간단한 챌린지 소개와 함께 사람들과 하고 싶은 챌린지에 대해 설명해주세요."
+        placeholder="친구들과 함께하고 싶은 챌린지에 대해 소개해주세요."
         inputValue={challengeInfo}
         setInputValue={setChallengeInfo}
         infoText="챌린지 소개(선택)"
