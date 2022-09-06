@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import Stepper from '../../components/stepper/Stepper';
@@ -35,7 +35,7 @@ const ChallengeInfoScreen = ({ navigation, route }) => {
 
   return (
     <>
-      <View style={{ margin: 10 }}>
+      <View style={styles.container}>
         <Text style={theme.fonts.text.display}>챌린지에 대해 알려주세요</Text>
         <Stepper totalStep={3} currentStep={2} />
         <ChallengeInfoSection
@@ -56,5 +56,11 @@ const ChallengeInfoScreen = ({ navigation, route }) => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+  },
+});
 
 export default ChallengeInfoScreen;

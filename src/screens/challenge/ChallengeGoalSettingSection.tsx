@@ -9,9 +9,11 @@ interface ChallengeGoalSettingSectionProps {
   setRecordPerWeek: (value: number | number[]) => void;
   participationPerWeek: number | number[];
   setParticipationPerWeek: (value: number | number[]) => void;
+  isExpanded: boolean;
+  setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const UNSELECTED = -1;
+const UNSELECTED = 1;
 
 const ChallengeGoalSettingSection = ({
   step,
@@ -19,11 +21,14 @@ const ChallengeGoalSettingSection = ({
   setRecordPerWeek,
   participationPerWeek,
   setParticipationPerWeek,
+  isExpanded,
+  setIsExpanded,
 }: ChallengeGoalSettingSectionProps) => {
   const [currentStep, setCurrentStep] = useState<number>(UNSELECTED);
   function handleClickOpen(selectedStep: number) {
     if (currentStep !== selectedStep) setCurrentStep(selectedStep);
     else setCurrentStep(UNSELECTED);
+    setIsExpanded(!isExpanded);
   }
 
   function handleChangeRecordPerWeek(recordPerWeek: number | number[]) {
@@ -37,10 +42,12 @@ const ChallengeGoalSettingSection = ({
   return (
     <>
       <Accordion
-        isOpen={currentStep === 1}
+        isOpen={step === 1 || !isExpanded}
         onClick={() => handleClickOpen(1)}
         openHeight={120}
+        duration={200}
         title={<Text style={styles.accordianTitle}>기록 횟수</Text>}
+        subTitle={step === 2 ? `매주 ${recordPerWeek}번` : ''}
       >
         <ChallengeGoalSettingBar
           minValue={1}
@@ -53,10 +60,12 @@ const ChallengeGoalSettingSection = ({
       </Accordion>
       {step === 2 && (
         <Accordion
-          isOpen={currentStep === 2}
+          isOpen={step === 2 && isExpanded}
           onClick={() => handleClickOpen(2)}
           openHeight={120}
+          duration={200}
           title={<Text style={styles.accordianTitle}>참여 주차</Text>}
+          subTitle={step === 2 ? `${participationPerWeek}주` : ''}
         >
           <ChallengeGoalSettingBar
             minValue={1}

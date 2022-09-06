@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { StyleSheet, Animated } from 'react-native';
+import { StyleSheet, Animated, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { View } from '../Themed';
 
 interface AccordionProps {
   title: JSX.Element;
@@ -10,16 +11,26 @@ interface AccordionProps {
   isOpen: boolean;
   onClick: () => void;
   openHeight: number;
+  duration: number;
+  subTitle?: string;
 }
 
-const Accordion = ({ title, children, isOpen, onClick, openHeight }: AccordionProps) => {
+const Accordion = ({
+  title,
+  subTitle,
+  children,
+  isOpen,
+  onClick,
+  openHeight,
+  duration,
+}: AccordionProps) => {
   const height = useRef(new Animated.Value(0)).current;
   const theme = useTheme();
 
   const open = () => {
     Animated.timing(height, {
       toValue: openHeight,
-      duration: 500,
+      duration: duration,
       useNativeDriver: false,
     }).start();
   };
@@ -27,7 +38,7 @@ const Accordion = ({ title, children, isOpen, onClick, openHeight }: AccordionPr
   const close = () => {
     Animated.timing(height, {
       toValue: 0,
-      duration: 500,
+      duration: duration,
       useNativeDriver: false,
     }).start();
   };
@@ -41,6 +52,7 @@ const Accordion = ({ title, children, isOpen, onClick, openHeight }: AccordionPr
     <>
       <TouchableOpacity onPress={onClick} style={styles.heading} activeOpacity={0.6}>
         {title}
+        <Text style={styles.subTitle}>{subTitle}</Text>
         <Icon
           name={isOpen ? 'chevron-up-outline' : 'chevron-down-outline'}
           size={18}
@@ -61,6 +73,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 10,
     margin: 10,
+  },
+  subTitle: {
+    marginLeft: 'auto',
+    marginRight: 10,
+    fontSize: 16,
+    color: '#486006',
   },
   list: { overflow: 'hidden' },
 });
