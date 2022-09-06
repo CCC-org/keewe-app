@@ -19,6 +19,11 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
     });
   }, []);
 
+  const mutateDate = (endDate: string) => {
+    const date = endDate.replace(/-/g, '.');
+    return date;
+  };
+
   return (
     <View style={styles.container}>
       <HeaderText
@@ -27,7 +32,6 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
           '챌린지 목표를 성공하면 타이틀을 획득해요. 자세한 내용은 마이페이지에서 확인하세요'
         }
       ></HeaderText>
-      <Text> {duration}</Text>
       <View style={{ marginTop: 16 }}>
         <Image style={styles.image} source={require('../../../assets/images/따봉도치.jpg')} />
       </View>
@@ -55,7 +59,7 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
         <View style={styles.info}>
           <Text style={{ fontSize: 16 }}>종료일</Text>
           <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
-            {endDate}
+            {mutateDate(endDate)} 까지
           </Text>
         </View>
       </View>
