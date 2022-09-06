@@ -28,7 +28,7 @@ const HeaderRightButton = (props: HeaderRightButtonProps) => {
           backgroundColor: backGroundColor,
           borderWidth: borderLine ? 1 : 0,
           height: height ? height : 32,
-          width: width ? width : 73,
+          width: width ? width : 49,
         }}
         disabled={disabled}
       >
@@ -42,7 +42,7 @@ export default HeaderRightButton;
 
 const styles = StyleSheet.create({
   btn: {
-    padding: 10,
+    padding: 0,
     borderRadius: 30,
     borderColor: 'black',
   },
