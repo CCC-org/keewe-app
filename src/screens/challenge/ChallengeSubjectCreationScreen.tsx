@@ -22,16 +22,6 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
     name: route.params.form.subject,
     introduction: route.params.form.challengeInfo,
   };
-  // const createRequestParams = {
-  //   participate: {
-  //     duration: 4,
-  //     insightPerWeek: 5,
-  //     myTopic: '하기 싫어요',
-  //   },
-  //   interest: '개발',
-  //   name: '하루 한 문제 풀기',
-  //   introduction: '알고리즘 하루에 하나씩 풀기',
-  // };
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -60,7 +50,6 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
 
   const { mutate: createChallenge } = useMutation(ChallengeAPI.create, {
     onSuccess: (data) => {
-      console.log('onSuccess Data', data);
       navigation.navigate('ChallengeCreationApproved', {
         form: { data },
       });

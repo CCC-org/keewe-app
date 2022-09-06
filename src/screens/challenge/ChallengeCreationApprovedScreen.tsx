@@ -5,7 +5,7 @@ import { useTheme } from 'react-native-paper';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 
 const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
-  const { challengeName, duration, endDate, insightPerWeek, myTopic } = route.params.form.data.data;
+  const { duration, endDate, insightPerWeek, myTopic } = route.params.form.data.data;
   console.log('form log:', route.params.form.data.data);
 
   const theme = useTheme();
