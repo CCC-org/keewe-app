@@ -33,6 +33,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
           borderLine={true}
           disabled={false}
           handlePress={handleSkipPress}
+          width={64}
         />
       ),
     });
