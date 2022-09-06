@@ -1,4 +1,6 @@
+import { getAccessToken } from '../hooks/asyncStorage/Login';
 import httpClient from './BaseHttpClient';
+import axios from 'axios';
 
 export const ChallengeQueryKeys = {
   create: (request: ChallengeCreateRequest) => ['challenge', request],
@@ -6,18 +8,14 @@ export const ChallengeQueryKeys = {
 
 export const ChallengeAPI = {
   create: async (params: ChallengeCreateRequest) => {
-    const { data } = await httpClient.post<ChallengeCreateResponse>(
-      'https://api-keewe.com/api/v1/challenge',
-      {
+    const token = await getAccessToken();
+    return httpClient
+      .post<ChallengeCreateResponse>('https://api-keewe.com/api/v1/challenge', params, {
         headers: {
-          Authorization:
-            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGtlZXdlLmNvbSIsInJvbGVzIjpbXSwiaWF0IjoxNjU4NTgwNzgzLCJleHAiOjE2NTg5NDA3ODN9.8OuBmD7iWMKKjnGf6mIUWCO4m1j69dNJ-d_hf6ezX6E',
+          Authorization: `Bearer ${token}`,
         },
-      },
-      {
-        params: params,
-      },
-    );
-    return data;
+      })
+      .then((res) => res.data)
+      .catch((err) => err);
   },
 };

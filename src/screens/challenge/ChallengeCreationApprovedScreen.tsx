@@ -5,14 +5,8 @@ import { useTheme } from 'react-native-paper';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 
 const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
-  const {
-    challengeName,
-    challengeInfo,
-    selectedCategory,
-    subject,
-    recordPerWeek,
-    participationPerWeek,
-  } = route.params.form;
+  const { challengeName, duration, endDate, insightPerWeek, myTopic } = route.params.form.data.data;
+  console.log('form log:', route.params.form.data.data);
 
   const theme = useTheme();
   useEffect(() => {
@@ -33,6 +27,7 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
           '챌린지 목표를 성공하면 타이틀을 획득해요. 자세한 내용은 마이페이지에서 확인하세요'
         }
       ></HeaderText>
+      <Text> {duration}</Text>
       <View style={{ marginTop: 16 }}>
         <Image style={styles.image} source={require('../../../assets/images/따봉도치.jpg')} />
       </View>
@@ -40,27 +35,27 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
         <View style={styles.info}>
           <Text style={{ fontSize: 16 }}>챌린지 이름</Text>
           <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
-            {challengeName}
+            {myTopic}
           </Text>
         </View>
-        {subject && (
+        {myTopic && (
           <View style={styles.info}>
             <Text style={{ fontSize: 16 }}>나의 주제</Text>
             <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
-              {subject}
+              {myTopic}
             </Text>
           </View>
         )}
         <View style={styles.info}>
           <Text style={{ fontSize: 16 }}>나의 목표</Text>
           <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
-            매주 {recordPerWeek}번 기록 x {participationPerWeek}주
+            매주 {insightPerWeek}번 기록 x {duration}주
           </Text>
         </View>
         <View style={styles.info}>
           <Text style={{ fontSize: 16 }}>종료일</Text>
           <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
-            1996.4.2 까지
+            {endDate}
           </Text>
         </View>
       </View>
