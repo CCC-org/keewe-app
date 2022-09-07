@@ -11,6 +11,7 @@ import ChallengeInfoScreen from './src/screens/challenge/ChallengeInfoScreen';
 import CategoryCreateScreen from './src/screens/challenge/CategoryCreateScreen';
 import ChallengeCreationApprovedScreen from './src/screens/challenge/ChallengeCreationApprovedScreen';
 import ChallengeGoalSettingScreen from './src/screens/challenge/ChallengeGoalSettingScreen';
+import TempScreen from './src/screens/onboarding/TempScreen';
 
 import { RootScreen } from './src/navigation';
 import { Provider as PaperProvider } from 'react-native-paper';
@@ -80,6 +81,7 @@ export default function App() {
                     component={ChallengeGoalSettingScreen}
                     options={headerOptions}
                   />
+                  <Stack.Screen name="Temp" component={TempScreen} options={headerOptions} />
                 </Stack.Group>
               </Stack.Navigator>
             </QueryClientProvider>

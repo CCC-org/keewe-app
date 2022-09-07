@@ -65,6 +65,17 @@ export function RootScreen() {
           <Text> ChallengeSubjectScreen.tsx</Text>
         </View>
       </Pressable>
+      <Pressable onPress={() => navigation.navigate('Temp')}>
+        <View
+          style={{
+            backgroundColor: 'skyblue',
+            height: 100,
+            width: 150,
+          }}
+        >
+          <Text> TempScreen.tsx</Text>
+        </View>
+      </Pressable>
     </>
     /*
     <Pressable onPress={() => navigation.navigate('Stack.screen.name String')}>
