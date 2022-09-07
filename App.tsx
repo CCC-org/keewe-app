@@ -36,7 +36,15 @@ export default function App() {
         <PaperProvider theme={light}>
           <NavigationContainer>
             <QueryClientProvider client={queryClient}>
-              <Stack.Navigator screenOptions={{ contentStyle: { backgroundColor: 'white' } }}>
+              <Stack.Navigator
+                screenOptions={{
+                  contentStyle: { backgroundColor: 'white' },
+                  headerTitleAlign: 'center',
+                  headerTitleStyle: {
+                    fontSize: 16,
+                  },
+                }}
+              >
                 <Stack.Group
                   screenOptions={{
                     headerStyle: { backgroundColor: 'white' },
