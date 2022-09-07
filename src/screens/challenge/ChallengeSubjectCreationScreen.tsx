@@ -73,7 +73,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
       <View>
         <HeaderText
           header="나만의 주제를 정해보세요"
-          subTitle='"챌린지 카테고리" 에 관한 주제면 좋아요. '
+          subTitle={`${route.params.form.selectedCategory}에 관한 주제면 좋아요. `}
         />
         <TextInputDetail
           inputValue={subject}

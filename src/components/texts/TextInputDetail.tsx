@@ -75,7 +75,9 @@ const TextInputDetail = (props: TextInputDetailProps) => {
           fontSize: 22,
           backgroundColor: 'white',
           marginHorizontal: 12,
+          paddingHorizontal: 0,
         }}
+        dense={true}
         onFocus={() => setFocused(true)}
         onEndEditing={() => setFocused(false)}
         placeholderTextColor={'rgba(18, 19, 20, 0.3)'}
