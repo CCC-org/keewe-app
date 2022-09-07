@@ -5,14 +5,7 @@ import { useTheme } from 'react-native-paper';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 
 const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
-  const {
-    challengeName,
-    challengeInfo,
-    selectedCategory,
-    subject,
-    recordPerWeek,
-    participationPerWeek,
-  } = route.params.form;
+  const { duration, endDate, insightPerWeek, myTopic, challengeName } = route.params.form.data;
 
   const theme = useTheme();
   useEffect(() => {
@@ -24,7 +17,12 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
       // headerLeft: () => null <- doesnt work.
     });
   }, []);
-  console.log(route.params.form);
+
+  const mutateDate = (endDate: string) => {
+    const date = endDate.replace(/-/g, '.');
+    return date;
+  };
+
   return (
     <View style={styles.container}>
       <HeaderText
@@ -43,24 +41,24 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
             {challengeName}
           </Text>
         </View>
-        {subject && (
+        {myTopic && (
           <View style={styles.info}>
             <Text style={{ fontSize: 16 }}>나의 주제</Text>
             <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
-              {subject}
+              {myTopic}
             </Text>
           </View>
         )}
         <View style={styles.info}>
           <Text style={{ fontSize: 16 }}>나의 목표</Text>
           <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
-            매주 {recordPerWeek}번 기록 x {participationPerWeek}주
+            매주 {insightPerWeek}번 기록 x {duration}주
           </Text>
         </View>
         <View style={styles.info}>
           <Text style={{ fontSize: 16 }}>종료일</Text>
           <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
-            1996.4.2 까지
+            {mutateDate(endDate)} 까지
           </Text>
         </View>
       </View>
@@ -104,7 +102,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   buttonContainer: {
-    marginTop: 32,
+    marginTop: 40,
     flexDirection: 'row',
   },
 });

@@ -18,7 +18,7 @@ function Login({ navigation, route }) {
   const { refetch } = useQuery(LoginQueryKeys.login(params), () => LoginAPI.login(params), {
     onSuccess: (response) => {
       setAccessToken(response.data.accessToken);
-      navigation.navigate('NicknameCreation');
+      navigation.navigate('CategorySelect');
     },
     onError: (e) => {
       alert('인증에 실패했습니다.');
