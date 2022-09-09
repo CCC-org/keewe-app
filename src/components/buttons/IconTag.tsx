@@ -5,25 +5,34 @@ import { useTheme } from 'react-native-paper';
 interface IconTagProps {
   title: string;
   isSelected: boolean;
-  icon: JSX.Element;
+  icon?: JSX.Element;
+  backgroundColor: string | undefined;
   onClick: () => void;
 }
 
-const IconTag = ({ title, isSelected, icon, onClick }: IconTagProps) => {
+const IconTag = ({ title, isSelected, icon, backgroundColor, onClick }: IconTagProps) => {
   const theme = useTheme();
   return (
     <View
       style={[
         styles.tag,
         {
-          backgroundColor: isSelected === true ? theme.colors.brand.primary.main : 'transparent',
+          backgroundColor: isSelected === true ? backgroundColor : 'transparent',
           borderColor: `${theme.colors.graphic.black}10`,
         },
       ]}
     >
       <Pressable style={styles.btn} onPress={onClick}>
         {icon}
-        <Text style={theme.fonts.text.body2.bold}>{title}</Text>
+        <Text
+          style={{
+            ...theme.fonts.text.body2.bold,
+            marginLeft: 5,
+            color: isSelected === true ? 'white' : '#121314',
+          }}
+        >
+          {title}
+        </Text>
       </Pressable>
     </View>
   );
@@ -45,6 +54,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 
