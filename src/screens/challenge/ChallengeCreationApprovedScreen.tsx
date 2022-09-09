@@ -6,7 +6,6 @@ import ConditionalButton from '../../components/buttons/ConditionalButton';
 
 const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
   const { duration, endDate, insightPerWeek, myTopic, challengeName } = route.params.form.data;
-
   const theme = useTheme();
   useEffect(() => {
     navigation.setOptions({
@@ -32,7 +31,10 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
         }
       ></HeaderText>
       <View style={{ marginTop: 16 }}>
-        <Image style={styles.image} source={require('../../../assets/images/따봉도치.jpg')} />
+        <Image
+          style={styles.image}
+          source={require('../../../assets/images/챌린지/챌린지생성.png')}
+        />
       </View>
       <View style={styles.infoContainer}>
         <View style={styles.info}>

@@ -59,9 +59,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
   });
 
   const handleSkipPress = () => {
-    navigation.navigate('ChallengeCreationApproved', {
-      form: { ...route.params.form },
-    });
+    createChallenge(createRequestParams);
   };
 
   const handleCompletePress = () => {
