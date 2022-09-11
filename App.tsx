@@ -48,6 +48,7 @@ export default function App() {
                 screenOptions={{
                   contentStyle: { backgroundColor: 'white' },
                   headerTitleAlign: 'center',
+                  animation: 'slide_from_right',
                   headerTitleStyle: {
                     fontSize: 16,
                   },

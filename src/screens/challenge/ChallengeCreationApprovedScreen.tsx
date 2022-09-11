@@ -43,7 +43,7 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
             {challengeName}
           </Text>
         </View>
-        {myTopic && (
+        {!!myTopic.length && (
           <View style={styles.info}>
             <Text style={{ fontSize: 16 }}>나의 주제</Text>
             <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 40,
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
 
