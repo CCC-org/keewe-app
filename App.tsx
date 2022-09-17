@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
@@ -20,6 +20,7 @@ import light from './src/theme/light';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ChallengeSubjectCreationScreen from './src/screens/challenge/ChallengeSubjectCreationScreen';
+import Challenges from './stack/Challenges';
 
 const queryClient = new QueryClient();
 
@@ -39,7 +40,7 @@ export default function App() {
   if (!isLoadingComplete) {
     return null;
   } else {
-    return isReady ? (
+    return (
       <>
         <PaperProvider theme={light}>
           <NavigationContainer>
@@ -61,42 +62,7 @@ export default function App() {
                     headerShadowVisible: false,
                   }}
                 >
-                  <Stack.Screen name="Root" component={RootScreen} options={{ title: 'Root' }} />
-                  <Stack.Screen
-                    name="NicknameCreation"
-                    component={NicknameCreationScreen}
-                    options={headerOptions}
-                  />
-                  <Stack.Screen name="SignUp" component={SignUpScreen} options={headerOptions} />
-                  <Stack.Screen name="Login" component={LoginScreen} options={headerOptions} />
-                  <Stack.Screen
-                    name="CategorySelect"
-                    component={CategorySelectScreen}
-                    options={headerOptions}
-                  />
-                  <Stack.Screen
-                    name="CategoryCreate"
-                    component={CategoryCreateScreen}
-                    options={headerOptions}
-                  />
-                  <Stack.Screen
-                    name="ChallengeInfo"
-                    component={ChallengeInfoScreen}
-                    options={headerOptions}
-                  />
-                  <Stack.Screen
-                    name="ChallengeCreationApproved"
-                    component={ChallengeCreationApprovedScreen}
-                  />
-                  <Stack.Screen
-                    name="ChallengeSubjectCreation"
-                    component={ChallengeSubjectCreationScreen}
-                  />
-                  <Stack.Screen
-                    name="ChallengeGoalSetting"
-                    component={ChallengeGoalSettingScreen}
-                    options={headerOptions}
-                  />
+                  <Stack.Screen name="Challenges" component={Challenges} />
                 </Stack.Group>
               </Stack.Navigator>
             </QueryClientProvider>
@@ -104,9 +70,6 @@ export default function App() {
           <StatusBar style="dark" />
         </PaperProvider>
       </>
-    ) : (
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      <AppLoading startAsync={getFonts} onFinish={() => setIsReady(true)} onError={() => {}} />
     );
   }
 }
