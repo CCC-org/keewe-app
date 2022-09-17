@@ -3,7 +3,7 @@ import React from 'react';
 
 interface HeaderTextProps {
   header: string;
-  subTitle: string;
+  subTitle?: string;
 }
 
 const HeaderText = ({ header, subTitle }: HeaderTextProps) => {
