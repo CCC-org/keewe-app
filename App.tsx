@@ -62,7 +62,42 @@ export default function App() {
                     headerShadowVisible: false,
                   }}
                 >
-                  <Stack.Screen name="Challenges" component={Challenges} />
+                  <Stack.Screen name="Root" component={RootScreen} options={{ title: 'Root' }} />
+                  <Stack.Screen
+                    name="NicknameCreation"
+                    component={NicknameCreationScreen}
+                    options={headerOptions}
+                  />
+                  <Stack.Screen name="SignUp" component={SignUpScreen} options={headerOptions} />
+                  <Stack.Screen name="Login" component={LoginScreen} options={headerOptions} />
+                  <Stack.Screen
+                    name="CategorySelect"
+                    component={CategorySelectScreen}
+                    options={headerOptions}
+                  />
+                  <Stack.Screen
+                    name="CategoryCreate"
+                    component={CategoryCreateScreen}
+                    options={headerOptions}
+                  />
+                  <Stack.Screen
+                    name="ChallengeInfo"
+                    component={ChallengeInfoScreen}
+                    options={headerOptions}
+                  />
+                  <Stack.Screen
+                    name="ChallengeCreationApproved"
+                    component={ChallengeCreationApprovedScreen}
+                  />
+                  <Stack.Screen
+                    name="ChallengeSubjectCreation"
+                    component={ChallengeSubjectCreationScreen}
+                  />
+                  <Stack.Screen
+                    name="ChallengeGoalSetting"
+                    component={ChallengeGoalSettingScreen}
+                    options={headerOptions}
+                  />
                 </Stack.Group>
               </Stack.Navigator>
             </QueryClientProvider>
