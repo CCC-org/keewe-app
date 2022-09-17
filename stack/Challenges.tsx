@@ -19,7 +19,7 @@ const Challenges = ({ headerOptions }: ChallengeProps) => {
   const Stack = createNativeStackNavigator();
 
   return (
-    <>
+    <Stack.Navigator>
       <Stack.Screen name="Root" component={RootScreen} options={{ title: 'Root' }} />
       <Stack.Screen
         name="NicknameCreation"
@@ -46,7 +46,7 @@ const Challenges = ({ headerOptions }: ChallengeProps) => {
         component={ChallengeGoalSettingScreen}
         options={headerOptions}
       />
-    </>
+    </Stack.Navigator>
   );
 };
 

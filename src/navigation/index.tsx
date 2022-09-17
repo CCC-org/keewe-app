@@ -26,7 +26,7 @@ export function RootScreen() {
             height: 100,
           }}
         >
-          <Text> NicknameCreation.tsx</Text>
+          <Text> NicknamreCreation.tsx</Text>
         </View>
       </Pressable>
 
@@ -74,7 +74,7 @@ export function RootScreen() {
           <Text> ChallengeSubjectScreen.tsx</Text>
         </View>
       </Pressable>
-      <Pressable onPress={() => navigation.navigate('ServiceIntro')}>
+      <Pressable onPress={() => navigation.navigate('ServiceIntroOne')}>
         <View
           style={{
             backgroundColor: 'green',

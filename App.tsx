@@ -21,22 +21,22 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ChallengeSubjectCreationScreen from './src/screens/challenge/ChallengeSubjectCreationScreen';
 import Challenges from './stack/Challenges';
-import ServiceIntroScreen from './src/screens/onboarding/ServiceIntroScreen';
+import ServiceIntroOneScreen from './src/screens/onboarding/ServiceIntroOneScreen';
+import { View } from 'react-native';
+import OnboardingIntroHeaderButton from './src/components/buttons/OnboardingIntroHeaderButton';
+import ServiceIntroTwoScreen from './src/screens/onboarding/ServiceIntroTwoScreen';
+import ServiceIntroThreeScreen from './src/screens/onboarding/ServiceIntroThreeScreen';
 
 const queryClient = new QueryClient();
+const Stack = createNativeStackNavigator();
+
+const headerOptions = {
+  headerBackVisible: false,
+  headerLeft: () => <HeaderBackButton />,
+};
 
 export default function App() {
-  const headerOptions = {
-    headerBackVisible: false,
-    headerLeft: () => <HeaderBackButton />,
-  };
-  const Stack = createNativeStackNavigator();
   const isLoadingComplete = useCachedResources();
-  const [isReady, setIsReady] = useState(false);
-
-  const getFonts = async () => {
-    await Font.loadAsync({ pretendard: require('./assets/fonts/PretendardVariable.ttf') });
-  };
 
   if (!isLoadingComplete) {
     return null;
@@ -54,6 +54,7 @@ export default function App() {
                   headerTitleStyle: {
                     fontSize: 16,
                   },
+                  animationDuration: 1000,
                 }}
               >
                 <Stack.Group
@@ -99,11 +100,21 @@ export default function App() {
                     component={ChallengeGoalSettingScreen}
                     options={headerOptions}
                   />
-                  <Stack.Screen
-                    name="ServiceIntro"
-                    component={ServiceIntroScreen}
-                    options={headerOptions}
-                  />
+                </Stack.Group>
+                <Stack.Group
+                  screenOptions={{
+                    headerTransparent: true,
+                    headerTitle: '',
+                    headerLeft: () => <View></View>,
+                    headerRight: () => <OnboardingIntroHeaderButton />,
+                    headerStyle: {
+                      backgroundColor: 'transparent',
+                    },
+                  }}
+                >
+                  <Stack.Screen name="ServiceIntroOne" component={ServiceIntroOneScreen} />
+                  <Stack.Screen name="ServiceIntroTwo" component={ServiceIntroTwoScreen} />
+                  <Stack.Screen name="ServiceIntroThree" component={ServiceIntroThreeScreen} />
                 </Stack.Group>
               </Stack.Navigator>
             </QueryClientProvider>
