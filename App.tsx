@@ -21,6 +21,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ChallengeSubjectCreationScreen from './src/screens/challenge/ChallengeSubjectCreationScreen';
 import Challenges from './stack/Challenges';
+import ServiceIntroScreen from './src/screens/onboarding/ServiceIntroScreen';
 
 const queryClient = new QueryClient();
 
@@ -96,6 +97,11 @@ export default function App() {
                   <Stack.Screen
                     name="ChallengeGoalSetting"
                     component={ChallengeGoalSettingScreen}
+                    options={headerOptions}
+                  />
+                  <Stack.Screen
+                    name="ServiceIntro"
+                    component={ServiceIntroScreen}
                     options={headerOptions}
                   />
                 </Stack.Group>
