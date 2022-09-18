@@ -4,6 +4,7 @@ import OnboardingIntroHeaderButton from '../../components/buttons/OnboardingIntr
 import HeaderText from '../../components/texts/HeaderText';
 import Stepper from '../../components/stepper/Stepper';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
+import { createStyle } from './ServiceIntroOneScreen';
 
 const ServiceIntroThreeScreen = ({ navigation, route }) => {
   const styles = createStyle();
@@ -48,38 +49,3 @@ const ServiceIntroThreeScreen = ({ navigation, route }) => {
 };
 
 export default ServiceIntroThreeScreen;
-
-function createStyle() {
-  return StyleSheet.create({
-    container: {
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      flex: 1,
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-    },
-
-    image: {
-      height: 448,
-    },
-    titleContainer: {
-      minWidth: '92%',
-    },
-    bottom: {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginTop: 40,
-      paddingHorizontal: 10,
-      height: 280,
-    },
-
-    nextButtonWithStepper: {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    },
-  });
-}
