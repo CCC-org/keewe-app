@@ -132,37 +132,44 @@ const GRAPHIC = {
 const TEXT = {
   color: GRAPHIC.black,
   display: {
+    fontFamily: 'pretendard',
     fontWeight: '700',
     fontSize: 30,
     lineHeight: 36,
   },
   headline1: {
+    fontFamily: 'pretendard',
     fontWeight: '700',
     fontSize: 22,
     lineHeight: 28,
   },
   headline2: {
+    fontFamily: 'pretendard',
     fontWeight: '700',
     fontSize: 18,
     lineHeight: 20,
   },
   footnote: {
+    fontFamily: 'pretendard',
     fontWeight: '400',
     fontSize: 14,
     lineHeight: 16,
   },
   caption1: {
+    fontFamily: 'pretendard',
     fontWeight: '400',
     fontSize: 14,
     lineHeight: 16,
   },
   body1: {
     regular: {
+      fontFamily: 'pretendard',
       fontWeight: '400',
       fontSize: 16,
       lineHeight: 24,
     },
     bold: {
+      fontFamily: 'pretendard',
       fontWeight: '700',
       fontSize: 16,
       lineHeight: 24,
@@ -170,11 +177,13 @@ const TEXT = {
   },
   body2: {
     regular: {
+      fontFamily: 'pretendard',
       fontWeight: '400',
       fontSize: 14,
       lineHeight: 20,
     },
     bold: {
+      fontFamily: 'pretendard',
       fontWeight: '700',
       fontSize: 14,
       lineHeight: 20,

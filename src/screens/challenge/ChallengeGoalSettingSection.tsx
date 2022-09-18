@@ -51,7 +51,7 @@ const ChallengeGoalSettingSection = ({
       >
         <ChallengeGoalSettingBar
           minValue={1}
-          maxValue={8}
+          maxValue={7}
           onChange={handleChangeRecordPerWeek}
           unit={'번'}
           value={recordPerWeek[0]}

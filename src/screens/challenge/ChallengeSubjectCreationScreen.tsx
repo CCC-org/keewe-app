@@ -17,7 +17,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
       myTopic: subject,
     },
     interest: route.params.form.selectedCategory,
-    name: route.params.form.subject,
+    name: route.params.form.challengeName,
     introduction: route.params.form.challengeInfo,
   };
   useEffect(() => {
@@ -33,6 +33,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
           borderLine={true}
           disabled={false}
           handlePress={handleSkipPress}
+          width={64}
         />
       ),
     });
@@ -47,17 +48,18 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
   }, [subject]);
 
   const { mutate: createChallenge } = useMutation(ChallengeAPI.create, {
-    onSuccess: (data) => {
+    onSuccess: (response) => {
       navigation.navigate('ChallengeCreationApproved', {
-        form: { data },
+        form: response,
       });
+    },
+    onError: (error) => {
+      alert(error.message);
     },
   });
 
   const handleSkipPress = () => {
-    navigation.navigate('ChallengeCreationApproved', {
-      form: { ...route.params.form },
-    });
+    createChallenge(createRequestParams);
   };
 
   const handleCompletePress = () => {
@@ -69,7 +71,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
       <View>
         <HeaderText
           header="나만의 주제를 정해보세요"
-          subTitle='"챌린지 카테고리" 에 관한 주제면 좋아요. '
+          subTitle={`${route.params.form.selectedCategory}에 관한 주제면 좋아요. `}
         />
         <TextInputDetail
           inputValue={subject}

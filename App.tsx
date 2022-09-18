@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import AppLoading from 'expo-app-loading';
+import * as Font from 'expo-font';
 import HeaderBackButton from './src/components/header/HeaderBackButton';
 import { NavigationContainer } from '@react-navigation/native';
 import useCachedResources from './src/utils/hooks/useCachedResources';
@@ -29,15 +31,29 @@ export default function App() {
   };
   const Stack = createNativeStackNavigator();
   const isLoadingComplete = useCachedResources();
+  const [isReady, setIsReady] = useState(false);
+
+  const getFonts = async () => {
+    await Font.loadAsync({ pretendard: require('./assets/fonts/PretendardVariable.ttf') });
+  };
+
   if (!isLoadingComplete) {
     return null;
   } else {
-    return (
+    return isReady ? (
       <>
         <PaperProvider theme={light}>
           <NavigationContainer>
             <QueryClientProvider client={queryClient}>
-              <Stack.Navigator screenOptions={{ contentStyle: { backgroundColor: 'white' } }}>
+              <Stack.Navigator
+                screenOptions={{
+                  contentStyle: { backgroundColor: 'white' },
+                  headerTitleAlign: 'center',
+                  headerTitleStyle: {
+                    fontSize: 16,
+                  },
+                }}
+              >
                 <Stack.Group
                   screenOptions={{
                     headerStyle: { backgroundColor: 'white' },
@@ -93,6 +109,9 @@ export default function App() {
           <StatusBar style="dark" />
         </PaperProvider>
       </>
+    ) : (
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      <AppLoading startAsync={getFonts} onFinish={() => setIsReady(true)} onError={() => {}} />
     );
   }
 }

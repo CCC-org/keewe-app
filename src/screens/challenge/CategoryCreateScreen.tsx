@@ -53,7 +53,7 @@ const CategoryCreateScreen = ({ navigation, route }) => {
               : theme.colors.graphic.white
           }
           borderLine={false}
-          disabled={errorMessage.length === 0 || input.length === 0}
+          disabled={errorMessage.length !== 0 || input.length === 0}
           handlePress={() => handleComplete()}
         />
       ),
