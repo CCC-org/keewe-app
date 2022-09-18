@@ -12,7 +12,6 @@ const InterestChooseScreen = ({ navigation, route }) => {
   const [customCategory, setCustomCategory] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [conditionalText, setConditionalText] = useState<string>('관심사를 선택하세요');
-  const [test, setTest] = useState('');
 
   const handleSelectTag = (tag: string) => {
     if (!selectedCategory.includes(tag)) {
