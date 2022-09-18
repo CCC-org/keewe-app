@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { Pressable, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { getAccessToken } from '../utils/hooks/asyncStorage/Login';
 
@@ -16,9 +16,14 @@ export function RootScreen() {
   return (
     // [HOW TO]
     // 새로운 링크는 임시적으로 Pressable을 그대로 따라하시고, onPress함수에 navigate 전달인자로 App.tsx의 Stack.Screen.name을 넘겨주시면 됨.
-    <>
-      <Text>{accessToken}</Text>
-
+    <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row' }}>
+      <Text>Token Must Be Valid Whilst Testing : {accessToken.slice(0, 20)}</Text>
+      <View style={{ width: '100%', height: 'auto', borderWidth: 2, flexDirection: 'column' }}>
+        <Text>주요 전달사항:</Text>
+        <View>
+          <Text>22.09.19 ServiceIntro occuring bugs with relatively wider screen fixed</Text>
+        </View>
+      </View>
       <Pressable onPress={() => navigation.navigate('SignUp')}>
         <View
           style={{
@@ -75,7 +80,7 @@ export function RootScreen() {
           <Text> ServiceIntroOneScreen.tsx</Text>
         </View>
       </Pressable>
-    </>
+    </View>
     /*
     <Pressable onPress={() => navigation.navigate('Stack.screen.name String')}>
       <View
