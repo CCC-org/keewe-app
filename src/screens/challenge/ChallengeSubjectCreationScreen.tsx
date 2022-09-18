@@ -8,7 +8,7 @@ import ConditionalButton from '../../components/buttons/ConditionalButton';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 
 const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
-  const [subject, setSubject] = useState('');
+  const [subject, setSubject] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const createRequestParams = {
     participate: {

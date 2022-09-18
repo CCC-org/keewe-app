@@ -42,37 +42,44 @@ declare global {
       text: {
         color: string;
         display: {
+          fontFamily: string;
           fontWeight: any;
           fontSize: number;
           lineHeight: number;
         };
         headline1: {
+          fontFamily: string;
           fontWeight: any;
           fontSize: number;
           lineHeight: number;
         };
         headline2: {
+          fontFamily: string;
           fontWeight: any;
           fontSize: number;
           lineHeight: number;
         };
         footnote: {
+          fontFamily: string;
           fontWeight: any;
           fontSize: number;
           lineHeight: number;
         };
         caption1: {
+          fontFamily: string;
           fontWeight: any;
           fontSize: number;
           lineHeight: number;
         };
         body1: {
           regular: {
+            fontFamily: string;
             fontWeight: any;
             fontSize: number;
             lineHeight: number;
           };
           bold: {
+            fontFamily: string;
             fontWeight: any;
             fontSize: number;
             lineHeight: number;
@@ -80,11 +87,13 @@ declare global {
         };
         body2: {
           regular: {
+            fontFamily: string;
             fontWeight: any;
             fontSize: number;
             lineHeight: number;
           };
           bold: {
+            fontFamily: string;
             fontWeight: any;
             fontSize: number;
             lineHeight: number;

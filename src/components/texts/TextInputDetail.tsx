@@ -74,7 +74,7 @@ const TextInputDetail = (props: TextInputDetailProps) => {
           fontWeight: '600',
           fontSize: 22,
           backgroundColor: 'white',
-          marginHorizontal: 12,
+          // marginHorizontal: 12,
           paddingHorizontal: 0,
         }}
         dense={true}
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 12,
     fontWeight: '500',
-    marginLeft: 12,
+    // marginLeft: 12,
   },
 });
 

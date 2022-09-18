@@ -71,8 +71,6 @@ export default ConditionalButton;
 
 const styles = StyleSheet.create({
   container: {
-    // flex inside container causes errors in android.
-    // flex: 1
     marginBottom: 25,
     alignItems: 'center',
     justifyContent: 'flex-end',
