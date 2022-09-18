@@ -34,25 +34,3 @@ const NicknameCreationScreen = () => {
 };
 
 export default NicknameCreationScreen;
-/*const title = ['마케팅', "가상"]
-const icons = [<마케팅/>, <가상/>]
-
-import IconComponents
-
-title.map(e, idx=> {
-  return (
-    View
-      <TagsWithIconComponent title={e.title} iconComponent={IconComponents[idx]}/>
-    View
-  )
-})*/
-// 동적으로 아이콘을 띄우는 방법은 성능상의 저하가 체감이된다니까, 이것밖에 없음.
-
-/*
-{InterestWithIcon.map((e, idx) => {
-  return (
-    <View key={idx}>
-      <SvgFromXml width={'100%'} height={'100%'} xml={e.icon} />
-    </View>
-  );
-})}*/

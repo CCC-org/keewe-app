@@ -12,38 +12,21 @@ const TempScreen = () => {
     if (!selectedCategory.includes(tag)) {
       setSelectedCategory([...selectedCategory, tag]);
     } else {
-      for (let i = 0; i < selectedCategory.length; i++) {
-        if (selectedCategory[i] === tag) {
-          selectedCategory.splice(i, 1);
-          i--;
-        }
-      }
+      const newArr = selectedCategory.filter((e) => e !== tag);
+      setSelectedCategory(newArr);
     }
   };
+  const handleCreateCategory = () => alert('add');
   return (
     <View>
       <InterestChooseSection
         totalCategory={[...customCategory, ...totalCategory]}
         selectedCategory={selectedCategory}
         onSelect={handleSelectTag}
+        onCreateCategory={handleCreateCategory}
       />
     </View>
   );
 };
 
 export default TempScreen;
-
-/*useEffect(() => {
-    if (
-      selectedCategory.filter(
-        (element) => selectedCategory[selectedCategory.length - 1] === element,
-      ).length === 2
-    ) {
-      for (let i = 0; i < selectedCategory.length; i++) {
-        if (selectedCategory[i] === selectedCategory[selectedCategory.length - 1]) {
-          selectedCategory.splice(i, 1);
-          i--;
-        }
-      }
-    }
-  }, [selectedCategory]);*/

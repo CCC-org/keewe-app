@@ -65,7 +65,7 @@ export function RootScreen() {
           <Text> ChallengeSubjectScreen.tsx</Text>
         </View>
       </Pressable>
-      <Pressable onPress={() => navigation.navigate('Temp')}>
+      <Pressable onPress={() => navigation.navigate('InterestChooseTemp')}>
         <View
           style={{
             backgroundColor: 'skyblue',
@@ -73,7 +73,7 @@ export function RootScreen() {
             width: 150,
           }}
         >
-          <Text> TempScreen.tsx</Text>
+          <Text> InterestChooseTempScreen.tsx</Text>
         </View>
       </Pressable>
     </>
