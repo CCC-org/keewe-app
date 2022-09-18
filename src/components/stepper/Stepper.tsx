@@ -14,6 +14,7 @@ const Stepper = ({ totalStep, currentStep }: StepperProps) => {
     for (let i = 1; i <= totalStep; i++)
       Items.push(
         <View
+          key={i}
           style={{
             width: currentStep === i ? 16 : 6,
             height: 6,
