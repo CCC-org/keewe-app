@@ -12,7 +12,7 @@ const HeaderText = ({ header, subTitle }: HeaderTextProps) => {
   return (
     <View>
       <Text style={styles.header}>{header}</Text>
-      <Text style={styles.subTitle}>{subTitle}</Text>
+      {subTitle && <Text style={styles.subTitle}>{subTitle}</Text>}
     </View>
   );
 };

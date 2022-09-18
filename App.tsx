@@ -54,6 +54,7 @@ export default function App() {
                   headerTitleStyle: {
                     fontSize: 16,
                   },
+                  headerShadowVisible: false,
                   animationDuration: 1000,
                 }}
               >
@@ -62,15 +63,10 @@ export default function App() {
                   screenOptions={{
                     headerStyle: { backgroundColor: 'white' },
                     title: '',
-                    headerShadowVisible: false,
                   }}
                 >
                   <Stack.Screen name="Root" component={RootScreen} options={{ title: 'Root' }} />
-                  <Stack.Screen
-                    name="NicknameCreation"
-                    component={NicknameCreationScreen}
-                    options={headerOptions}
-                  />
+
                   <Stack.Screen name="SignUp" component={SignUpScreen} options={headerOptions} />
                   <Stack.Screen name="Login" component={LoginScreen} options={headerOptions} />
                   <Stack.Screen
@@ -103,7 +99,16 @@ export default function App() {
                   />
                 </Stack.Group>
                 {/* 온보딩 그룹 */}
-                <Stack.Group>
+                <Stack.Group
+                  screenOptions={{
+                    title: '',
+                  }}
+                >
+                  <Stack.Screen
+                    name="NicknameCreation"
+                    component={NicknameCreationScreen}
+                    options={headerOptions}
+                  />
                   <Stack.Screen
                     name="ServiceIntroOne"
                     component={ServiceIntroOneScreen}
