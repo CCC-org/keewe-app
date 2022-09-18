@@ -53,6 +53,17 @@ export function RootScreen() {
           <Text> NicknameCreation.tsx</Text>
         </View>
       </Pressable>
+      <Pressable onPress={() => navigation.navigate('InterestChooseTemp')}>
+        <View
+          style={{
+            backgroundColor: 'skyblue',
+            height: 100,
+            width: 150,
+          }}
+        >
+          <Text> InterestChooseTempScreen.tsx</Text>
+        </View>
+      </Pressable>
     </>
     /*
     <Pressable onPress={() => navigation.navigate('Stack.screen.name String')}>
