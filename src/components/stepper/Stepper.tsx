@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   box: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    margin: 10,
+    // margin: 10,
   },
   step: {
     borderRadius: 30,
