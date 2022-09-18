@@ -31,7 +31,7 @@ export type RootStackParamList = {
   ChallengeSubjectCreation: undefined;
   ChallengeGoalSetting: undefined;
   ServiceIntroOne: undefined;
-  InterestChooseTemp: undefined;
+  InterestChoose: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
