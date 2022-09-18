@@ -34,7 +34,7 @@ const headerOptions = {
   headerBackVisible: false,
   headerLeft: () => <HeaderBackButton />,
 };
-
+// Text style. font-family : pretendard
 export default function App() {
   const isLoadingComplete = useCachedResources();
 
@@ -57,6 +57,7 @@ export default function App() {
                   animationDuration: 1000,
                 }}
               >
+                {/* 챌린지 그룹 */}
                 <Stack.Group
                   screenOptions={{
                     headerStyle: { backgroundColor: 'white' },
@@ -101,20 +102,47 @@ export default function App() {
                     options={headerOptions}
                   />
                 </Stack.Group>
-                <Stack.Group
-                  screenOptions={{
-                    headerTransparent: true,
-                    headerTitle: '',
-                    headerLeft: () => <View></View>,
-                    headerRight: () => <OnboardingIntroHeaderButton />,
-                    headerStyle: {
-                      backgroundColor: 'transparent',
-                    },
-                  }}
-                >
-                  <Stack.Screen name="ServiceIntroOne" component={ServiceIntroOneScreen} />
-                  <Stack.Screen name="ServiceIntroTwo" component={ServiceIntroTwoScreen} />
-                  <Stack.Screen name="ServiceIntroThree" component={ServiceIntroThreeScreen} />
+                {/* 온보딩 그룹 */}
+                <Stack.Group>
+                  <Stack.Screen
+                    name="ServiceIntroOne"
+                    component={ServiceIntroOneScreen}
+                    options={{
+                      headerTransparent: true,
+                      headerTitle: '',
+                      headerLeft: () => <View></View>,
+                      headerRight: () => <OnboardingIntroHeaderButton />,
+                      headerStyle: {
+                        backgroundColor: 'transparent',
+                      },
+                    }}
+                  />
+                  <Stack.Screen
+                    name="ServiceIntroTwo"
+                    component={ServiceIntroTwoScreen}
+                    options={{
+                      headerTransparent: true,
+                      headerTitle: '',
+                      headerLeft: () => <View></View>,
+                      headerRight: () => <OnboardingIntroHeaderButton />,
+                      headerStyle: {
+                        backgroundColor: 'transparent',
+                      },
+                    }}
+                  />
+                  <Stack.Screen
+                    name="ServiceIntroThree"
+                    component={ServiceIntroThreeScreen}
+                    options={{
+                      headerTransparent: true,
+                      headerTitle: '',
+                      headerLeft: () => <View></View>,
+                      headerRight: () => <OnboardingIntroHeaderButton />,
+                      headerStyle: {
+                        backgroundColor: 'transparent',
+                      },
+                    }}
+                  />
                 </Stack.Group>
               </Stack.Navigator>
             </QueryClientProvider>

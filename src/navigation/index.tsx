@@ -18,17 +18,6 @@ export function RootScreen() {
     // 새로운 링크는 임시적으로 Pressable을 그대로 따라하시고, onPress함수에 navigate 전달인자로 App.tsx의 Stack.Screen.name을 넘겨주시면 됨.
     <>
       <Text>{accessToken}</Text>
-      <Pressable onPress={() => navigation.navigate('NicknameCreation')}>
-        <View
-          style={{
-            backgroundColor: 'orange',
-            width: 150,
-            height: 100,
-          }}
-        >
-          <Text> NicknamreCreation.tsx</Text>
-        </View>
-      </Pressable>
 
       <Pressable onPress={() => navigation.navigate('SignUp')}>
         <View
@@ -52,18 +41,8 @@ export function RootScreen() {
           <Text> CategorySelectScreen.tsx</Text>
         </View>
       </Pressable>
-      <Pressable onPress={() => navigation.navigate('ChallengeCreationApproved')}>
-        <View
-          style={{
-            backgroundColor: 'purple',
-            height: 100,
-            width: 150,
-          }}
-        >
-          <Text> ChallengeApprovedScreen.tsx</Text>
-        </View>
-      </Pressable>
-      <Pressable onPress={() => navigation.navigate('ChallengeSubjectCreation')}>
+
+      <Pressable onPress={() => navigation.navigate('NicknameCreation')}>
         <View
           style={{
             backgroundColor: 'green',
@@ -71,18 +50,7 @@ export function RootScreen() {
             width: 150,
           }}
         >
-          <Text> ChallengeSubjectScreen.tsx</Text>
-        </View>
-      </Pressable>
-      <Pressable onPress={() => navigation.navigate('ServiceIntroOne')}>
-        <View
-          style={{
-            backgroundColor: 'green',
-            height: 100,
-            width: 150,
-          }}
-        >
-          <Text> ServiceIntroScreen.tsx</Text>
+          <Text> NicknameCreation.tsx</Text>
         </View>
       </Pressable>
     </>

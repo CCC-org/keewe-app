@@ -35,7 +35,7 @@ const ServiceIntroThreeScreen = ({ navigation, route }) => {
           <Stepper totalStep={3} currentStep={3} />
           <ConditionalButton
             isActive={true}
-            text={'다음'}
+            text={'시작하기'}
             color="#b0e817"
             textColor="black"
             width={343}

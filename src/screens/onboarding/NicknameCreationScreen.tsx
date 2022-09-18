@@ -1,12 +1,13 @@
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import TextInputDetail from '../../components/texts/TextInputDetail';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
+import HeaderText from '../../components/texts/HeaderText';
+import Stepper from '../../components/stepper/Stepper';
 
 const NicknameCreationScreen = ({ navigation }) => {
   const [nickname, setNickname] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [isHeaderButtonOn, setIsHeaderButtonOn] = useState(false);
   useEffect(() => {
     if (nickname.length > 8) {
       setErrorMessage('8자 이내로 입력하세요.');
@@ -17,28 +18,11 @@ const NicknameCreationScreen = ({ navigation }) => {
     else setErrorMessage('');
   }, [nickname]);
 
-  useEffect(() => {
-    if (nickname.length > 4) setIsHeaderButtonOn(true);
-    else setIsHeaderButtonOn(false);
-  }, [nickname]);
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <HeaderRightButton
-          text="Done"
-          backGroundColor={isHeaderButtonOn ? '#B0E817' : 'lightgrey'}
-          textColor={isHeaderButtonOn ? 'black' : 'white'}
-          borderLine={false}
-          disabled={isHeaderButtonOn ? false : true}
-          handlePress={() => navigation.goBack()}
-        />
-      ),
-    });
-  }, [navigation, nickname]);
-
   return (
-    <View>
+    <View style={styles.container}>
+      {/* eslint-disable-next-line quotes */}
+      <HeaderText header={`반가워요 키위새님\n이름이 무엇인가요?`} />
+      <Stepper currentStep={1} totalStep={2} />
       <TextInputDetail
         inputValue={nickname}
         setInputValue={setNickname}
@@ -49,5 +33,14 @@ const NicknameCreationScreen = ({ navigation }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 10,
+    // flexDirection: 'column',
+    // alignItems: 'flex-start',
+    // justifyContent: 'center',
+  },
+});
 
 export default NicknameCreationScreen;

@@ -27,7 +27,6 @@ function createStyles(theme) {
       justifyContent: 'center',
     },
     header: {
-      fontFamily: 'pretendard',
       fontSize: 30,
       fontWeight: '600',
       textAlign: 'left',
