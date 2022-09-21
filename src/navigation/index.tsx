@@ -64,6 +64,17 @@ export function RootScreen() {
           <Text> InterestChooseScreen.tsx</Text>
         </View>
       </Pressable>
+      <Pressable onPress={() => navigation.navigate('ServiceIntroOne')}>
+        <View
+          style={{
+            backgroundColor: 'skyblue',
+            height: 100,
+            width: 150,
+          }}
+        >
+          <Text> ServiceIntroOneScreen.tsx</Text>
+        </View>
+      </Pressable>
     </>
     /*
     <Pressable onPress={() => navigation.navigate('Stack.screen.name String')}>

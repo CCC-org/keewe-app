@@ -30,15 +30,14 @@ const InterestChooseScreen = ({ navigation, route }) => {
     else setConditionalText('완료');
   }, [selectedCategory]);
   useEffect(() => {
-    console.log('useEffect route', route);
-
+    // eslint-disable-next-line no-prototype-builtins
+    if (!route.params.hasOwnProperty('customCategory')) return;
     const { customCategory: paramCustomArr } = route.params;
     if (customCategory) {
       setCustomCategory([...paramCustomArr, ...customCategory]);
     } else {
       setCustomCategory([]);
     }
-    // setTest(route.params?.customCategory ? route.params?.customCategory[0] : '');
   }, [route]);
 
   return (
@@ -56,15 +55,13 @@ const InterestChooseScreen = ({ navigation, route }) => {
           <HeaderText header={'관심사를 알려주세요'} />
           <Stepper currentStep={2} totalStep={2} />
         </View>
-        {/* <InterestChooseSection
-          totalCategory={[...customCategory, ...totalCategory]}
+        <InterestChooseSection
+          totalCategory={totalCategory}
+          customCategory={customCategory}
           selectedCategory={selectedCategory}
           onSelect={handleSelectTag}
           onCreateCategory={handleCreateCategory}
-        /> */}
-        {[...customCategory, ...totalCategory].map((tag, idx) => {
-          console.log(idx, tag);
-        })}
+        />
       </View>
       <View style={{ height: 110, justifyContent: 'space-between' }}>
         <NumberProgressBar progressValue={selectedCategory.length} max={5} />
