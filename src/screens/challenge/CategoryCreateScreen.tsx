@@ -17,13 +17,6 @@ const CategoryCreateScreen = ({ navigation, route }) => {
     });
   };
 
-  // const handleComplete = () => {
-  //   navigation.navigate('CategorySelect', {
-  //     selectedCategory: input,
-  //     customCategory: [input, ...customCategory],
-  //   });
-  // };
-
   useEffect(() => {
     navigation.setOptions({
       headerTitle: '직접 추가',
