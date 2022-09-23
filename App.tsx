@@ -27,8 +27,7 @@ import { View } from 'react-native';
 import OnboardingIntroHeaderButton from './src/components/buttons/OnboardingIntroHeaderButton';
 import ServiceIntroTwoScreen from './src/screens/onboarding/ServiceIntroTwoScreen';
 import ServiceIntroThreeScreen from './src/screens/onboarding/ServiceIntroThreeScreen';
-import BottomSheetExperimentalScreen from './src/screens/BottomSheetExperimentalScreen';
-import { createStackNavigator } from '@react-navigation/stack';
+import InsightSampleScreen from './src/screens/onboarding/InsightSampleScreen';
 
 const queryClient = new QueryClient();
 // const Stack = createNativeStackNavigator();
@@ -155,6 +154,13 @@ export default function App() {
                       headerStyle: {
                         backgroundColor: 'transparent',
                       },
+                    }}
+                  />
+                  <Stack.Screen
+                    name="InsightSample"
+                    component={InsightSampleScreen}
+                    options={{
+                      headerBackVisible: false,
                     }}
                   />
                 </Stack.Group>
