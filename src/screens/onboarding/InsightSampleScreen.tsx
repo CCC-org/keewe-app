@@ -100,24 +100,23 @@ const InsightSampleScreen = ({ navigation }) => {
       {reaction ? (
         <>
           <View style={styles.React}>
-            <View style={{ ...styles.ReactionBar }}>
+            <View style={{ backgroundColor: theme.colors.graphic.white, ...styles.ReactionBar }}>
               {REACTIONS.map((data) => (
-                <>
-                  <BezierAnimatedView
-                    startMargin={100}
-                    endMargin={0}
-                    duration={700}
-                    bezier={data.bezier}
-                  >
-                    <ReactIconButton
-                      xml={data.xml}
-                      backgroundColor={data.color}
-                      onClick={() => {
-                        return;
-                      }}
-                    />
-                  </BezierAnimatedView>
-                </>
+                <BezierAnimatedView
+                  key={data.xml}
+                  startMargin={100}
+                  endMargin={0}
+                  duration={700}
+                  bezier={data.bezier}
+                >
+                  <ReactIconButton
+                    xml={data.xml}
+                    backgroundColor={data.color}
+                    onClick={() => {
+                      return;
+                    }}
+                  />
+                </BezierAnimatedView>
               ))}
             </View>
           </View>
