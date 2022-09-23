@@ -22,7 +22,7 @@ const NicknameCreationScreen = ({ navigation }) => {
   }, [nickname]);
 
   function handleNextScreen() {
-    navigation.navigate('InterestChooseTemp');
+    navigation.navigate('InterestChoose', { nickname });
   }
 
   useLayoutEffect(() => {

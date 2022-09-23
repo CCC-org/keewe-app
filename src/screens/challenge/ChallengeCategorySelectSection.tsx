@@ -22,7 +22,13 @@ const ChallengeCategorySelectSection = ({
   const title = <Text style={theme.fonts.text.body2.bold}>내 관심사</Text>;
   return (
     <View>
-      <Accordion title={title} isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} openHeight={200}>
+      <Accordion
+        title={title}
+        isOpen={isOpen}
+        onClick={() => setIsOpen(!isOpen)}
+        duration={300}
+        openHeight={200}
+      >
         <View style={styles.tagList}>
           {totalCategory.map((category) => (
             <Tag
