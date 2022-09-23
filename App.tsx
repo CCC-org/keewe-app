@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import AppLoading from 'expo-app-loading';
-import * as Font from 'expo-font';
 import HeaderBackButton from './src/components/header/HeaderBackButton';
 import { NavigationContainer } from '@react-navigation/native';
 import useCachedResources from './src/utils/hooks/useCachedResources';
@@ -21,17 +19,17 @@ import light from './src/theme/light';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ChallengeSubjectCreationScreen from './src/screens/challenge/ChallengeSubjectCreationScreen';
-import Challenges from './stack/Challenges';
 import ServiceIntroOneScreen from './src/screens/onboarding/ServiceIntroOneScreen';
 import { View } from 'react-native';
 import OnboardingIntroHeaderButton from './src/components/buttons/OnboardingIntroHeaderButton';
 import ServiceIntroTwoScreen from './src/screens/onboarding/ServiceIntroTwoScreen';
 import ServiceIntroThreeScreen from './src/screens/onboarding/ServiceIntroThreeScreen';
 import InsightSampleScreen from './src/screens/onboarding/InsightSampleScreen';
+import BottomSheetExperimentalScreen from './src/screens/BottomSheetExperimentalScreen';
 
 const queryClient = new QueryClient();
 // const Stack = createNativeStackNavigator();
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const headerOptions = {
   headerBackVisible: false,
