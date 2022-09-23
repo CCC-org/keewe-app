@@ -27,9 +27,12 @@ import { View } from 'react-native';
 import OnboardingIntroHeaderButton from './src/components/buttons/OnboardingIntroHeaderButton';
 import ServiceIntroTwoScreen from './src/screens/onboarding/ServiceIntroTwoScreen';
 import ServiceIntroThreeScreen from './src/screens/onboarding/ServiceIntroThreeScreen';
+import BottomSheetExperimentalScreen from './src/screens/BottomSheetExperimentalScreen';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const queryClient = new QueryClient();
-const Stack = createNativeStackNavigator();
+// const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 const headerOptions = {
   headerBackVisible: false,
@@ -49,14 +52,14 @@ export default function App() {
             <QueryClientProvider client={queryClient}>
               <Stack.Navigator
                 screenOptions={{
-                  contentStyle: { backgroundColor: 'white' },
+                  // contentStyle: { backgroundColor: 'white' },
                   headerTitleAlign: 'center',
-                  animation: 'slide_from_right',
+                  // animation: 'slide_from_right',
                   headerTitleStyle: {
                     fontSize: 16,
                   },
                   headerShadowVisible: false,
-                  animationDuration: 1000,
+                  // animationDuration: 1000,
                 }}
               >
                 {/* 챌린지 그룹 */}
@@ -153,6 +156,13 @@ export default function App() {
                         backgroundColor: 'transparent',
                       },
                     }}
+                  />
+                </Stack.Group>
+                {/* 실험적 그룹 */}
+                <Stack.Group>
+                  <Stack.Screen
+                    name={'BottomSheetExperimental'}
+                    component={BottomSheetExperimentalScreen}
                   />
                 </Stack.Group>
               </Stack.Navigator>
