@@ -61,51 +61,7 @@ export function RootScreen() {
               width: 150,
             }}
           >
-            <Text> NicknameCreation.tsx</Text>
-          </View>
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate('InterestChoose')}>
-          <View
-            style={{
-              backgroundColor: 'skyblue',
-              height: 100,
-              width: 150,
-            }}
-          >
-            <Text> InterestChooseScreen.tsx</Text>
-          </View>
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate('ServiceIntroOne')}>
-          <View
-            style={{
-              backgroundColor: 'skyblue',
-              height: 100,
-              width: 150,
-            }}
-          >
-            <Text> ServiceIntroOneScreen.tsx</Text>
-          </View>
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate('ServiceIntroOne')}>
-          <View
-            style={{
-              backgroundColor: 'purple',
-              height: 100,
-              width: 150,
-            }}
-          >
-            <Text> ServiceIntroOneScreen.tsx</Text>
-          </View>
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate('InsightSample')}>
-          <View
-            style={{
-              backgroundColor: 'blue',
-              height: 100,
-              width: 150,
-            }}
-          >
-            <Text> InsightSampleScreen.tsx</Text>
+            <Text>Onboard.0.1</Text>
           </View>
         </Pressable>
       </ScrollView>

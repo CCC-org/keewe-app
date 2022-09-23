@@ -17,7 +17,7 @@ const InsightText =
 const LinkTitle = '나의 친구 농사';
 const Link = 'careerly.co.kr';
 
-const InsightSampleScreen = ({ navigation }) => {
+const InsightSampleScreen = ({ navigation, route }) => {
   const theme = useTheme();
   const [reaction, setReaction] = useState<boolean>(false);
 
@@ -31,6 +31,7 @@ const InsightSampleScreen = ({ navigation }) => {
 
   const handleCompletePress = () => {
     //pressComplete
+    navigation.navigate('ServiceIntroOne');
   };
 
   useEffect(() => {
