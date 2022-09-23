@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import InterestChooseSection from './InterestChooseSection';
 import { TOTAL_TAG } from '../../constants/Interests';
@@ -42,7 +42,7 @@ const InterestChooseScreen = ({ navigation, route }) => {
   const handleNextScreen = () => {
     //create ID
     makeProfile();
-    //navigation.navigate('InsightSample');
+    navigation.navigate('InsightSample');
   };
 
   useEffect(() => {
@@ -63,38 +63,40 @@ const InterestChooseScreen = ({ navigation, route }) => {
   }, [route]);
 
   return (
-    <View style={styles.container}>
-      <View>
-        <View
-          style={{
-            height: 50,
-            justifyContent: 'space-between',
-            marginBottom: 20,
-            marginTop: 10,
-            paddingHorizontal: 16,
-          }}
-        >
-          <HeaderText header={'관심사를 알려주세요'} />
-          <Stepper currentStep={2} totalStep={2} />
+    <ScrollView>
+      <View style={styles.container}>
+        <View>
+          <View
+            style={{
+              height: 50,
+              justifyContent: 'space-between',
+              marginBottom: 20,
+              marginTop: 10,
+              paddingHorizontal: 16,
+            }}
+          >
+            <HeaderText header={'관심사를 알려주세요'} />
+            <Stepper currentStep={2} totalStep={2} />
+          </View>
+          <InterestChooseSection
+            totalCategory={totalCategory}
+            customCategory={customCategory}
+            selectedCategory={selectedCategory}
+            onSelect={handleSelectTag}
+            onCreateCategory={handleCreateCategory}
+          />
         </View>
-        <InterestChooseSection
-          totalCategory={totalCategory}
-          customCategory={customCategory}
-          selectedCategory={selectedCategory}
-          onSelect={handleSelectTag}
-          onCreateCategory={handleCreateCategory}
-        />
+        <View style={{ height: 110, justifyContent: 'space-between' }}>
+          <NumberProgressBar progressValue={selectedCategory.length} max={5} />
+          <ConditionalButton
+            isActive={selectedCategory.length > 0 && selectedCategory.length < 6}
+            onPress={handleNextScreen}
+            text={conditionalText}
+            width={343}
+          />
+        </View>
       </View>
-      <View style={{ height: 110, justifyContent: 'space-between' }}>
-        <NumberProgressBar progressValue={selectedCategory.length} max={5} />
-        <ConditionalButton
-          isActive={selectedCategory.length > 0 && selectedCategory.length < 6}
-          onPress={handleNextScreen}
-          text={conditionalText}
-          width={343}
-        />
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 
