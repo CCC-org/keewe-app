@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { SvgXml } from 'react-native-svg';
 import IconTag from '../../components/buttons/IconTag';
 import { IconXml, SelectedIconXml } from '../../constants/InterestsIconXml';
@@ -8,6 +8,7 @@ import { useTheme } from 'react-native-paper';
 
 interface InterestChooseSectionProps {
   totalCategory: string[];
+  customCategory: string[];
   selectedCategory: string[];
   onSelect: (value: string) => void;
   onCreateCategory: () => void;
@@ -29,27 +30,40 @@ const handleBackgroundColor = (idx) => {
 
 const InterestChooseSection = ({
   totalCategory,
+  customCategory,
   selectedCategory,
   onSelect,
   onCreateCategory,
 }: InterestChooseSectionProps) => {
   const theme = useTheme();
   return (
-    <View style={styles.tagList}>
-      {totalCategory.map((category, idx) => (
-        <IconTag
-          key={category}
-          title={category}
-          isSelected={selectedCategory.includes(category)}
-          backgroundColor={handleBackgroundColor(idx)}
-          icon={
-            <SvgXml
-              xml={selectedCategory.includes(category) ? SelectedIconXml[idx] : IconXml[idx]}
-            />
-          }
-          onClick={() => onSelect(category)}
-        />
-      ))}
+    <View>
+      <View style={styles.tagList}>
+        {totalCategory.map((category, idx) => (
+          <IconTag
+            key={category}
+            title={category}
+            isSelected={selectedCategory.includes(category)}
+            backgroundColor={handleBackgroundColor(idx)}
+            icon={
+              <SvgXml
+                xml={selectedCategory.includes(category) ? SelectedIconXml[idx] : IconXml[idx]}
+              />
+            }
+            onClick={() => onSelect(category)}
+          />
+        ))}
+        {customCategory.map((category, idx) => (
+          <IconTag
+            key={category}
+            title={category}
+            isSelected={selectedCategory.includes(category)}
+            backgroundColor={handleBackgroundColor(idx)}
+            onClick={() => onSelect(category)}
+          />
+        ))}
+      </View>
+
       <View style={{ ...styles.addBtn, borderColor: `${theme.colors.graphic.black}10` }}>
         <Pressable
           style={{ flexDirection: 'row', alignItems: 'center' }}
@@ -74,11 +88,15 @@ const styles = StyleSheet.create({
     margin: 8,
   },
   addBtn: {
+    justifyContent: 'center',
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderRadius: 30,
     borderWidth: 1,
     borderStyle: 'solid',
     marginVertical: 8,
+    width: 110,
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
 });

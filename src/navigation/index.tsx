@@ -64,7 +64,7 @@ export function RootScreen() {
           <Text> NicknameCreation.tsx</Text>
         </View>
       </Pressable>
-      <Pressable onPress={() => navigation.navigate('InterestChooseTemp')}>
+      <Pressable onPress={() => navigation.navigate('InterestChoose')}>
         <View
           style={{
             backgroundColor: 'skyblue',
@@ -72,7 +72,18 @@ export function RootScreen() {
             width: 150,
           }}
         >
-          <Text> InterestChooseTempScreen.tsx</Text>
+          <Text> InterestChooseScreen.tsx</Text>
+        </View>
+      </Pressable>
+      <Pressable onPress={() => navigation.navigate('ServiceIntroOne')}>
+        <View
+          style={{
+            backgroundColor: 'skyblue',
+            height: 100,
+            width: 150,
+          }}
+        >
+          <Text> ServiceIntroOneScreen.tsx</Text>
         </View>
       </Pressable>
       <Pressable onPress={() => navigation.navigate('ServiceIntroOne')}>
