@@ -54,100 +54,102 @@ const InsightSampleScreen = ({ navigation, route }) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <View
-        style={{
-          height: 90,
-          justifyContent: 'space-between',
-          marginBottom: 20,
-        }}
-      >
-        <HeaderText
-          header={`키위새님,\n이 인사이트 어때요?`}
-          subTitle={'인사이트를 읽고 반응을 남겨보세요!'}
-        />
-      </View>
-      <View
-        style={{
-          backgroundColor: theme.colors.brand.surface.container,
-          height: 300,
-          marginLeft: 10,
-          marginRight: 10,
-          marginBottom: 30,
-          borderRadius: 10,
-        }}
-      >
-        <View style={styles.Insight}>
-          <Text style={theme.fonts.text.body1.regular} numberOfLines={7} ellipsizeMode="tail">
-            {InsightText}
-          </Text>
-          <Pressable onPress={handlePressLink}>
-            <View style={styles.LinkTitle}>
+    <ScrollView>
+      <View style={styles.container}>
+        <View
+          style={{
+            height: 90,
+            justifyContent: 'space-between',
+            marginBottom: 20,
+          }}
+        >
+          <HeaderText
+            header={`키위새님,\n이 인사이트 어때요?`}
+            subTitle={'인사이트를 읽고 반응을 남겨보세요!'}
+          />
+        </View>
+        <View
+          style={{
+            backgroundColor: theme.colors.brand.surface.container,
+            height: 300,
+            marginLeft: 10,
+            marginRight: 10,
+            marginBottom: 30,
+            borderRadius: 10,
+          }}
+        >
+          <View style={styles.Insight}>
+            <Text style={theme.fonts.text.body1.regular} numberOfLines={7} ellipsizeMode="tail">
+              {InsightText}
+            </Text>
+            <Pressable onPress={handlePressLink}>
+              <View style={styles.LinkTitle}>
+                <Text
+                  style={{ color: `${theme.colors.graphic.black}50`, ...theme.fonts.text.caption1 }}
+                >
+                  {LinkTitle}
+                </Text>
+                <SvgXml xml={chevron_right} />
+              </View>
               <Text
                 style={{ color: `${theme.colors.graphic.black}50`, ...theme.fonts.text.caption1 }}
               >
-                {LinkTitle}
+                {Link}
               </Text>
-              <SvgXml xml={chevron_right} />
-            </View>
-            <Text
-              style={{ color: `${theme.colors.graphic.black}50`, ...theme.fonts.text.caption1 }}
-            >
-              {Link}
-            </Text>
-          </Pressable>
-        </View>
-      </View>
-      {reaction ? (
-        <>
-          <View style={styles.React}>
-            <View style={{ backgroundColor: theme.colors.graphic.white, ...styles.ReactionBar }}>
-              {REACTIONS.map((data) => (
-                <BezierAnimatedView
-                  key={data.xml}
-                  startMargin={100}
-                  endMargin={0}
-                  duration={700}
-                  bezier={data.bezier}
-                >
-                  <ReactIconButton
-                    xml={data.xml}
-                    backgroundColor={data.color}
-                    onClick={() => {
-                      return;
-                    }}
-                  />
-                </BezierAnimatedView>
-              ))}
-            </View>
+            </Pressable>
           </View>
-          <BezierAnimatedView
-            startMargin={100}
-            endMargin={0}
-            duration={700}
-            bezier={[0.5, 0, 0.5, 1.3]}
-          >
-            <ConditionalButton
-              isActive={true}
-              textColor={theme.colors.graphic.black}
-              color={theme.colors.brand.primary.main}
-              text={'완료'}
-              width={343}
-              onPress={handleCompletePress}
-            />
-          </BezierAnimatedView>
-        </>
-      ) : (
-        <ConditionalButton
-          isActive={true}
-          text="반응남기기"
-          color={theme.colors.brand.primary.container}
-          textColor={theme.colors.graphic.black}
-          width={150}
-          onPress={() => setReaction(true)}
-        />
-      )}
-    </View>
+        </View>
+        {reaction ? (
+          <>
+            <View style={styles.React}>
+              <View style={{ backgroundColor: theme.colors.graphic.white, ...styles.ReactionBar }}>
+                {REACTIONS.map((data) => (
+                  <BezierAnimatedView
+                    key={data.xml}
+                    startMargin={100}
+                    endMargin={0}
+                    duration={700}
+                    bezier={data.bezier}
+                  >
+                    <ReactIconButton
+                      xml={data.xml}
+                      backgroundColor={data.color}
+                      onClick={() => {
+                        return;
+                      }}
+                    />
+                  </BezierAnimatedView>
+                ))}
+              </View>
+            </View>
+            <BezierAnimatedView
+              startMargin={100}
+              endMargin={0}
+              duration={700}
+              bezier={[0.5, 0, 0.5, 1.3]}
+            >
+              <ConditionalButton
+                isActive={true}
+                textColor={theme.colors.graphic.black}
+                color={theme.colors.brand.primary.main}
+                text={'완료'}
+                width={343}
+                onPress={handleCompletePress}
+              />
+            </BezierAnimatedView>
+          </>
+        ) : (
+          <ConditionalButton
+            isActive={true}
+            text="반응남기기"
+            color={theme.colors.brand.primary.container}
+            textColor={theme.colors.graphic.black}
+            width={150}
+            onPress={() => setReaction(true)}
+          />
+        )}
+      </View>
+    </ScrollView>
   );
 };
 
