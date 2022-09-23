@@ -19,6 +19,17 @@ export function RootScreen() {
     <>
       <Text>{accessToken}</Text>
 
+      <Pressable onPress={() => navigation.navigate('BottomSheetExperimental')}>
+        <View
+          style={{
+            backgroundColor: 'pink',
+            width: 150,
+            height: 100,
+          }}
+        >
+          <Text> BottomSheetExperimental.tsx</Text>
+        </View>
+      </Pressable>
       <Pressable onPress={() => navigation.navigate('SignUp')}>
         <View
           style={{
@@ -68,6 +79,17 @@ export function RootScreen() {
         <View
           style={{
             backgroundColor: 'skyblue',
+            height: 100,
+            width: 150,
+          }}
+        >
+          <Text> ServiceIntroOneScreen.tsx</Text>
+        </View>
+      </Pressable>
+      <Pressable onPress={() => navigation.navigate('ServiceIntroOne')}>
+        <View
+          style={{
+            backgroundColor: 'purple',
             height: 100,
             width: 150,
           }}

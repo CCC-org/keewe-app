@@ -71,7 +71,7 @@ export default ConditionalButton;
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 25,
+    marginBottom: 0,
     alignItems: 'center',
     justifyContent: 'flex-end',
   },

@@ -1,9 +1,11 @@
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, Dimensions } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import OnboardingIntroHeaderButton from '../../components/buttons/OnboardingIntroHeaderButton';
 import HeaderText from '../../components/texts/HeaderText';
 import Stepper from '../../components/stepper/Stepper';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
+
+const fullScreenHeight = Dimensions.get('window').height;
 
 const ServiceIntroOneScreen = ({ navigation, route }) => {
   const styles = createStyle();
@@ -38,30 +40,33 @@ const ServiceIntroOneScreen = ({ navigation, route }) => {
 
 export default ServiceIntroOneScreen;
 
-function createStyle() {
+export function createStyle() {
   return StyleSheet.create({
     container: {
       backgroundColor: '#fff',
       alignItems: 'center',
       flex: 1,
       flexDirection: 'column',
-      justifyContent: 'space-between',
+      justifyContent: 'flex-start',
     },
 
     image: {
-      height: 448,
+      borderColor: 'red',
+      width: '100%',
+      height: fullScreenHeight * 0.62,
     },
     titleContainer: {
       minWidth: '92%',
     },
     bottom: {
-      display: 'flex',
-      flexDirection: 'column',
+      // display: 'flex',
+      // flexDirection: 'column',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginTop: 40,
       paddingHorizontal: 10,
-      height: 280,
+      paddingTop: 30,
+      paddingBottom: 0,
+      height: fullScreenHeight * 0.38,
     },
 
     nextButtonWithStepper: {
