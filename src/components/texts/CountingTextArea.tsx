@@ -33,6 +33,7 @@ const CountingTextArea = (props: CountingTextAreaProps) => {
         <View style={styles.intro}>
           <TextInput
             value={inputValue}
+            autoFocus={true}
             placeholder={placeholder}
             onChangeText={(inputValue) => setInputValue(inputValue)}
             style={styles.input}
