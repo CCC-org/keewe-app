@@ -1,9 +1,9 @@
 import { Feather } from '@expo/vector-icons';
-import BottomSheet, { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import axios from 'axios';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Switch, ToggleButton, useTheme } from 'react-native-paper';
+import { Switch, useTheme } from 'react-native-paper';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
 import BottomSheetHeader from '../../components/header/BottomSheetHeader';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
