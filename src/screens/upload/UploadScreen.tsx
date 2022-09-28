@@ -1,21 +1,23 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
+import { Feather } from '@expo/vector-icons';
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
-import CountingTextArea from '../../components/texts/CountingTextArea';
-import BottomSheetHeader from '../../components/header/BottomSheetHeader';
-import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
-import HeaderRightButton from '../../components/header/HeaderRightButton';
-import { Button } from 'react-native-paper';
-import CustomBackdrop from '../../components/backdrops/BackDrop';
 import axios from 'axios';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Switch, ToggleButton, useTheme } from 'react-native-paper';
+import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
+import BottomSheetHeader from '../../components/header/BottomSheetHeader';
+import HeaderRightButton from '../../components/header/HeaderRightButton';
+import CountingTextArea from '../../components/texts/CountingTextArea';
 
 const UploadScreen = ({ route, navigation }) => {
   const [sheetIsOpen, setSheetIsOpen] = useState(false);
   const [linkText, setLinkText] = useState<string>('');
   const [insightText, setInsightText] = useState<string>('');
+  const [isSwitchOn, setIsSwitchOn] = useState(false);
+  const [isValidSite, setIsValidSite] = useState(false);
   // ref
   const bottomSheetRef = useRef<BottomSheet>(null);
-
+  const theme = useTheme();
   // variables
   // const snapPoints = useMemo(() => ['90%'], []);
 
@@ -50,10 +52,12 @@ const UploadScreen = ({ route, navigation }) => {
         // valid link.
         console.log('valid response', response.status);
         setSheetIsOpen(false);
+        setIsValidSite(true);
         bottomSheetRef.current?.close();
       }
     } catch (error) {
-      console.log(error);
+      alert(error);
+      setIsValidSite(false);
       console.log('not valid url');
     }
   };
@@ -84,6 +88,7 @@ const UploadScreen = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <InsightLinkTriggerButton onPress={handleSheetControl} />
+      <Text>{isValidSite ? 'valid site' : 'not valid site'}</Text>
       <View style={styles.textContainer}>
         <CountingTextArea
           style={styles.textarea}
@@ -97,19 +102,24 @@ const UploadScreen = ({ route, navigation }) => {
       </View>
       <View style={styles.bottomContainer}>
         <View>
-          <Text>챌린지 명</Text>
-          <Text>6/12번째 기록 중</Text>
+          <Text style={theme.fonts.text.body1.bold}>챌린지 명</Text>
+          <Text style={theme.fonts.text.body2.regular}>6/12번째 기록 중</Text>
         </View>
         <View>
-          <Text>Toggle Button</Text>
+          <Switch
+            value={isSwitchOn}
+            onValueChange={() => setIsSwitchOn(!isSwitchOn)}
+            style={styles.switch}
+            color={'#b0e817'}
+          />
         </View>
       </View>
       <View style={styles.bottomContainer}>
         <View>
-          <Text>폴더</Text>
+          <Text style={theme.fonts.text.body1.bold}>폴더</Text>
         </View>
         <View>
-          <Text>right arrow</Text>
+          <Feather name="chevron-right" size={24} color="black" />
         </View>
       </View>
 
@@ -159,11 +169,13 @@ const styles = StyleSheet.create({
     borderBottomColor: '#12131410',
   },
   bottomContainer: {
-    borderWidth: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 12,
+  },
+  switch: {
+    transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }],
   },
 });
 
