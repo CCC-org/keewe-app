@@ -7,14 +7,27 @@ interface CountingTextAreaProps {
   inputValue: string;
   placeholder: string;
   setInputValue: (input: string) => void;
+  limit?: number;
+  style?: any;
+  height?: number;
+  autoFocus?: boolean;
 }
 
 const CountingTextArea = (props: CountingTextAreaProps) => {
-  const { infoText, inputValue, placeholder, setInputValue } = props;
+  const {
+    infoText,
+    inputValue,
+    placeholder,
+    setInputValue,
+    style,
+    limit,
+    height,
+    autoFocus = true,
+  } = props;
   const theme = useTheme();
   const [letterNumberColor, setLetterNumberColor] = useState<string>('grey');
   useEffect(() => {
-    if (inputValue.length > 150) {
+    if (inputValue.length > (limit ? limit : 150)) {
       setLetterNumberColor('red');
     } else {
       setLetterNumberColor('rgba(18, 19, 20, 0.5)');
@@ -22,7 +35,7 @@ const CountingTextArea = (props: CountingTextAreaProps) => {
   }, [inputValue]);
   return (
     <>
-      <ScrollView>
+      <ScrollView style={style}>
         {infoText && (
           <View>
             <Text style={{ ...theme.fonts.text.caption1, marginLeft: 12, opacity: 0.5 }}>
@@ -30,10 +43,10 @@ const CountingTextArea = (props: CountingTextAreaProps) => {
             </Text>
           </View>
         )}
-        <View style={styles.intro}>
+        <View style={{ ...styles.intro, height: height ?? 140 }}>
           <TextInput
             value={inputValue}
-            autoFocus={true}
+            autoFocus={autoFocus}
             placeholder={placeholder}
             onChangeText={(inputValue) => setInputValue(inputValue)}
             style={styles.input}
@@ -43,7 +56,7 @@ const CountingTextArea = (props: CountingTextAreaProps) => {
             selectionColor={'black'}
           />
           <Text style={{ ...styles.letterNumber, color: letterNumberColor }}>
-            {150 - inputValue.length}
+            {(limit ? limit : 150) - inputValue.length}
           </Text>
         </View>
       </ScrollView>

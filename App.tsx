@@ -156,7 +156,14 @@ export default function App() {
                 </Stack.Group>
                 {/* 실험적 그룹 */}
                 <Stack.Group>
-                  <Stack.Screen name={'Upload'} component={UploadScreen} />
+                  <Stack.Screen
+                    name={'Upload'}
+                    component={UploadScreen}
+                    options={{
+                      title: '',
+                      cardStyle: { backgroundColor: 'white' },
+                    }}
+                  />
                 </Stack.Group>
               </Stack.Navigator>
             </QueryClientProvider>
