@@ -10,7 +10,7 @@ const HeaderBackButton = () => {
 
   return (
     <>
-      <Pressable onPress={() => navigation.goBack()}>
+      <Pressable style={{ marginLeft: 18 }} onPress={() => navigation.goBack()}>
         <Icon name="arrowleft" size={30} color={theme.colors.graphic.black} />
       </Pressable>
     </>
