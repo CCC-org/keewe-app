@@ -19,6 +19,17 @@ export function RootScreen() {
     <>
       <Text>{accessToken}</Text>
 
+      <Pressable onPress={() => navigation.navigate('TempSheet')}>
+        <View
+          style={{
+            backgroundColor: 'pink',
+            width: 150,
+            height: 100,
+          }}
+        >
+          <Text> TempSheetScreen.tsx</Text>
+        </View>
+      </Pressable>
       <Pressable onPress={() => navigation.navigate('Upload')}>
         <View
           style={{

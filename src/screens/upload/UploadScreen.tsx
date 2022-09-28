@@ -1,5 +1,5 @@
 import { Feather } from '@expo/vector-icons';
-import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import axios from 'axios';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
@@ -16,12 +16,12 @@ const UploadScreen = ({ route, navigation }) => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [isValidSite, setIsValidSite] = useState(false);
   // ref
-  const bottomSheetRef = useRef<BottomSheet>(null);
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const theme = useTheme();
   // variables
   // const snapPoints = useMemo(() => ['90%'], []);
 
-  const snapPoints = useMemo(() => ['25%', '50%', '90%'], []);
+  const snapPoints = useMemo(() => ['30%', '50%', '90%'], []);
 
   // callbacks
   const handleSheetChanges = useCallback((index: number) => {
@@ -53,7 +53,7 @@ const UploadScreen = ({ route, navigation }) => {
         console.log('valid response', response.status);
         setSheetIsOpen(false);
         setIsValidSite(true);
-        bottomSheetRef.current?.close();
+        bottomSheetModalRef.current?.close();
       }
     } catch (error) {
       alert(error);
@@ -63,24 +63,18 @@ const UploadScreen = ({ route, navigation }) => {
   };
 
   const handleSheetControl = () => {
-    console.log(sheetIsOpen);
-    if (sheetIsOpen) {
-      bottomSheetRef.current?.close();
-      setSheetIsOpen(false);
-    } else {
-      bottomSheetRef.current?.expand();
-      setSheetIsOpen(true);
-    }
+    console.log('clicked');
+    bottomSheetModalRef.current?.present();
   };
 
   // close the bottomSheet when the user clicks outside of it
   const handleSheetBackdropPress = () => {
-    bottomSheetRef.current?.close();
+    bottomSheetModalRef.current?.close();
     setSheetIsOpen(false);
   };
 
   const renderBackdrop = useCallback(
-    (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={2} />,
+    (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
     [],
   );
 
@@ -123,9 +117,9 @@ const UploadScreen = ({ route, navigation }) => {
         </View>
       </View>
 
-      <BottomSheet
-        ref={bottomSheetRef}
-        index={-1}
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        index={1}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
         backdropComponent={renderBackdrop}
@@ -144,7 +138,7 @@ const UploadScreen = ({ route, navigation }) => {
             autoFocus={false}
           />
         </View>
-      </BottomSheet>
+      </BottomSheetModal>
     </View>
   );
 };
