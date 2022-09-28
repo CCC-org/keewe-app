@@ -19,7 +19,7 @@ import { RootScreen } from './src/navigation';
 import { Provider as PaperProvider } from 'react-native-paper';
 import light from './src/theme/light';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+//import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ChallengeSubjectCreationScreen from './src/screens/challenge/ChallengeSubjectCreationScreen';
 import Challenges from './stack/Challenges';
 import ServiceIntroOneScreen from './src/screens/onboarding/ServiceIntroOneScreen';
@@ -29,6 +29,7 @@ import ServiceIntroTwoScreen from './src/screens/onboarding/ServiceIntroTwoScree
 import ServiceIntroThreeScreen from './src/screens/onboarding/ServiceIntroThreeScreen';
 import BottomSheetExperimentalScreen from './src/screens/BottomSheetExperimentalScreen';
 import { createStackNavigator } from '@react-navigation/stack';
+import { TransitionPresets } from '@react-navigation/stack';
 
 const queryClient = new QueryClient();
 // const Stack = createNativeStackNavigator();
@@ -52,13 +53,15 @@ export default function App() {
             <QueryClientProvider client={queryClient}>
               <Stack.Navigator
                 screenOptions={{
+                  cardStyle: { backgroundColor: 'white' },
                   // contentStyle: { backgroundColor: 'white' },
                   headerTitleAlign: 'center',
-                  // animation: 'slide_from_right',
                   headerTitleStyle: {
                     fontSize: 16,
                   },
                   headerShadowVisible: false,
+                  ...TransitionPresets.SlideFromRightIOS,
+                  // animation: 'slide_from_right',
                   // animationDuration: 1000,
                 }}
               >
