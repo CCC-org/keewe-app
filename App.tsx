@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import AppLoading from 'expo-app-loading';
-import * as Font from 'expo-font';
 import HeaderBackButton from './src/components/header/HeaderBackButton';
 import { NavigationContainer } from '@react-navigation/native';
 import useCachedResources from './src/utils/hooks/useCachedResources';
@@ -19,16 +17,14 @@ import { RootScreen } from './src/navigation';
 import { Provider as PaperProvider } from 'react-native-paper';
 import light from './src/theme/light';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ChallengeSubjectCreationScreen from './src/screens/challenge/ChallengeSubjectCreationScreen';
-import Challenges from './stack/Challenges';
 import ServiceIntroOneScreen from './src/screens/onboarding/ServiceIntroOneScreen';
 import { View } from 'react-native';
 import OnboardingIntroHeaderButton from './src/components/buttons/OnboardingIntroHeaderButton';
 import ServiceIntroTwoScreen from './src/screens/onboarding/ServiceIntroTwoScreen';
 import ServiceIntroThreeScreen from './src/screens/onboarding/ServiceIntroThreeScreen';
-import BottomSheetExperimentalScreen from './src/screens/BottomSheetExperimentalScreen';
 import { createStackNavigator } from '@react-navigation/stack';
+import UploadScreen from './src/screens/upload/UploadScreen';
 
 const queryClient = new QueryClient();
 // const Stack = createNativeStackNavigator();
@@ -160,10 +156,7 @@ export default function App() {
                 </Stack.Group>
                 {/* 실험적 그룹 */}
                 <Stack.Group>
-                  <Stack.Screen
-                    name={'BottomSheetExperimental'}
-                    component={BottomSheetExperimentalScreen}
-                  />
+                  <Stack.Screen name={'Upload'} component={UploadScreen} />
                 </Stack.Group>
               </Stack.Navigator>
             </QueryClientProvider>

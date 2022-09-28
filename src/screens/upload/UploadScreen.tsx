@@ -1,22 +1,27 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
-import { ScrollView } from 'react-native-gesture-handler';
-import CountingTextArea from '../components/texts/CountingTextArea';
+import CountingTextArea from '../../components/texts/CountingTextArea';
+import BottomSheetHeader from '../../components/header/BottomSheetHeader';
+import { Feather } from '@expo/vector-icons';
 
-const App = () => {
+const UploadScreen = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [text, setText] = useState('');
+  const [text, setText] = useState<string>('');
   // ref
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   // variables
-  const snapPoints = useMemo(() => ['10%', '50', '80%'], []);
+  const snapPoints = useMemo(() => ['80%'], []);
 
   // callbacks
   const handleSheetChanges = useCallback((index: number) => {
     console.log('handleSheetChanges', index);
   }, []);
+
+  const handlePress = () => {
+    alert('handlePress');
+  };
 
   // renders
   return (
@@ -27,15 +32,15 @@ const App = () => {
       {isOpen && (
         <BottomSheet
           ref={bottomSheetRef}
-          index={2}
+          index={0}
           snapPoints={snapPoints}
           onChange={handleSheetChanges}
         >
           <View style={styles.contentContainer}>
+            <BottomSheetHeader onPress={handlePress} conditionalValue={text} />
             <CountingTextArea
-              infoText="asdf"
               inputValue={text}
-              placeholder="adfdffdfdf"
+              placeholder="인사이트를 얻은 링크"
               setInputValue={setText}
             />
           </View>
@@ -54,7 +59,9 @@ const styles = StyleSheet.create({
   contentContainer: {
     width: '100%',
     height: '80%',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
   },
 });
 
-export default App;
+export default UploadScreen;

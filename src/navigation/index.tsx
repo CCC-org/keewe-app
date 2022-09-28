@@ -19,7 +19,7 @@ export function RootScreen() {
     <>
       <Text>{accessToken}</Text>
 
-      <Pressable onPress={() => navigation.navigate('BottomSheetExperimental')}>
+      <Pressable onPress={() => navigation.navigate('Upload')}>
         <View
           style={{
             backgroundColor: 'pink',
@@ -27,7 +27,7 @@ export function RootScreen() {
             height: 100,
           }}
         >
-          <Text> BottomSheetExperimental.tsx</Text>
+          <Text> UploadScreen.tsx</Text>
         </View>
       </Pressable>
       <Pressable onPress={() => navigation.navigate('SignUp')}>

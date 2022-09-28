@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useTheme } from 'react-native-paper';
 
 interface CountingTextAreaProps {
-  infoText: string;
+  infoText?: string;
   inputValue: string;
   placeholder: string;
   setInputValue: (input: string) => void;
@@ -23,11 +23,13 @@ const CountingTextArea = (props: CountingTextAreaProps) => {
   return (
     <>
       <ScrollView>
-        <View>
-          <Text style={{ ...theme.fonts.text.caption1, marginLeft: 12, opacity: 0.5 }}>
-            {infoText}
-          </Text>
-        </View>
+        {infoText && (
+          <View>
+            <Text style={{ ...theme.fonts.text.caption1, marginLeft: 12, opacity: 0.5 }}>
+              {infoText}
+            </Text>
+          </View>
+        )}
         <View style={styles.intro}>
           <TextInput
             value={inputValue}
