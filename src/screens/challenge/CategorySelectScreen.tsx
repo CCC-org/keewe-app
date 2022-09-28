@@ -16,7 +16,10 @@ const CategorySelectScreen = ({ navigation, route }) => {
 
   const handleSelectTag = (tag: string) =>
     setSelectedCategory(selectedCategory === tag ? undefined : tag);
-  const handleCreateCategory = () => navigation.navigate('CategoryCreate', { customCategory });
+  //  const handleCreateCategory = () => navigation.navigate('CategoryCreate', { customCategory });
+  const handleCreateCategory = () =>
+    navigation.navigate('CategoryCreate', { toScreen: 'CategorySelect' });
+
   const handleNextClick = () =>
     navigation.navigate('ChallengeInfo', { form: { selectedCategory } });
 

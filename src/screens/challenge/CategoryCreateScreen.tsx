@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useTheme } from 'react-native-paper';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import SmallTextInput from '../../components/texts/SmallTextInput';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
 const CategoryCreateScreen = ({ navigation, route }) => {
   const [customCategory, setCustomCategory] = useState<string[]>([]);
@@ -11,7 +11,7 @@ const CategoryCreateScreen = ({ navigation, route }) => {
   const [input, setInput] = useState<string>('');
 
   const handleComplete = () => {
-    navigation.navigate('CategorySelect', {
+    navigation.navigate(route.params?.toScreen, {
       selectedCategory: input,
       customCategory: [input, ...customCategory],
     });
