@@ -66,11 +66,11 @@ const UploadScreen = ({ route, navigation }) => {
     [],
   );
 
-  const handleContentSizeChange = (event: { nativeEvent: { contentSize: { height: number } } }) => {
+  const handleAreaSize = (event: { nativeEvent: { contentSize: { height: number } } }) => {
     const { height } = event.nativeEvent.contentSize;
     const vh = Dimensions.get('window').height;
     console.log(height, vh);
-    setTextInputHeight(height - 260);
+    setTextInputHeight(height - 240);
   };
 
   useEffect(() => {
@@ -81,24 +81,19 @@ const UploadScreen = ({ route, navigation }) => {
 
   console.log('textInputHeight: ', textInputHeight);
   return (
-    <ScrollView
-      ref={scrollViewRef}
-      style={styles.container}
-      // contentOffset={{ x: 0, y: textInputHeight - 200 }}
-    >
+    <ScrollView ref={scrollViewRef} style={styles.container}>
       <InsightLinkTriggerButton onPress={handleSheetControl} />
       <Text>{isValidSite ? 'valid site' : 'not valid sitee'}</Text>
       <View style={styles.textContainer}>
-        {/* <CountingTextArea
-          style={styles.textarea}
+        <AutoGrowScrollTextArea
+          onContentSizeChange={handleAreaSize}
           inputValue={insightText}
-          placeholder="인사이트를 입력해주세요."
           setInputValue={setInsightText}
+          placeholder="인사이트를 입력해주세요."
           limit={400}
           height={280}
           autoFocus={false}
-        /> */}
-        <AutoGrowScrollTextArea onContentSizeChange={handleContentSizeChange} />
+        />
       </View>
       <UploadBottomContainer isSwitchOn={isSwitchOn} setIsSwitchOn={setIsSwitchOn} />
 
