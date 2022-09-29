@@ -1,34 +1,25 @@
-import { Feather } from '@expo/vector-icons';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import axios from 'axios';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Switch, useTheme } from 'react-native-paper';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
 import BottomSheetHeader from '../../components/header/BottomSheetHeader';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
+import AutoGrowScrollTextArea from '../../components/texts/AutoGrowScrollTextArea';
 import CountingTextArea from '../../components/texts/CountingTextArea';
+import UploadBottomContainer from './UploadBottomContainer';
 
 const UploadScreen = ({ route, navigation }) => {
-  const [sheetIsOpen, setSheetIsOpen] = useState(false);
   const [linkText, setLinkText] = useState<string>('');
   const [insightText, setInsightText] = useState<string>('');
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [isValidSite, setIsValidSite] = useState(false);
-  // ref
+  const [textInputHeight, setTextInputHeight] = useState(0);
+
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const theme = useTheme();
-  // variables
-  // const snapPoints = useMemo(() => ['90%'], []);
 
   const snapPoints = useMemo(() => ['30%', '50%', '90%'], []);
 
-  // callbacks
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
-
-  // append headerRightButton
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -38,7 +29,7 @@ const UploadScreen = ({ route, navigation }) => {
           borderLine={false}
           disabled={true}
           text="완료"
-          handlePress={() => setSheetIsOpen(true)}
+          handlePress={() => alert('pressed')}
         />
       ),
     });
@@ -51,7 +42,6 @@ const UploadScreen = ({ route, navigation }) => {
       if (response.status === 200) {
         // valid link.
         console.log('valid response', response.status);
-        setSheetIsOpen(false);
         setIsValidSite(true);
         bottomSheetModalRef.current?.close();
       }
@@ -67,10 +57,8 @@ const UploadScreen = ({ route, navigation }) => {
     bottomSheetModalRef.current?.present();
   };
 
-  // close the bottomSheet when the user clicks outside of it
   const handleSheetBackdropPress = () => {
     bottomSheetModalRef.current?.close();
-    setSheetIsOpen(false);
   };
 
   const renderBackdrop = useCallback(
@@ -78,13 +66,30 @@ const UploadScreen = ({ route, navigation }) => {
     [],
   );
 
-  // renders
+  const handleContentSizeChange = (event: { nativeEvent: { contentSize: { height: number } } }) => {
+    const { height } = event.nativeEvent.contentSize;
+    const vh = Dimensions.get('window').height;
+    console.log(height, vh);
+    setTextInputHeight(height - 260);
+  };
+
+  useEffect(() => {
+    scrollViewRef.current?.scrollTo({ x: 0, y: textInputHeight, animated: true });
+  }, [textInputHeight]);
+
+  const scrollViewRef = useRef<ScrollView>(null);
+
+  console.log('textInputHeight: ', textInputHeight);
   return (
-    <View style={styles.container}>
+    <ScrollView
+      ref={scrollViewRef}
+      style={styles.container}
+      // contentOffset={{ x: 0, y: textInputHeight - 200 }}
+    >
       <InsightLinkTriggerButton onPress={handleSheetControl} />
-      <Text>{isValidSite ? 'valid site' : 'not valid site'}</Text>
+      <Text>{isValidSite ? 'valid site' : 'not valid sitee'}</Text>
       <View style={styles.textContainer}>
-        <CountingTextArea
+        {/* <CountingTextArea
           style={styles.textarea}
           inputValue={insightText}
           placeholder="인사이트를 입력해주세요."
@@ -92,36 +97,15 @@ const UploadScreen = ({ route, navigation }) => {
           limit={400}
           height={280}
           autoFocus={false}
-        />
+        /> */}
+        <AutoGrowScrollTextArea onContentSizeChange={handleContentSizeChange} />
       </View>
-      <View style={styles.bottomContainer}>
-        <View>
-          <Text style={theme.fonts.text.body1.bold}>챌린지 명</Text>
-          <Text style={theme.fonts.text.body2.regular}>6/12번째 기록 중</Text>
-        </View>
-        <View>
-          <Switch
-            value={isSwitchOn}
-            onValueChange={() => setIsSwitchOn(!isSwitchOn)}
-            style={styles.switch}
-            color={'#b0e817'}
-          />
-        </View>
-      </View>
-      <View style={styles.bottomContainer}>
-        <View>
-          <Text style={theme.fonts.text.body1.bold}>폴더</Text>
-        </View>
-        <View>
-          <Feather name="chevron-right" size={24} color="black" />
-        </View>
-      </View>
+      <UploadBottomContainer isSwitchOn={isSwitchOn} setIsSwitchOn={setIsSwitchOn} />
 
       <BottomSheetModal
         ref={bottomSheetModalRef}
         index={1}
         snapPoints={snapPoints}
-        onChange={handleSheetChanges}
         backdropComponent={renderBackdrop}
       >
         <View style={styles.contentContainer}>
@@ -139,7 +123,7 @@ const UploadScreen = ({ route, navigation }) => {
           />
         </View>
       </BottomSheetModal>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -161,15 +145,6 @@ const styles = StyleSheet.create({
   textContainer: {
     borderBottomWidth: 1,
     borderBottomColor: '#12131410',
-  },
-  bottomContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 12,
-  },
-  switch: {
-    transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }],
   },
 });
 

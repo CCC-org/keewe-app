@@ -34,33 +34,31 @@ const CountingTextArea = (props: CountingTextAreaProps) => {
     }
   }, [inputValue]);
   return (
-    <>
-      <ScrollView style={style}>
-        {infoText && (
-          <View>
-            <Text style={{ ...theme.fonts.text.caption1, marginLeft: 12, opacity: 0.5 }}>
-              {infoText}
-            </Text>
-          </View>
-        )}
-        <View style={{ ...styles.intro, height: height ?? 140 }}>
-          <TextInput
-            value={inputValue}
-            autoFocus={autoFocus}
-            placeholder={placeholder}
-            onChangeText={(inputValue) => setInputValue(inputValue)}
-            style={styles.input}
-            // multiline sets texts ios to top, android to center.
-            // needs textAlignVertical to top on android
-            multiline={true}
-            selectionColor={'black'}
-          />
-          <Text style={{ ...styles.letterNumber, color: letterNumberColor }}>
-            {(limit ? limit : 150) - inputValue.length}
+    <ScrollView style={style}>
+      {infoText && (
+        <View>
+          <Text style={{ ...theme.fonts.text.caption1, marginLeft: 12, opacity: 0.5 }}>
+            {infoText}
           </Text>
         </View>
-      </ScrollView>
-    </>
+      )}
+      <View style={{ ...styles.intro, height: height ?? 140 }}>
+        <TextInput
+          value={inputValue}
+          autoFocus={autoFocus}
+          placeholder={placeholder}
+          onChangeText={(inputValue) => setInputValue(inputValue)}
+          style={styles.input}
+          // multiline sets texts ios to top, android to center.
+          // needs textAlignVertical to top on android
+          multiline={true}
+          selectionColor={'black'}
+        />
+        <Text style={{ ...styles.letterNumber, color: letterNumberColor }}>
+          {(limit ? limit : 150) - inputValue.length}
+        </Text>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -77,6 +75,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
     marginBottom: 32,
     height: 140,
+    maxHeight: 'auto',
   },
   input: {
     flex: 1,
