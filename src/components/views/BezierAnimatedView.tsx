@@ -29,9 +29,7 @@ const BezierAnimatedView = ({
 
   return (
     <>
-      <Animated.View style={{ overflow: 'hidden', marginTop: marginValue }}>
-        {children}
-      </Animated.View>
+      <Animated.View style={{ marginTop: marginValue }}>{children}</Animated.View>
     </>
   );
 };

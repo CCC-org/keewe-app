@@ -1,6 +1,6 @@
 /* eslint-disable quotes */
 import React, { useState, useEffect } from 'react';
-import { Pressable, Text, View, StyleSheet } from 'react-native';
+import { Pressable, Text, View, StyleSheet, ScrollView } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import { useTheme } from 'react-native-paper';
 import HeaderText from '../../components/texts/HeaderText';
@@ -23,6 +23,7 @@ const InsightSampleScreen = ({ navigation, route }) => {
 
   const handleSkipPress = () => {
     //skip
+    navigation.navigate('ServiceIntroOne');
   };
 
   const handlePressLink = () => {
@@ -190,6 +191,7 @@ const styles = StyleSheet.create({
   React: {
     display: 'flex',
     height: 200,
+    overflow: 'visible',
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
