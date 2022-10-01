@@ -7,6 +7,7 @@ import BottomSheetHeader from '../../components/header/BottomSheetHeader';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import AutoGrowScrollTextArea from '../../components/texts/AutoGrowScrollTextArea';
 import CountingTextArea from '../../components/texts/CountingTextArea';
+import { backButtonModalClose } from '../../utils/helper/backbuttonModalClose';
 import UploadBottomContainer from './UploadBottomContainer';
 
 const UploadScreen = ({ route, navigation }) => {
@@ -87,16 +88,8 @@ const UploadScreen = ({ route, navigation }) => {
   console.log('offSet: ', offSet);
   console.log('-----------------------');
 
-  useEffect(() => {
-    const backAction = () => {
-      bottomSheetModalRef.current?.close();
-      return true;
-    };
-
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
-
-    return () => backHandler.remove();
-  }, []);
+  // appends event handler for android back button to close modal.
+  backButtonModalClose(bottomSheetModalRef);
 
   return (
     <ScrollView ref={scrollViewRef} scrollToOverflowEnabled={true} style={styles.container}>
