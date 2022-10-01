@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { Switch, useTheme } from 'react-native-paper';
 import { Feather } from '@expo/vector-icons';
@@ -6,8 +6,13 @@ import { Feather } from '@expo/vector-icons';
 interface UploadBottomContainerProps {
   isSwitchOn: boolean;
   setIsSwitchOn: React.Dispatch<React.SetStateAction<boolean>>;
+  presentFolderSheet: () => void;
 }
-const UploadBottomContainer = ({ isSwitchOn, setIsSwitchOn }: UploadBottomContainerProps) => {
+const UploadBottomContainer = ({
+  isSwitchOn,
+  setIsSwitchOn,
+  presentFolderSheet,
+}: UploadBottomContainerProps) => {
   // console log the components height when it is rendered
   const onLayout = (event: any) => {
     console.log('onLayout', event.nativeEvent.layout.height);
@@ -30,14 +35,14 @@ const UploadBottomContainer = ({ isSwitchOn, setIsSwitchOn }: UploadBottomContai
           />
         </View>
       </View>
-      <View style={styles.bottomContainer}>
+      <Pressable style={styles.bottomContainer} onPress={presentFolderSheet}>
         <View>
           <Text style={theme.fonts.text.body1.bold}>폴더</Text>
         </View>
         <View>
           <Feather name="chevron-right" size={24} color="black" />
         </View>
-      </View>
+      </Pressable>
     </View>
   );
 };

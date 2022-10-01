@@ -6,28 +6,23 @@ import { useTheme } from 'react-native-paper';
 
 interface BottomSheetHeaderProps {
   onPress: () => void;
-  conditionalValue: string;
-  handleSheetController: () => void;
+  onLeftButtonPress: () => void;
+  title: string;
+  headerRightButton: () => JSX.Element;
 }
 
 const BottomSheetHeader = ({
   onPress,
-  conditionalValue,
-  handleSheetController,
+  onLeftButtonPress,
+  title,
+  headerRightButton,
 }: BottomSheetHeaderProps) => {
   const theme = useTheme();
   return (
     <View style={styles.container}>
-      <AntDesign name="arrowleft" size={24} color="black" onPress={handleSheetController} />
-      <Text style={{ ...theme.fonts.text.body1.bold, ...styles.text }}>링크</Text>
-      <HeaderRightButton
-        text="완료"
-        backGroundColor={conditionalValue.length ? '#b0e817' : '#12131420'}
-        textColor={conditionalValue.length ? 'black' : '#ffffff'}
-        disabled={false}
-        borderLine={false}
-        handlePress={onPress}
-      />
+      <AntDesign name="arrowleft" size={24} color="black" onPress={onLeftButtonPress} />
+      <Text style={{ ...theme.fonts.text.body1.bold, ...styles.text }}>{title}</Text>
+      {headerRightButton()}
     </View>
   );
 };
