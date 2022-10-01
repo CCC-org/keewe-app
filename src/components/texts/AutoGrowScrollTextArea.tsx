@@ -35,6 +35,7 @@ const AutoGrowScrollTextArea = ({
         activeUnderlineColor="white"
         selectionColor="black"
         underlineColor="white"
+        maxLength={limit ? limit : 400}
       />
       <View style={styles.letterNumberContainer}>
         <Text style={styles.limit}>{(limit ? limit : 400) - inputValue.length}</Text>

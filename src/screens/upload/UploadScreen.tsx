@@ -1,7 +1,7 @@
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import axios from 'axios';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { BackHandler, Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
 import BottomSheetHeader from '../../components/header/BottomSheetHeader';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
@@ -14,11 +14,11 @@ const UploadScreen = ({ route, navigation }) => {
   const [insightText, setInsightText] = useState<string>('');
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [isValidSite, setIsValidSite] = useState(false);
-  const [textInputHeight, setTextInputHeight] = useState(0);
+  const [offSet, setOffSet] = useState(0);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
-  const snapPoints = useMemo(() => ['30%', '50%', '90%'], []);
+  const snapPoints = useMemo(() => ['30%', '50%', '80%'], []);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -69,28 +69,48 @@ const UploadScreen = ({ route, navigation }) => {
   const handleAreaSize = (event: { nativeEvent: { contentSize: { height: number } } }) => {
     const { height } = event.nativeEvent.contentSize;
     const vh = Dimensions.get('window').height;
-    console.log(height, vh);
-    setTextInputHeight(height - 240);
+    const FACTOR = 3.4;
+    const thirdOfVh = vh / FACTOR;
+    console.log('height: ', height);
+    console.log('vh: ', vh);
+    console.log('thirdOfVh: ', thirdOfVh);
+    const OFFSET = height - thirdOfVh;
+    setOffSet(OFFSET);
   };
 
   useEffect(() => {
-    scrollViewRef.current?.scrollTo({ x: 0, y: textInputHeight, animated: true });
-  }, [textInputHeight]);
+    scrollViewRef.current?.scrollTo({ x: 0, y: offSet, animated: true });
+  }, [offSet]);
 
   const scrollViewRef = useRef<ScrollView>(null);
 
-  console.log('textInputHeight: ', textInputHeight);
+  console.log('offSet: ', offSet);
+  console.log('-----------------------');
+
+  useEffect(() => {
+    const backAction = () => {
+      bottomSheetModalRef.current?.close();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+
+    return () => backHandler.remove();
+  }, []);
+
   return (
-    <ScrollView ref={scrollViewRef} style={styles.container}>
+    <ScrollView ref={scrollViewRef} scrollToOverflowEnabled={true} style={styles.container}>
       <InsightLinkTriggerButton onPress={handleSheetControl} />
-      <Text>{isValidSite ? 'valid site' : 'not valid sitee'}</Text>
+      {/* <Text style={{ color: 'red', fontSize: 22 }}>
+        {isValidSite ? '좋은 주소' : '좋지 않은 주소'}
+      </Text> */}
       <View style={styles.textContainer}>
         <AutoGrowScrollTextArea
           onContentSizeChange={handleAreaSize}
           inputValue={insightText}
           setInputValue={setInsightText}
           placeholder="인사이트를 입력해주세요."
-          limit={400}
+          limit={50}
           height={280}
           autoFocus={false}
         />
@@ -99,7 +119,7 @@ const UploadScreen = ({ route, navigation }) => {
 
       <BottomSheetModal
         ref={bottomSheetModalRef}
-        index={1}
+        index={2}
         snapPoints={snapPoints}
         backdropComponent={renderBackdrop}
       >
@@ -114,7 +134,7 @@ const UploadScreen = ({ route, navigation }) => {
             inputValue={linkText}
             placeholder="인사이트를 얻은 링크"
             setInputValue={setLinkText}
-            autoFocus={false}
+            autoFocus={true}
           />
         </View>
       </BottomSheetModal>

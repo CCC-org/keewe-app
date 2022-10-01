@@ -8,9 +8,14 @@ interface UploadBottomContainerProps {
   setIsSwitchOn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const UploadBottomContainer = ({ isSwitchOn, setIsSwitchOn }: UploadBottomContainerProps) => {
+  // console log the components height when it is rendered
+  const onLayout = (event: any) => {
+    console.log('onLayout', event.nativeEvent.layout.height);
+  };
+
   const theme = useTheme();
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={onLayout}>
       <View style={styles.bottomContainer}>
         <View>
           <Text style={theme.fonts.text.body1.bold}>챌린지 명</Text>

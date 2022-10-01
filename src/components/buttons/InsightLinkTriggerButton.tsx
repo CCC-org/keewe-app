@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingLeft: 16,
     borderColor: '#12131420',
+    marginBottom: 8,
   },
   text: {
     marginLeft: 8,
