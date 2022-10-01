@@ -1,13 +1,13 @@
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
-import axios from 'axios';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { BackHandler, Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
 import BottomSheetHeader from '../../components/header/BottomSheetHeader';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import AutoGrowScrollTextArea from '../../components/texts/AutoGrowScrollTextArea';
 import CountingTextArea from '../../components/texts/CountingTextArea';
 import { backButtonModalClose } from '../../utils/helper/backbuttonModalClose';
+import handleSheetLinkComplete from '../../utils/helper/fetchAPI/isValidLink';
 import UploadBottomContainer from './UploadBottomContainer';
 
 const UploadScreen = ({ route, navigation }) => {
@@ -17,7 +17,7 @@ const UploadScreen = ({ route, navigation }) => {
   const [isValidSite, setIsValidSite] = useState(false);
   const [offSet, setOffSet] = useState(0);
 
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const LinkSheetRef = useRef<BottomSheetModal>(null);
 
   const snapPoints = useMemo(() => ['30%', '50%', '80%'], []);
 
@@ -36,30 +36,13 @@ const UploadScreen = ({ route, navigation }) => {
     });
   }, [navigation]);
 
-  const handleSheetLinkComplete = async () => {
-    try {
-      const URL = linkText.includes('http') ? linkText : `http://${linkText}`;
-      const response = await axios.get(URL);
-      if (response.status === 200) {
-        // valid link.
-        console.log('valid response', response.status);
-        setIsValidSite(true);
-        bottomSheetModalRef.current?.close();
-      }
-    } catch (error) {
-      alert(error);
-      setIsValidSite(false);
-      console.log('not valid url');
-    }
-  };
-
   const handleSheetControl = () => {
     console.log('clicked');
-    bottomSheetModalRef.current?.present();
+    LinkSheetRef.current?.present();
   };
 
   const handleSheetBackdropPress = () => {
-    bottomSheetModalRef.current?.close();
+    LinkSheetRef.current?.close();
   };
 
   const renderBackdrop = useCallback(
@@ -89,14 +72,14 @@ const UploadScreen = ({ route, navigation }) => {
   console.log('-----------------------');
 
   // appends event handler for android back button to close modal.
-  backButtonModalClose(bottomSheetModalRef);
+  backButtonModalClose(LinkSheetRef);
 
   return (
     <ScrollView ref={scrollViewRef} scrollToOverflowEnabled={true} style={styles.container}>
-      <InsightLinkTriggerButton onPress={handleSheetControl} />
-      {/* <Text style={{ color: 'red', fontSize: 22 }}>
-        {isValidSite ? '좋은 주소' : '좋지 않은 주소'}
-      </Text> */}
+      <InsightLinkTriggerButton
+        onPress={handleSheetControl}
+        text={isValidSite ? 'VALID' : '인사이트를 입력해주세요.'}
+      />
       <View style={styles.textContainer}>
         <AutoGrowScrollTextArea
           onContentSizeChange={handleAreaSize}
@@ -111,7 +94,7 @@ const UploadScreen = ({ route, navigation }) => {
       <UploadBottomContainer isSwitchOn={isSwitchOn} setIsSwitchOn={setIsSwitchOn} />
 
       <BottomSheetModal
-        ref={bottomSheetModalRef}
+        ref={LinkSheetRef}
         index={2}
         snapPoints={snapPoints}
         backdropComponent={renderBackdrop}
@@ -119,7 +102,7 @@ const UploadScreen = ({ route, navigation }) => {
         <View style={styles.contentContainer}>
           <BottomSheetHeader
             handleSheetController={handleSheetBackdropPress}
-            onPress={handleSheetLinkComplete}
+            onPress={() => handleSheetLinkComplete(linkText, LinkSheetRef, setIsValidSite)}
             conditionalValue={linkText}
           />
 

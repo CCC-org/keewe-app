@@ -5,14 +5,15 @@ import { useTheme } from 'react-native-paper';
 
 interface InsightLinkTriggerButtonProps {
   onPress: () => void;
+  text: string;
 }
 
-const InsightLinkTriggerButton = ({ onPress }: InsightLinkTriggerButtonProps) => {
+const InsightLinkTriggerButton = ({ onPress, text }: InsightLinkTriggerButtonProps) => {
   const { fonts } = useTheme();
   return (
     <Pressable onPress={onPress} style={styles.container}>
       <Feather name="link-2" size={24} color="#12131450" />
-      <Text style={{ ...fonts.text.body1.regular, ...styles.text }}>인사이트를 얻은 링크</Text>
+      <Text style={{ ...fonts.text.body1.regular, ...styles.text }}>{text}</Text>
     </Pressable>
   );
 };
