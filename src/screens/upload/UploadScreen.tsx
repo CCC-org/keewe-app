@@ -1,6 +1,6 @@
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
 import BottomSheetHeader from '../../components/header/BottomSheetHeader';
@@ -19,10 +19,12 @@ const UploadScreen = ({ route, navigation }) => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [isValidSite, setIsValidSite] = useState(false);
   const [offSet, setOffSet] = useState(0);
-
+  const [scrollViewHeight, setScrollViewHeight] = useState(0);
+  const [inputHeight, setInputHeight] = useState(0);
+  const [initialVh, setInitialVh] = useState(0);
   const linkSheetRef = useRef<BottomSheetModal>(null);
   const folderSheetRef = useRef<BottomSheetModal>(null);
-
+  const scrollViewRef = useRef<ScrollView>(null);
   const snapPoints = useMemo(() => ['30%', '50%', '80%'], []);
 
   React.useLayoutEffect(() => {
@@ -53,83 +55,117 @@ const UploadScreen = ({ route, navigation }) => {
     [],
   );
 
-  const handleAreaSize = (event: { nativeEvent: { contentSize: { height: number } } }) => {
-    const { height } = event.nativeEvent.contentSize;
-    const vh = Dimensions.get('window').height;
-    const FACTOR = 3.4;
-    const thirdOfVh = vh / FACTOR;
-    console.log('height: ', height);
-    console.log('vh: ', vh);
-    console.log('thirdOfVh: ', thirdOfVh);
-    const OFFSET = height - thirdOfVh;
-    setOffSet(OFFSET);
+  const handleAreaSize = (width: number, scrollViewHeight: number) => {
+    // const { height } = event.nativeEvent.contentSize;
+    // const vh = Dimensions.get('window').height;
+    // const FACTOR = 3.4;
+    // const thirdOfVh = vh / FACTOR;
+    // const OFFSET = height - thirdOfVh;
+    // console.log('scrollViewHeight From contentsizeChange: ', scrollViewHeight);
+    // setOffSet(vh - scrollViewHeight);
   };
 
   useEffect(() => {
-    scrollViewRef.current?.scrollTo({ x: 0, y: offSet, animated: true });
+    scrollViewRef.current?.scrollTo({ y: offSet, animated: true });
   }, [offSet]);
+
+  console.log('root offset : ', offSet);
+  const vh = Dimensions.get('window').height;
+  // console.log('vh: ', vh);
+  // console.log('-----------');
 
   const checkIsValidSite = async () => {
     handleSheetLinkComplete(linkText, linkSheetRef, setIsValidSite);
   };
 
-  const scrollViewRef = useRef<ScrollView>(null);
+  const handleSizechange = (event) => {
+    // console.log('object');
+  };
 
-  // console.log('offSet: ', offSet);
-  // console.log('-----------------------');
-
-  // appends event handler for android back button to close modal.
-  backButtonModalClose(linkSheetRef);
   backButtonModalClose(folderSheetRef);
-
+  backButtonModalClose(linkSheetRef);
+  const viewRef = useRef<View>(null);
+  useEffect(() => {
+    // get the initial height of the view
+    setTimeout(() => {
+      viewRef.current?.measure((x, y, width, height) => {
+        // console.log('initial View height: ', height);
+        setInitialVh(height);
+      });
+    }, 500);
+  }, []);
   return (
-    <ScrollView ref={scrollViewRef} scrollToOverflowEnabled={true} style={styles.container}>
-      <InsightLinkTriggerButton
-        onPress={() => handleSheetPresent(linkSheetRef)}
-        text={isValidSite ? 'VALID' : '인사이트를 입력해주세요.'}
-      />
-      <View style={styles.textContainer}>
-        <AutoGrowScrollTextArea
-          onContentSizeChange={handleAreaSize}
-          inputValue={insightText}
-          setInputValue={setInsightText}
-          placeholder="인사이트를 입력해주세요."
-          limit={50}
-          height={280}
-          autoFocus={false}
+    <View style={{ flex: 1 }}>
+      <ScrollView
+        scrollToOverflowEnabled={true}
+        style={styles.container}
+        ref={scrollViewRef}
+        // onLayout={(event) => {
+        //   const { height } = event.nativeEvent.layout;
+        //   // console.log('scrollViewHeight: ', height);
+        //   setScrollViewHeight(height);
+        // }}
+        onContentSizeChange={handleAreaSize}
+      >
+        <InsightLinkTriggerButton
+          onPress={() => handleSheetPresent(linkSheetRef)}
+          text={isValidSite ? 'VALID' : '인사이트를 입력해주세요.'}
         />
-      </View>
-      <UploadBottomContainer
-        isSwitchOn={isSwitchOn}
-        setIsSwitchOn={setIsSwitchOn}
-        presentFolderSheet={() => handleSheetPresent(folderSheetRef)}
-      />
+        <View
+          ref={viewRef}
+          style={styles.textContainer}
+          onLayout={(e) => {
+            const { height, y } = e.nativeEvent.layout;
+            // console.log('ViewHeight from onLayout: ', height);
+            //          248          227
+            // console.log('right before setOffset: ', height, initialVh);
+            setOffSet(height - initialVh - 80);
+          }}
+        >
+          <AutoGrowScrollTextArea
+            // onContentSizeChange={handleAreaSize}
+            inputValue={insightText}
+            setInputValue={setInsightText}
+            placeholder="인사이트를 입력해주세요."
+            limit={50}
+            height={280}
+            autoFocus={false}
+          />
+        </View>
+        <UploadBottomContainer
+          isSwitchOn={isSwitchOn}
+          setIsSwitchOn={setIsSwitchOn}
+          presentFolderSheet={() => handleSheetPresent(folderSheetRef)}
+          setPosition={setScrollViewHeight}
+          insightText={insightText}
+        />
 
-      <BottomSheetModal
-        ref={linkSheetRef}
-        index={2}
-        snapPoints={snapPoints}
-        backdropComponent={renderBackdrop}
-      >
-        <LinkSheetContent
-          linkText={linkText}
-          setLinkText={setLinkText}
-          handleSheetComplete={checkIsValidSite}
-          onHeaderLeftPress={() => handleSheetClose(linkSheetRef)}
-        />
-      </BottomSheetModal>
-      <BottomSheetModal
-        ref={folderSheetRef}
-        index={2}
-        snapPoints={snapPoints}
-        backdropComponent={renderBackdrop}
-      >
-        <FolderSheetContent
-          handleSheetComplete={() => handleSheetClose(folderSheetRef)}
-          onHeaderLeftPress={() => handleSheetClose(folderSheetRef)}
-        />
-      </BottomSheetModal>
-    </ScrollView>
+        <BottomSheetModal
+          ref={linkSheetRef}
+          index={2}
+          snapPoints={snapPoints}
+          backdropComponent={renderBackdrop}
+        >
+          <LinkSheetContent
+            linkText={linkText}
+            setLinkText={setLinkText}
+            handleSheetComplete={checkIsValidSite}
+            onHeaderLeftPress={() => handleSheetClose(linkSheetRef)}
+          />
+        </BottomSheetModal>
+        <BottomSheetModal
+          ref={folderSheetRef}
+          index={2}
+          snapPoints={snapPoints}
+          backdropComponent={renderBackdrop}
+        >
+          <FolderSheetContent
+            handleSheetComplete={() => handleSheetClose(folderSheetRef)}
+            onHeaderLeftPress={() => handleSheetClose(folderSheetRef)}
+          />
+        </BottomSheetModal>
+      </ScrollView>
+    </View>
   );
 };
 

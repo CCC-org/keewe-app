@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Switch, useTheme } from 'react-native-paper';
 import { Feather } from '@expo/vector-icons';
 
@@ -7,20 +7,22 @@ interface UploadBottomContainerProps {
   isSwitchOn: boolean;
   setIsSwitchOn: React.Dispatch<React.SetStateAction<boolean>>;
   presentFolderSheet: () => void;
+  setPosition: React.Dispatch<React.SetStateAction<number>>;
+  insightText: string;
 }
 const UploadBottomContainer = ({
   isSwitchOn,
   setIsSwitchOn,
+  insightText,
   presentFolderSheet,
 }: UploadBottomContainerProps) => {
   // console log the components height when it is rendered
-  const onLayout = (event: any) => {
-    console.log('onLayout', event.nativeEvent.layout.height);
-  };
 
   const theme = useTheme();
+  const containerRef = useRef<View>(null);
+
   return (
-    <View style={styles.container} onLayout={onLayout}>
+    <View style={styles.container}>
       <View style={styles.bottomContainer}>
         <View>
           <Text style={theme.fonts.text.body1.bold}>챌린지 명</Text>

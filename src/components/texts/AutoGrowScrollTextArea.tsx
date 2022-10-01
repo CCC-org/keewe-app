@@ -10,7 +10,7 @@ interface AutoGrowScrollTextAreaProps {
   style?: any;
   height?: number;
   autoFocus?: boolean;
-  onContentSizeChange: (event: any) => void;
+  onContentSizeChange?: (event: any) => void;
 }
 
 const AutoGrowScrollTextArea = ({
@@ -31,11 +31,14 @@ const AutoGrowScrollTextArea = ({
         onChangeText={(inputValue) => setInputValue(inputValue)}
         multiline={true}
         numberOfLines={10}
-        onContentSizeChange={onContentSizeChange}
+        // onContentSizeChange={onContentSizeChange}
+
         activeUnderlineColor="white"
         selectionColor="black"
         underlineColor="white"
         maxLength={limit ? limit : 400}
+        //ios
+        scrollEnabled={false}
       />
       <View style={styles.letterNumberContainer}>
         <Text style={styles.limit}>{(limit ? limit : 400) - inputValue.length}</Text>

@@ -10,11 +10,11 @@ export function backButtonModalClose(modalRef) {
   useEffect(() => {
     const backAction = () => {
       modalRef.current?.close();
+
       return true;
     };
+    console.log('clicked');
 
     const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
-
-    return () => backHandler.remove();
   }, []);
 }

@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { Pressable, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { getAccessToken } from '../utils/hooks/asyncStorage/Login';
 
@@ -16,7 +16,7 @@ export function RootScreen() {
   return (
     // [HOW TO]
     // 새로운 링크는 임시적으로 Pressable을 그대로 따라하시고, onPress함수에 navigate 전달인자로 App.tsx의 Stack.Screen.name을 넘겨주시면 됨.
-    <>
+    <ScrollView>
       <Text>{accessToken}</Text>
 
       <Pressable onPress={() => navigation.navigate('TempSheet')}>
@@ -108,7 +108,7 @@ export function RootScreen() {
           <Text> ServiceIntroOneScreen.tsx</Text>
         </View>
       </Pressable>
-    </>
+    </ScrollView>
     /*
     <Pressable onPress={() => navigation.navigate('Stack.screen.name String')}>
       <View
