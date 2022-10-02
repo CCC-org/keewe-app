@@ -1,17 +1,15 @@
+import { LinkPreview } from '@flyerhq/react-native-link-preview';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
-import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
-import BottomSheetHeader from '../../components/header/BottomSheetHeader';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import AutoGrowScrollTextArea from '../../components/texts/AutoGrowScrollTextArea';
-import CountingTextArea from '../../components/texts/CountingTextArea';
 import {
   backButtonModalClose,
   handleSheetClose,
   handleSheetPresent,
-} from '../../utils/helper/bottomSheetUtils/backbuttonModalClose';
+} from '../../utils/helper/bottomSheetUtils/bottomSheetUtils';
 import handleSheetLinkComplete from '../../utils/helper/fetchAPI/isValidLink';
 import FolderSheetContent from './FolderSheetContent';
 import LinkSheetContent from './LinkSheetContent';
@@ -73,15 +71,9 @@ const UploadScreen = ({ route, navigation }) => {
   //   scrollViewRef.current?.scrollTo({ y: offSet, animated: true });
   // }, [offSet]);
 
-  console.log('root offset : ', offSet);
-  const vh = Dimensions.get('window').height;
-  // console.log('vh: ', vh);
-  // console.log('-----------');
-
   const checkIsValidSite = async () => {
     handleSheetLinkComplete(linkText, linkSheetRef, setIsValidSite);
   };
-
   const handleSizechange = (event) => {
     // console.log('object');
   };
@@ -111,17 +103,19 @@ const UploadScreen = ({ route, navigation }) => {
         // }}
         onContentSizeChange={handleAreaSize}
       >
-        <InsightLinkTriggerButton
-          onPress={() => handleSheetPresent(linkSheetRef)}
-          text={isValidSite ? 'VALID' : '인사이트를 입력해주세요.'}
-        />
+        {isValidSite ? (
+          <LinkPreview text={linkText} />
+        ) : (
+          <InsightLinkTriggerButton
+            onPress={() => handleSheetPresent(linkSheetRef)}
+            text={isValidSite ? 'VALID' : '인사이트를 입력해주세요.'}
+          />
+        )}
         <View
           ref={viewRef}
           style={styles.textContainer}
           onLayout={(e) => {
             const { height, y } = e.nativeEvent.layout;
-            // console.log('ViewHeight from onLayout: ', height);
-            //          248          227
             console.log('right before setOffset: ', height, initialVh);
             const calc = height - initialVh - 80;
             scrollViewRef.current?.scrollTo({ y: calc, animated: true });
@@ -188,6 +182,11 @@ const styles = StyleSheet.create({
   textContainer: {
     borderBottomWidth: 1,
     borderBottomColor: '#12131410',
+  },
+
+  LinkPreviewContainer: {
+    borderWidth: 1,
+    backgroundColor: '#12131410',
   },
 });
 
