@@ -1,3 +1,4 @@
+import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { useEffect } from 'react';
 import { BackHandler } from 'react-native';
 
@@ -18,3 +19,10 @@ export function backButtonModalClose(modalRef) {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
   }, []);
 }
+export const handleSheetPresent = (Ref: React.RefObject<BottomSheetModalMethods>) => {
+  Ref.current?.present();
+};
+
+export const handleSheetClose = (Ref: React.RefObject<BottomSheetModalMethods>) => {
+  Ref.current?.close();
+};

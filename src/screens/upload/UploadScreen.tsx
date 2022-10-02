@@ -7,7 +7,11 @@ import BottomSheetHeader from '../../components/header/BottomSheetHeader';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import AutoGrowScrollTextArea from '../../components/texts/AutoGrowScrollTextArea';
 import CountingTextArea from '../../components/texts/CountingTextArea';
-import { backButtonModalClose } from '../../utils/helper/bottomSheetUtils/backbuttonModalClose';
+import {
+  backButtonModalClose,
+  handleSheetClose,
+  handleSheetPresent,
+} from '../../utils/helper/bottomSheetUtils/backbuttonModalClose';
 import handleSheetLinkComplete from '../../utils/helper/fetchAPI/isValidLink';
 import FolderSheetContent from './FolderSheetContent';
 import LinkSheetContent from './LinkSheetContent';
@@ -18,7 +22,7 @@ const UploadScreen = ({ route, navigation }) => {
   const [insightText, setInsightText] = useState<string>('');
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [isValidSite, setIsValidSite] = useState(false);
-  const [offSet, setOffSet] = useState(0);
+  const [offSet, setOffSet] = useState(-5000);
   const [scrollViewHeight, setScrollViewHeight] = useState(0);
   const [inputHeight, setInputHeight] = useState(0);
   const [initialVh, setInitialVh] = useState(0);
@@ -42,13 +46,13 @@ const UploadScreen = ({ route, navigation }) => {
     });
   }, [navigation]);
 
-  const handleSheetPresent = (Ref: React.RefObject<BottomSheetModalMethods>) => {
-    Ref.current?.present();
-  };
+  // const handleSheetPresent = (Ref: React.RefObject<BottomSheetModalMethods>) => {
+  //   Ref.current?.present();
+  // };
 
-  const handleSheetClose = (Ref: React.RefObject<BottomSheetModalMethods>) => {
-    Ref.current?.close();
-  };
+  // const handleSheetClose = (Ref: React.RefObject<BottomSheetModalMethods>) => {
+  //   Ref.current?.close();
+  // };
 
   const renderBackdrop = useCallback(
     (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
@@ -65,9 +69,9 @@ const UploadScreen = ({ route, navigation }) => {
     // setOffSet(vh - scrollViewHeight);
   };
 
-  useEffect(() => {
-    scrollViewRef.current?.scrollTo({ y: offSet, animated: true });
-  }, [offSet]);
+  // useEffect(() => {
+  //   scrollViewRef.current?.scrollTo({ y: offSet, animated: true });
+  // }, [offSet]);
 
   console.log('root offset : ', offSet);
   const vh = Dimensions.get('window').height;
@@ -118,8 +122,10 @@ const UploadScreen = ({ route, navigation }) => {
             const { height, y } = e.nativeEvent.layout;
             // console.log('ViewHeight from onLayout: ', height);
             //          248          227
-            // console.log('right before setOffset: ', height, initialVh);
-            setOffSet(height - initialVh - 80);
+            console.log('right before setOffset: ', height, initialVh);
+            const calc = height - initialVh - 80;
+            scrollViewRef.current?.scrollTo({ y: calc, animated: true });
+            setOffSet(calc > 0 && calc <= 5000 ? calc : 0);
           }}
         >
           <AutoGrowScrollTextArea
