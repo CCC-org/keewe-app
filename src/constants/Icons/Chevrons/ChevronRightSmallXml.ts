@@ -1,3 +1,4 @@
-export default `<svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M6.16797 5.13354L9.83464 8.80021L6.16797 12.4669" stroke="#121314" stroke-opacity="0.8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>`;
+export default `<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M5.70601 3.87349C5.95985 3.61965 6.3714 3.61965 6.62524 3.87349L10.2919 7.54015C10.5458 7.79399 10.5458 8.20555 10.2919 8.45939L6.62524 12.1261C6.3714 12.3799 5.95985 12.3799 5.70601 12.1261C5.45216 11.8722 5.45216 11.4607 5.70601 11.2068L8.91305 7.99977L5.70601 4.79272C5.45216 4.53888 5.45216 4.12733 5.70601 3.87349Z" fill="#12131450" fill-opacity="0.8"/>
+</svg>
+`;

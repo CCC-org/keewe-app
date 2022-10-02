@@ -2,36 +2,54 @@ import React, { useState, useRef } from 'react';
 import { Animated } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import { Pressable, Text, View, StyleSheet } from 'react-native';
-import FlyingEmoticons from '../../components/emoticons/FlyingEmoticons';
+import FlyingEmoticons from './FlyingEmoticons';
+import theme from '../../theme/light';
 
 interface ReactIconButtonProps {
   xml: string;
-  backgroundColor: string;
   onClick: () => void;
 }
 
-const ReactIconButton = ({ xml, backgroundColor, onClick }: ReactIconButtonProps) => {
+const ReactIconButton = ({ xml, onClick }: ReactIconButtonProps) => {
   const opacityValue = useRef(new Animated.Value(0)).current;
-
+  const paddingValue = useRef(new Animated.Value(0)).current;
+  const marginValue = useRef(new Animated.Value(5)).current;
   const [clicked, setClicked] = useState<boolean>(false);
-  const [animate, setAnimate] = useState<number[]>([]);
+  const [animate, setAnimate] = useState<string[]>([]);
 
   const handleClick = () => {
     setClicked(!clicked);
-    setAnimate((prev) => [...prev, 1]);
+    setAnimate((prev) => [...prev, `${xml}${animate.length}`]);
     onClick();
-    if (!clicked)
-      Animated.timing(opacityValue, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: false,
-      }).start();
-    else
+    Animated.timing(opacityValue, {
+      toValue: 1,
+      duration: 750,
+      useNativeDriver: false,
+    }).start(() => {
       Animated.timing(opacityValue, {
         toValue: 0,
-        duration: 200,
+        duration: 0,
         useNativeDriver: false,
       }).start();
+    });
+    Animated.timing(paddingValue, { toValue: 5, duration: 600, useNativeDriver: false }).start(
+      () => {
+        Animated.timing(paddingValue, {
+          toValue: 0,
+          duration: 600,
+          useNativeDriver: false,
+        }).start();
+      },
+    );
+    Animated.timing(marginValue, { toValue: 0, duration: 600, useNativeDriver: false }).start(
+      () => {
+        Animated.timing(marginValue, {
+          toValue: 5,
+          duration: 600,
+          useNativeDriver: false,
+        }).start();
+      },
+    );
   };
 
   return (
@@ -40,8 +58,10 @@ const ReactIconButton = ({ xml, backgroundColor, onClick }: ReactIconButtonProps
         style={{
           backgroundColor: opacityValue.interpolate({
             inputRange: [0, 1],
-            outputRange: ['#00000000', backgroundColor],
+            outputRange: ['#00000000', theme.colors.brand.surface.main],
           }),
+          padding: 5,
+          // margin: marginValue,
           ...styles.Button,
         }}
       >
@@ -51,7 +71,6 @@ const ReactIconButton = ({ xml, backgroundColor, onClick }: ReactIconButtonProps
       </Animated.View>
       <View
         style={{
-          backgroundColor: 'blue',
           width: 50,
           height: 100,
           position: 'absolute',
@@ -69,9 +88,7 @@ const ReactIconButton = ({ xml, backgroundColor, onClick }: ReactIconButtonProps
 
 const styles = StyleSheet.create({
   Button: {
-    padding: 5,
     borderRadius: 40,
-    overflow: 'visible',
   },
 });
 

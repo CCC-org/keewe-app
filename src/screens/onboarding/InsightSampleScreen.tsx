@@ -1,6 +1,6 @@
 /* eslint-disable quotes */
-import React, { useState, useEffect } from 'react';
-import { Pressable, Text, View, StyleSheet, ScrollView } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { Pressable, Text, View, StyleSheet, ScrollView, Animated } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import { useTheme } from 'react-native-paper';
 import HeaderText from '../../components/texts/HeaderText';
@@ -9,10 +9,10 @@ import chevron_right from '../../constants/Icons/Chevrons/ChevronRightSmallXml';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import BezierAnimatedView from '../../components/views/BezierAnimatedView';
 import { REACTIONS } from './constant';
-import ReactIconButton from './ReactIconButton';
+import ReactIconButton from '../../components/emoticons/ReactIconButton';
 
 const InsightText =
-  '우리는 어떤 커뮤니티를 만드는가? 서비스는 잘 된 UI를 맹목적으로 따라 하는 것이 아닌 서비스 성격에 맞는 UX/UI가 필요합니다. 이 글은 네이버 카페, 오늘의집, 당근마켓 등을 예로 들어 ‘커뮤니티’ UX/UI를 분석하고 있어요. 크게 게시판 리스트 뷰(네이버 카페), 사진 중심 2열 피드(오늘의집), 본문 중심 1열 피드(당근마켓)로 나누었다';
+  '우리는 어떤 커뮤니티를 만드는가? 서비스는 잘 된 UI를 맹목적으로 따라 하는 것이 아닌 서비스 성격에 맞는 UX/UI가 필요합니다. 이 글은 네이버 카페, 오늘의집, 당근마켓 등을 예로 들어 ‘커뮤니티’ UX/UI를 분석하고 있어요. 크게 게시판 리스트 뷰(네이버 카페), 사진 중심 2열 피드(오늘의집), 본문 중심 1열 피드(당근마켓)로 나누었다 우리는 어떤 커뮤니티를 만드는가? 서비스는 잘 된 UI를 맹목적으로 따라 하는 것이 아닌 서비스 성격에 맞는 UX/UI가 필요합니다. 이 글은 네이버 카페, 오늘의집, 당근마켓 등을 예로 들어 ‘커뮤니티’ UX/UI를 분석하고 있어요. 크게 게시판 리스트 뷰(네이버 카페), 사진 중심 2열 피드(오늘의집), 본문 중심 1열 피드(당근마켓)로 나누었다우리는 어떤 커뮤니티를 만드는가? 서비스는 잘 된 UI를 맹목적으로 따라 하는 것이 아닌 서비스 성격에 맞는 UX/UI가 필요합니다. 이 글은 네이버 카페, 오늘의집, 당근마켓 등을 예로 들어 ‘커뮤니티’ UX/UI를 분석하고 있어요. 크게 게시판 리스트 뷰(네이버 카페), 사진 중심 2열 피드(오늘의집), 본문 중심 1열 피드(당근마켓)로 나누었다우리는 어떤 커뮤니티를 만드는가? 서비스는 잘 된 UI를 맹목적으로 따라 하는 것이 아닌 서비스 성격에 맞는 UX/UI가 필요합니다. 이 글은 네이버 카페, 오늘의집, 당근마켓 등을 예로 들어 ‘커뮤니티’ UX/UI를 분석하고 있어요. 크게 게시판 리스트 뷰(네이버 카페), 사진 중심 2열 피드(오늘의집), 본문 중심 1열 피드(당근마켓)로 나누었다우리는 어떤 커뮤니티를 만드는가? 서비스는 잘 된 UI를 맹목적으로 따라 하는 것이 아닌 서비스 성격에 맞는 UX/UI가 필요합니다. 이 글은 네이버 카페, 오늘의집, 당근마켓 등을 예로 들어 ‘커뮤니티’ UX/UI를 분석하고 있어요. 크게 게시판 리스트 뷰(네이버 카페), 사진 중심 2열 피드(오늘의집), 본문 중심 1열 피드(당근마켓)로 나누었다우리는 어떤 커뮤니티를 만드는가? 서비스는 잘 된 UI를 맹목적으로 따라 하는 것이 아닌 서비스 성격에 맞는 UX/UI가 필요합니다. 이 글은 네이버 카페, 오늘의집, 당근마켓 등을 예로 들어 ‘커뮤니티’ UX/UI를 분석하고 있어요. 크게 게시판 리스트 뷰(네이버 카페), 사진 중심 2열 피드(오늘의집), 본문 중심 1열 피드(당근마켓)로 나누었다우리는 어떤 커뮤니티를 만드는가? 서비스는 잘 된 UI를 맹목적으로 따라 하는 것이 아닌 서비스 성격에 맞는 UX/UI가 필요합니다. 이 글은 네이버 카페, 오늘의집, 당근마켓 등을 예로 들어 ‘커뮤니티’ UX/UI를 분석하고 있어요. 크게 게시판 리스트 뷰(네이버 카페), 사진 중심 2열 피드(오늘의집), 본문 중심 1열 피드(당근마켓)로 나누었다';
 
 const LinkTitle = '나의 친구 농사';
 const Link = 'careerly.co.kr';
@@ -20,6 +20,7 @@ const Link = 'careerly.co.kr';
 const InsightSampleScreen = ({ navigation, route }) => {
   const theme = useTheme();
   const [reaction, setReaction] = useState<boolean>(false);
+  const [show, setShow] = useState<boolean>(false);
 
   const handleSkipPress = () => {
     //skip
@@ -33,6 +34,11 @@ const InsightSampleScreen = ({ navigation, route }) => {
   const handleCompletePress = () => {
     //pressComplete
     navigation.navigate('ServiceIntroOne');
+  };
+
+  const handleMoreClick = () => {
+    setShow(true);
+    return;
   };
 
   useEffect(() => {
@@ -69,21 +75,33 @@ const InsightSampleScreen = ({ navigation, route }) => {
             subTitle={'인사이트를 읽고 반응을 남겨보세요!'}
           />
         </View>
-        <View
+        <ScrollView
           style={{
             backgroundColor: theme.colors.brand.surface.container,
             height: 300,
             marginLeft: 10,
             marginRight: 10,
-            marginBottom: 30,
             borderRadius: 10,
           }}
         >
           <View style={styles.Insight}>
-            <Text style={theme.fonts.text.body1.regular} numberOfLines={7} ellipsizeMode="tail">
-              {InsightText}
-            </Text>
-            <Pressable onPress={handlePressLink}>
+            <View style={styles.Text}>
+              <Text style={theme.fonts.text.body1.regular} numberOfLines={show ? undefined : 7}>
+                {InsightText}
+              </Text>
+              {!show && (
+                <Pressable
+                  onPress={handleMoreClick}
+                  style={{
+                    backgroundColor: theme.colors.brand.surface.container,
+                    ...styles.MoreLink,
+                  }}
+                >
+                  <Text style={theme.fonts.text.body1.regular}>... 더보기</Text>
+                </Pressable>
+              )}
+            </View>
+            <Pressable onPress={handlePressLink} style={{ marginTop: 30, marginBottom: 10 }}>
               <View style={styles.LinkTitle}>
                 <Text
                   style={{ color: `${theme.colors.graphic.black}50`, ...theme.fonts.text.caption1 }}
@@ -99,7 +117,7 @@ const InsightSampleScreen = ({ navigation, route }) => {
               </Text>
             </Pressable>
           </View>
-        </View>
+        </ScrollView>
         {reaction ? (
           <>
             <View style={styles.React}>
@@ -114,7 +132,6 @@ const InsightSampleScreen = ({ navigation, route }) => {
                   >
                     <ReactIconButton
                       xml={data.xml}
-                      backgroundColor={data.color}
                       onClick={() => {
                         return;
                       }}
@@ -140,14 +157,16 @@ const InsightSampleScreen = ({ navigation, route }) => {
             </BezierAnimatedView>
           </>
         ) : (
-          <ConditionalButton
-            isActive={true}
-            text="반응남기기"
-            color={theme.colors.brand.primary.container}
-            textColor={theme.colors.graphic.black}
-            width={150}
-            onPress={() => setReaction(true)}
-          />
+          <View style={{ marginTop: 30 }}>
+            <ConditionalButton
+              isActive={true}
+              text="반응남기기"
+              color={theme.colors.brand.primary.container}
+              textColor={theme.colors.graphic.black}
+              width={150}
+              onPress={() => setReaction(true)}
+            />
+          </View>
         )}
       </View>
     </ScrollView>
@@ -179,7 +198,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignContent: 'center',
     alignItems: 'center',
-    overflow: 'visible',
     borderRadius: 30,
     height: 70,
     width: 'auto',
@@ -190,10 +208,19 @@ const styles = StyleSheet.create({
   },
   React: {
     display: 'flex',
-    height: 200,
-    overflow: 'visible',
+    paddingTop: 30,
+    marginBottom: 130,
+    overflow: 'hidden',
     flexDirection: 'column',
     justifyContent: 'space-between',
+  },
+  Text: {
+    //overflow: 'hidden',
+  },
+  MoreLink: {
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
   },
 });
 
