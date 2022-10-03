@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { StyleSheet, Text, View, Image } from 'react-native';
 import React from 'react';
 import { LinkPreview, LinkPreviewProps } from '@flyerhq/react-native-link-preview';
@@ -39,7 +40,9 @@ const LinkCard: React.FC<LinkPreviewProps> = (props: LinkPreviewProps) => {
           <View style={styles.container}>
             <View style={styles.metadataTextContainerStyle}>
               <Text style={styles.title}>{title}</Text>
-              <Text style={styles.description}>{description}</Text>
+              <Text style={styles.description}>
+                {description ? description!.slice(0, 40) + '...' : 'Nothing do render...'}
+              </Text>
             </View>
             <Image
               style={styles.imageContainer}
