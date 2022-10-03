@@ -22,6 +22,7 @@ const HeaderRightButton = (props: HeaderRightButtonProps) => {
         style={{
           ...styles.btn,
           padding: 0,
+          marginRight: 15,
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',

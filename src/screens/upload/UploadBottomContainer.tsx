@@ -13,13 +13,11 @@ interface UploadBottomContainerProps {
 const UploadBottomContainer = ({
   isSwitchOn,
   setIsSwitchOn,
-  insightText,
   presentFolderSheet,
 }: UploadBottomContainerProps) => {
   // console log the components height when it is rendered
 
   const theme = useTheme();
-  const containerRef = useRef<View>(null);
 
   return (
     <View style={styles.container}>
@@ -32,7 +30,6 @@ const UploadBottomContainer = ({
           <Switch
             value={isSwitchOn}
             onValueChange={() => setIsSwitchOn(!isSwitchOn)}
-            style={styles.switch}
             color={'#b0e817'}
           />
         </View>
@@ -60,8 +57,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 12,
-  },
-  switch: {
-    transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }],
   },
 });

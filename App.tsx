@@ -21,6 +21,7 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import OnboardingIntroHeaderButton from './src/components/buttons/OnboardingIntroHeaderButton';
 import { RootScreen } from './src/navigation';
+//import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ChallengeSubjectCreationScreen from './src/screens/challenge/ChallengeSubjectCreationScreen';
 import ServiceIntroOneScreen from './src/screens/onboarding/ServiceIntroOneScreen';
 import ServiceIntroThreeScreen from './src/screens/onboarding/ServiceIntroThreeScreen';
@@ -28,6 +29,7 @@ import ServiceIntroTwoScreen from './src/screens/onboarding/ServiceIntroTwoScree
 import TempSheetScreen from './src/screens/upload/TempSheetScreen';
 import UploadScreen from './src/screens/upload/UploadScreen';
 import light from './src/theme/light';
+import { TransitionPresets } from '@react-navigation/stack';
 
 const queryClient = new QueryClient();
 // const Stack = createNativeStackNavigator();
@@ -52,13 +54,15 @@ export default function App() {
               <QueryClientProvider client={queryClient}>
                 <Stack.Navigator
                   screenOptions={{
+                    cardStyle: { backgroundColor: 'white' },
                     // contentStyle: { backgroundColor: 'white' },
                     headerTitleAlign: 'center',
-                    // animation: 'slide_from_right',
                     headerTitleStyle: {
                       fontSize: 16,
                     },
                     headerShadowVisible: false,
+                    // ...TransitionPresets.SlideFromRightIOS,
+                    // animation: 'slide_from_right',
                     // animationDuration: 1000,
                   }}
                 >
@@ -107,6 +111,20 @@ export default function App() {
                       options={headerOptions}
                     />
                   </Stack.Group>
+                  {/* 온보딩 그룹 */}
+                  {/* <Stack.Group
+                    screenOptions={{
+                      // contentStyle: { backgroundColor: 'white' },
+                      headerTitleAlign: 'center',
+                      // animation: 'slide_from_right',
+                      headerTitleStyle: {
+                        fontSize: 16,
+                      },
+                      headerShadowVisible: false,
+                      // animationDuration: 1000,
+                    }}
+                  ></Stack.Group> */}
+
                   {/* 온보딩 그룹 */}
                   <Stack.Group
                     screenOptions={{

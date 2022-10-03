@@ -1,6 +1,6 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TextInput } from 'react-native';
 import React from 'react';
-import { Text, TextInput, useTheme } from 'react-native-paper';
+import { Text, useTheme } from 'react-native-paper';
 
 interface AutoGrowScrollTextAreaProps {
   inputValue: string;
@@ -14,7 +14,6 @@ interface AutoGrowScrollTextAreaProps {
 }
 
 const StaticSizeScrollTextArea = ({
-  onContentSizeChange,
   inputValue,
   placeholder,
   setInputValue,
@@ -23,23 +22,30 @@ const StaticSizeScrollTextArea = ({
   const theme = useTheme();
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={{ ...styles.input }}
-        value={inputValue}
-        placeholder={placeholder}
-        onChangeText={(inputValue) => setInputValue(inputValue)}
-        multiline={true}
-        activeUnderlineColor="white"
-        selectionColor="black"
-        underlineColor="white"
-        maxLength={limit ? limit : 400}
-        scrollEnabled={true}
-      />
-      <View style={styles.letterNumberContainer}>
-        <Text style={styles.limit}>{(limit ? limit : 400) - inputValue.length}</Text>
+    <>
+      <View style={styles.container}>
+        <TextInput
+          style={{ ...styles.input, ...theme.fonts.text.body1.regular }}
+          value={inputValue}
+          placeholder={placeholder}
+          onChangeText={(inputValue) => setInputValue(inputValue)}
+          multiline={true}
+          numberOfLines={16}
+          // activeUnderlineColor="white"
+          // selectionColor="black"
+          // underlineColor="white"
+          maxLength={limit ? limit : 400}
+          scrollEnabled={true}
+          textAlignVertical="top"
+          // textAlignVertical="top"
+        />
+        <View style={styles.letterNumberContainer}>
+          <View style={styles.limitContainer}>
+            <Text style={styles.limit}>{(limit ? limit : 400) - inputValue.length}</Text>
+          </View>
+        </View>
       </View>
-    </View>
+    </>
   );
 };
 
@@ -49,26 +55,27 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#12131410',
-    paddingBottom: 8,
+    borderRadius: 12,
+    backgroundColor: '#D9D9D9',
   },
   input: {
     width: '100%',
-    minHeight: 200,
-    backgroundColor: '#d9d9d9',
-    fontSize: 16,
-    fontFamily: 'pretendard',
-    lineHeight: 24,
-    borderRadius: 12,
+    height: 230,
+    paddingVertical: 24,
+    paddingHorizontal: 24,
   },
   letterNumberContainer: {
     width: '100%',
     alignItems: 'flex-end',
-    paddingRight: 12,
   },
   limit: {
     fontSize: 14,
     fontFamily: 'pretendard',
+  },
+  limitContainer: {
+    backgroundColor: '#F8F8F4',
+    borderRadius: 4,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
   },
 });

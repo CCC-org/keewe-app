@@ -3,6 +3,7 @@ import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
+import LinkCard from '../../components/cards/LinkCard';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import StaticSizeScrollTextArea from '../../components/texts/StaticSizeScrollTextArea';
 import {
@@ -55,7 +56,9 @@ const UploadScreen = ({ navigation }) => {
   return (
     <ScrollView scrollToOverflowEnabled={true} style={styles.container} ref={scrollViewRef}>
       {isValidSite ? (
-        <LinkPreview text={linkText} />
+        <>
+          <LinkCard text={linkText} />
+        </>
       ) : (
         <InsightLinkTriggerButton
           onPress={() => handleSheetPresent(linkSheetRef)}
@@ -67,11 +70,20 @@ const UploadScreen = ({ navigation }) => {
           inputValue={insightText}
           setInputValue={setInsightText}
           placeholder="인사이트를 입력해주세요."
-          limit={50}
+          limit={400}
           height={280}
           autoFocus={false}
         />
       </View>
+      <View
+        style={{
+          width: '100%',
+          borderBottomWidth: 1,
+          borderBottomColor: '#12131410',
+          marginTop: 12,
+        }}
+      ></View>
+
       <UploadBottomContainer
         isSwitchOn={isSwitchOn}
         setIsSwitchOn={setIsSwitchOn}
@@ -109,22 +121,15 @@ const UploadScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 24,
+    padding: 16,
     backgroundColor: 'white',
   },
 
-  textarea: {
-    width: '100%',
-  },
   textContainer: {
     borderBottomWidth: 1,
     borderBottomColor: '#12131410',
-  },
-
-  LinkPreviewContainer: {
-    borderWidth: 1,
-    backgroundColor: '#12131410',
+    marginTop: 16,
+    marginBottom: 8,
   },
 });
 
