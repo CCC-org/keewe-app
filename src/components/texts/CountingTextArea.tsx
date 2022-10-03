@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View, TextInput } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, TextInput, ViewProps } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useTheme } from 'react-native-paper';
 
@@ -11,6 +11,7 @@ interface CountingTextAreaProps {
   style?: any;
   height?: number;
   autoFocus?: boolean;
+  limitTextStyle?: any;
 }
 
 const CountingTextArea = (props: CountingTextAreaProps) => {
@@ -54,7 +55,7 @@ const CountingTextArea = (props: CountingTextAreaProps) => {
           multiline={true}
           selectionColor={'black'}
         />
-        <Text style={{ ...styles.letterNumber, color: letterNumberColor }}>
+        <Text style={{ ...styles.letterNumber, color: letterNumberColor, ...props.limitTextStyle }}>
           {(limit ? limit : 150) - inputValue.length}
         </Text>
       </View>

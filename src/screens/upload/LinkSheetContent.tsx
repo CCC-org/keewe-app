@@ -40,6 +40,7 @@ const LinkSheetContent = ({
         placeholder="인사이트를 얻은 링크"
         setInputValue={setLinkText}
         autoFocus={true}
+        limitTextStyle={{ color: 'white' }}
       />
     </View>
   );
