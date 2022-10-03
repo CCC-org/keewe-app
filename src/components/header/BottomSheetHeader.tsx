@@ -39,6 +39,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    marginLeft: 23,
+    marginLeft: 38,
   },
 });
