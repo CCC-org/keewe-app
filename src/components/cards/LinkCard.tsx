@@ -3,7 +3,11 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import React from 'react';
 import { LinkPreview, LinkPreviewProps } from '@flyerhq/react-native-link-preview';
 
-const LinkCard: React.FC<LinkPreviewProps> = (props: LinkPreviewProps) => {
+interface customProps extends LinkPreviewProps {
+  width?: number | string;
+}
+
+const LinkCard: React.FC<customProps> = (props) => {
   console.log('props', props);
 
   const styles = createStyles(props);
@@ -31,6 +35,7 @@ const LinkCard: React.FC<LinkPreviewProps> = (props: LinkPreviewProps) => {
     //    {...props}
     //  />
     <LinkPreview
+      {...props}
       renderLinkPreview={(pre) => {
         console.log('pre', pre);
         const title = pre.previewData?.title;
@@ -60,18 +65,16 @@ const LinkCard: React.FC<LinkPreviewProps> = (props: LinkPreviewProps) => {
 
 export default LinkCard;
 
-function createStyles(props) {
+function createStyles(props: customProps) {
   const styles = StyleSheet.create({
     container: {
-      width: '100%',
+      width: props.width,
       borderWidth: 1,
       borderColor: '#12131420',
       borderRadius: 8,
-      height: 80,
+      height: 60,
       flex: 1,
       flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
     },
     title: {
       fontSize: 12,
@@ -86,10 +89,7 @@ function createStyles(props) {
       fontSize: 12,
       color: '#12131450',
     },
-    //  metaDataContainerStyle: {
-    //    backgroundColor: 'black',
-    //    marginTop: 8,
-    //  },
+
     metadataTextContainerStyle: {
       paddingVertical: 12,
       paddingHorizontal: 18,
@@ -104,15 +104,6 @@ function createStyles(props) {
       borderTopRightRadius: 8,
       borderBottomRightRadius: 8,
     },
-    //  textContainerStyle: {
-    //    borderWidth: 2,
-    //    borderColor: 'green',
-    //    padding: 8,
-    //    paddingTop: 0,
-    //    marginHorizontal: 0,
-    //    marginVertical: 0,
-    //    backgroundColor: 'red',
-    //  },
   });
 
   return styles;

@@ -15,6 +15,7 @@ import handleSheetLinkComplete from '../../utils/helper/fetchAPI/isValidLink';
 import FolderSheetContent from './FolderSheetContent';
 import LinkSheetContent from './LinkSheetContent';
 import UploadBottomContainer from './UploadBottomContainer';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const UploadScreen = ({ navigation }) => {
   const [linkText, setLinkText] = useState<string>('');
@@ -50,15 +51,29 @@ const UploadScreen = ({ navigation }) => {
     handleSheetLinkComplete(linkText, linkSheetRef, setIsValidSite);
   };
 
+  const handleEditPress = () => {
+    setIsValidSite(false);
+    handleSheetPresent(linkSheetRef);
+  };
+
   backButtonModalClose(linkSheetRef);
   backButtonModalClose(folderSheetRef);
 
   return (
     <ScrollView scrollToOverflowEnabled={true} style={styles.container} ref={scrollViewRef}>
       {isValidSite ? (
-        <>
-          <LinkCard text={linkText} />
-        </>
+        <View style={styles.linkCardContainer}>
+          <View style={{ flexGrow: 3 }}>
+            <LinkCard text={linkText} />
+          </View>
+          <MaterialCommunityIcons
+            style={{ marginLeft: 20, flexGrow: 1 }}
+            name="checkbox-blank-circle"
+            size={27}
+            color="black"
+            onPress={handleEditPress}
+          />
+        </View>
       ) : (
         <InsightLinkTriggerButton
           onPress={() => handleSheetPresent(linkSheetRef)}
@@ -130,6 +145,12 @@ const styles = StyleSheet.create({
     borderBottomColor: '#12131410',
     marginTop: 16,
     marginBottom: 8,
+  },
+  linkCardContainer: {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flexDirection: 'row',
+    flex: 1,
   },
 });
 
