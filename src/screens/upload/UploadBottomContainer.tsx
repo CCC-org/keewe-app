@@ -7,7 +7,7 @@ interface UploadBottomContainerProps {
   isSwitchOn: boolean;
   setIsSwitchOn: React.Dispatch<React.SetStateAction<boolean>>;
   presentFolderSheet: () => void;
-  setPosition: React.Dispatch<React.SetStateAction<number>>;
+  setPosition?: React.Dispatch<React.SetStateAction<number>>;
   insightText: string;
 }
 const UploadBottomContainer = ({

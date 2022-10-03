@@ -13,7 +13,7 @@ interface AutoGrowScrollTextAreaProps {
   onContentSizeChange?: (event: any) => void;
 }
 
-const AutoGrowScrollTextArea = ({
+const StaticSizeScrollTextArea = ({
   onContentSizeChange,
   inputValue,
   placeholder,
@@ -30,15 +30,11 @@ const AutoGrowScrollTextArea = ({
         placeholder={placeholder}
         onChangeText={(inputValue) => setInputValue(inputValue)}
         multiline={true}
-        numberOfLines={10}
-        // onContentSizeChange={onContentSizeChange}
-
         activeUnderlineColor="white"
         selectionColor="black"
         underlineColor="white"
         maxLength={limit ? limit : 400}
-        //ios
-        scrollEnabled={false}
+        scrollEnabled={true}
       />
       <View style={styles.letterNumberContainer}>
         <Text style={styles.limit}>{(limit ? limit : 400) - inputValue.length}</Text>
@@ -47,7 +43,7 @@ const AutoGrowScrollTextArea = ({
   );
 };
 
-export default AutoGrowScrollTextArea;
+export default StaticSizeScrollTextArea;
 
 const styles = StyleSheet.create({
   container: {
@@ -60,10 +56,11 @@ const styles = StyleSheet.create({
   input: {
     width: '100%',
     minHeight: 200,
-    backgroundColor: 'white',
+    backgroundColor: '#d9d9d9',
     fontSize: 16,
     fontFamily: 'pretendard',
     lineHeight: 24,
+    borderRadius: 12,
   },
   letterNumberContainer: {
     width: '100%',

@@ -14,6 +14,9 @@ export function backButtonModalClose(modalRef) {
     };
 
     BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+    };
   }, []);
 }
 export const handleSheetPresent = (Ref: React.RefObject<BottomSheetModalMethods>) => {
