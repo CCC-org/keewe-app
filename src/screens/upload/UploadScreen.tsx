@@ -1,7 +1,7 @@
 import { LinkPreview } from '@flyerhq/react-native-link-preview';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { BackHandler, Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
 import LinkCard from '../../components/cards/LinkCard';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
@@ -17,14 +17,19 @@ import LinkSheetContent from './LinkSheetContent';
 import UploadBottomContainer from './UploadBottomContainer';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+const FOLDER_LIST = ['다른폴더', '다른폴더2'];
+
 const UploadScreen = ({ navigation }) => {
   const [linkText, setLinkText] = useState<string>('');
   const [insightText, setInsightText] = useState<string>('');
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [isValidSite, setIsValidSite] = useState(false);
+  const [folder, setFolder] = useState<string[]>(FOLDER_LIST);
+  const [selectedFolder, setSelectedFolder] = useState<string>('');
   const linkSheetRef = useRef<BottomSheetModal>(null);
   const folderSheetRef = useRef<BottomSheetModal>(null);
   const scrollViewRef = useRef<ScrollView>(null);
+
   const snapPoints = useMemo(() => ['30%', '50%', '80%'], []);
 
   React.useLayoutEffect(() => {
@@ -56,8 +61,12 @@ const UploadScreen = ({ navigation }) => {
     handleSheetPresent(linkSheetRef);
   };
 
-  backButtonModalClose(linkSheetRef);
-  backButtonModalClose(folderSheetRef);
+  const handleFolderSheetComplete = () => {
+    handleSheetClose(folderSheetRef);
+    setFolder((prev) => [...prev, selectedFolder]);
+  };
+
+  backButtonModalClose(folderSheetRef, linkSheetRef);
 
   return (
     <ScrollView scrollToOverflowEnabled={true} style={styles.container} ref={scrollViewRef}>
@@ -100,6 +109,7 @@ const UploadScreen = ({ navigation }) => {
       ></View>
 
       <UploadBottomContainer
+        selectedFolder={selectedFolder}
         isSwitchOn={isSwitchOn}
         setIsSwitchOn={setIsSwitchOn}
         presentFolderSheet={() => handleSheetPresent(folderSheetRef)}
@@ -121,13 +131,17 @@ const UploadScreen = ({ navigation }) => {
       </BottomSheetModal>
       <BottomSheetModal
         ref={folderSheetRef}
-        index={2}
+        index={1}
         snapPoints={snapPoints}
         backdropComponent={renderBackdrop}
       >
         <FolderSheetContent
-          handleSheetComplete={() => handleSheetClose(folderSheetRef)}
+          handleSheetComplete={handleFolderSheetComplete}
           onHeaderLeftPress={() => handleSheetClose(folderSheetRef)}
+          folder={folder}
+          setFolder={setFolder}
+          selectedFolder={selectedFolder}
+          setSelectedFolder={setSelectedFolder}
         />
       </BottomSheetModal>
     </ScrollView>
