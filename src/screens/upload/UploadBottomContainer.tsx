@@ -1,7 +1,7 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import React, { useEffect, useRef } from 'react';
-import { Switch, useTheme } from 'react-native-paper';
 import { Feather } from '@expo/vector-icons';
+import React from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Switch, useTheme } from 'react-native-paper';
 
 interface UploadBottomContainerProps {
   isSwitchOn: boolean;

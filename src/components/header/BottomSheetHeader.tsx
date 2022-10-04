@@ -1,7 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
 import { AntDesign } from '@expo/vector-icons';
-import HeaderRightButton from './HeaderRightButton';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
 interface BottomSheetHeaderProps {

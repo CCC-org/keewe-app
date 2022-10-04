@@ -1,7 +1,7 @@
-import { LinkPreview } from '@flyerhq/react-native-link-preview';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { BackHandler, Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
 import LinkCard from '../../components/cards/LinkCard';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
@@ -15,7 +15,6 @@ import handleSheetLinkComplete from '../../utils/helper/fetchAPI/isValidLink';
 import FolderSheetContent from './FolderSheetContent';
 import LinkSheetContent from './LinkSheetContent';
 import UploadBottomContainer from './UploadBottomContainer';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const FOLDER_LIST = ['다른폴더', '다른폴더2'];
 
@@ -28,7 +27,6 @@ const UploadScreen = ({ navigation }) => {
   const [selectedFolder, setSelectedFolder] = useState<string>('');
   const linkSheetRef = useRef<BottomSheetModal>(null);
   const folderSheetRef = useRef<BottomSheetModal>(null);
-  const scrollViewRef = useRef<ScrollView>(null);
 
   const snapPoints = useMemo(() => ['30%', '50%', '80%'], []);
 
@@ -69,7 +67,7 @@ const UploadScreen = ({ navigation }) => {
   backButtonModalClose(folderSheetRef, linkSheetRef);
 
   return (
-    <ScrollView scrollToOverflowEnabled={true} style={styles.container} ref={scrollViewRef}>
+    <ScrollView scrollToOverflowEnabled={true} style={styles.container}>
       {isValidSite ? (
         <View style={styles.linkCardContainer}>
           <View style={{ flexGrow: 3 }}>

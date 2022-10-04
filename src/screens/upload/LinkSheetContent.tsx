@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import BottomSheetHeader from '../../components/header/BottomSheetHeader';
-import CountingTextArea from '../../components/texts/CountingTextArea';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
+import CountingTextArea from '../../components/texts/CountingTextArea';
 
 interface LinkSheetContentProps {
   onHeaderLeftPress: () => void;
