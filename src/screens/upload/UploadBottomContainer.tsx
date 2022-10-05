@@ -31,7 +31,7 @@ const UploadBottomContainer = ({
         <View>
           <Switch
             value={isSwitchOn}
-            onValueChange={() => setIsSwitchOn(!isSwitchOn)}
+            onValueChange={() => setIsSwitchOn((prev) => !prev)}
             color={'#b0e817'}
           />
         </View>

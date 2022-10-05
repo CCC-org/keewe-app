@@ -1,11 +1,12 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
 import LinkCard from '../../components/cards/LinkCard';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import StaticSizeScrollTextArea from '../../components/texts/StaticSizeScrollTextArea';
+import { UploadApis } from '../../utils/api/UploadAPIs';
 import {
   backButtonModalClose,
   handleSheetClose,
@@ -34,16 +35,42 @@ const UploadScreen = ({ navigation }) => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderRightButton
-          backGroundColor="#12131420"
-          textColor="white"
+          backGroundColor={!!linkText.length && !!insightText.length ? '#b0e817' : '#12131420'}
+          textColor={!!linkText.length && !!insightText.length ? 'black' : 'white'}
           borderLine={false}
-          disabled={true}
+          disabled={!!linkText.length && !!insightText.length ? false : true}
           text="완료"
-          handlePress={() => alert('pressed')}
+          handlePress={() => handleSubmit()}
         />
       ),
     });
-  }, [navigation]);
+  }, [linkText, insightText, navigation, selectedFolder, isSwitchOn]);
+
+  useEffect(() => {
+    // Get the drawer from api, and set the result as folder list
+    console.log('changed', insightText);
+  }, [insightText]);
+
+  const handleSubmit = async () => {
+    const data = {
+      participation: isSwitchOn,
+      link: linkText,
+      contents: insightText,
+      drawerId: 4,
+    };
+
+    try {
+      const response = await UploadApis.uploadInsight(data);
+      console.log('submit res', response);
+      if (response.code === 200) {
+        alert('everything is fine, go back to home');
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      alert('error');
+    }
+  };
 
   const renderBackdrop = useCallback(
     (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
@@ -59,9 +86,18 @@ const UploadScreen = ({ navigation }) => {
     handleSheetPresent(linkSheetRef);
   };
 
-  const handleFolderSheetComplete = () => {
+  const handleFolderSheetComplete = async () => {
     handleSheetClose(folderSheetRef);
-    setFolder((prev) => [...prev, selectedFolder]);
+    try {
+      const completeRes = await UploadApis.createNewFolder(selectedFolder);
+      if (completeRes.code === 200) {
+        setFolder([...folder, selectedFolder]);
+      } else {
+        throw new Error('폴더 생성 실패');
+      }
+    } catch (error) {
+      alert(error);
+    }
   };
 
   backButtonModalClose(folderSheetRef, linkSheetRef);

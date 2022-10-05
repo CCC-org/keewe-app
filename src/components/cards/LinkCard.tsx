@@ -8,8 +8,6 @@ interface customProps extends LinkPreviewProps {
 }
 
 const LinkCard: React.FC<customProps> = (props) => {
-  console.log('props', props);
-
   const styles = createStyles(props);
 
   return (
@@ -37,7 +35,6 @@ const LinkCard: React.FC<customProps> = (props) => {
     <LinkPreview
       {...props}
       renderLinkPreview={(pre) => {
-        console.log('pre', pre);
         const title = pre.previewData?.title;
         const description = pre.previewData?.description || pre.previewData?.link;
         const url = pre.previewData?.image?.url;

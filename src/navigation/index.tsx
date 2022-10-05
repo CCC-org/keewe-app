@@ -17,6 +17,12 @@ export function RootScreen() {
     // [HOW TO]
     // 새로운 링크는 임시적으로 Pressable을 그대로 따라하시고, onPress함수에 navigate 전달인자로 App.tsx의 Stack.Screen.name을 넘겨주시면 됨.
     <ScrollView>
+      <Pressable
+        style={{ borderWidth: 1, backgroundColor: 'grey', width: 300, height: 50 }}
+        onPress={() => getAccessToken().then((res) => console.log(res))}
+      >
+        <Text>Get Token</Text>
+      </Pressable>
       <Text>{accessToken}</Text>
 
       <Pressable onPress={() => navigation.navigate('TempSheet')}>
