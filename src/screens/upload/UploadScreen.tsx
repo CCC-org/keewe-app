@@ -101,8 +101,6 @@ const UploadScreen = ({ navigation }) => {
     }
   };
 
-  backButtonModalClose(folderSheetRef, linkSheetRef);
-
   return (
     <ScrollView scrollToOverflowEnabled={true} style={styles.container}>
       {isValidSite ? (

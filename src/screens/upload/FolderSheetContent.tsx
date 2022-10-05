@@ -4,6 +4,8 @@ import BottomSheetHeader from '../../components/header/BottomSheetHeader';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import Folder from '../../components/Folder/Folder';
 import BlandTextInput from '../../components/texts/BlandTextInput';
+import { useBottomSheet } from '@gorhom/bottom-sheet';
+import { backButtonModalClose } from '../../utils/helper/bottomSheetUtils/bottomSheetUtils';
 
 interface FolderSheetContentProps {
   onHeaderLeftPress: () => void;
@@ -23,7 +25,8 @@ const FolderSheetContent = ({
   selectedFolder,
 }: FolderSheetContentProps) => {
   const [createFolder, setCreateFolder] = useState(false);
-
+  const { close } = useBottomSheet();
+  backButtonModalClose(close);
   useEffect(() => {
     setFolder(['선택안함', ...folder]);
   }, []);

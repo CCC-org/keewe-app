@@ -1,8 +1,14 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { useBottomSheet } from '@gorhom/bottom-sheet';
+import React, { useEffect } from 'react';
+import { BackHandler, Pressable, StyleSheet, View } from 'react-native';
+import { Text } from 'react-native-paper';
 import BottomSheetHeader from '../../components/header/BottomSheetHeader';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import CountingTextArea from '../../components/texts/CountingTextArea';
+import {
+  backButtonModalClose,
+  handleSheetClose,
+} from '../../utils/helper/bottomSheetUtils/bottomSheetUtils';
 
 interface LinkSheetContentProps {
   onHeaderLeftPress: () => void;
@@ -17,6 +23,8 @@ const LinkSheetContent = ({
   linkText,
   setLinkText,
 }: LinkSheetContentProps) => {
+  const { close } = useBottomSheet();
+  backButtonModalClose(close);
   return (
     <View style={styles.contentContainer}>
       <BottomSheetHeader
