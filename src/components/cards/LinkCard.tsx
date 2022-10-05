@@ -41,7 +41,9 @@ const LinkCard: React.FC<customProps> = (props) => {
         return (
           <View style={styles.container}>
             <View style={styles.metadataTextContainerStyle}>
-              <Text style={styles.title}>{title ? title.slice(0, 20) + '...' : 'No title'}</Text>
+              <Text style={styles.title}>
+                {title ? title.slice(0, 20) + (title.length > 20 ? '...' : '') : 'No title'}
+              </Text>
               <Text style={styles.description}>
                 {description ? description!.slice(0, 40) + '...' : 'Nothing do render...'}
               </Text>
@@ -69,7 +71,7 @@ function createStyles(props: customProps) {
       borderWidth: 1,
       borderColor: '#12131420',
       borderRadius: 8,
-      height: 60,
+      height: 68,
       flex: 1,
       flexDirection: 'row',
     },

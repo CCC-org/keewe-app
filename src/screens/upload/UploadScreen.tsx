@@ -2,6 +2,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import DividerBar from '../../components/bars/DividerBar';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
 import LinkCard from '../../components/cards/LinkCard';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
@@ -133,15 +134,7 @@ const UploadScreen = ({ navigation }) => {
           autoFocus={false}
         />
       </View>
-      <View
-        style={{
-          width: '100%',
-          borderBottomWidth: 1,
-          borderBottomColor: '#12131410',
-          marginTop: 12,
-        }}
-      ></View>
-
+      <DividerBar style={{ marginTop: 12 }} />
       <UploadBottomContainer
         selectedFolder={selectedFolder}
         isSwitchOn={isSwitchOn}
