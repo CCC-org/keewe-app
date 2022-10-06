@@ -33,7 +33,7 @@ export type RootStackParamList = {
   ServiceIntroOne: undefined;
   InterestChoose: undefined;
   InterestChooseTemp: undefined;
-  BottomSheetExperimental: undefined;
+  Upload: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
