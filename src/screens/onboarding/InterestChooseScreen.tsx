@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import InterestChooseSection from './InterestChooseSection';
 import { TOTAL_TAG } from '../../constants/Interests';
@@ -96,16 +96,7 @@ const InterestChooseScreen = ({ navigation, route }) => {
           />
         </View>
       </View>
-      <View style={{ height: 90, justifyContent: 'space-between', marginBottom: 35 }}>
-        <NumberProgressBar progressValue={selectedCategory.length} max={5} />
-        <ConditionalButton
-          isActive={selectedCategory.length > 0 && selectedCategory.length < 6}
-          onPress={handleNextScreen}
-          text={conditionalText}
-          width={343}
-        />
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 

@@ -60,7 +60,7 @@ const ReactIconButton = ({ xml, onClick }: ReactIconButtonProps) => {
             inputRange: [0, 1],
             outputRange: ['#00000000', theme.colors.brand.surface.main],
           }),
-          padding: 5,
+          padding: 10,
           // margin: marginValue,
           ...styles.Button,
         }}

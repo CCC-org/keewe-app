@@ -31,7 +31,7 @@ import { TransitionPresets } from '@react-navigation/stack';
 
 const queryClient = new QueryClient();
 // const Stack = createNativeStackNavigator();
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 const headerOptions = {
   headerBackVisible: false,
@@ -161,9 +161,7 @@ export default function App() {
                   <Stack.Screen
                     name="InsightSample"
                     component={InsightSampleScreen}
-                    options={{
-                      headerBackVisible: false,
-                    }}
+                    options={{ ...headerOptions, headerStyle: { backgroundColor: '#F8F8F4' } }}
                   />
                 </Stack.Group>
                 {/* 실험적 그룹 */}

@@ -29,7 +29,16 @@ const BezierAnimatedView = ({
 
   return (
     <>
-      <Animated.View style={{ marginTop: marginValue }}>{children}</Animated.View>
+      <Animated.View
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginTop: marginValue,
+        }}
+      >
+        {children}
+      </Animated.View>
     </>
   );
 };
