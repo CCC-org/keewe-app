@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import InterestChooseSection from './InterestChooseSection';
 import { TOTAL_TAG } from '../../constants/Interests';
@@ -41,7 +41,7 @@ const InterestChooseScreen = ({ navigation, route }) => {
   }, [route]);
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <View>
         <View
           style={{
@@ -72,7 +72,7 @@ const InterestChooseScreen = ({ navigation, route }) => {
           width={343}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -80,7 +80,7 @@ export default InterestChooseScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'space-between',
   },
 });

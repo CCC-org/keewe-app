@@ -1,4 +1,4 @@
-import { StyleSheet, View, Image, Dimensions } from 'react-native';
+import { StyleSheet, View, Image, Dimensions, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import OnboardingIntroHeaderButton from '../../components/buttons/OnboardingIntroHeaderButton';
 import HeaderText from '../../components/texts/HeaderText';
@@ -15,7 +15,7 @@ const ServiceIntroOneScreen = ({ navigation, route }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Image source={require('../../../assets/images/따봉도치.jpg')} style={styles.image} />
       <View style={styles.bottom}>
         <View style={styles.titleContainer}>
@@ -34,7 +34,7 @@ const ServiceIntroOneScreen = ({ navigation, route }) => {
           />
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -45,7 +45,6 @@ export function createStyle() {
     container: {
       backgroundColor: '#fff',
       alignItems: 'center',
-      flex: 1,
       flexDirection: 'column',
       justifyContent: 'flex-start',
     },
@@ -59,8 +58,6 @@ export function createStyle() {
       minWidth: '92%',
     },
     bottom: {
-      // display: 'flex',
-      // flexDirection: 'column',
       justifyContent: 'space-between',
       alignItems: 'center',
       paddingHorizontal: 10,
