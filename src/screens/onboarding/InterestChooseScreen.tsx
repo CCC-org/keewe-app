@@ -63,28 +63,19 @@ const InterestChooseScreen = ({ navigation, route }) => {
   }, [route]);
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View>
-          <View
-            style={{
-              height: 50,
-              justifyContent: 'space-between',
-              marginBottom: 20,
-              marginTop: 10,
-              paddingHorizontal: 16,
-            }}
-          >
-            <HeaderText header={'관심사를 알려주세요'} />
-            <Stepper currentStep={2} totalStep={2} />
-          </View>
-          <InterestChooseSection
-            totalCategory={totalCategory}
-            customCategory={customCategory}
-            selectedCategory={selectedCategory}
-            onSelect={handleSelectTag}
-            onCreateCategory={handleCreateCategory}
-          />
+    <ScrollView contentContainerStyle={styles.container}>
+      <View>
+        <View
+          style={{
+            height: 50,
+            justifyContent: 'space-between',
+            marginBottom: 20,
+            marginTop: 10,
+            paddingHorizontal: 16,
+          }}
+        >
+          <HeaderText header={'관심사를 알려주세요'} />
+          <Stepper currentStep={2} totalStep={2} />
         </View>
         <View style={{ height: 110, justifyContent: 'space-between' }}>
           <NumberProgressBar progressValue={selectedCategory.length} max={5} />
@@ -96,6 +87,15 @@ const InterestChooseScreen = ({ navigation, route }) => {
           />
         </View>
       </View>
+      <View style={{ height: 90, justifyContent: 'space-between', marginBottom: 35 }}>
+        <NumberProgressBar progressValue={selectedCategory.length} max={5} />
+        <ConditionalButton
+          isActive={selectedCategory.length > 0 && selectedCategory.length < 6}
+          onPress={handleNextScreen}
+          text={conditionalText}
+          width={343}
+        />
+      </View>
     </ScrollView>
   );
 };
@@ -104,7 +104,7 @@ export default InterestChooseScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'space-between',
   },
 });

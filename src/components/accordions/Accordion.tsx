@@ -3,7 +3,6 @@ import { StyleSheet, Animated, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { View } from '../Themed';
 
 interface AccordionProps {
   title: JSX.Element;

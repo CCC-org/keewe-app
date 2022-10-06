@@ -15,25 +15,12 @@ const ServiceIntroOneScreen = ({ navigation, route }) => {
   }
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Image source={require('../../../assets/images/따봉도치.jpg')} style={styles.image} />
-        <View style={styles.bottom}>
-          <View style={styles.titleContainer}>
-            {/* eslint-disable-next-line quotes */}
-            <HeaderText header={`기억하고 싶은 콘텐츠, \n지나치지 말고 기록하세요`} />
-          </View>
-          <View style={styles.nextButtonWithStepper}>
-            <Stepper totalStep={3} currentStep={1} />
-            <ConditionalButton
-              isActive={true}
-              text={'다음'}
-              color="#e0f6a2"
-              textColor="#486006"
-              width={343}
-              onPress={handlePress}
-            />
-          </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Image source={require('../../../assets/images/따봉도치.jpg')} style={styles.image} />
+      <View style={styles.bottom}>
+        <View style={styles.titleContainer}>
+          {/* eslint-disable-next-line quotes */}
+          <HeaderText header={`기억하고 싶은 콘텐츠, \n지나치지 말고 기록하세요`} />
         </View>
       </View>
     </ScrollView>
@@ -47,7 +34,6 @@ export function createStyle() {
     container: {
       backgroundColor: '#fff',
       alignItems: 'center',
-      flex: 1,
       flexDirection: 'column',
       justifyContent: 'flex-start',
     },
@@ -61,8 +47,6 @@ export function createStyle() {
       minWidth: '92%',
     },
     bottom: {
-      // display: 'flex',
-      // flexDirection: 'column',
       justifyContent: 'space-between',
       alignItems: 'center',
       paddingHorizontal: 10,

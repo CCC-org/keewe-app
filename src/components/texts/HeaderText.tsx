@@ -9,6 +9,9 @@ interface HeaderTextProps {
 const HeaderText = ({ header, subTitle }: HeaderTextProps) => {
   const theme = useTheme();
   const styles = createStyles(theme);
+  if (subTitle === '') {
+    subTitle = undefined;
+  }
   return (
     <View>
       <Text style={styles.header}>{header}</Text>
