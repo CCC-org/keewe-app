@@ -77,7 +77,14 @@ const InterestChooseScreen = ({ navigation, route }) => {
           <HeaderText header={'관심사를 알려주세요'} />
           <Stepper currentStep={2} totalStep={2} />
         </View>
-        <View style={{ height: 110, justifyContent: 'space-between' }}>
+        <InterestChooseSection
+          totalCategory={totalCategory}
+          customCategory={customCategory}
+          selectedCategory={selectedCategory}
+          onSelect={handleSelectTag}
+          onCreateCategory={handleCreateCategory}
+        />
+        <View style={{ height: 90, justifyContent: 'space-between', marginBottom: 35 }}>
           <NumberProgressBar progressValue={selectedCategory.length} max={5} />
           <ConditionalButton
             isActive={selectedCategory.length > 0 && selectedCategory.length < 6}
@@ -86,15 +93,6 @@ const InterestChooseScreen = ({ navigation, route }) => {
             width={343}
           />
         </View>
-      </View>
-      <View style={{ height: 90, justifyContent: 'space-between', marginBottom: 35 }}>
-        <NumberProgressBar progressValue={selectedCategory.length} max={5} />
-        <ConditionalButton
-          isActive={selectedCategory.length > 0 && selectedCategory.length < 6}
-          onPress={handleNextScreen}
-          text={conditionalText}
-          width={343}
-        />
       </View>
     </ScrollView>
   );

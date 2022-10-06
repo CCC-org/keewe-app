@@ -54,34 +54,34 @@ const ReactIconButton = ({ xml, onClick }: ReactIconButtonProps) => {
 
   return (
     <>
-      <Animated.View
-        style={{
-          backgroundColor: opacityValue.interpolate({
-            inputRange: [0, 1],
-            outputRange: ['#00000000', theme.colors.brand.surface.main],
-          }),
-          padding: 10,
-          // margin: marginValue,
-          ...styles.Button,
-        }}
-      >
-        <Pressable onPress={handleClick}>
+      <Pressable onPress={handleClick}>
+        <Animated.View
+          style={{
+            backgroundColor: opacityValue.interpolate({
+              inputRange: [0, 1],
+              outputRange: ['#00000000', theme.colors.brand.surface.main],
+            }),
+            padding: 10,
+            // margin: marginValue,
+            ...styles.Button,
+          }}
+        >
           <SvgXml xml={xml} />
-        </Pressable>
-      </Animated.View>
-      <View
-        style={{
-          width: 50,
-          height: 100,
-          position: 'absolute',
-          bottom: 20,
-          right: -7,
-        }}
-      >
-        {animate.map((animateValue) => (
-          <FlyingEmoticons key={animateValue} xml={xml} />
-        ))}
-      </View>
+        </Animated.View>
+        <View
+          style={{
+            width: 50,
+            height: 100,
+            position: 'absolute',
+            bottom: 20,
+            right: -7,
+          }}
+        >
+          {animate.map((animateValue) => (
+            <FlyingEmoticons key={animateValue} xml={xml} />
+          ))}
+        </View>
+      </Pressable>
     </>
   );
 };

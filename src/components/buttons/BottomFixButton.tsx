@@ -30,26 +30,26 @@ const BottomFixButton = ({
 }: BottomFixButtonProps) => {
   const theme = useTheme();
   return (
-    <View
+    <Pressable
       style={{
-        ...styles.Bottom,
-        width: width,
-        backgroundColor: color || theme.colors.graphic.black,
-        opacity: isActive ? 1 : 0.2,
+        ...styles.Button,
+      }}
+      onPress={() => {
+        if (!isActive) return;
+        onPress();
       }}
     >
-      <Pressable
+      <View
         style={{
-          ...styles.Button,
-        }}
-        onPress={() => {
-          if (!isActive) return;
-          onPress();
+          ...styles.Bottom,
+          width: width,
+          backgroundColor: color || theme.colors.graphic.black,
+          opacity: isActive ? 1 : 0.2,
         }}
       >
         <Text style={{ ...styles.text, color: textColor ? textColor : 'white' }}>{text}</Text>
-      </Pressable>
-    </View>
+      </View>
+    </Pressable>
   );
 };
 

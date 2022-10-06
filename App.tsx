@@ -24,14 +24,12 @@ import { RootScreen } from './src/navigation';
 //import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ChallengeSubjectCreationScreen from './src/screens/challenge/ChallengeSubjectCreationScreen';
 import ServiceIntroOneScreen from './src/screens/onboarding/ServiceIntroOneScreen';
-import ServiceIntroThreeScreen from './src/screens/onboarding/ServiceIntroThreeScreen';
 import ServiceIntroTwoScreen from './src/screens/onboarding/ServiceIntroTwoScreen';
 import TempSheetScreen from './src/screens/upload/TempSheetScreen';
 import UploadScreen from './src/screens/upload/UploadScreen';
 import light from './src/theme/light';
 import ServiceIntroThreeScreen from './src/screens/onboarding/ServiceIntroThreeScreen';
 import InsightSampleScreen from './src/screens/onboarding/InsightSampleScreen';
-import BottomSheetExperimentalScreen from './src/screens/BottomSheetExperimentalScreen';
 import { TransitionPresets } from '@react-navigation/stack';
 
 const queryClient = new QueryClient();
@@ -178,6 +176,11 @@ export default function App() {
                         },
                       }}
                     />
+                    <Stack.Screen
+                      name="InsightSample"
+                      options={{ ...headerOptions, headerStyle: { backgroundColor: '#F8F8F4' } }}
+                      component={InsightSampleScreen}
+                    />
                   </Stack.Group>
                   {/* 실험적 그룹 */}
                   <Stack.Group>
@@ -201,11 +204,6 @@ export default function App() {
                 </Stack.Navigator>
               </QueryClientProvider>
             </BottomSheetModalProvider>
-                  <Stack.Screen
-                    name="InsightSample"
-                    options={{ ...headerOptions, headerStyle: { backgroundColor: '#F8F8F4' } }}
-                    component={InsightSampleScreen}
-                  />
           </NavigationContainer>
           <StatusBar style="dark" />
         </PaperProvider>
