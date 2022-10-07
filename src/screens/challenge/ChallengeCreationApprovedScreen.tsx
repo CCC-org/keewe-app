@@ -66,20 +66,24 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <ConditionalButton
-          isActive={true}
-          text={'친구 초대하기'}
-          color={'#e0f6a2'}
-          width={168}
-          textColor={'#486006'}
-          onPress={() => alert('pressed')}
-        />
-        <ConditionalButton
-          isActive={true}
-          text={'확인'}
-          width={168}
-          onPress={() => alert('pressed')}
-        />
+        <View style={{ marginRight: 4 }}>
+          <ConditionalButton
+            isActive={true}
+            text={'친구 초대하기'}
+            color={'#e0f6a2'}
+            width={168}
+            textColor={'#486006'}
+            onPress={() => alert('pressed')}
+          />
+        </View>
+        <View style={{ marginLeft: 4 }}>
+          <ConditionalButton
+            isActive={true}
+            text={'확인'}
+            width={168}
+            onPress={() => alert('pressed')}
+          />
+        </View>
       </View>
     </View>
   );
@@ -106,7 +110,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 40,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
 });
 
