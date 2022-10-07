@@ -34,7 +34,7 @@ const ChallengeInfoSection = ({
         placeholder="친구들과 함께하고 싶은 챌린지에 대해 소개해주세요."
         inputValue={challengeInfo}
         setInputValue={setChallengeInfo}
-        infoText="챌린지 소개(선택)"
+        infoText="챌린지 소개"
       />
     </>
   );
