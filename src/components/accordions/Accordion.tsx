@@ -55,7 +55,7 @@ const Accordion = ({
         <Icon
           name={isOpen ? 'chevron-up-outline' : 'chevron-down-outline'}
           size={18}
-          color={`${theme.colors.graphic.black}80`}
+          color={`${theme.colors.graphic.black}cc`}
         />
       </TouchableOpacity>
       <Animated.View style={{ overflow: 'hidden', height: height }}>{children}</Animated.View>

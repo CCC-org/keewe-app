@@ -47,7 +47,7 @@ const ChallengeGoalSettingScreen = ({ navigation, route }) => {
           <ConditionalButton
             isActive={true}
             text={isNext ? '다음' : '완료'}
-            color={isNext ? theme.colors.brand.primary.main : theme.colors.graphic.black}
+            color={isNext ? theme.colors.brand.primary.container : theme.colors.graphic.black}
             textColor={isNext ? theme.colors.graphic.black : theme.colors.graphic.white}
             width={150}
             onPress={handleNextClick}
