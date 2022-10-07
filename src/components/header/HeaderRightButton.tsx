@@ -9,12 +9,22 @@ interface HeaderRightButtonProps {
   disabled: boolean;
   height?: number;
   width?: number;
+  borderColor?: string;
   handlePress: () => void;
 }
 
 const HeaderRightButton = (props: HeaderRightButtonProps) => {
-  const { text, backGroundColor, textColor, borderLine, disabled, handlePress, height, width } =
-    props;
+  const {
+    text,
+    backGroundColor,
+    textColor,
+    borderLine,
+    disabled,
+    handlePress,
+    height,
+    width,
+    borderColor,
+  } = props;
   return (
     <>
       <Pressable
@@ -28,6 +38,7 @@ const HeaderRightButton = (props: HeaderRightButtonProps) => {
           alignItems: 'center',
           backgroundColor: backGroundColor,
           borderWidth: borderLine ? 1 : 0,
+          borderColor: borderColor,
           height: height ? height : 32,
           width: width ? width : 49,
         }}
