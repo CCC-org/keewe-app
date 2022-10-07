@@ -60,7 +60,7 @@ const TextInputDetail = (props: TextInputDetailProps) => {
         selectionColor={'black'}
         right={
           <TextInput.Icon
-            style={{ opacity: isButtonEnabled ? 0.2 : 0 }}
+            style={{ opacity: isButtonEnabled ? 0.2 : 0, marginRight: -15 }}
             onPress={handleTextInputButton}
             name="close-circle"
           />
@@ -74,12 +74,18 @@ const TextInputDetail = (props: TextInputDetailProps) => {
           fontWeight: '600',
           fontSize: 22,
           backgroundColor: 'white',
-          // marginHorizontal: 12,
+          marginHorizontal: 12,
           paddingHorizontal: 0,
         }}
         dense={true}
-        onFocus={() => setFocused(true)}
-        onEndEditing={() => setFocused(false)}
+        onFocus={() => {
+          setFocused(true);
+          setIsButtonEnabled(true);
+        }}
+        onEndEditing={() => {
+          setFocused(false);
+          setIsButtonEnabled(false);
+        }}
         placeholderTextColor={'rgba(18, 19, 20, 0.3)'}
         theme={{
           colors: {

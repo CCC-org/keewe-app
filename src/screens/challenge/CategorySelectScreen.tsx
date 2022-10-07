@@ -43,7 +43,7 @@ const CategorySelectScreen = ({ navigation, route }) => {
       </View>
       <ConditionalButton
         isActive={isActive}
-        text={isActive ? '다음' : '카테고리를 선택해주세요'}
+        text={isActive ? '다음' : '1개의 카테고리를 선택하세요'}
         color={'black'}
         width={350}
         onPress={handleNextClick}
