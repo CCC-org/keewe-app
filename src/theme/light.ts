@@ -110,7 +110,7 @@ declare global {
 const BRAND = {
   primary: {
     main: '#B2E817',
-    container: '##E0F6A2',
+    container: '#E0F6A2',
   },
   onprimary: {
     main: '#121314',

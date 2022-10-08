@@ -1,4 +1,3 @@
-import { Alert } from 'react-native';
 import httpClient from './BaseHttpClient';
 
 export const LoginQueryKeys = {
@@ -10,7 +9,7 @@ export const LoginAPI = {
     const { code, state, oauth } = params;
     const { data } = await httpClient.get<LoginResponse>(
       `https://api-keewe.com/api/v1/user/${oauth}`,
-      { params: { code, state } },
+      { params: { code: decodeURIComponent(code || ''), state } },
     );
     return data;
   },

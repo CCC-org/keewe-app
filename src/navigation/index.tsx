@@ -24,109 +24,144 @@ export function RootScreen() {
         <Text>Get Token</Text>
       </Pressable>
       <Text>{accessToken}</Text>
+      <ScrollView>
+        <Pressable onPress={() => navigation.navigate('BottomSheetExperimental')}>
+          <View
+            style={{
+              backgroundColor: 'pink',
+              width: 150,
+              height: 100,
+            }}
+          >
+            <Text> BottomSheetExperimental.tsx</Text>
+          </View>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate('SignUp')}>
+          <View
+            style={{
+              backgroundColor: 'tomato',
+              width: 150,
+              height: 100,
+            }}
+          >
+            <Text> SignUpScreen.tsx</Text>
+          </View>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate('CategorySelect')}>
+          <View
+            style={{
+              backgroundColor: 'teal',
+              width: 150,
+              height: 100,
+            }}
+          >
+            <Text> CategorySelectScreen.tsx</Text>
+          </View>
+        </Pressable>
 
-      <Pressable onPress={() => navigation.navigate('TempSheet')}>
-        <View
-          style={{
-            backgroundColor: 'pink',
-            width: 150,
-            height: 100,
-          }}
-        >
-          <Text> TempSheetScreen.tsx</Text>
-        </View>
-      </Pressable>
-      <Pressable onPress={() => navigation.navigate('Upload')}>
-        <View
-          style={{
-            backgroundColor: 'pink',
-            width: 150,
-            height: 100,
-          }}
-        >
-          <Text> UploadScreen.tsx</Text>
-        </View>
-      </Pressable>
-      <Pressable onPress={() => navigation.navigate('SignUp')}>
-        <View
-          style={{
-            backgroundColor: 'tomato',
-            width: 150,
-            height: 100,
-          }}
-        >
-          <Text> SignUpScreen.tsx</Text>
-        </View>
-      </Pressable>
-      <Pressable onPress={() => navigation.navigate('CategorySelect')}>
-        <View
-          style={{
-            backgroundColor: 'teal',
-            width: 150,
-            height: 100,
-          }}
-        >
-          <Text> CategorySelectScreen.tsx</Text>
-        </View>
-      </Pressable>
+        <Pressable onPress={() => navigation.navigate('TempSheet')}>
+          <View
+            style={{
+              backgroundColor: 'pink',
+              width: 150,
+              height: 100,
+            }}
+          >
+            <Text> TempSheetScreen.tsx</Text>
+          </View>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate('Upload')}>
+          <View
+            style={{
+              backgroundColor: 'pink',
+              width: 150,
+              height: 100,
+            }}
+          >
+            <Text> UploadScreen.tsx</Text>
+          </View>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate('SignUp')}>
+          <View
+            style={{
+              backgroundColor: 'tomato',
+              width: 150,
+              height: 100,
+            }}
+          >
+            <Text> SignUpScreen.tsx</Text>
+          </View>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate('CategorySelect')}>
+          <View
+            style={{
+              backgroundColor: 'teal',
+              width: 150,
+              height: 100,
+            }}
+          >
+            <Text> CategorySelectScreen.tsx</Text>
+          </View>
+        </Pressable>
 
-      <Pressable onPress={() => navigation.navigate('NicknameCreation')}>
+        <Pressable onPress={() => navigation.navigate('NicknameCreation')}>
+          <View
+            style={{
+              backgroundColor: 'green',
+              height: 100,
+              width: 150,
+            }}
+          >
+            <Text> NicknameCreation.tsx</Text>
+          </View>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate('InterestChoose')}>
+          <View
+            style={{
+              backgroundColor: 'skyblue',
+              height: 100,
+              width: 150,
+            }}
+          >
+            <Text> InterestChooseScreen.tsx</Text>
+          </View>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate('ServiceIntroOne')}>
+          <View
+            style={{
+              backgroundColor: 'skyblue',
+              height: 100,
+              width: 150,
+            }}
+          >
+            <Text> ServiceIntroOneScreen.tsx</Text>
+          </View>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate('ServiceIntroOne')}>
+          <View
+            style={{
+              backgroundColor: 'purple',
+              height: 100,
+              width: 150,
+            }}
+          >
+            <Text> ServiceIntroOneScreen.tsx</Text>
+          </View>
+        </Pressable>
+      </ScrollView>
+      {/*
+      <Pressable onPress={() => navigation.navigate('Stack.screen.name String')}>
         <View
           style={{
-            backgroundColor: 'green',
-            height: 100,
+            backgroundColor: 'Color of any',
             width: 150,
+            height: 100,
           }}
         >
-          <Text> NicknameCreation.tsx</Text>
+          <Text> Component name</Text>
         </View>
       </Pressable>
-      <Pressable onPress={() => navigation.navigate('InterestChoose')}>
-        <View
-          style={{
-            backgroundColor: 'skyblue',
-            height: 100,
-            width: 150,
-          }}
-        >
-          <Text> InterestChooseScreen.tsx</Text>
-        </View>
-      </Pressable>
-      <Pressable onPress={() => navigation.navigate('ServiceIntroOne')}>
-        <View
-          style={{
-            backgroundColor: 'skyblue',
-            height: 100,
-            width: 150,
-          }}
-        >
-          <Text> ServiceIntroOneScreen.tsx</Text>
-        </View>
-      </Pressable>
-      <Pressable onPress={() => navigation.navigate('ServiceIntroOne')}>
-        <View
-          style={{
-            backgroundColor: 'purple',
-            height: 100,
-            width: 150,
-          }}
-        >
-          <Text> ServiceIntroOneScreen.tsx</Text>
-        </View>
-      </Pressable>
+        */}
     </ScrollView>
-    /*
-    <Pressable onPress={() => navigation.navigate('Stack.screen.name String')}>
-      <View
-        style={{
-          backgroundColor: 'Color of any',
-          width: 150,
-          height: 100,
-        }}
-      >
-        <Text> Component name</Text>
-      </View>
-    </Pressable>
-    */
   );
 }
