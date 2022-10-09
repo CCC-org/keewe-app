@@ -5,12 +5,18 @@ import BookMarkScreen from './BookMarkScreen';
 import ChallengesScreen from './ChallengesScreen';
 import MyPageScreen from './MyPageScreen';
 import { RootScreen } from '../../navigation';
+import MainScreen from './MainScreen';
 
-const Home = () => {
+const Tabs = () => {
   const Tab = createBottomTabNavigator();
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Tab.Screen name="Root" component={RootScreen} />
+      <Tab.Screen name="Main" component={MainScreen} />
       <Tab.Screen name="BookMark" component={BookMarkScreen} />
       <Tab.Screen name="Challenges" component={ChallengesScreen} />
       <Tab.Screen name="MyPage" component={MyPageScreen} />
@@ -18,6 +24,6 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Tabs;
 
 const styles = StyleSheet.create({});

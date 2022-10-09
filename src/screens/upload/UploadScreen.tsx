@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native';
 import DividerBar from '../../components/bars/DividerBar';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
-import LinkCard from '../../components/cards/LinkCard';
+import UploadLinkCard from '../../components/cards/LinkCardForUpload';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import StaticSizeScrollTextArea from '../../components/texts/StaticSizeScrollTextArea';
 import { UploadApis } from '../../utils/api/UploadAPIs';
@@ -14,6 +14,7 @@ import {
   handleSheetPresent,
 } from '../../utils/helper/bottomSheetUtils/bottomSheetUtils';
 import handleSheetLinkComplete from '../../utils/helper/fetchAPI/isValidLink';
+import EditButton from './EditButton';
 import FolderSheetContent from './FolderSheetContent';
 import LinkSheetContent from './LinkSheetContent';
 import UploadBottomContainer from './UploadBottomContainer';
@@ -105,16 +106,15 @@ const UploadScreen = ({ navigation }) => {
     <ScrollView scrollToOverflowEnabled={true} style={styles.container}>
       {isValidSite ? (
         <View style={styles.linkCardContainer}>
-          <View style={{ flexGrow: 3 }}>
-            <LinkCard text={linkText} />
-          </View>
-          <MaterialCommunityIcons
+          <UploadLinkCard text={linkText} />
+          {/* < <MaterialCommunityIcons
             style={{ marginLeft: 20, flexGrow: 1 }}
             name="checkbox-blank-circle"
             size={27}
             color="black"
             onPress={handleEditPress}
-          />
+          />> */}
+          <EditButton onPress={handleEditPress} />
         </View>
       ) : (
         <InsightLinkTriggerButton
@@ -190,6 +190,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     flex: 1,
+    borderWidth: 1,
+    borderColor: '#12131420',
+    borderRadius: 8,
   },
 });
 
