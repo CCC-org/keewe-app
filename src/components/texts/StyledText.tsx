@@ -6,7 +6,6 @@ export function MonoText(props: TextProps) {
   return <Text {...props} style={[props.style, { fontFamily: 'space-mono' }]} />;
 }
 export function FontText(props: TextProps) {
-  console.log('fonttext', props);
   return (
     <Text {...props} style={[props.style, { fontFamily: 'pretendard' }]}>
       {props.children}
