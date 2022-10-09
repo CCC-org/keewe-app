@@ -11,7 +11,7 @@ import { IFolder } from '../../types/upload';
 interface FolderSheetContentProps {
   onHeaderLeftPress: () => void;
   handleSheetComplete: () => void;
-  setFolder: React.Dispatch<React.SetStateAction<string[]>>;
+  setFolder: React.Dispatch<React.SetStateAction<IFolder[]>>;
   selectedFolder: string;
   setSelectedFolder: React.Dispatch<React.SetStateAction<string>>;
   folders: IFolder[];

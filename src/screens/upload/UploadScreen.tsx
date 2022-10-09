@@ -63,8 +63,10 @@ const UploadScreen = ({ navigation }) => {
       participation: isSwitchOn,
       link: linkText,
       contents: insightText,
-      drawerId: 4,
+      drawerId: folders.find((folder) => folder.name === selectedFolder)?.id || -1,
     };
+
+    console.log('uplaod', data);
 
     try {
       const response = await UploadApis.uploadInsight(data);
@@ -98,7 +100,7 @@ const UploadScreen = ({ navigation }) => {
     try {
       const completeRes = await UploadApis.createNewFolder(selectedFolder);
       if (completeRes.code === 200) {
-        setFolders([...folders, selectedFolder]);
+        setFolders([...folders, { name: selectedFolder, id: completeRes.data.drawerId }]);
       } else {
         throw new Error('폴더 생성 실패');
       }
