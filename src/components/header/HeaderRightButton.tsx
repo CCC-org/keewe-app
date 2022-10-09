@@ -10,6 +10,7 @@ interface HeaderRightButtonProps {
   disabled: boolean;
   height?: number;
   width?: number;
+  borderColor?: string;
   handlePress: () => void;
 }
 

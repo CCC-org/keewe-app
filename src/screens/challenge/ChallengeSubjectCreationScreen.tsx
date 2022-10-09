@@ -6,8 +6,10 @@ import HeaderText from '../../components/texts/HeaderText';
 import TextInputDetail from '../../components/texts/TextInputDetail';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
+import { useTheme } from 'react-native-paper';
 
 const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
+  const theme = useTheme();
   const [subject, setSubject] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const createRequestParams = {
@@ -29,11 +31,12 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
         <HeaderRightButton
           text="건너뛰기"
           backGroundColor="white"
-          textColor="black"
+          textColor={`${theme.colors.graphic.black}80`}
           borderLine={true}
           disabled={false}
           handlePress={handleSkipPress}
-          width={64}
+          width={73}
+          borderColor={`${theme.colors.graphic.black}1a`}
         />
       ),
     });
@@ -68,7 +71,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <View>
+      <View style={{ flex: 10 }}>
         <HeaderText
           header="나만의 주제를 정해보세요"
           subTitle={`${route.params.form.selectedCategory}에 관한 주제면 좋아요. `}
@@ -100,9 +103,8 @@ const styles = StyleSheet.create({
   container: {
     padding: 16,
     flex: 1,
-    justifyContent: 'space-between',
   },
   buttonCtn: {
-    // make it go to bottom of the screen
+    flex: 9,
   },
 });

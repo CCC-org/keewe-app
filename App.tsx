@@ -100,6 +100,7 @@ export default function App() {
                     <Stack.Screen
                       name="ChallengeSubjectCreation"
                       component={ChallengeSubjectCreationScreen}
+                      options={headerOptions}
                     />
                     <Stack.Screen
                       name="ChallengeGoalSetting"

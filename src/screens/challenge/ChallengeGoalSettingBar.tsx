@@ -91,7 +91,7 @@ function makeStyles(theme: ReactNativePaper.Theme, unit: string) {
       opacity: 0.8,
     },
     slider: {
-      width: '80%',
+      width: '105%',
       alignItems: 'stretch',
       justifyContent: 'center',
       position: 'relative',
@@ -129,7 +129,7 @@ function makeStyles(theme: ReactNativePaper.Theme, unit: string) {
       flexDirection: 'row',
       justifyContent: 'space-between',
       // 1px solid radius
-      width: '80%',
+      width: '105%',
       position: 'absolute',
       bottom: -10,
       fontSize: 14,
