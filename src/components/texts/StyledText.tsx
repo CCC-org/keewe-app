@@ -5,6 +5,7 @@ import { Text } from 'react-native';
 export function MonoText(props: TextProps) {
   return <Text {...props} style={[props.style, { fontFamily: 'space-mono' }]} />;
 }
+
 export function FontText(props: TextProps) {
   return (
     <Text {...props} style={[props.style, { fontFamily: 'pretendard' }]}>
@@ -12,3 +13,4 @@ export function FontText(props: TextProps) {
     </Text>
   );
 }
+
