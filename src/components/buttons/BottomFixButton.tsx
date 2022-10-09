@@ -65,6 +65,9 @@ const styles = StyleSheet.create({
   },
   Button: {
     margin: 12,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
     fontWeight: '600',
