@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { TOTAL_TAG } from '../../constants/Interests';
 import ChallengeCategorySelectSection from './ChallengeCategorySelectSection';
-import ConditionalButton from '../../components/buttons/ConditionalButton';
 import Stepper from '../../components/stepper/Stepper';
+import BottomFixButton from '../../components/buttons/BottomFixButton';
 
 const CategorySelectScreen = ({ navigation, route }) => {
   const theme = useTheme();
@@ -29,26 +29,28 @@ const CategorySelectScreen = ({ navigation, route }) => {
   }, [route.params]);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View>
-        <Text style={theme.fonts.text.display}>챌린지 카테고리를</Text>
-        <Text style={theme.fonts.text.display}>1개 선택하세요</Text>
-        <Stepper totalStep={3} currentStep={1} />
-        <ChallengeCategorySelectSection
-          totalCategory={[...customCategory, ...totalCategory]}
-          selectedCategory={selectedCategory}
-          onSelect={handleSelectTag}
-          onCreateCategory={handleCreateCategory}
-        />
-      </View>
-      <ConditionalButton
+    <>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View>
+          <Text style={theme.fonts.text.display}>챌린지 카테고리를</Text>
+          <Text style={theme.fonts.text.display}>1개 선택하세요</Text>
+          <Stepper totalStep={3} currentStep={1} />
+          <ChallengeCategorySelectSection
+            totalCategory={[...customCategory, ...totalCategory]}
+            selectedCategory={selectedCategory}
+            onSelect={handleSelectTag}
+            onCreateCategory={handleCreateCategory}
+          />
+        </View>
+      </ScrollView>
+      <BottomFixButton
         isActive={isActive}
         text={isActive ? '다음' : '1개의 카테고리를 선택하세요'}
         color={'black'}
         width={350}
         onPress={handleNextClick}
       />
-    </ScrollView>
+    </>
   );
 };
 
