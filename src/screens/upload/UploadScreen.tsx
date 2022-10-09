@@ -7,6 +7,7 @@ import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTrigge
 import UploadLinkCard from '../../components/cards/LinkCardForUpload';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import StaticSizeScrollTextArea from '../../components/texts/StaticSizeScrollTextArea';
+import { IFolder } from '../../types/upload';
 import { UploadApis } from '../../utils/api/UploadAPIs';
 import {
   backButtonModalClose,
@@ -26,7 +27,7 @@ const UploadScreen = ({ navigation }) => {
   const [insightText, setInsightText] = useState<string>('');
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [isValidSite, setIsValidSite] = useState(false);
-  const [folder, setFolder] = useState<string[]>(FOLDER_LIST);
+  const [folders, setFolders] = useState<IFolder[]>([]);
   const [selectedFolder, setSelectedFolder] = useState<string>('');
   const linkSheetRef = useRef<BottomSheetModal>(null);
   const folderSheetRef = useRef<BottomSheetModal>(null);
@@ -49,9 +50,13 @@ const UploadScreen = ({ navigation }) => {
   }, [linkText, insightText, navigation, selectedFolder, isSwitchOn]);
 
   useEffect(() => {
-    // Get the drawer from api, and set the result as folder list
-    console.log('changed', insightText);
-  }, [insightText]);
+    UploadApis.getFolderList().then(setFolders);
+  }, []);
+
+  // temp
+  useEffect(() => {
+    console.log(folders);
+  }, [folders]);
 
   const handleSubmit = async () => {
     const data = {
@@ -93,7 +98,7 @@ const UploadScreen = ({ navigation }) => {
     try {
       const completeRes = await UploadApis.createNewFolder(selectedFolder);
       if (completeRes.code === 200) {
-        setFolder([...folder, selectedFolder]);
+        setFolders([...folders, selectedFolder]);
       } else {
         throw new Error('폴더 생성 실패');
       }
@@ -163,8 +168,8 @@ const UploadScreen = ({ navigation }) => {
         <FolderSheetContent
           handleSheetComplete={handleFolderSheetComplete}
           onHeaderLeftPress={() => handleSheetClose(folderSheetRef)}
-          folder={folder}
-          setFolder={setFolder}
+          folders={folders}
+          setFolder={setFolders}
           selectedFolder={selectedFolder}
           setSelectedFolder={setSelectedFolder}
         />

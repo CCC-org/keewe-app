@@ -4,3 +4,8 @@ export interface UploadRequest {
   contents: string;
   link: string;
 }
+
+export interface IFolder {
+  id: number;
+  name: string;
+}

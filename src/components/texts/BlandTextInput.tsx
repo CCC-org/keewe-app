@@ -6,12 +6,13 @@ interface BlandTextInputProps {
   setTextVal: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const BlandTextInput = ({ textVal, setTextVal }: BlandTextInputProps) => {
+const BlandTextInput = ({ setTextVal }: BlandTextInputProps) => {
   return (
     <TextInput
       style={styles.textInput}
       placeholder={'새 폴더의 이름을 적어주세요.'}
       onChangeText={(text) => setTextVal(text)}
+      autoFocus={true}
     />
   );
 };
