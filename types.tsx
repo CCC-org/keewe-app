@@ -36,6 +36,7 @@ export type RootStackParamList = {
   BottomSheetExperimental: undefined;
   InsightSample: undefined;
   Upload: undefined;
+  Home: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

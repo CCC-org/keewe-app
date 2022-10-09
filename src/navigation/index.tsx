@@ -25,15 +25,15 @@ export function RootScreen() {
       </Pressable>
       <Text>{accessToken}</Text>
       <ScrollView>
-        <Pressable onPress={() => navigation.navigate('BottomSheetExperimental')}>
+        <Pressable onPress={() => navigation.navigate('Home')}>
           <View
             style={{
-              backgroundColor: 'pink',
+              backgroundColor: 'skyblue',
               width: 150,
               height: 100,
             }}
           >
-            <Text> BottomSheetExperimental.tsx</Text>
+            <Text> HomeScreen.tsx</Text>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('SignUp')}>
@@ -59,17 +59,6 @@ export function RootScreen() {
           </View>
         </Pressable>
 
-        <Pressable onPress={() => navigation.navigate('TempSheet')}>
-          <View
-            style={{
-              backgroundColor: 'pink',
-              width: 150,
-              height: 100,
-            }}
-          >
-            <Text> TempSheetScreen.tsx</Text>
-          </View>
-        </Pressable>
         <Pressable onPress={() => navigation.navigate('Upload')}>
           <View
             style={{

@@ -7,46 +7,27 @@ interface customProps extends LinkPreviewProps {
   width?: number | string;
 }
 
-const LinkCard: React.FC<customProps> = (props) => {
+const UploadLinkCard: React.FC<customProps> = (props) => {
   const styles = createStyles(props);
 
   return (
-    //  <LinkPreview
-    //    containerStyle={{ ...styles.container }}
-    //    metadataContainerStyle={styles.metaDataContainerStyle}
-    //    metadataTextContainerStyle={styles.metadataTextContainerStyle}
-    //    renderDescription={(description) => <Text>{description}</Text>}
-    //    renderHeader={(title) => <Text>{title}</Text>}
-    //    renderTitle={(title) => <Text style={styles.title}>{title}</Text>}
-    //    renderMinimizedImage={(image) => (
-    //      <Image
-    //        source={{
-    //          uri: image.url,
-    //          height: 50,
-    //          width: 50,
-    //        }}
-    //        defaultSource={require('../../../assets/images/챌린지/챌린지생성.png')}
-    //      />
-    //    )}
-    //    textContainerStyle={styles.textContainerStyle}
-    //    renderLinkPreview={(pre) => <View style={styles.container}></View>}
-    //    {...props}
-    //  />
     <LinkPreview
       {...props}
       renderLinkPreview={(pre) => {
         const title = pre.previewData?.title;
-        const description = pre.previewData?.description || pre.previewData?.link;
+        // make the link only to contain the domain name
+
+        const description =
+          pre.previewData?.link?.replace(/(^\w+:|^)\/\//, '').split('/')[0] ||
+          pre.previewData?.description;
         const url = pre.previewData?.image?.url;
         return (
-          <View style={styles.container}>
+          <View style={[styles.container]}>
             <View style={styles.metadataTextContainerStyle}>
               <Text style={styles.title}>
                 {title ? title.slice(0, 20) + (title.length > 20 ? '...' : '') : 'No title'}
               </Text>
-              <Text style={styles.description}>
-                {description ? description!.slice(0, 40) + '...' : 'Nothing do render...'}
-              </Text>
+              <Text style={styles.description}>{description}</Text>
             </View>
             <Image
               style={styles.imageContainer}
@@ -62,18 +43,19 @@ const LinkCard: React.FC<customProps> = (props) => {
   );
 };
 
-export default LinkCard;
+export default UploadLinkCard;
 
 function createStyles(props: customProps) {
   const styles = StyleSheet.create({
     container: {
       width: props.width,
-      borderWidth: 1,
-      borderColor: '#12131420',
+      // borderWidth: 1,
+      // borderColor: '#12131420',
+      borderRightWidth: 0,
       borderRadius: 8,
       height: 68,
       flex: 1,
-      flexDirection: 'row',
+      flexDirection: 'row-reverse',
     },
     title: {
       fontSize: 12,

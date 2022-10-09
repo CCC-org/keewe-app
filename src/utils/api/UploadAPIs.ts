@@ -31,4 +31,16 @@ export const UploadApis = {
         return res.data;
       });
   },
+  getFolderList: async () => {
+    const token = await getAccessToken();
+    return axios
+      .get('https://api-keewe.com/api/v1/drawer', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        return res.data.data;
+      });
+  },
 };

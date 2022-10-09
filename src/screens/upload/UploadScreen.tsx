@@ -4,9 +4,10 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native';
 import DividerBar from '../../components/bars/DividerBar';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
-import LinkCard from '../../components/cards/LinkCard';
+import UploadLinkCard from '../../components/cards/LinkCardForUpload';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import StaticSizeScrollTextArea from '../../components/texts/StaticSizeScrollTextArea';
+import { IFolder } from '../../types/upload';
 import { UploadApis } from '../../utils/api/UploadAPIs';
 import {
   backButtonModalClose,
@@ -14,6 +15,7 @@ import {
   handleSheetPresent,
 } from '../../utils/helper/bottomSheetUtils/bottomSheetUtils';
 import handleSheetLinkComplete from '../../utils/helper/fetchAPI/isValidLink';
+import EditButton from './EditButton';
 import FolderSheetContent from './FolderSheetContent';
 import LinkSheetContent from './LinkSheetContent';
 import UploadBottomContainer from './UploadBottomContainer';
@@ -25,7 +27,7 @@ const UploadScreen = ({ navigation }) => {
   const [insightText, setInsightText] = useState<string>('');
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [isValidSite, setIsValidSite] = useState(false);
-  const [folder, setFolder] = useState<string[]>(FOLDER_LIST);
+  const [folders, setFolders] = useState<IFolder[]>([]);
   const [selectedFolder, setSelectedFolder] = useState<string>('');
   const linkSheetRef = useRef<BottomSheetModal>(null);
   const folderSheetRef = useRef<BottomSheetModal>(null);
@@ -48,17 +50,23 @@ const UploadScreen = ({ navigation }) => {
   }, [linkText, insightText, navigation, selectedFolder, isSwitchOn]);
 
   useEffect(() => {
-    // Get the drawer from api, and set the result as folder list
-    console.log('changed', insightText);
-  }, [insightText]);
+    UploadApis.getFolderList().then(setFolders);
+  }, []);
+
+  // temp
+  useEffect(() => {
+    console.log(folders);
+  }, [folders]);
 
   const handleSubmit = async () => {
     const data = {
       participation: isSwitchOn,
       link: linkText,
       contents: insightText,
-      drawerId: 4,
+      drawerId: folders.find((folder) => folder.name === selectedFolder)?.id || -1,
     };
+
+    console.log('uplaod', data);
 
     try {
       const response = await UploadApis.uploadInsight(data);
@@ -92,7 +100,7 @@ const UploadScreen = ({ navigation }) => {
     try {
       const completeRes = await UploadApis.createNewFolder(selectedFolder);
       if (completeRes.code === 200) {
-        setFolder([...folder, selectedFolder]);
+        setFolders([...folders, { name: selectedFolder, id: completeRes.data.drawerId }]);
       } else {
         throw new Error('폴더 생성 실패');
       }
@@ -105,16 +113,15 @@ const UploadScreen = ({ navigation }) => {
     <ScrollView scrollToOverflowEnabled={true} style={styles.container}>
       {isValidSite ? (
         <View style={styles.linkCardContainer}>
-          <View style={{ flexGrow: 3 }}>
-            <LinkCard text={linkText} />
-          </View>
-          <MaterialCommunityIcons
+          <UploadLinkCard text={linkText} />
+          {/* < <MaterialCommunityIcons
             style={{ marginLeft: 20, flexGrow: 1 }}
             name="checkbox-blank-circle"
             size={27}
             color="black"
             onPress={handleEditPress}
-          />
+          />> */}
+          <EditButton onPress={handleEditPress} />
         </View>
       ) : (
         <InsightLinkTriggerButton
@@ -163,8 +170,8 @@ const UploadScreen = ({ navigation }) => {
         <FolderSheetContent
           handleSheetComplete={handleFolderSheetComplete}
           onHeaderLeftPress={() => handleSheetClose(folderSheetRef)}
-          folder={folder}
-          setFolder={setFolder}
+          folders={folders}
+          setFolder={setFolders}
           selectedFolder={selectedFolder}
           setSelectedFolder={setSelectedFolder}
         />
@@ -190,6 +197,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     flex: 1,
+    borderWidth: 1,
+    borderColor: '#12131420',
+    borderRadius: 8,
   },
 });
 

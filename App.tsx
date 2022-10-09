@@ -31,6 +31,7 @@ import light from './src/theme/light';
 import ServiceIntroThreeScreen from './src/screens/onboarding/ServiceIntroThreeScreen';
 import InsightSampleScreen from './src/screens/onboarding/InsightSampleScreen';
 import { TransitionPresets } from '@react-navigation/stack';
+import Tabs from './src/screens/Main/Tabs';
 
 const queryClient = new QueryClient();
 // const Stack = createNativeStackNavigator();
@@ -196,6 +197,14 @@ export default function App() {
                     <Stack.Screen
                       name={'TempSheet'}
                       component={TempSheetScreen}
+                      options={{
+                        title: '',
+                        cardStyle: { backgroundColor: 'white' },
+                      }}
+                    />
+                    <Stack.Screen
+                      name={'Home'}
+                      component={Tabs}
                       options={{
                         title: '',
                         cardStyle: { backgroundColor: 'white' },
