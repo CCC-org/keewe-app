@@ -22,17 +22,6 @@ const ServiceIntroOneScreen = ({ navigation, route }) => {
           {/* eslint-disable-next-line quotes */}
           <HeaderText header={`기억하고 싶은 콘텐츠, \n지나치지 말고 기록하세요`} />
         </View>
-        <View style={styles.nextButtonWithStepper}>
-          <Stepper totalStep={3} currentStep={1} />
-          <ConditionalButton
-            isActive={true}
-            text={'다음'}
-            color="#e0f6a2"
-            textColor="#486006"
-            width={343}
-            onPress={handlePress}
-          />
-        </View>
       </View>
     </ScrollView>
   );

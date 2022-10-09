@@ -33,6 +33,8 @@ export type RootStackParamList = {
   ServiceIntroOne: undefined;
   InterestChoose: undefined;
   InterestChooseTemp: undefined;
+  BottomSheetExperimental: undefined;
+  InsightSample: undefined;
   Upload: undefined;
 };
 

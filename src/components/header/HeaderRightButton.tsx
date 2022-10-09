@@ -6,6 +6,7 @@ interface HeaderRightButtonProps {
   backGroundColor: string;
   textColor: string;
   borderLine: boolean;
+  borderColor: string;
   disabled: boolean;
   height?: number;
   width?: number;
@@ -19,11 +20,11 @@ const HeaderRightButton = (props: HeaderRightButtonProps) => {
     backGroundColor,
     textColor,
     borderLine,
+    borderColor,
     disabled,
     handlePress,
     height,
     width,
-    borderColor,
   } = props;
   return (
     <>
@@ -38,7 +39,7 @@ const HeaderRightButton = (props: HeaderRightButtonProps) => {
           alignItems: 'center',
           backgroundColor: backGroundColor,
           borderWidth: borderLine ? 1 : 0,
-          borderColor: borderColor,
+          borderColor: borderColor ?? '#121314',
           height: height ? height : 32,
           width: width ? width : 49,
         }}
