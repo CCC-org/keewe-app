@@ -1,4 +1,4 @@
-import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import DividerBar from '../../components/bars/DividerBar';
@@ -6,6 +6,7 @@ import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTrigge
 import UploadLinkCard from '../../components/cards/LinkCardForUpload';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import StaticSizeScrollTextArea from '../../components/texts/StaticSizeScrollTextArea';
+import { FontText } from '../../components/texts/StyledText';
 import { IFolder } from '../../types/upload';
 import { UploadApis } from '../../utils/api/UploadAPIs';
 import {
@@ -31,6 +32,7 @@ const UploadScreen = ({ navigation }) => {
   const folderSheetRef = useRef<BottomSheetModal>(null);
 
   const snapPoints = useMemo(() => ['30%', '50%', '80%'], []);
+  const snapPoints2 = useMemo(() => ['80%'], []);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -57,11 +59,12 @@ const UploadScreen = ({ navigation }) => {
   }, [folders]);
 
   const handleSubmit = async () => {
+    const drawerId = folders.find((folder) => folder.name === selectedFolder)?.id || null;
     const data = {
       participation: isSwitchOn,
       link: linkText,
       contents: insightText,
-      drawerId: folders.find((folder) => folder.name === selectedFolder)?.id || -1,
+      drawerId: drawerId,
     };
 
     console.log('uplaod', data);
@@ -74,8 +77,9 @@ const UploadScreen = ({ navigation }) => {
       } else {
         throw new Error(response.message);
       }
-    } catch (error) {
-      alert('error');
+    } catch (error: unknown) {
+      alert(error);
+      // get type of error
     }
   };
 
@@ -154,8 +158,8 @@ const UploadScreen = ({ navigation }) => {
       </BottomSheetModal>
       <BottomSheetModal
         ref={folderSheetRef}
-        index={1}
-        snapPoints={snapPoints}
+        index={0}
+        snapPoints={snapPoints2}
         backdropComponent={renderBackdrop}
       >
         <FolderSheetContent
