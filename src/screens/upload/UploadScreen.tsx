@@ -1,4 +1,3 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
@@ -10,7 +9,6 @@ import StaticSizeScrollTextArea from '../../components/texts/StaticSizeScrollTex
 import { IFolder } from '../../types/upload';
 import { UploadApis } from '../../utils/api/UploadAPIs';
 import {
-  backButtonModalClose,
   handleSheetClose,
   handleSheetPresent,
 } from '../../utils/helper/bottomSheetUtils/bottomSheetUtils';
@@ -180,8 +178,6 @@ const styles = StyleSheet.create({
   },
 
   textContainer: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#12131410',
     marginTop: 16,
     marginBottom: 8,
   },
