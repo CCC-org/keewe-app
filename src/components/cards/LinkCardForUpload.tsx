@@ -72,8 +72,9 @@ function createStyles(props: customProps) {
     },
 
     metadataTextContainerStyle: {
-      paddingVertical: 12,
       paddingHorizontal: 18,
+      alignItems: 'flex-start',
+      justifyContent: 'center',
       width: '70%',
     },
     imageContainer: {
