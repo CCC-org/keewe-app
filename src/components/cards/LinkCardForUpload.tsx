@@ -82,8 +82,8 @@ function createStyles(props: customProps) {
       justifyContent: 'center',
       width: '100%',
       height: '100%',
-      borderTopRightRadius: 8,
-      borderBottomRightRadius: 8,
+      borderTopLeftRadius: 8,
+      borderBottomLeftRadius: 8,
     },
   });
 

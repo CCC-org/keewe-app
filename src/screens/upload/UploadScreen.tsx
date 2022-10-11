@@ -114,13 +114,6 @@ const UploadScreen = ({ navigation }) => {
       {isValidSite ? (
         <View style={styles.linkCardContainer}>
           <UploadLinkCard text={linkText} />
-          {/* < <MaterialCommunityIcons
-            style={{ marginLeft: 20, flexGrow: 1 }}
-            name="checkbox-blank-circle"
-            size={27}
-            color="black"
-            onPress={handleEditPress}
-          />> */}
           <EditButton onPress={handleEditPress} />
         </View>
       ) : (
