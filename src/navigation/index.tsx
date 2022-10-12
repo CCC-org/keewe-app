@@ -70,28 +70,6 @@ export function RootScreen() {
             <Text> UploadScreen.tsx</Text>
           </View>
         </Pressable>
-        <Pressable onPress={() => navigation.navigate('SignUp')}>
-          <View
-            style={{
-              backgroundColor: 'tomato',
-              width: 150,
-              height: 100,
-            }}
-          >
-            <Text> SignUpScreen.tsx</Text>
-          </View>
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate('CategorySelect')}>
-          <View
-            style={{
-              backgroundColor: 'teal',
-              width: 150,
-              height: 100,
-            }}
-          >
-            <Text> CategorySelectScreen.tsx</Text>
-          </View>
-        </Pressable>
 
         <Pressable onPress={() => navigation.navigate('NicknameCreation')}>
           <View
@@ -102,17 +80,6 @@ export function RootScreen() {
             }}
           >
             <Text> NicknameCreation.tsx</Text>
-          </View>
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate('InterestChoose')}>
-          <View
-            style={{
-              backgroundColor: 'skyblue',
-              height: 100,
-              width: 150,
-            }}
-          >
-            <Text> InterestChooseScreen.tsx</Text>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('ServiceIntroOne')}>
