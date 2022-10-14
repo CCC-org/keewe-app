@@ -106,7 +106,14 @@ const InsightSampleScreen = ({ navigation, route }) => {
                       ...styles.MoreLink,
                     }}
                   >
-                    <Text style={theme.fonts.text.body1.regular}>... 더보기</Text>
+                    <Text
+                      style={{
+                        ...theme.fonts.text.body1.regular,
+                        color: `${theme.colors.graphic.black}50`,
+                      }}
+                    >
+                      ... 더보기
+                    </Text>
                   </Pressable>
                 )}
               </View>
