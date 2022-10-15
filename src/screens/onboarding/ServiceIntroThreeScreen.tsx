@@ -51,3 +51,5 @@ const ServiceIntroThreeScreen = ({ navigation, route }) => {
 };
 
 export default ServiceIntroThreeScreen;
+
+createStyle();

@@ -33,15 +33,15 @@ const ConditionalButton = ({
   const [offset, setOffset] = useState(0);
 
   function handleLayout(event: LayoutChangeEvent) {
-    // const { y: yCoordinate, height } = event.nativeEvent.layout;
-    // setOffset(fullHeightOfScreen - yCoordinate - height);
+    const { y: yCoordinate, height } = event.nativeEvent.layout;
+    setOffset(fullHeightOfScreen - yCoordinate - height);
   }
 
   const theme = useTheme();
   return (
     <KeyboardAvoidingView
       onLayout={handleLayout}
-      behavior={Platform.select({ ios: 'position' })} // position || padding
+      behavior={Platform.select({ ios: 'padding' })} // position || padding
       keyboardVerticalOffset={Platform.select({ ios: offset })}
       style={styles.container}
     >

@@ -101,8 +101,11 @@ export default ChallengeSubjectCreationScreen;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
     flex: 1,
+    paddingTop: 10,
+    paddingHorizontal: 16,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   buttonCtn: {
     flex: 9,
