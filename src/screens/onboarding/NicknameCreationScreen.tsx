@@ -5,6 +5,7 @@ import TextInputDetail from '../../components/texts/TextInputDetail';
 import HeaderText from '../../components/texts/HeaderText';
 import Stepper from '../../components/stepper/Stepper';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
+import BottomFixButton from '../../components/buttons/BottomFixButton';
 
 const NicknameCreationScreen = ({ navigation }) => {
   const [nickname, setNickname] = useState<string>('');
@@ -32,36 +33,38 @@ const NicknameCreationScreen = ({ navigation }) => {
   });
 
   return (
-    <View style={styles.container}>
-      <View>
-        <View
-          style={{
-            height: 90,
-            justifyContent: 'space-between',
-            marginBottom: 20,
-          }}
-        >
-          <HeaderText header={`반가워요 키위새님\n이름이 무엇인가요?`} />
-          <Stepper currentStep={1} totalStep={2} />
-        </View>
+    <>
+      <View style={styles.container}>
+        <View>
+          <View
+            style={{
+              height: 90,
+              justifyContent: 'space-between',
+              marginBottom: 20,
+            }}
+          >
+            <HeaderText header={`반가워요 키위새님\n이름이 무엇인가요?`} />
+            <Stepper currentStep={1} totalStep={2} />
+          </View>
 
-        <View style={{ marginTop: 0 }}>
-          <TextInputDetail
-            inputValue={nickname}
-            setInputValue={setNickname}
-            placeholder={'이름을 자유롭게 정하세요'}
-            letterLimit={8}
-            errorMessage={errorMessage}
-          />
+          <View style={{ marginTop: 0 }}>
+            <TextInputDetail
+              inputValue={nickname}
+              setInputValue={setNickname}
+              placeholder={'이름을 자유롭게 정하세요'}
+              letterLimit={8}
+              errorMessage={errorMessage}
+            />
+          </View>
         </View>
       </View>
-      <ConditionalButton
+      <BottomFixButton
         isActive={!errorMessage.length && nickname.length > 0}
         onPress={handleNextScreen}
         text={'다음'}
         width={343}
       />
-    </View>
+    </>
   );
 };
 

@@ -63,38 +63,49 @@ const InterestChooseScreen = ({ navigation, route }) => {
   }, [route]);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View>
-        <View
-          style={{
-            height: 50,
-            justifyContent: 'space-between',
-            marginBottom: 20,
-            marginTop: 10,
-            paddingHorizontal: 16,
-          }}
-        >
-          <HeaderText header={'관심사를 알려주세요'} />
-          <Stepper currentStep={2} totalStep={2} />
-        </View>
-        <InterestChooseSection
-          totalCategory={totalCategory}
-          customCategory={customCategory}
-          selectedCategory={selectedCategory}
-          onSelect={handleSelectTag}
-          onCreateCategory={handleCreateCategory}
-        />
-        <View style={{ height: 90, justifyContent: 'space-between', marginBottom: 35 }}>
-          <NumberProgressBar progressValue={selectedCategory.length} max={5} />
-          <ConditionalButton
-            isActive={selectedCategory.length > 0 && selectedCategory.length < 6}
-            onPress={handleNextScreen}
-            text={conditionalText}
-            width={343}
+    <>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View>
+          <View
+            style={{
+              height: 50,
+              justifyContent: 'space-between',
+              marginBottom: 20,
+              marginTop: 10,
+              paddingHorizontal: 16,
+            }}
+          >
+            <HeaderText header={'관심사를 알려주세요'} />
+            <Stepper currentStep={2} totalStep={2} />
+          </View>
+          <InterestChooseSection
+            totalCategory={totalCategory}
+            customCategory={customCategory}
+            selectedCategory={selectedCategory}
+            onSelect={handleSelectTag}
+            onCreateCategory={handleCreateCategory}
           />
         </View>
+      </ScrollView>
+      <View
+        style={{
+          position: 'absolute',
+          height: 80,
+          width: '100%',
+          bottom: 12,
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <NumberProgressBar progressValue={selectedCategory.length} max={5} />
+        <ConditionalButton
+          isActive={selectedCategory.length > 0 && selectedCategory.length < 6}
+          onPress={handleNextScreen}
+          text={conditionalText}
+          width={343}
+        />
       </View>
-    </ScrollView>
+    </>
   );
 };
 
