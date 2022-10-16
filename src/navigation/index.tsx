@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { Pressable, ScrollView, View } from 'react-native';
-import { Text } from 'react-native-paper';
+import { Pressable, ScrollView, View, Text } from 'react-native';
+import { FontText } from '../components/texts/StyledText';
 import { getAccessToken } from '../utils/hooks/asyncStorage/Login';
 
 export function RootScreen() {
@@ -21,9 +21,24 @@ export function RootScreen() {
         style={{ borderWidth: 1, backgroundColor: 'grey', width: 300, height: 50 }}
         onPress={() => getAccessToken().then((res) => console.log(res))}
       >
-        <Text>Get Token</Text>
+        <FontText style={{ fontWeight: '700' }}>Get Token</FontText>
+        <Text style={{}}>Get Token</Text>
       </Pressable>
-      <Text>{accessToken}</Text>
+      <FontText style={{ fontWeight: '400', fontSize: 50 }}>Get Token</FontText>
+      <FontText style={{ fontWeight: '500', fontSize: 50 }}>Get Token</FontText>
+      <FontText style={{ fontWeight: '600', fontSize: 50 }}>Get Token</FontText>
+      <FontText style={{ fontWeight: '700', fontSize: 50 }}>Get Token</FontText>
+      <FontText style={{ fontWeight: '800', fontSize: 50 }}>Get Token</FontText>
+      <FontText style={{ fontWeight: '900', fontSize: 50 }}>Get Token</FontText>
+      <Text style={{}}>----------</Text>
+      <Text style={{ fontWeight: '400', fontSize: 50 }}>Get Token</Text>
+      <Text style={{ fontWeight: '500', fontSize: 50 }}>Get Token</Text>
+      <Text style={{ fontWeight: '600', fontSize: 50 }}>Get Token</Text>
+      <Text style={{ fontWeight: '700', fontSize: 50 }}>Get Token</Text>
+      <Text style={{ fontWeight: '800', fontSize: 50 }}>Get Token</Text>
+      <Text style={{ fontWeight: '900', fontSize: 50 }}>Get Token</Text>
+
+      <FontText>{accessToken}</FontText>
       <ScrollView>
         <Pressable onPress={() => navigation.navigate('Home')}>
           <View
@@ -33,7 +48,7 @@ export function RootScreen() {
               height: 100,
             }}
           >
-            <Text> HomeScreen.tsx</Text>
+            <FontText> HomeScreen.tsx</FontText>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('SignUp')}>
@@ -44,7 +59,7 @@ export function RootScreen() {
               height: 100,
             }}
           >
-            <Text> SignUpScreen.tsx</Text>
+            <FontText> SignUpScreen.tsx</FontText>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('CategorySelect')}>
@@ -55,7 +70,7 @@ export function RootScreen() {
               height: 100,
             }}
           >
-            <Text> CategorySelectScreen.tsx</Text>
+            <FontText> CategorySelectScreen.tsx</FontText>
           </View>
         </Pressable>
 
@@ -67,7 +82,7 @@ export function RootScreen() {
               height: 100,
             }}
           >
-            <Text> UploadScreen.tsx</Text>
+            <FontText> UploadScreen.tsx</FontText>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('SignUp')}>
@@ -78,7 +93,7 @@ export function RootScreen() {
               height: 100,
             }}
           >
-            <Text> SignUpScreen.tsx</Text>
+            <FontText> SignUpScreen.tsx</FontText>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('CategorySelect')}>
@@ -89,7 +104,7 @@ export function RootScreen() {
               height: 100,
             }}
           >
-            <Text> CategorySelectScreen.tsx</Text>
+            <FontText> CategorySelectScreen.tsx</FontText>
           </View>
         </Pressable>
 
@@ -101,7 +116,7 @@ export function RootScreen() {
               width: 150,
             }}
           >
-            <Text> NicknameCreation.tsx</Text>
+            <FontText> NicknameCreation.tsx</FontText>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('InterestChoose')}>
@@ -112,7 +127,7 @@ export function RootScreen() {
               width: 150,
             }}
           >
-            <Text> InterestChooseScreen.tsx</Text>
+            <FontText> InterestChooseScreen.tsx</FontText>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('ServiceIntroOne')}>
@@ -123,7 +138,7 @@ export function RootScreen() {
               width: 150,
             }}
           >
-            <Text> ServiceIntroOneScreen.tsx</Text>
+            <FontText> ServiceIntroOneScreen.tsx</FontText>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('ServiceIntroOne')}>
@@ -134,7 +149,7 @@ export function RootScreen() {
               width: 150,
             }}
           >
-            <Text> ServiceIntroOneScreen.tsx</Text>
+            <FontText> ServiceIntroOneScreen.tsx</FontText>
           </View>
         </Pressable>
       </ScrollView>
