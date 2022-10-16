@@ -13,4 +13,3 @@ export function FontText(props: TextProps) {
     </Text>
   );
 }
-
