@@ -30,8 +30,8 @@ import UploadScreen from './src/screens/upload/UploadScreen';
 import light from './src/theme/light';
 import ServiceIntroThreeScreen from './src/screens/onboarding/ServiceIntroThreeScreen';
 import InsightSampleScreen from './src/screens/onboarding/InsightSampleScreen';
-import { TransitionPresets } from '@react-navigation/stack';
 import Tabs from './src/screens/Main/Tabs';
+import InsightScreen from './src/screens/Insight/InsightScreen';
 
 const queryClient = new QueryClient();
 // const Stack = createNativeStackNavigator();
@@ -111,6 +111,11 @@ export default function App() {
                     <Stack.Screen
                       name="InterestChoose"
                       component={InterestChooseScreen}
+                      options={headerOptions}
+                    />
+                    <Stack.Screen
+                      name="Insight"
+                      component={InsightScreen}
                       options={headerOptions}
                     />
                   </Stack.Group>
