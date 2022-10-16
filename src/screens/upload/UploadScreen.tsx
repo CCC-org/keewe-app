@@ -1,11 +1,13 @@
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import DividerBar from '../../components/bars/DividerBar';
+import SnackBar from '../../components/bars/SnackBar';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
 import UploadLinkCard from '../../components/cards/LinkCardForUpload';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import StaticSizeScrollTextArea from '../../components/texts/StaticSizeScrollTextArea';
+import { FontText } from '../../components/texts/StyledText';
 import { IFolder } from '../../types/upload';
 import { UploadApis } from '../../utils/api/UploadAPIs';
 import {
@@ -27,9 +29,12 @@ const UploadScreen = ({ navigation }) => {
   const [selectedFolder, setSelectedFolder] = useState<string>('');
   const linkSheetRef = useRef<BottomSheetModal>(null);
   const folderSheetRef = useRef<BottomSheetModal>(null);
+  // SnackBar states
+  const [isLinkSnackBarOpen, setIsLinkSnackBarOpen] = useState(false);
+  const [isFolderSnackBarOpen, setIsFolderSnackBarOpen] = useState(false);
 
   const snapPoints = useMemo(() => ['50%', '80%'], []);
-
+  // TODO: Need to implement snack bars
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -85,7 +90,7 @@ const UploadScreen = ({ navigation }) => {
   );
 
   const checkIsValidSite = async () => {
-    handleSheetLinkComplete(linkText, linkSheetRef, setIsValidSite);
+    handleSheetLinkComplete(linkText, linkSheetRef, setIsValidSite, setIsLinkSnackBarOpen);
   };
 
   const handleEditPress = () => {
@@ -99,6 +104,10 @@ const UploadScreen = ({ navigation }) => {
       const completeRes = await UploadApis.createNewFolder(selectedFolder);
       if (completeRes.code === 200) {
         setFolders([...folders, { name: selectedFolder, id: completeRes.data.drawerId }]);
+        setIsFolderSnackBarOpen(true);
+        setTimeout(() => {
+          setIsFolderSnackBarOpen(false);
+        }, 3000);
       } else {
         throw new Error('폴더 생성 실패');
       }
@@ -106,68 +115,73 @@ const UploadScreen = ({ navigation }) => {
       alert(error);
     }
   };
-
   return (
-    <ScrollView scrollToOverflowEnabled={true} style={styles.container}>
-      {isValidSite ? (
-        <View style={styles.linkCardContainer}>
-          <UploadLinkCard text={linkText} />
-          <EditButton onPress={handleEditPress} />
+    <>
+      <ScrollView scrollToOverflowEnabled={true} contentContainerStyle={styles.container}>
+        {isValidSite ? (
+          <View style={styles.linkCardContainer}>
+            <UploadLinkCard text={linkText} />
+            <EditButton onPress={handleEditPress} />
+          </View>
+        ) : (
+          <InsightLinkTriggerButton
+            onPress={() => handleSheetPresent(linkSheetRef)}
+            text={isValidSite ? 'VALID' : '인사이트를 입력해주세요.'}
+          />
+        )}
+        <View style={styles.textContainer}>
+          <StaticSizeScrollTextArea
+            inputValue={insightText}
+            setInputValue={setInsightText}
+            placeholder="인사이트를 입력해주세요."
+            limit={400}
+            height={280}
+            autoFocus={false}
+          />
         </View>
-      ) : (
-        <InsightLinkTriggerButton
-          onPress={() => handleSheetPresent(linkSheetRef)}
-          text={isValidSite ? 'VALID' : '인사이트를 입력해주세요.'}
-        />
-      )}
-      <View style={styles.textContainer}>
-        <StaticSizeScrollTextArea
-          inputValue={insightText}
-          setInputValue={setInsightText}
-          placeholder="인사이트를 입력해주세요."
-          limit={400}
-          height={280}
-          autoFocus={false}
-        />
-      </View>
-      <DividerBar style={{ marginTop: 12 }} />
-      <UploadBottomContainer
-        selectedFolder={selectedFolder}
-        isSwitchOn={isSwitchOn}
-        setIsSwitchOn={setIsSwitchOn}
-        presentFolderSheet={() => handleSheetPresent(folderSheetRef)}
-        insightText={insightText}
-      />
-
-      <BottomSheetModal
-        ref={linkSheetRef}
-        index={1}
-        snapPoints={snapPoints}
-        backdropComponent={renderBackdrop}
-      >
-        <LinkSheetContent
-          linkText={linkText}
-          setLinkText={setLinkText}
-          handleSheetComplete={checkIsValidSite}
-          onHeaderLeftPress={() => handleSheetClose(linkSheetRef)}
-        />
-      </BottomSheetModal>
-      <BottomSheetModal
-        ref={folderSheetRef}
-        index={0}
-        snapPoints={snapPoints}
-        backdropComponent={renderBackdrop}
-      >
-        <FolderSheetContent
-          handleSheetComplete={handleFolderSheetComplete}
-          onHeaderLeftPress={() => handleSheetClose(folderSheetRef)}
-          folders={folders}
-          setFolder={setFolders}
+        <DividerBar style={{ marginTop: 12 }} />
+        <UploadBottomContainer
           selectedFolder={selectedFolder}
-          setSelectedFolder={setSelectedFolder}
+          isSwitchOn={isSwitchOn}
+          setIsSwitchOn={setIsSwitchOn}
+          presentFolderSheet={() => handleSheetPresent(folderSheetRef)}
+          insightText={insightText}
         />
-      </BottomSheetModal>
-    </ScrollView>
+
+        <BottomSheetModal
+          ref={linkSheetRef}
+          index={1}
+          snapPoints={snapPoints}
+          backdropComponent={renderBackdrop}
+        >
+          <LinkSheetContent
+            linkText={linkText}
+            setLinkText={setLinkText}
+            handleSheetComplete={checkIsValidSite}
+            onHeaderLeftPress={() => handleSheetClose(linkSheetRef)}
+          />
+        </BottomSheetModal>
+        <BottomSheetModal
+          ref={folderSheetRef}
+          index={0}
+          snapPoints={snapPoints}
+          backdropComponent={renderBackdrop}
+        >
+          <FolderSheetContent
+            handleSheetComplete={handleFolderSheetComplete}
+            onHeaderLeftPress={() => handleSheetClose(folderSheetRef)}
+            folders={folders}
+            setFolder={setFolders}
+            selectedFolder={selectedFolder}
+            setSelectedFolder={setSelectedFolder}
+          />
+        </BottomSheetModal>
+
+        {/* Invalid Link snackbar */}
+      </ScrollView>
+      <SnackBar visible={isLinkSnackBarOpen} text="올바른 링크인지 확인해주세요." />
+      <SnackBar visible={isFolderSnackBarOpen} text="새로운 폴더를 추가했어요" />
+    </>
   );
 };
 

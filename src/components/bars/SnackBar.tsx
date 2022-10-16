@@ -6,7 +6,7 @@ import { FontText } from '../texts/StyledText';
 
 interface SnackBarProps {
   visible: boolean;
-  actionText: string;
+  actionText?: string;
   text: string;
   onDismiss?: () => void;
   onPressSnackBar?: () => void;
@@ -17,17 +17,16 @@ interface SnackBarProps {
 const SnackBar = (props: SnackBarProps) => {
   const theme = useTheme();
   const { visible, text, actionText, onDismiss, onPressSnackBar, onPressAction } = props;
-  console.log('snackbar valid');
   return (
     <>
-      <Pressable onPress={onPressSnackBar} style={[props.style, {}]}>
+      <Pressable onPress={onPressSnackBar} style={[props.style, { marginBottom: 20 }]}>
         <Snackbar
           duration={3000}
           visible={visible}
           // eslint-disable-next-line @typescript-eslint/no-empty-function
           onDismiss={onDismiss || (() => {})}
           action={{
-            label: actionText,
+            label: actionText || '',
             color: theme.colors.graphic.coral,
           }}
           style={{
