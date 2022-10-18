@@ -22,23 +22,9 @@ export function RootScreen() {
         onPress={() => getAccessToken().then((res) => console.log(res))}
       >
         <FontText style={{ fontWeight: '700' }}>Get Token</FontText>
-        <Text style={{}}>Get Token</Text>
       </Pressable>
-      <FontText style={{ fontWeight: '400', fontSize: 50 }}>Get Token</FontText>
-      <FontText style={{ fontWeight: '500', fontSize: 50 }}>Get Token</FontText>
-      <FontText style={{ fontWeight: '600', fontSize: 50 }}>Get Token</FontText>
-      <FontText style={{ fontWeight: '700', fontSize: 50 }}>Get Token</FontText>
-      <FontText style={{ fontWeight: '800', fontSize: 50 }}>Get Token</FontText>
-      <FontText style={{ fontWeight: '900', fontSize: 50 }}>Get Token</FontText>
-      <Text style={{}}>----------</Text>
-      <Text style={{ fontWeight: '400', fontSize: 50 }}>Get Token</Text>
-      <Text style={{ fontWeight: '500', fontSize: 50 }}>Get Token</Text>
-      <Text style={{ fontWeight: '600', fontSize: 50 }}>Get Token</Text>
-      <Text style={{ fontWeight: '700', fontSize: 50 }}>Get Token</Text>
-      <Text style={{ fontWeight: '800', fontSize: 50 }}>Get Token</Text>
-      <Text style={{ fontWeight: '900', fontSize: 50 }}>Get Token</Text>
 
-      <FontText>{accessToken}</FontText>
+      <FontText style={{ fontWeight: '500' }}>{accessToken}</FontText>
       <ScrollView>
         <Pressable onPress={() => navigation.navigate('Home')}>
           <View

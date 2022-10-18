@@ -7,7 +7,7 @@ export function MonoText(props: TextProps) {
 }
 
 interface customTextProps extends TextProps {
-  style?: StyleProp<TextStyle> | any;
+  style?: TextStyle;
 }
 
 export function FontText(props: customTextProps) {
