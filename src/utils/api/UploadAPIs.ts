@@ -44,3 +44,7 @@ export const UploadApis = {
       });
   },
 };
+
+function temp() {
+  return 'temp';
+}
