@@ -137,6 +137,17 @@ export function RootScreen() {
             <Text> ServiceIntroOneScreen.tsx</Text>
           </View>
         </Pressable>
+        <Pressable onPress={() => navigation.navigate('DetailedPost')}>
+          <View
+            style={{
+              backgroundColor: 'yellow',
+              height: 100,
+              width: 150,
+            }}
+          >
+            <Text> DetailedPostScreen.tsx</Text>
+          </View>
+        </Pressable>
       </ScrollView>
       {/*
       <Pressable onPress={() => navigation.navigate('Stack.screen.name String')}>

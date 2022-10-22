@@ -27,6 +27,7 @@ import ServiceIntroOneScreen from './src/screens/onboarding/ServiceIntroOneScree
 import ServiceIntroTwoScreen from './src/screens/onboarding/ServiceIntroTwoScreen';
 import TempSheetScreen from './src/screens/upload/TempSheetScreen';
 import UploadScreen from './src/screens/upload/UploadScreen';
+import DetailedPostScreen from './src/screens/detailedPost/DetailedPostScreen';
 import light from './src/theme/light';
 import ServiceIntroThreeScreen from './src/screens/onboarding/ServiceIntroThreeScreen';
 import InsightSampleScreen from './src/screens/onboarding/InsightSampleScreen';
@@ -205,6 +206,14 @@ export default function App() {
                     <Stack.Screen
                       name={'Home'}
                       component={Tabs}
+                      options={{
+                        title: '',
+                        cardStyle: { backgroundColor: 'white' },
+                      }}
+                    />
+                    <Stack.Screen
+                      name={'DetailedPost'}
+                      component={DetailedPostScreen}
                       options={{
                         title: '',
                         cardStyle: { backgroundColor: 'white' },
