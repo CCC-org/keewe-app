@@ -2,7 +2,8 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useRef, useState } from 'react';
 import { FontText } from '../../components/texts/StyledText';
 import { captureRef } from 'react-native-view-shot';
-import Share from 'react-native-share';
+// import Share from 'react-native-share';
+import * as Sharing from 'expo-sharing';
 
 const ShareScreen = () => {
   const [color, setColor] = useState('#f1f1e9');
@@ -10,20 +11,10 @@ const ShareScreen = () => {
 
   const shareImage = async () => {
     const uri = await captureRef(viewRef, {
-      format: 'jpg',
+      format: 'png',
       quality: 0.8,
     });
-    const shareOptions = {
-      title: 'Share file',
-      url: uri,
-      type: 'image/jpeg',
-    };
-    try {
-      const ShareResponse = await Share.open(shareOptions);
-      console.log(JSON.stringify(ShareResponse));
-    } catch (error) {
-      console.log('Error => ', error);
-    }
+    await Sharing.shareAsync(uri, { mimeType: 'image/png' });
   };
 
   return (

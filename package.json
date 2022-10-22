@@ -50,7 +50,8 @@
     "react-native-vector-icons": "^9.2.0",
     "react-native-view-shot": "^3.4.0",
     "react-native-web": "0.17.7",
-    "react-native-webview": "^11.22.7"
+    "react-native-webview": "^11.22.7",
+    "expo-sharing": "~10.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
