@@ -42,13 +42,11 @@ const Profile = ({ nickname, title, follow, self, interests, createdAt, image }:
           )}
         </View>
       </View>
-      <ScrollView horizontal={true}>
-        <View style={styles.Interest}>
-          {interests.map((item, idx) => (
-            <InterestItem key={idx} interest={item.name} />
-          ))}
-        </View>
-      </ScrollView>
+      <View style={styles.Interest}>
+        {interests.map((item, idx) => (
+          <InterestItem key={idx} interest={item.name} />
+        ))}
+      </View>
     </View>
   );
 };
@@ -99,5 +97,6 @@ const styles = StyleSheet.create({
     marginTop: 16,
     justifyContent: 'flex-start',
     alignSelf: 'center',
+    flexWrap: 'wrap',
   },
 });
