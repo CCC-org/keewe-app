@@ -5,17 +5,25 @@ const handleSheetLinkComplete = async (
   linkText: string,
   linkSheetRef: React.RefObject<BottomSheetModalMethods>,
   setIsValidSite: React.Dispatch<React.SetStateAction<boolean>>,
+  setIsLinkSnackBarOpen: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   try {
     const URL = linkText.includes('http') ? linkText : `http://${linkText}`;
     const response = await axios.get(URL);
+    console.log(response);
     if (response.status === 200) {
       setIsValidSite(true);
       linkSheetRef.current?.close();
+    } else {
+      throw new Error('Invalid link');
     }
   } catch (error) {
-    alert(error);
     setIsValidSite(false);
+    linkSheetRef.current?.close();
+    setIsLinkSnackBarOpen(true);
+    setTimeout(() => {
+      setIsLinkSnackBarOpen(false);
+    }, 3000);
   }
 };
 

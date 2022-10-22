@@ -1,6 +1,6 @@
 export interface UploadRequest {
   participation: boolean;
-  drawerId: number;
+  drawerId: number | null;
   contents: string;
   link: string;
 }
