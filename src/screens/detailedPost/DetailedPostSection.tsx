@@ -3,6 +3,7 @@ import React from 'react';
 import { FontText } from '../../components/texts/StyledText';
 import { useTheme } from 'react-native-paper';
 import { Octicons } from '@expo/vector-icons';
+import LinkCard from '../../components/cards/LinkCard';
 
 interface DetailedPostSectionProps {
   insightText: string;
@@ -22,6 +23,7 @@ const DetailedPostSection = ({
         <FontText style={{ fontSize: 16, color: `${theme.colors.graphic.black}80` }}>
           {currentChallenge}
         </FontText>
+
         <Pressable style={{ flexDirection: 'row' }}>
           <FontText style={{ paddingRight: 10, color: `${theme.colors.graphic.black}80` }}>
             6/12번째 기록 중
@@ -33,11 +35,13 @@ const DetailedPostSection = ({
         <FontText style={{ fontSize: 16, lineHeight: 28 }}>{insightText}</FontText>
       </View>
       <View style={styles.link}>
-        <Pressable>
+        {/* <Pressable>
           <FontText>웹소설 웹툰의 어휘가 길수록 단순하고 유치...</FontText>
           <FontText>careerly.co.kr</FontText>
-        </Pressable>
+        </Pressable> */}
+        <LinkCard text="https://naver.com"></LinkCard>
       </View>
+
       <View style={styles.emoticonBox}>
         <FontText style={{ fontSize: 16 }}>이모티콘</FontText>
       </View>
@@ -68,8 +72,6 @@ const styles = StyleSheet.create({
   },
   link: {
     marginHorizontal: 16,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
     backgroundColor: 'white',
     borderRadius: 8,
   },
