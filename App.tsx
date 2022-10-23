@@ -193,7 +193,11 @@ export default function App() {
                       title: '',
                     }}
                   >
-                    <Stack.Screen name={'Insight'} component={InsightScreen} />
+                    <Stack.Screen
+                      name={'Insight'}
+                      component={InsightScreen}
+                      options={{ headerStyle: { backgroundColor: '#F1F1E9' } }}
+                    />
                     <Stack.Screen
                       name={'Share'}
                       component={ShareScreen}
