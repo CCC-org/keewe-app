@@ -9,12 +9,14 @@ interface DetailedPostSectionProps {
   insightText: string;
   views: number | string;
   currentChallenge: string;
+  link: string;
 }
 
 const DetailedPostSection = ({
   insightText,
   views,
   currentChallenge,
+  link,
 }: DetailedPostSectionProps) => {
   const theme = useTheme();
   return (
@@ -39,7 +41,7 @@ const DetailedPostSection = ({
           <FontText>웹소설 웹툰의 어휘가 길수록 단순하고 유치...</FontText>
           <FontText>careerly.co.kr</FontText>
         </Pressable> */}
-        <LinkCard text="https://naver.com"></LinkCard>
+        <LinkCard text={link}></LinkCard>
       </View>
 
       <View style={styles.emoticonBox}>

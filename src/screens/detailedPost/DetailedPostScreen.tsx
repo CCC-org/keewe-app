@@ -1,24 +1,81 @@
-import { StyleSheet, View } from 'react-native';
-import React, { useState } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { Feather } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 import DetailedPostSection from './DetailedPostSection';
+import { DetailedPostApi } from '../../utils/api/DetailedPostAPI';
+import { useIncreaseView } from '../../utils/hooks/DetailedInsight/useIncreaseView';
 
-const DetailedPostScreen = () => {
-  const [insightText, setInsightText] = useState(
-    '가나다라마바사아자아자자아라나마다라자아라자라자라자랴쟈라자랴쟈라잘자라자라자라잘자라아낭라망람아람아라',
-  );
-  const [views, sestViews] = useState(0);
+const InsightScreen = ({ navigation }) => {
+  const [insightText, setInsightText] = useState('');
+  const [link, setLink] = useState('');
   const [currentChallenge, setCurrentChallenge] = useState('내가 참여중인 챌린지');
+  // useIncreaseView의 전달인자는 추후에 route의 id를 집어넣어야함
+  const [views] = useIncreaseView(30);
+
+  useEffect(() => {
+    async function getInsight() {
+      try {
+        /**
+         getInsight(전달인자)
+         전달인자는, 추후에 InsightScreen 의 route 에 있는 id를 집어넣어야 함.
+         */
+        const res = await DetailedPostApi.getInsight(String(30));
+        const data = res.data;
+        if (data.contents !== insightText) {
+          setInsightText(data.contents);
+        }
+        if (data.link.url !== link) {
+          setLink(data.link.url);
+        }
+      } catch (error) {
+        alert(error);
+      }
+    }
+    getInsight();
+  }, []);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <View style={styles.headerRight}>
+            <Pressable onPress={() => alert('bookmark')}>
+              <Feather name="bookmark" size={24} color="black" />
+            </Pressable>
+            <Pressable onPress={() => alert('share')}>
+              <Feather name="share" size={24} color="black" />
+            </Pressable>
+            <Pressable onPress={() => alert('three dots')}>
+              <Entypo name="dots-three-vertical" size={24} color="black" />
+            </Pressable>
+          </View>
+        );
+      },
+    });
+  });
   return (
-    <View>
-      <DetailedPostSection
-        insightText={insightText}
-        views={views}
-        currentChallenge={currentChallenge}
-      />
-    </View>
+    <>
+      <View>
+        <DetailedPostSection
+          insightText={insightText}
+          views={views}
+          link={link}
+          currentChallenge={currentChallenge}
+        />
+      </View>
+    </>
   );
 };
 
-export default DetailedPostScreen;
+export default InsightScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  headerRight: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: 100,
+    marginRight: 20,
+  },
+});

@@ -93,28 +93,6 @@ export function RootScreen() {
             <FontText> UploadScreen.tsx</FontText>
           </View>
         </Pressable>
-        <Pressable onPress={() => navigation.navigate('SignUp')}>
-          <View
-            style={{
-              backgroundColor: 'tomato',
-              width: 150,
-              height: 100,
-            }}
-          >
-            <FontText> SignUpScreen.tsx</FontText>
-          </View>
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate('CategorySelect')}>
-          <View
-            style={{
-              backgroundColor: 'teal',
-              width: 150,
-              height: 100,
-            }}
-          >
-            <FontText> CategorySelectScreen.tsx</FontText>
-          </View>
-        </Pressable>
 
         <Pressable onPress={() => navigation.navigate('NicknameCreation')}>
           <View
