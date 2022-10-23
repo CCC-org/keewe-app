@@ -6,7 +6,7 @@ import DetailedPostSection from './DetailedPostSection';
 import { DetailedPostApi } from '../../utils/api/DetailedPostAPI';
 import { useIncreaseView } from '../../utils/hooks/DetailedInsight/useIncreaseView';
 
-const InsightScreen = ({ navigation }) => {
+const DetailedPostScreen = ({ navigation }) => {
   const [insightText, setInsightText] = useState('');
   const [link, setLink] = useState('');
   const [currentChallenge, setCurrentChallenge] = useState('내가 참여중인 챌린지');
@@ -68,7 +68,7 @@ const InsightScreen = ({ navigation }) => {
   );
 };
 
-export default InsightScreen;
+export default DetailedPostScreen;
 
 const styles = StyleSheet.create({
   headerRight: {
