@@ -33,6 +33,7 @@ import InsightSampleScreen from './src/screens/onboarding/InsightSampleScreen';
 import { TransitionPresets } from '@react-navigation/stack';
 import Tabs from './src/screens/Main/Tabs';
 import ShareScreen from './src/screens/posts/ShareScreen';
+import InsightScreen from './src/screens/posts/InsightScreen';
 
 const queryClient = new QueryClient();
 // const Stack = createNativeStackNavigator();
@@ -186,7 +187,13 @@ export default function App() {
                     />
                   </Stack.Group>
                   {/* 게시글 그룹 */}
-                  <Stack.Group>
+                  <Stack.Group
+                    screenOptions={{
+                      headerStyle: { backgroundColor: 'white' },
+                      title: '',
+                    }}
+                  >
+                    <Stack.Screen name={'Insight'} component={InsightScreen} />
                     <Stack.Screen
                       name={'Share'}
                       component={ShareScreen}
