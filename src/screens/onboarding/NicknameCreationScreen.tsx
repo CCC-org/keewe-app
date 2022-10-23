@@ -5,6 +5,7 @@ import TextInputDetail from '../../components/texts/TextInputDetail';
 import HeaderText from '../../components/texts/HeaderText';
 import Stepper from '../../components/stepper/Stepper';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
+import LinkCard from '../../components/cards/LinkCard';
 
 const NicknameCreationScreen = ({ navigation }) => {
   const [nickname, setNickname] = useState<string>('');

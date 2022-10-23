@@ -93,28 +93,6 @@ export function RootScreen() {
             <FontText> UploadScreen.tsx</FontText>
           </View>
         </Pressable>
-        <Pressable onPress={() => navigation.navigate('SignUp')}>
-          <View
-            style={{
-              backgroundColor: 'tomato',
-              width: 150,
-              height: 100,
-            }}
-          >
-            <FontText> SignUpScreen.tsx</FontText>
-          </View>
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate('CategorySelect')}>
-          <View
-            style={{
-              backgroundColor: 'teal',
-              width: 150,
-              height: 100,
-            }}
-          >
-            <FontText> CategorySelectScreen.tsx</FontText>
-          </View>
-        </Pressable>
 
         <Pressable onPress={() => navigation.navigate('NicknameCreation')}>
           <View
@@ -158,6 +136,17 @@ export function RootScreen() {
             }}
           >
             <FontText> ServiceIntroOneScreen.tsx</FontText>
+          </View>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate('DetailedPost')}>
+          <View
+            style={{
+              backgroundColor: 'yellow',
+              height: 100,
+              width: 150,
+            }}
+          >
+            <Text> DetailedPostScreen.tsx</Text>
           </View>
         </Pressable>
       </ScrollView>
