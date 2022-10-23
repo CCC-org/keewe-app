@@ -27,13 +27,13 @@ import ServiceIntroOneScreen from './src/screens/onboarding/ServiceIntroOneScree
 import ServiceIntroTwoScreen from './src/screens/onboarding/ServiceIntroTwoScreen';
 import TempSheetScreen from './src/screens/upload/TempSheetScreen';
 import UploadScreen from './src/screens/upload/UploadScreen';
+import DetailedPostScreen from './src/screens/detailedPost/DetailedPostScreen';
 import light from './src/theme/light';
 import ServiceIntroThreeScreen from './src/screens/onboarding/ServiceIntroThreeScreen';
 import InsightSampleScreen from './src/screens/onboarding/InsightSampleScreen';
 import { TransitionPresets } from '@react-navigation/stack';
 import Tabs from './src/screens/Main/Tabs';
-import ShareScreen from './src/screens/posts/ShareScreen';
-import InsightScreen from './src/screens/posts/InsightScreen';
+import ShareScreen from './src/screens/detailedPost/ShareScreen';
 
 const queryClient = new QueryClient();
 // const Stack = createNativeStackNavigator();
@@ -194,11 +194,6 @@ export default function App() {
                     }}
                   >
                     <Stack.Screen
-                      name={'Insight'}
-                      component={InsightScreen}
-                      options={{ headerStyle: { backgroundColor: '#F1F1E9' } }}
-                    />
-                    <Stack.Screen
                       name={'Share'}
                       component={ShareScreen}
                       options={{ title: '공유하기' }}
@@ -225,6 +220,14 @@ export default function App() {
                     <Stack.Screen
                       name={'Home'}
                       component={Tabs}
+                      options={{
+                        title: '',
+                        cardStyle: { backgroundColor: 'white' },
+                      }}
+                    />
+                    <Stack.Screen
+                      name={'DetailedPost'}
+                      component={DetailedPostScreen}
                       options={{
                         title: '',
                         cardStyle: { backgroundColor: 'white' },

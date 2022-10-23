@@ -117,7 +117,6 @@ export function RootScreen() {
             <Text style={theme.fonts.text.body1.bold}> CategorySelectScreen.tsx</Text>
           </View>
         </Pressable>
-
         <Pressable onPress={() => navigation.navigate('NicknameCreation')}>
           <View
             style={{
@@ -160,6 +159,17 @@ export function RootScreen() {
             }}
           >
             <Text style={theme.fonts.text.body1.regular}> ServiceIntroOneScreen.tsx</Text>
+          </View>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate('DetailedPost')}>
+          <View
+            style={{
+              backgroundColor: 'yellow',
+              height: 100,
+              width: 150,
+            }}
+          >
+            <Text> DetailedPostScreen.tsx</Text>
           </View>
         </Pressable>
       </ScrollView>
