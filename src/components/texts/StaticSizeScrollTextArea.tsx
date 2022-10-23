@@ -56,13 +56,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 12,
-    backgroundColor: '#D9D9D9',
   },
   input: {
     width: '100%',
     height: 230,
-    paddingVertical: 24,
-    paddingHorizontal: 24,
+    paddingHorizontal: 8,
   },
   letterNumberContainer: {
     width: '100%',

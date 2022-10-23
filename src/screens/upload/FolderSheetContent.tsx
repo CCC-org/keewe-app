@@ -58,18 +58,27 @@ const FolderSheetContent = ({
           </View>
         </>
       ) : (
-        folders.map((folder, index) => {
-          return (
-            <Folder
-              style={styles.folderContainer}
-              key={folder.id}
-              text={folder.name}
-              textStyle={index === 0 ? { color: '#12131450' } : {}}
-              setSelectedFolder={setSelectedFolder}
-              selectedFolder={selectedFolder}
-            />
-          );
-        })
+        <>
+          <Folder
+            style={styles.folderContainer}
+            key={0}
+            text={'선택안함'}
+            textStyle={{ color: '#12131450' }}
+            setSelectedFolder={setSelectedFolder}
+            selectedFolder={selectedFolder}
+          />
+          {folders.map((folder, index) => {
+            return (
+              <Folder
+                style={styles.folderContainer}
+                key={folder.id}
+                text={folder.name}
+                setSelectedFolder={setSelectedFolder}
+                selectedFolder={selectedFolder}
+              />
+            );
+          })}
+        </>
       )}
 
       {!createFolder && (
@@ -86,7 +95,8 @@ export default FolderSheetContent;
 const styles = StyleSheet.create({
   contentContainer: {
     width: '100%',
-    height: '80%',
+    // BottomSheetScrollView height makes it not scrollable
+    // height: '80%',
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },

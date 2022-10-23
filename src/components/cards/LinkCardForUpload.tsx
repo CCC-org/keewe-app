@@ -72,8 +72,9 @@ function createStyles(props: customProps) {
     },
 
     metadataTextContainerStyle: {
-      paddingVertical: 12,
       paddingHorizontal: 18,
+      alignItems: 'flex-start',
+      justifyContent: 'center',
       width: '70%',
     },
     imageContainer: {
@@ -82,8 +83,8 @@ function createStyles(props: customProps) {
       justifyContent: 'center',
       width: '100%',
       height: '100%',
-      borderTopRightRadius: 8,
-      borderBottomRightRadius: 8,
+      borderTopLeftRadius: 8,
+      borderBottomLeftRadius: 8,
     },
   });
 
