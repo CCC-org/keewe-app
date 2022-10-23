@@ -1,6 +1,6 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useRef, useState } from 'react';
-import { FontText, RidiText } from '../../components/texts/StyledText';
+import { RidiText } from '../../components/texts/StyledText';
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
 import ColorSelectRadioButton from '../../components/buttons/ColorSelectRadioButton';

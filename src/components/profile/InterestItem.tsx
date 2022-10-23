@@ -1,14 +1,12 @@
 import React from 'react';
-import { View } from 'react-native';
-import { useTheme } from 'react-native-paper';
-import { FontText } from '../texts/StyledText';
+import { View, Text } from 'react-native';
+import theme from '../../theme/light';
 
 interface InterestItemProps {
   interest: string;
 }
 
 const InterestItem = ({ interest }: InterestItemProps) => {
-  const theme = useTheme();
   return (
     <View
       style={{
@@ -21,7 +19,9 @@ const InterestItem = ({ interest }: InterestItemProps) => {
         marginRight: 4,
       }}
     >
-      <FontText style={{ color: theme.colors.graphic.black }}>{interest}</FontText>
+      <Text style={{ ...theme.fonts.text.body2.regular, color: theme.colors.graphic.black }}>
+        {interest}
+      </Text>
     </View>
   );
 };

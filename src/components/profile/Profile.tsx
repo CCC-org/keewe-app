@@ -1,7 +1,6 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import { FontText } from '../texts/StyledText';
 import theme from '../../theme/light';
 import ProfileAvatar from './ProfileAvatar';
 import InterestItem from './InterestItem';
@@ -24,20 +23,25 @@ const Profile = ({ nickname, title, follow, self, interests, createdAt, image }:
         <View style={styles.Profile}>
           <ProfileAvatar image={image} />
           <View style={styles.Description}>
-            <FontText style={{ fontWeight: '600', fontSize: 14 }}>{nickname}</FontText>
-            <FontText style={{ fontWeight: '600', fontSize: 12 }}>{title} ∙</FontText>
+            <Text style={theme.fonts.text.body2.bold}>{nickname}</Text>
+            <Text
+              style={{ ...theme.fonts.text.caption1, color: `${theme.colors.graphic.black}50` }}
+            >
+              {title} ∙
+            </Text>
           </View>
         </View>
         <View>
           {self ? undefined : (
             <View style={follow ? styles.Follow : styles.Following}>
-              <FontText
+              <Text
                 style={{
+                  ...theme.fonts.text.body2.bold,
                   color: follow ? theme.colors.graphic.white : theme.colors.graphic.black,
                 }}
               >
                 {follow ? '팔로우' : '팔로잉'}
-              </FontText>
+              </Text>
             </View>
           )}
         </View>
