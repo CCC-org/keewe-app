@@ -37,6 +37,8 @@ export type RootStackParamList = {
   InsightSample: undefined;
   Upload: undefined;
   Home: undefined;
+  Share: undefined;
+  Insight: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

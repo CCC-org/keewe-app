@@ -26,6 +26,28 @@ export function RootScreen() {
 
       <FontText style={{ fontWeight: '500' }}>{accessToken}</FontText>
       <ScrollView>
+        <Pressable onPress={() => navigation.navigate('Insight')}>
+          <View
+            style={{
+              backgroundColor: 'lightgreen',
+              width: 150,
+              height: 100,
+            }}
+          >
+            <FontText> InsightScreen.tsx</FontText>
+          </View>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate('Share')}>
+          <View
+            style={{
+              backgroundColor: 'red',
+              width: 150,
+              height: 100,
+            }}
+          >
+            <FontText> ShareScreen.tsx</FontText>
+          </View>
+        </Pressable>
         <Pressable onPress={() => navigation.navigate('Home')}>
           <View
             style={{
