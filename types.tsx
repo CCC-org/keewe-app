@@ -38,6 +38,8 @@ export type RootStackParamList = {
   Upload: undefined;
   Home: undefined;
   DetailedPost: undefined;
+  Share: undefined;
+  Insight: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
