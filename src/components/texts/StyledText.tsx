@@ -45,3 +45,7 @@ export function FontText(props: customTextProps) {
     </Text>
   );
 }
+
+export function RidiText(props: customTextProps) {
+  return <Text {...props} style={[props.style, { fontFamily: 'ridiBatang' }]} />;
+}
