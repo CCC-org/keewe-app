@@ -1,12 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Pressable, ScrollView, View, Text } from 'react-native';
-import { FontText } from '../components/texts/StyledText';
+import { useTheme } from 'react-native-paper';
 import { getAccessToken } from '../utils/hooks/asyncStorage/Login';
 
 export function RootScreen() {
   const navigation = useNavigation();
   const [accessToken, setAccessToken] = useState<any>('');
+  const theme = useTheme();
+
   useEffect(() => {
     getAccessToken().then((token) => {
       setAccessToken(token);
@@ -21,10 +23,10 @@ export function RootScreen() {
         style={{ borderWidth: 1, backgroundColor: 'grey', width: 300, height: 50 }}
         onPress={() => getAccessToken().then((res) => console.log(res))}
       >
-        <FontText style={{ fontWeight: '700' }}>Get Token</FontText>
+        <Text style={theme.fonts.text.display}>Get Token</Text>
       </Pressable>
 
-      <FontText style={{ fontWeight: '500' }}>{accessToken}</FontText>
+      <Text style={theme.fonts.text.body1.regular}>{accessToken}</Text>
       <ScrollView>
         <Pressable onPress={() => navigation.navigate('Insight')}>
           <View
@@ -56,7 +58,7 @@ export function RootScreen() {
               height: 100,
             }}
           >
-            <FontText> HomeScreen.tsx</FontText>
+            <Text style={theme.fonts.text.body1.bold}> HomeScreen.tsx</Text>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('SignUp')}>
@@ -67,7 +69,7 @@ export function RootScreen() {
               height: 100,
             }}
           >
-            <FontText> SignUpScreen.tsx</FontText>
+            <Text style={theme.fonts.text.body1.bold}> SignUpScreen.tsx</Text>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('CategorySelect')}>
@@ -78,7 +80,7 @@ export function RootScreen() {
               height: 100,
             }}
           >
-            <FontText> CategorySelectScreen.tsx</FontText>
+            <Text style={theme.fonts.text.body1.bold}> CategorySelectScreen.tsx</Text>
           </View>
         </Pressable>
 
@@ -90,10 +92,31 @@ export function RootScreen() {
               height: 100,
             }}
           >
-            <FontText> UploadScreen.tsx</FontText>
+            <Text style={theme.fonts.text.body1.bold}> UploadScreen.tsx</Text>
           </View>
         </Pressable>
-
+        <Pressable onPress={() => navigation.navigate('SignUp')}>
+          <View
+            style={{
+              backgroundColor: 'tomato',
+              width: 150,
+              height: 100,
+            }}
+          >
+            <Text style={theme.fonts.text.body1.bold}> SignUpScreen.tsx</Text>
+          </View>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate('CategorySelect')}>
+          <View
+            style={{
+              backgroundColor: 'teal',
+              width: 150,
+              height: 100,
+            }}
+          >
+            <Text style={theme.fonts.text.body1.bold}> CategorySelectScreen.tsx</Text>
+          </View>
+        </Pressable>
         <Pressable onPress={() => navigation.navigate('NicknameCreation')}>
           <View
             style={{
@@ -102,7 +125,7 @@ export function RootScreen() {
               width: 150,
             }}
           >
-            <FontText> NicknameCreation.tsx</FontText>
+            <Text style={theme.fonts.text.body1.bold}> NicknameCreation.tsx</Text>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('InterestChoose')}>
@@ -113,7 +136,7 @@ export function RootScreen() {
               width: 150,
             }}
           >
-            <FontText> InterestChooseScreen.tsx</FontText>
+            <Text style={theme.fonts.text.body1.bold}> InterestChooseScreen.tsx</Text>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('ServiceIntroOne')}>
@@ -124,7 +147,7 @@ export function RootScreen() {
               width: 150,
             }}
           >
-            <FontText> ServiceIntroOneScreen.tsx</FontText>
+            <Text style={theme.fonts.text.body1.bold}> ServiceIntroOneScreen.tsx</Text>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('ServiceIntroOne')}>
@@ -135,7 +158,7 @@ export function RootScreen() {
               width: 150,
             }}
           >
-            <FontText> ServiceIntroOneScreen.tsx</FontText>
+            <Text style={theme.fonts.text.body1.regular}> ServiceIntroOneScreen.tsx</Text>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('DetailedPost')}>

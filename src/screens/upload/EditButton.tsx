@@ -1,13 +1,21 @@
 import { Pressable, PressableProps, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { FontText, MonoText } from '../../components/texts/StyledText';
+import theme from '../../theme/light';
 
 const EditButton = (
   props: JSX.IntrinsicAttributes & PressableProps & React.RefAttributes<View>,
 ) => {
   return (
     <Pressable {...props} style={styles.container}>
-      <FontText style={{ fontSize: 14, paddingLeft: 36 }}>수정</FontText>
+      <Text
+        style={{
+          ...theme.fonts.text.caption1,
+          marginLeft: 36,
+          color: `${theme.colors.graphic.black}50`,
+        }}
+      >
+        수정
+      </Text>
     </Pressable>
   );
 };

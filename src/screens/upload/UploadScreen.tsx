@@ -7,7 +7,6 @@ import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTrigge
 import UploadLinkCard from '../../components/cards/LinkCardForUpload';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import StaticSizeScrollTextArea from '../../components/texts/StaticSizeScrollTextArea';
-import { FontText } from '../../components/texts/StyledText';
 import { IFolder } from '../../types/upload';
 import { UploadApis } from '../../utils/api/UploadAPIs';
 import {
