@@ -2,7 +2,6 @@ import { Pressable, Text } from 'react-native';
 import React from 'react';
 import { Snackbar } from 'react-native-paper';
 import { useTheme } from 'react-native-paper';
-import { FontText } from '../texts/StyledText';
 
 interface SnackBarProps {
   visible: boolean;
@@ -38,7 +37,7 @@ const SnackBar = (props: SnackBarProps) => {
             marginRight: 'auto',
           }}
         >
-          <FontText>{text}</FontText>
+          <Text>{text}</Text>
         </Snackbar>
       </Pressable>
     </>

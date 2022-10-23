@@ -37,6 +37,8 @@ export type RootStackParamList = {
   InsightSample: undefined;
   Upload: undefined;
   Home: undefined;
+  DetailedPost: undefined;
+  Share: undefined;
   Insight: undefined;
 };
 

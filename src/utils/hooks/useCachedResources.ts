@@ -21,7 +21,7 @@ export default function useCachedResources() {
           pretendardBold: require('../../../assets/fonts/Pretendard-Bold.otf'),
           pretendardExtraBold: require('../../../assets/fonts/Pretendard-ExtraBold.otf'),
           pretendardBlack: require('../../../assets/fonts/Pretendard-Black.otf'),
-          // 'space-mono': require('../../../assets/fonts/SpaceMono-Regular.ttf'),
+          ridiBatang: require('../../../assets/fonts/RIDIBatang.otf'),
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service
