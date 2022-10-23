@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';

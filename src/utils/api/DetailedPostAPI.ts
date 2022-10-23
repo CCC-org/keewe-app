@@ -25,7 +25,6 @@ export const DetailedPostApi = {
         },
       })
       .then((res) => {
-        console.log('insight post response', res);
         return res.data.data;
       });
   },
