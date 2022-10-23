@@ -28,6 +28,28 @@ export function RootScreen() {
 
       <Text style={theme.fonts.text.body1.regular}>{accessToken}</Text>
       <ScrollView>
+        <Pressable onPress={() => navigation.navigate('Insight')}>
+          <View
+            style={{
+              backgroundColor: 'lightgreen',
+              width: 150,
+              height: 100,
+            }}
+          >
+            <FontText> InsightScreen.tsx</FontText>
+          </View>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate('Share')}>
+          <View
+            style={{
+              backgroundColor: 'red',
+              width: 150,
+              height: 100,
+            }}
+          >
+            <FontText> ShareScreen.tsx</FontText>
+          </View>
+        </Pressable>
         <Pressable onPress={() => navigation.navigate('Home')}>
           <View
             style={{

@@ -32,6 +32,8 @@ import ServiceIntroThreeScreen from './src/screens/onboarding/ServiceIntroThreeS
 import InsightSampleScreen from './src/screens/onboarding/InsightSampleScreen';
 import { TransitionPresets } from '@react-navigation/stack';
 import Tabs from './src/screens/Main/Tabs';
+import ShareScreen from './src/screens/posts/ShareScreen';
+import InsightScreen from './src/screens/posts/InsightScreen';
 
 const queryClient = new QueryClient();
 // const Stack = createNativeStackNavigator();
@@ -182,6 +184,24 @@ export default function App() {
                       name="InsightSample"
                       options={{ ...headerOptions, headerStyle: { backgroundColor: '#F8F8F4' } }}
                       component={InsightSampleScreen}
+                    />
+                  </Stack.Group>
+                  {/* 게시글 그룹 */}
+                  <Stack.Group
+                    screenOptions={{
+                      headerStyle: { backgroundColor: 'white' },
+                      title: '',
+                    }}
+                  >
+                    <Stack.Screen
+                      name={'Insight'}
+                      component={InsightScreen}
+                      options={{ headerStyle: { backgroundColor: '#F1F1E9' } }}
+                    />
+                    <Stack.Screen
+                      name={'Share'}
+                      component={ShareScreen}
+                      options={{ title: '공유하기' }}
                     />
                   </Stack.Group>
                   {/* 실험적 그룹 */}
