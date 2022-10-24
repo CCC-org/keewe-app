@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React, { ReactElement } from 'react';
-import { FontText } from '../texts/StyledText';
 
 interface ShareButtonProps {
   icon: ReactElement<any, any>;
@@ -12,9 +11,9 @@ const ShareButton = (props: ShareButtonProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.button}>{icon}</View>
-      <FontText style={{ marginTop: 8, fontWeight: '400', fontSize: 14, color: '#121314' }}>
+      <Text style={{ marginTop: 8, fontWeight: '400', fontSize: 14, color: '#121314' }}>
         {text}
-      </FontText>
+      </Text>
     </View>
   );
 };

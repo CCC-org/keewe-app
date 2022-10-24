@@ -1,10 +1,11 @@
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import DetailedPostSection from './DetailedPostSection';
 import { DetailedPostApi } from '../../utils/api/DetailedPostAPI';
 import { useIncreaseView } from '../../utils/hooks/DetailedInsight/useIncreaseView';
+import RepresentativeCommentsSection from './RepresentativeCommentsSection';
 
 const DetailedPostScreen = ({ navigation }) => {
   const [insightText, setInsightText] = useState('');
@@ -56,14 +57,20 @@ const DetailedPostScreen = ({ navigation }) => {
   });
   return (
     <>
-      <View>
+      <ScrollView>
         <DetailedPostSection
           insightText={insightText}
           views={views}
           link={link}
           currentChallenge={currentChallenge}
         />
-      </View>
+        <RepresentativeCommentsSection
+          nickname="nickname"
+          title="타이틀"
+          content="좋아요!"
+          total={4}
+        />
+      </ScrollView>
     </>
   );
 };
