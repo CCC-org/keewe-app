@@ -1,19 +1,23 @@
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View, Text } from 'react-native';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import DetailedPostSection from './DetailedPostSection';
 import { DetailedPostApi } from '../../utils/api/DetailedPostAPI';
 import { useIncreaseView } from '../../utils/hooks/DetailedInsight/useIncreaseView';
-import RepresentativeCommentsSection from './RepresentativeCommentsSection';
+import { useTheme } from 'react-native-paper';
+import Comments from '../../components/comments/Comments';
 
 const DetailedPostScreen = ({ navigation }) => {
   const [insightText, setInsightText] = useState('');
+  const [commentText, setCommentText] = useState('');
   const [link, setLink] = useState('');
   const [currentChallenge, setCurrentChallenge] = useState('내가 참여중인 챌린지');
   // useIncreaseView의 전달인자는 추후에 route의 id를 집어넣어야함
   const [views] = useIncreaseView(30);
+  const [total, setTotal] = useState(0);
 
+  const theme = useTheme();
   useEffect(() => {
     async function getInsight() {
       try {
@@ -64,12 +68,23 @@ const DetailedPostScreen = ({ navigation }) => {
           link={link}
           currentChallenge={currentChallenge}
         />
-        <RepresentativeCommentsSection
+        {/* <RepresentativeCommentsSection
           nickname="nickname"
           title="타이틀"
           content="좋아요!"
           total={4}
-        />
+        /> */}
+        <View style={styles.commentsHeader}>
+          <Text style={{ fontWeight: '600', fontSize: 18, color: theme.colors.graphic.black }}>
+            댓글{' '}
+          </Text>
+          <Text
+            style={{ fontWeight: '600', fontSize: 18, color: `${theme.colors.graphic.black}4d` }}
+          >
+            {total}
+          </Text>
+        </View>
+        <Comments content={commentText} nickname="글쓴이" title="타이틀" />
       </ScrollView>
     </>
   );
@@ -84,5 +99,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 100,
     marginRight: 20,
+  },
+  commentsHeader: {
+    height: 54,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
   },
 });

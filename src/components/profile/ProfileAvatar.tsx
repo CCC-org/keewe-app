@@ -10,7 +10,7 @@ const ProfileAvatar = ({ image }: ProfileAvatarProps) => {
   return (
     <Avatar.Image
       size={40}
-      source={image ?? require('../../constants/Icons/Avatar/person.png')}
+      source={image ?? require('../../constants/Icons/Avatar/person1.png')}
       style={{
         backgroundColor: theme.colors.brand.surface.container,
       }}
