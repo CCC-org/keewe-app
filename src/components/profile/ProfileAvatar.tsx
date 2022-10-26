@@ -1,5 +1,8 @@
 import React from 'react';
 import { Avatar, useTheme } from 'react-native-paper';
+import { SvgXml } from 'react-native-svg';
+import { View } from 'react-native';
+import person from '../../constants/Icons/Avatar/personXml';
 
 interface ProfileAvatarProps {
   image?: string;
@@ -8,13 +11,28 @@ interface ProfileAvatarProps {
 const ProfileAvatar = ({ image }: ProfileAvatarProps) => {
   const theme = useTheme();
   return (
-    <Avatar.Image
-      size={40}
-      source={image ?? require('../../constants/Icons/Avatar/person.png')}
-      style={{
-        backgroundColor: theme.colors.brand.surface.container,
-      }}
-    />
+    <>
+      {image ? (
+        <Avatar.Image
+          size={40}
+          source={require(image)}
+          style={{
+            backgroundColor: theme.colors.brand.surface.container,
+          }}
+        />
+      ) : (
+        <View
+          style={{
+            width: 40,
+            height: 40,
+            borderRadius: 100,
+            backgroundColor: theme.colors.brand.surface.container,
+          }}
+        >
+          <SvgXml xml={person} height={22} width={22} />
+        </View>
+      )}
+    </>
   );
 };
 
