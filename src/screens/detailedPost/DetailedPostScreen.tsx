@@ -8,6 +8,7 @@ import { useIncreaseView } from '../../utils/hooks/DetailedInsight/useIncreaseVi
 import { useTheme } from 'react-native-paper';
 import Comments from '../../components/comments/Comments';
 import { CommentsApi } from '../../utils/api/CommentsAPI';
+import MoreCommentsButton from '../../components/buttons/MoreCommentsButton';
 
 const DetailedPostScreen = ({ navigation }) => {
   const [insightText, setInsightText] = useState('');
@@ -174,6 +175,7 @@ const DetailedPostScreen = ({ navigation }) => {
             });
             return comments.concat(replies);
           })}
+          {data.total < 4 ? null : <MoreCommentsButton number={data.total - 3} />}
         </View>
       </ScrollView>
     </>
