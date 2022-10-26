@@ -4,6 +4,8 @@ import { useTheme } from 'react-native-paper';
 import theme from '../../theme/light';
 import ProfileAvatar from './ProfileAvatar';
 import InterestItem from './InterestItem';
+import { getTimeInterval } from '../../utils/string/timeInterval';
+import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 
 interface ProfileProps {
   nickname: string;
@@ -27,7 +29,10 @@ const Profile = ({ nickname, title, follow, self, interests, createdAt, image }:
             <Text
               style={{ ...theme.fonts.text.caption1, color: `${theme.colors.graphic.black}50` }}
             >
-              {title} ∙
+              {title} ∙{' '}
+              {getTimeInterval(
+                new Date().getTime() - new Date('2022-10-23T22:49:57.698058').getTime(),
+              )}
             </Text>
           </View>
         </View>
