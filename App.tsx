@@ -230,7 +230,7 @@ export default function App() {
                       component={DetailedPostScreen}
                       options={{
                         title: '',
-                        cardStyle: { backgroundColor: 'white' },
+                        cardStyle: { backgroundColor: '#F1F1E9' },
                       }}
                     />
                   </Stack.Group>

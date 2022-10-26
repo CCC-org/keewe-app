@@ -7,6 +7,7 @@ import { DetailedPostApi } from '../../utils/api/DetailedPostAPI';
 import { useIncreaseView } from '../../utils/hooks/DetailedInsight/useIncreaseView';
 import { useTheme } from 'react-native-paper';
 import Comments from '../../components/comments/Comments';
+import { CommentsApi } from '../../utils/api/CommentsAPI';
 
 const DetailedPostScreen = ({ navigation }) => {
   const [insightText, setInsightText] = useState('');
@@ -39,6 +40,71 @@ const DetailedPostScreen = ({ navigation }) => {
     }
     getInsight();
   }, []);
+
+  // useEffect(() => {
+  //   async function getRepresentativeComments() {
+  //     try {
+  //       /**
+  //        getRepresentativeComments(전달인자)
+  //        전달인자는, 추후에 InsightScreen 의 route 에 있는 id를 집어넣어야 함.
+  //        */
+  //       const res = await CommentsApi.getRepresentativeComments(String(30));
+  //       const data = res.data;
+  //       console.log(data);
+  //     } catch (error) {
+  //       alert(error);
+  //     }
+  //   }
+  //   getRepresentativeComments();
+  // }, []);
+
+  useEffect(() => {
+    setTotal(data.total);
+  }, []);
+
+  const data = {
+    total: 10,
+    comments: [
+      {
+        id: 1,
+        writer: {
+          id: 1,
+          name: '유승훈',
+          title: '타이틀1',
+          image: 'www.api-keewe.com/images',
+        },
+        content: '댓글의 내용',
+        createdAt: '2022-10-23T22:51:44.188726',
+        replies: [
+          {
+            writer: {
+              id: 1,
+              name: '유승훈',
+              title: '타이틀1',
+              image: 'www.api-keewe.com/images',
+            },
+            id: 2,
+            parentId: 1,
+            content: '답글1 내용',
+            createdAt: '2022-10-23T22:51:44.188726',
+          },
+          {
+            writer: {
+              id: 1,
+              name: '유승훈',
+              title: '타이틀1',
+              image: 'www.api-keewe.com/images',
+            },
+            id: 3,
+            parentId: 1,
+            content: '답글2 내용',
+            createdAt: '2022-10-23T22:51:44.188726',
+          },
+        ],
+        totalReply: 2,
+      },
+    ],
+  };
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -84,7 +150,31 @@ const DetailedPostScreen = ({ navigation }) => {
             {total}
           </Text>
         </View>
-        <Comments content={commentText} nickname="글쓴이" title="타이틀" />
+        <View style={{ backgroundColor: 'white' }}>
+          {data.comments.map((cur, idx) => {
+            const comments = [
+              <Comments
+                key={idx}
+                content={cur.content}
+                nickname={cur.writer.name}
+                title={cur.writer.title}
+              />,
+            ];
+            const replies = cur.replies.map((current, index) => {
+              return (
+                <View key={index} style={{ marginLeft: 44 }}>
+                  <Comments
+                    key={index}
+                    content={current.content}
+                    nickname={current.writer.name}
+                    title={current.writer.title}
+                  />
+                </View>
+              );
+            });
+            return comments.concat(replies);
+          })}
+        </View>
       </ScrollView>
     </>
   );
@@ -106,5 +196,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     paddingHorizontal: 16,
     paddingVertical: 10,
+    backgroundColor: 'white',
   },
 });
