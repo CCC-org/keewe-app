@@ -15,7 +15,7 @@ const ProfileAvatar = ({ image }: ProfileAvatarProps) => {
       {image ? (
         <Avatar.Image
           size={40}
-          source={require(image)}
+          source={{ uri: image }}
           style={{
             backgroundColor: theme.colors.brand.surface.container,
           }}
@@ -27,9 +27,11 @@ const ProfileAvatar = ({ image }: ProfileAvatarProps) => {
             height: 40,
             borderRadius: 100,
             backgroundColor: theme.colors.brand.surface.container,
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
-          <SvgXml xml={person} height={22} width={22} />
+          <SvgXml xml={person} height={30} width={30} />
         </View>
       )}
     </>

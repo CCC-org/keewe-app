@@ -29,10 +29,7 @@ const Profile = ({ nickname, title, follow, self, interests, createdAt, image }:
             <Text
               style={{ ...theme.fonts.text.caption1, color: `${theme.colors.graphic.black}50` }}
             >
-              {title} ∙{' '}
-              {getTimeInterval(
-                new Date().getTime() - new Date('2022-10-23T22:49:57.698058').getTime(),
-              )}
+              {title} ∙ {getTimeInterval(new Date().getTime() - new Date(createdAt).getTime())}
             </Text>
           </View>
         </View>
