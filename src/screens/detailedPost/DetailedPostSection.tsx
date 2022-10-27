@@ -1,6 +1,5 @@
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View, Text } from 'react-native';
 import React from 'react';
-import { FontText } from '../../components/texts/StyledText';
 import { useTheme } from 'react-native-paper';
 import { Octicons } from '@expo/vector-icons';
 import LinkCard from '../../components/cards/LinkCard';
@@ -22,19 +21,25 @@ const DetailedPostSection = ({
   return (
     <View style={{ backgroundColor: '#F1F1E9' }}>
       <View style={{ ...styles.top, borderColor: `${theme.colors.graphic.black}1a` }}>
-        <FontText style={{ fontSize: 16, color: `${theme.colors.graphic.black}80` }}>
+        <Text style={{ ...theme.fonts.text.caption1, color: `${theme.colors.graphic.black}80` }}>
           {currentChallenge}
-        </FontText>
+        </Text>
 
         <Pressable style={{ flexDirection: 'row' }}>
-          <FontText style={{ paddingRight: 10, color: `${theme.colors.graphic.black}80` }}>
+          <Text
+            style={{
+              ...theme.fonts.text.caption1,
+              paddingRight: 10,
+              color: `${theme.colors.graphic.black}80`,
+            }}
+          >
             6/12번째 기록 중
-          </FontText>
+          </Text>
           <Octicons name="chevron-right" size={17} color={`${theme.colors.graphic.black}cc`} />
         </Pressable>
       </View>
       <View style={styles.insightText}>
-        <FontText style={{ fontSize: 16, lineHeight: 28 }}>{insightText}</FontText>
+        <Text style={theme.fonts.text.body1.regular}>{insightText}</Text>
       </View>
       <View style={styles.link}>
         {/* <Pressable>
@@ -45,14 +50,18 @@ const DetailedPostSection = ({
       </View>
 
       <View style={styles.emoticonBox}>
-        <FontText style={{ fontSize: 16 }}>이모티콘</FontText>
+        <Text style={{ fontSize: 16 }}>이모티콘</Text>
       </View>
       <View style={{ ...styles.insightView, backgroundColor: '#E1E1D0' }}>
-        <FontText
-          style={{ fontSize: 12, marginVertical: 9, color: `${theme.colors.graphic.black}cc` }}
+        <Text
+          style={{
+            ...theme.fonts.text.caption1,
+            marginVertical: 9,
+            color: `${theme.colors.graphic.black}cc`,
+          }}
         >
           {views}명이 본 인사이트
-        </FontText>
+        </Text>
       </View>
     </View>
   );

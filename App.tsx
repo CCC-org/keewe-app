@@ -31,8 +31,8 @@ import DetailedPostScreen from './src/screens/detailedPost/DetailedPostScreen';
 import light from './src/theme/light';
 import ServiceIntroThreeScreen from './src/screens/onboarding/ServiceIntroThreeScreen';
 import InsightSampleScreen from './src/screens/onboarding/InsightSampleScreen';
-import { TransitionPresets } from '@react-navigation/stack';
 import Tabs from './src/screens/Main/Tabs';
+import InsightScreen from './src/screens/Insight/InsightScreen';
 import ShareScreen from './src/screens/detailedPost/ShareScreen';
 
 const queryClient = new QueryClient();
@@ -113,6 +113,11 @@ export default function App() {
                     <Stack.Screen
                       name="InterestChoose"
                       component={InterestChooseScreen}
+                      options={headerOptions}
+                    />
+                    <Stack.Screen
+                      name="Insight"
+                      component={InsightScreen}
                       options={headerOptions}
                     />
                   </Stack.Group>
