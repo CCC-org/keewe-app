@@ -1,42 +1,45 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { useTheme } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 
 interface MoreCommentsButtonProps {
   number: number | string;
+  textColor: string;
+  backgroundColor: string;
+  onPress: () => void;
 }
 
-const MoreCommentsButton = ({ number }: MoreCommentsButtonProps) => {
-  const theme = useTheme();
+const MoreCommentsButton = ({
+  number,
+  textColor,
+  backgroundColor,
+  onPress,
+}: MoreCommentsButtonProps) => {
   return (
-    <View style={styles.container}>
-      <Pressable style={{ ...styles.btn, backgroundColor: `${theme.colors.graphic.black}cc` }}>
-        <MaterialIcons name="subdirectory-arrow-right" size={14} color="white" />
+    <>
+      <Pressable onPress={onPress} style={{ ...styles.btn, backgroundColor: backgroundColor }}>
+        <MaterialIcons name="subdirectory-arrow-right" size={14} color={textColor} />
         <Text
           style={{
             fontWeight: '500',
             fontSize: 12,
-            color: theme.colors.graphic.white,
+            color: textColor,
             paddingLeft: 6,
           }}
         >
           댓글 {number}개 더보기
         </Text>
       </Pressable>
-    </View>
+    </>
   );
 };
 
 export default MoreCommentsButton;
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    marginVertical: 16,
-  },
   btn: {
     flexDirection: 'row',
+    width: 130,
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 40,

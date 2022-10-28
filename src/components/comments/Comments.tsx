@@ -35,7 +35,7 @@ export default Comments;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    marginTop: 14,
     marginHorizontal: 16,
   },
   content: {

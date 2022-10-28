@@ -17,7 +17,14 @@ const MiniProfile = ({ nickname, title, createdAt, image }: MiniProfileProps) =>
       <ProfileAvatar image={image} />
       <View style={styles.Description}>
         <Text style={{ fontWeight: '600', fontSize: 14 }}>{nickname}</Text>
-        <Text style={{ fontWeight: '500', fontSize: 12, color: `${theme.colors.graphic.black}80` }}>
+        <Text
+          style={{
+            fontWeight: '500',
+            fontSize: 12,
+            color: `${theme.colors.graphic.black}80`,
+            paddingTop: 5,
+          }}
+        >
           {title} ∙ {createdAt}
         </Text>
       </View>

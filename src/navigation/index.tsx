@@ -172,6 +172,17 @@ export function RootScreen() {
             <Text> DetailedPostScreen.tsx</Text>
           </View>
         </Pressable>
+        <Pressable onPress={() => navigation.navigate('Comments')}>
+          <View
+            style={{
+              backgroundColor: '#aa33cc',
+              height: 100,
+              width: 150,
+            }}
+          >
+            <Text> CommentsScreen.tsx</Text>
+          </View>
+        </Pressable>
       </ScrollView>
       {/*
       <Pressable onPress={() => navigation.navigate('Stack.screen.name String')}>

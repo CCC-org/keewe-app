@@ -126,6 +126,10 @@ const DetailedPostScreen = ({ navigation }) => {
       },
     });
   });
+
+  function handleMoreCommentsPress() {
+    navigation.navigate('Comments');
+  }
   return (
     <>
       <ScrollView>
@@ -135,12 +139,7 @@ const DetailedPostScreen = ({ navigation }) => {
           link={link}
           currentChallenge={currentChallenge}
         />
-        {/* <RepresentativeCommentsSection
-          nickname="nickname"
-          title="타이틀"
-          content="좋아요!"
-          total={4}
-        /> */}
+
         <View style={styles.commentsHeader}>
           <Text style={{ fontWeight: '600', fontSize: 18, color: theme.colors.graphic.black }}>
             댓글{' '}
@@ -175,7 +174,16 @@ const DetailedPostScreen = ({ navigation }) => {
             });
             return comments.concat(replies);
           })}
-          {data.total < 4 ? null : <MoreCommentsButton number={data.total - 3} />}
+          {data.total < 4 ? null : (
+            <View style={{ alignItems: 'center', marginVertical: 16 }}>
+              <MoreCommentsButton
+                onPress={handleMoreCommentsPress}
+                number={data.total - 3}
+                textColor={'white'}
+                backgroundColor={`${theme.colors.graphic.black}cc`}
+              />
+            </View>
+          )}
         </View>
       </ScrollView>
     </>

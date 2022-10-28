@@ -34,6 +34,7 @@ import InsightSampleScreen from './src/screens/onboarding/InsightSampleScreen';
 import { TransitionPresets } from '@react-navigation/stack';
 import Tabs from './src/screens/Main/Tabs';
 import ShareScreen from './src/screens/detailedPost/ShareScreen';
+import CommentsScreen from './src/screens/detailedPost/CommentsScreen';
 
 const queryClient = new QueryClient();
 // const Stack = createNativeStackNavigator();
@@ -198,6 +199,23 @@ export default function App() {
                       component={ShareScreen}
                       options={{ title: '공유하기' }}
                     />
+                    <Stack.Screen
+                      name={'DetailedPost'}
+                      component={DetailedPostScreen}
+                      options={{
+                        ...headerOptions,
+                        cardStyle: { backgroundColor: '#F1F1E9' },
+                      }}
+                    />
+                    <Stack.Screen
+                      name={'Comments'}
+                      component={CommentsScreen}
+                      options={{
+                        ...headerOptions,
+                        cardStyle: { backgroundColor: 'white' },
+                        title: '댓글',
+                      }}
+                    />
                   </Stack.Group>
                   {/* 실험적 그룹 */}
                   <Stack.Group>
@@ -223,14 +241,6 @@ export default function App() {
                       options={{
                         title: '',
                         cardStyle: { backgroundColor: 'white' },
-                      }}
-                    />
-                    <Stack.Screen
-                      name={'DetailedPost'}
-                      component={DetailedPostScreen}
-                      options={{
-                        title: '',
-                        cardStyle: { backgroundColor: '#F1F1E9' },
                       }}
                     />
                   </Stack.Group>
