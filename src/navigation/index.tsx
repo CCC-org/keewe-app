@@ -36,7 +36,7 @@ export function RootScreen() {
               height: 100,
             }}
           >
-            <FontText> InsightScreen.tsx</FontText>
+            <Text> InsightScreen.tsx</Text>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('Share')}>
@@ -47,7 +47,7 @@ export function RootScreen() {
               height: 100,
             }}
           >
-            <FontText> ShareScreen.tsx</FontText>
+            <Text> ShareScreen.tsx</Text>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('Home')}>

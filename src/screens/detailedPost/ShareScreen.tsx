@@ -1,6 +1,5 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useRef, useState } from 'react';
-import { FontText, RidiText } from '../../components/texts/StyledText';
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
 import ColorSelectRadioButton from '../../components/buttons/ColorSelectRadioButton';
@@ -66,9 +65,7 @@ const ShareScreen = () => {
       <View ref={viewRef} style={[styles.container, { backgroundColor: color }]}>
         <View style={styles.profileContainer}></View>
         <ScrollView style={styles.textContainer}>
-          <RidiText
-            style={{ ...styles.text, ...{ color: color === '#f1f1e9' ? 'black' : 'white' } }}
-          >
+          <Text style={{ ...styles.text, ...{ color: color === '#f1f1e9' ? 'black' : 'white' } }}>
             난 너를 믿었던 만큼 내 친구도 믿었기에 난 아무런 부담없이 널 내 친구에게 소개시켜줬고
             그런 만남이 있은후부터 우린 자주 함께 만나며 즐거운 시간을 보내며 함께 어울렸던 것
             뿐인데 그런 만남이 어디부터 잘못됐는지 난 알수없는 예감에 조금씩 빠져들고 있을때쯤 넌
@@ -84,7 +81,7 @@ const ShareScreen = () => {
             느낀거야 모든것이 잘못돼있는걸 너와 내 친구는 어느새 다정한 연인이 돼있었지 있을 수 없는
             일이라며 난 울었어 내 사랑과 우정을 모두 버려야 했기에 또다른 내 친구는 내 어깰 두드리며
             잊어버리라 했지만 잊지 못할것 같아
-          </RidiText>
+          </Text>
         </ScrollView>
       </View>
       <View style={styles.bottom}>
@@ -156,6 +153,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     lineHeight: 32,
     fontSize: 18,
+    fontFamily: 'ridiBatang',
   },
   bottom: {
     flex: 0.6,
