@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React, { ReactElement } from 'react';
+import theme from '../../theme/light';
 
 interface ShareButtonProps {
   icon: ReactElement<any, any>;
@@ -13,8 +14,8 @@ const ShareButton = (props: ShareButtonProps) => {
       <View style={styles.button}>{icon}</View>
       <Text
         style={{
+          ...theme.fonts.text.body2.regular,
           marginTop: 8,
-          fontFamily: 'pretendard',
           fontWeight: '400',
           fontSize: 14,
           color: '#121314',

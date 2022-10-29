@@ -21,19 +21,25 @@ const DetailedPostSection = ({
   return (
     <View style={{ backgroundColor: '#F1F1E9' }}>
       <View style={{ ...styles.top, borderColor: `${theme.colors.graphic.black}1a` }}>
-        <Text style={{ fontSize: 16, color: `${theme.colors.graphic.black}80` }}>
+        <Text style={{ ...theme.fonts.text.caption1, color: `${theme.colors.graphic.black}80` }}>
           {currentChallenge}
         </Text>
 
         <Pressable style={{ flexDirection: 'row' }}>
-          <Text style={{ paddingRight: 10, color: `${theme.colors.graphic.black}80` }}>
+          <Text
+            style={{
+              ...theme.fonts.text.caption1,
+              paddingRight: 10,
+              color: `${theme.colors.graphic.black}80`,
+            }}
+          >
             6/12번째 기록 중
           </Text>
           <Octicons name="chevron-right" size={17} color={`${theme.colors.graphic.black}cc`} />
         </Pressable>
       </View>
       <View style={styles.insightText}>
-        <Text style={{ fontSize: 16, lineHeight: 28 }}>{insightText}</Text>
+        <Text style={theme.fonts.text.body1.regular}>{insightText}</Text>
       </View>
       <View style={styles.link}>
         {/* <Pressable>
@@ -47,7 +53,13 @@ const DetailedPostSection = ({
         <Text style={{ fontSize: 16 }}>이모티콘</Text>
       </View>
       <View style={{ ...styles.insightView, backgroundColor: '#E1E1D0' }}>
-        <Text style={{ fontSize: 12, marginVertical: 9, color: `${theme.colors.graphic.black}cc` }}>
+        <Text
+          style={{
+            ...theme.fonts.text.caption1,
+            marginVertical: 9,
+            color: `${theme.colors.graphic.black}cc`,
+          }}
+        >
           {views}명이 본 인사이트
         </Text>
       </View>
