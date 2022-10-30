@@ -15,12 +15,7 @@ const ProfileAvatar = ({ image }: ProfileAvatarProps) => {
       {image ? (
         <Avatar.Image
           size={40}
-<<<<<<< HEAD
-          // TODO: image needs default value, or error occurs
-          source={require('../../../assets/images/챌린지/챌린지생성.png')}
-=======
           source={{ uri: image }}
->>>>>>> 1365db4ae25777675514cf1b245e21ba185572ad
           style={{
             backgroundColor: theme.colors.brand.surface.container,
           }}
