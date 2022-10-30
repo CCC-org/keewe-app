@@ -6,15 +6,16 @@ import person from '../../constants/Icons/Avatar/personXml';
 
 interface ProfileAvatarProps {
   image?: string;
+  size?: number;
 }
 
-const ProfileAvatar = ({ image }: ProfileAvatarProps) => {
+const ProfileAvatar = ({ image, number = 40 }: ProfileAvatarProps) => {
   const theme = useTheme();
   return (
     <>
       {image ? (
         <Avatar.Image
-          size={40}
+          size={36}
           source={{ uri: image }}
           style={{
             backgroundColor: theme.colors.brand.surface.container,

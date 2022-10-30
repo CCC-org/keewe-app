@@ -103,9 +103,9 @@ const DetailedPostScreen = ({ navigation }) => {
     getInsight();
   }, []);
 
-  useEffect(() => {
-    console.log('data2', data2);
-  }, []);
+  // useEffect(() => {
+  //   console.log('data2', data2);
+  // }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -122,6 +122,7 @@ const DetailedPostScreen = ({ navigation }) => {
                   title: data ? data.data.title : 'null ',
                   image: data ? data.data.image : 'null ',
                   challenge: currentChallenge,
+                  insightText,
                 })
               }
             >

@@ -31,7 +31,7 @@ export const InsightAPI = {
       console.log('api: ', data);
       return data;
     } catch (err) {
-      console.log('api error: ', err);
+      console.log('api error2: ', err);
     }
   },
   getRepresentativeComments: async (request: RepresentativeCommentsRequest) => {
