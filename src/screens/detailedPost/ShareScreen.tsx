@@ -70,21 +70,41 @@ const ShareScreen = ({ navigation, route }) => {
     <>
       <View ref={viewRef} style={[styles.container, { backgroundColor: color }]}>
         <View style={styles.profileContainer}>
-          <Text style={{ fontFamily: 'pretendardMedium', fontSize: 14, color: '#486006' }}>
+          <Text
+            style={{
+              fontFamily: 'pretendardMedium',
+              fontSize: 14,
+              color: color === '#f1f1e9' ? '#486006' : '#e0f6a2',
+            }}
+          >
             Keewe
           </Text>
-          <View style={{ flexDirection: 'row' }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+              paddingTop: 10,
+            }}
+          >
             <ProfileAvatar
-              style={{ borderWidth: 1 }}
+              style={{ marginRight: 10 }}
               size={36}
               image={'../../../assets/images/따봉도치.jpg'}
             />
             <View>
               <Text
-                style={[theme.fonts.text.caption1, { color: '#12131450' }]}
+                style={[
+                  theme.fonts.text.caption1,
+                  { color: color === '#f1f1e9' ? '#12131450' : '#ffffff50' },
+                ]}
               >{`${name} 의`}</Text>
               <Text
-                style={{ fontFamily: 'pretendardSemiBold', fontSize: 12, color: '#12131450' }}
+                style={{
+                  fontFamily: 'pretendardSemiBold',
+                  fontSize: 12,
+                  color: color === '#f1f1e9' ? '#12131450' : '#ffffff50',
+                }}
               >{`${challenge}에 대한 인사이트`}</Text>
             </View>
           </View>
@@ -93,7 +113,7 @@ const ShareScreen = ({ navigation, route }) => {
           <Text
             style={{
               ...theme.fonts.text.ridi,
-              ...{ color: color === '#f1f1e9' ? 'black' : 'white' },
+              ...{ color: color === '#f1f1e9' ? 'black' : 'white', marginTop: 4 },
             }}
           >
             {insightText}
@@ -149,13 +169,10 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   profileContainer: {
-    borderWidth: 1,
     height: 80,
     width: '100%',
   },
-  textContainer: {
-    borderWidth: 1,
-  },
+  textContainer: {},
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
