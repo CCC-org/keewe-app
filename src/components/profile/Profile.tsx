@@ -6,7 +6,7 @@ import ProfileAvatar from './ProfileAvatar';
 import InterestItem from './InterestItem';
 import { getTimeInterval } from '../../utils/string/timeInterval';
 import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
-import { Interest } from '../../types/profile/profile';
+import { Interest } from '../../types/insight/profile';
 
 interface ProfileProps {
   nickname: string;

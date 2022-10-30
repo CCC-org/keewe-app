@@ -25,7 +25,6 @@ const NicknameCreationScreen = ({ navigation }) => {
   function handleNextScreen() {
     navigation.navigate('InterestChoose', { nickname });
   }
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => null,

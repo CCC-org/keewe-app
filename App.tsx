@@ -32,8 +32,8 @@ import light from './src/theme/light';
 import ServiceIntroThreeScreen from './src/screens/onboarding/ServiceIntroThreeScreen';
 import InsightSampleScreen from './src/screens/onboarding/InsightSampleScreen';
 import Tabs from './src/screens/Main/Tabs';
-import InsightScreen from './src/screens/Insight/InsightScreen';
 import ShareScreen from './src/screens/detailedPost/ShareScreen';
+import CommentsScreen from './src/screens/detailedPost/CommentsScreen';
 
 const queryClient = new QueryClient();
 // const Stack = createNativeStackNavigator();
@@ -113,11 +113,6 @@ export default function App() {
                     <Stack.Screen
                       name="InterestChoose"
                       component={InterestChooseScreen}
-                      options={headerOptions}
-                    />
-                    <Stack.Screen
-                      name="Insight"
-                      component={InsightScreen}
                       options={headerOptions}
                     />
                   </Stack.Group>
@@ -203,6 +198,23 @@ export default function App() {
                       component={ShareScreen}
                       options={{ title: '공유하기' }}
                     />
+                    <Stack.Screen
+                      name={'DetailedPost'}
+                      component={DetailedPostScreen}
+                      options={{
+                        ...headerOptions,
+                        cardStyle: { backgroundColor: '#F1F1E9' },
+                      }}
+                    />
+                    <Stack.Screen
+                      name={'Comments'}
+                      component={CommentsScreen}
+                      options={{
+                        ...headerOptions,
+                        cardStyle: { backgroundColor: 'white' },
+                        title: '댓글',
+                      }}
+                    />
                   </Stack.Group>
                   {/* 실험적 그룹 */}
                   <Stack.Group>
@@ -225,14 +237,6 @@ export default function App() {
                     <Stack.Screen
                       name={'Home'}
                       component={Tabs}
-                      options={{
-                        title: '',
-                        cardStyle: { backgroundColor: 'white' },
-                      }}
-                    />
-                    <Stack.Screen
-                      name={'DetailedPost'}
-                      component={DetailedPostScreen}
                       options={{
                         title: '',
                         cardStyle: { backgroundColor: 'white' },
