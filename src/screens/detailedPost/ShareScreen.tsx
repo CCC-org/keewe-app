@@ -74,7 +74,11 @@ const ShareScreen = ({ navigation, route }) => {
             Keewe
           </Text>
           <View style={{ flexDirection: 'row' }}>
-            <ProfileAvatar image={'../../../assets/images/따봉도치.jpg'} />
+            <ProfileAvatar
+              style={{ borderWidth: 1 }}
+              size={36}
+              image={'../../../assets/images/따봉도치.jpg'}
+            />
             <View>
               <Text
                 style={[theme.fonts.text.caption1, { color: '#12131450' }]}
