@@ -22,7 +22,6 @@ const falseObject = {
 
 const ShareScreen = ({ navigation, route }) => {
   const { challenge, image, name, title, insightText } = route.params;
-  console.log(route.params);
   const [color, setColor] = useState('#f1f1e9');
   const [buttonColorSelected, setButtonColorSelected] = useState({
     first: true,
@@ -38,7 +37,6 @@ const ShareScreen = ({ navigation, route }) => {
         quality: 1,
       });
       const permissionResponse = await MediaLibrary.getPermissionsAsync();
-      console.log('per', permissionResponse);
 
       if (permissionResponse.status === 'granted') {
         const asset = await MediaLibrary.createAssetAsync(uri);
@@ -87,11 +85,7 @@ const ShareScreen = ({ navigation, route }) => {
               paddingTop: 10,
             }}
           >
-            <ProfileAvatar
-              style={{ marginRight: 10 }}
-              size={36}
-              image={'../../../assets/images/따봉도치.jpg'}
-            />
+            <ProfileAvatar style={{ marginRight: 10 }} size={36} image={image} />
             <View>
               <Text
                 style={[
