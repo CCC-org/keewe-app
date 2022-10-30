@@ -90,6 +90,11 @@ declare global {
             lineHeight: number;
           };
         };
+        ridi: {
+          fontFamily: string;
+          fontSize: number;
+          lineHeight: number;
+        };
       };
     }
     interface Theme {
@@ -186,6 +191,11 @@ const TEXT = {
       fontSize: 14,
       lineHeight: 20,
     },
+  },
+  ridi: {
+    fontFamily: 'ridiBatang',
+    fontSize: 18,
+    lineHeight: 32,
   },
 };
 

@@ -31,7 +31,6 @@ import DetailedPostScreen from './src/screens/detailedPost/DetailedPostScreen';
 import light from './src/theme/light';
 import ServiceIntroThreeScreen from './src/screens/onboarding/ServiceIntroThreeScreen';
 import InsightSampleScreen from './src/screens/onboarding/InsightSampleScreen';
-import { TransitionPresets } from '@react-navigation/stack';
 import Tabs from './src/screens/Main/Tabs';
 import ShareScreen from './src/screens/detailedPost/ShareScreen';
 import CommentsScreen from './src/screens/detailedPost/CommentsScreen';

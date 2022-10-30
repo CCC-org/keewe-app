@@ -7,8 +7,11 @@ import { DetailedPostApi } from '../../utils/api/DetailedPostAPI';
 import { useIncreaseView } from '../../utils/hooks/DetailedInsight/useIncreaseView';
 import { useTheme } from 'react-native-paper';
 import Comments from '../../components/comments/Comments';
-import { CommentsApi } from '../../utils/api/CommentsAPI';
 import MoreCommentsButton from '../../components/buttons/MoreCommentsButton';
+import { useQuery } from 'react-query';
+import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
+import Profile from '../../components/profile/Profile';
+import { querySuccessError } from '../../utils/helper/queryReponse/querySuccessError';
 
 const DetailedPostScreen = ({ navigation }) => {
   const [insightText, setInsightText] = useState('');
@@ -17,53 +20,7 @@ const DetailedPostScreen = ({ navigation }) => {
   const [currentChallenge, setCurrentChallenge] = useState('내가 참여중인 챌린지');
   // useIncreaseView의 전달인자는 추후에 route의 id를 집어넣어야함
   const [views] = useIncreaseView(30);
-  const [total, setTotal] = useState(0);
-
-  const theme = useTheme();
-  useEffect(() => {
-    async function getInsight() {
-      try {
-        /**
-         getInsight(전달인자)
-         전달인자는, 추후에 InsightScreen 의 route 에 있는 id를 집어넣어야 함.
-         */
-        const res = await DetailedPostApi.getInsight(String(30));
-        const data = res.data;
-        if (data.contents !== insightText) {
-          setInsightText(data.contents);
-        }
-        if (data.link.url !== link) {
-          setLink(data.link.url);
-        }
-      } catch (error) {
-        alert(error);
-      }
-    }
-    getInsight();
-  }, []);
-
-  // useEffect(() => {
-  //   async function getRepresentativeComments() {
-  //     try {
-  //       /**
-  //        getRepresentativeComments(전달인자)
-  //        전달인자는, 추후에 InsightScreen 의 route 에 있는 id를 집어넣어야 함.
-  //        */
-  //       const res = await CommentsApi.getRepresentativeComments(String(30));
-  //       const data = res.data;
-  //       console.log(data);
-  //     } catch (error) {
-  //       alert(error);
-  //     }
-  //   }
-  //   getRepresentativeComments();
-  // }, []);
-
-  useEffect(() => {
-    setTotal(data.total);
-  }, []);
-
-  const data = {
+  const [data2, setData2] = useState({
     total: 10,
     comments: [
       {
@@ -105,7 +62,50 @@ const DetailedPostScreen = ({ navigation }) => {
         totalReply: 2,
       },
     ],
-  };
+  });
+  const [total, setTotal] = useState(data2.total);
+
+  const theme = useTheme();
+  const { data, isLoading } = useQuery(
+    InsightQueryKeys.getProfile({ insightId: 2 }),
+    () => InsightAPI.getProfile({ insightId: 2 }),
+    querySuccessError,
+  );
+
+  // const { data: data2, isLoading: isLoading2 } = useQuery(
+  //   InsightQueryKeys.getRepresentativeComments({ insightId: 1 }),
+  //   () => InsightAPI.getRepresentativeComments({ insightId: 1 }),
+  //   querySuccessError,
+  // );
+
+  console.log('detailedPost data: ', data);
+  console.log('isLoading: ', isLoading);
+
+  useEffect(() => {
+    async function getInsight() {
+      try {
+        /**
+         getInsight(전달인자)
+         전달인자는, 추후에 InsightScreen 의 route 에 있는 id를 집어넣어야 함.
+         */
+        const res = await DetailedPostApi.getInsight(String(30));
+        const data = res.data;
+        if (data.contents !== insightText) {
+          setInsightText(data.contents);
+        }
+        if (data.link.url !== link) {
+          setLink(data.link.url);
+        }
+      } catch (error) {
+        alert(error);
+      }
+    }
+    getInsight();
+  }, []);
+
+  useEffect(() => {
+    console.log('data2', data2);
+  }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -115,7 +115,16 @@ const DetailedPostScreen = ({ navigation }) => {
             <Pressable onPress={() => alert('bookmark')}>
               <Feather name="bookmark" size={24} color="black" />
             </Pressable>
-            <Pressable onPress={() => alert('share')}>
+            <Pressable
+              onPress={() =>
+                navigation.navigate('Share', {
+                  name: data ? data.data.nickname : 'null ',
+                  title: data ? data.data.title : 'null ',
+                  image: data ? data.data.image : 'null ',
+                  challenge: currentChallenge,
+                })
+              }
+            >
               <Feather name="share" size={24} color="black" />
             </Pressable>
             <Pressable onPress={() => alert('three dots')}>
@@ -125,7 +134,7 @@ const DetailedPostScreen = ({ navigation }) => {
         );
       },
     });
-  });
+  }, [data, insightText, currentChallenge]);
 
   function handleMoreCommentsPress() {
     navigation.navigate('Comments');
@@ -139,7 +148,21 @@ const DetailedPostScreen = ({ navigation }) => {
           link={link}
           currentChallenge={currentChallenge}
         />
-
+        <>
+          {isLoading ? null : (
+            <Profile
+              nickname={data.data.nickname}
+              title={data.data.title}
+              self={data.data.author}
+              follow={data.data.following}
+              interests={data.data.interests}
+              createdAt={data.data.createdAt}
+              image={data.data.image}
+            />
+          )}
+          {/* Insight text, link card, emoticons, etc.. */}
+          {/* reply etc.. */}
+        </>
         <View style={styles.commentsHeader}>
           <Text style={{ fontWeight: '600', fontSize: 18, color: theme.colors.graphic.black }}>
             댓글{' '}
@@ -150,8 +173,9 @@ const DetailedPostScreen = ({ navigation }) => {
             {total}
           </Text>
         </View>
+
         <View style={{ backgroundColor: 'white' }}>
-          {data.comments.map((cur, idx) => {
+          {data2.comments.map((cur, idx) => {
             const comments = [
               <Comments
                 key={idx}
@@ -174,11 +198,11 @@ const DetailedPostScreen = ({ navigation }) => {
             });
             return comments.concat(replies);
           })}
-          {data.total < 4 ? null : (
+          {data2.total < 4 ? null : (
             <View style={{ alignItems: 'center', marginVertical: 16 }}>
               <MoreCommentsButton
                 onPress={handleMoreCommentsPress}
-                number={data.total - 3}
+                number={data2.total - 3}
                 textColor={'white'}
                 backgroundColor={`${theme.colors.graphic.black}cc`}
               />

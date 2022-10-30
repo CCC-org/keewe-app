@@ -6,7 +6,7 @@ import { useTheme } from 'react-native-paper';
 
 const CommentsScreen = () => {
   const theme = useTheme();
-  const data = {
+  const [data, setData] = useState({
     message: '성공',
     code: 200,
     data: [
@@ -63,9 +63,9 @@ const CommentsScreen = () => {
         totalReply: 2,
       },
     ],
-  };
+  });
 
-  const dataReply = {
+  const [dataReply, setDataReply] = useState({
     message: '성공',
     code: 200,
     data: [
@@ -94,7 +94,7 @@ const CommentsScreen = () => {
         createdAt: '2022-10-23T22:51:44.800570',
       },
     ],
-  };
+  });
 
   const [moreCommentsBtnVisible, setMoreCommentsBtnVisible] = useState<boolean[]>(() => {
     const init: boolean[] = [];

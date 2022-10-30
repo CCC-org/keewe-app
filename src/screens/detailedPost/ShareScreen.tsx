@@ -9,6 +9,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Permissions from 'expo-permissions';
 import * as MediaLibrary from 'expo-media-library';
 import { downloadToFolder } from 'expo-file-dl';
+import theme from '../../theme/light';
 
 const falseObject = {
   first: false,
@@ -16,7 +17,8 @@ const falseObject = {
   third: false,
 };
 
-const ShareScreen = () => {
+const ShareScreen = ({ navigation, route }) => {
+  console.log('route.params', route.params);
   const [color, setColor] = useState('#f1f1e9');
   const [buttonColorSelected, setButtonColorSelected] = useState({
     first: true,
@@ -65,7 +67,12 @@ const ShareScreen = () => {
       <View ref={viewRef} style={[styles.container, { backgroundColor: color }]}>
         <View style={styles.profileContainer}></View>
         <ScrollView style={styles.textContainer}>
-          <Text style={{ ...styles.text, ...{ color: color === '#f1f1e9' ? 'black' : 'white' } }}>
+          <Text
+            style={{
+              ...theme.fonts.text.ridi,
+              ...{ color: color === '#f1f1e9' ? 'black' : 'white' },
+            }}
+          >
             난 너를 믿었던 만큼 내 친구도 믿었기에 난 아무런 부담없이 널 내 친구에게 소개시켜줬고
             그런 만남이 있은후부터 우린 자주 함께 만나며 즐거운 시간을 보내며 함께 어울렸던 것
             뿐인데 그런 만남이 어디부터 잘못됐는지 난 알수없는 예감에 조금씩 빠져들고 있을때쯤 넌
@@ -153,6 +160,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     lineHeight: 32,
     fontSize: 18,
+    fontFamily: 'ridiBatang',
   },
   bottom: {
     flex: 0.6,

@@ -28,7 +28,7 @@ export function RootScreen() {
 
       <Text style={theme.fonts.text.body1.regular}>{accessToken}</Text>
       <ScrollView>
-        <Pressable onPress={() => navigation.navigate('Insight')}>
+        <Pressable onPress={() => navigation.navigate('DetailedPost')}>
           <View
             style={{
               backgroundColor: 'lightgreen',
@@ -36,7 +36,7 @@ export function RootScreen() {
               height: 100,
             }}
           >
-            <Text> InsightScreen.tsx</Text>
+            <Text style={theme.fonts.text.body1.regular}> DetailedPostScreen.tsx</Text>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('Share')}>
@@ -47,7 +47,7 @@ export function RootScreen() {
               height: 100,
             }}
           >
-            <Text> ShareScreen.tsx</Text>
+            <Text style={theme.fonts.text.body1.regular}> ShareScreen.tsx</Text>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('Home')}>
@@ -172,15 +172,15 @@ export function RootScreen() {
             <Text> DetailedPostScreen.tsx</Text>
           </View>
         </Pressable>
-        <Pressable onPress={() => navigation.navigate('Comments')}>
+        <Pressable onPress={() => navigation.navigate('Insight')}>
           <View
             style={{
-              backgroundColor: '#aa33cc',
+              backgroundColor: 'grey',
               height: 100,
               width: 150,
             }}
           >
-            <Text> CommentsScreen.tsx</Text>
+            <Text> InsightScreen.tsx</Text>
           </View>
         </Pressable>
       </ScrollView>
