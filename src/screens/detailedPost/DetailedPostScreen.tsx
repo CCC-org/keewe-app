@@ -23,6 +23,9 @@ const DetailedPostScreen = ({ navigation }) => {
     querySuccessError,
   );
 
+  console.log('detailedPost data: ', data);
+  console.log('isLoading: ', isLoading);
+
   useEffect(() => {
     async function getInsight() {
       try {
@@ -53,7 +56,16 @@ const DetailedPostScreen = ({ navigation }) => {
             <Pressable onPress={() => alert('bookmark')}>
               <Feather name="bookmark" size={24} color="black" />
             </Pressable>
-            <Pressable onPress={() => navigation.navigate('Share')}>
+            <Pressable
+              onPress={() =>
+                navigation.navigate('Share', {
+                  name: data ? data.data.nickname : 'null ',
+                  title: data ? data.data.title : 'null ',
+                  image: data ? data.data.image : 'null ',
+                  challenge: currentChallenge,
+                })
+              }
+            >
               <Feather name="share" size={24} color="black" />
             </Pressable>
             <Pressable onPress={() => alert('three dots')}>
@@ -63,7 +75,7 @@ const DetailedPostScreen = ({ navigation }) => {
         );
       },
     });
-  });
+  }, [data, insightText, currentChallenge]);
   return (
     <>
       <View>
