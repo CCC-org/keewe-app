@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, View, Text } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { useTheme } from 'react-native-paper';
 import { Octicons } from '@expo/vector-icons';
@@ -43,8 +43,8 @@ const DetailedPostSection = ({
       </View>
       <View style={styles.link}>
         {/* <Pressable>
-          <FontText>웹소설 웹툰의 어휘가 길수록 단순하고 유치...</FontText>
-          <FontText>careerly.co.kr</FontText>
+          <Text>웹소설 웹툰의 어휘가 길수록 단순하고 유치...</Text>
+          <Text>careerly.co.kr</Text>
         </Pressable> */}
         <LinkCard text={link}></LinkCard>
       </View>

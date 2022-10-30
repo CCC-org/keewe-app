@@ -17,7 +17,8 @@ const falseObject = {
   third: false,
 };
 
-const ShareScreen = () => {
+const ShareScreen = ({ navigation, route }) => {
+  console.log('route.params', route.params);
   const [color, setColor] = useState('#f1f1e9');
   const [buttonColorSelected, setButtonColorSelected] = useState({
     first: true,
@@ -154,6 +155,12 @@ const styles = StyleSheet.create({
     padding: 20,
     marginLeft: 'auto',
     marginRight: 'auto',
+  },
+  text: {
+    fontWeight: '600',
+    lineHeight: 32,
+    fontSize: 18,
+    fontFamily: 'ridiBatang',
   },
   bottom: {
     flex: 0.6,

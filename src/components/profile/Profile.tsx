@@ -1,26 +1,39 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import theme from '../../theme/light';
 import ProfileAvatar from './ProfileAvatar';
 import InterestItem from './InterestItem';
 import { getTimeInterval } from '../../utils/string/timeInterval';
 import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
+import { Interest } from '../../types/profile/profile';
 
 interface ProfileProps {
   nickname: string;
   title: string;
   self: boolean;
   follow?: boolean;
-  interests: Record<string, string>[];
+  interests: Interest[];
   createdAt: string;
   image?: string;
+  style?: ViewStyle;
 }
 
-const Profile = ({ nickname, title, follow, self, interests, createdAt, image }: ProfileProps) => {
+const Profile = ({
+  nickname,
+  title,
+  follow,
+  self,
+  interests,
+  createdAt,
+  image,
+  style,
+}: ProfileProps) => {
   const theme = useTheme();
+
+  console.log('Profile Props', nickname);
   return (
-    <View style={{ width: '100%' }}>
+    <View style={[{ width: '100%' }, style]}>
       <View style={styles.Header}>
         <View style={styles.Profile}>
           <ProfileAvatar image={image} />
@@ -49,9 +62,9 @@ const Profile = ({ nickname, title, follow, self, interests, createdAt, image }:
         </View>
       </View>
       <View style={styles.Interest}>
-        {interests.map((item, idx) => (
+        {/* {interests.map((item, idx) => (
           <InterestItem key={idx} interest={item.name} />
-        ))}
+        ))} */}
       </View>
     </View>
   );

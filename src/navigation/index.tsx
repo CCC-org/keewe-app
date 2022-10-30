@@ -28,7 +28,7 @@ export function RootScreen() {
 
       <Text style={theme.fonts.text.body1.regular}>{accessToken}</Text>
       <ScrollView>
-        <Pressable onPress={() => navigation.navigate('Insight')}>
+        <Pressable onPress={() => navigation.navigate('DetailedPost')}>
           <View
             style={{
               backgroundColor: 'lightgreen',
@@ -36,7 +36,7 @@ export function RootScreen() {
               height: 100,
             }}
           >
-            <Text style={theme.fonts.text.body1.regular}> InsightScreen.tsx</Text>
+            <Text style={theme.fonts.text.body1.regular}> DetailedPostScreen.tsx</Text>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('Share')}>
