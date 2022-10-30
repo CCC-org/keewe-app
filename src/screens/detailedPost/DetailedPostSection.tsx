@@ -39,7 +39,7 @@ const DetailedPostSection = ({
         </Pressable>
       </View>
       <View style={styles.insightText}>
-        <Text style={theme.fonts.text.body1.regular}>{insightText}</Text>
+        <Text style={[theme.fonts.text.body1.regular, { lineHeight: 28 }]}>{insightText}</Text>
       </View>
       <View style={styles.link}>
         {/* <Pressable>

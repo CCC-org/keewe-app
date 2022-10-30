@@ -103,9 +103,9 @@ const DetailedPostScreen = ({ navigation }) => {
     getInsight();
   }, []);
 
-  useEffect(() => {
-    console.log('data2', data2);
-  }, []);
+  // useEffect(() => {
+  //   console.log('data2', data2);
+  // }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -122,6 +122,7 @@ const DetailedPostScreen = ({ navigation }) => {
                   title: data ? data.data.title : 'null ',
                   image: data ? data.data.image : 'null ',
                   challenge: currentChallenge,
+                  insightText,
                 })
               }
             >
@@ -148,21 +149,19 @@ const DetailedPostScreen = ({ navigation }) => {
           link={link}
           currentChallenge={currentChallenge}
         />
-        <>
-          {isLoading ? null : (
-            <Profile
-              nickname={data.data.nickname}
-              title={data.data.title}
-              self={data.data.author}
-              follow={data.data.following}
-              interests={data.data.interests}
-              createdAt={data.data.createdAt}
-              image={data.data.image}
-            />
-          )}
-          {/* Insight text, link card, emoticons, etc.. */}
-          {/* reply etc.. */}
-        </>
+        {isLoading ? null : (
+          <Profile
+            nickname={data.data.nickname}
+            title={data.data.title}
+            self={data.data.author}
+            follow={data.data.following}
+            interests={data.data.interests}
+            createdAt={data.data.createdAt}
+            image={data.data.image}
+          />
+        )}
+        {/* Insight text, link card, emoticons, etc.. */}
+        {/* reply etc.. */}
         <View style={styles.commentsHeader}>
           <Text style={{ fontWeight: '600', fontSize: 18, color: theme.colors.graphic.black }}>
             댓글{' '}

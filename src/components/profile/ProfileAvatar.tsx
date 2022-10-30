@@ -3,28 +3,34 @@ import { Avatar, useTheme } from 'react-native-paper';
 import { SvgXml } from 'react-native-svg';
 import { View } from 'react-native';
 import person from '../../constants/Icons/Avatar/personXml';
+import { ViewProps } from '../Themed';
 
-interface ProfileAvatarProps {
+interface ProfileAvatarProps extends ViewProps {
   image?: string;
+  size?: number;
 }
 
-const ProfileAvatar = ({ image }: ProfileAvatarProps) => {
+const ProfileAvatar = (props: ProfileAvatarProps) => {
+  const { image, size = 40 } = props;
   const theme = useTheme();
   return (
     <>
       {image ? (
         <Avatar.Image
-          size={40}
+          size={size}
           source={{ uri: image }}
-          style={{
-            backgroundColor: theme.colors.brand.surface.container,
-          }}
+          style={[
+            {
+              backgroundColor: theme.colors.brand.surface.container,
+            },
+            props.style,
+          ]}
         />
       ) : (
         <View
           style={{
-            width: 40,
-            height: 40,
+            width: size,
+            height: size,
             borderRadius: 100,
             backgroundColor: theme.colors.brand.surface.container,
             justifyContent: 'center',
