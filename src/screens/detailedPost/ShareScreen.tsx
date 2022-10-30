@@ -17,7 +17,8 @@ const falseObject = {
   third: false,
 };
 
-const ShareScreen = () => {
+const ShareScreen = ({ navigation, route }) => {
+  console.log('route.params', route.params);
   const [color, setColor] = useState('#f1f1e9');
   const [buttonColorSelected, setButtonColorSelected] = useState({
     first: true,

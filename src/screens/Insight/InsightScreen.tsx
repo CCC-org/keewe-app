@@ -1,10 +1,19 @@
 import { Pressable, StyleSheet, View } from 'react-native';
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import Profile from '../../components/profile/Profile';
 import { Feather } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
+import axios from 'axios';
 
-const InsightScreen = ({ navigation }) => {
+const InsightScreen = ({ navigation, route }) => {
+  useEffect(() => {
+    async function getProfile(id: number) {
+      const response = await axios.get('https://api-keewe.com/api/v1/insight/author/' + id);
+      console.log('res', response);
+    }
+    getProfile(1);
+  }, []);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => {
@@ -13,7 +22,7 @@ const InsightScreen = ({ navigation }) => {
             <Pressable onPress={() => alert('bookmark')}>
               <Feather name="bookmark" size={24} color="black" />
             </Pressable>
-            <Pressable onPress={() => alert('share')}>
+            <Pressable onPress={() => navigation.navigate('Share')}>
               <Feather name="share" size={24} color="black" />
             </Pressable>
             <Pressable onPress={() => alert('three dots')}>
