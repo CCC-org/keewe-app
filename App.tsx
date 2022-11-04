@@ -34,6 +34,7 @@ import InsightSampleScreen from './src/screens/onboarding/InsightSampleScreen';
 import Tabs from './src/screens/Main/Tabs';
 import ShareScreen from './src/screens/detailedPost/ShareScreen';
 import CommentsScreen from './src/screens/detailedPost/CommentsScreen';
+import HomeScreen from './src/screens/Home/HomeScreen';
 
 const queryClient = new QueryClient();
 // const Stack = createNativeStackNavigator();
@@ -235,14 +236,23 @@ export default function App() {
                         cardStyle: { backgroundColor: 'white' },
                       }}
                     />
-                    <Stack.Screen
-                      name={'Home'}
-                      component={Tabs}
-                      options={{
-                        title: '',
+                    {/* Tabs  */}
+                    <Stack.Group
+                      screenOptions={{
+                        headerShown: false,
                         cardStyle: { backgroundColor: 'white' },
                       }}
-                    />
+                    >
+                      <Stack.Screen name={'Home'} component={HomeScreen}></Stack.Screen>
+                      <Stack.Screen
+                        name={'Tabs'}
+                        component={Tabs}
+                        options={{
+                          title: '',
+                          cardStyle: { backgroundColor: 'white' },
+                        }}
+                      />
+                    </Stack.Group>
                   </Stack.Group>
                 </Stack.Navigator>
               </QueryClientProvider>
