@@ -107,7 +107,7 @@ const CommentsScreen = () => {
   // useEffect(() => {
   // }, []);
 
-  function handleMoreCommentsPress(idx) {
+  function handleMoreCommentsPress(idx, id) {
     setMoreCommentsBtnVisible((current) => {
       const result = [...current];
       result[idx] = false;
@@ -120,25 +120,28 @@ const CommentsScreen = () => {
       {data.data.map((cur, idx) => {
         const comments = [
           <Comments
-            key={idx}
+            key={cur.id}
             content={cur.content}
             nickname={cur.writer.name}
             title={cur.writer.title}
+            insightWriter={true}
           />,
         ];
-        const replies = cur.replies.map((current, index) => {
+        const reply = cur.replies.map((current, index) => {
           return (
             <View key={index} style={{ marginLeft: 44 }}>
               <Comments
-                key={index}
+                key={current.id}
                 content={current.content}
                 nickname={current.writer.name}
                 title={current.writer.title}
+                insightWriter={false}
               />
-              {cur.totalReply > 1 && moreCommentsBtnVisible[idx] ? (
+              {cur.totalReply > 1 ? (
                 <View style={{ marginLeft: 60, marginTop: 10 }}>
                   <MoreCommentsButton
-                    onPress={() => handleMoreCommentsPress(idx)}
+                    key={cur.id}
+                    onPress={() => handleMoreCommentsPress(idx, cur.id)}
                     number={cur.totalReply - 1}
                     backgroundColor={'white'}
                     textColor={`${theme.colors.graphic.black}cc`}
@@ -148,7 +151,19 @@ const CommentsScreen = () => {
             </View>
           );
         });
-        return comments.concat(replies);
+        const replies = dataReply.data.map((current, index) => {
+          return (
+            <View key={index} style={{ marginLeft: 44 }}>
+              <Comments
+                key={current.id}
+                content={current.content}
+                nickname={current.writer.name}
+                title={current.writer.title}
+              />
+            </View>
+          );
+        });
+        return moreCommentsBtnVisible[idx] ? comments.concat(reply) : comments.concat(replies);
       })}
     </View>
   );

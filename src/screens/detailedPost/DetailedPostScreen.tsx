@@ -78,8 +78,8 @@ const DetailedPostScreen = ({ navigation }) => {
   //   querySuccessError,
   // );
 
-  console.log('detailedPost data: ', data);
-  console.log('isLoading: ', isLoading);
+  // console.log('detailedPost data: ', data);
+  // console.log('isLoading: ', isLoading);
 
   useEffect(() => {
     async function getInsight() {
