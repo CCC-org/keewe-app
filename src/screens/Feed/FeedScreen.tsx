@@ -18,11 +18,11 @@ const FeedScreen = ({ navigation }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.feedCtn}>
-      <Text style={[theme.fonts.text.display]}>홈</Text>
+      <Text style={[theme.fonts.text.display, { marginBottom: 32 }]}>홈</Text>
       {isLoading ? (
         <Text>로딩중</Text>
       ) : (
-        feedList?.map((insight) => <FeedItem key={insight.id} insight={insight} />)
+        feedList?.map((insight) => <FeedItem key={insight.id} insight={insight} /> || null)
       )}
     </ScrollView>
   );
