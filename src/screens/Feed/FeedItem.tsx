@@ -3,7 +3,7 @@ import React from 'react';
 import { InsightData } from '../../types/Feed/Feedinsights';
 import MiniProfile from '../../components/profile/MiniProfile';
 import { useTheme } from 'react-native-paper';
-import FeedLinkCard from './FeedLinkCard';
+import FeedLinkWithBookMark from './FeedLinkCard';
 import { LinkPreview } from '@flyerhq/react-native-link-preview';
 import FeedVerticalDots from './FeedVerticalDots';
 import FeedTextContent from './FeedTextContent';
@@ -14,7 +14,6 @@ interface FeedItemProps {
 
 const FeedItem = ({ insight }: FeedItemProps) => {
   const { id, contents, createdAt, link, reaction, writer } = insight;
-  // splice contents string to 100 characters and add '...' at the end
 
   const handleOnBookMarkPress = () => {
     alert(`id:${id} bookmark pressed`);
@@ -28,7 +27,6 @@ const FeedItem = ({ insight }: FeedItemProps) => {
     alert(`writerId:${writer.writerId} profile pressed`);
   };
 
-  const theme = useTheme();
   return (
     <View style={styles.Feed}>
       <View style={styles.Profilecontainer}>
@@ -37,14 +35,18 @@ const FeedItem = ({ insight }: FeedItemProps) => {
             style={styles.MiniProfile}
             nickname={writer.nickname}
             title={writer.title}
-            image={'../../../assets/images/favicon.png'}
+            createdAt={createdAt}
           />
         </Pressable>
         <FeedVerticalDots onPress={handleVerticalDotsPress} />
       </View>
       <View style={styles.contentCtn}>
         <FeedTextContent contents={contents} insightId={id} />
-        <FeedLinkCard text={'naver.com'} onBookmarkPress={handleOnBookMarkPress} />
+        <FeedLinkWithBookMark
+          text={'naver.com'}
+          onBookmarkPress={handleOnBookMarkPress}
+          isBookMarked={false}
+        />
       </View>
     </View>
   );

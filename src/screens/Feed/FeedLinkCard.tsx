@@ -6,8 +6,14 @@ import { Entypo } from '@expo/vector-icons';
 interface FeedLinkCard {
   text: string;
   onBookmarkPress?: () => void;
+  isBookMarked?: boolean;
 }
-const FeedLinkCard = ({ text, onBookmarkPress, ...props }: FeedLinkCard) => {
+const FeedLinkWithBookMark = ({
+  text,
+  onBookmarkPress,
+  isBookMarked = false,
+  ...props
+}: FeedLinkCard) => {
   const styles = createStyles();
 
   return (
@@ -35,12 +41,12 @@ const FeedLinkCard = ({ text, onBookmarkPress, ...props }: FeedLinkCard) => {
           );
         }}
       />
-      <FeedBookMarkIcon onPress={onBookmarkPress} isMarked={true} />
+      <FeedBookMarkIcon onPress={onBookmarkPress} isMarked={isBookMarked} />
     </View>
   );
 };
 
-export default FeedLinkCard;
+export default FeedLinkWithBookMark;
 
 function createStyles() {
   const styles = StyleSheet.create({
