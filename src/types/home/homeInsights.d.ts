@@ -3,10 +3,10 @@
 export interface HomeInsight {
   message: string;
   code: number;
-  data: Datum[];
+  data: Insight[];
 }
 
-export interface Datum {
+export interface Insight {
   id: number;
   contents: string;
   link: Link;
