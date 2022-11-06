@@ -141,7 +141,6 @@ const DetailedPostScreen = ({ navigation, route }) => {
   function handleMoreCommentsPress() {
     navigation.navigate('Comments');
   }
-  return null;
   return (
     <>
       <ScrollView>
