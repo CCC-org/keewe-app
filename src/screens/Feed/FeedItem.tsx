@@ -47,6 +47,7 @@ const FeedItem = ({ insight }: FeedItemProps) => {
           onBookmarkPress={handleOnBookMarkPress}
           isBookMarked={false}
         />
+        {/* TODO: 인사이트 반응 남기기 */}
       </View>
     </View>
   );
