@@ -3,9 +3,19 @@ import React, { useEffect, useState } from 'react';
 import Comments from '../../components/comments/Comments';
 import MoreCommentsButton from '../../components/buttons/MoreCommentsButton';
 import { useTheme } from 'react-native-paper';
+import { useQuery } from 'react-query';
+import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
+import { querySuccessError } from '../../utils/helper/queryReponse/querySuccessError';
 
 const CommentsScreen = () => {
   const theme = useTheme();
+
+  // const { data, isLoading } = useQuery(
+  //   InsightQueryKeys.getReplies({ parentId: 2 }),
+  //   () => InsightAPI.getReplies({ parentId: 2 }),
+  //   querySuccessError,
+  // );
+
   const [data, setData] = useState({
     message: '성공',
     code: 200,
@@ -103,9 +113,6 @@ const CommentsScreen = () => {
     }
     return init;
   });
-
-  // useEffect(() => {
-  // }, []);
 
   function handleMoreCommentsPress(idx, id) {
     setMoreCommentsBtnVisible((current) => {

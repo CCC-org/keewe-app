@@ -81,27 +81,27 @@ const DetailedPostScreen = ({ navigation }) => {
   // console.log('detailedPost data: ', data);
   // console.log('isLoading: ', isLoading);
 
-  useEffect(() => {
-    async function getInsight() {
-      try {
-        /**
-         getInsight(전달인자)
-         전달인자는, 추후에 InsightScreen 의 route 에 있는 id를 집어넣어야 함.
-         */
-        const res = await DetailedPostApi.getInsight(String(30));
-        const data = res.data;
-        if (data.contents !== insightText) {
-          setInsightText(data.contents);
-        }
-        if (data.link.url !== link) {
-          setLink(data.link.url);
-        }
-      } catch (error) {
-        alert(error);
-      }
-    }
-    getInsight();
-  }, []);
+  // useEffect(() => {
+  //   async function getInsight() {
+  //     try {
+  //       /**
+  //        getInsight(전달인자)
+  //        전달인자는, 추후에 InsightScreen 의 route 에 있는 id를 집어넣어야 함.
+  //        */
+  //       const res = await DetailedPostApi.getInsight(String(30));
+  //       const data = res.data;
+  //       if (data.contents !== insightText) {
+  //         setInsightText(data.contents);
+  //       }
+  //       if (data.link.url !== link) {
+  //         setLink(data.link.url);
+  //       }
+  //     } catch (error) {
+  //       alert(error);
+  //     }
+  //   }
+  //   getInsight();
+  // }, []);
 
   // useEffect(() => {
   //   console.log('data2', data2);
