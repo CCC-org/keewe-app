@@ -1,14 +1,17 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { LinkPreview, LinkPreviewProps } from '@flyerhq/react-native-link-preview';
+import FeedBookMarkIcon from './FeedBookMarkIcon';
+import { Entypo } from '@expo/vector-icons';
 interface FeedLinkCard {
   text: string;
+  onBookmarkPress?: () => void;
 }
-const FeedLinkCard = ({ text, ...props }: FeedLinkCard) => {
+const FeedLinkCard = ({ text, onBookmarkPress, ...props }: FeedLinkCard) => {
   const styles = createStyles();
 
   return (
-    <View>
+    <View style={styles.FeedLinkCardContainer}>
       <LinkPreview
         text={text}
         renderLinkPreview={(pre) => {
@@ -22,15 +25,17 @@ const FeedLinkCard = ({ text, ...props }: FeedLinkCard) => {
             <View style={[styles.container]}>
               <View>
                 <Text style={styles.title}>
-                  {title ? title.slice(0, 20) + (title.length > 20 ? '...' : '') : 'No title'}
+                  {title ? title.slice(0, 20) + (title.length > 20 ? '... >' : '') : 'No title'}
+                  <Entypo name="chevron-right" size={12} color="#12131450" />
                 </Text>
+
                 <Text style={styles.description}>{description}</Text>
               </View>
-              <FeedBookMarkIcon />
             </View>
           );
         }}
       />
+      <FeedBookMarkIcon onPress={onBookmarkPress} isMarked={true} />
     </View>
   );
 };
@@ -39,22 +44,25 @@ export default FeedLinkCard;
 
 function createStyles() {
   const styles = StyleSheet.create({
+    FeedLinkCardContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
     container: {
       width: 300,
       height: 48,
-      borderWidth: 1,
-      // borderColor: '#12131420',
       justifyContent: 'center',
     },
     title: {
       fontSize: 12,
-      fontFamily: 'pretendard',
-      fontWeight: 'bold',
+      fontFamily: 'pretendardSemiBold',
       marginBottom: 2,
       color: '#12131450',
     },
     description: {
-      fontFamily: 'pretendard',
+      fontFamily: 'pretendardSemiBold',
       fontWeight: '500',
       fontSize: 12,
       color: '#12131450',

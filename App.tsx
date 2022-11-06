@@ -39,7 +39,6 @@ import FeedScreen from './src/screens/Feed/FeedScreen';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator();
-
 const headerOptions = {
   headerBackVisible: false,
   headerLeft: () => <HeaderBackButton />,
@@ -47,6 +46,7 @@ const headerOptions = {
 // Text style. font-family : pretendard
 export default function App() {
   const isLoadingComplete = useCachedResources();
+  const queryClient = new QueryClient();
 
   if (!isLoadingComplete) {
     return null;
@@ -56,83 +56,84 @@ export default function App() {
         <PaperProvider theme={light}>
           <NavigationContainer>
             <BottomSheetModalProvider>
-              <Stack.Navigator
-                screenOptions={{
-                  cardStyle: { backgroundColor: 'white' },
-                  // contentStyle: { backgroundColor: 'white' },
-                  headerTitleAlign: 'center',
-                  headerTitleStyle: {
-                    fontSize: 16,
-                  },
-                  headerShadowVisible: false,
-                  // ...TransitionPresets.SlideFromRightIOS,
-                  // animation: 'slide_from_right',
-                  // animationDuration: 1000,
-                }}
-              >
-                {/* Tabs  */}
-                <Stack.Group
+              <QueryClientProvider client={queryClient}>
+                <Stack.Navigator
                   screenOptions={{
-                    headerShown: false,
+                    cardStyle: { backgroundColor: 'white' },
+                    // contentStyle: { backgroundColor: 'white' },
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                      fontSize: 16,
+                    },
+                    headerShadowVisible: false,
+                    // ...TransitionPresets.SlideFromRightIOS,
+                    // animation: 'slide_from_right',
+                    // animationDuration: 1000,
                   }}
                 >
-                  <Stack.Screen
-                    name={'Tabs'}
-                    component={Tabs}
-                    options={{
-                      cardStyle: { backgroundColor: 'white' },
+                  {/* Tabs  */}
+                  <Stack.Group
+                    screenOptions={{
+                      headerShown: false,
                     }}
-                  />
-                  {/* <Stack.Screen name={'Home'} component={HomeScreen}></Stack.Screen> */}
-                </Stack.Group>
-                {/* 챌린지 그룹 */}
-                <Stack.Group
-                  screenOptions={{
-                    headerStyle: { backgroundColor: 'white' },
-                    title: '',
-                  }}
-                >
-                  <Stack.Screen name="Root" component={RootScreen} options={{ title: 'Root' }} />
+                  >
+                    <Stack.Screen
+                      name={'Tabs'}
+                      component={Tabs}
+                      options={{
+                        cardStyle: { backgroundColor: 'white' },
+                      }}
+                    />
+                    {/* <Stack.Screen name={'Home'} component={HomeScreen}></Stack.Screen> */}
+                  </Stack.Group>
+                  {/* 챌린지 그룹 */}
+                  <Stack.Group
+                    screenOptions={{
+                      headerStyle: { backgroundColor: 'white' },
+                      title: '',
+                    }}
+                  >
+                    <Stack.Screen name="Root" component={RootScreen} options={{ title: 'Root' }} />
 
-                  <Stack.Screen name="SignUp" component={SignUpScreen} options={headerOptions} />
-                  <Stack.Screen name="Login" component={LoginScreen} options={headerOptions} />
-                  <Stack.Screen
-                    name="CategorySelect"
-                    component={CategorySelectScreen}
-                    options={headerOptions}
-                  />
-                  <Stack.Screen
-                    name="CategoryCreate"
-                    component={CategoryCreateScreen}
-                    options={headerOptions}
-                  />
-                  <Stack.Screen
-                    name="ChallengeInfo"
-                    component={ChallengeInfoScreen}
-                    options={headerOptions}
-                  />
-                  <Stack.Screen
-                    name="ChallengeCreationApproved"
-                    component={ChallengeCreationApprovedScreen}
-                  />
-                  <Stack.Screen
-                    name="ChallengeSubjectCreation"
-                    component={ChallengeSubjectCreationScreen}
-                    options={headerOptions}
-                  />
-                  <Stack.Screen
-                    name="ChallengeGoalSetting"
-                    component={ChallengeGoalSettingScreen}
-                    options={headerOptions}
-                  />
-                  <Stack.Screen
-                    name="InterestChoose"
-                    component={InterestChooseScreen}
-                    options={headerOptions}
-                  />
-                </Stack.Group>
-                {/* 온보딩 그룹 */}
-                {/* <Stack.Group
+                    <Stack.Screen name="SignUp" component={SignUpScreen} options={headerOptions} />
+                    <Stack.Screen name="Login" component={LoginScreen} options={headerOptions} />
+                    <Stack.Screen
+                      name="CategorySelect"
+                      component={CategorySelectScreen}
+                      options={headerOptions}
+                    />
+                    <Stack.Screen
+                      name="CategoryCreate"
+                      component={CategoryCreateScreen}
+                      options={headerOptions}
+                    />
+                    <Stack.Screen
+                      name="ChallengeInfo"
+                      component={ChallengeInfoScreen}
+                      options={headerOptions}
+                    />
+                    <Stack.Screen
+                      name="ChallengeCreationApproved"
+                      component={ChallengeCreationApprovedScreen}
+                    />
+                    <Stack.Screen
+                      name="ChallengeSubjectCreation"
+                      component={ChallengeSubjectCreationScreen}
+                      options={headerOptions}
+                    />
+                    <Stack.Screen
+                      name="ChallengeGoalSetting"
+                      component={ChallengeGoalSettingScreen}
+                      options={headerOptions}
+                    />
+                    <Stack.Screen
+                      name="InterestChoose"
+                      component={InterestChooseScreen}
+                      options={headerOptions}
+                    />
+                  </Stack.Group>
+                  {/* 온보딩 그룹 */}
+                  {/* <Stack.Group
                     screenOptions={{
                       // contentStyle: { backgroundColor: 'white' },
                       headerTitleAlign: 'center',
@@ -145,113 +146,114 @@ export default function App() {
                     }}
                   ></Stack.Group> */}
 
-                {/* 온보딩 그룹 */}
-                <Stack.Group
-                  screenOptions={{
-                    title: '',
-                  }}
-                >
-                  <Stack.Screen
-                    name="NicknameCreation"
-                    component={NicknameCreationScreen}
-                    options={headerOptions}
-                  />
-                  <Stack.Screen
-                    name="ServiceIntroOne"
-                    component={ServiceIntroOneScreen}
-                    options={{
-                      headerTransparent: true,
-                      headerTitle: '',
-                      headerLeft: () => <View></View>,
-                      headerRight: () => <OnboardingIntroHeaderButton />,
-                      headerStyle: {
-                        backgroundColor: 'transparent',
-                      },
-                    }}
-                  />
-                  <Stack.Screen
-                    name="ServiceIntroTwo"
-                    component={ServiceIntroTwoScreen}
-                    options={{
-                      headerTransparent: true,
-                      headerTitle: '',
-                      headerLeft: () => <View></View>,
-                      headerRight: () => <OnboardingIntroHeaderButton />,
-                      headerStyle: {
-                        backgroundColor: 'transparent',
-                      },
-                    }}
-                  />
-                  <Stack.Screen
-                    name="ServiceIntroThree"
-                    component={ServiceIntroThreeScreen}
-                    options={{
-                      headerTransparent: true,
-                      headerTitle: '',
-                      headerLeft: () => <View></View>,
-                      headerRight: () => <OnboardingIntroHeaderButton />,
-                      headerStyle: {
-                        backgroundColor: 'transparent',
-                      },
-                    }}
-                  />
-                  <Stack.Screen
-                    name="InsightSample"
-                    options={{ ...headerOptions, headerStyle: { backgroundColor: '#F8F8F4' } }}
-                    component={InsightSampleScreen}
-                  />
-                </Stack.Group>
-                {/* 게시글 그룹 */}
-                <Stack.Group
-                  screenOptions={{
-                    headerStyle: { backgroundColor: 'white' },
-                    title: '',
-                  }}
-                >
-                  <Stack.Screen
-                    name={'Share'}
-                    component={ShareScreen}
-                    options={{ title: '공유하기' }}
-                  />
-                  <Stack.Screen
-                    name={'DetailedPost'}
-                    component={DetailedPostScreen}
-                    options={{
-                      ...headerOptions,
-                      headerStyle: { backgroundColor: '#F1F1E9' },
-                      cardStyle: { backgroundColor: '#F1F1E9' },
-                    }}
-                  />
-                  <Stack.Screen
-                    name={'Comments'}
-                    component={CommentsScreen}
-                    options={{
-                      ...headerOptions,
-                      cardStyle: { backgroundColor: 'white' },
-                      title: '댓글',
-                    }}
-                  />
-                </Stack.Group>
-                {/* 실험적 그룹 */}
-                <Stack.Group>
-                  <Stack.Screen
-                    name={'Upload'}
-                    component={UploadScreen}
-                    options={{
+                  {/* 온보딩 그룹 */}
+                  <Stack.Group
+                    screenOptions={{
                       title: '',
-                      cardStyle: { backgroundColor: 'white' },
                     }}
-                  />
-                  <Stack.Screen
-                    name={'TempSheet'}
-                    component={TempSheetScreen}
-                    options={{
+                  >
+                    <Stack.Screen
+                      name="NicknameCreation"
+                      component={NicknameCreationScreen}
+                      options={headerOptions}
+                    />
+                    <Stack.Screen
+                      name="ServiceIntroOne"
+                      component={ServiceIntroOneScreen}
+                      options={{
+                        headerTransparent: true,
+                        headerTitle: '',
+                        headerLeft: () => <View></View>,
+                        headerRight: () => <OnboardingIntroHeaderButton />,
+                        headerStyle: {
+                          backgroundColor: 'transparent',
+                        },
+                      }}
+                    />
+                    <Stack.Screen
+                      name="ServiceIntroTwo"
+                      component={ServiceIntroTwoScreen}
+                      options={{
+                        headerTransparent: true,
+                        headerTitle: '',
+                        headerLeft: () => <View></View>,
+                        headerRight: () => <OnboardingIntroHeaderButton />,
+                        headerStyle: {
+                          backgroundColor: 'transparent',
+                        },
+                      }}
+                    />
+                    <Stack.Screen
+                      name="ServiceIntroThree"
+                      component={ServiceIntroThreeScreen}
+                      options={{
+                        headerTransparent: true,
+                        headerTitle: '',
+                        headerLeft: () => <View></View>,
+                        headerRight: () => <OnboardingIntroHeaderButton />,
+                        headerStyle: {
+                          backgroundColor: 'transparent',
+                        },
+                      }}
+                    />
+                    <Stack.Screen
+                      name="InsightSample"
+                      options={{ ...headerOptions, headerStyle: { backgroundColor: '#F8F8F4' } }}
+                      component={InsightSampleScreen}
+                    />
+                  </Stack.Group>
+                  {/* 게시글 그룹 */}
+                  <Stack.Group
+                    screenOptions={{
+                      headerStyle: { backgroundColor: 'white' },
                       title: '',
-                      cardStyle: { backgroundColor: 'white' },
                     }}
-                  />
-                </Stack.Group>
-              </Stack.Navigator>
+                  >
+                    <Stack.Screen
+                      name={'Share'}
+                      component={ShareScreen}
+                      options={{ title: '공유하기' }}
+                    />
+                    <Stack.Screen
+                      name={'DetailedPost'}
+                      component={DetailedPostScreen}
+                      options={{
+                        ...headerOptions,
+                        headerStyle: { backgroundColor: '#F1F1E9' },
+                        cardStyle: { backgroundColor: '#F1F1E9' },
+                      }}
+                    />
+                    <Stack.Screen
+                      name={'Comments'}
+                      component={CommentsScreen}
+                      options={{
+                        ...headerOptions,
+                        cardStyle: { backgroundColor: 'white' },
+                        title: '댓글',
+                      }}
+                    />
+                  </Stack.Group>
+                  {/* 실험적 그룹 */}
+                  <Stack.Group>
+                    <Stack.Screen
+                      name={'Upload'}
+                      component={UploadScreen}
+                      options={{
+                        title: '',
+                        cardStyle: { backgroundColor: 'white' },
+                      }}
+                    />
+                    <Stack.Screen
+                      name={'TempSheet'}
+                      component={TempSheetScreen}
+                      options={{
+                        title: '',
+                        cardStyle: { backgroundColor: 'white' },
+                      }}
+                    />
+                  </Stack.Group>
+                </Stack.Navigator>
+              </QueryClientProvider>
             </BottomSheetModalProvider>
           </NavigationContainer>
           <StatusBar style="dark" />
