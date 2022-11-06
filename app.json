@@ -31,38 +31,3 @@
     }
   }
 }
-
-{
-  "message": "성공",
-  "code": 200,
-  "data": [
-		{
-    "id": 1,
-    "contents": "인사이트 내용입니다. 즐거운 개발 되세요!",
-    "link": {
-      "url": "www.keewe.com"
-	    },
-    "reaction": {
-      "clap": 1,
-      "heart": 2,
-      "sad": 3,
-      "surprise": 4,
-      "fire": 5,
-      "eyes": 6
-    },
-		{
-    "id": 2,
-    "contents": "인사이트 내용입니다. 즐거운 개발 되세요!",
-    "link": {
-      "url": "www.keewe.com"
-	    },
-    "reaction": {
-      "clap": 1,
-      "heart": 2,
-      "sad": 3,
-      "surprise": 4,
-      "fire": 5,
-      "eyes": 6
-    }
-  ]
-}

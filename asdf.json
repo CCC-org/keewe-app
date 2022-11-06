@@ -5,6 +5,7 @@
     {
       "id": 1,
       "contents": "인사이트 내용입니다. 즐거운 개발 되세요!",
+      "createdAt": "2022-10-23T22:51:45.901392",
       "link": {
         "url": "www.keewe.com"
       },
@@ -15,11 +16,18 @@
         "surprise": 4,
         "fire": 5,
         "eyes": 6
+      },
+      "writer": {
+        "writerId": 1,
+        "nickname": "nickname",
+        "title": "고급 기록가",
+        "image": "www.api-keewe.com/images/128398681"
       }
     },
     {
       "id": 2,
       "contents": "인사이트 내용입니다. 즐거운 개발 되세요!",
+      "createdAt": "2022-10-23T22:51:45.901392",
       "link": {
         "url": "www.keewe.com"
       },
@@ -30,6 +38,100 @@
         "surprise": 4,
         "fire": 5,
         "eyes": 6
+      },
+      "writer": {
+        "writerId": 1,
+        "nickname": "nickname",
+        "title": "고급 기록가",
+        "image": "www.api-keewe.com/images/128398681"
+      }
+    },
+    {
+      "id": 3,
+      "contents": "인사이트 내용입니다. 즐거운 개발 되세요!",
+      "createdAt": "2022-10-23T22:51:45.901392",
+      "link": {
+        "url": "www.keewe.com"
+      },
+      "reaction": {
+        "clap": 1,
+        "heart": 2,
+        "sad": 3,
+        "surprise": 4,
+        "fire": 5,
+        "eyes": 6
+      },
+      "writer": {
+        "writerId": 1,
+        "nickname": "nickname",
+        "title": "고급 기록가",
+        "image": "www.api-keewe.com/images/128398681"
+      }
+    },
+    {
+      "id": 4,
+      "contents": "인사이트 내용입니다. 즐거운 개발 되세요!",
+      "createdAt": "2022-10-23T22:51:45.901392",
+      "link": {
+        "url": "www.keewe.com"
+      },
+      "reaction": {
+        "clap": 1,
+        "heart": 2,
+        "sad": 3,
+        "surprise": 4,
+        "fire": 5,
+        "eyes": 6
+      },
+      "writer": {
+        "writerId": 1,
+        "nickname": "nickname",
+        "title": "고급 기록가",
+        "image": "www.api-keewe.com/images/128398681"
+      }
+    },
+    {
+      "id": 5,
+      "contents": "인사이트 내용입니다. 즐거운 개발 되세요!",
+      "createdAt": "2022-10-23T22:51:45.901392",
+      "link": {
+        "url": "www.keewe.com"
+      },
+      "reaction": {
+        "clap": 1,
+        "heart": 2,
+        "sad": 3,
+        "surprise": 4,
+        "fire": 5,
+        "eyes": 6
+      },
+      "writer": {
+        "writerId": 1,
+        "nickname": "nickname",
+        "title": "고급 기록가",
+        "image": "www.api-keewe.com/images/128398681"
+      }
+    },
+    {
+      "id": 6,
+      "contents": "인사이트 내용입니다. 즐거운 개발 되세요!",
+      "createdAt": "2022-10-23T22:51:45.901392",
+      "link": {
+        "url": "www.keewe.com"
+      },
+      "reaction": {
+        "clap": 1,
+        "heart": 2,
+        "sad": 3,
+        "surprise": 4,
+        "fire": 5,
+        "eyes": 6
+      },
+      "writer": {
+        "writerId": 1,
+        "nickname": "nickname",
+        "title": "고 급 기록가",
+        "image": "www.api-keewe.com/images/128398681"
       }
     }
   ]

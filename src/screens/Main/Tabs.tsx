@@ -5,25 +5,20 @@ import BookMarkScreen from './BookMarkScreen';
 import ChallengesScreen from './ChallengesScreen';
 import MyPageScreen from './MyPageScreen';
 import { RootScreen } from '../../navigation';
-import MainScreen from './MainScreen';
+import FeedScreen from './FeedScreen';
 import HomeScreen from '../Home/HomeScreen';
+import App from '../../../App';
+import { NavigationContainer } from '@react-navigation/native';
 
+const Tab = createBottomTabNavigator();
 const Tabs = () => {
-  const Tab = createBottomTabNavigator();
   return (
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: true,
-      }}
-    >
-      <Tab.Group>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Main" component={MainScreen} />
-        <Tab.Screen name="BookMark" component={BookMarkScreen} />
-        <Tab.Screen name="Challenges" component={ChallengesScreen} />
-        <Tab.Screen name="MyPage" component={MyPageScreen} />
-        <Tab.Screen name="Root" component={RootScreen} />
-      </Tab.Group>
+    <Tab.Navigator sceneContainerStyle={{ backgroundColor: 'white' }}>
+      <Tab.Screen name="Feed" component={FeedScreen} />
+      <Tab.Screen name="BookMark" component={BookMarkScreen} />
+      <Tab.Screen name="Challenges" component={ChallengesScreen} />
+      <Tab.Screen name="MyPage" component={MyPageScreen} />
+      <Tab.Screen name="Root" component={RootScreen} />
     </Tab.Navigator>
   );
 };

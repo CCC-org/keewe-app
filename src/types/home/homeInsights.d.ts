@@ -3,14 +3,16 @@
 export interface HomeInsight {
   message: string;
   code: number;
-  data: Insight[];
+  data: InsightData[];
 }
 
-export interface Insight {
+export interface InsightData {
   id: number;
   contents: string;
+  createdAt: string;
   link: Link;
   reaction: Reaction;
+  writer: Writer;
 }
 
 export interface Link {
@@ -24,4 +26,11 @@ export interface Reaction {
   surprise: number;
   fire: number;
   eyes: number;
+}
+
+export interface Writer {
+  writerId: number;
+  nickname: string;
+  title: string;
+  image: string;
 }

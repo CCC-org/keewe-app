@@ -17,7 +17,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { Provider as PaperProvider, useTheme } from 'react-native-paper';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import OnboardingIntroHeaderButton from './src/components/buttons/OnboardingIntroHeaderButton';
 import { RootScreen } from './src/navigation';
@@ -35,6 +35,7 @@ import Tabs from './src/screens/Main/Tabs';
 import ShareScreen from './src/screens/detailedPost/ShareScreen';
 import CommentsScreen from './src/screens/detailedPost/CommentsScreen';
 import HomeScreen from './src/screens/Home/HomeScreen';
+import FeedScreen from './src/screens/Main/FeedScreen';
 
 const queryClient = new QueryClient();
 // const Stack = createNativeStackNavigator();
@@ -71,6 +72,21 @@ export default function App() {
                     // animationDuration: 1000,
                   }}
                 >
+                  {/* Tabs  */}
+                  <Stack.Group
+                    screenOptions={{
+                      headerShown: false,
+                    }}
+                  >
+                    <Stack.Screen
+                      name={'Tabs'}
+                      component={Tabs}
+                      options={{
+                        cardStyle: { backgroundColor: 'white' },
+                      }}
+                    />
+                    {/* <Stack.Screen name={'Home'} component={HomeScreen}></Stack.Screen> */}
+                  </Stack.Group>
                   {/* 챌린지 그룹 */}
                   <Stack.Group
                     screenOptions={{
@@ -236,23 +252,6 @@ export default function App() {
                         cardStyle: { backgroundColor: 'white' },
                       }}
                     />
-                    {/* Tabs  */}
-                    <Stack.Group
-                      screenOptions={{
-                        headerShown: false,
-                        cardStyle: { backgroundColor: 'white' },
-                      }}
-                    >
-                      <Stack.Screen name={'Home'} component={HomeScreen}></Stack.Screen>
-                      <Stack.Screen
-                        name={'Tabs'}
-                        component={Tabs}
-                        options={{
-                          title: '',
-                          cardStyle: { backgroundColor: 'white' },
-                        }}
-                      />
-                    </Stack.Group>
                   </Stack.Group>
                 </Stack.Navigator>
               </QueryClientProvider>

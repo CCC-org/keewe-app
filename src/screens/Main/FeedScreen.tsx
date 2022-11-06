@@ -1,7 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
-const MainScreen = () => {
+const FeedScreen = ({ navigation }) => {
+  navigation.setOptions({
+    headerShown: true,
+    backgroundColor: 'red',
+  });
   return (
     <View>
       <Text>MainScreen</Text>
@@ -9,6 +13,6 @@ const MainScreen = () => {
   );
 };
 
-export default MainScreen;
+export default FeedScreen;
 
 const styles = StyleSheet.create({});
