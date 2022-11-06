@@ -6,20 +6,23 @@ import { querySuccessError } from '../../utils/helper/queryReponse/querySuccessE
 import { ScrollView } from 'react-native-gesture-handler';
 import { FeedInsight, InsightData } from '../../types/Feed/Feedinsights';
 import FeedItem from './FeedItem';
+import { useTheme } from 'react-native-paper';
 
 const FeedScreen = ({ navigation }) => {
-  const Feed = useQuery<FeedInsight['data'] | undefined>(
+  const theme = useTheme();
+  const { data: feedList, isLoading } = useQuery<FeedInsight['data'] | undefined>(
     FeedQueryKeys.getFeed(),
     () => FeedAPI.getFeed(),
     querySuccessError,
   );
-  console.log('Feed', Feed);
+
   return (
     <ScrollView contentContainerStyle={styles.feedCtn}>
-      {Feed.isLoading ? (
+      <Text style={[theme.fonts.text.display]}>홈</Text>
+      {isLoading ? (
         <Text>로딩중</Text>
       ) : (
-        Feed.data?.map((insight) => <FeedItem key={insight.id} insight={insight} />)
+        feedList?.map((insight) => <FeedItem key={insight.id} insight={insight} />)
       )}
     </ScrollView>
   );
@@ -28,7 +31,9 @@ const FeedScreen = ({ navigation }) => {
 export default FeedScreen;
 
 const styles = StyleSheet.create({
-  feedCtn: {},
+  feedCtn: {
+    padding: 16.5,
+  },
   feedItem: {
     backgroundColor: 'blue',
   },

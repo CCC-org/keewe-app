@@ -1,14 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-interface FeedLinkCardProps {
-  link: string;
+import { LinkPreview, LinkPreviewProps } from '@flyerhq/react-native-link-preview';
+interface customProps extends LinkPreviewProps {
+  width?: number | string;
 }
-const FeedLinkCard = ({ link }: FeedLinkCardProps) => {
-  return (
-    <View>
-      <Text>FeedLinkCard</Text>
-    </View>
-  );
+const FeedLinkCard = ({ text }: customProps) => {
+  return <LinkPreview text={text} />;
 };
 
 export default FeedLinkCard;
