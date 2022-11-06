@@ -5,6 +5,7 @@ import { getAccessToken } from '../hooks/asyncStorage/Login';
 import httpClient from './BaseHttpClient';
 
 export const InsightQueryKeys = {
+  getInsight: (request: InsightGetRequest) => ['Insight', request.insightId],
   getProfile: (request: InsightProfileRequest) => ['profile', request.insightId],
   getRepresentativeComments: (request: RepresentativeCommentsRequest) => [
     'RepresentativeComments',
@@ -13,9 +14,43 @@ export const InsightQueryKeys = {
 };
 
 export const InsightAPI = {
+  react: async (params: InsightReactRequest) => {
+    try {
+      const token = await getAccessToken();
+      const { data } = await httpClient.post<InsightGetReponse>(
+        'https://api-keewe.com/api/v1/reaction',
+        params,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      return data;
+    } catch (e) {
+      console.log('api error', e);
+    }
+  },
+  getInsight: async (request: InsightGetRequest) => {
+    const { insightId } = request;
+    try {
+      const token = await getAccessToken();
+      const { data } = await httpClient.get<InsightGetReponse>(
+        `https://api-keewe.com/api/v1/insight/${insightId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      return data;
+    } catch (err) {
+      console.error('api error: ', err);
+    }
+  },
+
   getProfile: async (request: InsightProfileRequest) => {
     const { insightId } = request;
-
     try {
       const token = await getAccessToken();
 

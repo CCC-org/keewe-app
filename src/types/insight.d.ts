@@ -15,3 +15,39 @@ interface ProfileResponse {
     author: boolean;
   };
 }
+
+interface InsightGetRequest {
+  insightId: number;
+}
+
+interface InsightGetReponse {
+  message: string;
+  code: number;
+  data: Insight;
+}
+
+interface Insight {
+  id: number;
+  contents: string;
+  link: Link;
+  reaction: Reaction;
+}
+
+interface Link {
+  url: string;
+}
+
+interface Reaction {
+  clap: number;
+  heart: number;
+  sad: number;
+  surprise: number;
+  fire: number;
+  eyes: number;
+}
+
+interface InsightReactRequest {
+  reactionType: string;
+  insightId: Insight['id'];
+  value: number;
+}

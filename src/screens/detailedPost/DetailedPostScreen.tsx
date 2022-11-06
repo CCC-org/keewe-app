@@ -14,9 +14,6 @@ import Profile from '../../components/profile/Profile';
 import { querySuccessError } from '../../utils/helper/queryReponse/querySuccessError';
 
 const DetailedPostScreen = ({ navigation }) => {
-  const [insightText, setInsightText] = useState('');
-  const [commentText, setCommentText] = useState('');
-  const [link, setLink] = useState('');
   const [currentChallenge, setCurrentChallenge] = useState('내가 참여중인 챌린지');
   // useIncreaseView의 전달인자는 추후에 route의 id를 집어넣어야함
   const [views] = useIncreaseView(30);
@@ -66,9 +63,14 @@ const DetailedPostScreen = ({ navigation }) => {
   const [total, setTotal] = useState(data2.total);
 
   const theme = useTheme();
-  const { data, isLoading } = useQuery(
+  const { data: profile, isProfileLoading } = useQuery(
     InsightQueryKeys.getProfile({ insightId: 2 }),
     () => InsightAPI.getProfile({ insightId: 2 }),
+    querySuccessError,
+  );
+  const { data: insight, isLoading: isInsightLoading } = useQuery(
+    InsightQueryKeys.getInsight({ insightId: 2 }),
+    () => InsightAPI.getInsight({ insightId: 2 }),
     querySuccessError,
   );
 
@@ -78,30 +80,8 @@ const DetailedPostScreen = ({ navigation }) => {
   //   querySuccessError,
   // );
 
-  console.log('detailedPost data: ', data);
-  console.log('isLoading: ', isLoading);
-
-  useEffect(() => {
-    async function getInsight() {
-      try {
-        /**
-         getInsight(전달인자)
-         전달인자는, 추후에 InsightScreen 의 route 에 있는 id를 집어넣어야 함.
-         */
-        const res = await DetailedPostApi.getInsight(String(30));
-        const data = res.data;
-        if (data.contents !== insightText) {
-          setInsightText(data.contents);
-        }
-        if (data.link.url !== link) {
-          setLink(data.link.url);
-        }
-      } catch (error) {
-        alert(error);
-      }
-    }
-    getInsight();
-  }, []);
+  console.log('detailedPost data: ', profile);
+  console.log('isLoading: ', isProfileLoading);
 
   // useEffect(() => {
   //   console.log('data2', data2);
@@ -118,11 +98,11 @@ const DetailedPostScreen = ({ navigation }) => {
             <Pressable
               onPress={() =>
                 navigation.navigate('Share', {
-                  name: data ? data.data.nickname : 'null ',
-                  title: data ? data.data.title : 'null ',
-                  image: data ? data.data.image : 'null ',
+                  name: profile ? profile.data.nickname : 'null ',
+                  title: profile ? profile.data.title : 'null ',
+                  image: profile ? profile.data.image : 'null ',
                   challenge: currentChallenge,
-                  insightText,
+                  insightText: insight.contents,
                 })
               }
             >
@@ -135,29 +115,34 @@ const DetailedPostScreen = ({ navigation }) => {
         );
       },
     });
-  }, [data, insightText, currentChallenge]);
+  }, [profile, insight, currentChallenge]);
 
   function handleMoreCommentsPress() {
     navigation.navigate('Comments');
   }
+
   return (
     <>
       <ScrollView>
-        <DetailedPostSection
-          insightText={insightText}
-          views={views}
-          link={link}
-          currentChallenge={currentChallenge}
-        />
-        {isLoading ? null : (
+        {!isInsightLoading && (
+          <DetailedPostSection
+            insightText={insight?.contents ?? ''}
+            views={views}
+            link={insight?.link ?? ''}
+            currentChallenge={currentChallenge}
+            reaction={{ ...(insight?.reaction ?? {}) }}
+          />
+        )}
+
+        {isProfileLoading ? null : (
           <Profile
-            nickname={data.data.nickname}
-            title={data.data.title}
-            self={data.data.author}
-            follow={data.data.following}
-            interests={data.data.interests}
-            createdAt={data.data.createdAt}
-            image={data.data.image}
+            nickname={profile.data.nickname}
+            title={profile.data.title}
+            self={profile.data.author}
+            follow={profile.data.following}
+            interests={profile.data.interests}
+            createdAt={profile.data.createdAt}
+            image={profile.data.image}
           />
         )}
         {/* Insight text, link card, emoticons, etc.. */}

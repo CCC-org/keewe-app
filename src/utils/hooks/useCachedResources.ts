@@ -22,6 +22,11 @@ export default function useCachedResources() {
           pretendardExtraBold: require('../../../assets/fonts/Pretendard-ExtraBold.otf'),
           pretendardBlack: require('../../../assets/fonts/Pretendard-Black.otf'),
           ridiBatang: require('../../../assets/fonts/RIDIBatang.otf'),
+          podkova: require('../../../assets/fonts/Podkova-Regular.ttf'),
+          podkovaSemiBold: require('../../../assets/fonts/Podkova-SemiBold.ttf'),
+          podkovaBold: require('../../../assets/fonts/Podkova-Bold.ttf'),
+          podkovaMedium: require('../../../assets/fonts/Podkova-Medium.ttf'),
+          podkovaExtraBold: require('../../../assets/fonts/Podkova-ExtraBold.ttf'),
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service

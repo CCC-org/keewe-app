@@ -4,6 +4,8 @@ import { SvgXml } from 'react-native-svg';
 
 interface FlyingEmoticonsProps {
   xml: string;
+  height: number;
+  width: number;
 }
 
 const FlyingEmoticons = ({ xml }: FlyingEmoticonsProps) => {
