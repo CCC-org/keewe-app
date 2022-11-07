@@ -5,7 +5,7 @@ interface FolderProps extends ViewProps {
   text: string;
   selectedFolder: string;
   setSelectedFolder: React.Dispatch<React.SetStateAction<string>>;
-  textStyle: any;
+  textStyle?: any;
 }
 
 const Folder = (props: FolderProps) => {

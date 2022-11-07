@@ -16,7 +16,12 @@ export default function useCachedResources() {
         await Font.loadAsync({
           ...FontAwesome.font,
           pretendard: require('../../../assets/fonts/PretendardVariable.ttf'),
-          // 'space-mono': require('../../../assets/fonts/SpaceMono-Regular.ttf'),
+          pretendardMedium: require('../../../assets/fonts/Pretendard-Medium.otf'),
+          pretendardSemiBold: require('../../../assets/fonts/Pretendard-SemiBold.otf'),
+          pretendardBold: require('../../../assets/fonts/Pretendard-Bold.otf'),
+          pretendardExtraBold: require('../../../assets/fonts/Pretendard-ExtraBold.otf'),
+          pretendardBlack: require('../../../assets/fonts/Pretendard-Black.otf'),
+          ridiBatang: require('../../../assets/fonts/RIDIBatang.otf'),
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service
