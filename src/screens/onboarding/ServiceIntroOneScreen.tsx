@@ -24,14 +24,16 @@ const ServiceIntroOneScreen = ({ navigation }) => {
         </View>
         <View style={styles.nextButtonWithStepper}>
           <Stepper totalStep={3} currentStep={1} />
-          <ConditionalButton
-            isActive={true}
-            text={'다음'}
-            color="#e0f6a2"
-            textColor="#486006"
-            width={343}
-            onPress={handlePress}
-          />
+          <View style={styles.nextButton}>
+            <ConditionalButton
+              isActive={true}
+              text={'다음'}
+              color="#e0f6a2"
+              textColor="#486006"
+              width={343}
+              onPress={handlePress}
+            />
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -65,12 +67,14 @@ export function createStyle() {
       paddingBottom: 0,
       height: fullScreenHeight * 0.38,
     },
-
     nextButtonWithStepper: {
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
       alignItems: 'center',
+    },
+    nextButton: {
+      marginVertical: 12,
     },
   });
 }

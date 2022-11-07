@@ -23,14 +23,16 @@ const ServiceIntroTwoScreen = ({ navigation }) => {
         </View>
         <View style={styles.nextButtonWithStepper}>
           <Stepper totalStep={3} currentStep={2} />
-          <ConditionalButton
-            isActive={true}
-            text={'다음'}
-            color="#e0f6a2"
-            textColor="#486006"
-            width={343}
-            onPress={handlePress}
-          />
+          <View style={styles.nextButton}>
+            <ConditionalButton
+              isActive={true}
+              text={'다음'}
+              color="#e0f6a2"
+              textColor="#486006"
+              width={343}
+              onPress={handlePress}
+            />
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -38,5 +40,3 @@ const ServiceIntroTwoScreen = ({ navigation }) => {
 };
 
 export default ServiceIntroTwoScreen;
-
-createStyle();
