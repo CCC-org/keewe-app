@@ -13,6 +13,7 @@ import {
   UserSpecificChallengeQueryKeys,
 } from '../../utils/api/UserSpecificChallenge';
 import UserSpecificChallengeSection from './UserSpecificChallengeSection';
+import DividerBar from '../../components/bars/DividerBar';
 
 const FeedScreen = ({ navigation }) => {
   const theme = useTheme();
@@ -37,8 +38,11 @@ const FeedScreen = ({ navigation }) => {
       {challengeData.isLoading ? (
         <Text>챌린지 데이터 로둥중</Text>
       ) : (
-        <UserSpecificChallengeSection userSpecificChallenge={userSpecificChallenge} />
+        userSpecificChallenge && (
+          <UserSpecificChallengeSection userSpecificChallenge={userSpecificChallenge} />
+        )
       )}
+      <DividerBar style={styles.divider} />
       {isLoading ? (
         <Text>로딩중</Text>
       ) : (
@@ -56,5 +60,14 @@ const styles = StyleSheet.create({
   },
   feedItem: {
     backgroundColor: 'blue',
+  },
+  divider: {
+    backgroundColor: '#f8f8f4',
+    borderBottomColor: '#f8f8f4',
+    marginBottom: 24,
+    height: 12,
+    width: '150%',
+    marginLeft: 0,
+    left: -50,
   },
 });

@@ -58,10 +58,11 @@ const UserSpecificChallengeSection = ({
       </View>
       <BottomFixButton
         isActive={true}
-        text={'asdfasdf'}
+        text={'챌린지에 인사이트 적기'}
         width={100}
         onPress={() => alert('pressed')}
-        style={{ position: 'absolute', bottom: 0 }}
+        buttonStyle={styles.button}
+        textStyle={styles.buttonText}
       />
     </View>
   );
@@ -88,5 +89,15 @@ const styles = StyleSheet.create({
   day: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  button: {
+    width: '100%',
+    borderRadius: 12,
+    backgroundColor: '#e0f6a2',
+    marginBottom: 18,
+  },
+  buttonText: {
+    color: '#486006',
   },
 });

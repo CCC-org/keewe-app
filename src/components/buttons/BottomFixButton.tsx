@@ -8,12 +8,14 @@ import {
   Dimensions,
   LayoutChangeEvent,
   ViewStyle,
+  TextStyle,
 } from 'react-native';
 import React, { useState } from 'react';
 import { useTheme } from 'react-native-paper';
 
 interface BottomFixButtonProps {
-  style?: ViewStyle;
+  buttonStyle?: ViewStyle;
+  textStyle?: TextStyle;
   isActive: boolean;
   text: string;
   color?: string;
@@ -50,10 +52,12 @@ const BottomFixButton = ({
             backgroundColor: color || theme.colors.graphic.black,
             opacity: isActive ? 1 : 0.2,
           },
-          props.style,
+          props.buttonStyle,
         ]}
       >
-        <Text style={{ ...styles.text, color: textColor ? textColor : 'white' }}>{text}</Text>
+        <Text style={[{ ...styles.text, color: textColor ? textColor : 'white' }, props.textStyle]}>
+          {text}
+        </Text>
       </View>
     </Pressable>
   );
