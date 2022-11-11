@@ -7,14 +7,28 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { FeedInsight, InsightData } from '../../types/Feed/Feedinsights';
 import FeedItem from './FeedItem';
 import { useTheme } from 'react-native-paper';
+import { UserSpecificChallenge } from '../../types/Feed/UserSpecificChallenge';
+import {
+  UserSpecificChallengeAPI,
+  UserSpecificChallengeQueryKeys,
+} from '../../utils/api/UserSpecificChallenge';
 
 const FeedScreen = ({ navigation }) => {
   const theme = useTheme();
   const { data: feedList, isLoading } = useQuery<FeedInsight['data'] | undefined>(
     FeedQueryKeys.getFeed(),
     () => FeedAPI.getFeed(),
+  );
+
+  const { data: userSpecificChallenge, ...challengeData } = useQuery<
+    UserSpecificChallenge['data'] | undefined
+  >(
+    UserSpecificChallengeQueryKeys.getUserSpecificChallenge(),
+    () => UserSpecificChallengeAPI.getUserSpecificChallenge(),
     querySuccessError,
   );
+
+  console.log('userSpecificChallenge', userSpecificChallenge);
 
   return (
     <ScrollView contentContainerStyle={styles.feedCtn}>
