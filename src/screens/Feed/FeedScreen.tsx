@@ -12,6 +12,7 @@ import {
   UserSpecificChallengeAPI,
   UserSpecificChallengeQueryKeys,
 } from '../../utils/api/UserSpecificChallenge';
+import UserSpecificChallengeSection from './UserSpecificChallengeSection';
 
 const FeedScreen = ({ navigation }) => {
   const theme = useTheme();
@@ -33,6 +34,11 @@ const FeedScreen = ({ navigation }) => {
   return (
     <ScrollView contentContainerStyle={styles.feedCtn}>
       <Text style={[theme.fonts.text.display, { marginBottom: 32 }]}>홈</Text>
+      {challengeData.isLoading ? (
+        <Text>챌린지 데이터 로둥중</Text>
+      ) : (
+        <UserSpecificChallengeSection userSpecificChallenge={userSpecificChallenge} />
+      )}
       {isLoading ? (
         <Text>로딩중</Text>
       ) : (
