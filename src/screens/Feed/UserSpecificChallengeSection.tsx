@@ -6,6 +6,8 @@ import { useTheme } from 'react-native-paper';
 import { getFormattedDateArray } from '../../utils/helper/UserSpecificChallengeDateFormatter/formatter';
 import CircularCheckbox from '../../components/checkbox/CircularCheckbox';
 import BottomFixButton from '../../components/buttons/BottomFixButton';
+import { formatChallengeText } from '../../utils/helper/UserSpecificChallengeDateFormatter/challengeTextFormatter';
+import { AntDesign } from '@expo/vector-icons';
 
 interface UserSpecificChallengeSectionProps {
   userSpecificChallenge: UserSpecificChallenge['data'];
@@ -39,10 +41,20 @@ const UserSpecificChallengeSection = ({
     '🚀 ~ file: UserSpecificChallengeSection.tsx ~ line 36 ~ formattedWeekWithCheck',
     formattedWeekWithCheck,
   );
+  const challengeHeaderText = formatChallengeText(challenge.remain, challenge.startDate);
 
   return (
     <View>
-      <Text style={styles.headerText}>이번주 챌린지도 힘내요! </Text>
+      <View style={styles.headerCtn}>
+        <Text style={styles.headerText}>{challengeHeaderText}</Text>
+        <AntDesign
+          name="arrowright"
+          size={24}
+          color="black"
+          onPress={() => alert('챌린지 상세 ')}
+        />
+      </View>
+
       <Text style={[theme.fonts.text.body2.regular, styles.challengeText]}>
         {challenge.challengeName}
       </Text>
@@ -71,6 +83,11 @@ const UserSpecificChallengeSection = ({
 export default UserSpecificChallengeSection;
 
 const styles = StyleSheet.create({
+  headerCtn: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   headerText: {
     fontSize: 18,
     fontFamily: 'pretendardSemiBold',
