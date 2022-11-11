@@ -13,7 +13,8 @@ import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
 import Profile from '../../components/profile/Profile';
 import { querySuccessError } from '../../utils/helper/queryReponse/querySuccessError';
 
-const DetailedPostScreen = ({ navigation }) => {
+const DetailedPostScreen = ({ navigation, route }) => {
+  console.log('🚀 ~ file: DetailedPostScreen.tsx ~ line 17 ~ DetailedPostScreen ~ route', route);
   const [insightText, setInsightText] = useState('');
   const [commentText, setCommentText] = useState('');
   const [link, setLink] = useState('');

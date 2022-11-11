@@ -36,7 +36,7 @@ export type RootStackParamList = {
   BottomSheetExperimental: undefined;
   InsightSample: undefined;
   Upload: undefined;
-  Home: undefined;
+  Tabs: undefined;
   DetailedPost: undefined;
   Share: undefined;
   Insight: undefined;
