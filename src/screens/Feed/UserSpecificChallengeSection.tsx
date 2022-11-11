@@ -1,11 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { UserSpecificChallenge, Data } from '../../types/Feed/UserSpecificChallenge';
 import { isDatePassedMoreThanOneWeek } from '../../utils/string/userSpecificDataDateInterval';
 import { useTheme } from 'react-native-paper';
+import { getFormattedDateArray } from '../../utils/helper/UserSpecificChallengeDateFormatter/formatter';
+import CircularCheckbox from '../../components/checkbox/CircularCheckbox';
+import BottomFixButton from '../../components/buttons/BottomFixButton';
 
 interface UserSpecificChallengeSectionProps {
-  userSpecificChallenge: UserSpecificChallenge['data'] | undefined;
+  userSpecificChallenge: UserSpecificChallenge['data'];
 }
 
 const UserSpecificChallengeSection = ({
@@ -24,20 +27,42 @@ const UserSpecificChallengeSection = ({
   useEffect(() => {
     setUserChallenge((prev) => ({
       ...prev,
-      startDate: '2022-11-08',
+      startDate: '2022-11-02',
     }));
   }, []);
 
-  if (!userChallenge.startDate) return null;
-  const dayOfTheWeek = new Date(userChallenge.startDate).getDay();
-  const dayOfTheWeekString = ['일', '월', '화', '수', '목', '금', '토'][dayOfTheWeek];
+  const formattedWeekWithCheck = useMemo(
+    () => getFormattedDateArray(userChallenge.startDate as string, challenge.dayProgresses as []),
+    [userChallenge],
+  );
+  console.log(
+    '🚀 ~ file: UserSpecificChallengeSection.tsx ~ line 36 ~ formattedWeekWithCheck',
+    formattedWeekWithCheck,
+  );
+
   return (
     <View>
       <Text style={styles.headerText}>이번주 챌린지도 힘내요! </Text>
       <Text style={[theme.fonts.text.body2.regular, styles.challengeText]}>
         {challenge.challengeName}
       </Text>
-      <View></View>
+      <View style={styles.weekProgress}>
+        {formattedWeekWithCheck.map((challenge) => {
+          return (
+            <View key={challenge.day} style={styles.day}>
+              <CircularCheckbox disabled={challenge.progress.check} />
+              <Text>{challenge.day}</Text>
+            </View>
+          );
+        })}
+      </View>
+      <BottomFixButton
+        isActive={true}
+        text={'asdfasdf'}
+        width={100}
+        onPress={() => alert('pressed')}
+        style={{ position: 'absolute', bottom: 0 }}
+      />
     </View>
   );
 };
@@ -51,5 +76,17 @@ const styles = StyleSheet.create({
   },
   challengeText: {
     color: '#12131450',
+    marginTop: 2,
+  },
+  weekProgress: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 32,
+    marginBottom: 18,
+    paddingHorizontal: 8,
+  },
+  day: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

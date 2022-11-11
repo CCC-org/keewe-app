@@ -18,7 +18,6 @@ export const UserSpecificChallengeAPI = {
           },
         },
       );
-      console.log('userSpeci', response);
       if (response.data.code !== 200) throw new Error(response.data.message);
       return response.data.data;
     } catch (err) {
