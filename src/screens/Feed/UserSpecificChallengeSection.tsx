@@ -8,6 +8,7 @@ import CircularCheckbox from '../../components/checkbox/CircularCheckbox';
 import BottomFixButton from '../../components/buttons/BottomFixButton';
 import { formatChallengeText } from '../../utils/helper/UserSpecificChallengeDateFormatter/challengeTextFormatter';
 import { AntDesign } from '@expo/vector-icons';
+import TodayBubble from './TodayBubble';
 
 interface UserSpecificChallengeSectionProps {
   userSpecificChallenge: UserSpecificChallenge['data'];
@@ -16,7 +17,6 @@ interface UserSpecificChallengeSectionProps {
 const UserSpecificChallengeSection = ({
   userSpecificChallenge: challenge,
 }: UserSpecificChallengeSectionProps) => {
-  const [userChallenge, setUserChallenge] = useState<Partial<Data>>({});
   if (!challenge) return null;
 
   //   if (isDatePassedMoreThanOneWeek(challenge.startDate))
@@ -26,23 +26,20 @@ const UserSpecificChallengeSection = ({
   //       </View>
   //     );
   const theme = useTheme();
-  useEffect(() => {
-    setUserChallenge((prev) => ({
-      ...prev,
-      startDate: '2022-11-02',
-    }));
-  }, []);
 
-  const formattedWeekWithCheck = useMemo(
-    () => getFormattedDateArray(userChallenge.startDate as string, challenge.dayProgresses as []),
-    [userChallenge],
+  const { formattedWeekWithCheck, today } = useMemo(
+    () => getFormattedDateArray(challenge.startDate as string, challenge.dayProgresses as []),
+    [challenge],
   );
   console.log(
     '🚀 ~ file: UserSpecificChallengeSection.tsx ~ line 36 ~ formattedWeekWithCheck',
     formattedWeekWithCheck,
   );
+  console.log('🚀 ~ file: UserSpecificChallengeSection.tsx ~ line 38 ~ today', today);
   const challengeHeaderText = formatChallengeText(challenge.remain, challenge.startDate);
 
+  const firstDay = formattedWeekWithCheck[0].day;
+  const tempToday = '토';
   return (
     <View>
       <View style={styles.headerCtn}>
@@ -62,7 +59,11 @@ const UserSpecificChallengeSection = ({
         {formattedWeekWithCheck.map((challenge) => {
           return (
             <View key={challenge.day} style={styles.day}>
-              <CircularCheckbox disabled={challenge.progress.check} />
+              {/* {today === challenge.day && <TodayBubble isFirst={today === firstDay} />} */}
+              {/* {true && <TodayBubble isFirst={today === firstDay} />} */}
+              {tempToday === challenge.day && <TodayBubble isFirst={tempToday === firstDay} />}
+              {/* <CircularCheckbox disabled={!challenge.progress.check} /> */}
+              <CircularCheckbox disabled={true} />
               <Text>{challenge.day}</Text>
             </View>
           );
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
   weekProgress: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 32,
+    marginTop: 48,
     marginBottom: 18,
     paddingHorizontal: 8,
   },
