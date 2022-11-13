@@ -1,55 +1,45 @@
 import React, { useState, useRef } from 'react';
 import { Animated } from 'react-native';
 import { SvgXml } from 'react-native-svg';
+import { useMutation } from 'react-query';
 import { Pressable, Text, View, StyleSheet } from 'react-native';
 import FlyingEmoticons from './FlyingEmoticons';
+import { InsightAPI } from '../../utils/api/InsightAPI';
 import theme from '../../theme/light';
 
 interface ReactIconButtonProps {
   xml: string;
-  onClick: () => void;
+  color: string;
+  taps?: number;
+  name: string;
+  insightId: number;
 }
 
-const ReactIconButton = ({ xml, onClick }: ReactIconButtonProps) => {
+const ReactIconButton = ({ xml, color, taps, name, insightId }: ReactIconButtonProps) => {
   const opacityValue = useRef(new Animated.Value(0)).current;
-  const paddingValue = useRef(new Animated.Value(0)).current;
-  const marginValue = useRef(new Animated.Value(5)).current;
-  const [clicked, setClicked] = useState<boolean>(false);
   const [animate, setAnimate] = useState<string[]>([]);
+  const [text, setText] = useState<number>(taps ?? 0);
+
+  const { mutate: insightReact } = useMutation(InsightAPI.react, {
+    onSuccess: (response) => {
+      setText(response.data.count);
+    },
+  });
 
   const handleClick = () => {
-    setClicked(!clicked);
+    insightReact({ insightId, reactionType: name, value: 1 });
+    // onClick();
     setAnimate((prev) => [...prev, `${xml}${animate.length}`]);
-    onClick();
     Animated.timing(opacityValue, {
       toValue: 1,
+      duration: 0,
+      useNativeDriver: false,
+    }).start();
+    Animated.timing(opacityValue, {
+      toValue: 0,
       duration: 750,
       useNativeDriver: false,
-    }).start(() => {
-      Animated.timing(opacityValue, {
-        toValue: 0,
-        duration: 0,
-        useNativeDriver: false,
-      }).start();
-    });
-    Animated.timing(paddingValue, { toValue: 5, duration: 600, useNativeDriver: false }).start(
-      () => {
-        Animated.timing(paddingValue, {
-          toValue: 0,
-          duration: 600,
-          useNativeDriver: false,
-        }).start();
-      },
-    );
-    Animated.timing(marginValue, { toValue: 0, duration: 600, useNativeDriver: false }).start(
-      () => {
-        Animated.timing(marginValue, {
-          toValue: 5,
-          duration: 600,
-          useNativeDriver: false,
-        }).start();
-      },
-    );
+    }).start();
   };
 
   return (
@@ -59,14 +49,29 @@ const ReactIconButton = ({ xml, onClick }: ReactIconButtonProps) => {
           style={{
             backgroundColor: opacityValue.interpolate({
               inputRange: [0, 1],
-              outputRange: ['#00000000', theme.colors.brand.surface.main],
+              outputRange: [theme.colors.graphic.white, color],
             }),
-            padding: 10,
-            // margin: marginValue,
+            padding: 8,
+            borderColor: `${theme.colors.graphic.black}20`,
+            borderWidth: 1,
             ...styles.Button,
           }}
         >
           <SvgXml xml={xml} />
+          {text !== 0 && (
+            <Animated.Text
+              style={{
+                color: opacityValue.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [theme.colors.graphic.black, theme.colors.graphic.white],
+                }),
+                ...theme.fonts.text.podkova.bold,
+                marginLeft: 4,
+              }}
+            >
+              <Text>{text}</Text>
+            </Animated.Text>
+          )}
         </Animated.View>
         <View
           style={{
@@ -74,11 +79,10 @@ const ReactIconButton = ({ xml, onClick }: ReactIconButtonProps) => {
             height: 100,
             position: 'absolute',
             bottom: 20,
-            right: -7,
           }}
         >
           {animate.map((animateValue) => (
-            <FlyingEmoticons key={animateValue} xml={xml} />
+            <FlyingEmoticons key={animateValue} xml={xml} width={16} height={16} />
           ))}
         </View>
       </Pressable>
@@ -88,7 +92,11 @@ const ReactIconButton = ({ xml, onClick }: ReactIconButtonProps) => {
 
 const styles = StyleSheet.create({
   Button: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'row',
     borderRadius: 40,
+    marginLeft: 8,
   },
 });
 

@@ -197,6 +197,13 @@ const TEXT = {
     fontSize: 18,
     lineHeight: 32,
   },
+  podkova: {
+    bold: {
+      fontFamily: 'podkovaBold',
+      fontSize: 14,
+      lineHeight: 16,
+    },
+  },
 };
 
 const SYSTEM = {
