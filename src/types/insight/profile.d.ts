@@ -1,7 +1,7 @@
 export interface Profile {
   message: string;
   code: number;
-  data: Insight;
+  data: ProfileData;
 }
 
 export interface ProfileData {

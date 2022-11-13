@@ -6,18 +6,39 @@ import { useTheme } from 'react-native-paper';
 interface MiniProfileProps {
   nickname: string;
   title: string;
+  insightWriter?: boolean;
   createdAt?: string;
   image?: string;
   style?: ViewStyle;
 }
 
-const MiniProfile = ({ nickname, title, createdAt, image, ...props }: MiniProfileProps) => {
+const MiniProfile = ({
+  nickname,
+  title,
+  insightWriter,
+  createdAt,
+  image,
+  ...props
+}: MiniProfileProps) => {
   const theme = useTheme();
   return (
     <View style={[styles.Profile, props.style]}>
       <ProfileAvatar image={image} />
       <View style={styles.Description}>
-        <Text style={{ fontWeight: '600', fontSize: 14 }}>{nickname}</Text>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={{ fontWeight: '600', fontSize: 14, marginRight: 4 }}>{nickname}</Text>
+          {insightWriter ? (
+            <Text
+              style={{
+                fontWeight: '500',
+                fontSize: 12,
+                color: theme.colors.brand.onprimary.container,
+              }}
+            >
+              글쓴이
+            </Text>
+          ) : null}
+        </View>
         <Text
           style={{
             fontWeight: '500',

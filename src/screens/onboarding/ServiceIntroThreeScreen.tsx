@@ -35,14 +35,16 @@ const ServiceIntroThreeScreen = ({ navigation, route }) => {
           </View>
           <View style={styles.nextButtonWithStepper}>
             <Stepper totalStep={3} currentStep={3} />
-            <ConditionalButton
-              isActive={true}
-              text={'시작하기'}
-              color="#b0e817"
-              textColor="black"
-              width={343}
-              onPress={handlePress}
-            />
+            <View style={styles.nextButton}>
+              <ConditionalButton
+                isActive={true}
+                text={'시작하기'}
+                color="#b0e817"
+                textColor="black"
+                width={343}
+                onPress={handlePress}
+              />
+            </View>
           </View>
         </View>
       </View>

@@ -55,12 +55,14 @@ const NicknameCreationScreen = ({ navigation }) => {
           />
         </View>
       </View>
-      <ConditionalButton
-        isActive={!errorMessage.length && nickname.length > 0}
-        onPress={handleNextScreen}
-        text={'다음'}
-        width={343}
-      />
+      <View style={{ marginBottom: 16 }}>
+        <ConditionalButton
+          isActive={!errorMessage.length && nickname.length > 0}
+          onPress={handleNextScreen}
+          text={'다음'}
+          width={343}
+        />
+      </View>
     </View>
   );
 };
@@ -71,7 +73,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: 400,
   },
 });
 

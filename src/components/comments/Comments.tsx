@@ -10,14 +10,15 @@ interface CommentsProps {
   content: string;
   createdAt?: string;
   image?: string;
+  insightWriter?: boolean;
 }
 
-const Comments = ({ nickname, title, content, createdAt, image }: CommentsProps) => {
+const Comments = ({ nickname, title, content, insightWriter, createdAt, image }: CommentsProps) => {
   const theme = useTheme();
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-        <MiniProfile nickname={nickname} title={title} />
+        <MiniProfile nickname={nickname} title={title} insightWriter={insightWriter} />
         <Pressable>
           <Entypo name="dots-three-vertical" size={20} color="black" />
         </Pressable>
