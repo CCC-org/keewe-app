@@ -9,7 +9,7 @@ export const FeedAPI = {
   getFeed: async () => {
     try {
       const response = await axios.get<FeedInsight>(
-        'https://run.mocky.io/v3/85edf28b-8bdd-4405-a165-bb372a59c086',
+        'https://run.mocky.io/v3/09153a94-f032-40c8-b7cb-fecbaf047f0e',
       );
       if (response.data.code !== 200) throw new Error(response.data.message);
       return response.data.data;
