@@ -11,8 +11,10 @@ import { useQuery } from 'react-query';
 import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
 import Profile from '../../components/profile/Profile';
 import { querySuccessError } from '../../utils/helper/queryReponse/querySuccessError';
+import CommentInput from '../../components/comments/CommentInput';
 
-const DetailedPostScreen = ({ navigation }) => {
+const DetailedPostScreen = ({ navigation, route }) => {
+  const { insightId } = route.params;
   const [currentChallenge, setCurrentChallenge] = useState('내가 참여중인 챌린지');
   // useIncreaseView의 전달인자는 추후에 route의 id를 집어넣어야함
   const [views] = useIncreaseView(30);
@@ -63,28 +65,15 @@ const DetailedPostScreen = ({ navigation }) => {
 
   const theme = useTheme();
   const { data: profile, isProfileLoading } = useQuery(
-    InsightQueryKeys.getProfile({ insightId: 23 }),
-    () => InsightAPI.getProfile({ insightId: 23 }),
+    InsightQueryKeys.getProfile({ insightId }),
+    () => InsightAPI.getProfile({ insightId }),
     querySuccessError,
   );
   const { data: insightResponse, isLoading: isInsightLoading } = useQuery(
-    InsightQueryKeys.getInsight({ insightId: 23 }),
-    () => InsightAPI.getInsight({ insightId: 23 }),
+    InsightQueryKeys.getInsight({ insightId }),
+    () => InsightAPI.getInsight({ insightId }),
     querySuccessError,
   );
-
-  // const { data: data2, isLoading: isLoading2 } = useQuery(
-  //   InsightQueryKeys.getRepresentativeComments({ insightId: 1 }),
-  //   () => InsightAPI.getRepresentativeComments({ insightId: 1 }),
-  //   querySuccessError,
-  // );
-
-  console.log('detailedPost data: ', profile);
-  console.log('isLoading: ', isProfileLoading);
-
-  // useEffect(() => {
-  //   console.log('data2', data2);
-  // }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -122,13 +111,13 @@ const DetailedPostScreen = ({ navigation }) => {
 
   return (
     <>
-      <ScrollView>
+      <ScrollView stickyHeaderIndices={[3]}>
         {!isInsightLoading && (
           <DetailedPostSection
-            insightId={23}
-            insightText={insightResponse?.contents ?? ''}
+            insightId={insightId}
+            insightText={insightResponse?.data?.contents ?? ''}
             views={views}
-            link={insightResponse?.link ?? ''}
+            link={insightResponse?.data?.link ?? ''}
             currentChallenge={currentChallenge}
             reaction={insightResponse.data.reaction}
           />
@@ -194,6 +183,11 @@ const DetailedPostScreen = ({ navigation }) => {
           )}
         </View>
       </ScrollView>
+      <CommentInput
+        onSubmit={(data: string) => {
+          return;
+        }}
+      />
     </>
   );
 };
