@@ -12,10 +12,14 @@ interface MiniProfileProps {
   style?: ViewStyle;
 }
 
-
-
-const MiniProfile = ({ nickname, title, createdAt, image, ...props }: MiniProfileProps) => {
-
+const MiniProfile = ({
+  nickname,
+  title,
+  insightWriter,
+  createdAt,
+  image,
+  ...props
+}: MiniProfileProps) => {
   const theme = useTheme();
   return (
     <View style={[styles.Profile, props.style]}>
