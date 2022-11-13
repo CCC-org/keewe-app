@@ -1,30 +1,36 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { useTheme } from 'react-native-paper';
 import { Octicons } from '@expo/vector-icons';
 import LinkCard from '../../components/cards/LinkCard';
+import { REACTIONS } from './constant';
+import ReactIconButton from '../../components/emoticons/ReactIconButton';
 
 interface DetailedPostSectionProps {
   insightText: string;
+  insightId: number;
   views: number | string;
   currentChallenge: string;
   link: string;
+  reaction: Reaction;
 }
 
 const DetailedPostSection = ({
   insightText,
+  insightId,
   views,
   currentChallenge,
   link,
+  reaction,
 }: DetailedPostSectionProps) => {
   const theme = useTheme();
+
   return (
     <View style={{ backgroundColor: '#F1F1E9' }}>
       <View style={{ ...styles.top, borderColor: `${theme.colors.graphic.black}1a` }}>
         <Text style={{ ...theme.fonts.text.caption1, color: `${theme.colors.graphic.black}80` }}>
           {currentChallenge}
         </Text>
-
         <Pressable style={{ flexDirection: 'row' }}>
           <Text
             style={{
@@ -48,9 +54,21 @@ const DetailedPostSection = ({
         </Pressable> */}
         <LinkCard text={link}></LinkCard>
       </View>
-
       <View style={styles.emoticonBox}>
-        <Text style={{ fontSize: 16 }}>이모티콘</Text>
+        <ScrollView horizontal style={{ overflow: 'visible' }}>
+          <View style={{ ...styles.ReactionBar }}>
+            {REACTIONS.map((react) => (
+              <ReactIconButton
+                key={react.reaction}
+                xml={react.xml}
+                color={react.color}
+                taps={reaction[react.reaction]}
+                name={react.name}
+                insightId={insightId}
+              />
+            ))}
+          </View>
+        </ScrollView>
       </View>
       <View style={{ ...styles.insightView, backgroundColor: '#E1E1D0' }}>
         <Text
@@ -96,5 +114,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     paddingVertical: 12,
     paddingHorizontal: 16,
+  },
+  ReactionBar: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignContent: 'center',
+    alignItems: 'center',
+    borderRadius: 30,
+    height: 70,
+    width: 'auto',
   },
 });

@@ -4,6 +4,7 @@ import FireRoundOffXml from '../../constants/Icons/Reacts/FireRoundOffXml';
 import HeartRoundOffXml from '../../constants/Icons/Reacts/ClapRoundOffXml';
 import SadRoundOffXml from '../../constants/Icons/Reacts/SadRoundOffXml';
 import SurpriseRoundOffXml from '../../constants/Icons/Reacts/SurpriseRoundOffXml';
+import theme from '../../theme/light';
 
 export const REACTIONS: Record<string, any>[] = [
   { xml: ClapRoundOffXml, bezier: [0.5, 1.8, 0.4, 1.0] },

@@ -9,7 +9,7 @@ import chevron_right from '../../constants/Icons/Chevrons/ChevronRightSmallXml';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import BezierAnimatedView from '../../components/views/BezierAnimatedView';
 import { REACTIONS } from './constant';
-import ReactIconButton from '../../components/emoticons/ReactIconButton';
+import TestIconButton from '../../components/emoticons/TestIconButton';
 import BottomFixButton from '../../components/buttons/BottomFixButton';
 
 const InsightText =
@@ -144,12 +144,7 @@ const InsightSampleScreen = ({ navigation, route }) => {
                       duration={700}
                       bezier={data.bezier}
                     >
-                      <ReactIconButton
-                        xml={data.xml}
-                        onClick={() => {
-                          return;
-                        }}
-                      />
+                      <TestIconButton xml={data.xml} />
                     </BezierAnimatedView>
                   ))}
                 </View>

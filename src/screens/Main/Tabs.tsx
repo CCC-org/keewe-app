@@ -5,22 +5,25 @@ import BookMarkScreen from './BookMarkScreen';
 import ChallengesScreen from './ChallengesScreen';
 import MyPageScreen from './MyPageScreen';
 import { RootScreen } from '../../navigation';
-import MainScreen from './MainScreen';
+import FeedScreen from '../Feed/FeedScreen';
+import HomeScreen from '../Home/HomeScreen';
+import App from '../../../App';
+import { NavigationContainer } from '@react-navigation/native';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+const queryClient = new QueryClient();
 
+const Tab = createBottomTabNavigator();
 const Tabs = () => {
-  const Tab = createBottomTabNavigator();
   return (
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Tab.Screen name="Root" component={RootScreen} />
-      <Tab.Screen name="Main" component={MainScreen} />
-      <Tab.Screen name="BookMark" component={BookMarkScreen} />
-      <Tab.Screen name="Challenges" component={ChallengesScreen} />
-      <Tab.Screen name="MyPage" component={MyPageScreen} />
-    </Tab.Navigator>
+    <QueryClientProvider client={queryClient}>
+      <Tab.Navigator sceneContainerStyle={{ backgroundColor: 'white' }}>
+        <Tab.Screen name="Feed" component={FeedScreen} />
+        <Tab.Screen name="BookMark" component={BookMarkScreen} />
+        <Tab.Screen name="Challenges" component={ChallengesScreen} />
+        <Tab.Screen name="MyPage" component={MyPageScreen} />
+        <Tab.Screen name="Root" component={RootScreen} />
+      </Tab.Navigator>
+    </QueryClientProvider>
   );
 };
 
