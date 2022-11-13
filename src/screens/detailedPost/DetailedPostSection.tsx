@@ -5,11 +5,10 @@ import { Octicons } from '@expo/vector-icons';
 import LinkCard from '../../components/cards/LinkCard';
 import { REACTIONS } from './constant';
 import ReactIconButton from '../../components/emoticons/ReactIconButton';
-import { useMutation, useQueryClient } from 'react-query';
-import { InsightAPI } from '../../utils/api/InsightAPI';
 
 interface DetailedPostSectionProps {
   insightText: string;
+  insightId: number;
   views: number | string;
   currentChallenge: string;
   link: string;
@@ -18,19 +17,13 @@ interface DetailedPostSectionProps {
 
 const DetailedPostSection = ({
   insightText,
+  insightId,
   views,
   currentChallenge,
   link,
   reaction,
 }: DetailedPostSectionProps) => {
   const theme = useTheme();
-  const queryClient = useQueryClient();
-
-  const { mutate: insightReact } = useMutation(InsightAPI.react, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('list');
-    },
-  });
 
   return (
     <View style={{ backgroundColor: '#F1F1E9' }}>
@@ -61,7 +54,6 @@ const DetailedPostSection = ({
         </Pressable> */}
         <LinkCard text={link}></LinkCard>
       </View>
-
       <View style={styles.emoticonBox}>
         <ScrollView horizontal style={{ overflow: 'visible' }}>
           <View style={{ ...styles.ReactionBar }}>
@@ -71,9 +63,8 @@ const DetailedPostSection = ({
                 xml={react.xml}
                 color={react.color}
                 taps={reaction[react.reaction]}
-                onClick={() => {
-                  insightReact({ insightId: 2, reactionType: react.name, value: 1 });
-                }}
+                name={react.name}
+                insightId={insightId}
               />
             ))}
           </View>

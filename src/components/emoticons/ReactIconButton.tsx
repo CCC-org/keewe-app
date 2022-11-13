@@ -1,24 +1,34 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Animated } from 'react-native';
 import { SvgXml } from 'react-native-svg';
-import { Pressable, Text, View, StyleSheet, ViewProps } from 'react-native';
+import { useMutation } from 'react-query';
+import { Pressable, Text, View, StyleSheet } from 'react-native';
 import FlyingEmoticons from './FlyingEmoticons';
+import { InsightAPI } from '../../utils/api/InsightAPI';
 import theme from '../../theme/light';
 
 interface ReactIconButtonProps {
   xml: string;
   color: string;
   taps?: number;
-  onClick: () => void;
+  name: string;
+  insightId: number;
 }
 
-const ReactIconButton = ({ xml, color, taps, onClick }: ReactIconButtonProps) => {
+const ReactIconButton = ({ xml, color, taps, name, insightId }: ReactIconButtonProps) => {
   const opacityValue = useRef(new Animated.Value(0)).current;
-  const [clicked, setClicked] = useState<boolean>(false);
   const [animate, setAnimate] = useState<string[]>([]);
+  const [text, setText] = useState<number>(taps ?? 0);
+
+  const { mutate: insightReact } = useMutation(InsightAPI.react, {
+    onSuccess: (response) => {
+      setText(response.data.count);
+    },
+  });
 
   const handleClick = () => {
-    onClick();
+    insightReact({ insightId, reactionType: name, value: 1 });
+    // onClick();
     setAnimate((prev) => [...prev, `${xml}${animate.length}`]);
     Animated.timing(opacityValue, {
       toValue: 1,
@@ -48,7 +58,7 @@ const ReactIconButton = ({ xml, color, taps, onClick }: ReactIconButtonProps) =>
           }}
         >
           <SvgXml xml={xml} />
-          {taps && (
+          {text !== 0 && (
             <Animated.Text
               style={{
                 color: opacityValue.interpolate({
@@ -59,7 +69,7 @@ const ReactIconButton = ({ xml, color, taps, onClick }: ReactIconButtonProps) =>
                 marginLeft: 4,
               }}
             >
-              {taps}
+              <Text>{text}</Text>
             </Animated.Text>
           )}
         </Animated.View>

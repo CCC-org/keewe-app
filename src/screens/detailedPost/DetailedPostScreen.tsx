@@ -3,7 +3,6 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import DetailedPostSection from './DetailedPostSection';
-import { DetailedPostApi } from '../../utils/api/DetailedPostAPI';
 import { useIncreaseView } from '../../utils/hooks/DetailedInsight/useIncreaseView';
 import { useTheme } from 'react-native-paper';
 import Comments from '../../components/comments/Comments';
@@ -64,13 +63,13 @@ const DetailedPostScreen = ({ navigation }) => {
 
   const theme = useTheme();
   const { data: profile, isProfileLoading } = useQuery(
-    InsightQueryKeys.getProfile({ insightId: 2 }),
-    () => InsightAPI.getProfile({ insightId: 2 }),
+    InsightQueryKeys.getProfile({ insightId: 23 }),
+    () => InsightAPI.getProfile({ insightId: 23 }),
     querySuccessError,
   );
-  const { data: insight, isLoading: isInsightLoading } = useQuery(
-    InsightQueryKeys.getInsight({ insightId: 2 }),
-    () => InsightAPI.getInsight({ insightId: 2 }),
+  const { data: insightResponse, isLoading: isInsightLoading } = useQuery(
+    InsightQueryKeys.getInsight({ insightId: 23 }),
+    () => InsightAPI.getInsight({ insightId: 23 }),
     querySuccessError,
   );
 
@@ -102,7 +101,7 @@ const DetailedPostScreen = ({ navigation }) => {
                   title: profile ? profile.data.title : 'null ',
                   image: profile ? profile.data.image : 'null ',
                   challenge: currentChallenge,
-                  insightText: insight.contents,
+                  insightText: insightResponse.contents,
                 })
               }
             >
@@ -115,7 +114,7 @@ const DetailedPostScreen = ({ navigation }) => {
         );
       },
     });
-  }, [profile, insight, currentChallenge]);
+  }, [profile, insightResponse, currentChallenge]);
 
   function handleMoreCommentsPress() {
     navigation.navigate('Comments');
@@ -126,23 +125,24 @@ const DetailedPostScreen = ({ navigation }) => {
       <ScrollView>
         {!isInsightLoading && (
           <DetailedPostSection
-            insightText={insight?.contents ?? ''}
+            insightId={23}
+            insightText={insightResponse?.contents ?? ''}
             views={views}
-            link={insight?.link ?? ''}
+            link={insightResponse?.link ?? ''}
             currentChallenge={currentChallenge}
-            reaction={{ ...(insight?.reaction ?? {}) }}
+            reaction={insightResponse.data.reaction}
           />
         )}
 
         {isProfileLoading ? null : (
           <Profile
-            nickname={profile.data.nickname}
-            title={profile.data.title}
-            self={profile.data.author}
-            follow={profile.data.following}
-            interests={profile.data.interests}
-            createdAt={profile.data.createdAt}
-            image={profile.data.image}
+            nickname={profile?.data?.nickname ?? '-'}
+            title={profile?.data?.title ?? '-'}
+            self={profile?.data?.author ?? '-'}
+            follow={profile?.data?.following ?? true}
+            interests={profile?.data?.interests ?? []}
+            createdAt={profile?.data?.createdAt ?? '-'}
+            image={profile?.data?.image ?? ''}
           />
         )}
         {/* Insight text, link card, emoticons, etc.. */}
