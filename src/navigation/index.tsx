@@ -128,6 +128,7 @@ export function RootScreen() {
             <Text style={theme.fonts.text.body1.bold}> NicknameCreation.tsx</Text>
           </View>
         </Pressable>
+
         <Pressable onPress={() => navigation.navigate('InterestChoose')}>
           <View
             style={{

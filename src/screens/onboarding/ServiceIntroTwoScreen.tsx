@@ -1,5 +1,5 @@
 import { StyleSheet, View, Image, ScrollView } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import OnboardingIntroHeaderButton from '../../components/buttons/OnboardingIntroHeaderButton';
 import HeaderText from '../../components/texts/HeaderText';
 import Stepper from '../../components/stepper/Stepper';
@@ -14,16 +14,16 @@ const ServiceIntroTwoScreen = ({ navigation }) => {
   }
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Image source={require('../../../assets/images/따봉도치.jpg')} style={styles.image} />
-        <View style={styles.bottom}>
-          <View style={styles.titleContainer}>
-            {/* eslint-disable-next-line quotes */}
-            <HeaderText header={`꾸준하기 어렵다면\n친구들과 함께 도전해요`} />
-          </View>
-          <View style={styles.nextButtonWithStepper}>
-            <Stepper totalStep={3} currentStep={2} />
+    <ScrollView contentContainerStyle={styles.container}>
+      <Image source={require('../../../assets/images/따봉도치.jpg')} style={styles.image} />
+      <View style={styles.bottom}>
+        <View style={styles.titleContainer}>
+          {/* eslint-disable-next-line quotes */}
+          <HeaderText header={`꾸준하기 어렵다면\n친구들과 함께 도전해요`} />
+        </View>
+        <View style={styles.nextButtonWithStepper}>
+          <Stepper totalStep={3} currentStep={2} />
+          <View style={styles.nextButton}>
             <ConditionalButton
               isActive={true}
               text={'다음'}

@@ -1,5 +1,5 @@
 import { StyleSheet, View, Image, Dimensions, ScrollView } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import OnboardingIntroHeaderButton from '../../components/buttons/OnboardingIntroHeaderButton';
 import HeaderText from '../../components/texts/HeaderText';
 import Stepper from '../../components/stepper/Stepper';
@@ -7,7 +7,7 @@ import ConditionalButton from '../../components/buttons/ConditionalButton';
 
 const fullScreenHeight = Dimensions.get('window').height;
 
-const ServiceIntroOneScreen = ({ navigation, route }) => {
+const ServiceIntroOneScreen = ({ navigation }) => {
   const styles = createStyle();
 
   function handlePress() {
@@ -21,6 +21,19 @@ const ServiceIntroOneScreen = ({ navigation, route }) => {
         <View style={styles.titleContainer}>
           {/* eslint-disable-next-line quotes */}
           <HeaderText header={`기억하고 싶은 콘텐츠, \n지나치지 말고 기록하세요`} />
+        </View>
+        <View style={styles.nextButtonWithStepper}>
+          <Stepper totalStep={3} currentStep={1} />
+          <View style={styles.nextButton}>
+            <ConditionalButton
+              isActive={true}
+              text={'다음'}
+              color="#e0f6a2"
+              textColor="#486006"
+              width={343}
+              onPress={handlePress}
+            />
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -54,12 +67,14 @@ export function createStyle() {
       paddingBottom: 0,
       height: fullScreenHeight * 0.38,
     },
-
     nextButtonWithStepper: {
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
       alignItems: 'center',
+    },
+    nextButton: {
+      marginVertical: 12,
     },
   });
 }
