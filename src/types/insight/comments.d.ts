@@ -35,6 +35,6 @@ export interface Writer {
   image: string;
 }
 
-export interface RepresentativeCommentsRequest {
+export interface CommentsRequest {
   insightId: number;
 }
