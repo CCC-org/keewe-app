@@ -50,7 +50,7 @@ export function RootScreen() {
             <Text style={theme.fonts.text.body1.regular}> ShareScreen.tsx</Text>
           </View>
         </Pressable>
-        <Pressable onPress={() => navigation.navigate('Home')}>
+        <Pressable onPress={() => navigation.navigate('Tabs')}>
           <View
             style={{
               backgroundColor: 'skyblue',
@@ -58,7 +58,7 @@ export function RootScreen() {
               height: 100,
             }}
           >
-            <Text style={theme.fonts.text.body1.bold}> HomeScreen.tsx</Text>
+            <Text style={theme.fonts.text.body1.bold}> Tabs.tsx</Text>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('SignUp')}>
