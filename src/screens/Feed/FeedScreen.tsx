@@ -30,8 +30,6 @@ const FeedScreen = ({ navigation }) => {
     querySuccessError,
   );
 
-  console.log('userSpecificChallenge', userSpecificChallenge);
-
   return (
     <ScrollView contentContainerStyle={styles.feedCtn}>
       <Text style={[theme.fonts.text.display, { marginBottom: 32 }]}>홈</Text>

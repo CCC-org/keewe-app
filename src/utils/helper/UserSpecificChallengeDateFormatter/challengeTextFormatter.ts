@@ -11,7 +11,7 @@ export function formatChallengeText(remainingDays: number, startDate: string) {
   } else if (remainingDays === 0) {
     return '대단해요! 이번 주 목표를 이뤘어요.';
   } else if (remainingDays >= 2 && remainingDays <= 7) {
-    return `앞으로 번 ${remainingDays}더!`;
+    return `앞으로 번 ${remainingDays}번더!`;
   }
   return '';
 }

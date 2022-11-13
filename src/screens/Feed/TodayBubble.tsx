@@ -33,7 +33,6 @@ const createStyle = (isFirst: boolean) =>
       alignItems: 'center',
     },
     reverseTriangle: {
-      // create a reverse triangle
       position: 'absolute',
       top: 24,
       left: isFirst ? 17 : 12,
@@ -52,35 +51,3 @@ const createStyle = (isFirst: boolean) =>
       color: 'white',
     },
   });
-
-// const createStyle = (isFirst: boolean) =>
-//   StyleSheet.create({
-//     bubble: {
-//       top: -38,
-//       position: 'absolute',
-//       width: 37,
-//       height: 24,
-//       borderRadius: 4,
-//       backgroundColor: '#121314',
-//       justifyContent: 'center',
-//       alignItems: 'center',
-//     },
-//     reverseTriangle: {
-//       // create a reverse triangle
-//       position: 'absolute',
-//       top: 24,
-//       width: 0,
-//       height: 0,
-//       borderLeftWidth: 6.5,
-//       borderRightWidth: 6.5,
-//       borderTopWidth: 6,
-//       borderStyle: 'solid',
-//       backgroundColor: 'transparent',
-//       borderLeftColor: 'transparent',
-//       borderRightColor: 'transparent',
-//       borderBottomColor: 'white',
-//     },
-//     text: {
-//       color: 'white',
-//     },
-//   });

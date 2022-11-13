@@ -19,27 +19,15 @@ const UserSpecificChallengeSection = ({
 }: UserSpecificChallengeSectionProps) => {
   if (!challenge) return null;
 
-  //   if (isDatePassedMoreThanOneWeek(challenge.startDate))
-  //     return (
-  //       <View>
-  //         <Text>Passed more than one week</Text>
-  //       </View>
-  //     );
   const theme = useTheme();
 
   const { formattedWeekWithCheck, today } = useMemo(
     () => getFormattedDateArray(challenge.startDate as string, challenge.dayProgresses as []),
     [challenge],
   );
-  console.log(
-    '🚀 ~ file: UserSpecificChallengeSection.tsx ~ line 36 ~ formattedWeekWithCheck',
-    formattedWeekWithCheck,
-  );
-  console.log('🚀 ~ file: UserSpecificChallengeSection.tsx ~ line 38 ~ today', today);
-  const challengeHeaderText = formatChallengeText(challenge.remain, challenge.startDate);
 
+  const challengeHeaderText = formatChallengeText(challenge.remain, challenge.startDate);
   const firstDay = formattedWeekWithCheck[0].day;
-  const tempToday = '토';
   return (
     <View>
       <View style={styles.headerCtn}>
@@ -59,10 +47,7 @@ const UserSpecificChallengeSection = ({
         {formattedWeekWithCheck.map((challenge) => {
           return (
             <View key={challenge.day} style={styles.day}>
-              {/* {today === challenge.day && <TodayBubble isFirst={today === firstDay} />} */}
-              {/* {true && <TodayBubble isFirst={today === firstDay} />} */}
-              {tempToday === challenge.day && <TodayBubble isFirst={tempToday === firstDay} />}
-              {/* <CircularCheckbox disabled={!challenge.progress.check} /> */}
+              {today === challenge.day && <TodayBubble isFirst={today === firstDay} />}
               <CircularCheckbox disabled={true} />
               <Text>{challenge.day}</Text>
             </View>
