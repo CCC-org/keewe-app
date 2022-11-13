@@ -7,11 +7,15 @@ import {
   Platform,
   Dimensions,
   LayoutChangeEvent,
+  ViewStyle,
+  TextStyle,
 } from 'react-native';
 import React, { useState } from 'react';
 import { useTheme } from 'react-native-paper';
 
 interface BottomFixButtonProps {
+  buttonStyle?: ViewStyle;
+  textStyle?: TextStyle;
   isActive: boolean;
   text: string;
   color?: string;
@@ -27,6 +31,7 @@ const BottomFixButton = ({
   textColor,
   width,
   onPress,
+  ...props
 }: BottomFixButtonProps) => {
   const theme = useTheme();
   return (
@@ -40,14 +45,19 @@ const BottomFixButton = ({
       }}
     >
       <View
-        style={{
-          ...styles.Bottom,
-          width: width,
-          backgroundColor: color || theme.colors.graphic.black,
-          opacity: isActive ? 1 : 0.2,
-        }}
+        style={[
+          {
+            ...styles.Bottom,
+            width: width,
+            backgroundColor: color || theme.colors.graphic.black,
+            opacity: isActive ? 1 : 0.2,
+          },
+          props.buttonStyle,
+        ]}
       >
-        <Text style={{ ...styles.text, color: textColor ? textColor : 'white' }}>{text}</Text>
+        <Text style={[{ ...styles.text, color: textColor ? textColor : 'white' }, props.textStyle]}>
+          {text}
+        </Text>
       </View>
     </Pressable>
   );

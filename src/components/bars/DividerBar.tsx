@@ -1,18 +1,21 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 import React from 'react';
 import { ViewProps } from '../Themed';
 
-const DividerBar = (props: ViewProps) => {
+interface DividerBarProps {
+  style?: ViewStyle;
+}
+
+const DividerBar = ({ style, ...props }: DividerBarProps) => {
   return (
     <View
-      {...props}
       style={[
         {
           width: '100%',
           borderBottomWidth: 1,
           borderBottomColor: '#12131410',
         },
-        props.style,
+        style,
       ]}
     ></View>
   );
