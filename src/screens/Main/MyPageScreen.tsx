@@ -3,6 +3,9 @@ import React from 'react';
 import MypageProfile from '../../components/profile/MypageProfile';
 import { useTheme } from 'react-native-paper';
 import { Feather, Ionicons } from '@expo/vector-icons';
+import MypageTitle from '../../components/title/MypageTitle';
+import DividerBar from '../../components/bars/DividerBar';
+import RNFadedScrollView from 'rn-faded-scrollview';
 
 const MyPageScreen = () => {
   const theme = useTheme();
@@ -38,7 +41,47 @@ const MyPageScreen = () => {
           </Pressable>
         </View>
       </View>
-      <View></View>
+      <View style={styles.mid}>
+        <View style={styles.title}>
+          <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>
+            타이틀{' '}
+          </Text>
+          <Text style={{ ...theme.fonts.text.headline2, color: `${theme.colors.graphic.black}4d` }}>
+            8
+          </Text>
+        </View>
+        <MypageTitle label="타이틀 제목" condition="획득 방법" date="2023.01.01" />
+      </View>
+      <Pressable
+        onPress={() => alert('view every title!')}
+        style={{ ...styles.viewAll, borderTopColor: `${theme.colors.graphic.black}1a` }}
+      >
+        <Text
+          style={{ ...theme.fonts.text.body1.regular, color: `${theme.colors.graphic.black}cc` }}
+        >
+          전체보기
+        </Text>
+        <Feather name="chevron-right" size={24} color={`${theme.colors.graphic.black}cc`} />
+      </Pressable>
+      <DividerBar style={styles.divider} />
+      <ScrollView
+        horizontal={true}
+        contentContainerStyle={styles.group}
+        showsHorizontalScrollIndicator={false}
+      >
+        <Text style={theme.fonts.text.headline2}>All </Text>
+        <Text style={theme.fonts.text.headline2}>
+          Group1 Group2 Group3 Group4 Group5 Group6 Group7 Group8
+        </Text>
+      </ScrollView>
+      <View style={styles.insight}>
+        <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>
+          인사이트{' '}
+        </Text>
+        <Text style={{ ...theme.fonts.text.headline2, color: `${theme.colors.graphic.black}4d` }}>
+          581
+        </Text>
+      </View>
     </ScrollView>
   );
 };
@@ -63,5 +106,38 @@ const styles = StyleSheet.create({
     height: 48,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  mid: {
+    marginHorizontal: 16,
+  },
+  title: {
+    flexDirection: 'row',
+    paddingTop: 24,
+    paddingBottom: 10,
+  },
+  viewAll: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 16,
+    borderTopWidth: 1,
+  },
+  divider: {
+    backgroundColor: '#f8f8f4',
+    borderBottomColor: '#f8f8f4',
+    height: 12,
+    width: '150%',
+    left: -50,
+  },
+  group: {
+    marginLeft: 16,
+    marginTop: 24,
+    marginBottom: 10,
+  },
+  insight: {
+    flexDirection: 'row',
+    paddingTop: 24,
+    paddingBottom: 10,
+    marginLeft: 16,
   },
 });
