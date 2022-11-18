@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { Comments, CommentsRequest } from '../../types/insight/comments';
 import { Replies, RepliesRequest } from '../../types/insight/replies';
 
 import { InsightProfileRequest, ProfileData } from '../../types/insight/profile';
