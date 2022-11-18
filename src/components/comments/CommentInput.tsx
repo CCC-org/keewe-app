@@ -3,9 +3,9 @@ import {
   View,
   TextInput,
   StyleSheet,
+  Pressable,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
 } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import theme from '../../theme/light';

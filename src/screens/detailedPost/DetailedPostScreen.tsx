@@ -1,4 +1,12 @@
-import { Pressable, ScrollView, StyleSheet, View, Text } from 'react-native';
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+  Platform,
+  KeyboardAvoidingView,
+} from 'react-native';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
@@ -111,77 +119,82 @@ const DetailedPostScreen = ({ navigation, route }) => {
 
   return (
     <>
-      <ScrollView stickyHeaderIndices={[3]}>
-        {!isInsightLoading && (
-          <DetailedPostSection
-            insightId={insightId}
-            insightText={insightResponse?.data?.contents ?? ''}
-            views={views}
-            link={insightResponse?.data?.link ?? ''}
-            currentChallenge={currentChallenge}
-            reaction={insightResponse.data.reaction}
-          />
-        )}
-
-        {isProfileLoading ? null : (
-          <Profile
-            nickname={profile?.data?.nickname ?? '-'}
-            title={profile?.data?.title ?? '-'}
-            self={profile?.data?.author ?? '-'}
-            follow={profile?.data?.following ?? true}
-            interests={profile?.data?.interests ?? []}
-            createdAt={profile?.data?.createdAt ?? '-'}
-            image={profile?.data?.image ?? ''}
-          />
-        )}
-        {/* Insight text, link card, emoticons, etc.. */}
-        {/* reply etc.. */}
-        <View style={styles.commentsHeader}>
-          <Text style={{ fontWeight: '600', fontSize: 18, color: theme.colors.graphic.black }}>
-            댓글{' '}
-          </Text>
-          <Text
-            style={{ fontWeight: '600', fontSize: 18, color: `${theme.colors.graphic.black}4d` }}
-          >
-            {total}
-          </Text>
-        </View>
-
-        <View style={{ backgroundColor: 'white' }}>
-          {data2.comments.map((cur, idx) => {
-            const comments = [
-              <Comments
-                key={idx}
-                content={cur.content}
-                nickname={cur.writer.name}
-                title={cur.writer.title}
-              />,
-            ];
-            const replies = cur.replies.map((current, index) => {
-              return (
-                <View key={index} style={{ marginLeft: 44 }}>
-                  <Comments
-                    key={index}
-                    content={current.content}
-                    nickname={current.writer.name}
-                    title={current.writer.title}
-                  />
-                </View>
-              );
-            });
-            return comments.concat(replies);
-          })}
-          {data2.total < 4 ? null : (
-            <View style={{ alignItems: 'center', marginVertical: 16 }}>
-              <MoreCommentsButton
-                onPress={handleMoreCommentsPress}
-                number={data2.total - 3}
-                textColor={'white'}
-                backgroundColor={`${theme.colors.graphic.black}cc`}
-              />
-            </View>
+      <ScrollView>
+        <KeyboardAvoidingView
+          behavior={Platform.select({ ios: 'position' })} // position || padding
+          keyboardVerticalOffset={Platform.select({ ios: 70 })}
+        >
+          {!isInsightLoading && (
+            <DetailedPostSection
+              insightId={insightId}
+              insightText={insightResponse?.data?.contents ?? ''}
+              views={views}
+              link={insightResponse?.data?.link ?? ''}
+              currentChallenge={currentChallenge}
+              reaction={insightResponse.data.reaction}
+            />
           )}
-        </View>
+
+          {isProfileLoading ? null : (
+            <Profile
+              nickname={profile?.data?.nickname ?? '-'}
+              title={profile?.data?.title ?? '-'}
+              self={profile?.data?.author ?? '-'}
+              follow={profile?.data?.following ?? true}
+              interests={profile?.data?.interests ?? []}
+              createdAt={profile?.data?.createdAt ?? '-'}
+              image={profile?.data?.image ?? ''}
+            />
+          )}
+          {/* Insight text, link card, emoticons, etc.. */}
+          {/* reply etc.. */}
+          <View style={styles.commentsHeader}>
+            <Text style={{ fontWeight: '600', fontSize: 18, color: theme.colors.graphic.black }}>
+              댓글{' '}
+            </Text>
+            <Text
+              style={{ fontWeight: '600', fontSize: 18, color: `${theme.colors.graphic.black}4d` }}
+            >
+              {total}
+            </Text>
+          </View>
+
+          <View style={{ backgroundColor: 'white' }}>
+            {data2.comments.map((cur, idx) => {
+              const comments = [
+                <Comments
+                  key={idx}
+                  content={cur.content}
+                  nickname={cur.writer.name}
+                  title={cur.writer.title}
+                />,
+              ];
+              const replies = cur.replies.map((current, index) => {
+                return (
+                  <View key={index} style={{ marginLeft: 44 }}>
+                    <Comments
+                      key={index}
+                      content={current.content}
+                      nickname={current.writer.name}
+                      title={current.writer.title}
+                    />
+                  </View>
+                );
+              });
+              return comments.concat(replies);
+            })}
+            {data2.total < 4 ? null : (
+              <View style={{ alignItems: 'center', marginVertical: 16 }}>
+                <MoreCommentsButton
+                  onPress={handleMoreCommentsPress}
+                  number={data2.total - 3}
+                  textColor={'white'}
+                  backgroundColor={`${theme.colors.graphic.black}cc`}
+                />
+              </View>
+            )}
+          </View>
+        </KeyboardAvoidingView>
       </ScrollView>
       <CommentInput
         onSubmit={(data: string) => {
