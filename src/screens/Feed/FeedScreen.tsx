@@ -15,6 +15,7 @@ import {
 import UserSpecificChallengeSection from './UserSpecificChallengeSection';
 import DividerBar from '../../components/bars/DividerBar';
 import { postFeedBookMark } from '../../utils/api/FeedBookMark';
+import MainLottie from '../../components/lotties/MainLottie';
 
 const FeedScreen = ({ navigation }) => {
   const theme = useTheme();
@@ -59,6 +60,10 @@ const FeedScreen = ({ navigation }) => {
       feedListQueryClient.invalidateQueries(FeedQueryKeys.getFeed());
     },
   });
+
+  if (isLoading || challengeData.isLoading) {
+    return <MainLottie />;
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.feedCtn}>
