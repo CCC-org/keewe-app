@@ -1,9 +1,7 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { Animated, Easing } from 'react-native';
-import { useTheme } from 'react-native-paper';
-import { Text } from 'react-native';
 
-interface BezierAnimatedViewProps {
+interface BezierAnimatedPopupViewProps {
   children: JSX.Element;
   startMargin: number;
   endMargin: number;
@@ -11,13 +9,13 @@ interface BezierAnimatedViewProps {
   bezier: number[];
 }
 
-const BezierAnimatedView = ({
+const BezierAnimatedPopupView = ({
   children,
   startMargin,
   endMargin,
   duration,
   bezier,
-}: BezierAnimatedViewProps) => {
+}: BezierAnimatedPopupViewProps) => {
   const marginValue = useRef(new Animated.Value(startMargin)).current;
 
   Animated.timing(marginValue, {
@@ -43,4 +41,4 @@ const BezierAnimatedView = ({
   );
 };
 
-export default BezierAnimatedView;
+export default BezierAnimatedPopupView;

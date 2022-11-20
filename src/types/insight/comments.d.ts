@@ -1,12 +1,27 @@
-interface Comments {
-  message: string;
-  code: number;
-  data: Data;
+interface CommentGetListRequest {
+  insightId: number;
 }
 
-interface Data {
-  total: number;
-  comments: Comment[];
+interface CommentGetListResponse {
+  message: string;
+  code: number;
+  data: {
+    total: number;
+    comments: Comment[];
+  };
+}
+
+interface CommentCreateRequest {
+  insightId: number;
+  content: string;
+  parentId?: number;
+}
+interface CommentCreateResponse {
+  message: string;
+  code: number;
+  data: {
+    commentId: Comment['id'];
+  };
 }
 
 interface Comment {
@@ -31,8 +46,4 @@ interface Writer {
   name: string;
   title: string;
   image: string;
-}
-
-interface CommentsRequest {
-  insightId: number;
 }

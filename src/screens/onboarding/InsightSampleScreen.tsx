@@ -7,7 +7,7 @@ import HeaderText from '../../components/texts/HeaderText';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import chevron_right from '../../constants/Icons/Chevrons/ChevronRightSmallXml';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
-import BezierAnimatedView from '../../components/views/BezierAnimatedView';
+import BezierAnimatedPopupView from '../../components/views/BezierAnimatedPopupView';
 import { REACTIONS } from './constant';
 import TestIconButton from '../../components/emoticons/TestIconButton';
 import BottomFixButton from '../../components/buttons/BottomFixButton';
@@ -137,7 +137,7 @@ const InsightSampleScreen = ({ navigation, route }) => {
                   style={{ backgroundColor: theme.colors.graphic.white, ...styles.ReactionBar }}
                 >
                   {REACTIONS.map((data) => (
-                    <BezierAnimatedView
+                    <BezierAnimatedPopupView
                       key={data.xml}
                       startMargin={100}
                       endMargin={0}
@@ -145,7 +145,7 @@ const InsightSampleScreen = ({ navigation, route }) => {
                       bezier={data.bezier}
                     >
                       <TestIconButton xml={data.xml} />
-                    </BezierAnimatedView>
+                    </BezierAnimatedPopupView>
                   ))}
                 </View>
               </View>
@@ -175,7 +175,7 @@ const InsightSampleScreen = ({ navigation, route }) => {
             alignItems: 'center',
           }}
         >
-          <BezierAnimatedView
+          <BezierAnimatedPopupView
             startMargin={100}
             endMargin={0}
             duration={700}
@@ -189,7 +189,7 @@ const InsightSampleScreen = ({ navigation, route }) => {
               width={343}
               onPress={handleCompletePress}
             />
-          </BezierAnimatedView>
+          </BezierAnimatedPopupView>
         </View>
       )}
     </>

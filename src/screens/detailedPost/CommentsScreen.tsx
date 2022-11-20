@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import Comments from '../../components/comments/Comments';
+import Comment from '../../components/comments/Comment';
 import MoreCommentsButton from '../../components/buttons/MoreCommentsButton';
 import { useTheme } from 'react-native-paper';
 import { useQuery } from 'react-query';
@@ -126,7 +126,7 @@ const CommentsScreen = () => {
     <View>
       {data.data.map((cur, idx) => {
         const comments = [
-          <Comments
+          <Comment
             key={cur.id}
             content={cur.content}
             nickname={cur.writer.name}
@@ -137,7 +137,7 @@ const CommentsScreen = () => {
         const reply = cur.replies.map((current, index) => {
           return (
             <View key={index} style={{ marginLeft: 44 }}>
-              <Comments
+              <Comment
                 key={current.id}
                 content={current.content}
                 nickname={current.writer.name}
@@ -161,7 +161,7 @@ const CommentsScreen = () => {
         const replies = dataReply.data.map((current, index) => {
           return (
             <View key={index} style={{ marginLeft: 44 }}>
-              <Comments
+              <Comment
                 key={current.id}
                 content={current.content}
                 nickname={current.writer.name}

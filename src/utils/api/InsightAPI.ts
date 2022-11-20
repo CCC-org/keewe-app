@@ -8,11 +8,8 @@ import httpClient from './BaseHttpClient';
 export const InsightQueryKeys = {
   getInsight: (request: InsightGetRequest) => ['Insight', request.insightId],
   getProfile: (request: InsightProfileRequest) => ['profile', request.insightId],
-  getRepresentativeComments: (request: CommentsRequest) => [
-    'RepresentativeComments',
-    request.insightId,
-  ],
-  getReplies: (request: RepliesRequest) => ['Comments', request.parentId],
+  getCommentList: (request: CommentGetListRequest) => ['comment', request.insightId],
+  getReplies: (request: RepliesRequest) => ['comment', request.parentId],
 };
 
 export const InsightAPI = {
@@ -50,7 +47,6 @@ export const InsightAPI = {
       console.error('api error: ', err);
     }
   },
-
   getProfile: async (request: InsightProfileRequest) => {
     const { insightId } = request;
     try {
@@ -70,13 +66,26 @@ export const InsightAPI = {
       console.error('api error2: ', err);
     }
   },
-  getRepresentativeComments: async (request: CommentsRequest) => {
+  createComment: async (params: CommentCreateRequest) => {
+    const token = await getAccessToken();
+    const { data } = await httpClient.post<CommentCreateResponse>(
+      'https://api-keewe.com/api/v1/comments',
+      params,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return data;
+  },
+  getCommentList: async (request: CommentGetListRequest) => {
     const { insightId } = request;
 
     try {
       const token = await getAccessToken();
 
-      const { data } = await httpClient.get<Comments>(
+      const { data } = await httpClient.get<CommentGetListResponse>(
         `https://api-keewe.com/api/v1/comments/representative/insights/${insightId}`,
         {
           headers: {

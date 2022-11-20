@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  Text,
   View,
   TextInput,
   StyleSheet,
@@ -11,13 +12,34 @@ import { SvgXml } from 'react-native-svg';
 import theme from '../../theme/light';
 import main from '../../constants/Icons/Upload/UploadMainXml';
 import shadow from '../../constants/Icons/Upload/UploadShadowXml';
+import AnimatedHeightView from '../views/AnimatedHeightView';
+import ClearSmallXml from '../../constants/Icons/Clear/ClearSmallXml';
+import { useMutation, useQueryClient } from 'react-query';
+import { InsightAPI } from '../../utils/api/InsightAPI';
 
 interface CommentInputProps {
-  onSubmit: (value: string) => void;
+  insightId: number;
+  replyInfo?: ReplyInfo;
+  onCancelReply: () => void;
 }
 
-const CommentInput = ({ onSubmit }: CommentInputProps) => {
+export type ReplyInfo = {
+  id: number;
+  nickname: string;
+};
+
+const CommentInput = ({ insightId, replyInfo, onCancelReply }: CommentInputProps) => {
   const [input, setInput] = useState<string>('');
+  const queryClient = useQueryClient();
+  const { mutate: createComment } = useMutation(InsightAPI.createComment, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['comment']);
+    },
+  });
+
+  const handleCancelReply = () => {
+    onCancelReply();
+  };
 
   return (
     <KeyboardAvoidingView
@@ -25,6 +47,23 @@ const CommentInput = ({ onSubmit }: CommentInputProps) => {
       keyboardVerticalOffset={Platform.select({ ios: 90 })}
     >
       <View style={styles.Container}>
+        {replyInfo && (
+          <AnimatedHeightView startHeight={0} endHeight={44} duration={200}>
+            <View style={styles.reply}>
+              <Text
+                style={{
+                  ...theme.fonts.text.body2.regular,
+                  color: `${theme.colors.graphic.black}30`,
+                }}
+              >
+                {replyInfo.nickname}님에게 답글 남기는 중
+              </Text>
+              <Pressable onPress={handleCancelReply}>
+                <SvgXml xml={ClearSmallXml} />
+              </Pressable>
+            </View>
+          </AnimatedHeightView>
+        )}
         <View style={styles.inputContainer}>
           <View style={styles.input}>
             <TextInput
@@ -39,6 +78,11 @@ const CommentInput = ({ onSubmit }: CommentInputProps) => {
           </View>
           <Pressable
             onPress={() => {
+              createComment({
+                insightId,
+                content: input,
+                parentId: replyInfo?.id,
+              });
               return;
             }}
             style={{ alignItems: 'center', justifyContent: 'center' }}
@@ -63,6 +107,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     display: 'flex',
+    overflow: 'hidden',
     justifyContent: 'space-between',
     flexDirection: 'row',
     marginVertical: 12,
@@ -77,5 +122,17 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     paddingHorizontal: 16,
     justifyContent: 'center',
+  },
+  reply: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    height: 44,
+    width: '100%',
+    backgroundColor: `${theme.colors.brand.surface.container2}`,
+    paddingTop: 12,
+    paddingBottom: 12,
+    paddingRight: 20,
+    paddingLeft: 20,
   },
 });
