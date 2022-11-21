@@ -6,7 +6,6 @@ interface HeaderRightButtonProps {
   backGroundColor: string;
   textColor: string;
   borderLine: boolean;
-  borderColor: string;
   disabled: boolean;
   height?: number;
   width?: number;
