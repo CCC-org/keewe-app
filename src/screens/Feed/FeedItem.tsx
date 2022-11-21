@@ -11,7 +11,7 @@ import { postFeedBookMark } from '../../utils/api/FeedBookMark';
 
 interface FeedItemProps {
   insight: InsightData;
-  onBookMarkClick: (arg0: number) => void;
+  onBookMarkClick: (id: number) => void;
 }
 
 const FeedItem = ({ insight, onBookMarkClick }: FeedItemProps) => {
