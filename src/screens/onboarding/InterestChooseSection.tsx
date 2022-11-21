@@ -39,6 +39,15 @@ const InterestChooseSection = ({
   return (
     <View>
       <View style={styles.tagList}>
+        {customCategory.map((category, idx) => (
+          <IconTag
+            key={category}
+            title={category}
+            isSelected={selectedCategory.includes(category)}
+            backgroundColor={handleBackgroundColor(idx)}
+            onClick={() => onSelect(category)}
+          />
+        ))}
         {totalCategory.map((category, idx) => (
           <IconTag
             key={category}
@@ -51,15 +60,6 @@ const InterestChooseSection = ({
                 style={{ marginRight: 5 }}
               />
             }
-            onClick={() => onSelect(category)}
-          />
-        ))}
-        {customCategory.map((category, idx) => (
-          <IconTag
-            key={category}
-            title={category}
-            isSelected={selectedCategory.includes(category)}
-            backgroundColor={handleBackgroundColor(idx)}
             onClick={() => onSelect(category)}
           />
         ))}

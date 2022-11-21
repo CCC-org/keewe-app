@@ -57,6 +57,7 @@ const InterestChooseScreen = ({ navigation, route }) => {
     const { customCategory: paramCustomArr } = route.params;
     if (customCategory) {
       setCustomCategory([...paramCustomArr, ...customCategory]);
+      setSelectedCategory([...paramCustomArr, ...selectedCategory]);
     } else {
       setCustomCategory([]);
     }
