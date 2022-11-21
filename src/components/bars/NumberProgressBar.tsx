@@ -13,14 +13,14 @@ const NumberProgressBar = ({ progressValue: progress, max }: CustomProgressBarPr
   return (
     <View style={styles.container}>
       <Text style={styles.indicator}>
-        <Text style={{ color: progressPercentage > 1 ? 'red' : '#486006' }}>{progress}</Text>{' '}
+        <Text style={{ color: progressPercentage > 1 ? 'red' : '#B0E817' }}>{progress}</Text>{' '}
         <Text style={styles.under}> / {max}</Text>
       </Text>
 
       <ProgressBar
         progress={progressPercentage}
         style={styles.progressBar}
-        color={progressPercentage > 1 ? '#f24822' : '#486006'}
+        color={progressPercentage > 1 ? '#f24822' : '#B0E817'}
       />
     </View>
   );

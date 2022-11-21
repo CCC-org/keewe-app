@@ -27,7 +27,6 @@ const IconTag = ({ title, isSelected, icon, backgroundColor, onClick }: IconTagP
         <Text
           style={{
             ...theme.fonts.text.body2.bold,
-            marginLeft: 5,
             color: isSelected === true ? 'white' : '#121314',
           }}
         >
@@ -43,7 +42,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignSelf: 'center',
-    paddingVertical: 6,
+    paddingVertical: 5,
     paddingHorizontal: 12,
     borderRadius: 30,
     borderWidth: 1,

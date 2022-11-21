@@ -48,6 +48,7 @@ const InterestChooseSection = ({
             icon={
               <SvgXml
                 xml={selectedCategory.includes(category) ? SelectedIconXml[idx] : IconXml[idx]}
+                style={{ marginRight: 5 }}
               />
             }
             onClick={() => onSelect(category)}
@@ -85,11 +86,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     flexWrap: 'wrap',
-    margin: 8,
+    marginTop: 8,
+    marginHorizontal: 8,
   },
   addBtn: {
     justifyContent: 'center',
-    paddingVertical: 6,
+    paddingVertical: 5,
     paddingHorizontal: 12,
     borderRadius: 30,
     borderWidth: 1,

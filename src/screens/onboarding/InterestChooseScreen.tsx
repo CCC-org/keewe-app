@@ -1,4 +1,4 @@
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import InterestChooseSection from './InterestChooseSection';
 import { TOTAL_TAG } from '../../constants/Interests';
@@ -63,29 +63,29 @@ const InterestChooseScreen = ({ navigation, route }) => {
   }, [route]);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View>
-        <View
-          style={{
-            height: 50,
-            justifyContent: 'space-between',
-            marginBottom: 20,
-            marginTop: 10,
-            paddingHorizontal: 16,
-          }}
-        >
-          <HeaderText header={'관심사를 알려주세요'} />
-          <Stepper currentStep={2} totalStep={2} />
-        </View>
-        <InterestChooseSection
-          totalCategory={totalCategory}
-          customCategory={customCategory}
-          selectedCategory={selectedCategory}
-          onSelect={handleSelectTag}
-          onCreateCategory={handleCreateCategory}
-        />
-        <View style={{ height: 90, justifyContent: 'space-between', marginBottom: 35 }}>
-          <NumberProgressBar progressValue={selectedCategory.length} max={5} />
+    <View style={{ flex: 1 }}>
+      <View
+        style={{
+          height: 50,
+          justifyContent: 'space-between',
+          marginBottom: 20,
+          marginTop: 10,
+          paddingHorizontal: 16,
+        }}
+      >
+        <HeaderText header={'관심사를 알려주세요'} />
+        <Stepper currentStep={2} totalStep={2} />
+      </View>
+      <InterestChooseSection
+        totalCategory={totalCategory}
+        customCategory={customCategory}
+        selectedCategory={selectedCategory}
+        onSelect={handleSelectTag}
+        onCreateCategory={handleCreateCategory}
+      />
+      <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+        <NumberProgressBar progressValue={selectedCategory.length} max={5} />
+        <View style={{ marginBottom: 30, marginTop: 15 }}>
           <ConditionalButton
             isActive={selectedCategory.length > 0 && selectedCategory.length < 6}
             onPress={handleNextScreen}
@@ -94,15 +94,10 @@ const InterestChooseScreen = ({ navigation, route }) => {
           />
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
 export default InterestChooseScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    justifyContent: 'space-between',
-  },
-});
+const styles = StyleSheet.create({});
