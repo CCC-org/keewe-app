@@ -79,10 +79,9 @@ const FeedScreen = ({ navigation }) => {
       {isLoading ? (
         <Text>로딩중</Text>
       ) : (
-        feedList?.map(
-          (insight) =>
-            <FeedItem onBookMarkClick={touchBookMark} key={insight.id} insight={insight} /> || null,
-        )
+        feedList?.map((insight) => (
+          <FeedItem onBookMarkClick={touchBookMark} key={insight.id} insight={insight} />
+        ))
       )}
     </ScrollView>
   );
