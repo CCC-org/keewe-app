@@ -13,7 +13,6 @@ import { Entypo } from '@expo/vector-icons';
 import DetailedPostSection from './DetailedPostSection';
 import { useIncreaseView } from '../../utils/hooks/DetailedInsight/useIncreaseView';
 import { useTheme } from 'react-native-paper';
-import CommentList from '../../components/comments/CommentList';
 import MoreCommentsButton from '../../components/buttons/MoreCommentsButton';
 import { useQuery } from 'react-query';
 import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
@@ -28,7 +27,6 @@ const DetailedPostScreen = ({ navigation, route }) => {
   const [currentChallenge, setCurrentChallenge] = useState('내가 참여중인 챌린지');
   const [views] = useIncreaseView(insightId);
   const [replyInfo, setReplyInfo] = useState<ReplyInfo | undefined>();
-
   const theme = useTheme();
   const { data: profile, isProfileLoading } = useQuery(
     InsightQueryKeys.getProfile({ insightId }),
@@ -41,7 +39,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
     querySuccessError,
   );
   const { data: getCommentResponse, isLoading: isCommentLoading } = useQuery(
-    InsightQueryKeys.getCommentList({ insightId }),
+    InsightQueryKeys.getRepresentiveCommentList({ insightId }),
     () => InsightAPI.getRepresentiveCommentList({ insightId }),
     querySuccessError,
   );
@@ -76,9 +74,9 @@ const DetailedPostScreen = ({ navigation, route }) => {
     });
   }, [profile, insightResponse, currentChallenge]);
 
-  function handleMoreCommentsPress() {
-    navigation.navigate('Comments');
-  }
+  const handleMoreCommentsPress = () => {
+    navigation.navigate('Comments', { insightId });
+  };
 
   const handleReplyClick = (info: ReplyInfo) => {
     setReplyInfo(info);
@@ -181,11 +179,6 @@ const DetailedPostScreen = ({ navigation, route }) => {
           )}
         </KeyboardAvoidingView>
       </ScrollView>
-      <CommentInput
-        insightId={insightId}
-        replyInfo={replyInfo}
-        onCancelReply={() => setReplyInfo(undefined)}
-      />
     </>
   );
 };

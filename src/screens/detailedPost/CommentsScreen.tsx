@@ -1,23 +1,29 @@
-import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { FlatList, Text } from 'react-native';
+import React, { useState } from 'react';
 import Comment from '../../components/comments/Comment';
-import MoreCommentsButton from '../../components/buttons/MoreCommentsButton';
-import { useTheme } from 'react-native-paper';
 import { useQuery } from 'react-query';
 import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
-import { querySuccessError } from '../../utils/helper/queryReponse/querySuccessError';
 import { ReplyInfo } from '../../components/comments/CommentInput';
 import CommentInput from '../../components/comments/CommentInput';
 
-const COMMENT_LIMIT = 5;
+const COMMENT_LIMIT = 11;
 
 const CommentsScreen = ({ navigation, route }) => {
   const { insightId } = route.params;
-  const theme = useTheme();
-  const [data, setData] = useState([]);
-  const [commentCursor, setCommentCursor] = useState();
+  const [data, setData] = useState<Comment[]>([]);
+  const [commentCursor, setCommentCursor] = useState(0);
   const [replyCursor, setReplyCursor] = useState();
   const [replyInfo, setReplyInfo] = useState<ReplyInfo | undefined>();
+  const { isLoading: isCommentLoading } = useQuery(
+    InsightQueryKeys.getCommentList({ insightId, cursor: commentCursor, limit: COMMENT_LIMIT }),
+    () => InsightAPI.getCommentList({ insightId, cursor: commentCursor, limit: COMMENT_LIMIT }),
+    {
+      onSuccess: (response) => {
+        setData((prev) => [...prev, ...response.data]);
+        setCommentCursor(commentCursor + COMMENT_LIMIT);
+      },
+    },
+  );
 
   const handleReplyClick = (info: ReplyInfo) => {
     setReplyInfo(info);
@@ -48,12 +54,15 @@ const CommentsScreen = ({ navigation, route }) => {
     return (
       <>
         {comment.concat(repies)}
-        {item.total != item.replies.length && <Text>답글 더보기</Text>}
+        {item.total !== item.replies.length && 1 === item.replies.length && (
+          <Text>답글 더보기</Text>
+        )}
       </>
     );
   };
 
   const onEndReached = () => {
+    alert(commentCursor);
     return;
   };
 
@@ -70,5 +79,3 @@ const CommentsScreen = ({ navigation, route }) => {
 };
 
 export default CommentsScreen;
-
-const styles = StyleSheet.create({});

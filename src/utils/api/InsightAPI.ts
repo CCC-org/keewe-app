@@ -8,7 +8,17 @@ import httpClient from './BaseHttpClient';
 export const InsightQueryKeys = {
   getInsight: (request: InsightGetRequest) => ['Insight', request.insightId],
   getProfile: (request: InsightProfileRequest) => ['profile', request.insightId],
-  getCommentList: (request: RepresentiveCommentGetListRequest) => ['comment', request.insightId],
+  getRepresentiveCommentList: (request: RepresentiveCommentGetListRequest) => [
+    'comment',
+    'representive',
+    request.insightId,
+  ],
+  getCommentList: (request: CommentGetListRequest) => [
+    'comment',
+    request.insightId,
+    request.cursor,
+    request.limit,
+  ],
   getReplies: (request: RepliesRequest) => ['comment', request.parentId],
 };
 
