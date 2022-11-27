@@ -45,7 +45,7 @@ const CategoryCreateScreen = ({ navigation, route }) => {
           backGroundColor={
             errorMessage.length === 0 && input.length > 0
               ? theme.colors.brand.primary.main
-              : `${theme.colors.graphic.black}10`
+              : `${theme.colors.graphic.black}33`
           }
           textColor={
             errorMessage.length === 0 && input.length > 0
