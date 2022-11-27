@@ -1,5 +1,20 @@
+interface RepresentiveCommentGetListRequest {
+  insightId: number;
+}
+
+interface RepresentiveCommentGetListResponse {
+  message: string;
+  code: number;
+  data: {
+    total: number;
+    comments: Comment[];
+  };
+}
+
 interface CommentGetListRequest {
   insightId: number;
+  cursor: number;
+  limit: number;
 }
 
 interface CommentGetListResponse {

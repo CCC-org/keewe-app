@@ -8,7 +8,7 @@ import httpClient from './BaseHttpClient';
 export const InsightQueryKeys = {
   getInsight: (request: InsightGetRequest) => ['Insight', request.insightId],
   getProfile: (request: InsightProfileRequest) => ['profile', request.insightId],
-  getCommentList: (request: CommentGetListRequest) => ['comment', request.insightId],
+  getCommentList: (request: RepresentiveCommentGetListRequest) => ['comment', request.insightId],
   getReplies: (request: RepliesRequest) => ['comment', request.parentId],
 };
 
@@ -79,13 +79,13 @@ export const InsightAPI = {
     );
     return data;
   },
-  getCommentList: async (request: CommentGetListRequest) => {
+  getRepresentiveCommentList: async (request: RepresentiveCommentGetListRequest) => {
     const { insightId } = request;
 
     try {
       const token = await getAccessToken();
 
-      const { data } = await httpClient.get<CommentGetListResponse>(
+      const { data } = await httpClient.get<RepresentiveCommentGetListResponse>(
         `https://api-keewe.com/api/v1/comments/representative/insights/${insightId}`,
         {
           headers: {
@@ -98,8 +98,28 @@ export const InsightAPI = {
       console.error('api error: ', err);
     }
   },
+  getCommentList: async (request: CommentGetListRequest) => {
+    const { insightId, ...params } = request;
+
+    try {
+      const token = await getAccessToken();
+
+      const { data } = await httpClient.get<CommentGetListResponse>(
+        `https://api-keewe.com/api/v1/comments/insights/${insightId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params,
+        },
+      );
+      return data;
+    } catch (err) {
+      console.error('api error: ', err);
+    }
+  },
   getReplies: async (request: RepliesRequest) => {
-    const { parentId } = request;
+    const { parentId, ...params } = request;
 
     try {
       const token = await getAccessToken();
@@ -110,6 +130,7 @@ export const InsightAPI = {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          params,
         },
       );
       return data;

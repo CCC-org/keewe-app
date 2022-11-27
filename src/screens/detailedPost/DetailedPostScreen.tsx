@@ -21,6 +21,7 @@ import Profile from '../../components/profile/Profile';
 import { querySuccessError } from '../../utils/helper/queryReponse/querySuccessError';
 import CommentInput from '../../components/comments/CommentInput';
 import { ReplyInfo } from '../../components/comments/CommentInput';
+import Comment from '../../components/comments/Comment';
 
 const DetailedPostScreen = ({ navigation, route }) => {
   const { insightId } = route.params;
@@ -41,7 +42,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
   );
   const { data: getCommentResponse, isLoading: isCommentLoading } = useQuery(
     InsightQueryKeys.getCommentList({ insightId }),
-    () => InsightAPI.getCommentList({ insightId }),
+    () => InsightAPI.getRepresentiveCommentList({ insightId }),
     querySuccessError,
   );
 
@@ -140,10 +141,30 @@ const DetailedPostScreen = ({ navigation, route }) => {
 
               <View style={{ backgroundColor: 'white' }}>
                 <>
-                  <CommentList
-                    comments={getCommentResponse.data.comments}
-                    onReply={handleReplyClick}
-                  />
+                  {getCommentResponse.data.comments.map((cur) => {
+                    const comment = [
+                      <Comment
+                        key={cur.id}
+                        content={cur.content}
+                        nickname={cur.writer.name}
+                        title={cur.writer.title}
+                        createdAt={cur.createdAt}
+                        isReply={false}
+                        onReply={() => handleReplyClick({ id: cur.id, nickname: cur.writer.name })}
+                      />,
+                    ];
+                    const repies = cur.replies.map((reply) => (
+                      <Comment
+                        key={`${cur.id} reply ${reply.id}`}
+                        content={reply.content}
+                        nickname={reply.writer.name}
+                        createdAt={reply.createdAt}
+                        title={reply.writer.title}
+                        isReply={true}
+                      />
+                    ));
+                    return comment.concat(repies);
+                  })}
                   {getCommentResponse.data.total >= 4 && (
                     <View style={{ alignItems: 'center', marginVertical: 16 }}>
                       <MoreCommentsButton
