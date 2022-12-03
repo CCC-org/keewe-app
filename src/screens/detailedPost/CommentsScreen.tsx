@@ -1,26 +1,31 @@
-import { FlatList, Text } from 'react-native';
+import { Pressable, FlatList, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import Comment from '../../components/comments/Comment';
 import { useQuery } from 'react-query';
 import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
 import { ReplyInfo } from '../../components/comments/CommentInput';
 import CommentInput from '../../components/comments/CommentInput';
+import CommentXml from '../../constants/Icons/Comment/CommentXml';
+import { SvgXml } from 'react-native-svg';
 
 const COMMENT_LIMIT = 11;
 
 const CommentsScreen = ({ navigation, route }) => {
   const { insightId } = route.params;
   const [data, setData] = useState<Comment[]>([]);
-  const [commentCursor, setCommentCursor] = useState(0);
+  const [commentCursor, setCommentCursor] = useState<number | undefined>(undefined);
   const [replyCursor, setReplyCursor] = useState();
   const [replyInfo, setReplyInfo] = useState<ReplyInfo | undefined>();
   const { isLoading: isCommentLoading } = useQuery(
-    InsightQueryKeys.getCommentList({ insightId, cursor: commentCursor, limit: COMMENT_LIMIT }),
+    InsightQueryKeys.getCommentList({
+      insightId,
+      cursor: commentCursor,
+      limit: COMMENT_LIMIT,
+    }),
     () => InsightAPI.getCommentList({ insightId, cursor: commentCursor, limit: COMMENT_LIMIT }),
     {
       onSuccess: (response) => {
         setData((prev) => [...prev, ...response.data]);
-        setCommentCursor(commentCursor + COMMENT_LIMIT);
       },
     },
   );
@@ -54,8 +59,14 @@ const CommentsScreen = ({ navigation, route }) => {
     return (
       <>
         {comment.concat(repies)}
-        {item.total !== item.replies.length && 1 === item.replies.length && (
-          <Text>답글 더보기</Text>
+        {item.total !== item.replies.length && item.replies.length === 1 && (
+          <Pressable
+            style={{ marginLeft: 100, flexDirection: 'row' }}
+            onPress={() => handleReplyClick()}
+          >
+            <SvgXml xml={CommentXml} />
+            <Text>답글 {item.replies.length - 1}개 더보기</Text>
+          </Pressable>
         )}
       </>
     );
@@ -63,6 +74,7 @@ const CommentsScreen = ({ navigation, route }) => {
 
   const onEndReached = () => {
     alert(commentCursor);
+    setCommentCursor((commentCursor === undefined ? 0 : commentCursor) + COMMENT_LIMIT);
     return;
   };
 

@@ -13,7 +13,7 @@ interface RepresentiveCommentGetListResponse {
 
 interface CommentGetListRequest {
   insightId: number;
-  cursor: number;
+  cursor?: number;
   limit: number;
 }
 
