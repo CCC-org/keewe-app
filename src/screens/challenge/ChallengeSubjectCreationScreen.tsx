@@ -72,10 +72,12 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <View style={{ flex: 10 }}>
-        <HeaderText
-          header="나만의 주제를 정해보세요"
-          subTitle={`${route.params.form.selectedCategory}에 관한 주제면 좋아요. `}
-        />
+        <View style={{ marginHorizontal: 10 }}>
+          <HeaderText
+            header="나만의 주제를 정해보세요"
+            subTitle={`${route.params.form.selectedCategory}에 관한 주제면 좋아요. `}
+          />
+        </View>
         <TextInputDetail
           inputValue={subject}
           setInputValue={setSubject}
@@ -108,6 +110,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   buttonCtn: {
-    flex: 9,
+    flex: 10,
   },
 });

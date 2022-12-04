@@ -43,7 +43,7 @@ const TextInputDetail = (props: TextInputDetailProps) => {
       setInputValueColor('#121314');
     } else if (!focused) {
       setInputUnderlineColor('rgba(12,13,14,0.1)');
-      setInputValueColor('rgba(12,13,14,0.1)');
+      setInputValueColor('rgba(12,13,14,0.5)');
     }
   }, [inputValue, focused]);
 

@@ -70,6 +70,7 @@ function makeStyles(theme: ReactNativePaper.Theme, unit: string) {
     },
     challengeSettingAmount: {
       fontSize: 30,
+      fontWeight: '600',
     },
     challengeSettingUnit: {
       fontSize: 16,

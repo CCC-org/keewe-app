@@ -36,6 +36,7 @@ function createStyles(theme) {
     },
     subTitle: {
       marginTop: 8,
+      marginHorizontal: 2,
       fontSize: 14,
       textAlign: 'left',
       color: '#121314',
