@@ -67,8 +67,6 @@ const UploadScreen = ({ navigation }) => {
       drawerId: drawerId,
     };
 
-    console.log('uplaod', data);
-
     try {
       const response = await UploadApis.uploadInsight(data);
       console.log('submit res', response);
