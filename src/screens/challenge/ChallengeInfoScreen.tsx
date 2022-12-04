@@ -36,8 +36,12 @@ const ChallengeInfoScreen = ({ navigation, route }) => {
   return (
     <>
       <View style={styles.container}>
-        <Text style={theme.fonts.text.display}>챌린지에 대해 알려주세요</Text>
-        <Stepper totalStep={3} currentStep={2} />
+        <View style={{ marginHorizontal: 10 }}>
+          <Text style={theme.fonts.text.display}>챌린지에 대해 알려주세요</Text>
+        </View>
+        <View style={{ marginHorizontal: 6 }}>
+          <Stepper totalStep={3} currentStep={2} />
+        </View>
         <ChallengeInfoSection
           challengeName={challengeName}
           setChallengeName={setChallengeName}
