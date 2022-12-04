@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderWidth: 1,
     borderStyle: 'solid',
-    margin: 4,
+    marginHorizontal: 4,
+    marginVertical: 8,
   },
 });
 

@@ -31,9 +31,13 @@ const CategorySelectScreen = ({ navigation, route }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View>
-        <Text style={theme.fonts.text.display}>챌린지 카테고리를</Text>
-        <Text style={theme.fonts.text.display}>1개 선택하세요</Text>
-        <Stepper totalStep={3} currentStep={1} />
+        <View style={{ marginHorizontal: 10 }}>
+          <Text style={theme.fonts.text.display}>챌린지 카테고리를</Text>
+          <Text style={theme.fonts.text.display}>1개 선택하세요</Text>
+        </View>
+        <View style={{ marginHorizontal: 6 }}>
+          <Stepper totalStep={3} currentStep={1} />
+        </View>
         <ChallengeCategorySelectSection
           totalCategory={[...customCategory, ...totalCategory]}
           selectedCategory={selectedCategory}
@@ -41,13 +45,15 @@ const CategorySelectScreen = ({ navigation, route }) => {
           onCreateCategory={handleCreateCategory}
         />
       </View>
-      <ConditionalButton
-        isActive={isActive}
-        text={isActive ? '다음' : '1개의 카테고리를 선택하세요'}
-        color={'black'}
-        width={350}
-        onPress={handleNextClick}
-      />
+      <View style={{ marginBottom: 12 }}>
+        <ConditionalButton
+          isActive={isActive}
+          text={isActive ? '다음' : '1개의 카테고리를 선택하세요'}
+          color={'black'}
+          width={350}
+          onPress={handleNextClick}
+        />
+      </View>
     </ScrollView>
   );
 };
