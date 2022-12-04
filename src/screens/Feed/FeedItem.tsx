@@ -7,16 +7,18 @@ import FeedLinkWithBookMark from './FeedLinkCard';
 import { LinkPreview } from '@flyerhq/react-native-link-preview';
 import FeedVerticalDots from './FeedVerticalDots';
 import FeedTextContent from './FeedTextContent';
+import { postFeedBookMark } from '../../utils/api/FeedBookMark';
 
 interface FeedItemProps {
   insight: InsightData;
+  onBookMarkClick: (id: number) => void;
 }
 
-const FeedItem = ({ insight }: FeedItemProps) => {
-  const { id, contents, createdAt, link, reaction, writer } = insight;
+const FeedItem = ({ insight, onBookMarkClick }: FeedItemProps) => {
+  const { id, contents, createdAt, link, reaction, writer, bookmark } = insight;
 
   const handleOnBookMarkPress = () => {
-    alert(`id:${id} bookmark pressed`);
+    onBookMarkClick(id);
   };
 
   const handleVerticalDotsPress = () => {
@@ -45,7 +47,7 @@ const FeedItem = ({ insight }: FeedItemProps) => {
         <FeedLinkWithBookMark
           text={'naver.com'}
           onBookmarkPress={handleOnBookMarkPress}
-          isBookMarked={false}
+          isBookMarked={bookmark}
         />
         {/* TODO: 인사이트 반응 남기기 */}
       </View>

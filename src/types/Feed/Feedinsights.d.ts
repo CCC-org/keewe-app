@@ -12,6 +12,7 @@ export interface InsightData {
   createdAt: string;
   link: Link;
   reaction: Reaction;
+  bookmark: boolean;
   writer: Writer;
 }
 
