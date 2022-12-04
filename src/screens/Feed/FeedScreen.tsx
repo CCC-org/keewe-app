@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { StyleSheet, Text, View, RefreshControl, ScrollView } from 'react-native';
+import React, { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { FeedAPI, FeedQueryKeys } from '../../utils/api/FeedAPI';
 import { querySuccessError } from '../../utils/helper/queryReponse/querySuccessError';
-import { ScrollView } from 'react-native-gesture-handler';
+// import { ScrollView } from 'react-native-gesture-handler';
 import { FeedInsight, InsightData } from '../../types/Feed/Feedinsights';
 import FeedItem from './FeedItem';
 import { useTheme } from 'react-native-paper';
@@ -18,6 +18,8 @@ import { postFeedBookMark } from '../../utils/api/FeedBookMark';
 import MainLottie from '../../components/lotties/MainLottie';
 
 const FeedScreen = ({ navigation }) => {
+  const [refreshing, setRefreshing] = useState(false);
+
   const theme = useTheme();
   const feedListQueryClient = useQueryClient();
   const { data: feedList, isLoading } = useQuery<FeedInsight['data'] | undefined>(
@@ -61,20 +63,32 @@ const FeedScreen = ({ navigation }) => {
     },
   });
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+    feedListQueryClient.invalidateQueries(FeedQueryKeys.getFeed());
+    feedListQueryClient.invalidateQueries(
+      UserSpecificChallengeQueryKeys.getUserSpecificChallenge(),
+    );
+  };
+
   if (isLoading || challengeData.isLoading) {
     return <MainLottie />;
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.feedCtn}>
+    <ScrollView
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+      contentContainerStyle={styles.feedCtn}
+    >
       <Text style={[theme.fonts.text.display, { marginBottom: 32 }]}>홈</Text>
-      {challengeData.isLoading ? (
-        <Text>챌린지 데이터 로둥중</Text>
-      ) : (
-        userSpecificChallenge && (
+      <View>
+        {userSpecificChallenge && (
           <UserSpecificChallengeSection userSpecificChallenge={userSpecificChallenge} />
-        )
-      )}
+        )}
+      </View>
       <DividerBar style={styles.divider} />
       {isLoading ? (
         <Text>로딩중</Text>
