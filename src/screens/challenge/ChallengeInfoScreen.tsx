@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect, useLayoutEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
-import ConditionalButton from '../../components/buttons/ConditionalButton';
+//import ConditionalButton from '../../components/buttons/ConditionalButton';
 import Stepper from '../../components/stepper/Stepper';
 import ChallengeInfoSection from './ChallengeInfoSection';
 
