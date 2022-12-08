@@ -29,23 +29,25 @@ const CategorySelectScreen = ({ navigation, route }) => {
   }, [route.params]);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View>
-        <View style={{ marginHorizontal: 10 }}>
-          <Text style={theme.fonts.text.display}>챌린지 카테고리를</Text>
-          <Text style={theme.fonts.text.display}>1개 선택하세요</Text>
+    <>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View>
+          <View style={{ marginHorizontal: 10 }}>
+            <Text style={theme.fonts.text.display}>챌린지 카테고리를</Text>
+            <Text style={theme.fonts.text.display}>1개 선택하세요</Text>
+          </View>
+          <View style={{ marginHorizontal: 6 }}>
+            <Stepper totalStep={3} currentStep={1} />
+          </View>
+          <ChallengeCategorySelectSection
+            totalCategory={[...customCategory, ...totalCategory]}
+            selectedCategory={selectedCategory}
+            onSelect={handleSelectTag}
+            onCreateCategory={handleCreateCategory}
+          />
         </View>
-        <View style={{ marginHorizontal: 6 }}>
-          <Stepper totalStep={3} currentStep={1} />
-        </View>
-        <ChallengeCategorySelectSection
-          totalCategory={[...customCategory, ...totalCategory]}
-          selectedCategory={selectedCategory}
-          onSelect={handleSelectTag}
-          onCreateCategory={handleCreateCategory}
-        />
-      </View>
-      <View style={{ marginBottom: 12 }}>
+      </ScrollView>
+      <View style={styles.btn}>
         <ConditionalButton
           isActive={isActive}
           text={isActive ? '다음' : '1개의 카테고리를 선택하세요'}
@@ -54,7 +56,7 @@ const CategorySelectScreen = ({ navigation, route }) => {
           onPress={handleNextClick}
         />
       </View>
-    </ScrollView>
+    </>
   );
 };
 
@@ -63,6 +65,13 @@ const styles = StyleSheet.create({
     margin: 10,
     flexGrow: 1,
     justifyContent: 'space-between',
+  },
+  btn: {
+    position: 'absolute',
+    bottom: 18,
+    left: 0,
+    right: 0,
+    margin: 'auto',
   },
 });
 

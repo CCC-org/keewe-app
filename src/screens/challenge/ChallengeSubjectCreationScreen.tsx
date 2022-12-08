@@ -110,6 +110,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   buttonCtn: {
-    flex: 10,
+    marginBottom: 16,
   },
 });
