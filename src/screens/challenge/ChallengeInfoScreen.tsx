@@ -1,7 +1,8 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useLayoutEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import ConditionalButton from '../../components/buttons/ConditionalButton';
+import HeaderRightButton from '../../components/header/HeaderRightButton';
+//import ConditionalButton from '../../components/buttons/ConditionalButton';
 import Stepper from '../../components/stepper/Stepper';
 import ChallengeInfoSection from './ChallengeInfoSection';
 
@@ -33,6 +34,23 @@ const ChallengeInfoScreen = ({ navigation, route }) => {
     }
   }, [challengeName]);
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderRightButton
+          text="다음"
+          backGroundColor={
+            isActive ? theme.colors.brand.primary.main : `${theme.colors.graphic.black}33`
+          }
+          textColor={isActive ? theme.colors.graphic.black : theme.colors.graphic.white}
+          borderLine={false}
+          disabled={!isActive || hasError}
+          handlePress={() => handleNextClick()}
+        />
+      ),
+    });
+  }, [isActive, hasError]);
+
   return (
     <>
       <View style={styles.container}>
@@ -49,13 +67,13 @@ const ChallengeInfoScreen = ({ navigation, route }) => {
           setChallengeInfo={setChallengeInfo}
           errorMessage={errorMessage}
         />
-        <ConditionalButton
+        {/* <ConditionalButton
           isActive={isActive && !hasError}
           text={'다음'}
           color={'black'}
           width={150}
           onPress={handleNextClick}
-        />
+        /> */}
       </View>
     </>
   );
