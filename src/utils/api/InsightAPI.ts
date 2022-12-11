@@ -1,6 +1,4 @@
 import axios from 'axios';
-import { Comments, CommentsRequest } from '../../types/insight/comments';
-import { Replies, RepliesRequest } from '../../types/insight/replies';
 
 import { InsightProfileRequest, ProfileData } from '../../types/insight/profile';
 import { getAccessToken } from '../hooks/asyncStorage/Login';
@@ -9,11 +7,23 @@ import httpClient from './BaseHttpClient';
 export const InsightQueryKeys = {
   getInsight: (request: InsightGetRequest) => ['Insight', request.insightId],
   getProfile: (request: InsightProfileRequest) => ['profile', request.insightId],
-  getRepresentativeComments: (request: CommentsRequest) => [
-    'RepresentativeComments',
+  getRepresentiveCommentList: (request: RepresentiveCommentGetListRequest) => [
+    'comment',
+    'representive',
     request.insightId,
   ],
-  getReplies: (request: RepliesRequest) => ['Comments', request.parentId],
+  getCommentList: (request: CommentGetListRequest) => [
+    'comment',
+    request.insightId,
+    request.cursor,
+    request.limit,
+  ],
+  getReplies: (request: ReplyGetListRequest) => [
+    'comment',
+    request.parentId,
+    request.cursor,
+    request.limit,
+  ],
 };
 
 export const InsightAPI = {
@@ -51,7 +61,6 @@ export const InsightAPI = {
       console.error('api error: ', err);
     }
   },
-
   getProfile: async (request: InsightProfileRequest) => {
     const { insightId } = request;
     try {
@@ -71,13 +80,26 @@ export const InsightAPI = {
       console.error('api error2: ', err);
     }
   },
-  getRepresentativeComments: async (request: CommentsRequest) => {
+  createComment: async (params: CommentCreateRequest) => {
+    const token = await getAccessToken();
+    const { data } = await httpClient.post<CommentCreateResponse>(
+      'https://api-keewe.com/api/v1/comments',
+      params,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return data;
+  },
+  getRepresentiveCommentList: async (request: RepresentiveCommentGetListRequest) => {
     const { insightId } = request;
 
     try {
       const token = await getAccessToken();
 
-      const { data } = await httpClient.get<Comments>(
+      const { data } = await httpClient.get<RepresentiveCommentGetListResponse>(
         `https://api-keewe.com/api/v1/comments/representative/insights/${insightId}`,
         {
           headers: {
@@ -90,18 +112,38 @@ export const InsightAPI = {
       console.error('api error: ', err);
     }
   },
-  getReplies: async (request: RepliesRequest) => {
-    const { parentId } = request;
+  getCommentList: async (request: CommentGetListRequest) => {
+    const { insightId, ...params } = request;
 
     try {
       const token = await getAccessToken();
 
-      const { data } = await httpClient.get<Replies>(
+      const { data } = await httpClient.get<CommentGetListResponse>(
+        `https://api-keewe.com/api/v1/comments/insights/${insightId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params,
+        },
+      );
+      return data;
+    } catch (err) {
+      console.error('api error: ', err);
+    }
+  },
+  getReplies: async (request: ReplyGetListRequest) => {
+    const { parentId, ...params } = request;
+
+    try {
+      const token = await getAccessToken();
+      const { data } = await httpClient.get<ReplyGetListResponse>(
         `https://api-keewe.com/api/v1/comments/${parentId}/replies`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          params,
         },
       );
       return data;

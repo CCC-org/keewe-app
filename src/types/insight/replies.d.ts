@@ -18,7 +18,3 @@ export interface Writer {
   title: string;
   image: string;
 }
-
-export interface RepliesRequest {
-  parentId: number;
-}

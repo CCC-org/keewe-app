@@ -1,115 +1,48 @@
-import { Pressable, ScrollView, StyleSheet, View, Text } from 'react-native';
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+  Platform,
+  KeyboardAvoidingView,
+} from 'react-native';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import DetailedPostSection from './DetailedPostSection';
 import { useIncreaseView } from '../../utils/hooks/DetailedInsight/useIncreaseView';
 import { useTheme } from 'react-native-paper';
-import Comments from '../../components/comments/Comments';
 import MoreCommentsButton from '../../components/buttons/MoreCommentsButton';
 import { useQuery } from 'react-query';
 import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
 import Profile from '../../components/profile/Profile';
 import { querySuccessError } from '../../utils/helper/queryReponse/querySuccessError';
+import CommentInput from '../../components/comments/CommentInput';
+import { ReplyInfo } from '../../components/comments/CommentInput';
+import Comment from '../../components/comments/Comment';
 
-const DetailedPostScreen = ({ navigation }) => {
+const DetailedPostScreen = ({ navigation, route }) => {
+  const { insightId } = route.params;
   const [currentChallenge, setCurrentChallenge] = useState('내가 참여중인 챌린지');
-  // useIncreaseView의 전달인자는 추후에 route의 id를 집어넣어야함
-  const [views] = useIncreaseView(30);
-  const [data2, setData2] = useState({
-    total: 10,
-    comments: [
-      {
-        id: 1,
-        writer: {
-          id: 1,
-          name: '유승훈',
-          title: '타이틀1',
-          image: 'www.api-keewe.com/images',
-        },
-        content: '댓글의 내용',
-        createdAt: '2022-10-23T22:51:44.188726',
-        replies: [
-          {
-            writer: {
-              id: 1,
-              name: '유승훈',
-              title: '타이틀1',
-              image: 'www.api-keewe.com/images',
-            },
-            id: 2,
-            parentId: 1,
-            content: '답글1 내용',
-            createdAt: '2022-10-23T22:51:44.188726',
-          },
-          {
-            writer: {
-              id: 1,
-              name: '유승훈',
-              title: '타이틀1',
-              image: 'www.api-keewe.com/images',
-            },
-            id: 3,
-            parentId: 1,
-            content: '답글2 내용',
-            createdAt: '2022-10-23T22:51:44.188726',
-          },
-        ],
-        totalReply: 2,
-      },
-    ],
-  });
-  const [total, setTotal] = useState(data2.total);
-
+  const [views] = useIncreaseView(insightId);
+  const [replyInfo, setReplyInfo] = useState<ReplyInfo | undefined>();
   const theme = useTheme();
   const { data: profile, isProfileLoading } = useQuery(
-    InsightQueryKeys.getProfile({ insightId: 23 }),
-    () => InsightAPI.getProfile({ insightId: 23 }),
+    InsightQueryKeys.getProfile({ insightId }),
+    () => InsightAPI.getProfile({ insightId }),
     querySuccessError,
   );
   const { data: insightResponse, isLoading: isInsightLoading } = useQuery(
-    InsightQueryKeys.getInsight({ insightId: 23 }),
-    () => InsightAPI.getInsight({ insightId: 23 }),
+    InsightQueryKeys.getInsight({ insightId }),
+    () => InsightAPI.getInsight({ insightId }),
     querySuccessError,
   );
-
-  // const { data: data2, isLoading: isLoading2 } = useQuery(
-  //   InsightQueryKeys.getRepresentativeComments({ insightId: 1 }),
-  //   () => InsightAPI.getRepresentativeComments({ insightId: 1 }),
-  //   querySuccessError,
-  // );
-
-
-
-  // useEffect(() => {
-  //   async function getInsight() {
-  //     try {
-  //       /**
-  //        getInsight(전달인자)
-  //        전달인자는, 추후에 InsightScreen 의 route 에 있는 id를 집어넣어야 함.
-  //        */
-  //       const res = await DetailedPostApi.getInsight(String(30));
-  //       const data = res.data;
-  //       if (data.contents !== insightText) {
-  //         setInsightText(data.contents);
-  //       }
-  //       if (data.link.url !== link) {
-  //         setLink(data.link.url);
-  //       }
-  //     } catch (error) {
-  //       alert(error);
-  //     }
-  //   }
-  //   getInsight();
-  // }, []);
-
-  console.log('detailedPost data: ', profile);
-  console.log('isLoading: ', isProfileLoading);
-
-
-  // useEffect(() => {
-  //   console.log('data2', data2);
-  // }, []);
+  const { data: getCommentResponse, isLoading: isCommentLoading } = useQuery(
+    InsightQueryKeys.getRepresentiveCommentList({ insightId }),
+    () => InsightAPI.getRepresentiveCommentList({ insightId }),
+    querySuccessError,
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -141,84 +74,125 @@ const DetailedPostScreen = ({ navigation }) => {
     });
   }, [profile, insightResponse, currentChallenge]);
 
-  function handleMoreCommentsPress() {
-    navigation.navigate('Comments');
-  }
+  const handleMoreCommentsPress = () => {
+    navigation.navigate('Comments', { insightId });
+  };
+
+  const handleReplyClick = (info: ReplyInfo) => {
+    setReplyInfo(info);
+  };
 
   return (
     <>
       <ScrollView>
-        {!isInsightLoading && (
-          <DetailedPostSection
-            insightId={23}
-            insightText={insightResponse?.contents ?? ''}
-            views={views}
-            link={insightResponse?.link ?? ''}
-            currentChallenge={currentChallenge}
-            reaction={insightResponse.data.reaction}
-          />
-        )}
-
-        {isProfileLoading ? null : (
-          <Profile
-            nickname={profile?.data?.nickname ?? '-'}
-            title={profile?.data?.title ?? '-'}
-            self={profile?.data?.author ?? '-'}
-            follow={profile?.data?.following ?? true}
-            interests={profile?.data?.interests ?? []}
-            createdAt={profile?.data?.createdAt ?? '-'}
-            image={profile?.data?.image ?? ''}
-          />
-        )}
-        {/* Insight text, link card, emoticons, etc.. */}
-        {/* reply etc.. */}
-        <View style={styles.commentsHeader}>
-          <Text style={{ fontWeight: '600', fontSize: 18, color: theme.colors.graphic.black }}>
-            댓글{' '}
-          </Text>
-          <Text
-            style={{ fontWeight: '600', fontSize: 18, color: `${theme.colors.graphic.black}4d` }}
-          >
-            {total}
-          </Text>
-        </View>
-
-        <View style={{ backgroundColor: 'white' }}>
-          {data2.comments.map((cur, idx) => {
-            const comments = [
-              <Comments
-                key={idx}
-                content={cur.content}
-                nickname={cur.writer.name}
-                title={cur.writer.title}
-              />,
-            ];
-            const replies = cur.replies.map((current, index) => {
-              return (
-                <View key={index} style={{ marginLeft: 44 }}>
-                  <Comments
-                    key={index}
-                    content={current.content}
-                    nickname={current.writer.name}
-                    title={current.writer.title}
-                  />
-                </View>
-              );
-            });
-            return comments.concat(replies);
-          })}
-          {data2.total < 4 ? null : (
-            <View style={{ alignItems: 'center', marginVertical: 16 }}>
-              <MoreCommentsButton
-                onPress={handleMoreCommentsPress}
-                number={data2.total - 3}
-                textColor={'white'}
-                backgroundColor={`${theme.colors.graphic.black}cc`}
-              />
-            </View>
+        <KeyboardAvoidingView
+          behavior={Platform.select({ ios: 'position' })} // position || padding
+          keyboardVerticalOffset={Platform.select({ ios: 0 })}
+        >
+          {!isInsightLoading && (
+            <DetailedPostSection
+              insightId={insightId}
+              insightText={insightResponse?.data?.contents ?? ''}
+              views={views}
+              link={insightResponse?.data?.link ?? ''}
+              currentChallenge={currentChallenge}
+              reaction={insightResponse.data.reaction}
+            />
           )}
-        </View>
+
+          {isProfileLoading ? null : (
+            <Profile
+              nickname={profile?.data?.nickname ?? '-'}
+              title={profile?.data?.title ?? '-'}
+              self={profile?.data?.author ?? '-'}
+              follow={profile?.data?.following ?? true}
+              interests={profile?.data?.interests ?? []}
+              createdAt={profile?.data?.createdAt ?? '-'}
+              image={profile?.data?.image ?? ''}
+              style={{
+                backgroundColor: theme.colors.graphic.white,
+                padding: 16,
+              }}
+            />
+          )}
+          <View
+            style={{ ...styles.commentDivider, backgroundColor: theme.colors.brand.surface.main }}
+          />
+          {!isCommentLoading && (
+            <>
+              <View style={styles.commentsHeader}>
+                <Text
+                  style={{ fontWeight: '600', fontSize: 18, color: theme.colors.graphic.black }}
+                >
+                  댓글{' '}
+                </Text>
+                <Text
+                  style={{
+                    fontWeight: '600',
+                    fontSize: 18,
+                    color: `${theme.colors.graphic.black}4d`,
+                  }}
+                >
+                  {getCommentResponse.data.total}
+                </Text>
+              </View>
+
+              <View style={{ backgroundColor: 'white', paddingBottom: 16 }}>
+                <>
+                  {getCommentResponse.data.comments.map((cur) => {
+                    const comment = [
+                      <Comment
+                        key={cur.id}
+                        content={cur.content}
+                        nickname={cur.writer.name}
+                        title={cur.writer.title}
+                        createdAt={cur.createdAt}
+                        isReply={false}
+                        onReply={() => handleReplyClick({ id: cur.id, nickname: cur.writer.name })}
+                      />,
+                    ];
+                    const repies = cur.replies.map((reply) => (
+                      <Comment
+                        key={`${cur.id} reply ${reply.id}`}
+                        content={reply.content}
+                        nickname={reply.writer.name}
+                        createdAt={reply.createdAt}
+                        title={reply.writer.title}
+                        isReply={true}
+                      />
+                    ));
+                    return comment.concat(repies);
+                  })}
+                  {getCommentResponse.data.total >= 4 && (
+                    <View
+                      style={{
+                        marginTop: 16,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <MoreCommentsButton
+                        onPress={handleMoreCommentsPress}
+                        number={getCommentResponse.data.total - 3}
+                        textColor={'white'}
+                        backgroundColor={`${theme.colors.graphic.black}cc`}
+                      />
+                    </View>
+                  )}
+                </>
+              </View>
+            </>
+          )}
+        </KeyboardAvoidingView>
       </ScrollView>
+      <CommentInput
+        insightId={insightId}
+        replyInfo={replyInfo}
+        onCancelReply={() => setReplyInfo(undefined)}
+        onCreate={() => {
+          return;
+        }}
+      />
     </>
   );
 };
@@ -240,5 +214,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 10,
     backgroundColor: 'white',
+  },
+  commentDivider: {
+    height: 12,
   },
 });
