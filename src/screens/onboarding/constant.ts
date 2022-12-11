@@ -7,8 +7,8 @@ import SurpriseRoundOffXml from '../../constants/Icons/Reacts/SurpriseRoundOffXm
 import theme from '../../theme/light';
 
 export const REACTIONS: Record<string, any>[] = [
-  { xml: ClapRoundOffXml, bezier: [0.5, 1.8, 0.4, 1.0] },
-  { xml: HeartRoundOffXml, bezier: [0.5, 1.8, 0.4, 1.12] },
+  { xml: HeartRoundOffXml, bezier: [0.5, 1.8, 0.4, 1.0] },
+  { xml: ClapRoundOffXml, bezier: [0.5, 1.8, 0.4, 1.12] },
   { xml: SadRoundOffXml, bezier: [0.5, 1.8, 0.4, 1.24] },
   { xml: SurpriseRoundOffXml, bezier: [0.5, 1.8, 0.4, 1.36] },
   { xml: EyesRoundOffXml, bezier: [0.5, 1.8, 0.4, 1.48] },
