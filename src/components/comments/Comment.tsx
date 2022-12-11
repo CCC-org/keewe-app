@@ -27,7 +27,7 @@ const Comment = ({
 }: CommentsProps) => {
   const theme = useTheme();
   return (
-    <View style={{ marginLeft: isReply ? 44 : 0, ...styles.container }}>
+    <View style={{ marginLeft: isReply ? 60 : 16, ...styles.container }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
         <MiniProfile
           nickname={nickname}

@@ -26,6 +26,19 @@ interface CommentGetListResponse {
   };
 }
 
+interface ReplyGetListRequest {
+  parentId?: number;
+  insightId: number;
+  cursor?: number;
+  limit: number;
+}
+
+interface ReplyGetListResponse {
+  message: string;
+  code: number;
+  data: Reply[];
+}
+
 interface CommentCreateRequest {
   insightId: number;
   content: string;

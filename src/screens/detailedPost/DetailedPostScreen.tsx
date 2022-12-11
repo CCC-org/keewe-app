@@ -87,7 +87,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
       <ScrollView>
         <KeyboardAvoidingView
           behavior={Platform.select({ ios: 'position' })} // position || padding
-          keyboardVerticalOffset={Platform.select({ ios: -20 })}
+          keyboardVerticalOffset={Platform.select({ ios: 0 })}
         >
           {!isInsightLoading && (
             <DetailedPostSection
@@ -137,7 +137,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
                 </Text>
               </View>
 
-              <View style={{ backgroundColor: 'white' }}>
+              <View style={{ backgroundColor: 'white', paddingBottom: 16 }}>
                 <>
                   {getCommentResponse.data.comments.map((cur) => {
                     const comment = [
@@ -164,7 +164,13 @@ const DetailedPostScreen = ({ navigation, route }) => {
                     return comment.concat(repies);
                   })}
                   {getCommentResponse.data.total >= 4 && (
-                    <View style={{ alignItems: 'center', marginVertical: 16 }}>
+                    <View
+                      style={{
+                        marginTop: 16,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
                       <MoreCommentsButton
                         onPress={handleMoreCommentsPress}
                         number={getCommentResponse.data.total - 3}
@@ -179,6 +185,14 @@ const DetailedPostScreen = ({ navigation, route }) => {
           )}
         </KeyboardAvoidingView>
       </ScrollView>
+      <CommentInput
+        insightId={insightId}
+        replyInfo={replyInfo}
+        onCancelReply={() => setReplyInfo(undefined)}
+        onCreate={() => {
+          return;
+        }}
+      />
     </>
   );
 };

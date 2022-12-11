@@ -21,6 +21,7 @@ interface CommentInputProps {
   insightId: number;
   replyInfo?: ReplyInfo;
   onCancelReply: () => void;
+  onCreate: () => void;
 }
 
 export type ReplyInfo = {
@@ -28,12 +29,13 @@ export type ReplyInfo = {
   nickname: string;
 };
 
-const CommentInput = ({ insightId, replyInfo, onCancelReply }: CommentInputProps) => {
+const CommentInput = ({ insightId, replyInfo, onCancelReply, onCreate }: CommentInputProps) => {
   const [input, setInput] = useState<string>('');
   const queryClient = useQueryClient();
   const { mutate: createComment } = useMutation(InsightAPI.createComment, {
     onSuccess: () => {
       queryClient.invalidateQueries(['comment']);
+      onCreate();
     },
   });
 
@@ -83,6 +85,7 @@ const CommentInput = ({ insightId, replyInfo, onCancelReply }: CommentInputProps
                 content: input,
                 parentId: replyInfo?.id,
               });
+              setInput('');
               return;
             }}
             style={{ alignItems: 'center', justifyContent: 'center' }}

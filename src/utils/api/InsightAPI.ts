@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { Replies, RepliesRequest } from '../../types/insight/replies';
 
 import { InsightProfileRequest, ProfileData } from '../../types/insight/profile';
 import { getAccessToken } from '../hooks/asyncStorage/Login';
@@ -19,7 +18,12 @@ export const InsightQueryKeys = {
     request.cursor,
     request.limit,
   ],
-  getReplies: (request: RepliesRequest) => ['comment', request.parentId],
+  getReplies: (request: ReplyGetListRequest) => [
+    'comment',
+    request.parentId,
+    request.cursor,
+    request.limit,
+  ],
 };
 
 export const InsightAPI = {
@@ -128,13 +132,12 @@ export const InsightAPI = {
       console.error('api error: ', err);
     }
   },
-  getReplies: async (request: RepliesRequest) => {
+  getReplies: async (request: ReplyGetListRequest) => {
     const { parentId, ...params } = request;
 
     try {
       const token = await getAccessToken();
-
-      const { data } = await httpClient.get<Replies>(
+      const { data } = await httpClient.get<ReplyGetListResponse>(
         `https://api-keewe.com/api/v1/comments/${parentId}/replies`,
         {
           headers: {
