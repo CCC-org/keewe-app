@@ -24,7 +24,7 @@ export const FeedAPI = {
         },
       );
       if (response.data.code !== 200) throw new Error(response.data.message);
-      console.log('🚀 ~ file: FeedAPI.ts:24 ~ getFeed: ~ response', response.data);
+      // console.log('🚀 ~ file: FeedAPI.ts:24 ~ getFeed: ~ response', response.data);
 
       return response.data.data;
     } catch (err) {
