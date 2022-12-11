@@ -3,7 +3,6 @@ import { View, Text } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import Stepper from '../../components/stepper/Stepper';
-import HeaderText from '../../components/texts/HeaderText';
 import ChallengeGoalSettingSection from './ChallengeGoalSettingSection';
 
 const UNSELECTED = 1;
@@ -32,8 +31,13 @@ const ChallengeGoalSettingScreen = ({ navigation, route }) => {
   return (
     <>
       <View style={{ margin: 10 }}>
-        <HeaderText header="나만의 목표를 세우세요" subTitle=""></HeaderText>
-        <Stepper totalStep={3} currentStep={3} />
+        <View style={{ marginHorizontal: 10 }}>
+          <Text style={theme.fonts.text.display}>나만의 목표를 세우세요</Text>
+        </View>
+        <View style={{ marginHorizontal: 6 }}>
+          <Stepper totalStep={3} currentStep={3} />
+        </View>
+
         <ChallengeGoalSettingSection
           step={step}
           recordPerWeek={recordPerWeek}

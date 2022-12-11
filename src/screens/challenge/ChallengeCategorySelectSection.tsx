@@ -17,9 +17,9 @@ const ChallengeCategorySelectSection = ({
   onSelect,
   onCreateCategory,
 }: ChallengeCategorySelectSectionProps) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   const theme = useTheme();
-  const title = <Text style={theme.fonts.text.body2.bold}>내 관심사</Text>;
+  const title = <Text style={theme.fonts.text.headline2}>내 관심사</Text>;
   return (
     <View>
       <Accordion
@@ -42,7 +42,7 @@ const ChallengeCategorySelectSection = ({
       </Accordion>
       <View>
         <View style={styles.accordion}>
-          <Text style={theme.fonts.text.body2.bold}>전체</Text>
+          <Text style={theme.fonts.text.headline2}>전체</Text>
           <Pressable onPress={onCreateCategory}>
             <Text
               style={[

@@ -65,7 +65,7 @@ const ChallengeGoalSettingSection = ({
           openHeight={120}
           duration={200}
           title={<Text style={styles.accordianTitle}>참여 주차</Text>}
-          subTitle={step === 2 ? `${participationPerWeek}주` : ''}
+          subTitle={step === 2 ? `${participationPerWeek}주 동안` : ''}
         >
           <ChallengeGoalSettingBar
             minValue={1}

@@ -1,4 +1,4 @@
-import { AntDesign } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View, ViewProps } from 'react-native';
 interface FolderProps extends ViewProps {
@@ -15,7 +15,7 @@ const Folder = (props: FolderProps) => {
       <Pressable onPress={() => setSelectedFolder(text)} style={props.style}>
         <Text style={{ ...styles.text, ...props.textStyle }}>{text}</Text>
       </Pressable>
-      {selectedFolder === text && <AntDesign name="check" size={24} color="black" />}
+      {selectedFolder === text && <Feather name="check" size={24} color="#486006" />}
     </View>
   );
 };

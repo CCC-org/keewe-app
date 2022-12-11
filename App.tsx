@@ -34,6 +34,7 @@ import InsightSampleScreen from './src/screens/onboarding/InsightSampleScreen';
 import Tabs from './src/screens/Main/Tabs';
 import ShareScreen from './src/screens/detailedPost/ShareScreen';
 import CommentsScreen from './src/screens/detailedPost/CommentsScreen';
+import { TransitionPresets } from '@react-navigation/stack';
 import HomeScreen from './src/screens/Home/HomeScreen';
 import FeedScreen from './src/screens/Feed/FeedScreen';
 
@@ -66,7 +67,8 @@ export default function App() {
                       fontSize: 16,
                     },
                     headerShadowVisible: false,
-                    // ...TransitionPresets.SlideFromRightIOS,
+                    animationEnabled: false,
+                    //...TransitionPresets.DefaultTransition,
                     // animation: 'slide_from_right',
                     // animationDuration: 1000,
                   }}
@@ -100,7 +102,9 @@ export default function App() {
                     <Stack.Screen
                       name="CategorySelect"
                       component={CategorySelectScreen}
-                      options={headerOptions}
+                      options={{
+                        ...headerOptions,
+                      }}
                     />
                     <Stack.Screen
                       name="CategoryCreate"

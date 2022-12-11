@@ -23,7 +23,7 @@ const CountingTextArea = (props: CountingTextAreaProps) => {
     style,
     limit,
     height,
-    autoFocus = true,
+    autoFocus = false,
   } = props;
   const theme = useTheme();
   const [letterNumberColor, setLetterNumberColor] = useState<string>('grey');
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(18, 19, 20, 0.1)',
     paddingBottom: 10,
-    marginHorizontal: 10,
+    marginHorizontal: 12,
     marginTop: 12,
     marginBottom: 32,
     height: 140,
@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
     marginBottom: 22,
     marginTop: 10,
     fontSize: 16,
-    width: '95%',
     height: '100%',
     textAlignVertical: 'top',
   },
@@ -95,7 +94,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     position: 'absolute',
     bottom: 10,
-    right: 10,
+    right: 16,
     fontSize: 12,
     fontWeight: '500',
   },
