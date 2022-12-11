@@ -16,6 +16,8 @@ declare global {
         surface: {
           main: string;
           container: string;
+          container1: string;
+          container2: string;
         };
       };
       graphic: {
@@ -115,6 +117,8 @@ const BRAND = {
   surface: {
     main: '#F8F8F4',
     container: '#E2D9CF',
+    container1: '#F1F1E9',
+    container2: '#E1E1D0',
   },
 };
 

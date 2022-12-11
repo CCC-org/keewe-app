@@ -1,16 +1,5 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-  KeyboardAvoidingView,
-  Platform,
-  Dimensions,
-  LayoutChangeEvent,
-  ViewStyle,
-  TextStyle,
-} from 'react-native';
-import React, { useState } from 'react';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
+import React from 'react';
 import { useTheme } from 'react-native-paper';
 
 interface BottomFixButtonProps {

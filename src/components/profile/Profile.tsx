@@ -33,7 +33,7 @@ const Profile = ({
 
   console.log('Profile Props', nickname);
   return (
-    <View style={[{ width: '100%' }, style]}>
+    <View style={style}>
       <View style={styles.Header}>
         <View style={styles.Profile}>
           <ProfileAvatar image={image} />
@@ -62,9 +62,9 @@ const Profile = ({
         </View>
       </View>
       <View style={styles.Interest}>
-        {/* {interests.map((item, idx) => (
+        {interests.map((item, idx) => (
           <InterestItem key={idx} interest={item.name} />
-        ))} */}
+        ))}
       </View>
     </View>
   );
@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
   Interest: {
     display: 'flex',
     flexDirection: 'row',
+    width: '100%',
     marginTop: 16,
     justifyContent: 'flex-start',
     alignSelf: 'center',

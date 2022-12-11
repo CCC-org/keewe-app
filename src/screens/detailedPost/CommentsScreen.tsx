@@ -1,181 +1,152 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import Comments from '../../components/comments/Comments';
-import MoreCommentsButton from '../../components/buttons/MoreCommentsButton';
-import { useTheme } from 'react-native-paper';
+import { Pressable, FlatList, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import Comment from '../../components/comments/Comment';
 import { useQuery } from 'react-query';
 import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
-import { querySuccessError } from '../../utils/helper/queryReponse/querySuccessError';
+import { ReplyInfo } from '../../components/comments/CommentInput';
+import CommentInput from '../../components/comments/CommentInput';
+import CommentXml from '../../constants/Icons/Comment/CommentXml';
+import { SvgXml } from 'react-native-svg';
 
-const CommentsScreen = () => {
-  const theme = useTheme();
+const COMMENT_LIMIT = 10;
 
-  // const { data, isLoading } = useQuery(
-  //   InsightQueryKeys.getReplies({ parentId: 2 }),
-  //   () => InsightAPI.getReplies({ parentId: 2 }),
-  //   querySuccessError,
-  // );
+type ReplyCursor = {
+  parentId?: number;
+  cursor?: number;
+};
 
-  const [data, setData] = useState({
-    message: '성공',
-    code: 200,
-    data: [
-      {
-        id: 1,
-        writer: {
-          id: 1,
-          name: '유승훈',
-          title: '타이틀1',
-          image: 'www.api-keewe.com/images',
-        },
-        content: '댓글의 내용1',
-        createdAt: '2022-10-23T22:51:45.015338',
-        replies: [
-          {
-            writer: {
-              id: 2,
-              name: '최지훈',
-              title: '타이틀2',
-              image: 'www.api-keewe.com/images',
-            },
-            id: 3,
-            parentId: 1,
-            content: '답글1 내용',
-            createdAt: '2022-10-23T22:51:45.015338',
-          },
-        ],
-        totalReply: 2,
+const CommentsScreen = ({ navigation, route }) => {
+  const { insightId } = route.params;
+  const [data, setData] = useState<Comment[]>([]);
+  const [commentCursor, setCommentCursor] = useState<number | undefined>(undefined);
+  const [replyCursor, setReplyCursor] = useState<ReplyCursor | undefined>(undefined);
+  const [replyInfo, setReplyInfo] = useState<ReplyInfo | undefined>(undefined);
+
+  const handleReplyClick = (info: ReplyInfo) => {
+    setReplyInfo(info);
+  };
+
+  const { isLoading: isCommentLoading } = useQuery(
+    InsightQueryKeys.getCommentList({
+      insightId,
+      cursor: commentCursor,
+      limit: COMMENT_LIMIT,
+    }),
+    () => InsightAPI.getCommentList({ insightId, cursor: commentCursor, limit: COMMENT_LIMIT }),
+    {
+      onSuccess: (response) => {
+        setData((prev) => [...prev, ...response.data]);
       },
-      {
-        id: 2,
-        writer: {
-          id: 1,
-          name: '유승훈',
-          title: '타이틀1',
-          image: 'www.api-keewe.com/images',
-        },
-        content: '댓글의 내용2',
-        createdAt: '2022-10-23T22:51:45.015338',
-        replies: [
-          {
-            writer: {
-              id: 2,
-              name: '최지훈',
-              title: '타이틀2',
-              image: 'www.api-keewe.com/images',
-            },
-            id: 4,
-            parentId: 1,
-            content: '답글2 내용',
-            createdAt: '2022-10-23T22:51:45.015338',
-          },
-        ],
-        totalReply: 2,
-      },
-    ],
-  });
+    },
+  );
 
-  const [dataReply, setDataReply] = useState({
-    message: '성공',
-    code: 200,
-    data: [
-      {
-        writer: {
-          id: 1,
-          name: '유승훈',
-          title: '타이틀1',
-          image: 'www.api-keewe.com/images',
-        },
-        id: 2,
-        parentId: 1,
-        content: '답글1 내용',
-        createdAt: '2022-10-23T22:51:44.800570',
+  const { isLoading: isReplyLoading } = useQuery(
+    InsightQueryKeys.getReplies({
+      parentId: replyCursor?.parentId,
+      insightId,
+      cursor: replyCursor?.cursor,
+      limit: COMMENT_LIMIT,
+    }),
+    () =>
+      InsightAPI.getReplies({
+        parentId: replyCursor?.parentId,
+        insightId,
+        cursor: replyCursor?.cursor,
+        limit: COMMENT_LIMIT,
+      }),
+    {
+      enabled: replyCursor?.parentId !== undefined,
+      onSuccess: async (response) => {
+        await setData((prev) => {
+          const idx = prev.findIndex((item) => item.id === replyCursor?.parentId);
+          prev[idx].replies.push(...response.data);
+          return [...prev];
+        });
+        if (response.data.length < COMMENT_LIMIT) {
+          setReplyCursor(undefined);
+        } // return to comment
       },
-      {
-        writer: {
-          id: 2,
-          name: '최지훈',
-          title: '타이틀2',
-          image: 'www.api-keewe.com/images',
-        },
-        id: 3,
-        parentId: 1,
-        content: '답글2 내용',
-        createdAt: '2022-10-23T22:51:44.800570',
-      },
-    ],
-  });
+    },
+  );
 
-  const [moreCommentsBtnVisible, setMoreCommentsBtnVisible] = useState<boolean[]>(() => {
-    const init: boolean[] = [];
-    for (let i = 0; i < data.data.length; i++) {
-      init.push(true);
+  const renderItem = ({ item, index }) => {
+    const comment = [
+      <Comment
+        key={item.id}
+        content={item.content}
+        nickname={item.writer.name}
+        title={item.writer.title}
+        createdAt={item.createdAt}
+        isReply={false}
+        onReply={() => handleReplyClick({ id: item.id, nickname: item.writer.name })}
+      />,
+    ];
+    const repies = item.replies.map((reply) => (
+      <Comment
+        key={`${item.id} reply ${reply.id}`}
+        content={reply.content}
+        nickname={reply.writer.name}
+        createdAt={reply.createdAt}
+        title={reply.writer.title}
+        isReply={true}
+      />
+    ));
+    return (
+      <>
+        {comment.concat(repies)}
+        {item.totalReply !== item.replies.length && item.replies.length === 1 && (
+          <Pressable
+            style={{ marginLeft: 100, flexDirection: 'row', alignItems: 'center' }}
+            onPress={() => {
+              setData((prev) => {
+                prev[index].replies = [];
+                return [...prev.slice(0, index + 1)];
+              });
+              setCommentCursor(data[index].id);
+              setReplyCursor({ parentId: item.id });
+            }}
+          >
+            <SvgXml xml={CommentXml} />
+            <Text>답글 {item.totalReply - 1}개 더보기</Text>
+          </Pressable>
+        )}
+      </>
+    );
+  };
+
+  const onEndReached = () => {
+    if (replyCursor?.parentId === undefined) setCommentCursor(data[data.length - 1].id);
+    else {
+      setReplyCursor((prev) => {
+        const parentData = data.find((comment) => comment.id === replyCursor.parentId);
+        return {
+          ...prev,
+          cursor:
+            parentData?.replies.length != 0
+              ? parentData?.replies[parentData?.replies.length - 1].id
+              : undefined,
+        };
+      });
     }
-    return init;
-  });
-
-  function handleMoreCommentsPress(idx, id) {
-    setMoreCommentsBtnVisible((current) => {
-      const result = [...current];
-      result[idx] = false;
-      return result;
-    });
-  }
+    return;
+  };
 
   return (
-    <View>
-      {data.data.map((cur, idx) => {
-        const comments = [
-          <Comments
-            key={cur.id}
-            content={cur.content}
-            nickname={cur.writer.name}
-            title={cur.writer.title}
-            insightWriter={true}
-          />,
-        ];
-        const reply = cur.replies.map((current, index) => {
-          return (
-            <View key={index} style={{ marginLeft: 44 }}>
-              <Comments
-                key={current.id}
-                content={current.content}
-                nickname={current.writer.name}
-                title={current.writer.title}
-                insightWriter={false}
-              />
-              {cur.totalReply > 1 ? (
-                <View style={{ marginLeft: 60, marginTop: 10 }}>
-                  <MoreCommentsButton
-                    key={cur.id}
-                    onPress={() => handleMoreCommentsPress(idx, cur.id)}
-                    number={cur.totalReply - 1}
-                    backgroundColor={'white'}
-                    textColor={`${theme.colors.graphic.black}cc`}
-                  />
-                </View>
-              ) : null}
-            </View>
-          );
-        });
-        const replies = dataReply.data.map((current, index) => {
-          return (
-            <View key={index} style={{ marginLeft: 44 }}>
-              <Comments
-                key={current.id}
-                content={current.content}
-                nickname={current.writer.name}
-                title={current.writer.title}
-              />
-            </View>
-          );
-        });
-        return moreCommentsBtnVisible[idx] ? comments.concat(reply) : comments.concat(replies);
-      })}
-    </View>
+    <>
+      <FlatList data={data} renderItem={renderItem} onEndReached={onEndReached} />
+      <CommentInput
+        insightId={insightId}
+        replyInfo={replyInfo}
+        onCancelReply={() => setReplyInfo(undefined)}
+        onCreate={() => {
+          setData([]);
+          setCommentCursor(undefined);
+          setReplyCursor(undefined);
+          setReplyInfo(undefined);
+        }}
+      />
+    </>
   );
 };
 
 export default CommentsScreen;
-
-const styles = StyleSheet.create({});

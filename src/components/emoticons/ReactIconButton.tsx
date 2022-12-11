@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Animated } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import { useMutation } from 'react-query';
@@ -18,7 +18,7 @@ interface ReactIconButtonProps {
 const ReactIconButton = ({ xml, color, taps, name, insightId }: ReactIconButtonProps) => {
   const opacityValue = useRef(new Animated.Value(0)).current;
   const [animate, setAnimate] = useState<string[]>([]);
-  const [text, setText] = useState<number>(taps ?? 0);
+  const [text, setText] = useState<number>();
 
   const { mutate: insightReact } = useMutation(InsightAPI.react, {
     onSuccess: (response) => {
@@ -28,7 +28,6 @@ const ReactIconButton = ({ xml, color, taps, name, insightId }: ReactIconButtonP
 
   const handleClick = () => {
     insightReact({ insightId, reactionType: name, value: 1 });
-    // onClick();
     setAnimate((prev) => [...prev, `${xml}${animate.length}`]);
     Animated.timing(opacityValue, {
       toValue: 1,
@@ -41,6 +40,10 @@ const ReactIconButton = ({ xml, color, taps, name, insightId }: ReactIconButtonP
       useNativeDriver: false,
     }).start();
   };
+
+  useEffect(() => {
+    setText(taps ?? 0);
+  }, [taps]);
 
   return (
     <>

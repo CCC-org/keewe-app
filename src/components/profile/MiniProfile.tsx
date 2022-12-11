@@ -2,12 +2,13 @@ import { StyleSheet, Text, View, ViewStyle } from 'react-native';
 import React from 'react';
 import ProfileAvatar from '../../components/profile/ProfileAvatar';
 import { useTheme } from 'react-native-paper';
+import { getTimeInterval } from '../../utils/string/timeInterval';
 
 interface MiniProfileProps {
   nickname: string;
   title: string;
   insightWriter?: boolean;
-  createdAt?: string;
+  createdAt: string;
   image?: string;
   style?: ViewStyle;
 }
@@ -47,7 +48,7 @@ const MiniProfile = ({
             paddingTop: 5,
           }}
         >
-          {title} ∙ {createdAt}
+          {title} ∙ {getTimeInterval(new Date().getTime() - new Date(createdAt).getTime())}
         </Text>
       </View>
     </View>
