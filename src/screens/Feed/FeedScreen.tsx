@@ -27,6 +27,7 @@ const FeedScreen = ({ navigation }) => {
     () => FeedAPI.getFeed(),
   );
 
+  console.log('asdf');
   const { data: userSpecificChallenge, ...challengeData } = useQuery<
     UserSpecificChallenge['data'] | undefined
   >(
