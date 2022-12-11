@@ -76,21 +76,22 @@ const InsightSampleScreen = ({ navigation, route }) => {
             style={{
               height: 90,
               justifyContent: 'space-between',
-              marginBottom: 20,
+              marginBottom: 32,
             }}
           >
             <HeaderText
               header={`키위새님,\n이 인사이트 어때요?`}
-              subTitle={'인사이트를 읽고 반응을 남겨보세요!'}
+              subTitle={'인사이트를 읽고 반응을 눌러보세요!'}
             />
           </View>
-          <ScrollView
+          <View
             style={{
-              backgroundColor: theme.colors.brand.surface.container,
-              height: 300,
+              backgroundColor: theme.colors.brand.surface.container1,
               marginLeft: 10,
               marginRight: 10,
-              borderRadius: 10,
+              paddingHorizontal: 16,
+              paddingVertical: 20,
+              borderRadius: 12,
             }}
           >
             <View style={styles.Insight}>
@@ -102,7 +103,7 @@ const InsightSampleScreen = ({ navigation, route }) => {
                   <Pressable
                     onPress={handleMoreClick}
                     style={{
-                      backgroundColor: theme.colors.brand.surface.container,
+                      backgroundColor: theme.colors.brand.surface.container1,
                       ...styles.MoreLink,
                     }}
                   >
@@ -129,7 +130,7 @@ const InsightSampleScreen = ({ navigation, route }) => {
                 </Text>
               </Pressable>
             </View>
-          </ScrollView>
+          </View>
           {reaction ? (
             <>
               <View style={styles.React}>
@@ -206,14 +207,13 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    margin: 25,
   },
   LinkTitle: {
     display: 'flex',
     flexDirection: 'row',
     alignContent: 'center',
     alignItems: 'center',
-    marginBottom: 5,
+    marginBottom: 16,
   },
   ReactionBar: {
     display: 'flex',

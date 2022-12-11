@@ -19,12 +19,12 @@ const TestIconButton = ({ xml }: TestIconButtonProps) => {
     setAnimate((prev) => [...prev, `${xml}${animate.length}`]);
     Animated.timing(opacityValue, {
       toValue: 1,
-      duration: 750,
+      duration: 0,
       useNativeDriver: false,
     }).start(() => {
       Animated.timing(opacityValue, {
         toValue: 0,
-        duration: 0,
+        duration: 750,
         useNativeDriver: false,
       }).start();
     });
@@ -37,7 +37,7 @@ const TestIconButton = ({ xml }: TestIconButtonProps) => {
           style={{
             backgroundColor: opacityValue.interpolate({
               inputRange: [0, 1],
-              outputRange: ['#00000000', theme.colors.brand.surface.main],
+              outputRange: ['#00000000', '#1213140d'],
             }),
             padding: 10,
             ...styles.Button,
