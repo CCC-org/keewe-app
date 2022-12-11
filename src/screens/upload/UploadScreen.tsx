@@ -33,30 +33,26 @@ const UploadScreen = ({ navigation }) => {
   const [isFolderSnackBarOpen, setIsFolderSnackBarOpen] = useState(false);
 
   const snapPoints = useMemo(() => ['50%', '80%'], []);
-  // TODO: Need to implement snack bars
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderRightButton
-          backGroundColor={!!linkText.length && !!insightText.length ? '#b0e817' : '#12131420'}
-          textColor={!!linkText.length && !!insightText.length ? 'black' : 'white'}
+          backGroundColor={
+            isValidSite && !!linkText.length && !!insightText.length ? '#b0e817' : '#12131420'
+          }
+          textColor={isValidSite && !!linkText.length && !!insightText.length ? 'black' : 'white'}
           borderLine={false}
-          disabled={!!linkText.length && !!insightText.length ? false : true}
+          disabled={isValidSite && !!linkText.length && !!insightText.length ? false : true}
           text="완료"
           handlePress={() => handleSubmit()}
         />
       ),
     });
-  }, [linkText, insightText, navigation, selectedFolder, isSwitchOn]);
+  }, [linkText, insightText, navigation, selectedFolder, isSwitchOn, isValidSite]);
 
   useEffect(() => {
     UploadApis.getFolderList().then(setFolders);
   }, []);
-
-  // temp
-  useEffect(() => {
-    console.log(folders);
-  }, [folders]);
 
   const handleSubmit = async () => {
     const drawerId = folders.find((folder) => folder.name === selectedFolder)?.id || null;
@@ -67,11 +63,8 @@ const UploadScreen = ({ navigation }) => {
       drawerId: drawerId,
     };
 
-    console.log('uplaod', data);
-
     try {
       const response = await UploadApis.uploadInsight(data);
-      console.log('submit res', response);
       if (response.code === 200) {
         alert('everything is fine, go back to home');
       } else {
@@ -79,7 +72,6 @@ const UploadScreen = ({ navigation }) => {
       }
     } catch (error: unknown) {
       alert(error);
-      // get type of error
     }
   };
 

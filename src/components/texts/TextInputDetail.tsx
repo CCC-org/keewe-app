@@ -74,7 +74,7 @@ const TextInputDetail = (props: TextInputDetailProps) => {
           fontWeight: '600',
           fontSize: 22,
           backgroundColor: 'white',
-          marginHorizontal: 12,
+          marginHorizontal: 0,
           paddingHorizontal: 0,
         }}
         dense={true}

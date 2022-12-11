@@ -9,6 +9,7 @@ const MainLottie = () => {
         source={require('../../../assets/lotties/mainLottie.json')}
         loop
         autoPlay={true}
+        style={{ width: 150, height: 150 }}
       />
     </View>
   );

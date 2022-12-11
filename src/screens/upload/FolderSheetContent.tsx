@@ -43,6 +43,9 @@ const FolderSheetContent = ({
             title="새폴더 만들기"
             headerRightButton={() => (
               <HeaderRightButton
+                pressableStyle={{
+                  right: -10,
+                }}
                 text="완료"
                 disabled={false}
                 borderLine={false}
