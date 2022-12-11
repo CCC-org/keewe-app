@@ -10,11 +10,11 @@ const handleSheetLinkComplete = async (
   try {
     const URL = linkText.includes('http') ? linkText : `http://${linkText}`;
     const response = await axios.get(URL);
-    console.log(response);
     if (response.status === 200) {
       setIsValidSite(true);
       linkSheetRef.current?.close();
     } else {
+      setIsValidSite(false);
       throw new Error('Invalid link');
     }
   } catch (error) {
