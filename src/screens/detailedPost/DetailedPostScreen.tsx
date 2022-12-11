@@ -163,7 +163,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
                     ));
                     return comment.concat(repies);
                   })}
-                  {getCommentResponse.data.total >= 4 && (
+                  {getCommentResponse.data.total > 0 && (
                     <View
                       style={{
                         marginTop: 16,
@@ -173,7 +173,9 @@ const DetailedPostScreen = ({ navigation, route }) => {
                     >
                       <MoreCommentsButton
                         onPress={handleMoreCommentsPress}
-                        number={getCommentResponse.data.total - 3}
+                        number={
+                          getCommentResponse.data.total - getCommentResponse.data.comments.length
+                        }
                         textColor={'white'}
                         backgroundColor={`${theme.colors.graphic.black}cc`}
                       />
