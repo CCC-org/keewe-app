@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
 import React from 'react';
-import MypageProfile from '../../components/profile/MypageProfile';
+import MypageProfile from '../../../components/profile/MypageProfile';
 import { useTheme } from 'react-native-paper';
 import { Feather, Ionicons } from '@expo/vector-icons';
-import MypageTitle from '../../components/title/MypageTitle';
-import DividerBar from '../../components/bars/DividerBar';
-import RNFadedScrollView from 'rn-faded-scrollview';
+import MypageTitle from '../../../components/title/MypageTitle';
+import DividerBar from '../../../components/bars/DividerBar';
+//import RNFadedScrollView from 'rn-faded-scrollview';
 
 const MyPageScreen = () => {
   const theme = useTheme();
