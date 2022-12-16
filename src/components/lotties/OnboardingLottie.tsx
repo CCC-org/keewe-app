@@ -11,7 +11,6 @@ const OnboardingLottie = () => {
       style={{
         width: '60%',
         height: '60%',
-        borderWidth: 2,
         justifyContent: 'center',
         alignItems: 'center',
       }}
