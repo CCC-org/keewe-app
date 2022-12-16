@@ -1,9 +1,7 @@
-import { StyleSheet, Text, View, RefreshControl, ScrollView, Pressable } from 'react-native';
+import { StyleSheet, Text, View, RefreshControl } from 'react-native';
 import React, { Fragment, useState } from 'react';
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { FeedAPI, FeedQueryKeys } from '../../utils/api/FeedAPI';
-import { querySuccessError } from '../../utils/helper/queryReponse/querySuccessError';
-// import { ScrollView } from 'react-native-gesture-handler';
 import { FeedInsight, InsightData } from '../../types/Feed/Feedinsights';
 import FeedItem from './FeedItem';
 import { useTheme } from 'react-native-paper';
@@ -16,13 +14,13 @@ import UserSpecificChallengeSection from './UserSpecificChallengeSection';
 import DividerBar from '../../components/bars/DividerBar';
 import { postFeedBookMark } from '../../utils/api/FeedBookMark';
 import MainLottie from '../../components/lotties/MainLottie';
+import { InView, IOScrollView } from 'react-native-intersection-observer';
 
-const FeedScreen = ({ navigation }) => {
+const FeedScreen = () => {
   const [cursor, setCursor] = useState(0);
   const [limit, setLimit] = useState(5);
   const [follow, setFollow] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-
   const theme = useTheme();
   const feedListQueryClient = useQueryClient();
   const {
@@ -93,7 +91,7 @@ const FeedScreen = ({ navigation }) => {
   }
 
   return (
-    <ScrollView
+    <IOScrollView
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       contentContainerStyle={styles.feedCtn}
     >
@@ -104,25 +102,25 @@ const FeedScreen = ({ navigation }) => {
         )}
       </View>
       <DividerBar style={styles.divider} />
-      {isLoading ? (
-        <Text>로딩중</Text>
-      ) : (
-        feedList?.pages.map((group, i) => {
-          return (
-            <Fragment key={i}>
-              {group?.map((insight) => {
+      {feedList?.pages.map((group, i) => {
+        return (
+          <Fragment key={i}>
+            {group?.map((insight, idx) => {
+              if (group.length - 1 === idx && feedList.pages.length - 1 === i) {
                 return (
-                  <FeedItem onBookMarkClick={touchBookMark} key={insight.id} insight={insight} />
+                  <InView key={insight.id} onChange={() => fetchNextPage()}>
+                    <FeedItem onBookMarkClick={touchBookMark} insight={insight} />
+                  </InView>
                 );
-              })}
-            </Fragment>
-          );
-        })
-      )}
-      <Pressable onPress={() => fetchNextPage()}>
-        <Text>Next feed</Text>
-      </Pressable>
-    </ScrollView>
+              }
+              return (
+                <FeedItem onBookMarkClick={touchBookMark} key={insight.id} insight={insight} />
+              );
+            })}
+          </Fragment>
+        );
+      })}
+    </IOScrollView>
   );
 };
 
