@@ -51,13 +51,11 @@ export default FeedLinkWithBookMark;
 function createStyles() {
   const styles = StyleSheet.create({
     FeedLinkCardContainer: {
-      flex: 1,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
     },
     container: {
-      width: 300,
       height: 48,
       justifyContent: 'center',
     },

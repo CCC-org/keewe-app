@@ -19,32 +19,12 @@ import MainLottie from '../../components/lotties/MainLottie';
 
 const FeedScreen = ({ navigation }) => {
   const [cursor, setCursor] = useState(0);
-  const [limit, setLimit] = useState(1);
+  const [limit, setLimit] = useState(5);
   const [follow, setFollow] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
   const theme = useTheme();
   const feedListQueryClient = useQueryClient();
-  // const {
-  //   data: feedList,
-  //   isLoading,
-  //   refetch,
-  // } = useQuery<FeedInsight['data'] | undefined>(
-  //   FeedQueryKeys.getFeed(),
-  //   () => FeedAPI.getFeed(cursor, limit, follow),
-  //   {
-  //     onSuccess: (data) => {
-  //       if (data && data.length === 0) {
-  //         console.log('refetch');
-  //         setFollow(false);
-  //         refetch();
-  //       }
-  //       if (data) {
-  //         setCursor(data[data.length - 1].id);
-  //       }
-  //     },
-  //   },
-  // );
   const {
     data: feedList,
     isLoading,
@@ -55,7 +35,6 @@ const FeedScreen = ({ navigation }) => {
   } = useInfiniteQuery<FeedInsight['data'] | undefined>({
     queryKey: FeedQueryKeys.getFeed(),
     queryFn: (context) => {
-      console.log('🚀 ~ file: FeedScreen.tsx:58 ~ FeedScreen ~ context', context);
       return FeedAPI.getFeed(context.pageParam, limit, follow);
     },
     getNextPageParam: (lastpage, pages) => {
@@ -63,7 +42,6 @@ const FeedScreen = ({ navigation }) => {
       return lastFeedId;
     },
   });
-  console.log('🚀 ~ file: FeedScreen.tsx:66 ~ FeedScreen ~ feedList', feedList);
 
   const { data: userSpecificChallenge, ...challengeData } = useQuery<
     UserSpecificChallenge['data'] | undefined
@@ -129,10 +107,6 @@ const FeedScreen = ({ navigation }) => {
       {isLoading ? (
         <Text>로딩중</Text>
       ) : (
-        // feedList?.pages.map((insight) => (
-        //   <FeedItem onBookMarkClick={touchBookMark} key={insight.id} insight={insight} />
-        // ))
-
         feedList?.pages.map((group, i) => {
           return (
             <Fragment key={i}>
