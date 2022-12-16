@@ -45,7 +45,7 @@ const FeedItem = ({ insight, onBookMarkClick }: FeedItemProps) => {
       <View style={styles.contentCtn}>
         <FeedTextContent contents={contents} insightId={id} />
         <FeedLinkWithBookMark
-          text={'naver.com'}
+          text={insight.link.url}
           onBookmarkPress={handleOnBookMarkPress}
           isBookMarked={bookmark}
         />

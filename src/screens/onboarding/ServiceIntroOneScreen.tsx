@@ -5,6 +5,7 @@ import HeaderText from '../../components/texts/HeaderText';
 import Stepper from '../../components/stepper/Stepper';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import Carousel from 'react-native-reanimated-carousel';
+import OnboardingLottie from '../../components/lotties/OnboardingLottie';
 
 const fullScreenHeight = Dimensions.get('window').height;
 const fullScreenWidth = Dimensions.get('window').width;
@@ -13,6 +14,13 @@ const ServiceIntroOneScreen = ({ navigation }) => {
   const [step, setStep] = useState(0);
   const styles = createStyle();
   const carouselRef = useRef<any>(null);
+
+  const handleStep = (idx: number) => {
+    if (step === 0 && idx === 2) return;
+    if (step === 2 && idx === 0) return;
+    setStep(idx);
+  };
+
   function handlePress() {
     if (step === 2) {
       alert('navigate to Home');
@@ -26,7 +34,8 @@ const ServiceIntroOneScreen = ({ navigation }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Image source={require('../../../assets/images/따봉도치.jpg')} style={styles.image} />
+      {/* <Image source={require('../../../assets/images/따봉도치.jpg')} style={styles.image} /> */}
+      <OnboardingLottie />
       <View style={styles.bottom}>
         <View style={styles.titleContainer}>
           <Carousel
@@ -39,7 +48,8 @@ const ServiceIntroOneScreen = ({ navigation }) => {
             ref={carouselRef}
             width={fullScreenWidth}
             height={205}
-            onSnapToItem={setStep}
+            loop={false}
+            onSnapToItem={(idx) => handleStep(idx)}
             data={[
               <View key={1} style={styles.carouselItemCtn}>
                 <HeaderText key={1} header={'기억하고 싶은 콘텐츠, \n지나치지 말고 기록하세요'} />
@@ -88,10 +98,11 @@ export default ServiceIntroOneScreen;
 export function createStyle() {
   return StyleSheet.create({
     container: {
+      flex: 1,
       backgroundColor: '#fff',
-      alignItems: 'center',
       flexDirection: 'column',
-      justifyContent: 'flex-start',
+      justifyContent: 'flex-end',
+      alignItems: 'center',
     },
     carouselItemCtn: {
       width: '100%',
@@ -115,19 +126,17 @@ export function createStyle() {
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      // paddingLeft: 100,
     },
     bottom: {
       justifyContent: 'space-between',
       alignItems: 'center',
       paddingHorizontal: 10,
       paddingBottom: 0,
-      height: fullScreenHeight * 0.38,
+      border: '10px solid red',
     },
     nextButtonWithStepper: {
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'space-between',
       alignItems: 'center',
     },
     nextButton: {
