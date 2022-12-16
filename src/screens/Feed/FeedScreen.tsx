@@ -36,7 +36,7 @@ const FeedScreen = () => {
       return FeedAPI.getFeed(context.pageParam, limit, follow);
     },
     getNextPageParam: (lastpage, pages) => {
-      const lastFeedId = lastpage?.[lastpage.length - 1].id || 0;
+      const lastFeedId = lastpage?.[lastpage.length - 1]?.id || 0;
       return lastFeedId;
     },
   });
@@ -77,15 +77,12 @@ const FeedScreen = () => {
 
   const onRefresh = () => {
     setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 1000);
     feedListQueryClient.invalidateQueries(FeedQueryKeys.getFeed());
     feedListQueryClient
       .invalidateQueries(UserSpecificChallengeQueryKeys.getUserSpecificChallenge())
       .then(() => setRefreshing(false));
   };
-
+  console.log(refreshing);
   if (isLoading || challengeData.isLoading) {
     return <MainLottie />;
   }

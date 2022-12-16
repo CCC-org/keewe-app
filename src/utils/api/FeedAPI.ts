@@ -8,6 +8,7 @@ export const FeedQueryKeys = {
 
 export const FeedAPI = {
   getFeed: async (cursor: number, limit: number, follow: boolean) => {
+    console.log('called');
     const token = await getAccessToken();
     try {
       const response = await axios.get<FeedInsight>(
