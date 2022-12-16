@@ -7,11 +7,11 @@ import MypageTitle from '../../../components/title/MypageTitle';
 import DividerBar from '../../../components/bars/DividerBar';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
-const MyPageScreen = ({ route }) => {
+const MyPageScreen = ({ navigation, route }) => {
   const { userId } = route.params;
   if (userId === null || userId === undefined) {
     alert('userId를 인식할 수 없었습니다.');
-    return null;
+    //return null;
   }
   const theme = useTheme();
   return (
@@ -33,11 +33,11 @@ const MyPageScreen = ({ route }) => {
             style={{ ...theme.fonts.text.body2.regular, color: `${theme.colors.graphic.black}cc` }}
           >
             암더 코리안 탑클래스 힙합모범 노블레스 페뷸러스 터뷸렌스 고져스 벗 댕저러스 난 비트를
-            비틀어 제껴버리는 셔브미션 챔피욘
+            비틀어 제껴버리는 셔브미션 좀 돼라
           </Text>
         </View>
         <View style={{ alignItems: 'center' }}>
-          <Pressable style={styles.editBtn} onPress={() => alert('Editing Profile!')}>
+          <Pressable style={styles.editBtn} onPress={() => navigation.navigate('ProfileEdit')}>
             <Text
               style={{ ...theme.fonts.text.body1.bold, color: `${theme.colors.graphic.black}cc` }}
             >

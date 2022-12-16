@@ -37,6 +37,7 @@ import CommentsScreen from './src/screens/detailedPost/CommentsScreen';
 import { TransitionPresets } from '@react-navigation/stack';
 import HomeScreen from './src/screens/Home/HomeScreen';
 import FeedScreen from './src/screens/Feed/FeedScreen';
+import ProfileEditScreen from './src/screens/Main/mypage/ProfileEditScreen';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator();
@@ -88,6 +89,11 @@ export default function App() {
                     />
                     {/* <Stack.Screen name={'Home'} component={HomeScreen}></Stack.Screen> */}
                   </Stack.Group>
+                  <Stack.Screen
+                    name={'ProfileEdit'}
+                    component={ProfileEditScreen}
+                    options={headerOptions}
+                  />
                   {/* 챌린지 그룹 */}
                   <Stack.Group
                     screenOptions={{

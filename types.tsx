@@ -41,6 +41,8 @@ export type RootStackParamList = {
   Share: undefined;
   Insight: undefined;
   Comments: undefined;
+  Mypage: undefined;
+  ProfileEdit: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

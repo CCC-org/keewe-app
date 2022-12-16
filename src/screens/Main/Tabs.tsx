@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BookMarkScreen from './BookMarkScreen';
 import ChallengesScreen from './ChallengesScreen';
-import MyPageScreen from './MyPageScreen';
 import { RootScreen } from '../../navigation';
 import FeedScreen from '../Feed/FeedScreen';
 import HomeScreen from '../Home/HomeScreen';
@@ -22,6 +21,7 @@ import {
   mypageOff,
 } from '../../constants/Icons/Navigation/NavigationIconsXml';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
+import MyPageScreen from './mypage/MyPageScreen';
 const queryClient = new QueryClient();
 const Tab = createBottomTabNavigator();
 
