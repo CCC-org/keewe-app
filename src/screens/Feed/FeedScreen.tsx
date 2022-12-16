@@ -47,7 +47,7 @@ const FeedScreen = () => {
     UserSpecificChallengeAPI.getUserSpecificChallenge(),
   );
 
-  const { mutate: touchBookMark } = useMutation({
+  const { mutate: touchBookMark, isLoading: bookMarkIsLoading } = useMutation({
     mutationFn: postFeedBookMark,
     onSettled: () => {
       feedListQueryClient.invalidateQueries(FeedQueryKeys.getFeed());
@@ -84,14 +84,23 @@ const FeedScreen = () => {
               if (group.length - 1 === idx && feedList.pages.length - 1 === i) {
                 return (
                   <InView key={insight.id} onChange={() => fetchNextPage()}>
-                    <FeedItem onBookMarkClick={touchBookMark} insight={insight} />
+                    <FeedItem
+                      bookMarkIsLoading={bookMarkIsLoading}
+                      onBookMarkClick={touchBookMark}
+                      insight={insight}
+                    />
                   </InView>
                 );
               }
               return (
                 <Fragment key={insight.id}>
                   <Text>{insight.id}</Text>
-                  <FeedItem onBookMarkClick={touchBookMark} key={insight.id} insight={insight} />
+                  <FeedItem
+                    bookMarkIsLoading={bookMarkIsLoading}
+                    onBookMarkClick={touchBookMark}
+                    key={insight.id}
+                    insight={insight}
+                  />
                 </Fragment>
               );
             })}

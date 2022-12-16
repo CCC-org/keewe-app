@@ -1,20 +1,18 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import React from 'react';
 import { InsightData } from '../../types/Feed/Feedinsights';
 import MiniProfile from '../../components/profile/MiniProfile';
-import { useTheme } from 'react-native-paper';
 import FeedLinkWithBookMark from './FeedLinkCard';
-import { LinkPreview } from '@flyerhq/react-native-link-preview';
 import FeedVerticalDots from './FeedVerticalDots';
 import FeedTextContent from './FeedTextContent';
-import { postFeedBookMark } from '../../utils/api/FeedBookMark';
 
 interface FeedItemProps {
   insight: InsightData;
   onBookMarkClick: (id: number) => void;
+  bookMarkIsLoading: boolean;
 }
 
-const FeedItem = ({ insight, onBookMarkClick }: FeedItemProps) => {
+const FeedItem = ({ insight, onBookMarkClick, bookMarkIsLoading }: FeedItemProps) => {
   const { id, contents, createdAt, link, reaction, writer, bookmark } = insight;
 
   const handleOnBookMarkPress = () => {
@@ -45,6 +43,7 @@ const FeedItem = ({ insight, onBookMarkClick }: FeedItemProps) => {
       <View style={styles.contentCtn}>
         <FeedTextContent contents={contents} insightId={id} />
         <FeedLinkWithBookMark
+          bookMarkIsLoading={bookMarkIsLoading}
           text={insight.link.url}
           onBookmarkPress={handleOnBookMarkPress}
           isBookMarked={bookmark}
