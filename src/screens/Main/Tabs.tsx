@@ -46,16 +46,16 @@ const Tabs = () => {
             tabBarIcon: ({ focused }) =>
               focused ? <SvgXml xml={challengeOn} /> : <SvgXml xml={challengeOff} />,
           }}
-          name="BookMark"
-          component={BookMarkScreen}
+          name="Challenges"
+          component={ChallengesScreen}
         />
         <Tab.Screen
           options={{
             tabBarIcon: ({ focused }) =>
               focused ? <SvgXml xml={bookmarkOn} /> : <SvgXml xml={bookmarkOff} />,
           }}
-          name="Challenges"
-          component={ChallengesScreen}
+          name="BookMark"
+          component={BookMarkScreen}
         />
         <Tab.Screen
           options={{
