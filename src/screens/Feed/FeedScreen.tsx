@@ -35,7 +35,7 @@ const FeedScreen = () => {
     queryFn: (context) => {
       return FeedAPI.getFeed(context.pageParam, limit, follow);
     },
-    getNextPageParam: (lastpage, pages) => {
+    getNextPageParam: (lastpage) => {
       const lastFeedId = lastpage?.[lastpage.length - 1]?.id || 0;
       return lastFeedId;
     },
@@ -47,29 +47,8 @@ const FeedScreen = () => {
     UserSpecificChallengeAPI.getUserSpecificChallenge(),
   );
 
-  const { mutate: touchBookMark } = useMutation(postFeedBookMark, {
-    onMutate: async (id) => {
-      await feedListQueryClient.cancelQueries(FeedQueryKeys.getFeed());
-      const previousFeedList = feedListQueryClient.getQueryData(FeedQueryKeys.getFeed());
-      feedListQueryClient.setQueryData(FeedQueryKeys.getFeed(), (old: any) => {
-        const newFeedList = old?.map((feed) => {
-          if (feed.id === id) {
-            return {
-              ...feed,
-              bookmark: !feed.bookmark,
-            };
-          }
-          return feed;
-        });
-        return newFeedList;
-      });
-      return { previousFeedList };
-    },
-
-    onError: (err, variables, context) => {
-      console.error(err);
-      feedListQueryClient.setQueryData(FeedQueryKeys.getFeed(), context!.previousFeedList);
-    },
+  const { mutate: touchBookMark } = useMutation({
+    mutationFn: postFeedBookMark,
     onSettled: () => {
       feedListQueryClient.invalidateQueries(FeedQueryKeys.getFeed());
     },
@@ -82,7 +61,6 @@ const FeedScreen = () => {
       .invalidateQueries(UserSpecificChallengeQueryKeys.getUserSpecificChallenge())
       .then(() => setRefreshing(false));
   };
-  console.log(refreshing);
   if (isLoading || challengeData.isLoading) {
     return <MainLottie />;
   }
@@ -111,7 +89,10 @@ const FeedScreen = () => {
                 );
               }
               return (
-                <FeedItem onBookMarkClick={touchBookMark} key={insight.id} insight={insight} />
+                <Fragment key={insight.id}>
+                  <Text>{insight.id}</Text>
+                  <FeedItem onBookMarkClick={touchBookMark} key={insight.id} insight={insight} />
+                </Fragment>
               );
             })}
           </Fragment>
