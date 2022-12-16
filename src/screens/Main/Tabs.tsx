@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BookMarkScreen from './BookMarkScreen';
 import ChallengesScreen from './ChallengesScreen';
@@ -21,10 +21,12 @@ import {
   mypageOn,
   mypageOff,
 } from '../../constants/Icons/Navigation/NavigationIconsXml';
+import { useGetUserId } from '../../utils/hooks/useGetUserId';
 const queryClient = new QueryClient();
-
 const Tab = createBottomTabNavigator();
+
 const Tabs = () => {
+  const userId = useGetUserId();
   return (
     <QueryClientProvider client={queryClient}>
       <Tab.Navigator
@@ -64,6 +66,9 @@ const Tabs = () => {
           }}
           name="MyPage"
           component={MyPageScreen}
+          initialParams={{
+            userId: userId,
+          }}
         />
         <Tab.Screen name="Root" component={RootScreen} />
       </Tab.Navigator>

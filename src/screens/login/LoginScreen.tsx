@@ -3,7 +3,7 @@ import { WebView } from 'react-native-webview';
 import { View } from 'react-native';
 import { useQuery } from 'react-query';
 import { LoginQueryKeys, LoginAPI } from '../../utils/api/LoginAPI';
-import { setAccessToken } from '../../utils/hooks/asyncStorage/Login';
+import { setAccessToken, setUserId } from '../../utils/hooks/asyncStorage/Login';
 
 // eslint-disable-next-line quotes
 const INJECTED_JAVASCRIPT = "window.ReactNativeWebView.postMessage('login start')";
@@ -18,6 +18,7 @@ function Login({ navigation, route }) {
   const { refetch } = useQuery(LoginQueryKeys.login(params), () => LoginAPI.login(params), {
     onSuccess: (response) => {
       setAccessToken(response.data.accessToken);
+      setUserId(response.data.userId);
       navigation.navigate('CategorySelect');
     },
     onError: (e) => {

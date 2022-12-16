@@ -7,7 +7,12 @@ import MypageTitle from '../../../components/title/MypageTitle';
 import DividerBar from '../../../components/bars/DividerBar';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
-const MyPageScreen = () => {
+const MyPageScreen = ({ route }) => {
+  const { userId } = route.params;
+  if (userId === null || userId === undefined) {
+    alert('userId를 인식할 수 없었습니다.');
+    return null;
+  }
   const theme = useTheme();
   return (
     <ScrollView>
