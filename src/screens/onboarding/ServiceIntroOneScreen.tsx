@@ -16,8 +16,6 @@ const ServiceIntroOneScreen = ({ navigation }) => {
   const carouselRef = useRef<any>(null);
 
   const handleStep = (idx: number) => {
-    if (step === 0 && idx === 2) return;
-    if (step === 2 && idx === 0) return;
     setStep(idx);
   };
 
