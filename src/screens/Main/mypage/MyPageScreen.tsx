@@ -1,19 +1,34 @@
 import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import MypageProfile from '../../../components/profile/MypageProfile';
 import { useTheme } from 'react-native-paper';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import MypageTitle from '../../../components/title/MypageTitle';
 import DividerBar from '../../../components/bars/DividerBar';
+import InterestIcon from './InterestIcon';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
 const MyPageScreen = ({ navigation, route }) => {
   const { userId } = route.params;
   if (userId === null || userId === undefined) {
-    alert('userId를 인식할 수 없었습니다.');
+    //alert('userId를 인식할 수 없었습니다.');
     //return null;
   }
   const theme = useTheme();
+  const [interests, setInterests] = useState([
+    '관심사1',
+    '관심사2',
+    '관심사3',
+    '관심사4',
+    '관심사5',
+  ]);
+  const [iconColor, setIconColor] = useState([
+    ['#9350E9', '#9350E91a'],
+    ['#19A9FA', '#19A9FA1a'],
+    ['#FF42B2', '#FF42B21a'],
+    ['#7545FF', '#7545FF1a'],
+    ['#09CE84', '#09CE841a'],
+  ]);
   return (
     <ScrollView>
       <View style={styles.top}>
@@ -28,12 +43,24 @@ const MyPageScreen = ({ navigation, route }) => {
         <View style={{ marginLeft: 16, marginBottom: 24 }}>
           <MypageProfile />
         </View>
+        <View
+          style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: 20, marginHorizontal: 14 }}
+        >
+          {interests.map((cur, idx) => (
+            <InterestIcon
+              key={idx}
+              title={cur}
+              textColor={iconColor[idx][0]}
+              backgroundColor={iconColor[idx][1]}
+            />
+          ))}
+        </View>
         <View style={{ marginHorizontal: 16 }}>
           <Text
             style={{ ...theme.fonts.text.body2.regular, color: `${theme.colors.graphic.black}cc` }}
           >
             암더 코리안 탑클래스 힙합모범 노블레스 페뷸러스 터뷸렌스 고져스 벗 댕저러스 난 비트를
-            비틀어 제껴버리는 셔브미션 좀 돼라
+            비틀어 제껴버리는 셔브미션 챔피욘
           </Text>
         </View>
         <View style={{ alignItems: 'center' }}>

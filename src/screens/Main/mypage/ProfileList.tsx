@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { useTheme } from 'react-native-paper';
 
@@ -16,14 +16,18 @@ const ProfileList = ({ title, content, contentColor }: ProfileListProps) => {
         <Text style={theme.fonts.text.body1.regular}>{title}</Text>
       </View>
       <View style={{ flex: 11 }}>
-        <Text
-          style={{
-            ...theme.fonts.text.body1.bold,
-            color: contentColor ?? theme.colors.brand.onprimary.container,
-          }}
-        >
-          {content}
-        </Text>
+        <Pressable onPress={() => alert('메롱')}>
+          <View>
+            <Text
+              style={{
+                ...theme.fonts.text.body1.bold,
+                color: contentColor ?? theme.colors.brand.onprimary.container,
+              }}
+            >
+              {content}
+            </Text>
+          </View>
+        </Pressable>
       </View>
     </View>
   );
