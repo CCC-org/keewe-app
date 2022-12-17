@@ -86,7 +86,7 @@ const InterestChooseScreen = ({ navigation, route }) => {
       />
       <View style={{ flex: 1, justifyContent: 'flex-end' }}>
         <NumberProgressBar progressValue={selectedCategory.length} max={5} />
-        <View style={{ marginBottom: 30, marginTop: 15 }}>
+        <View style={{ marginBottom: 12, marginTop: 15 }}>
           <ConditionalButton
             isActive={selectedCategory.length > 0 && selectedCategory.length < 6}
             onPress={handleNextScreen}

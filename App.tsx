@@ -39,6 +39,7 @@ import HomeScreen from './src/screens/Home/HomeScreen';
 import FeedScreen from './src/screens/Feed/FeedScreen';
 import ProfileEditScreen from './src/screens/Main/mypage/ProfileEditScreen';
 import NicknameEditingScreen from './src/screens/Main/mypage/NicknameEditingScreen';
+import IntroductionEditingScreen from './src/screens/Main/mypage/IntroductionEditingScreen';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator();
@@ -98,6 +99,11 @@ export default function App() {
                   <Stack.Screen
                     name={'NicknameEditing'}
                     component={NicknameEditingScreen}
+                    options={headerOptions}
+                  />
+                  <Stack.Screen
+                    name={'IntroductionEditing'}
+                    component={IntroductionEditingScreen}
                     options={headerOptions}
                   />
                   {/* 챌린지 그룹 */}

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import HeaderRightButton from '../../../components/header/HeaderRightButton';
 import { useTheme } from 'react-native-paper';
 import { SvgXml } from 'react-native-svg';
@@ -8,8 +8,15 @@ import ProfileList from './ProfileList';
 
 const ProfileEditScreen = ({ navigation }) => {
   const theme = useTheme();
+  const [nickname, setNickname] = useState('이름');
+  const [title, setTitle] = useState('프로환승러');
+  const [introduction, setIntroduction] = useState('');
+  const [interest, setInterest] = useState(['여행', '운동']);
   const handleComplete = () => alert('back!');
   const handleNickname = () => navigation.navigate('NicknameEditing');
+  const handleTitle = () => alert('타이틀창으로');
+  const handleIntroduction = () => navigation.navigate('IntroductionEditing');
+  const handleInterest = () => navigation.navigate('InterestChoose', { nickname });
   useEffect(() => {
     navigation.setOptions({
       headerTitle: '프로필 수정',
@@ -50,14 +57,15 @@ const ProfileEditScreen = ({ navigation }) => {
         </View>
       </View>
       <View>
-        <ProfileList title="이름" content="문복" handlePress={handleNickname} />
-        <ProfileList title="대표 타이틀" content="프로환승러" />
+        <ProfileList title="이름" content={nickname} handlePress={handleNickname} />
+        <ProfileList title="대표 타이틀" content={title} handlePress={handleTitle} />
         <ProfileList
           title="소개"
-          content="자신을 자유롭게 표현해보세요"
-          contentColor={`${theme.colors.graphic.black}4d`}
+          content={introduction === '' ? '자신을 자유롭게 표현해보세요' : introduction}
+          contentColor={introduction === '' ? `${theme.colors.graphic.black}4d` : undefined}
+          handlePress={handleIntroduction}
         />
-        <ProfileList title="관심사" content="#여행 #운동" />
+        <ProfileList title="관심사" content={interest.join(' ')} handlePress={handleInterest} />
       </View>
     </>
   );
