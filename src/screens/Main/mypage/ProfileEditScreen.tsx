@@ -9,6 +9,7 @@ import ProfileList from './ProfileList';
 const ProfileEditScreen = ({ navigation }) => {
   const theme = useTheme();
   const handleComplete = () => alert('back!');
+  const handleNickname = () => navigation.navigate('NicknameEditing');
   useEffect(() => {
     navigation.setOptions({
       headerTitle: '프로필 수정',
@@ -49,7 +50,7 @@ const ProfileEditScreen = ({ navigation }) => {
         </View>
       </View>
       <View>
-        <ProfileList title="이름" content="문복" />
+        <ProfileList title="이름" content="문복" handlePress={handleNickname} />
         <ProfileList title="대표 타이틀" content="프로환승러" />
         <ProfileList
           title="소개"

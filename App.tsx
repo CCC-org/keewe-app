@@ -38,6 +38,7 @@ import { TransitionPresets } from '@react-navigation/stack';
 import HomeScreen from './src/screens/Home/HomeScreen';
 import FeedScreen from './src/screens/Feed/FeedScreen';
 import ProfileEditScreen from './src/screens/Main/mypage/ProfileEditScreen';
+import NicknameEditingScreen from './src/screens/Main/mypage/NicknameEditingScreen';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator();
@@ -92,6 +93,11 @@ export default function App() {
                   <Stack.Screen
                     name={'ProfileEdit'}
                     component={ProfileEditScreen}
+                    options={headerOptions}
+                  />
+                  <Stack.Screen
+                    name={'NicknameEditing'}
+                    component={NicknameEditingScreen}
                     options={headerOptions}
                   />
                   {/* 챌린지 그룹 */}

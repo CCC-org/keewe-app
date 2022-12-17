@@ -43,6 +43,7 @@ export type RootStackParamList = {
   Comments: undefined;
   Mypage: undefined;
   ProfileEdit: undefined;
+  NicknameEditing: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
