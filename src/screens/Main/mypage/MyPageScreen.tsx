@@ -15,13 +15,18 @@ const MyPageScreen = ({ navigation, route }) => {
     //return null;
   }
   const theme = useTheme();
-  const [interests, setInterests] = useState([
-    '관심사1',
-    '관심사2',
-    '관심사3',
-    '관심사4',
-    '관심사5',
+  const [nickname, setNickname] = useState<string>('닉네임');
+  const [title, setTitle] = useState<string>('대표 타이틀');
+  const [selectedCategory, setSelectedCategory] = useState<string[]>([
+    '여행',
+    '반려동물',
+    '사진',
+    '맛집',
+    '가상자산',
   ]);
+  const [introduction, setIntroduction] = useState<string>(
+    '암더 코리안 탑클래스 힙합모범 노블레스 페뷸러스 터뷸렌스 고져스 벗 댕저러스 난 비트를 비틀어 제껴버리는 셔브미션 챔피욘',
+  );
   const [iconColor, setIconColor] = useState([
     ['#9350E9', '#9350E91a'],
     ['#19A9FA', '#19A9FA1a'],
@@ -41,12 +46,12 @@ const MyPageScreen = ({ navigation, route }) => {
           </Pressable>
         </View>
         <View style={{ marginLeft: 16, marginBottom: 24 }}>
-          <MypageProfile />
+          <MypageProfile nickname={nickname} title={title} />
         </View>
         <View
           style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: 20, marginHorizontal: 14 }}
         >
-          {interests.map((cur, idx) => (
+          {selectedCategory.map((cur, idx) => (
             <InterestIcon
               key={idx}
               title={cur}
@@ -59,12 +64,21 @@ const MyPageScreen = ({ navigation, route }) => {
           <Text
             style={{ ...theme.fonts.text.body2.regular, color: `${theme.colors.graphic.black}cc` }}
           >
-            암더 코리안 탑클래스 힙합모범 노블레스 페뷸러스 터뷸렌스 고져스 벗 댕저러스 난 비트를
-            비틀어 제껴버리는 셔브미션 챔피욘
+            {introduction}
           </Text>
         </View>
         <View style={{ alignItems: 'center' }}>
-          <Pressable style={styles.editBtn} onPress={() => navigation.navigate('ProfileEdit')}>
+          <Pressable
+            style={styles.editBtn}
+            onPress={() =>
+              navigation.navigate('ProfileEdit', {
+                nickname,
+                title,
+                selectedCategory,
+                introduction,
+              })
+            }
+          >
             <Text
               style={{ ...theme.fonts.text.body1.bold, color: `${theme.colors.graphic.black}cc` }}
             >

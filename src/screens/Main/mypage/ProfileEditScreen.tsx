@@ -5,18 +5,42 @@ import { useTheme } from 'react-native-paper';
 import { SvgXml } from 'react-native-svg';
 import person from '../../../constants/Icons/Avatar/personXml';
 import ProfileList from './ProfileList';
+import { TOTAL_TAG } from '../../../constants/Interests';
 
-const ProfileEditScreen = ({ navigation }) => {
+const ProfileEditScreen = ({ navigation, route }) => {
   const theme = useTheme();
-  const [nickname, setNickname] = useState('이름');
-  const [title, setTitle] = useState('프로환승러');
-  const [introduction, setIntroduction] = useState('');
-  const [interest, setInterest] = useState(['여행', '운동']);
+  const [nickname, setNickname] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
+  const [introduction, setIntroduction] = useState<string>('');
+  const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
+  const [customCategory, setCustomCategory] = useState<string[]>([]);
   const handleComplete = () => alert('back!');
-  const handleNickname = () => navigation.navigate('NicknameEditing');
+  const handleNickname = () => {
+    navigation.navigate('NicknameEditing', {
+      nickname,
+      title,
+      introduction,
+      selectedCategory,
+      toScreen: 'ProfileEdit',
+    });
+  };
   const handleTitle = () => alert('타이틀창으로');
-  const handleIntroduction = () => navigation.navigate('IntroductionEditing');
-  const handleInterest = () => navigation.navigate('InterestChoose', { nickname });
+  const handleIntroduction = () =>
+    navigation.navigate('IntroductionEditing', {
+      nickname,
+      title,
+      introduction,
+      selectedCategory,
+      toScreen: 'ProfileEdit',
+    });
+  const handleInterests = () =>
+    navigation.navigate('InterestEditing', {
+      nickname,
+      title,
+      introduction,
+      selectedCategory,
+      customCategory,
+    });
   useEffect(() => {
     navigation.setOptions({
       headerTitle: '프로필 수정',
@@ -37,6 +61,21 @@ const ProfileEditScreen = ({ navigation }) => {
       ),
     });
   }, []);
+
+  useEffect(() => {
+    // eslint-disable-next-line no-prototype-builtins
+    //if (!route.params.hasOwnProperty('selectedCategory')) return;
+    const { nickname, title, introduction, selectedCategory } = route.params;
+    setNickname(nickname);
+    setTitle(title);
+    setSelectedCategory(selectedCategory);
+    setIntroduction(introduction);
+    setCustomCategory(
+      selectedCategory.filter((cur) => {
+        return !TOTAL_TAG.includes(cur);
+      }),
+    );
+  }, [route]);
   return (
     <>
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -65,7 +104,11 @@ const ProfileEditScreen = ({ navigation }) => {
           contentColor={introduction === '' ? `${theme.colors.graphic.black}4d` : undefined}
           handlePress={handleIntroduction}
         />
-        <ProfileList title="관심사" content={interest.join(' ')} handlePress={handleInterest} />
+        <ProfileList
+          title="관심사"
+          content={selectedCategory.map((cur) => '#' + cur).join(' ')}
+          handlePress={handleInterests}
+        />
       </View>
     </>
   );

@@ -12,7 +12,7 @@ const CategoryCreateScreen = ({ navigation, route }) => {
 
   const handleComplete = () => {
     navigation.navigate(route.params?.toScreen, {
-      selectedCategory: input,
+      selectedCategory: [input],
       customCategory: [input, ...customCategory],
     });
   };

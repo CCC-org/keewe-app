@@ -44,6 +44,7 @@ export type RootStackParamList = {
   Mypage: undefined;
   ProfileEdit: undefined;
   NicknameEditing: undefined;
+  interestEditing: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

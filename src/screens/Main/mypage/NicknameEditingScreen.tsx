@@ -4,16 +4,27 @@ import HeaderRightButton from '../../../components/header/HeaderRightButton';
 import { useTheme } from 'react-native-paper';
 import SmallTextInput from '../../../components/texts/SmallTextInput';
 
-const NicknameEditingScreen = ({ navigation }) => {
+const NicknameEditingScreen = ({ navigation, route }) => {
   const theme = useTheme();
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [input, setInput] = useState<string>('');
+  const [title] = useState(route.params.title);
+  const [introduction] = useState(route.params.introduction);
+  const [selectedCategory] = useState(route.params.selectedCategory);
   useEffect(() => {
     navigation.setOptions({
       headerTitle: '이름',
     });
   }, []);
-  const handleComplete = () => alert('변경 완료');
+
+  const handleComplete = () => {
+    navigation.navigate(route.params?.toScreen, {
+      nickname: input,
+      title,
+      selectedCategory,
+      introduction,
+    });
+  };
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -27,7 +38,11 @@ const NicknameEditingScreen = ({ navigation }) => {
         />
       ),
     });
-  }, []);
+  }, [input, errorMessage]);
+
+  useEffect(() => {
+    setInput(route.params?.nickname ?? '');
+  }, [route.params]);
   return (
     <View style={styles.container}>
       <SmallTextInput
