@@ -44,57 +44,52 @@ const CommentInput = ({ insightId, replyInfo, onCancelReply, onCreate }: Comment
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.select({ ios: 'position' })} // position || padding
-      keyboardVerticalOffset={Platform.select({ ios: 90 })}
-    >
-      <View style={styles.Container}>
-        {replyInfo && (
-          <AnimatedHeightView startHeight={0} endHeight={44} duration={200}>
-            <View style={styles.reply}>
-              <Text
-                style={{
-                  ...theme.fonts.text.body2.regular,
-                  color: `${theme.colors.graphic.black}30`,
-                }}
-              >
-                {replyInfo.nickname}님에게 답글 남기는 중
-              </Text>
-              <Pressable onPress={handleCancelReply}>
-                <SvgXml xml={ClearSmallXml} />
-              </Pressable>
-            </View>
-          </AnimatedHeightView>
-        )}
-        <View style={styles.inputContainer}>
-          <View style={styles.input}>
-            <TextInput
-              value={input}
-              autoFocus={false}
-              onChangeText={(value) => setInput(value)}
-              placeholder="댓글 입력"
-              multiline={true}
-              style={{ ...theme.fonts.text.body2.regular }}
-              selectionColor={'black'}
-            ></TextInput>
+    <View style={styles.Container}>
+      {replyInfo && (
+        <AnimatedHeightView startHeight={0} endHeight={44} duration={200}>
+          <View style={styles.reply}>
+            <Text
+              style={{
+                ...theme.fonts.text.body2.regular,
+                color: `${theme.colors.graphic.black}30`,
+              }}
+            >
+              {replyInfo.nickname}님에게 답글 남기는 중
+            </Text>
+            <Pressable onPress={handleCancelReply}>
+              <SvgXml xml={ClearSmallXml} />
+            </Pressable>
           </View>
-          <Pressable
-            onPress={() => {
-              createComment({
-                insightId,
-                content: input,
-                parentId: replyInfo?.id,
-              });
-              setInput('');
-              return;
-            }}
-            style={{ alignItems: 'center', justifyContent: 'center' }}
-          >
-            <SvgXml xml={input === '' ? shadow : main} />
-          </Pressable>
+        </AnimatedHeightView>
+      )}
+      <View style={styles.inputContainer}>
+        <View style={styles.input}>
+          <TextInput
+            value={input}
+            autoFocus={false}
+            onChangeText={(value) => setInput(value)}
+            placeholder="댓글 입력"
+            multiline={true}
+            style={{ ...theme.fonts.text.body2.regular }}
+            selectionColor={'black'}
+          ></TextInput>
         </View>
+        <Pressable
+          onPress={() => {
+            createComment({
+              insightId,
+              content: input,
+              parentId: replyInfo?.id,
+            });
+            setInput('');
+            return;
+          }}
+          style={{ alignItems: 'center', justifyContent: 'center' }}
+        >
+          <SvgXml xml={input === '' ? shadow : main} />
+        </Pressable>
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
@@ -102,6 +97,7 @@ export default CommentInput;
 
 const styles = StyleSheet.create({
   Container: {
+    position: 'absolute',
     width: '100%',
     bottom: 0,
     borderTopWidth: 1,

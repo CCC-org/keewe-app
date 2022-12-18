@@ -27,6 +27,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
   const [currentChallenge, setCurrentChallenge] = useState('내가 참여중인 챌린지');
   const [views] = useIncreaseView(insightId);
   const [replyInfo, setReplyInfo] = useState<ReplyInfo | undefined>();
+  const [representiveReplies, setRepresentiveReplies] = useState(0);
   const theme = useTheme();
   const { data: profile, isProfileLoading } = useQuery(
     InsightQueryKeys.getProfile({ insightId }),
@@ -41,7 +42,13 @@ const DetailedPostScreen = ({ navigation, route }) => {
   const { data: getCommentResponse, isLoading: isCommentLoading } = useQuery(
     InsightQueryKeys.getRepresentiveCommentList({ insightId }),
     () => InsightAPI.getRepresentiveCommentList({ insightId }),
-    querySuccessError,
+    {
+      onSuccess: (response) => {
+        response.data.comments.map((comment) =>
+          setRepresentiveReplies((prev) => prev + comment.replies.length + 1),
+        );
+      },
+    },
   );
 
   useLayoutEffect(() => {
@@ -84,11 +91,11 @@ const DetailedPostScreen = ({ navigation, route }) => {
 
   return (
     <>
-      <ScrollView>
-        <KeyboardAvoidingView
-          behavior={Platform.select({ ios: 'position' })} // position || padding
-          keyboardVerticalOffset={Platform.select({ ios: 0 })}
-        >
+      <KeyboardAvoidingView
+        behavior={Platform.select({ ios: 'position' })} // position || padding
+        keyboardVerticalOffset={Platform.select({ ios: 90 })}
+      >
+        <ScrollView style={{ marginBottom: 70 }}>
           {!isInsightLoading && (
             <DetailedPostSection
               insightId={insightId}
@@ -163,7 +170,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
                     ));
                     return comment.concat(repies);
                   })}
-                  {getCommentResponse.data.total > 0 && (
+                  {getCommentResponse.data.total > representiveReplies && (
                     <View
                       style={{
                         marginTop: 16,
@@ -173,9 +180,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
                     >
                       <MoreCommentsButton
                         onPress={handleMoreCommentsPress}
-                        number={
-                          getCommentResponse.data.total - getCommentResponse.data.comments.length
-                        }
+                        number={getCommentResponse.data.total - representiveReplies}
                         textColor={'white'}
                         backgroundColor={`${theme.colors.graphic.black}cc`}
                       />
@@ -185,16 +190,16 @@ const DetailedPostScreen = ({ navigation, route }) => {
               </View>
             </>
           )}
-        </KeyboardAvoidingView>
-      </ScrollView>
-      <CommentInput
-        insightId={insightId}
-        replyInfo={replyInfo}
-        onCancelReply={() => setReplyInfo(undefined)}
-        onCreate={() => {
-          return;
-        }}
-      />
+        </ScrollView>
+        <CommentInput
+          insightId={insightId}
+          replyInfo={replyInfo}
+          onCancelReply={() => setReplyInfo(undefined)}
+          onCreate={() => {
+            return;
+          }}
+        />
+      </KeyboardAvoidingView>
     </>
   );
 };
