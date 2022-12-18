@@ -1,4 +1,4 @@
-import { Pressable, FlatList, Text, View } from 'react-native';
+import { Pressable, FlatList, Text, Platform, KeyboardAvoidingView } from 'react-native';
 import React, { useState } from 'react';
 import Comment from '../../components/comments/Comment';
 import { useQuery } from 'react-query';
@@ -133,18 +133,28 @@ const CommentsScreen = ({ navigation, route }) => {
 
   return (
     <>
-      <FlatList data={data} renderItem={renderItem} onEndReached={onEndReached} />
-      <CommentInput
-        insightId={insightId}
-        replyInfo={replyInfo}
-        onCancelReply={() => setReplyInfo(undefined)}
-        onCreate={() => {
-          setData([]);
-          setCommentCursor(undefined);
-          setReplyCursor(undefined);
-          setReplyInfo(undefined);
-        }}
-      />
+      <KeyboardAvoidingView
+        behavior={Platform.select({ ios: 'position' })} // position || padding
+        keyboardVerticalOffset={Platform.select({ ios: 90 })}
+      >
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          onEndReached={onEndReached}
+          style={{ marginBottom: 80 }}
+        />
+        <CommentInput
+          insightId={insightId}
+          replyInfo={replyInfo}
+          onCancelReply={() => setReplyInfo(undefined)}
+          onCreate={() => {
+            setData([]);
+            setCommentCursor(undefined);
+            setReplyCursor(undefined);
+            setReplyInfo(undefined);
+          }}
+        />
+      </KeyboardAvoidingView>
     </>
   );
 };
