@@ -28,6 +28,7 @@ declare global {
         purple: string;
         violet: string;
         pink: string;
+        hotpink: string;
         red: string;
         coral: string;
         yellow: string;
@@ -130,6 +131,7 @@ const GRAPHIC = {
   purple: '#9350E9',
   violet: '#7545FF',
   pink: '#FF55BA',
+  hotpink: '#FF42B2',
   red: '#F24822',
   coral: '#FF7163',
   yellow: '#FFD600',

@@ -28,11 +28,11 @@ const MyPageScreen = ({ navigation, route }) => {
     '암더 코리안 탑클래스 힙합모범 노블레스 페뷸러스 터뷸렌스 고져스 벗 댕저러스 난 비트를 비틀어 제껴버리는 셔브미션 챔피욘',
   );
   const [iconColor, setIconColor] = useState([
-    ['#9350E9', '#9350E91a'],
-    ['#19A9FA', '#19A9FA1a'],
-    ['#FF42B2', '#FF42B21a'],
-    ['#7545FF', '#7545FF1a'],
-    ['#09CE84', '#09CE841a'],
+    [theme.colors.graphic.purple, `${theme.colors.graphic.purple}1a`],
+    [theme.colors.graphic.sky, `${theme.colors.graphic.sky}1a`],
+    [theme.colors.graphic.hotpink, `${theme.colors.graphic.hotpink}1a`],
+    [theme.colors.graphic.violet, `${theme.colors.graphic.violet}1a`],
+    [theme.colors.graphic.green, `${theme.colors.graphic.green}1a`],
   ]);
   return (
     <ScrollView>
