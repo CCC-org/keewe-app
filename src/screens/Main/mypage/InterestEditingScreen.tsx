@@ -1,13 +1,11 @@
 import { View } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { useMutation } from 'react-query';
 import InterestChooseSection from '../../onboarding/InterestChooseSection';
 import { TOTAL_TAG } from '../../../constants/Interests';
 import HeaderText from '../../../components/texts/HeaderText';
 import Stepper from '../../../components/stepper/Stepper';
 import NumberProgressBar from '../../../components/bars/NumberProgressBar';
 import ConditionalButton from '../../../components/buttons/ConditionalButton';
-import { OnboardAPI, OnboardQueryKeys } from '../../../utils/api/OnboardAPI';
 
 const InterestEditingScreen = ({ navigation, route }) => {
   const totalCategory = TOTAL_TAG;
@@ -17,18 +15,6 @@ const InterestEditingScreen = ({ navigation, route }) => {
   const [title] = useState(route.params.title);
   const [introduction] = useState(route.params.introduction);
   const [nickname] = useState(route.params.nickname);
-
-  // const { mutate: makeProfile } = useMutation(
-  //   OnboardQueryKeys.makeProfile({
-  //     nickname: route.params.nickname,
-  //     interests: selectedCategory,
-  //   }),
-  //   () =>
-  //     OnboardAPI.makeProfile({
-  //       nickname: route.params.nickname,
-  //       interests: selectedCategory,
-  //     }),
-  // );
 
   const handleSelectTag = (tag: string) => {
     if (!selectedCategory.includes(tag)) {

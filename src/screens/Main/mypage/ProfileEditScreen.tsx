@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import HeaderRightButton from '../../../components/header/HeaderRightButton';
 import { useTheme } from 'react-native-paper';
@@ -63,8 +63,6 @@ const ProfileEditScreen = ({ navigation, route }) => {
   }, []);
 
   useEffect(() => {
-    // eslint-disable-next-line no-prototype-builtins
-    //if (!route.params.hasOwnProperty('selectedCategory')) return;
     const { nickname, title, introduction, selectedCategory } = route.params;
     setNickname(nickname);
     setTitle(title);
