@@ -48,10 +48,6 @@ const DetailedPostSection = ({
         <Text style={[theme.fonts.text.body1.regular, { lineHeight: 28 }]}>{insightText}</Text>
       </View>
       <View style={styles.link}>
-        {/* <Pressable>
-          <Text>웹소설 웹툰의 어휘가 길수록 단순하고 유치...</Text>
-          <Text>careerly.co.kr</Text>
-        </Pressable> */}
         <LinkCard text={link}></LinkCard>
       </View>
       <View style={styles.emoticonBox}>
