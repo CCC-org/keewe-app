@@ -99,7 +99,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     borderRadius: 40,
-    marginLeft: 8,
+    marginRight: 8,
+    marginBottom: 12,
   },
 });
 

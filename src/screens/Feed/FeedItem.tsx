@@ -1,13 +1,12 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import React from 'react';
 import { InsightData } from '../../types/Feed/Feedinsights';
 import MiniProfile from '../../components/profile/MiniProfile';
-import { useTheme } from 'react-native-paper';
 import FeedLinkWithBookMark from './FeedLinkCard';
-import { LinkPreview } from '@flyerhq/react-native-link-preview';
 import FeedVerticalDots from './FeedVerticalDots';
 import FeedTextContent from './FeedTextContent';
-import { postFeedBookMark } from '../../utils/api/FeedBookMark';
+import { REACTIONS } from './constant';
+import ReactIconButton from '../../components/emoticons/ReactIconButton';
 
 interface FeedItemProps {
   insight: InsightData;
@@ -49,7 +48,18 @@ const FeedItem = ({ insight, onBookMarkClick }: FeedItemProps) => {
           onBookmarkPress={handleOnBookMarkPress}
           isBookMarked={bookmark}
         />
-        {/* TODO: 인사이트 반응 남기기 */}
+        <View style={{ ...styles.ReactionBar }}>
+          {REACTIONS.map((react) => (
+            <ReactIconButton
+              key={react.reaction}
+              xml={react.xml}
+              color={react.color}
+              taps={reaction[react.reaction]}
+              name={react.name}
+              insightId={id}
+            />
+          ))}
+        </View>
       </View>
     </View>
   );
@@ -61,7 +71,6 @@ const styles = StyleSheet.create({
   Feed: {
     marginBottom: 28,
   },
-
   Profilecontainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -78,5 +87,12 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     paddingLeft: 20,
     minHeight: 120,
+  },
+  ReactionBar: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignContent: 'center',
+    alignItems: 'center',
   },
 });
