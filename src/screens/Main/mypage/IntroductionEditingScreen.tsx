@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import HeaderRightButton from '../../../components/header/HeaderRightButton';
 import { useTheme } from 'react-native-paper';
@@ -29,11 +29,17 @@ const IntroductionEditingScreen = ({ navigation, route }) => {
         <HeaderRightButton
           text="완료"
           backGroundColor={
-            input.length < 151 ? theme.colors.brand.primary.main : `${theme.colors.graphic.black}33`
+            input.length > 150 || input === route.params?.introduction
+              ? `${theme.colors.graphic.black}33`
+              : theme.colors.brand.primary.main
           }
-          textColor={input.length < 151 ? theme.colors.graphic.black : theme.colors.graphic.white}
+          textColor={
+            input.length > 150 || input === route.params?.introduction
+              ? theme.colors.graphic.white
+              : theme.colors.graphic.black
+          }
           borderLine={false}
-          disabled={input.length < 151 ? false : true}
+          disabled={input.length > 150 || input === route.params?.introduction ? true : false}
           handlePress={() => handleComplete()}
         />
       ),
