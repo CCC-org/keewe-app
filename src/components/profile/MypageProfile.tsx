@@ -3,14 +3,19 @@ import React from 'react';
 import ProfileAvatar from './ProfileAvatar';
 import { useTheme } from 'react-native-paper';
 
-const MypageProfile = () => {
+interface MypageProfileProps {
+  nickname: string;
+  title: string;
+}
+
+const MypageProfile = ({ nickname, title }: MypageProfileProps) => {
   const theme = useTheme();
   return (
     <View style={styles.container}>
       <ProfileAvatar size={84} />
       <View style={{ marginLeft: 12 }}>
         <Text style={{ ...theme.fonts.text.headline1, color: `${theme.colors.graphic.black}cc` }}>
-          닉네임
+          {nickname}
         </Text>
         <Text
           style={{
@@ -19,7 +24,7 @@ const MypageProfile = () => {
             marginTop: 4,
           }}
         >
-          타이틀
+          {title}
         </Text>
         <View style={{ flexDirection: 'row', marginTop: 8 }}>
           <Text

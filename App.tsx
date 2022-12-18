@@ -37,6 +37,10 @@ import CommentsScreen from './src/screens/detailedPost/CommentsScreen';
 import { TransitionPresets } from '@react-navigation/stack';
 import HomeScreen from './src/screens/Home/HomeScreen';
 import FeedScreen from './src/screens/Feed/FeedScreen';
+import ProfileEditScreen from './src/screens/Main/mypage/ProfileEditScreen';
+import NicknameEditingScreen from './src/screens/Main/mypage/NicknameEditingScreen';
+import IntroductionEditingScreen from './src/screens/Main/mypage/IntroductionEditingScreen';
+import InterestEditingScreen from './src/screens/Main/mypage/InterestEditingScreen';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator();
@@ -88,6 +92,26 @@ export default function App() {
                     />
                     {/* <Stack.Screen name={'Home'} component={HomeScreen}></Stack.Screen> */}
                   </Stack.Group>
+                  <Stack.Screen
+                    name={'ProfileEdit'}
+                    component={ProfileEditScreen}
+                    options={headerOptions}
+                  />
+                  <Stack.Screen
+                    name={'NicknameEditing'}
+                    component={NicknameEditingScreen}
+                    options={headerOptions}
+                  />
+                  <Stack.Screen
+                    name={'IntroductionEditing'}
+                    component={IntroductionEditingScreen}
+                    options={headerOptions}
+                  />
+                  <Stack.Screen
+                    name={'InterestEditing'}
+                    component={InterestEditingScreen}
+                    options={{ ...headerOptions, title: '' }}
+                  />
                   {/* 챌린지 그룹 */}
                   <Stack.Group
                     screenOptions={{
