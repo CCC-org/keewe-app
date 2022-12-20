@@ -4,7 +4,7 @@ import Stepper from '../../components/stepper/Stepper';
 import ChallengeGoalSettingSection from './ChallengeGoalSettingSection';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import { Modal, Portal, useTheme } from 'react-native-paper';
-import { white } from 'react-native-paper/lib/typescript/styles/colors';
+import BottomFixButton from '../../components/buttons/BottomFixButton';
 
 const UNSELECTED = 1;
 
@@ -40,7 +40,34 @@ const ChallengeJoinScreen = ({ navigation, route }) => {
             onDismiss={hideModal}
             contentContainerStyle={styles.modal}
           >
-            <Text>Example Modal. Click outside this area to dismiss.</Text>
+            <Text style={{ ...theme.fonts.text.headline1, marginBottom: 8 }}>
+              챌린지는 1개만 참여할 수 있어요.
+            </Text>
+            <Text style={{ ...theme.fonts.text.body1.regular, marginBottom: 20 }}>
+              "{}"에서 탈퇴하고 새로운 챌린지에 참여할까요?
+            </Text>
+            <View style={styles.modalButtonGroup}>
+              <BottomFixButton
+                isActive={true}
+                text="취소"
+                width={148}
+                height={48}
+                color={`${theme.colors.graphic.black}1a`}
+                textColor={`${theme.colors.graphic.black}cc`}
+                buttonStyle={styles.modalButton}
+                onPress={() => setModalVisible(false)}
+              />
+              <BottomFixButton
+                isActive={true}
+                text="탈퇴하고 참여"
+                width={148}
+                height={48}
+                color={theme.colors.graphic.black}
+                textColor={theme.colors.graphic.white}
+                buttonStyle={styles.modalButton}
+                onPress={() => setModalVisible(false)}
+              />
+            </View>
           </Modal>
         </Portal>
         <View style={{ marginHorizontal: 10 }}>
@@ -82,5 +109,12 @@ const styles = StyleSheet.create({
     paddingVertical: 28,
     marginHorizontal: 16,
     borderRadius: 16,
+  },
+  modalButtonGroup: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  modalButton: {
+    borderRadius: 12,
   },
 });
