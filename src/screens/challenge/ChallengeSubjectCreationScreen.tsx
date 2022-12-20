@@ -23,6 +23,12 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
     name: route.params.form.challengeName,
     introduction: route.params.form.challengeInfo,
   };
+  const joinRequestParams = {
+    duration: route.params.form.participationPerWeek,
+    challengeId: {},
+    insightPerWeek: route.params.form.recordPerWeek,
+    myTopic: subject,
+  };
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -62,12 +68,25 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
     },
   });
 
+  const joinChallenge = (response) =>
+    navigation.navigate('ChallengeJoinApproved', {
+      form: response,
+    });
+
   const handleSkipPress = () => {
-    createChallenge(createRequestParams);
+    if (route.params.form.purpose === 'create') {
+      createChallenge(createRequestParams);
+    } else if (route.params.form.purpose === 'join') {
+      joinChallenge(joinRequestParams);
+    }
   };
 
   const handleCompletePress = () => {
-    createChallenge(createRequestParams);
+    if (route.params.form.purpose === 'create') {
+      createChallenge(createRequestParams);
+    } else if (route.params.form.purpose === 'join') {
+      joinChallenge(joinRequestParams);
+    }
   };
 
   return (

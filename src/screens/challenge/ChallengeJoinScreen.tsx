@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },
   modalButtonGroup: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
   },
   modalButton: {
     borderRadius: 12,

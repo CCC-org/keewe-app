@@ -42,6 +42,7 @@ import NicknameEditingScreen from './src/screens/Main/mypage/NicknameEditingScre
 import IntroductionEditingScreen from './src/screens/Main/mypage/IntroductionEditingScreen';
 import InterestEditingScreen from './src/screens/Main/mypage/InterestEditingScreen';
 import ChallengeJoinScreen from './src/screens/challenge/ChallengeJoinScreen';
+import ChallengeJoinApprovedScreen from './src/screens/challenge/ChallengeJoinApprovedScreen';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator();
@@ -163,6 +164,11 @@ export default function App() {
                     <Stack.Screen
                       name="ChallengeJoin"
                       component={ChallengeJoinScreen}
+                      options={headerOptions}
+                    />
+                    <Stack.Screen
+                      name="ChallengeJoinApproved"
+                      component={ChallengeJoinApprovedScreen}
                       options={headerOptions}
                     />
                   </Stack.Group>

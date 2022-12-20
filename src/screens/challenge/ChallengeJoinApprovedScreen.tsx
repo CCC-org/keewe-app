@@ -1,11 +1,12 @@
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import React, { useEffect } from 'react';
-import HeaderText from '../../components/texts/HeaderText';
 import { useTheme } from 'react-native-paper';
+import HeaderText from '../../components/texts/HeaderText';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 
-const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
-  const { duration, endDate, insightPerWeek, myTopic, challengeName } = route.params.form.data;
+const ChallengeJoinApprovedScreen = ({ navigation, route }) => {
+  const { duration, insightPerWeek, myTopic } = route.params.form;
+
   const theme = useTheme();
   useEffect(() => {
     navigation.setOptions({
@@ -21,11 +22,10 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
     const date = endDate.replace(/-/g, '.');
     return date;
   };
-
   return (
     <View style={styles.container}>
       <HeaderText
-        header={'챌린지를 만들었어요!'}
+        header={'챌린지에 참여했어요!'}
         subTitle={
           '챌린지 목표를 성공하면 타이틀을 획득해요. 자세한 내용은 마이페이지에서 확인하세요'
         }
@@ -38,10 +38,8 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
       </View>
       <View style={styles.infoContainer}>
         <View style={styles.info}>
-          <Text style={{ fontSize: 16 }}>챌린지 이름</Text>
-          <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
-            {challengeName}
-          </Text>
+          <Text style={{ fontSize: 16 }}>참여 챌린지</Text>
+          <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>{}</Text>
         </View>
         {!!myTopic.length && (
           <View style={styles.info}>
@@ -59,9 +57,9 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
         </View>
         <View style={styles.info}>
           <Text style={{ fontSize: 16 }}>종료일</Text>
-          <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
+          {/* <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
             {mutateDate(endDate)} 까지
-          </Text>
+          </Text> */}
         </View>
       </View>
 
@@ -88,6 +86,9 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
     </View>
   );
 };
+
+export default ChallengeJoinApprovedScreen;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -113,5 +114,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-export default ChallengeCreationApprovedScreen;
