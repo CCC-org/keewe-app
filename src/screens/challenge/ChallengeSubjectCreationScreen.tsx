@@ -7,6 +7,7 @@ import TextInputDetail from '../../components/texts/TextInputDetail';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import { useTheme } from 'react-native-paper';
+import Stepper from '../../components/stepper/Stepper';
 
 const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
   const theme = useTheme();
@@ -78,6 +79,11 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
             subTitle={`${route.params.form.selectedCategory}에 관한 주제면 좋아요. `}
           />
         </View>
+        {route.params.form.purpose === 'join' ? (
+          <View style={{ marginHorizontal: 6, marginBottom: 24 }}>
+            <Stepper totalStep={2} currentStep={2} />
+          </View>
+        ) : null}
         <TextInputDetail
           inputValue={subject}
           setInputValue={setSubject}

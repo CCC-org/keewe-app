@@ -83,7 +83,17 @@ export function RootScreen() {
             <Text style={theme.fonts.text.body1.bold}> CategorySelectScreen.tsx</Text>
           </View>
         </Pressable>
-
+        <Pressable onPress={() => navigation.navigate('ChallengeJoin')}>
+          <View
+            style={{
+              backgroundColor: 'orange',
+              width: 150,
+              height: 100,
+            }}
+          >
+            <Text style={theme.fonts.text.body1.bold}> ChallengeJoinScreen.tsx</Text>
+          </View>
+        </Pressable>
         <Pressable onPress={() => navigation.navigate('Upload')}>
           <View
             style={{
@@ -95,28 +105,7 @@ export function RootScreen() {
             <Text style={theme.fonts.text.body1.bold}> UploadScreen.tsx</Text>
           </View>
         </Pressable>
-        <Pressable onPress={() => navigation.navigate('SignUp')}>
-          <View
-            style={{
-              backgroundColor: 'tomato',
-              width: 150,
-              height: 100,
-            }}
-          >
-            <Text style={theme.fonts.text.body1.bold}> SignUpScreen.tsx</Text>
-          </View>
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate('CategorySelect')}>
-          <View
-            style={{
-              backgroundColor: 'teal',
-              width: 150,
-              height: 100,
-            }}
-          >
-            <Text style={theme.fonts.text.body1.bold}> CategorySelectScreen.tsx</Text>
-          </View>
-        </Pressable>
+
         <Pressable onPress={() => navigation.navigate('NicknameCreation')}>
           <View
             style={{
@@ -129,28 +118,6 @@ export function RootScreen() {
           </View>
         </Pressable>
 
-        <Pressable onPress={() => navigation.navigate('InterestChoose')}>
-          <View
-            style={{
-              backgroundColor: 'skyblue',
-              height: 100,
-              width: 150,
-            }}
-          >
-            <Text style={theme.fonts.text.body1.bold}> InterestChooseScreen.tsx</Text>
-          </View>
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate('ServiceIntroOne')}>
-          <View
-            style={{
-              backgroundColor: 'skyblue',
-              height: 100,
-              width: 150,
-            }}
-          >
-            <Text style={theme.fonts.text.body1.bold}> ServiceIntroOneScreen.tsx</Text>
-          </View>
-        </Pressable>
         <Pressable onPress={() => navigation.navigate('ServiceIntroOne')}>
           <View
             style={{

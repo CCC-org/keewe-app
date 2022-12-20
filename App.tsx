@@ -41,6 +41,7 @@ import ProfileEditScreen from './src/screens/Main/mypage/ProfileEditScreen';
 import NicknameEditingScreen from './src/screens/Main/mypage/NicknameEditingScreen';
 import IntroductionEditingScreen from './src/screens/Main/mypage/IntroductionEditingScreen';
 import InterestEditingScreen from './src/screens/Main/mypage/InterestEditingScreen';
+import ChallengeJoinScreen from './src/screens/challenge/ChallengeJoinScreen';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator();
@@ -157,6 +158,11 @@ export default function App() {
                     <Stack.Screen
                       name="InterestChoose"
                       component={InterestChooseScreen}
+                      options={headerOptions}
+                    />
+                    <Stack.Screen
+                      name="ChallengeJoin"
+                      component={ChallengeJoinScreen}
                       options={headerOptions}
                     />
                   </Stack.Group>

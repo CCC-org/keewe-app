@@ -30,9 +30,9 @@ export type RootStackParamList = {
   ChallengeInfo: undefined;
   ChallengeSubjectCreation: undefined;
   ChallengeGoalSetting: undefined;
+  ChallengeJoin: undefined;
   ServiceIntroOne: undefined;
   InterestChoose: undefined;
-  InterestChooseTemp: undefined;
   BottomSheetExperimental: undefined;
   InsightSample: undefined;
   Upload: undefined;
