@@ -3,8 +3,8 @@ import React, { useMemo, useState } from 'react';
 import Stepper from '../../components/stepper/Stepper';
 import ChallengeGoalSettingSection from './ChallengeGoalSettingSection';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
-import { Modal, Portal, useTheme } from 'react-native-paper';
-import BottomFixButton from '../../components/buttons/BottomFixButton';
+import { useTheme } from 'react-native-paper';
+import TwoButtonModal from '../../components/modal/TwoButtonModal';
 
 const UNSELECTED = 1;
 
@@ -33,43 +33,17 @@ const ChallengeJoinScreen = ({ navigation, route }) => {
   return (
     <>
       <View style={{ margin: 10 }}>
-        <Portal>
-          <Modal
-            dismissable={false}
-            visible={modalVisible}
-            onDismiss={hideModal}
-            contentContainerStyle={styles.modal}
-          >
-            <Text style={{ ...theme.fonts.text.headline1, marginBottom: 8 }}>
-              챌린지는 1개만 참여할 수 있어요.
-            </Text>
-            <Text style={{ ...theme.fonts.text.body1.regular, marginBottom: 20 }}>
-              "{}"에서 탈퇴하고 새로운 챌린지에 참여할까요?
-            </Text>
-            <View style={styles.modalButtonGroup}>
-              <BottomFixButton
-                isActive={true}
-                text="취소"
-                width={148}
-                height={48}
-                color={`${theme.colors.graphic.black}1a`}
-                textColor={`${theme.colors.graphic.black}cc`}
-                buttonStyle={styles.modalButton}
-                onPress={() => setModalVisible(false)}
-              />
-              <BottomFixButton
-                isActive={true}
-                text="탈퇴하고 참여"
-                width={148}
-                height={48}
-                color={theme.colors.graphic.black}
-                textColor={theme.colors.graphic.white}
-                buttonStyle={styles.modalButton}
-                onPress={() => setModalVisible(false)}
-              />
-            </View>
-          </Modal>
-        </Portal>
+        <TwoButtonModal
+          dismissable={false}
+          mainTitle={'챌린지는 1개만 참여할 수 있어요.'}
+          subTitle={'에서 탈퇴하고 새로운 챌린지에 참여할까요?'}
+          visible={modalVisible}
+          onDismiss={hideModal}
+          leftButtonText={'취소'}
+          rightButtonText={'탈퇴하고 참여'}
+          leftButtonPress={() => setModalVisible(false)}
+          rightButtonPress={() => setModalVisible(false)}
+        />
         <View style={{ marginHorizontal: 10 }}>
           <Text style={theme.fonts.text.display}>나만의 목표를 세우세요</Text>
         </View>
@@ -102,19 +76,4 @@ const ChallengeJoinScreen = ({ navigation, route }) => {
 
 export default ChallengeJoinScreen;
 
-const styles = StyleSheet.create({
-  modal: {
-    backgroundColor: 'white',
-    paddingHorizontal: 20,
-    paddingVertical: 28,
-    marginHorizontal: 16,
-    borderRadius: 16,
-  },
-  modalButtonGroup: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  modalButton: {
-    borderRadius: 12,
-  },
-});
+const styles = StyleSheet.create({});
