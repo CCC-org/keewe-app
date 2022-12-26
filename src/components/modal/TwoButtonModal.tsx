@@ -8,7 +8,7 @@ interface TwoButtonModalProps {
   visible: boolean;
   onDismiss: () => void;
   mainTitle: string;
-  subTitle: string;
+  subTitle?: string;
   leftButtonText: string;
   rightButtonText: string;
   leftButtonPress: () => void;
@@ -36,7 +36,7 @@ const TwoButtonModal = ({
         contentContainerStyle={styles.modal}
       >
         <Text style={{ ...theme.fonts.text.headline1, marginBottom: 8 }}>{mainTitle}</Text>
-        <Text style={{ ...theme.fonts.text.body1.regular, marginBottom: 20 }}>{subTitle}</Text>
+        {subTitle ? <Text style={theme.fonts.text.body1.regular}>{subTitle}</Text> : null}
         <View style={styles.modalButtonGroup}>
           <BottomFixButton
             isActive={true}
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
   modalButtonGroup: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop: 20,
   },
   modalButton: {
     borderRadius: 12,
