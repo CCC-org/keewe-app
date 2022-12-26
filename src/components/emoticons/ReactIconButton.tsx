@@ -77,6 +77,7 @@ const ReactIconButton = ({ xml, color, taps, name, insightId }: ReactIconButtonP
           )}
         </Animated.View>
         <View
+          pointerEvents="none"
           style={{
             width: 50,
             height: 100,
