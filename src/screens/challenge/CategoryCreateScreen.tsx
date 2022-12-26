@@ -5,14 +5,14 @@ import SmallTextInput from '../../components/texts/SmallTextInput';
 import { StyleSheet, View, Text } from 'react-native';
 
 const CategoryCreateScreen = ({ navigation, route }) => {
+  const theme = useTheme();
   const [customCategory, setCustomCategory] = useState<string[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const theme = useTheme();
   const [input, setInput] = useState<string>('');
 
   const handleComplete = () => {
     navigation.navigate(route.params?.toScreen, {
-      selectedCategory: input,
+      selectedCategory: [input],
       customCategory: [input, ...customCategory],
     });
   };

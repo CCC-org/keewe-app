@@ -1,31 +1,20 @@
 import { View } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import InterestChooseSection from './InterestChooseSection';
-import { TOTAL_TAG } from '../../constants/Interests';
-import { useMutation } from 'react-query';
-import HeaderText from '../../components/texts/HeaderText';
-import Stepper from '../../components/stepper/Stepper';
-import NumberProgressBar from '../../components/bars/NumberProgressBar';
-import ConditionalButton from '../../components/buttons/ConditionalButton';
-import { OnboardAPI, OnboardQueryKeys } from '../../utils/api/OnboardAPI';
+import InterestChooseSection from '../../onboarding/InterestChooseSection';
+import { TOTAL_TAG } from '../../../constants/Interests';
+import HeaderText from '../../../components/texts/HeaderText';
+import Stepper from '../../../components/stepper/Stepper';
+import NumberProgressBar from '../../../components/bars/NumberProgressBar';
+import ConditionalButton from '../../../components/buttons/ConditionalButton';
 
-const InterestChooseScreen = ({ navigation, route }) => {
+const InterestEditingScreen = ({ navigation, route }) => {
   const totalCategory = TOTAL_TAG;
   const [customCategory, setCustomCategory] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [conditionalText, setConditionalText] = useState<string>('관심사를 선택하세요');
-
-  const { mutate: makeProfile } = useMutation(
-    OnboardQueryKeys.makeProfile({
-      nickname: route.params.nickname,
-      interests: selectedCategory,
-    }),
-    () =>
-      OnboardAPI.makeProfile({
-        nickname: route.params.nickname,
-        interests: selectedCategory,
-      }),
-  );
+  const [title] = useState(route.params.title);
+  const [introduction] = useState(route.params.introduction);
+  const [nickname] = useState(route.params.nickname);
 
   const handleSelectTag = (tag: string) => {
     if (!selectedCategory.includes(tag)) {
@@ -37,12 +26,19 @@ const InterestChooseScreen = ({ navigation, route }) => {
   };
 
   const handleCreateCategory = () =>
-    navigation.navigate('CategoryCreate', { toScreen: 'InterestChoose' });
+    navigation.navigate('CategoryCreate', {
+      toScreen: 'InterestEditing',
+    });
 
   const handleNextScreen = () => {
     //create ID
-    makeProfile();
-    navigation.navigate('InsightSample');
+    //makeProfile();
+    navigation.navigate('ProfileEdit', {
+      nickname,
+      title,
+      selectedCategory,
+      introduction,
+    });
   };
 
   useEffect(() => {
@@ -54,10 +50,10 @@ const InterestChooseScreen = ({ navigation, route }) => {
   useEffect(() => {
     // eslint-disable-next-line no-prototype-builtins
     if (!route.params.hasOwnProperty('customCategory')) return;
-    const { customCategory: paramCustomArr } = route.params;
+    const { customCategory: paramCustomArr, selectedCategory: paramSelectedArr } = route.params;
     if (customCategory) {
       setCustomCategory([...paramCustomArr, ...customCategory]);
-      setSelectedCategory([...paramCustomArr, ...selectedCategory]);
+      setSelectedCategory([...paramSelectedArr, ...selectedCategory]);
     } else {
       setCustomCategory([]);
     }
@@ -74,7 +70,7 @@ const InterestChooseScreen = ({ navigation, route }) => {
           paddingHorizontal: 16,
         }}
       >
-        <HeaderText header={'관심사를 알려주세요'} />
+        <HeaderText header={'관심사를 설정하세요'} />
         <Stepper currentStep={2} totalStep={2} />
       </View>
       <InterestChooseSection
@@ -99,4 +95,4 @@ const InterestChooseScreen = ({ navigation, route }) => {
   );
 };
 
-export default InterestChooseScreen;
+export default InterestEditingScreen;

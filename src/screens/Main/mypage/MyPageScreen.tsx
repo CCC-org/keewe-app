@@ -1,14 +1,39 @@
 import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import MypageProfile from '../../../components/profile/MypageProfile';
 import { useTheme } from 'react-native-paper';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import MypageTitle from '../../../components/title/MypageTitle';
 import DividerBar from '../../../components/bars/DividerBar';
+import InterestIcon from './InterestIcon';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
-const MyPageScreen = () => {
+const MyPageScreen = ({ navigation, route }) => {
+  const { userId } = route.params;
+  if (userId === null || userId === undefined) {
+    //alert('userId를 인식할 수 없었습니다.');
+    //return null;
+  }
   const theme = useTheme();
+  const [nickname, setNickname] = useState<string>('닉네임');
+  const [title, setTitle] = useState<string>('대표 타이틀');
+  const [selectedCategory, setSelectedCategory] = useState<string[]>([
+    '여행',
+    '반려동물',
+    '사진',
+    '맛집',
+    '가상자산',
+  ]);
+  const [introduction, setIntroduction] = useState<string>(
+    '암더 코리안 탑클래스 힙합모범 노블레스 페뷸러스 터뷸렌스 고져스 벗 댕저러스 난 비트를 비틀어 제껴버리는 셔브미션 챔피욘',
+  );
+  const [iconColor, setIconColor] = useState([
+    [theme.colors.graphic.purple, `${theme.colors.graphic.purple}1a`],
+    [theme.colors.graphic.sky, `${theme.colors.graphic.sky}1a`],
+    [theme.colors.graphic.hotpink, `${theme.colors.graphic.hotpink}1a`],
+    [theme.colors.graphic.violet, `${theme.colors.graphic.violet}1a`],
+    [theme.colors.graphic.green, `${theme.colors.graphic.green}1a`],
+  ]);
   return (
     <ScrollView>
       <View style={styles.top}>
@@ -21,18 +46,39 @@ const MyPageScreen = () => {
           </Pressable>
         </View>
         <View style={{ marginLeft: 16, marginBottom: 24 }}>
-          <MypageProfile />
+          <MypageProfile nickname={nickname} title={title} />
+        </View>
+        <View
+          style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: 20, marginHorizontal: 14 }}
+        >
+          {selectedCategory.map((cur, idx) => (
+            <InterestIcon
+              key={idx}
+              title={cur}
+              textColor={iconColor[idx][0]}
+              backgroundColor={iconColor[idx][1]}
+            />
+          ))}
         </View>
         <View style={{ marginHorizontal: 16 }}>
           <Text
             style={{ ...theme.fonts.text.body2.regular, color: `${theme.colors.graphic.black}cc` }}
           >
-            암더 코리안 탑클래스 힙합모범 노블레스 페뷸러스 터뷸렌스 고져스 벗 댕저러스 난 비트를
-            비틀어 제껴버리는 셔브미션 챔피욘
+            {introduction}
           </Text>
         </View>
         <View style={{ alignItems: 'center' }}>
-          <Pressable style={styles.editBtn} onPress={() => alert('Editing Profile!')}>
+          <Pressable
+            style={styles.editBtn}
+            onPress={() =>
+              navigation.navigate('ProfileEdit', {
+                nickname,
+                title,
+                selectedCategory,
+                introduction,
+              })
+            }
+          >
             <Text
               style={{ ...theme.fonts.text.body1.bold, color: `${theme.colors.graphic.black}cc` }}
             >

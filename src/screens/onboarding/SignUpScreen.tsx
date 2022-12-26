@@ -2,6 +2,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import React from 'react';
 import SocialLoginButton from '../../components/buttons/SocialLoginButton';
 import { useTheme } from 'react-native-paper';
+import OnboardingLottie from '../../components/lotties/OnboardingLottie';
 
 const SignUpScreen = ({ navigation }) => {
   const theme = useTheme();
@@ -15,7 +16,7 @@ const SignUpScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.rotty}></View>
+      <OnboardingLottie />
       <View style={styles.login}>
         <Text style={styles.agree}>
           <Text style={styles.greeny}>Keewe 약관</Text>에 모두 동의합니다.
@@ -59,6 +60,8 @@ const SignUpScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   rotty: {
     flex: 62,
@@ -66,6 +69,7 @@ const styles = StyleSheet.create({
   },
   login: {
     flex: 38,
+    width: '100%',
     backgroundColor: '#F5F5F5',
     alignItems: 'center',
     justifyContent: 'center',

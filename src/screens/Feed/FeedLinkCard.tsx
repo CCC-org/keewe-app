@@ -1,20 +1,37 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
-import { LinkPreview, LinkPreviewProps } from '@flyerhq/react-native-link-preview';
+import React, { useEffect, useState } from 'react';
+import { LinkPreview } from '@flyerhq/react-native-link-preview';
 import FeedBookMarkIcon from './FeedBookMarkIcon';
 import { Entypo } from '@expo/vector-icons';
 interface FeedLinkCard {
   text: string;
-  onBookmarkPress?: () => void;
+  onBookmarkPress: () => void;
   isBookMarked?: boolean;
+  bookMarkIsLoading: boolean;
 }
+
 const FeedLinkWithBookMark = ({
   text,
   onBookmarkPress,
   isBookMarked = false,
+  bookMarkIsLoading,
   ...props
 }: FeedLinkCard) => {
+  const [isLoading, setIsLoading] = useState(false);
   const styles = createStyles();
+
+  useEffect(() => {
+    if (isLoading && !bookMarkIsLoading) {
+      setTimeout(() => {
+        setIsLoading(bookMarkIsLoading);
+      }, 300);
+    }
+  }, [bookMarkIsLoading]);
+
+  const handleOnPress = () => {
+    setIsLoading(true);
+    onBookmarkPress();
+  };
 
   return (
     <View style={styles.FeedLinkCardContainer}>
@@ -41,7 +58,11 @@ const FeedLinkWithBookMark = ({
           );
         }}
       />
-      <FeedBookMarkIcon onPress={onBookmarkPress} isMarked={isBookMarked} />
+      {isLoading ? (
+        <Text>loading... </Text>
+      ) : (
+        <FeedBookMarkIcon onPress={handleOnPress} isMarked={isBookMarked} />
+      )}
     </View>
   );
 };
@@ -50,14 +71,15 @@ export default FeedLinkWithBookMark;
 
 function createStyles() {
   const styles = StyleSheet.create({
+    loadingSpinner: {
+      transform: [{ rotate: '90deg' }],
+    },
     FeedLinkCardContainer: {
-      flex: 1,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
     },
     container: {
-      width: 300,
       height: 48,
       justifyContent: 'center',
     },

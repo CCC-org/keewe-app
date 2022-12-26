@@ -15,3 +15,19 @@ export const setAccessToken = async (value: string) => {
     alert('토큰 저장 실패');
   }
 };
+
+export const setUserId = async (userId: number) => {
+  try {
+    await AsyncStorage.setItem('userId', String(userId));
+  } catch (e) {
+    alert('ID 저장 실패');
+  }
+};
+
+export const getUserId = async () => {
+  try {
+    return await AsyncStorage.getItem('userId');
+  } catch (e) {
+    alert('ID 불러오기 실패');
+  }
+};

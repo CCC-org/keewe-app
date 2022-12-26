@@ -19,7 +19,7 @@ const BottomSheetHeader = ({
   const theme = useTheme();
   return (
     <View style={styles.container}>
-      <AntDesign name="arrowleft" size={24} color="black" onPress={onLeftButtonPress} />
+      <AntDesign name="close" size={24} color="black" onPress={onLeftButtonPress} />
       <Text style={{ ...theme.fonts.text.body1.bold, ...styles.text }}>{title}</Text>
       {headerRightButton()}
     </View>

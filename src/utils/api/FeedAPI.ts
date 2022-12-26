@@ -8,9 +8,6 @@ export const FeedQueryKeys = {
 
 export const FeedAPI = {
   getFeed: async (cursor: number, limit: number, follow: boolean) => {
-    console.log('🚀 ~ file: FeedAPI.ts:11 ~ getFeed: ~ follow', follow);
-    console.log('🚀 ~ file: FeedAPI.ts:11 ~ getFeed: ~ limit', limit);
-    console.log('🚀 ~ file: FeedAPI.ts:11 ~ getFeed: ~ cursor', cursor);
     const token = await getAccessToken();
     try {
       const response = await axios.get<FeedInsight>(
@@ -24,7 +21,6 @@ export const FeedAPI = {
         },
       );
       if (response.data.code !== 200) throw new Error(response.data.message);
-      console.log('🚀 ~ file: FeedAPI.ts:24 ~ getFeed: ~ response', response.data);
 
       return response.data.data;
     } catch (err) {

@@ -5,6 +5,7 @@ import HeaderText from '../../components/texts/HeaderText';
 import Stepper from '../../components/stepper/Stepper';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import Carousel from 'react-native-reanimated-carousel';
+import OnboardingLottie from '../../components/lotties/OnboardingLottie';
 
 const fullScreenHeight = Dimensions.get('window').height;
 const fullScreenWidth = Dimensions.get('window').width;
@@ -13,6 +14,11 @@ const ServiceIntroOneScreen = ({ navigation }) => {
   const [step, setStep] = useState(0);
   const styles = createStyle();
   const carouselRef = useRef<any>(null);
+
+  const handleStep = (idx: number) => {
+    setStep(idx);
+  };
+
   function handlePress() {
     if (step === 2) {
       alert('navigate to Home');
@@ -26,7 +32,8 @@ const ServiceIntroOneScreen = ({ navigation }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Image source={require('../../../assets/images/따봉도치.jpg')} style={styles.image} />
+      {/* <Image source={require('../../../assets/images/따봉도치.jpg')} style={styles.image} /> */}
+      <OnboardingLottie />
       <View style={styles.bottom}>
         <View style={styles.titleContainer}>
           <Carousel
@@ -35,16 +42,22 @@ const ServiceIntroOneScreen = ({ navigation }) => {
               flexDirection: 'row',
               justifyContent: 'center',
               alignItems: 'center',
-              paddingLeft: 20,
             }}
             ref={carouselRef}
             width={fullScreenWidth}
-            height={150}
-            onSnapToItem={setStep}
+            height={205}
+            loop={false}
+            onSnapToItem={(idx) => handleStep(idx)}
             data={[
-              <HeaderText key={1} header={'기억하고 싶은 콘텐츠, \n지나치지 말고 기록하2세요'} />,
-              <HeaderText key={2} header={'기억하고 싶은 콘텐츠, \n지나치지 말고 기록하세요'} />,
-              <HeaderText key={3} header={'기억하고 싶은 콘텐츠, \n지나치지 말고 기록하세요'} />,
+              <View key={1} style={styles.carouselItemCtn}>
+                <HeaderText key={1} header={'기억하고 싶은 콘텐츠, \n지나치지 말고 기록하세요'} />
+              </View>,
+              <View key={2} style={styles.carouselItemCtn}>
+                <HeaderText key={1} header={'꾸준하기 어렵다면, \n친구들과 함께 도전해요'} />
+              </View>,
+              <View key={3} style={styles.carouselItemCtn}>
+                <HeaderText key={1} header={'함께할수록 쉬워지는 기록, \n키위가 도와줄게요!'} />
+              </View>,
             ]}
             renderItem={({ item }) => item}
           />
@@ -83,10 +96,21 @@ export default ServiceIntroOneScreen;
 export function createStyle() {
   return StyleSheet.create({
     container: {
+      flex: 1,
       backgroundColor: '#fff',
+      flexDirection: 'column',
+      justifyContent: 'flex-end',
       alignItems: 'center',
+    },
+    carouselItemCtn: {
+      width: '100%',
+      height: '100%',
+      display: 'flex',
+      paddingLeft: 24,
+      paddingTop: 36,
       flexDirection: 'column',
       justifyContent: 'flex-start',
+      alignItems: 'flex-start',
     },
 
     image: {
@@ -95,25 +119,22 @@ export function createStyle() {
       height: fullScreenHeight * 0.62,
     },
     titleContainer: {
-      minWidth: '92%',
+      minWidth: '100%',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      paddingLeft: 100,
     },
     bottom: {
       justifyContent: 'space-between',
       alignItems: 'center',
       paddingHorizontal: 10,
-      paddingTop: 30,
       paddingBottom: 0,
-      height: fullScreenHeight * 0.38,
+      border: '10px solid red',
     },
     nextButtonWithStepper: {
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'space-between',
       alignItems: 'center',
     },
     nextButton: {
