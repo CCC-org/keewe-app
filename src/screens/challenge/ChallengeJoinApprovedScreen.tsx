@@ -5,7 +5,7 @@ import HeaderText from '../../components/texts/HeaderText';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 
 const ChallengeJoinApprovedScreen = ({ navigation, route }) => {
-  const { duration, insightPerWeek, myTopic } = route.params.form;
+  const { duration, insightPerWeek, myTopic, endDate } = route.params.form;
 
   const theme = useTheme();
   useEffect(() => {
@@ -57,9 +57,10 @@ const ChallengeJoinApprovedScreen = ({ navigation, route }) => {
         </View>
         <View style={styles.info}>
           <Text style={{ fontSize: 16 }}>종료일</Text>
-          {/* <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
-            {mutateDate(endDate)} 까지
-          </Text> */}
+          <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
+            2023.02.28 까지
+            {/* {mutateDate(endDate)} 까지 */}
+          </Text>
         </View>
       </View>
 

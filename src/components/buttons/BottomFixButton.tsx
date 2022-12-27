@@ -27,9 +27,6 @@ const BottomFixButton = ({
   const theme = useTheme();
   return (
     <Pressable
-      style={{
-        ...styles.Button,
-      }}
       onPress={() => {
         if (!isActive) return;
         onPress();
@@ -69,5 +66,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  Button: {},
 });

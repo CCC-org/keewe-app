@@ -21,6 +21,7 @@ const ProfileImage = () => {
         style={{
           ...styles.camera,
           borderColor: `${theme.colors.graphic.black}1a`,
+          backgroundColor: theme.colors.graphic.white,
         }}
       >
         <SvgXml xml={smallCameraXml} height={14} width={14} />
@@ -50,7 +51,6 @@ const styles = StyleSheet.create({
   },
   camera: {
     position: 'absolute',
-    backgroundColor: 'white',
     bottom: 24,
     right: '38%',
     width: 32,
