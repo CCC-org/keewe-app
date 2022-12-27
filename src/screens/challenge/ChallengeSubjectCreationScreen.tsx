@@ -7,6 +7,7 @@ import TextInputDetail from '../../components/texts/TextInputDetail';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import { useTheme } from 'react-native-paper';
+import Stepper from '../../components/stepper/Stepper';
 
 const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
   const theme = useTheme();
@@ -21,6 +22,12 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
     interest: route.params.form.selectedCategory,
     name: route.params.form.challengeName,
     introduction: route.params.form.challengeInfo,
+  };
+  const joinRequestParams = {
+    duration: route.params.form.participationPerWeek,
+    challengeId: {},
+    insightPerWeek: route.params.form.recordPerWeek,
+    myTopic: subject,
   };
   useEffect(() => {
     navigation.setOptions({
@@ -61,12 +68,25 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
     },
   });
 
+  const joinChallenge = (response) =>
+    navigation.navigate('ChallengeJoinApproved', {
+      form: response,
+    });
+
   const handleSkipPress = () => {
-    createChallenge(createRequestParams);
+    if (route.params.form.purpose === 'create') {
+      createChallenge(createRequestParams);
+    } else if (route.params.form.purpose === 'join') {
+      joinChallenge(joinRequestParams);
+    }
   };
 
   const handleCompletePress = () => {
-    createChallenge(createRequestParams);
+    if (route.params.form.purpose === 'create') {
+      createChallenge(createRequestParams);
+    } else if (route.params.form.purpose === 'join') {
+      joinChallenge(joinRequestParams);
+    }
   };
 
   return (
@@ -78,6 +98,11 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
             subTitle={`${route.params.form.selectedCategory}에 관한 주제면 좋아요. `}
           />
         </View>
+        {route.params.form.purpose === 'join' ? (
+          <View style={{ marginHorizontal: 6, marginBottom: 24 }}>
+            <Stepper totalStep={2} currentStep={2} />
+          </View>
+        ) : null}
         <TextInputDetail
           inputValue={subject}
           setInputValue={setSubject}

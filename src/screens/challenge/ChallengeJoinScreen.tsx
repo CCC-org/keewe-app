@@ -1,14 +1,17 @@
-import React, { useState, useMemo } from 'react';
-import { View, Text } from 'react-native';
-import { useTheme } from 'react-native-paper';
-import ConditionalButton from '../../components/buttons/ConditionalButton';
+import { StyleSheet, Text, View } from 'react-native';
+import React, { useMemo, useState } from 'react';
 import Stepper from '../../components/stepper/Stepper';
 import ChallengeGoalSettingSection from './ChallengeGoalSettingSection';
+import ConditionalButton from '../../components/buttons/ConditionalButton';
+import { useTheme } from 'react-native-paper';
+import TwoButtonModal from '../../components/modal/TwoButtonModal';
 
 const UNSELECTED = 1;
 
-const ChallengeGoalSettingScreen = ({ navigation, route }) => {
+const ChallengeJoinScreen = ({ navigation, route }) => {
   const theme = useTheme();
+  const [modalVisible, setModalVisible] = useState<boolean>(true);
+  const hideModal = () => setModalVisible(false);
   const [recordPerWeek, setRecordPerWeek] = useState<number | number[]>([2]);
   const [participationPerWeek, setParticipationPerWeek] = useState<number | number[]>([2]);
   const [step, setStep] = useState<number>(UNSELECTED);
@@ -24,20 +27,29 @@ const ChallengeGoalSettingScreen = ({ navigation, route }) => {
       return;
     }
     navigation.navigate('ChallengeSubjectCreation', {
-      form: { recordPerWeek, participationPerWeek, purpose: 'create', ...route.params.form },
+      form: { recordPerWeek, participationPerWeek, purpose: 'join' },
     });
   };
-
   return (
     <>
       <View style={{ margin: 10 }}>
+        <TwoButtonModal
+          dismissable={false}
+          mainTitle={'챌린지는 1개만 참여할 수 있어요.'}
+          subTitle={'에서 탈퇴하고 새로운 챌린지에 참여할까요?'}
+          visible={modalVisible}
+          onDismiss={hideModal}
+          leftButtonText={'취소'}
+          rightButtonText={'탈퇴하고 참여'}
+          leftButtonPress={() => setModalVisible(false)}
+          rightButtonPress={() => setModalVisible(false)}
+        />
         <View style={{ marginHorizontal: 10 }}>
           <Text style={theme.fonts.text.display}>나만의 목표를 세우세요</Text>
         </View>
         <View style={{ marginHorizontal: 6 }}>
-          <Stepper totalStep={3} currentStep={3} />
+          <Stepper totalStep={2} currentStep={1} />
         </View>
-
         <ChallengeGoalSettingSection
           step={step}
           recordPerWeek={recordPerWeek}
@@ -62,4 +74,6 @@ const ChallengeGoalSettingScreen = ({ navigation, route }) => {
   );
 };
 
-export default ChallengeGoalSettingScreen;
+export default ChallengeJoinScreen;
+
+const styles = StyleSheet.create({});

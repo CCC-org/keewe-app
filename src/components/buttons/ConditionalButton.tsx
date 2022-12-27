@@ -17,6 +17,7 @@ interface ConditionalButtonProps {
   color?: string;
   textColor?: string;
   width: number;
+  borderRadius?: number;
   onPress: () => void;
 }
 
@@ -29,6 +30,7 @@ const ConditionalButton = ({
   width,
   color,
   textColor,
+  borderRadius,
 }: ConditionalButtonProps) => {
   const [offset, setOffset] = useState(0);
 
@@ -49,6 +51,7 @@ const ConditionalButton = ({
         style={{
           ...styles.btn,
           width: width,
+          borderRadius: borderRadius ?? 50,
           backgroundColor: color || theme.colors.graphic.black,
           opacity: isActive ? 1 : 0.2,
         }}
@@ -77,7 +80,6 @@ const styles = StyleSheet.create({
   },
   btn: {
     height: 56,
-    borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
   },
