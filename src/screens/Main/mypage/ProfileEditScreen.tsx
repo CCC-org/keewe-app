@@ -9,7 +9,7 @@ import ProfileImage from './ProfileImage';
 
 const ProfileEditScreen = ({ navigation, route }) => {
   const theme = useTheme();
-  const [modalVisible, setModalVisible] = useState<boolean>(true);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const hideModal = () => setModalVisible(false);
   const [btnAbled, setBtnAbled] = useState<boolean>(true);
   const [nickname, setNickname] = useState<string>('');
@@ -17,7 +17,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
   const [introduction, setIntroduction] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [customCategory, setCustomCategory] = useState<string[]>([]);
-  const handleComplete = () => alert('back!');
+  const handleComplete = () => setModalVisible(true);
   const handleNickname = () => {
     navigation.navigate('NicknameEditing', {
       nickname,
@@ -97,7 +97,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
         leftButtonPress={() => setModalVisible(false)}
         rightButtonPress={() => setModalVisible(false)}
       />
-      <ProfileImage />
+      <ProfileImage onPress={() => alert('hi')} />
       <View>
         <ProfileList title="이름" content={nickname} handlePress={handleNickname} />
         <ProfileList title="대표 타이틀" content={title} handlePress={handleTitle} />
