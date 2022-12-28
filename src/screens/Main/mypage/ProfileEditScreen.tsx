@@ -101,8 +101,8 @@ const ProfileEditScreen = ({ navigation, route }) => {
   }, []);
 
   const handleDeletePress = () => alert('삭제!');
-  const handleLibraryPress = () => alert('선택!');
-  const handleShotPress = () => alert('찰칵!');
+  const handleLibraryPress = () => null;
+  const handleShotPress = () => null;
 
   const renderBackdrop = useCallback(
     (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
