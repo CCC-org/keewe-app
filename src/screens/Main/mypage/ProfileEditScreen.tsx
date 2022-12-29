@@ -12,6 +12,7 @@ import {
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
 import BottomSheetOption from '../../../components/bottomsheet/BottomSheetOption';
+import * as ImagePicker from 'expo-image-picker';
 
 const ProfileEditScreen = ({ navigation, route }) => {
   const theme = useTheme();
@@ -23,6 +24,8 @@ const ProfileEditScreen = ({ navigation, route }) => {
   const [introduction, setIntroduction] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [customCategory, setCustomCategory] = useState<string[]>([]);
+  const [image, setImage] = useState<string | undefined>(undefined);
+
   const handleComplete = () => setModalVisible(true);
   const handleNickname = () => {
     navigation.navigate('NicknameEditing', {
@@ -101,8 +104,47 @@ const ProfileEditScreen = ({ navigation, route }) => {
   }, []);
 
   const handleDeletePress = () => alert('삭제!');
-  const handleLibraryPress = () => null;
-  const handleShotPress = () => null;
+  const handleLibraryPress = () => pickImage();
+  const handleShotPress = () => openCamera();
+
+  const pickImage = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert('접근 권한이 없습니다ㅠ_ㅠ');
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
+  const openCamera = async () => {
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert('접근 권한이 없습니다ㅜ_ㅜ');
+      return;
+    }
+
+    const result = await ImagePicker.launchCameraAsync();
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
 
   const renderBackdrop = useCallback(
     (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
@@ -119,9 +161,12 @@ const ProfileEditScreen = ({ navigation, route }) => {
           leftButtonText={'취소'}
           rightButtonText={'저장'}
           leftButtonPress={() => setModalVisible(false)}
-          rightButtonPress={() => setModalVisible(false)}
+          rightButtonPress={() => {
+            alert('저장은 타이틀 작업이 된 후에 작업할 예정입니다!');
+            setModalVisible(false);
+          }}
         />
-        <ProfileImage onPress={() => handlePresentModalPress()} />
+        <ProfileImage image={image} onPress={() => handlePresentModalPress()} />
         <BottomSheetModal
           ref={bottomSheetModalRef}
           index={1}

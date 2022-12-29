@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Image, Pressable, StyleSheet, View } from 'react-native';
 import React from 'react';
 import { useTheme } from 'react-native-paper';
 import { SvgXml } from 'react-native-svg';
@@ -6,22 +6,27 @@ import person from '../../../constants/Icons/Avatar/personXml';
 import smallCameraXml from '../../../constants/Icons/Avatar/smallCameraXml';
 
 interface ProfileImageProps {
+  image: string | undefined;
   onPress?: () => void;
 }
 
-const ProfileImage = ({ onPress }: ProfileImageProps) => {
+const ProfileImage = ({ image, onPress }: ProfileImageProps) => {
   const theme = useTheme();
   return (
     <View style={styles.svg}>
       <Pressable onPress={onPress}>
-        <View
-          style={{
-            ...styles.image,
-            backgroundColor: theme.colors.brand.surface.container2,
-          }}
-        >
-          <SvgXml xml={person} height={60} width={60} />
-        </View>
+        {image !== undefined ? (
+          <Image source={{ uri: image }} style={styles.image} />
+        ) : (
+          <View
+            style={{
+              ...styles.image,
+              backgroundColor: theme.colors.brand.surface.container2,
+            }}
+          >
+            <SvgXml xml={person} height={60} width={60} />
+          </View>
+        )}
       </Pressable>
       <View
         style={{
