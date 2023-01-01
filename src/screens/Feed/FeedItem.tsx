@@ -6,7 +6,7 @@ import FeedLinkWithBookMark from './FeedLinkCard';
 import FeedVerticalDots from './FeedVerticalDots';
 import FeedTextContent from './FeedTextContent';
 import { REACTIONS } from './constant';
-import ReactIconButton from '../../components/emoticons/ReactIconButton';\
+import ReactIconButton from '../../components/emoticons/ReactIconButton';
 
 interface FeedItemProps {
   insight: InsightData;
