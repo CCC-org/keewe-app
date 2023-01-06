@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { Linking, StyleSheet, View } from 'react-native';
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import HeaderRightButton from '../../../components/header/HeaderRightButton';
 import { useTheme } from 'react-native-paper';
@@ -17,7 +17,9 @@ import * as ImagePicker from 'expo-image-picker';
 const ProfileEditScreen = ({ navigation, route }) => {
   const theme = useTheme();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [permissionModal, setPermissionModal] = useState<boolean>(false);
   const hideModal = () => setModalVisible(false);
+  const hidePermissionModal = () => setPermissionModal(false);
   const [btnAbled, setBtnAbled] = useState<boolean>(true);
   const [nickname, setNickname] = useState<string>('');
   const [title, setTitle] = useState<string>('');
@@ -27,6 +29,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
   const [image, setImage] = useState<string | undefined>(undefined);
 
   const handleComplete = () => setModalVisible(true);
+  const changePermission = () => setPermissionModal(true);
   const handleNickname = () => {
     navigation.navigate('NicknameEditing', {
       nickname,
@@ -103,15 +106,14 @@ const ProfileEditScreen = ({ navigation, route }) => {
     bottomSheetModalRef.current?.present();
   }, []);
 
-  const handleDeletePress = () => alert('삭제!');
+  const handleDeletePress = () => setImage(undefined);
   const handleLibraryPress = () => pickImage();
   const handleShotPress = () => openCamera();
 
   const pickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
     if (permissionResult.granted === false) {
-      alert('접근 권한이 없습니다ㅠ_ㅠ');
+      changePermission();
       return;
     }
 
@@ -133,7 +135,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
     const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
 
     if (permissionResult.granted === false) {
-      alert('접근 권한이 없습니다ㅜ_ㅜ');
+      changePermission();
       return;
     }
 
@@ -163,6 +165,20 @@ const ProfileEditScreen = ({ navigation, route }) => {
           leftButtonPress={() => setModalVisible(false)}
           rightButtonPress={() => {
             alert('저장은 타이틀 작업이 된 후에 작업할 예정입니다!');
+            setModalVisible(false);
+          }}
+        />
+        <TwoButtonModal
+          dismissable={false}
+          mainTitle={'카메라 접근 권한을 허용해주세요.'}
+          subTitle={'설정 > Keewe > 카메라 접근 권한 허용'}
+          visible={permissionModal}
+          onDismiss={hidePermissionModal}
+          leftButtonText={'취소'}
+          rightButtonText={'허용하기'}
+          leftButtonPress={() => setPermissionModal(false)}
+          rightButtonPress={() => {
+            Linking.openSettings();
             setModalVisible(false);
           }}
         />
