@@ -77,6 +77,7 @@ const ReactIconButton = ({ xml, color, taps, name, insightId }: ReactIconButtonP
           )}
         </Animated.View>
         <View
+          pointerEvents="none"
           style={{
             width: 50,
             height: 100,
@@ -99,7 +100,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     borderRadius: 40,
-    marginLeft: 8,
+    marginRight: 8,
+    marginBottom: 12,
   },
 });
 
