@@ -55,6 +55,7 @@ const IntroductionEditingScreen = ({ navigation, route }) => {
         inputValue={input}
         setInputValue={setInput}
         height={214}
+        autoFocus={true}
       />
     </View>
   );
