@@ -13,6 +13,7 @@ interface TwoButtonModalProps {
   rightButtonText: string;
   leftButtonPress: () => void;
   rightButtonPress: () => void;
+  rightButtonColor?: string;
 }
 
 const TwoButtonModal = ({
@@ -23,6 +24,7 @@ const TwoButtonModal = ({
   onDismiss,
   rightButtonPress,
   rightButtonText,
+  rightButtonColor,
   subTitle,
   visible,
 }: TwoButtonModalProps) => {
@@ -53,7 +55,7 @@ const TwoButtonModal = ({
             text={rightButtonText}
             width={148}
             height={48}
-            color={theme.colors.graphic.black}
+            color={rightButtonColor ?? theme.colors.graphic.black}
             textColor={theme.colors.graphic.white}
             buttonStyle={styles.modalButton}
             onPress={rightButtonPress}

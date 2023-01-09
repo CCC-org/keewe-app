@@ -1,18 +1,31 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import ProfileAvatar from './ProfileAvatar';
 import { useTheme } from 'react-native-paper';
+import { SvgXml } from 'react-native-svg';
+import person from '../../constants/Icons/Avatar/personXml';
 
 interface MypageProfileProps {
   nickname: string;
   title: string;
+  image: string | undefined;
 }
 
-const MypageProfile = ({ nickname, title }: MypageProfileProps) => {
+const MypageProfile = ({ nickname, title, image }: MypageProfileProps) => {
   const theme = useTheme();
   return (
     <View style={styles.container}>
-      <ProfileAvatar size={84} />
+      {image !== undefined ? (
+        <Image source={{ uri: image }} style={styles.image} />
+      ) : (
+        <View
+          style={{
+            ...styles.image,
+            backgroundColor: theme.colors.brand.surface.container2,
+          }}
+        >
+          <SvgXml xml={person} height={60} width={60} />
+        </View>
+      )}
       <View style={{ marginLeft: 12 }}>
         <Text style={{ ...theme.fonts.text.headline1, color: `${theme.colors.graphic.black}cc` }}>
           {nickname}
@@ -56,6 +69,14 @@ export default MypageProfile;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    alignItems: 'center',
+  },
+  image: {
+    flexDirection: 'row',
+    width: 84,
+    height: 84,
+    borderRadius: 100,
+    justifyContent: 'center',
     alignItems: 'center',
   },
 });

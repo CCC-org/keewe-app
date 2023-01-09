@@ -15,6 +15,7 @@ const MyPageScreen = ({ navigation, route }) => {
     //return null;
   }
   const theme = useTheme();
+  const [profileImage, setProfileImage] = useState<string | undefined>(undefined);
   const [nickname, setNickname] = useState<string>('닉네임');
   const [title, setTitle] = useState<string>('대표 타이틀');
   const [selectedCategory, setSelectedCategory] = useState<string[]>([
@@ -46,7 +47,7 @@ const MyPageScreen = ({ navigation, route }) => {
           </Pressable>
         </View>
         <View style={{ marginLeft: 16, marginBottom: 24 }}>
-          <MypageProfile nickname={nickname} title={title} />
+          <MypageProfile nickname={nickname} title={title} image={profileImage} />
         </View>
         <View
           style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: 20, marginHorizontal: 14 }}
