@@ -18,8 +18,10 @@ const ProfileEditScreen = ({ navigation, route }) => {
   const theme = useTheme();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [permissionModal, setPermissionModal] = useState<boolean>(false);
+  const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const hideModal = () => setModalVisible(false);
   const hidePermissionModal = () => setPermissionModal(false);
+  const hideDeleteModal = () => setDeleteModal(false);
   const [btnAbled, setBtnAbled] = useState<boolean>(true);
   const [nickname, setNickname] = useState<string>('');
   const [title, setTitle] = useState<string>('');
@@ -106,7 +108,10 @@ const ProfileEditScreen = ({ navigation, route }) => {
     bottomSheetModalRef.current?.present();
   }, []);
 
-  const handleDeletePress = () => setImage(undefined);
+  const handleDeletePress = () => {
+    setDeleteModal(true);
+    bottomSheetModalRef.current?.dismiss();
+  };
   const handleLibraryPress = () => pickImage();
   const handleShotPress = () => openCamera();
 
@@ -118,7 +123,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
     }
 
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
@@ -129,6 +134,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
     if (!result.cancelled) {
       setImage(result.uri);
     }
+    bottomSheetModalRef.current?.dismiss();
   };
 
   const openCamera = async () => {
@@ -146,6 +152,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
     if (!result.cancelled) {
       setImage(result.uri);
     }
+    bottomSheetModalRef.current?.dismiss();
   };
 
   const renderBackdrop = useCallback(
@@ -179,8 +186,22 @@ const ProfileEditScreen = ({ navigation, route }) => {
           leftButtonPress={() => setPermissionModal(false)}
           rightButtonPress={() => {
             Linking.openSettings();
-            setModalVisible(false);
+            setPermissionModal(false);
           }}
+        />
+        <TwoButtonModal
+          dismissable={false}
+          mainTitle={'현재 사진을 삭제할까요?'}
+          visible={deleteModal}
+          onDismiss={hideDeleteModal}
+          leftButtonText={'취소'}
+          rightButtonText={'삭제하기'}
+          leftButtonPress={() => setDeleteModal(false)}
+          rightButtonPress={() => {
+            setImage(undefined);
+            setDeleteModal(false);
+          }}
+          rightButtonColor={theme.colors.graphic.red}
         />
         <ProfileImage image={image} onPress={() => handlePresentModalPress()} />
         <BottomSheetModal
@@ -192,9 +213,9 @@ const ProfileEditScreen = ({ navigation, route }) => {
           backdropComponent={renderBackdrop}
         >
           <View style={styles.sheet}>
-            <BottomSheetOption title="현재 사진 삭제" onPress={handleDeletePress} />
             <BottomSheetOption title="라이브러리에서 선택" onPress={handleLibraryPress} />
             <BottomSheetOption title="사진 찍기" onPress={handleShotPress} />
+            <BottomSheetOption title="현재 사진 삭제" onPress={handleDeletePress} />
           </View>
         </BottomSheetModal>
         <View>
