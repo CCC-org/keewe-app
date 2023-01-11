@@ -102,7 +102,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
-  const snapPoints = useMemo(() => ['30%', '30%'], []);
+  const snapPoints = useMemo(() => ['28%', '28%'], []);
 
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
@@ -215,7 +215,9 @@ const ProfileEditScreen = ({ navigation, route }) => {
           <View style={styles.sheet}>
             <BottomSheetOption title="라이브러리에서 선택" onPress={handleLibraryPress} />
             <BottomSheetOption title="사진 찍기" onPress={handleShotPress} />
-            <BottomSheetOption title="현재 사진 삭제" onPress={handleDeletePress} />
+            {image !== undefined ? (
+              <BottomSheetOption title="현재 사진 삭제" onPress={handleDeletePress} />
+            ) : null}
           </View>
         </BottomSheetModal>
         <View>
@@ -244,6 +246,6 @@ export default ProfileEditScreen;
 const styles = StyleSheet.create({
   sheet: {
     height: 168,
-    justifyContent: 'space-around',
+    //justifyContent: 'space-around',
   },
 });
