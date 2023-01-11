@@ -11,8 +11,8 @@ import InterestIcon from './InterestIcon';
 const MyPageScreen = ({ navigation, route }) => {
   const { userId } = route.params;
   if (userId === null || userId === undefined) {
-    //alert('userId를 인식할 수 없었습니다.');
-    //return null;
+    alert('userId를 인식할 수 없었습니다.');
+    return null;
   }
   const theme = useTheme();
   const [profileImage, setProfileImage] = useState<string | undefined>(undefined);
