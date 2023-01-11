@@ -1,5 +1,5 @@
 interface ProfileGetRequest {
-  insightId: string;
+  targetId: string;
 }
 
 interface ProfileGetResponse {
@@ -13,7 +13,7 @@ interface ProfileGetResponse {
     introduction: string;
     followerCount: number;
     followingCount: number;
-    challengeName: string;
+    challengeName: string | null;
     follow: boolean;
   };
 }

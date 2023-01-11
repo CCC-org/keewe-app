@@ -1,11 +1,14 @@
 import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MypageProfile from '../../../components/profile/MypageProfile';
 import { useTheme } from 'react-native-paper';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import MypageTitle from '../../../components/title/MypageTitle';
 import DividerBar from '../../../components/bars/DividerBar';
 import InterestIcon from './InterestIcon';
+import { useQuery } from '@tanstack/react-query';
+import { MypageAPI, MypageQueryKeys } from '../../../utils/api/mypageAPI';
+import { querySuccessError } from '../../../utils/helper/queryReponse/querySuccessError';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
 const MyPageScreen = ({ navigation, route }) => {
@@ -15,19 +18,13 @@ const MyPageScreen = ({ navigation, route }) => {
     return null;
   }
   const theme = useTheme();
-  const [profileImage, setProfileImage] = useState<string | undefined>(undefined);
+  const [profileImage, setProfileImage] = useState<string>('');
   const [nickname, setNickname] = useState<string>('닉네임');
   const [title, setTitle] = useState<string>('대표 타이틀');
-  const [selectedCategory, setSelectedCategory] = useState<string[]>([
-    '여행',
-    '반려동물',
-    '사진',
-    '맛집',
-    '가상자산',
-  ]);
-  const [introduction, setIntroduction] = useState<string>(
-    '암더 코리안 탑클래스 힙합모범 노블레스 페뷸러스 터뷸렌스 고져스 벗 댕저러스 난 비트를 비틀어 제껴버리는 셔브미션 챔피욘',
-  );
+  const [follower, setFollower] = useState<number>(0);
+  const [following, setFollowing] = useState<number>(0);
+  const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
+  const [introduction, setIntroduction] = useState<string>('소개글');
   const [iconColor, setIconColor] = useState([
     [theme.colors.graphic.purple, `${theme.colors.graphic.purple}1a`],
     [theme.colors.graphic.sky, `${theme.colors.graphic.sky}1a`],
@@ -35,6 +32,23 @@ const MyPageScreen = ({ navigation, route }) => {
     [theme.colors.graphic.violet, `${theme.colors.graphic.violet}1a`],
     [theme.colors.graphic.green, `${theme.colors.graphic.green}1a`],
   ]);
+
+  const { data: profile, isLoading: isProfileLoading } = useQuery(
+    MypageQueryKeys.getProfile({ targetId: userId }),
+    () => MypageAPI.getProfile({ targetId: userId }),
+    querySuccessError,
+  );
+
+  useEffect(() => {
+    setNickname(profile?.data?.nickname ?? '');
+    setTitle(profile?.data?.title ?? '');
+    setSelectedCategory(profile?.data?.interests ?? []);
+    setProfileImage(profile?.data?.image);
+    setIntroduction(profile?.data?.introduction ?? '');
+    setFollower(profile?.data?.followerCount ?? 0);
+    setFollowing(profile?.data?.followingCount ?? 0);
+  }, [profile, isProfileLoading]);
+
   return (
     <ScrollView>
       <View style={styles.top}>
@@ -47,7 +61,13 @@ const MyPageScreen = ({ navigation, route }) => {
           </Pressable>
         </View>
         <View style={{ marginLeft: 16, marginBottom: 24 }}>
-          <MypageProfile nickname={nickname} title={title} image={profileImage} />
+          <MypageProfile
+            nickname={nickname}
+            title={title}
+            image={profileImage}
+            follower={follower}
+            following={following}
+          />
         </View>
         <View
           style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: 20, marginHorizontal: 14 }}
