@@ -43,6 +43,7 @@ import IntroductionEditingScreen from './src/screens/Main/mypage/IntroductionEdi
 import InterestEditingScreen from './src/screens/Main/mypage/InterestEditingScreen';
 import ChallengeJoinScreen from './src/screens/challenge/ChallengeJoinScreen';
 import ChallengeJoinApprovedScreen from './src/screens/challenge/ChallengeJoinApprovedScreen';
+import TitleScreen from './src/screens/title/TitleScreen';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator();
@@ -172,21 +173,7 @@ export default function App() {
                       options={headerOptions}
                     />
                   </Stack.Group>
-                  {/* 온보딩 그룹 */}
-                  {/* <Stack.Group
-                    screenOptions={{
-                      // contentStyle: { backgroundColor: 'white' },
-                      headerTitleAlign: 'center',
-                      // animation: 'slide_from_right',
-                      headerTitleStyle: {
-                        fontSize: 16,
-                      },
-                      headerShadowVisible: false,
-                      // animationDuration: 1000,
-                    }}
-                  ></Stack.Group> */}
 
-                  {/* 온보딩 그룹 */}
                   <Stack.Group
                     screenOptions={{
                       title: '',
@@ -288,6 +275,18 @@ export default function App() {
                       component={TempSheetScreen}
                       options={{
                         title: '',
+                        cardStyle: { backgroundColor: 'white' },
+                      }}
+                    />
+                  </Stack.Group>
+
+                  {/* 타이틀 페이지 */}
+                  <Stack.Group>
+                    <Stack.Screen
+                      name={'Title'}
+                      component={TitleScreen}
+                      options={{
+                        title: '달성',
                         cardStyle: { backgroundColor: 'white' },
                       }}
                     />

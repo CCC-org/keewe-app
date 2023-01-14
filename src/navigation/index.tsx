@@ -72,6 +72,17 @@ export function RootScreen() {
             <Text style={theme.fonts.text.body1.bold}> SignUpScreen.tsx</Text>
           </View>
         </Pressable>
+        <Pressable onPress={() => navigation.navigate('Title')}>
+          <View
+            style={{
+              backgroundColor: 'violet',
+              width: 150,
+              height: 100,
+            }}
+          >
+            <Text style={theme.fonts.text.body1.bold}> TitleScreen.tsx</Text>
+          </View>
+        </Pressable>
         <Pressable onPress={() => navigation.navigate('CategorySelect')}>
           <View
             style={{
