@@ -20,7 +20,12 @@ export const TitleApis = {
         },
       )
       .then((res) => {
+        console.log('🚀 ~ file: TitleAPI.ts:23 ~ .then ~ res', res);
         return res.data.data;
+      })
+      .catch((err) => {
+        console.log('getTitleList err: ', err);
+        return [];
       });
   },
 };

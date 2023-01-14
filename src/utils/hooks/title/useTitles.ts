@@ -3,13 +3,13 @@ import { TitleApis } from '../../api/TitleAPI';
 import { Title } from '../../../types/title/title';
 
 export function useTitles(userId: string | number) {
-  const [titles, setTitles] = useState<Title['data']>();
+  const [userTitles, setUserTitles] = useState<Title['data']>([]);
   useEffect(() => {
     async function getTitles() {
-      TitleApis.getTitleList(userId).then((res) => setTitles(res));
+      TitleApis.getTitleList(userId).then((res) => setUserTitles(res));
     }
     getTitles();
   }, []);
 
-  return [titles] as const;
+  return [userTitles] as const;
 }

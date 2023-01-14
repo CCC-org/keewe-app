@@ -1,6 +1,7 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { titleInfo, titleMeta } from '../../types/title/title';
+import { useTheme } from 'react-native-paper';
 
 interface TitleStickerProp {
   userTitles: titleInfo[];
@@ -8,29 +9,61 @@ interface TitleStickerProp {
 }
 
 const TitleSticker = ({ userTitles, titleMeta }: TitleStickerProp) => {
-  // console.log(
-  //   '🚀 ~ file: TitleSticker.tsx:11 ~ TitleSticker ~ userTitles, titleMeta',
-  //   userTitles,
-  //   titleMeta,
-  // );
+  console.log('🚀 ~ file: TitleSticker.tsx:12 ~ TitleSticker ~ userTitles', userTitles);
+  const { fonts } = useTheme();
+  // TODO: userTitles에 있으면, id를 source로 받고, 아니면 666이 들어감.
+  // 666은 없는 이미지를 의미함.
+  const source = userTitles.find((title) => title.titleId === titleMeta.id);
   return (
-    <View>
-      <Image
+    <View style={styles.mainContainer}>
+      <View
         style={{
-          borderWidth: 10,
-          width: '100%',
-          height: 100,
+          borderWidth: 1,
+          borderColor: 'red',
         }}
-        // source={{ uri: `../../../assets/images/titles/${titleMeta.id}.png` }}
-        source={{ uri: `../../../assets/images/챌린지/챌린지생성.png` }}
-        // source={require(`../../../assets/images/titles/1000.png`)}
-      />
+      >
+        <Image
+          style={{
+            borderWidth: 10,
+            width: 80,
+            height: 80,
+          }}
+          source={{ uri: `../../../assets/images/titles/${source || 666}.png` }}
+        />
+      </View>
 
-      <Text>what</Text>
+      <View style={styles.metaContainer}>
+        <Text style={[fonts.text.body2.bold, { textAlign: 'center' }]}>{titleMeta.name}</Text>
+        <Text style={[fonts.text.caption1, { color: '#18192090', textAlign: 'center' }]}>
+          {titleMeta.introduction}
+        </Text>
+        {source ? (
+          <Text style={[fonts.text.caption1, { color: '#18192090', textAlign: 'center' }]}>
+            {source.achievedDate}
+          </Text>
+        ) : (
+          <></>
+        )}
+      </View>
     </View>
   );
 };
 
 export default TitleSticker;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  mainContainer: {
+    borderWidth: 1,
+    borderColor: 'green',
+    margin: 10,
+    width: 100,
+  },
+  metaContainer: {
+    borderWidth: 1,
+    borderColor: 'yellow',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 15,
+  },
+});
