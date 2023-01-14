@@ -8,13 +8,15 @@ interface MypageProfileProps {
   nickname: string;
   title: string;
   image: string | undefined;
+  follower: number;
+  following: number;
 }
 
-const MypageProfile = ({ nickname, title, image }: MypageProfileProps) => {
+const MypageProfile = ({ nickname, title, image, follower, following }: MypageProfileProps) => {
   const theme = useTheme();
   return (
     <View style={styles.container}>
-      {image !== undefined ? (
+      {image !== '' ? (
         <Image source={{ uri: image }} style={styles.image} />
       ) : (
         <View
@@ -47,7 +49,7 @@ const MypageProfile = ({ nickname, title, image }: MypageProfileProps) => {
           </Text>
           <Text style={{ ...theme.fonts.text.body1.bold, color: theme.colors.graphic.black }}>
             {' '}
-            123{' '}
+            {follower}{' '}
           </Text>
           <Text
             style={{ ...theme.fonts.text.body1.regular, color: `${theme.colors.graphic.black}cc` }}
@@ -56,7 +58,7 @@ const MypageProfile = ({ nickname, title, image }: MypageProfileProps) => {
             팔로잉{' '}
           </Text>
           <Text style={{ ...theme.fonts.text.body1.bold, color: theme.colors.graphic.black }}>
-            50K
+            {following}
           </Text>
         </View>
       </View>

@@ -29,6 +29,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [customCategory, setCustomCategory] = useState<string[]>([]);
   const [image, setImage] = useState<string | undefined>(undefined);
+  const [userId, setUserId] = useState<string>('');
 
   const handleComplete = () => setModalVisible(true);
   const changePermission = () => setPermissionModal(true);
@@ -41,7 +42,15 @@ const ProfileEditScreen = ({ navigation, route }) => {
       toScreen: 'ProfileEdit',
     });
   };
-  const handleTitle = () => alert('타이틀창으로');
+  const handleTitle = () =>
+    navigation.navigate('title', {
+      nickname,
+      title,
+      introduction,
+      selectedCategory,
+      userId,
+      toScreen: 'ProfileEdit',
+    });
   const handleIntroduction = () =>
     navigation.navigate('IntroductionEditing', {
       nickname,
@@ -88,7 +97,8 @@ const ProfileEditScreen = ({ navigation, route }) => {
   }, [route]);
 
   useEffect(() => {
-    const { nickname, title, introduction, selectedCategory } = route.params;
+    const { nickname, title, introduction, selectedCategory, userId } = route.params;
+    setUserId(userId);
     setNickname(nickname);
     setTitle(title);
     setSelectedCategory(selectedCategory);
@@ -102,7 +112,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
-  const snapPoints = useMemo(() => ['30%', '30%'], []);
+  const snapPoints = useMemo(() => ['28%', '28%'], []);
 
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
@@ -215,7 +225,9 @@ const ProfileEditScreen = ({ navigation, route }) => {
           <View style={styles.sheet}>
             <BottomSheetOption title="라이브러리에서 선택" onPress={handleLibraryPress} />
             <BottomSheetOption title="사진 찍기" onPress={handleShotPress} />
-            <BottomSheetOption title="현재 사진 삭제" onPress={handleDeletePress} />
+            {image !== undefined ? (
+              <BottomSheetOption title="현재 사진 삭제" onPress={handleDeletePress} />
+            ) : null}
           </View>
         </BottomSheetModal>
         <View>
@@ -244,6 +256,5 @@ export default ProfileEditScreen;
 const styles = StyleSheet.create({
   sheet: {
     height: 168,
-    justifyContent: 'space-around',
   },
 });
