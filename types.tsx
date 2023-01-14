@@ -46,7 +46,7 @@ export type RootStackParamList = {
   ProfileEdit: undefined;
   NicknameEditing: undefined;
   interestEditing: undefined;
-  title: undefined;
+  Title: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
