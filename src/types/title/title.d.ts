@@ -10,3 +10,10 @@ export interface titleInfo {
   introduction: string;
   achievedDate: string;
 }
+
+export interface titleMeta {
+  id: number;
+  category: string;
+  name: string;
+  introduction: string;
+}

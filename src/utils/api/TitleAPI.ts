@@ -1,4 +1,4 @@
-import { Title } from '../../types/title/title';
+import { Title, titleInfo } from '../../types/title/title';
 import { getAccessToken } from '../hooks/asyncStorage/Login';
 import axios from 'axios';
 
@@ -8,7 +8,7 @@ export const TitleApiKeys = {
 };
 
 export const TitleApis = {
-  getTitleList: async (userId: string | number): Promise<Title['data']> => {
+  getTitleList: async (userId: string | number): Promise<titleInfo[]> => {
     const token = await getAccessToken();
     return axios
       .get<Title>(
