@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import React from 'react';
 import { useTheme } from 'react-native-paper';
 
@@ -36,5 +36,3 @@ const ProfileList = ({ title, content, contentColor, height, handlePress }: Prof
 };
 
 export default ProfileList;
-
-const styles = StyleSheet.create({});
