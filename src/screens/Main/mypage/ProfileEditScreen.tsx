@@ -246,6 +246,5 @@ export default ProfileEditScreen;
 const styles = StyleSheet.create({
   sheet: {
     height: 168,
-    //justifyContent: 'space-around',
   },
 });
