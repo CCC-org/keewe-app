@@ -29,6 +29,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [customCategory, setCustomCategory] = useState<string[]>([]);
   const [image, setImage] = useState<string | undefined>(undefined);
+  const [userId, setUserId] = useState<string>('');
 
   const handleComplete = () => setModalVisible(true);
   const changePermission = () => setPermissionModal(true);
@@ -41,7 +42,15 @@ const ProfileEditScreen = ({ navigation, route }) => {
       toScreen: 'ProfileEdit',
     });
   };
-  const handleTitle = () => alert('타이틀창으로');
+  const handleTitle = () =>
+    navigation.navigate('title', {
+      nickname,
+      title,
+      introduction,
+      selectedCategory,
+      userId,
+      toScreen: 'ProfileEdit',
+    });
   const handleIntroduction = () =>
     navigation.navigate('IntroductionEditing', {
       nickname,
@@ -88,7 +97,8 @@ const ProfileEditScreen = ({ navigation, route }) => {
   }, [route]);
 
   useEffect(() => {
-    const { nickname, title, introduction, selectedCategory } = route.params;
+    const { nickname, title, introduction, selectedCategory, userId } = route.params;
+    setUserId(userId);
     setNickname(nickname);
     setTitle(title);
     setSelectedCategory(selectedCategory);

@@ -97,6 +97,7 @@ const MyPageScreen = ({ navigation, route }) => {
                 title,
                 selectedCategory,
                 introduction,
+                userId,
               })
             }
           >
