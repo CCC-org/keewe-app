@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { titleInfo, titleMeta } from '../../types/title/title';
 import { useTheme } from 'react-native-paper';
@@ -9,18 +9,18 @@ interface TitleStickerProp {
 }
 
 const TitleSticker = ({ userTitles, titleMeta }: TitleStickerProp) => {
-  console.log('🚀 ~ file: TitleSticker.tsx:12 ~ TitleSticker ~ userTitles', userTitles);
   const { fonts } = useTheme();
   // TODO: userTitles에 있으면, id를 source로 받고, 아니면 666이 들어감.
   // 666은 없는 이미지를 의미함.
   const source = userTitles.find((title) => title.titleId === titleMeta.id);
   return (
     <View style={styles.mainContainer}>
-      <View
+      <Pressable
         style={{
           borderWidth: 1,
           borderColor: 'red',
         }}
+        onPress={() => alert(titleMeta.id)}
       >
         <Image
           style={{
@@ -30,7 +30,7 @@ const TitleSticker = ({ userTitles, titleMeta }: TitleStickerProp) => {
           }}
           source={{ uri: `../../../assets/images/titles/${source || 666}.png` }}
         />
-      </View>
+      </Pressable>
 
       <View style={styles.metaContainer}>
         <Text style={[fonts.text.body2.bold, { textAlign: 'center' }]}>{titleMeta.name}</Text>
