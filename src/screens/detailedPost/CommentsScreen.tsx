@@ -7,6 +7,7 @@ import { ReplyInfo } from '../../components/comments/CommentInput';
 import CommentInput from '../../components/comments/CommentInput';
 import CommentXml from '../../constants/Icons/Comment/CommentXml';
 import { SvgXml } from 'react-native-svg';
+import { View } from '../../components/Themed';
 
 const COMMENT_LIMIT = 10;
 
@@ -136,12 +137,13 @@ const CommentsScreen = ({ navigation, route }) => {
       <KeyboardAvoidingView
         behavior={Platform.select({ ios: 'position' })} // position || padding
         keyboardVerticalOffset={Platform.select({ ios: 90 })}
+        style={{ flex: 1 }}
       >
         <FlatList
           data={data}
           renderItem={renderItem}
           onEndReached={onEndReached}
-          style={{ marginBottom: 80 }}
+          style={{ paddingBottom: '100%', marginBottom: 80 }}
         />
         <CommentInput
           insightId={insightId}

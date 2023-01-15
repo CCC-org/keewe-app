@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Text,
-  View,
-  TextInput,
-  StyleSheet,
-  Pressable,
-  KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
+import { Text, View, TextInput, StyleSheet, Pressable } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import theme from '../../theme/light';
 import main from '../../constants/Icons/Upload/UploadMainXml';
