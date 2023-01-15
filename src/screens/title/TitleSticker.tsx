@@ -13,6 +13,7 @@ const TitleSticker = ({ userTitles, titleMeta }: TitleStickerProp) => {
   // TODO: userTitles에 있으면, id를 source로 받고, 아니면 666이 들어감.
   // 666은 없는 이미지를 의미함.
   const source = userTitles.find((title) => title.titleId === titleMeta.id);
+
   return (
     <View style={styles.mainContainer}>
       <Pressable
@@ -22,14 +23,33 @@ const TitleSticker = ({ userTitles, titleMeta }: TitleStickerProp) => {
         }}
         onPress={() => alert(titleMeta.id)}
       >
-        <Image
-          style={{
-            borderWidth: 10,
-            width: 80,
-            height: 80,
-          }}
-          source={{ uri: `../../../assets/images/titles/${source || 666}.png` }}
-        />
+        {source ? (
+          <>
+            <Image
+              style={{
+                width: 160,
+                height: 160,
+              }}
+              width={160}
+              height={160}
+              source={require(`../../../assets/images/titles/1000.png`)}
+            />
+            <Text>{source.titleId}</Text>
+          </>
+        ) : (
+          <>
+            <Image
+              style={{
+                width: 80,
+                height: 80,
+              }}
+              // source={require('../../../assets/images/titles/666.png')}
+              source={require('../../../assets/images/챌린지/챌린지생성.png')}
+            />
+            <Text>666</Text>
+            <Text>{titleMeta.id}</Text>
+          </>
+        )}
       </Pressable>
 
       <View style={styles.metaContainer}>

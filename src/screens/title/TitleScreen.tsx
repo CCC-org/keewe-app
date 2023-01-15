@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
 import React from 'react';
 import { useTitles } from '../../utils/hooks/title/useTitles';
 import TitleSticker from './TitleSticker';
@@ -9,6 +9,18 @@ const TitleScreen = ({ route }) => {
   const { userId } = route.params;
   const [userTitles] = useTitles(userId);
   const theme = useTheme();
+
+  return (
+    <Image
+      style={{
+        width: 160,
+        height: 160,
+      }}
+      width={160}
+      height={160}
+      source={require(`../../../assets/images/webpack.png`)}
+    />
+  );
 
   return (
     <ScrollView style={styles.mainContainer} contentContainerStyle={{ paddingBottom: 100 }}>
