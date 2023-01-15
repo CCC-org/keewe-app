@@ -136,7 +136,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
         behavior={Platform.select({ ios: 'position' })} // position || padding
         keyboardVerticalOffset={Platform.select({ ios: 90 })}
       >
-        <ScrollView style={{ marginBottom: 70 }}>
+        <ScrollView style={{ paddingBottom: '100%', marginBottom: 70 }}>
           {!isInsightLoading && (
             <DetailedPostSection
               insightId={insightId}
