@@ -25,6 +25,7 @@ const MyPageScreen = ({ navigation, route }) => {
   const [following, setFollowing] = useState<number>(0);
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [introduction, setIntroduction] = useState<string>('소개글');
+  const [representativeTitleList, setRepresentativeTitleList] = useState<AchievedTitle[]>([]);
   const [iconColor, setIconColor] = useState([
     [theme.colors.graphic.purple, `${theme.colors.graphic.purple}1a`],
     [theme.colors.graphic.sky, `${theme.colors.graphic.sky}1a`],
@@ -38,6 +39,11 @@ const MyPageScreen = ({ navigation, route }) => {
     () => MypageAPI.getProfile({ targetId: userId }),
     querySuccessError,
   );
+  const { data: representativeTitles, isLoading: isrepresentativeTitlesLoading } = useQuery(
+    MypageQueryKeys.getRepresentativeTitles({ userId: userId }),
+    () => MypageAPI.getRepresentativeTitles({ userId: userId }),
+    querySuccessError,
+  );
 
   useEffect(() => {
     setNickname(profile?.data?.nickname ?? '');
@@ -47,7 +53,9 @@ const MyPageScreen = ({ navigation, route }) => {
     setIntroduction(profile?.data?.introduction ?? '');
     setFollower(profile?.data?.followerCount ?? 0);
     setFollowing(profile?.data?.followingCount ?? 0);
-  }, [profile, isProfileLoading]);
+    setRepresentativeTitleList(representativeTitles?.data?.achievedTitles ?? []);
+    console.log(representativeTitleList);
+  }, [profile, isProfileLoading, representativeTitles, isrepresentativeTitlesLoading]);
 
   return (
     <ScrollView>

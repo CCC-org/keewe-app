@@ -17,3 +17,25 @@ interface ProfileGetResponse {
     follow: boolean;
   };
 }
+
+interface RepresentativeTitlesGetRequest {
+  userId: string;
+}
+
+interface RepresentativeTitlesGetResponse {
+  message: string;
+  code: number;
+  data: RepresentativeTitlesData;
+}
+
+interface RepresentativeTitlesData {
+  total: number;
+  achievedTitles: AchievedTitle[];
+}
+
+interface AchievedTitle {
+  titleId: number;
+  name: string;
+  introduction: string;
+  achievedDate: string;
+}
