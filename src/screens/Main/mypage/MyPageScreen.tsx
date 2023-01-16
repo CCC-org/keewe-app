@@ -27,6 +27,7 @@ const MyPageScreen = ({ navigation, route }) => {
   const [introduction, setIntroduction] = useState<string>('소개글');
   const [representativeTitleList, setRepresentativeTitleList] = useState<AchievedTitle[]>([]);
   const [titleTotal, setTitleTotal] = useState<number>(0);
+  const [folderList, setFolderList] = useState<FolderData[]>([]);
   const [iconColor, setIconColor] = useState([
     [theme.colors.graphic.purple, `${theme.colors.graphic.purple}1a`],
     [theme.colors.graphic.sky, `${theme.colors.graphic.sky}1a`],
@@ -45,6 +46,11 @@ const MyPageScreen = ({ navigation, route }) => {
     () => MypageAPI.getRepresentativeTitles({ userId: userId }),
     querySuccessError,
   );
+  const { data: userFolderList, isLoading: isUserFolderListLoading } = useQuery(
+    MypageQueryKeys.getFolderList({ userId: userId }),
+    () => MypageAPI.getFolderList({ userId: userId }),
+    querySuccessError,
+  );
 
   useEffect(() => {
     setNickname(profile?.data?.nickname ?? '');
@@ -56,8 +62,17 @@ const MyPageScreen = ({ navigation, route }) => {
     setFollowing(profile?.data?.followingCount ?? 0);
     setRepresentativeTitleList(representativeTitles?.data?.achievedTitles ?? []);
     setTitleTotal(representativeTitles?.data?.total ?? 0);
+    setFolderList(userFolderList?.data ?? []);
     console.log(representativeTitleList);
-  }, [profile, isProfileLoading, representativeTitles, isrepresentativeTitlesLoading]);
+    console.log(userFolderList);
+  }, [
+    profile,
+    isProfileLoading,
+    representativeTitles,
+    isrepresentativeTitlesLoading,
+    userFolderList,
+    isUserFolderListLoading,
+  ]);
 
   return (
     <ScrollView>

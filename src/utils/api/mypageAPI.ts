@@ -7,6 +7,7 @@ export const MypageQueryKeys = {
     'representativeTitles',
     request.userId,
   ],
+  getFolderList: (request: UserFolderListGetRequest) => ['folderList', request.userId],
 };
 
 export const MypageAPI = {
@@ -36,6 +37,25 @@ export const MypageAPI = {
 
       const { data } = await httpClient.get<RepresentativeTitlesGetResponse>(
         `https://api-keewe.com/api/v1/user/profile/achieved-title/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      return data;
+    } catch (err) {
+      console.error('api error2: ', err);
+    }
+  },
+  getFolderList: async (request: UserFolderListGetRequest) => {
+    const { userId } = request;
+    try {
+      const token = await getAccessToken();
+
+      const { data } = await httpClient.get<UserFolderListGetResponse>(
+        `https://api-keewe.com/api/v1/drawer/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

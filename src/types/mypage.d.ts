@@ -39,3 +39,18 @@ interface AchievedTitle {
   introduction: string;
   achievedDate: string;
 }
+
+interface UserFolderListGetRequest {
+  userId: string;
+}
+
+interface UserFolderListGetResponse {
+  message: string;
+  code: number;
+  data: FolderData[];
+}
+
+interface FolderData {
+  id: number;
+  name: string;
+}
