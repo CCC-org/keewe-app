@@ -11,7 +11,7 @@ interface DetailedPostSectionProps {
   insightId: number;
   views: number | string;
   currentChallenge: string;
-  link: string;
+  url: string;
   reaction: Reaction;
 }
 
@@ -20,7 +20,7 @@ const DetailedPostSection = ({
   insightId,
   views,
   currentChallenge,
-  link,
+  url,
   reaction,
 }: DetailedPostSectionProps) => {
   const theme = useTheme();
@@ -48,7 +48,7 @@ const DetailedPostSection = ({
         <Text style={[theme.fonts.text.body1.regular, { lineHeight: 28 }]}>{insightText}</Text>
       </View>
       <View style={styles.link}>
-        <LinkCard text={link}></LinkCard>
+        <LinkCard text={url}></LinkCard>
       </View>
       <View style={styles.emoticonBox}>
         <ScrollView horizontal style={{ overflow: 'visible' }}>
