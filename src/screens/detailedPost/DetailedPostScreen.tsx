@@ -7,7 +7,7 @@ import {
   Platform,
   KeyboardAvoidingView,
 } from 'react-native';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import DetailedPostSection from './DetailedPostSection';
@@ -142,7 +142,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
               insightId={insightId}
               insightText={insightResponse?.data?.contents ?? ''}
               views={views}
-              link={insightResponse?.data?.link ?? ''}
+              url={insightResponse?.data?.link?.url ?? ''}
               currentChallenge={currentChallenge}
               reaction={insightResponse.data.reaction}
               authorId={profile?.data?.authorId ?? -1}
