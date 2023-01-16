@@ -26,6 +26,7 @@ const MyPageScreen = ({ navigation, route }) => {
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [introduction, setIntroduction] = useState<string>('소개글');
   const [representativeTitleList, setRepresentativeTitleList] = useState<AchievedTitle[]>([]);
+  const [titleTotal, setTitleTotal] = useState<number>(0);
   const [iconColor, setIconColor] = useState([
     [theme.colors.graphic.purple, `${theme.colors.graphic.purple}1a`],
     [theme.colors.graphic.sky, `${theme.colors.graphic.sky}1a`],
@@ -54,6 +55,7 @@ const MyPageScreen = ({ navigation, route }) => {
     setFollower(profile?.data?.followerCount ?? 0);
     setFollowing(profile?.data?.followingCount ?? 0);
     setRepresentativeTitleList(representativeTitles?.data?.achievedTitles ?? []);
+    setTitleTotal(representativeTitles?.data?.total ?? 0);
     console.log(representativeTitleList);
   }, [profile, isProfileLoading, representativeTitles, isrepresentativeTitlesLoading]);
 
@@ -123,10 +125,19 @@ const MyPageScreen = ({ navigation, route }) => {
             타이틀{' '}
           </Text>
           <Text style={{ ...theme.fonts.text.headline2, color: `${theme.colors.graphic.black}4d` }}>
-            8
+            {titleTotal}
           </Text>
         </View>
-        <MypageTitle label="타이틀 제목" condition="획득 방법" date="2023.01.01" />
+        {representativeTitleList.map((cur, idx) => {
+          return (
+            <MypageTitle
+              key={idx}
+              label={cur['name']}
+              condition={cur['introduction']}
+              date={cur['achievedDate']}
+            />
+          );
+        })}
       </View>
       <Pressable
         onPress={() => alert('view every title!')}
