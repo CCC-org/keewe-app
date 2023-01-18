@@ -1,7 +1,7 @@
 import { Pressable, FlatList, Text, Platform, KeyboardAvoidingView } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Comment from '../../components/comments/Comment';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
 import { ReplyInfo } from '../../components/comments/CommentInput';
 import CommentInput from '../../components/comments/CommentInput';
@@ -18,6 +18,8 @@ type ReplyCursor = {
 
 const CommentsScreen = ({ navigation, route }) => {
   const { insightId } = route.params;
+  const ref = useRef();
+  const queryClient = useQueryClient();
   const [data, setData] = useState<Comment[]>([]);
   const [commentCursor, setCommentCursor] = useState<number | undefined>(undefined);
   const [replyCursor, setReplyCursor] = useState<ReplyCursor | undefined>(undefined);
@@ -25,6 +27,9 @@ const CommentsScreen = ({ navigation, route }) => {
 
   const handleReplyClick = (info: ReplyInfo) => {
     setReplyInfo(info);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    ref?.current?.scrollToEnd();
   };
 
   const { isLoading: isCommentLoading } = useQuery(
@@ -58,14 +63,21 @@ const CommentsScreen = ({ navigation, route }) => {
     {
       enabled: replyCursor?.parentId !== undefined,
       onSuccess: async (response) => {
+        const idx = data.findIndex((item) => item.id === replyCursor?.parentId);
         await setData((prev) => {
-          const idx = prev.findIndex((item) => item.id === replyCursor?.parentId);
           prev[idx].replies.push(...response.data);
           return [...prev];
         });
         if (response.data.length < COMMENT_LIMIT) {
           setReplyCursor(undefined);
         } // return to comment
+        setCommentCursor(data[idx].id);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        // ref?.current?.scrollToIndex({ animated: true, index: idx });
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        ref?.current?.scrollToEnd();
       },
     },
   );
@@ -103,7 +115,6 @@ const CommentsScreen = ({ navigation, route }) => {
                 prev[index].replies = [];
                 return [...prev.slice(0, index + 1)];
               });
-              setCommentCursor(data[index].id);
               setReplyCursor({ parentId: item.id });
             }}
           >
@@ -113,6 +124,12 @@ const CommentsScreen = ({ navigation, route }) => {
         )}
       </>
     );
+  };
+
+  const scroll = (index: number) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    ref?.current?.scrollToIndex({ animated: true, index });
   };
 
   const onEndReached = () => {
@@ -129,9 +146,11 @@ const CommentsScreen = ({ navigation, route }) => {
         };
       });
     }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    ref?.current?.scrollToEnd();
     return;
   };
-
   return (
     <>
       <KeyboardAvoidingView
@@ -141,6 +160,9 @@ const CommentsScreen = ({ navigation, route }) => {
       >
         <FlatList
           data={data}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          //@ts-ignore
+          ref={ref}
           renderItem={renderItem}
           onEndReached={onEndReached}
           style={{ paddingBottom: '100%', marginBottom: 80 }}
