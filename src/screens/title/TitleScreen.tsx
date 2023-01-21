@@ -11,18 +11,6 @@ const TitleScreen = ({ route }) => {
   const theme = useTheme();
 
   return (
-    <Image
-      style={{
-        width: 160,
-        height: 160,
-      }}
-      width={160}
-      height={160}
-      source={require(`../../../assets/images/webpack.png`)}
-    />
-  );
-
-  return (
     <ScrollView style={styles.mainContainer} contentContainerStyle={{ paddingBottom: 100 }}>
       {Object.values(titleMap).map((titleContainer) => {
         const filteredTitle = titleMetaArr.filter(

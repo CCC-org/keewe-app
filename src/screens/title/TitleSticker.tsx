@@ -13,7 +13,8 @@ const TitleSticker = ({ userTitles, titleMeta }: TitleStickerProp) => {
   // TODO: userTitles에 있으면, id를 source로 받고, 아니면 666이 들어감.
   // 666은 없는 이미지를 의미함.
   const source = userTitles.find((title) => title.titleId === titleMeta.id);
-
+  console.log('🚀 ~ file: TitleSticker.tsx:16 ~ TitleSticker ~ source', source);
+  console.log('🚀 ~ file: TitleSticker.tsx:19 ~ TitleSticker ~ titleMeta.url', titleMeta.url);
   return (
     <View style={styles.mainContainer}>
       <Pressable
@@ -27,12 +28,12 @@ const TitleSticker = ({ userTitles, titleMeta }: TitleStickerProp) => {
           <>
             <Image
               style={{
-                width: 160,
-                height: 160,
+                width: 80,
+                height: 80,
               }}
-              width={160}
-              height={160}
-              source={require(`../../../assets/images/titles/1000.png`)}
+              // source={require(titleMeta.url)}
+              source={titleMeta.url}
+              // source={require('../../../assets/images/titles/666.png')}
             />
             <Text>{source.titleId}</Text>
           </>
@@ -43,8 +44,8 @@ const TitleSticker = ({ userTitles, titleMeta }: TitleStickerProp) => {
                 width: 80,
                 height: 80,
               }}
-              // source={require('../../../assets/images/titles/666.png')}
-              source={require('../../../assets/images/챌린지/챌린지생성.png')}
+              // source={titleMeta.url}
+              source={require('../../../assets/images/titles/666.png')}
             />
             <Text>666</Text>
             <Text>{titleMeta.id}</Text>

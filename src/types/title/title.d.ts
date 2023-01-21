@@ -16,4 +16,5 @@ export interface titleMeta {
   category: string;
   name: string;
   introduction: string;
+  url: NodeRequire;
 }
