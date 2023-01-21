@@ -13,8 +13,9 @@ const TitleSticker = ({ userTitles, titleMeta }: TitleStickerProp) => {
   // TODO: userTitles에 있으면, id를 source로 받고, 아니면 666이 들어감.
   // 666은 없는 이미지를 의미함.
   const source = userTitles.find((title) => title.titleId === titleMeta.id);
-  console.log('🚀 ~ file: TitleSticker.tsx:16 ~ TitleSticker ~ source', source);
-  console.log('🚀 ~ file: TitleSticker.tsx:19 ~ TitleSticker ~ titleMeta.url', titleMeta.url);
+
+  // 현재쓰고 있는 타이틀과 일치하면, true로 넣을 부분이 존재함. 체크표시
+
   return (
     <View style={styles.mainContainer}>
       <Pressable
@@ -30,6 +31,9 @@ const TitleSticker = ({ userTitles, titleMeta }: TitleStickerProp) => {
               style={{
                 width: 80,
                 height: 80,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
               // source={require(titleMeta.url)}
               source={titleMeta.url}
@@ -43,12 +47,13 @@ const TitleSticker = ({ userTitles, titleMeta }: TitleStickerProp) => {
               style={{
                 width: 80,
                 height: 80,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
               // source={titleMeta.url}
               source={require('../../../assets/images/titles/666.png')}
             />
-            <Text>666</Text>
-            <Text>{titleMeta.id}</Text>
           </>
         )}
       </Pressable>

@@ -21,7 +21,12 @@ const FeedTextContent = ({ contents, insightId }: FeedTextContent) => {
 
   return (
     <Pressable onPress={handleNavigateToInsight}>
-      <Text style={theme.fonts.text.body1.regular}>
+      <Text
+        style={[
+          theme.fonts.text.body1.regular,
+          { paddingBottom: modifiedContents.length < 100 ? 20 : 4 },
+        ]}
+      >
         {modifiedContents}
         {modifiedContents.length >= 99 ? (
           <Text style={[theme.fonts.text.body1.regular, { color: '#12131450' }]}>
