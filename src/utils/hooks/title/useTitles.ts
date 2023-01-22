@@ -3,7 +3,8 @@ import { TitleApis } from '../../api/TitleAPI';
 import { Title } from '../../../types/title/title';
 
 export function useTitles(userId: string | number) {
-  const [userTitles, setUserTitles] = useState<Title['data']>([]);
+  const [userTitles, setUserTitles] = useState<Title['data']>({} as Title['data']);
+
   useEffect(() => {
     async function getTitles() {
       TitleApis.getTitleList(userId).then((res) => setUserTitles(res));

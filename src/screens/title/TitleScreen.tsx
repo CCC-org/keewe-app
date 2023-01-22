@@ -4,9 +4,10 @@ import { useTitles } from '../../utils/hooks/title/useTitles';
 import TitleSticker from './TitleSticker';
 import { useTheme } from 'react-native-paper';
 import { titleMap, titleMetaArr } from '../../constants/title/titleData';
+import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 
 const TitleScreen = ({ route }) => {
-  const { userId } = route.params;
+  const userId = route.params?.userId ?? getUserId().then((id) => id);
   const [userTitles] = useTitles(userId);
   const theme = useTheme();
 
@@ -33,7 +34,12 @@ const TitleScreen = ({ route }) => {
               {filteredTitle.map((titleMeta) => {
                 return (
                   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                  <TitleSticker key={titleMeta.id} userTitles={userTitles!} titleMeta={titleMeta} />
+                  <TitleSticker
+                    key={titleMeta.id}
+                    userTitles={userTitles.achievedTitles}
+                    repTitleId={userTitles.repTitleId}
+                    titleMeta={titleMeta}
+                  />
                 );
               })}
             </View>
