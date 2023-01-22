@@ -6,7 +6,7 @@ import { useTheme } from 'react-native-paper';
 import { titleMap, titleMetaArr } from '../../constants/title/titleData';
 import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 
-const TitleScreen = ({ route }) => {
+const TitleScreen = ({ route, navigation }) => {
   const userId = route.params?.userId ?? getUserId().then((id) => id);
   const [userTitles] = useTitles(userId);
   const theme = useTheme();

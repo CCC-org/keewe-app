@@ -2,6 +2,7 @@ import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { Title, TitleMeta } from '../../types/title/title';
 import { useTheme } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 
 interface TitleStickerProp {
   userTitles: Title['data']['achievedTitles'];
@@ -11,7 +12,20 @@ interface TitleStickerProp {
 
 const TitleSticker = ({ userTitles, titleMeta, repTitleId }: TitleStickerProp) => {
   const { fonts } = useTheme();
+  const navigation = useNavigation();
+
+  // source is the matching title. if undefined, the sticker will be an empty box.
   const source = userTitles?.find((title) => title.titleId === titleMeta.id);
+
+  const handleChangeTitle = () => {
+    if (!source) {
+      alert('아직 획득하지 못한 타이틀은 등록할 수 없습니다.');
+      return;
+    }
+    const res = navigation.getState().routes.filter((route) => route.name === 'ProfileEdit')[0];
+    const mergedRouteParams = { ...res.params, title: titleMeta.name };
+    navigation.navigate('ProfileEdit', mergedRouteParams);
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -25,7 +39,7 @@ const TitleSticker = ({ userTitles, titleMeta, repTitleId }: TitleStickerProp) =
               alignItems: 'center',
               justifyContent: 'center',
             }}
-            onPress={() => alert(titleMeta.id)}
+            onPress={handleChangeTitle}
           >
             <Image
               style={{
@@ -35,9 +49,7 @@ const TitleSticker = ({ userTitles, titleMeta, repTitleId }: TitleStickerProp) =
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              // source={require(titleMeta.url)}
               source={titleMeta.url}
-              // source={require('../../../assets/images/titles/666.png')}
             />
           </Pressable>
           <Text>{source.titleId}</Text>
@@ -52,7 +64,7 @@ const TitleSticker = ({ userTitles, titleMeta, repTitleId }: TitleStickerProp) =
               alignItems: 'center',
               justifyContent: 'center',
             }}
-            onPress={() => alert(titleMeta.id)}
+            onPress={handleChangeTitle}
           >
             <Image
               style={{
@@ -62,7 +74,6 @@ const TitleSticker = ({ userTitles, titleMeta, repTitleId }: TitleStickerProp) =
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              // source={titleMeta.url}
               source={require('../../../assets/images/titles/666.png')}
             />
           </Pressable>
