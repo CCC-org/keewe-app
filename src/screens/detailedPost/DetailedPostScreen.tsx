@@ -47,20 +47,30 @@ const DetailedPostScreen = ({ navigation, route }) => {
 
       // Snapshot the previous value
       const prevState = queryClient.getQueryData<any>(key);
-      console.log('🚀 ~ file: DetailedPostScreen.tsx:51 ~ onMutate: ~ prevState', prevState);
 
       // Optimistically update to the new value
       queryClient.setQueryData(key, (old: any) => {
-        console.log('🚀 ~ file: DetailedPostScreen.tsx:55 ~ queryClient.setQueryData ~ old', old);
-
-        return {
+        const newProfile = {
           ...old,
-          following: !prevState.following,
+          data: {
+            ...old.data,
+            following: !old.data.following,
+          },
         };
+        console.log(
+          '🚀 ~ file: DetailedPostScreen.tsx:64 ~ queryClient.setQueryData ~ newProfile',
+          newProfile,
+        );
+        return newProfile;
       });
 
       // Return a context object with the snapshotted value
       return { prevState };
+    },
+    onError: (err, variables, context) => {
+      console.log('profile mutate err');
+      const key = InsightQueryKeys.getProfile({ insightId });
+      queryClient.setQueryData(key, context?.prevState);
     },
   });
 
@@ -173,13 +183,13 @@ const DetailedPostScreen = ({ navigation, route }) => {
                     color: `${theme.colors.graphic.black}4d`,
                   }}
                 >
-                  {getCommentResponse.data.total}
+                  {getCommentResponse?.data.total}
                 </Text>
               </View>
 
               <View style={{ backgroundColor: 'white', paddingBottom: 16 }}>
                 <>
-                  {getCommentResponse.data.comments.map((cur) => {
+                  {getCommentResponse?.data.comments.map((cur) => {
                     const comment = [
                       <Comment
                         key={cur.id}

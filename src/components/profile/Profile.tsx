@@ -17,14 +17,7 @@ interface ProfileProps {
   createdAt: string;
   image?: string;
   style?: ViewStyle;
-  followMutation?: UseMutationResult<
-    boolean | undefined,
-    unknown,
-    void,
-    {
-      prevState: any;
-    }
-  >;
+  followMutation?: any;
 }
 
 const Profile = ({
@@ -38,6 +31,7 @@ const Profile = ({
   style,
   followMutation,
 }: ProfileProps) => {
+  console.log('🚀 ~ file: Profile.tsx:41 ~ follow', follow);
   const theme = useTheme();
 
   return (
@@ -68,7 +62,7 @@ const Profile = ({
                   color: follow ? theme.colors.graphic.white : theme.colors.graphic.black,
                 }}
               >
-                {follow ? '팔로우' : '팔로잉'}
+                {follow ? '팔로잉' : '팔로우'}
               </Text>
             </Pressable>
           )}

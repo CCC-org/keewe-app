@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
 import HeaderText from '../../components/texts/HeaderText';
 import TextInputDetail from '../../components/texts/TextInputDetail';
@@ -64,7 +64,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
       });
     },
     onError: (error) => {
-      alert(error.message);
+      alert(error);
     },
   });
 
