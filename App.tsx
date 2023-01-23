@@ -18,7 +18,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider as PaperProvider, useTheme } from 'react-native-paper';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import OnboardingIntroHeaderButton from './src/components/buttons/OnboardingIntroHeaderButton';
 import { RootScreen } from './src/navigation';
 //import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -44,6 +43,7 @@ import InterestEditingScreen from './src/screens/Main/mypage/InterestEditingScre
 import ChallengeJoinScreen from './src/screens/challenge/ChallengeJoinScreen';
 import ChallengeJoinApprovedScreen from './src/screens/challenge/ChallengeJoinApprovedScreen';
 import TitleScreen from './src/screens/title/TitleScreen';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator();

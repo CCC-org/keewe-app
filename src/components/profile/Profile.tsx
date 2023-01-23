@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { Pressable, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import theme from '../../theme/light';
 import ProfileAvatar from './ProfileAvatar';
 import InterestItem from './InterestItem';
 import { getTimeInterval } from '../../utils/string/timeInterval';
-import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 import { Interest } from '../../types/insight/profile';
+import { UseMutationResult } from '@tanstack/react-query';
 
 interface ProfileProps {
   nickname: string;
@@ -17,6 +17,14 @@ interface ProfileProps {
   createdAt: string;
   image?: string;
   style?: ViewStyle;
+  followMutation?: UseMutationResult<
+    boolean | undefined,
+    unknown,
+    void,
+    {
+      prevState: any;
+    }
+  >;
 }
 
 const Profile = ({
@@ -28,10 +36,10 @@ const Profile = ({
   createdAt,
   image,
   style,
+  followMutation,
 }: ProfileProps) => {
   const theme = useTheme();
 
-  console.log('Profile Props', nickname);
   return (
     <View style={style}>
       <View style={styles.Header}>
@@ -48,7 +56,12 @@ const Profile = ({
         </View>
         <View>
           {self ? undefined : (
-            <View style={follow ? styles.Follow : styles.Following}>
+            <Pressable
+              onPress={() => {
+                followMutation?.mutate();
+              }}
+              style={follow ? styles.Follow : styles.Following}
+            >
               <Text
                 style={{
                   ...theme.fonts.text.body2.bold,
@@ -57,7 +70,7 @@ const Profile = ({
               >
                 {follow ? '팔로우' : '팔로잉'}
               </Text>
-            </View>
+            </Pressable>
           )}
         </View>
       </View>
