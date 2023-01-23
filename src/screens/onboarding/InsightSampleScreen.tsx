@@ -8,32 +8,24 @@ import HeaderRightButton from '../../components/header/HeaderRightButton';
 import chevron_right from '../../constants/Icons/Chevrons/ChevronRightSmallXml';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import BezierAnimatedPopupView from '../../components/views/BezierAnimatedPopupView';
-import { REACTIONS } from './constant';
+import { INSIGHT_SAMPLE, REACTIONS } from './constant';
 import TestIconButton from '../../components/emoticons/TestIconButton';
 import BottomFixButton from '../../components/buttons/BottomFixButton';
-
-const InsightText =
-  '우리는 어떤 커뮤니티를 만드는가? 서비스는 잘 된 UI를 맹목적으로 따라 하는 것이 아닌 서비스 성격에 맞는 UX/UI가 필요합니다. 이 글은 네이버 카페, 오늘의집, 당근마켓 등을 예로 들어 ‘커뮤니티’ UX/UI를 분석하고 있어요. 크게 게시판 리스트 뷰(네이버 카페), 사진 중심 2열 피드(오늘의집), 본문 중심 1열 피드(당근마켓)로 나누었다 우리는 어떤 커뮤니티를 만드는가? 서비스는 잘 된 UI를 맹목적으로 따라 하는 것이 아닌 서비스 성격에 맞는 UX/UI가 필요합니다. 이 글은 네이버 카페, 오늘의집, 당근마켓 등을 예로 들어 ‘커뮤니티’ UX/UI를 분석하고 있어요. 크게 게시판 리스트 뷰(네이버 카페), 사진 중심 2열 피드(오늘의집), 본문 중심 1열 피드(당근마켓)로 나누었다우리는 어떤 커뮤니티를 만드는가? 서비스는 잘 된 UI를 맹목적으로 따라 하는 것이 아닌 서비스 성격에 맞는 UX/UI가 필요합니다. 이 글은 네이버 카페, 오늘의집, 당근마켓 등을 예로 들어 ‘커뮤니티’ UX/UI를 분석하고 있어요. 크게 게시판 리스트 뷰(네이버 카페), 사진 중심 2열 피드(오늘의집), 본문 중심 1열 피드(당근마켓)로 나누었다우리는 어떤 커뮤니티를 만드는가? 서비스는 잘 된 UI를 맹목적으로 따라 하는 것이 아닌 서비스 성격에 맞는 UX/UI가 필요합니다. 이 글은 네이버 카페, 오늘의집, 당근마켓 등을 예로 들어 ‘커뮤니티’ UX/UI를 분석하고 있어요. 크게 게시판 리스트 뷰(네이버 카페), 사진 중심 2열 피드(오늘의집), 본문 중심 1열 피드(당근마켓)로 나누었다우리는 어떤 커뮤니티를 만드는가? 서비스는 잘 된 UI를 맹목적으로 따라 하는 것이 아닌 서비스 성격에 맞는 UX/UI가 필요합니다. 이 글은 네이버 카페, 오늘의집, 당근마켓 등을 예로 들어 ‘커뮤니티’ UX/UI를 분석하고 있어요. 크게 게시판 리스트 뷰(네이버 카페), 사진 중심 2열 피드(오늘의집), 본문 중심 1열 피드(당근마켓)로 나누었다우리는 어떤 커뮤니티를 만드는가? 서비스는 잘 된 UI를 맹목적으로 따라 하는 것이 아닌 서비스 성격에 맞는 UX/UI가 필요합니다. 이 글은 네이버 카페, 오늘의집, 당근마켓 등을 예로 들어 ‘커뮤니티’ UX/UI를 분석하고 있어요. 크게 게시판 리스트 뷰(네이버 카페), 사진 중심 2열 피드(오늘의집), 본문 중심 1열 피드(당근마켓)로 나누었다우리는 어떤 커뮤니티를 만드는가? 서비스는 잘 된 UI를 맹목적으로 따라 하는 것이 아닌 서비스 성격에 맞는 UX/UI가 필요합니다. 이 글은 네이버 카페, 오늘의집, 당근마켓 등을 예로 들어 ‘커뮤니티’ UX/UI를 분석하고 있어요. 크게 게시판 리스트 뷰(네이버 카페), 사진 중심 2열 피드(오늘의집), 본문 중심 1열 피드(당근마켓)로 나누었다';
-
-const LinkTitle = '나의 친구 농사';
-const Link = 'careerly.co.kr';
+import { LinkPreview } from '@flyerhq/react-native-link-preview';
+import { Entypo } from '@expo/vector-icons';
 
 const InsightSampleScreen = ({ navigation, route }) => {
   const theme = useTheme();
   const [reaction, setReaction] = useState<boolean>(false);
   const [show, setShow] = useState<boolean>(false);
 
+  const sampleData = INSIGHT_SAMPLE[route.params.category[0]];
+
   const handleSkipPress = () => {
-    //skip
     navigation.navigate('ServiceIntroOne');
   };
 
-  const handlePressLink = () => {
-    //pressedLink
-  };
-
   const handleCompletePress = () => {
-    //pressComplete
     navigation.navigate('ServiceIntroOne');
   };
 
@@ -97,7 +89,7 @@ const InsightSampleScreen = ({ navigation, route }) => {
             <View style={styles.Insight}>
               <View style={styles.Text}>
                 <Text style={theme.fonts.text.body1.regular} numberOfLines={show ? undefined : 7}>
-                  {InsightText}
+                  {sampleData.content}
                 </Text>
                 {!show && (
                   <Pressable
@@ -107,28 +99,42 @@ const InsightSampleScreen = ({ navigation, route }) => {
                       ...styles.MoreLink,
                     }}
                   >
-                    <Text style={theme.fonts.text.body1.regular}>... 더보기</Text>
+                    <Text
+                      style={{
+                        color: `${theme.colors.graphic.black}50`,
+                        ...theme.fonts.text.body1.regular,
+                      }}
+                    >
+                      ... 더보기
+                    </Text>
                   </Pressable>
                 )}
               </View>
-              <Pressable onPress={handlePressLink} style={{ marginTop: 30, marginBottom: 10 }}>
-                <View style={styles.LinkTitle}>
-                  <Text
-                    style={{
-                      color: `${theme.colors.graphic.black}50`,
-                      ...theme.fonts.text.caption1,
-                    }}
-                  >
-                    {LinkTitle}
-                  </Text>
-                  <SvgXml xml={chevron_right} />
-                </View>
-                <Text
-                  style={{ color: `${theme.colors.graphic.black}50`, ...theme.fonts.text.caption1 }}
-                >
-                  {Link}
-                </Text>
-              </Pressable>
+              <LinkPreview
+                text={sampleData.link}
+                renderLinkPreview={(pre) => {
+                  const title = pre.previewData?.title;
+                  // make the link only to contain the domain name
+
+                  const description =
+                    pre.previewData?.link?.replace(/(^\w+:|^)\/\//, '').split('/')[0] ||
+                    pre.previewData?.description;
+                  return (
+                    <View style={styles.linkContainer}>
+                      <View>
+                        <Text style={styles.title}>
+                          {title
+                            ? title.slice(0, 20) + (title.length > 20 ? '... >' : '')
+                            : 'No title'}
+                          <Entypo name="chevron-right" size={12} color="#12131450" />
+                        </Text>
+
+                        <Text style={styles.description}>{description}</Text>
+                      </View>
+                    </View>
+                  );
+                }}
+              />
             </View>
           </View>
           {reaction ? (
@@ -202,6 +208,7 @@ const styles = StyleSheet.create({
     padding: 16,
     flexDirection: 'column',
   },
+  linkContainer: { paddingTop: 16 },
   Insight: {
     flex: 1,
     display: 'flex',
@@ -244,6 +251,18 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     bottom: 0,
+  },
+  title: {
+    fontSize: 12,
+    fontFamily: 'pretendardSemiBold',
+    marginBottom: 2,
+    color: '#12131450',
+  },
+  description: {
+    fontFamily: 'pretendardSemiBold',
+    fontWeight: '500',
+    fontSize: 12,
+    color: '#12131450',
   },
 });
 

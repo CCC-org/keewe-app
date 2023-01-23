@@ -42,7 +42,7 @@ const InterestChooseScreen = ({ navigation, route }) => {
   const handleNextScreen = () => {
     //create ID
     makeProfile();
-    navigation.navigate('InsightSample');
+    navigation.navigate('InsightSample', { category: selectedCategory });
   };
 
   useEffect(() => {
