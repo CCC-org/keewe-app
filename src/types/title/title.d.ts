@@ -9,6 +9,7 @@ export interface Title {
 }
 
 export interface Data {
+  data: Data;
   repTitleId: number | null;
   achievedTitles: AchievedTitle[];
 }
