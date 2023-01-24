@@ -31,7 +31,6 @@ const Profile = ({
   style,
   followMutation,
 }: ProfileProps) => {
-  console.log('🚀 ~ file: Profile.tsx:41 ~ follow', follow);
   const theme = useTheme();
 
   return (

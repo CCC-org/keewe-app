@@ -41,7 +41,8 @@ const DetailedPostScreen = ({ navigation, route }) => {
 
   const followMutation = useMutation({
     mutationFn: () => FollowAPI.follow(profile.data.authorId),
-    onMutate: async () => {
+    onMutate: async (isFollowing: any) => {
+      console.log('🚀 ~ file: DetailedPostScreen.tsx:45 ~ onMutate: ~ isFollowing', isFollowing);
       const key = InsightQueryKeys.getProfile({ insightId });
       await queryClient.cancelQueries({ queryKey: key });
 
@@ -57,10 +58,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
             following: !old.data.following,
           },
         };
-        console.log(
-          '🚀 ~ file: DetailedPostScreen.tsx:64 ~ queryClient.setQueryData ~ newProfile',
-          newProfile,
-        );
+
         return newProfile;
       });
 
@@ -128,8 +126,6 @@ const DetailedPostScreen = ({ navigation, route }) => {
   const handleReplyClick = (info: ReplyInfo) => {
     setReplyInfo(info);
   };
-
-  console.log('profile from query: ', profile);
 
   return (
     <>
