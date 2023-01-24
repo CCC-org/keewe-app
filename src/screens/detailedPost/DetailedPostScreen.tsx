@@ -42,7 +42,6 @@ const DetailedPostScreen = ({ navigation, route }) => {
   const followMutation = useMutation({
     mutationFn: () => FollowAPI.follow(profile.data.authorId),
     onMutate: async (isFollowing: any) => {
-      console.log('🚀 ~ file: DetailedPostScreen.tsx:45 ~ onMutate: ~ isFollowing', isFollowing);
       const key = InsightQueryKeys.getProfile({ insightId });
       await queryClient.cancelQueries({ queryKey: key });
 
@@ -65,6 +64,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
       // Return a context object with the snapshotted value
       return { prevState };
     },
+
     onError: (err, variables, context) => {
       console.log('profile mutate err');
       const key = InsightQueryKeys.getProfile({ insightId });
@@ -77,6 +77,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
     () => InsightAPI.getInsight({ insightId }),
     querySuccessError,
   );
+
   const { data: getCommentResponse, isLoading: isCommentLoading } = useQuery(
     InsightQueryKeys.getRepresentiveCommentList({ insightId }),
     () => InsightAPI.getRepresentiveCommentList({ insightId }),

@@ -6,7 +6,6 @@ import ProfileAvatar from './ProfileAvatar';
 import InterestItem from './InterestItem';
 import { getTimeInterval } from '../../utils/string/timeInterval';
 import { Interest } from '../../types/insight/profile';
-import { UseMutationResult } from '@tanstack/react-query';
 
 interface ProfileProps {
   nickname: string;
