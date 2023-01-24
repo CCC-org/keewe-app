@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import InterestChooseSection from './InterestChooseSection';
 import { TOTAL_TAG } from '../../constants/Interests';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import HeaderText from '../../components/texts/HeaderText';
 import Stepper from '../../components/stepper/Stepper';
 import NumberProgressBar from '../../components/bars/NumberProgressBar';

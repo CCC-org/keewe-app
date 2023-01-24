@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Animated } from 'react-native';
 import { SvgXml } from 'react-native-svg';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { Pressable, Text, View, StyleSheet } from 'react-native';
 import FlyingEmoticons from './FlyingEmoticons';
 import { InsightAPI } from '../../utils/api/InsightAPI';
@@ -22,7 +22,8 @@ const ReactIconButton = ({ xml, color, taps, name, insightId }: ReactIconButtonP
 
   const { mutate: insightReact } = useMutation(InsightAPI.react, {
     onSuccess: (response) => {
-      setText(response.data.count);
+      // BUG: insightGetResponse doesnlt contain count property.
+      // setText(response.data.count);
     },
   });
 

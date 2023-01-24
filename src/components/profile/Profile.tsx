@@ -1,11 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { Pressable, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import theme from '../../theme/light';
 import ProfileAvatar from './ProfileAvatar';
 import InterestItem from './InterestItem';
 import { getTimeInterval } from '../../utils/string/timeInterval';
-import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 import { Interest } from '../../types/insight/profile';
 
 interface ProfileProps {
@@ -17,6 +16,7 @@ interface ProfileProps {
   createdAt: string;
   image?: string;
   style?: ViewStyle;
+  followMutation?: any;
 }
 
 const Profile = ({
@@ -28,10 +28,10 @@ const Profile = ({
   createdAt,
   image,
   style,
+  followMutation,
 }: ProfileProps) => {
   const theme = useTheme();
 
-  console.log('Profile Props', nickname);
   return (
     <View style={style}>
       <View style={styles.Header}>
@@ -48,16 +48,21 @@ const Profile = ({
         </View>
         <View>
           {self ? undefined : (
-            <View style={follow ? styles.Follow : styles.Following}>
+            <Pressable
+              onPress={() => {
+                followMutation?.mutate();
+              }}
+              style={follow ? styles.Follow : styles.Following}
+            >
               <Text
                 style={{
                   ...theme.fonts.text.body2.bold,
                   color: follow ? theme.colors.graphic.white : theme.colors.graphic.black,
                 }}
               >
-                {follow ? '팔로우' : '팔로잉'}
+                {follow ? '팔로잉' : '팔로우'}
               </Text>
-            </View>
+            </Pressable>
           )}
         </View>
       </View>

@@ -14,7 +14,7 @@ import main from '../../constants/Icons/Upload/UploadMainXml';
 import shadow from '../../constants/Icons/Upload/UploadShadowXml';
 import AnimatedHeightView from '../views/AnimatedHeightView';
 import ClearSmallXml from '../../constants/Icons/Clear/ClearSmallXml';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InsightAPI } from '../../utils/api/InsightAPI';
 
 interface CommentInputProps {

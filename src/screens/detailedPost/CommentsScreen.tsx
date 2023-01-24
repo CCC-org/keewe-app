@@ -1,7 +1,7 @@
 import { Pressable, FlatList, Text, Platform, KeyboardAvoidingView } from 'react-native';
 import React, { useState } from 'react';
 import Comment from '../../components/comments/Comment';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
 import { ReplyInfo } from '../../components/comments/CommentInput';
 import CommentInput from '../../components/comments/CommentInput';

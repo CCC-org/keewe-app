@@ -14,13 +14,14 @@ import DetailedPostSection from './DetailedPostSection';
 import { useIncreaseView } from '../../utils/hooks/DetailedInsight/useIncreaseView';
 import { useTheme } from 'react-native-paper';
 import MoreCommentsButton from '../../components/buttons/MoreCommentsButton';
-import { useQuery } from 'react-query';
 import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
 import Profile from '../../components/profile/Profile';
 import { querySuccessError } from '../../utils/helper/queryReponse/querySuccessError';
 import CommentInput from '../../components/comments/CommentInput';
 import { ReplyInfo } from '../../components/comments/CommentInput';
 import Comment from '../../components/comments/Comment';
+import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
+import { FollowAPI } from '../../utils/api/FollowAPI';
 
 const DetailedPostScreen = ({ navigation, route }) => {
   const { insightId } = route.params;
@@ -28,23 +29,61 @@ const DetailedPostScreen = ({ navigation, route }) => {
   const [views] = useIncreaseView(insightId);
   const [replyInfo, setReplyInfo] = useState<ReplyInfo | undefined>();
   const [representiveReplies, setRepresentiveReplies] = useState(0);
+
+  const queryClient = useQueryClient();
   const theme = useTheme();
-  const { data: profile, isProfileLoading } = useQuery(
+
+  const { data: profile, isLoading: isProfileLoading } = useQuery(
     InsightQueryKeys.getProfile({ insightId }),
     () => InsightAPI.getProfile({ insightId }),
     querySuccessError,
   );
+
+  const followMutation = useMutation({
+    mutationFn: () => FollowAPI.follow(profile.data.authorId),
+    onMutate: async (isFollowing: any) => {
+      const key = InsightQueryKeys.getProfile({ insightId });
+      await queryClient.cancelQueries({ queryKey: key });
+
+      // Snapshot the previous value
+      const prevState = queryClient.getQueryData<any>(key);
+
+      // Optimistically update to the new value
+      queryClient.setQueryData(key, (old: any) => {
+        const newProfile = {
+          ...old,
+          data: {
+            ...old.data,
+            following: !old.data.following,
+          },
+        };
+
+        return newProfile;
+      });
+
+      // Return a context object with the snapshotted value
+      return { prevState };
+    },
+
+    onError: (err, variables, context) => {
+      console.log('profile mutate err');
+      const key = InsightQueryKeys.getProfile({ insightId });
+      queryClient.setQueryData(key, context?.prevState);
+    },
+  });
+
   const { data: insightResponse, isLoading: isInsightLoading } = useQuery(
     InsightQueryKeys.getInsight({ insightId }),
     () => InsightAPI.getInsight({ insightId }),
     querySuccessError,
   );
+
   const { data: getCommentResponse, isLoading: isCommentLoading } = useQuery(
     InsightQueryKeys.getRepresentiveCommentList({ insightId }),
     () => InsightAPI.getRepresentiveCommentList({ insightId }),
     {
       onSuccess: (response) => {
-        response.data.comments.map((comment) =>
+        response?.data.comments.map((comment) =>
           setRepresentiveReplies((prev) => prev + comment.replies.length + 1),
         );
       },
@@ -112,10 +151,11 @@ const DetailedPostScreen = ({ navigation, route }) => {
               nickname={profile?.data?.nickname ?? '-'}
               title={profile?.data?.title ?? '-'}
               self={profile?.data?.author ?? '-'}
-              follow={profile?.data?.following ?? true}
+              follow={profile?.data?.following}
               interests={profile?.data?.interests ?? []}
               createdAt={profile?.data?.createdAt ?? '-'}
               image={profile?.data?.image ?? ''}
+              followMutation={followMutation}
               style={{
                 backgroundColor: theme.colors.graphic.white,
                 padding: 16,
@@ -140,13 +180,13 @@ const DetailedPostScreen = ({ navigation, route }) => {
                     color: `${theme.colors.graphic.black}4d`,
                   }}
                 >
-                  {getCommentResponse.data.total}
+                  {getCommentResponse?.data.total}
                 </Text>
               </View>
 
               <View style={{ backgroundColor: 'white', paddingBottom: 16 }}>
                 <>
-                  {getCommentResponse.data.comments.map((cur) => {
+                  {getCommentResponse?.data.comments.map((cur) => {
                     const comment = [
                       <Comment
                         key={cur.id}

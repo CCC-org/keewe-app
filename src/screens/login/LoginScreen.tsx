@@ -1,7 +1,7 @@
 import React from 'react';
 import { WebView } from 'react-native-webview';
 import { View } from 'react-native';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { LoginQueryKeys, LoginAPI } from '../../utils/api/LoginAPI';
 import { setAccessToken, setUserId } from '../../utils/hooks/asyncStorage/Login';
 

@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
   },
   MiniProfile: {},
   contentCtn: {
-    borderWidth: 1,
     justifyContent: 'space-between',
     backgroundColor: '#f1f1e9',
     paddingHorizontal: 10,
