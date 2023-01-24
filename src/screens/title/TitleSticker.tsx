@@ -3,19 +3,24 @@ import React from 'react';
 import { Title, TitleMeta } from '../../types/title/title';
 import { useTheme } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import { modifyDateForTitleSticker } from '../../utils/helper/title/modifyDate';
 
 interface TitleStickerProp {
-  userTitles: Title['data']['achievedTitles'];
+  achievedTitles: Title['data']['achievedTitles'];
   titleMeta: TitleMeta;
   repTitleId: number | null;
 }
 
-const TitleSticker = ({ userTitles, titleMeta, repTitleId }: TitleStickerProp) => {
+const TitleSticker = ({ achievedTitles, titleMeta, repTitleId }: TitleStickerProp) => {
   const { fonts } = useTheme();
   const navigation = useNavigation();
 
   // source is the matching title. if undefined, the sticker will be an empty box.
-  const source = userTitles?.find((title) => title.titleId === titleMeta.id);
+  const source = achievedTitles?.find((title) => {
+    if (title.titleId === titleMeta.id) {
+      return true;
+    }
+  });
 
   const handleChangeTitle = () => {
     if (!source) {
@@ -81,8 +86,8 @@ const TitleSticker = ({ userTitles, titleMeta, repTitleId }: TitleStickerProp) =
           {titleMeta.introduction}
         </Text>
         {source ? (
-          <Text style={[fonts.text.caption1, { color: '#18192090', textAlign: 'center' }]}>
-            {source.achievedDate}
+          <Text style={[fonts.text.caption1, { color: '#486006', textAlign: 'center' }]}>
+            {modifyDateForTitleSticker(source.achievedDate)}
           </Text>
         ) : (
           <></>

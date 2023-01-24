@@ -7,7 +7,7 @@ export function useTitles(userId: string | number) {
 
   useEffect(() => {
     async function getTitles() {
-      TitleApis.getTitleList(userId).then((res) => setUserTitles(res));
+      TitleApis.getTitleList(userId).then((res) => setUserTitles(res.data as Title['data']));
     }
     getTitles();
   }, []);

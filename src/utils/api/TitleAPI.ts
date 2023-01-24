@@ -20,6 +20,7 @@ export const TitleApis = {
         },
       )
       .then((res) => {
+        console.log('all achieved title: ', res.data);
         return res.data;
       })
       .catch((err) => {

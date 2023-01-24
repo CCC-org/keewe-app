@@ -36,7 +36,7 @@ const TitleScreen = ({ route, navigation }) => {
                   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                   <TitleSticker
                     key={titleMeta.id}
-                    userTitles={userTitles.achievedTitles}
+                    achievedTitles={userTitles.achievedTitles}
                     repTitleId={userTitles.repTitleId}
                     titleMeta={titleMeta}
                   />
