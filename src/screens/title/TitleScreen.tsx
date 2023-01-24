@@ -59,13 +59,8 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingTop: 20,
   },
-  achievementContainer: {
-    borderWidth: 1,
-    borderColor: 'red',
-  },
+  achievementContainer: {},
   titlesContainer: {
-    borderWidth: 1,
-    borderColor: 'blue',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     paddingHorizontal: 12,

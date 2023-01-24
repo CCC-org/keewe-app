@@ -33,8 +33,6 @@ const TitleSticker = ({ userTitles, titleMeta, repTitleId }: TitleStickerProp) =
         <>
           <Pressable
             style={{
-              borderWidth: 1,
-              borderColor: 'red',
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'center',
@@ -52,14 +50,11 @@ const TitleSticker = ({ userTitles, titleMeta, repTitleId }: TitleStickerProp) =
               source={titleMeta.url}
             />
           </Pressable>
-          <Text>{source.titleId}</Text>
         </>
       ) : (
         <>
           <Pressable
             style={{
-              borderWidth: 1,
-              borderColor: 'red',
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'center',
@@ -101,14 +96,10 @@ export default TitleSticker;
 
 const styles = StyleSheet.create({
   mainContainer: {
-    borderWidth: 1,
-    borderColor: 'green',
     margin: 10,
     width: 100,
   },
   metaContainer: {
-    borderWidth: 1,
-    borderColor: 'yellow',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
