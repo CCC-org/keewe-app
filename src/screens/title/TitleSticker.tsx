@@ -3,6 +3,7 @@ import React from 'react';
 import { Title, TitleMeta } from '../../types/title/title';
 import { useTheme } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import { modifyDateForTitleSticker } from '../../utils/helper/title/modifyDate';
 
 interface TitleStickerProp {
   achievedTitles: Title['data']['achievedTitles'];
@@ -87,7 +88,7 @@ const TitleSticker = ({ achievedTitles, titleMeta, repTitleId }: TitleStickerPro
         </Text>
         {source ? (
           <Text style={[fonts.text.caption1, { color: '#486006', textAlign: 'center' }]}>
-            {modifyDate(source.achievedDate)}
+            {modifyDateForTitleSticker(source.achievedDate)}
           </Text>
         ) : (
           <></>
@@ -96,13 +97,6 @@ const TitleSticker = ({ achievedTitles, titleMeta, repTitleId }: TitleStickerPro
     </View>
   );
 };
-
-function modifyDate(date: string) {
-  const year = date.slice(0, 4);
-  const month = date.slice(5, 7);
-  const day = date.slice(8, 10);
-  return `${year}.${month}.${day}`;
-}
 
 export default TitleSticker;
 
