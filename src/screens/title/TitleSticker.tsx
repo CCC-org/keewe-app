@@ -18,7 +18,6 @@ const TitleSticker = ({ achievedTitles, titleMeta, repTitleId }: TitleStickerPro
   // source is the matching title. if undefined, the sticker will be an empty box.
   const source = achievedTitles?.find((title) => {
     if (title.titleId === titleMeta.id) {
-      console.log('first if', title.titleId, titleMeta.id);
       return true;
     }
   });

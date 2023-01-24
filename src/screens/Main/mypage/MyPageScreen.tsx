@@ -9,6 +9,7 @@ import InterestIcon from './InterestIcon';
 import { useQuery } from '@tanstack/react-query';
 import { MypageAPI, MypageQueryKeys } from '../../../utils/api/mypageAPI';
 import { querySuccessError } from '../../../utils/helper/queryReponse/querySuccessError';
+import FolderOption from './FolderOption';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
 const MyPageScreen = ({ navigation, route }) => {
@@ -25,6 +26,10 @@ const MyPageScreen = ({ navigation, route }) => {
   const [following, setFollowing] = useState<number>(0);
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [introduction, setIntroduction] = useState<string>('소개글');
+  const [representativeTitleList, setRepresentativeTitleList] = useState<AchievedTitle[]>([]);
+  const [titleTotal, setTitleTotal] = useState<number>(0);
+  const [folderList, setFolderList] = useState<FolderData[]>([]);
+  const [selectedFolder, setSelectedFolder] = useState<boolean[]>([]);
   const [iconColor, setIconColor] = useState([
     [theme.colors.graphic.purple, `${theme.colors.graphic.purple}1a`],
     [theme.colors.graphic.sky, `${theme.colors.graphic.sky}1a`],
@@ -38,6 +43,22 @@ const MyPageScreen = ({ navigation, route }) => {
     () => MypageAPI.getProfile({ targetId: userId }),
     querySuccessError,
   );
+  const { data: representativeTitles, isLoading: isrepresentativeTitlesLoading } = useQuery(
+    MypageQueryKeys.getRepresentativeTitles({ userId: userId }),
+    () => MypageAPI.getRepresentativeTitles({ userId: userId }),
+    querySuccessError,
+  );
+  const { data: userFolderList, isLoading: isUserFolderListLoading } = useQuery(
+    MypageQueryKeys.getFolderList({ userId: userId }),
+    () => MypageAPI.getFolderList({ userId: userId }),
+    querySuccessError,
+  );
+
+  // useEffect(() => {
+  //   const initialSelectedFolder = new Array(userFolderList?.data?.length).fill(false);
+  //   initialSelectedFolder.unshift(true);
+  //   setSelectedFolder(initialSelectedFolder);
+  // }, []);
 
   useEffect(() => {
     setNickname(profile?.data?.nickname ?? '');
@@ -47,7 +68,20 @@ const MyPageScreen = ({ navigation, route }) => {
     setIntroduction(profile?.data?.introduction ?? '');
     setFollower(profile?.data?.followerCount ?? 0);
     setFollowing(profile?.data?.followingCount ?? 0);
-  }, [profile, isProfileLoading]);
+    setRepresentativeTitleList(representativeTitles?.data?.achievedTitles ?? []);
+    setTitleTotal(representativeTitles?.data?.total ?? 0);
+  }, [
+    profile,
+    isProfileLoading,
+    representativeTitles,
+    isrepresentativeTitlesLoading,
+    userFolderList,
+    isUserFolderListLoading,
+  ]);
+
+  const handleFolderOption = () => {
+    return;
+  };
 
   return (
     <ScrollView>
@@ -115,10 +149,19 @@ const MyPageScreen = ({ navigation, route }) => {
             타이틀{' '}
           </Text>
           <Text style={{ ...theme.fonts.text.headline2, color: `${theme.colors.graphic.black}4d` }}>
-            8
+            {titleTotal}
           </Text>
         </View>
-        <MypageTitle label="타이틀 제목" condition="획득 방법" date="2023.01.01" />
+        {representativeTitleList.map((cur, idx) => {
+          return (
+            <MypageTitle
+              key={idx}
+              label={cur['name']}
+              condition={cur['introduction']}
+              date={cur['achievedDate']}
+            />
+          );
+        })}
       </View>
       <Pressable
         onPress={() => alert('view every title!')}
@@ -137,10 +180,16 @@ const MyPageScreen = ({ navigation, route }) => {
         contentContainerStyle={styles.group}
         showsHorizontalScrollIndicator={false}
       >
-        <Text style={theme.fonts.text.headline2}>All </Text>
-        <Text style={theme.fonts.text.headline2}>
-          Group1 Group2 Group3 Group4 Group5 Group6 Group7 Group8
-        </Text>
+        {userFolderList.tabs.map((cur, idx) => {
+          return (
+            <FolderOption
+              key={idx}
+              title={cur.name}
+              selected={cur.isClicked}
+              onPress={() => handleFolderOption()}
+            />
+          );
+        })}
       </ScrollView>
       <View style={styles.insight}>
         <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>
@@ -198,7 +247,7 @@ const styles = StyleSheet.create({
     left: -50,
   },
   group: {
-    marginLeft: 16,
+    marginLeft: 4,
     marginTop: 24,
     marginBottom: 10,
   },

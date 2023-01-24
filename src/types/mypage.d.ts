@@ -17,3 +17,40 @@ interface ProfileGetResponse {
     follow: boolean;
   };
 }
+
+interface RepresentativeTitlesGetRequest {
+  userId: string;
+}
+
+interface RepresentativeTitlesGetResponse {
+  message: string;
+  code: number;
+  data: RepresentativeTitlesData;
+}
+
+interface RepresentativeTitlesData {
+  total: number;
+  achievedTitles: AchievedTitle[];
+}
+
+interface AchievedTitle {
+  titleId: number;
+  name: string;
+  introduction: string;
+  achievedDate: string;
+}
+
+interface UserFolderListGetRequest {
+  userId: string;
+}
+
+interface UserFolderListGetResponse {
+  message: string;
+  code: number;
+  data: FolderData[];
+}
+
+interface FolderData {
+  id: number;
+  name: string;
+}

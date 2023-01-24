@@ -54,7 +54,7 @@ const ShareScreen = ({ navigation, route }) => {
       format: 'png',
       quality: 1,
     });
-    await Sharing.shareAsync(uri, { mimeType: 'image/jpg' });
+    await Sharing.shareAsync('file://' + uri, { mimeType: 'image/jpg', UTI: 'image/jpeg' });
   };
 
   const handleSelectColor = (position: string, color: string) => {
