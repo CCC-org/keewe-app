@@ -63,9 +63,25 @@ export const MypageAPI = {
         },
       );
 
-      return data;
+      return modifyData(data.data);
     } catch (err) {
       console.error('api error2: ', err);
     }
   },
 };
+
+function modifyData(data: UserFolderListGetResponse['data']) {
+  const mappedData = data.map((data) => {
+    return {
+      ...data,
+      isClicked: false,
+    };
+  });
+  mappedData.unshift({ id: 0, name: '전체', isClicked: true });
+
+  const selectedTab = mappedData.filter((data) => data.isClicked === true);
+  return {
+    tabs: mappedData,
+    selectedTab: selectedTab[0],
+  };
+}

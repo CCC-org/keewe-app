@@ -9,6 +9,7 @@ import InterestIcon from './InterestIcon';
 import { useQuery } from '@tanstack/react-query';
 import { MypageAPI, MypageQueryKeys } from '../../../utils/api/mypageAPI';
 import { querySuccessError } from '../../../utils/helper/queryReponse/querySuccessError';
+import FolderOption from './FolderOption';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
 const MyPageScreen = ({ navigation, route }) => {
@@ -28,6 +29,7 @@ const MyPageScreen = ({ navigation, route }) => {
   const [representativeTitleList, setRepresentativeTitleList] = useState<AchievedTitle[]>([]);
   const [titleTotal, setTitleTotal] = useState<number>(0);
   const [folderList, setFolderList] = useState<FolderData[]>([]);
+  const [selectedFolder, setSelectedFolder] = useState<boolean[]>([]);
   const [iconColor, setIconColor] = useState([
     [theme.colors.graphic.purple, `${theme.colors.graphic.purple}1a`],
     [theme.colors.graphic.sky, `${theme.colors.graphic.sky}1a`],
@@ -52,6 +54,12 @@ const MyPageScreen = ({ navigation, route }) => {
     querySuccessError,
   );
 
+  // useEffect(() => {
+  //   const initialSelectedFolder = new Array(userFolderList?.data?.length).fill(false);
+  //   initialSelectedFolder.unshift(true);
+  //   setSelectedFolder(initialSelectedFolder);
+  // }, []);
+
   useEffect(() => {
     setNickname(profile?.data?.nickname ?? '');
     setTitle(profile?.data?.title ?? '');
@@ -62,9 +70,6 @@ const MyPageScreen = ({ navigation, route }) => {
     setFollowing(profile?.data?.followingCount ?? 0);
     setRepresentativeTitleList(representativeTitles?.data?.achievedTitles ?? []);
     setTitleTotal(representativeTitles?.data?.total ?? 0);
-    setFolderList(userFolderList?.data ?? []);
-    console.log(representativeTitleList);
-    console.log(userFolderList);
   }, [
     profile,
     isProfileLoading,
@@ -73,6 +78,10 @@ const MyPageScreen = ({ navigation, route }) => {
     userFolderList,
     isUserFolderListLoading,
   ]);
+
+  const handleFolderOption = () => {
+    return;
+  };
 
   return (
     <ScrollView>
@@ -171,10 +180,16 @@ const MyPageScreen = ({ navigation, route }) => {
         contentContainerStyle={styles.group}
         showsHorizontalScrollIndicator={false}
       >
-        <Text style={theme.fonts.text.headline2}>All </Text>
-        <Text style={theme.fonts.text.headline2}>
-          Group1 Group2 Group3 Group4 Group5 Group6 Group7 Group8
-        </Text>
+        {userFolderList.tabs.map((cur, idx) => {
+          return (
+            <FolderOption
+              key={idx}
+              title={cur.name}
+              selected={cur.isClicked}
+              onPress={() => handleFolderOption()}
+            />
+          );
+        })}
       </ScrollView>
       <View style={styles.insight}>
         <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>
@@ -232,7 +247,7 @@ const styles = StyleSheet.create({
     left: -50,
   },
   group: {
-    marginLeft: 16,
+    marginLeft: 4,
     marginTop: 24,
     marginBottom: 10,
   },
