@@ -70,7 +70,20 @@ export const MypageAPI = {
   },
 };
 
-function modifyData(data: UserFolderListGetResponse['data']) {
+export interface TabInfo {
+  tabs: {
+    isClicked: boolean;
+    id: number;
+    name: string;
+  }[];
+  selectedTab: {
+    isClicked: boolean;
+    id: number;
+    name: string;
+  };
+}
+
+export function modifyData(data: UserFolderListGetResponse['data']): TabInfo {
   const mappedData = data.map((data) => {
     return {
       ...data,

@@ -6,10 +6,11 @@ import { Feather, Ionicons } from '@expo/vector-icons';
 import MypageTitle from '../../../components/title/MypageTitle';
 import DividerBar from '../../../components/bars/DividerBar';
 import InterestIcon from './InterestIcon';
-import { useQuery } from '@tanstack/react-query';
-import { MypageAPI, MypageQueryKeys } from '../../../utils/api/mypageAPI';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { MypageAPI, MypageQueryKeys, TabInfo } from '../../../utils/api/mypageAPI';
 import { querySuccessError } from '../../../utils/helper/queryReponse/querySuccessError';
 import FolderOption from './FolderOption';
+import MyPageFeedList from './MyPageFeedList';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
 const MyPageScreen = ({ navigation, route }) => {
@@ -54,14 +55,14 @@ const MyPageScreen = ({ navigation, route }) => {
     querySuccessError,
   );
 
-  // useEffect(() => {
-  //   const initialSelectedFolder = new Array(userFolderList?.data?.length).fill(false);
-  //   initialSelectedFolder.unshift(true);
-  //   setSelectedFolder(initialSelectedFolder);
-  // }, []);
+  const queryClient = useQueryClient();
+
+  // const forderMutation = useMutation({
+  //   mutationFn: (tabId: number) => {
+  //   }
+  // })
 
   useEffect(() => {
-    setNickname(profile?.data?.nickname ?? '');
     setTitle(profile?.data?.title ?? '');
     setSelectedCategory(profile?.data?.interests ?? []);
     setProfileImage(profile?.data?.image);
@@ -79,8 +80,25 @@ const MyPageScreen = ({ navigation, route }) => {
     isUserFolderListLoading,
   ]);
 
-  const handleFolderOption = () => {
-    return;
+  const handleFolderOption = (tabId: number) => {
+    const key = MypageQueryKeys.getFolderList({ userId: userId });
+    const data = queryClient.getQueryState(key)!.data as TabInfo;
+    const newTabs = data.tabs.map((tab) => {
+      return {
+        ...tab,
+        isClicked: false,
+      };
+    });
+    for (const tab of newTabs) {
+      if (tab.id === tabId) {
+        tab.isClicked = true;
+      }
+    }
+    const newSelectedTab = newTabs.find((tab) => tab.id === tabId);
+    queryClient.setQueryData(key, {
+      tabs: newTabs,
+      selectedTab: newSelectedTab,
+    });
   };
 
   return (
@@ -96,7 +114,7 @@ const MyPageScreen = ({ navigation, route }) => {
         </View>
         <View style={{ marginLeft: 16, marginBottom: 24 }}>
           <MypageProfile
-            nickname={nickname}
+            nickname={profile?.data?.nickname ?? ''}
             title={title}
             image={profileImage}
             follower={follower}
@@ -127,7 +145,7 @@ const MyPageScreen = ({ navigation, route }) => {
             style={styles.editBtn}
             onPress={() =>
               navigation.navigate('ProfileEdit', {
-                nickname,
+                nickname: profile?.data?.nickname ?? '',
                 title,
                 selectedCategory,
                 introduction,
@@ -175,22 +193,28 @@ const MyPageScreen = ({ navigation, route }) => {
         <Feather name="chevron-right" size={24} color={`${theme.colors.graphic.black}cc`} />
       </Pressable>
       <DividerBar style={styles.divider} />
-      <ScrollView
-        horizontal={true}
-        contentContainerStyle={styles.group}
-        showsHorizontalScrollIndicator={false}
-      >
-        {userFolderList.tabs.map((cur, idx) => {
-          return (
-            <FolderOption
-              key={idx}
-              title={cur.name}
-              selected={cur.isClicked}
-              onPress={() => handleFolderOption()}
-            />
-          );
-        })}
-      </ScrollView>
+      {userFolderList && (
+        <>
+          <ScrollView
+            horizontal={true}
+            contentContainerStyle={styles.group}
+            showsHorizontalScrollIndicator={false}
+          >
+            {userFolderList.tabs.map((cur, idx) => {
+              return (
+                <FolderOption
+                  key={idx}
+                  title={cur.name}
+                  selected={cur.isClicked}
+                  onPress={() => handleFolderOption(cur.id)}
+                />
+              );
+            })}
+          </ScrollView>
+          <MyPageFeedList id={userFolderList.selectedTab.id} userId={userId} />
+        </>
+      )}
+
       <View style={styles.insight}>
         <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>
           인사이트{' '}
