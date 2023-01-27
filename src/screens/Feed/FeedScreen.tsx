@@ -15,6 +15,7 @@ import DividerBar from '../../components/bars/DividerBar';
 import { postFeedBookMark } from '../../utils/api/FeedBookMark';
 import MainLottie from '../../components/lotties/MainLottie';
 import { InView, IOScrollView } from 'react-native-intersection-observer';
+import FeedList from './FeedList';
 
 const FeedScreen = () => {
   const [cursor, setCursor] = useState(0);
@@ -77,36 +78,12 @@ const FeedScreen = () => {
         )}
       </View>
       <DividerBar style={styles.divider} />
-      {feedList?.pages.map((group, i) => {
-        return (
-          <Fragment key={i}>
-            {group?.map((insight, idx) => {
-              if (group.length - 1 === idx && feedList.pages.length - 1 === i) {
-                return (
-                  <InView key={insight.id} onChange={() => fetchNextPage()}>
-                    <FeedItem
-                      bookMarkIsLoading={bookMarkIsLoading}
-                      onBookMarkClick={touchBookMark}
-                      insight={insight}
-                    />
-                  </InView>
-                );
-              }
-              return (
-                <Fragment key={insight.id}>
-                  <Text>{insight.id}</Text>
-                  <FeedItem
-                    bookMarkIsLoading={bookMarkIsLoading}
-                    onBookMarkClick={touchBookMark}
-                    key={insight.id}
-                    insight={insight}
-                  />
-                </Fragment>
-              );
-            })}
-          </Fragment>
-        );
-      })}
+      <FeedList
+        feedList={feedList}
+        fetchNextPage={fetchNextPage}
+        touchBookMark={touchBookMark}
+        bookMarkIsLoading={bookMarkIsLoading}
+      />
     </IOScrollView>
   );
 };
