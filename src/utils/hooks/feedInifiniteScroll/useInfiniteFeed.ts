@@ -4,7 +4,7 @@ import { FeedAPI, FeedQueryKeys } from '../../api/FeedAPI';
 import { FeedInsight } from '../../../types/Feed/Feedinsights';
 import { postFeedBookMark } from '../../api/FeedBookMark';
 
-export function useInfiniteFeed() {
+export function useInfiniteFeed(fetchUrl: string) {
   const feedListQueryClient = useQueryClient();
   const [cursor, setCursor] = useState(0);
   const [limit, setLimit] = useState(5);
@@ -20,7 +20,7 @@ export function useInfiniteFeed() {
   } = useInfiniteQuery<FeedInsight['data'] | undefined>({
     queryKey: FeedQueryKeys.getFeed(),
     queryFn: (context) => {
-      return FeedAPI.getFeed(context.pageParam, limit, follow);
+      return FeedAPI.getFeed(fetchUrl, context.pageParam, limit, follow);
     },
     getNextPageParam: (lastpage) => {
       const lastFeedId = lastpage?.[lastpage.length - 1]?.id || 0;

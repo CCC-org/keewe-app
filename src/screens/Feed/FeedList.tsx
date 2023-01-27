@@ -14,13 +14,13 @@ interface FeedListProps {
   touchBookMark: UseMutateFunction<void, unknown, number, unknown>;
   bookMarkIsLoading: boolean;
   // UpperComponent is not required, but used in FeedScreen.tsx for to display the user's current streak
-  UpperComponent?: React.ReactNode;
+  upperComponent?: React.ReactNode;
   feedListQueryClient: QueryClient;
   feedListIsLoading: boolean;
 }
 
 const FeedList = ({
-  UpperComponent,
+  upperComponent: UpperComponent,
   feedList,
   fetchNextPage,
   touchBookMark,

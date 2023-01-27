@@ -11,7 +11,7 @@ const FeedScreen = () => {
     bookMarkIsLoading,
     fetchNextPage,
     feedListQueryClient,
-  } = useInfiniteFeed();
+  } = useInfiniteFeed('https://api-keewe.com/api/v1/insight');
 
   // challenge section.
 
@@ -23,7 +23,7 @@ const FeedScreen = () => {
   return (
     <>
       <FeedList
-        UpperComponent={<FeedScreenChallenge />}
+        upperComponent={<FeedScreenChallenge />}
         feedList={feedList}
         feedListQueryClient={feedListQueryClient}
         fetchNextPage={fetchNextPage}
