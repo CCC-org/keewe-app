@@ -2,7 +2,9 @@ import { getAccessToken } from '../hooks/asyncStorage/Login';
 import httpClient from './BaseHttpClient';
 
 export const MypageQueryKeys = {
-  getProfile: (request: ProfileGetRequest) => ['profile', request.targetId],
+  getProfile: (request: ProfileGetRequest) => {
+    return ['profile', request.targetId];
+  },
   getRepresentativeTitles: (request: RepresentativeTitlesGetRequest) => [
     'representativeTitles',
     request.userId,
@@ -12,6 +14,7 @@ export const MypageQueryKeys = {
 
 export const MypageAPI = {
   getProfile: async (request: ProfileGetRequest) => {
+    console.log('get profile');
     const { targetId } = request;
     try {
       const token = await getAccessToken();
@@ -24,7 +27,6 @@ export const MypageAPI = {
           },
         },
       );
-
       return data;
     } catch (err) {
       console.error('api error2: ', err);

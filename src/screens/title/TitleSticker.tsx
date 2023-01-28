@@ -18,10 +18,11 @@ const TitleSticker = ({
   repTitleId,
   isEnteredByProfileEdit,
 }: TitleStickerProp) => {
+  console.log('🚀 ~ file: TitleSticker.tsx:21 ~ repTitleId', repTitleId);
   const { fonts } = useTheme();
   const navigation = useNavigation();
-
-  // source is the matching title. if undefined, the sticker will be an empty box.
+  const tempRepTitleId = 2000;
+  // source is t-+he matching title. if undefined, the sticker will be an empty box.
   const source = achievedTitles?.find((title) => {
     if (title.titleId === titleMeta.id) {
       return true;
@@ -63,6 +64,12 @@ const TitleSticker = ({
               }}
               source={titleMeta.url}
             />
+            {tempRepTitleId === source.titleId ? (
+              <View>
+                <Image source={require('../../../assets/images/titles/small_check.png')} />
+                <Text>asdf</Text>
+              </View>
+            ) : null}
           </Pressable>
         </>
       ) : (
