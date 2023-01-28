@@ -180,7 +180,7 @@ const MyPageScreen = ({ navigation, route }) => {
         contentContainerStyle={styles.group}
         showsHorizontalScrollIndicator={false}
       >
-        {userFolderList.tabs.map((cur, idx) => {
+        {/* {userFolderList.tabs.map((cur, idx) => {
           return (
             <FolderOption
               key={idx}
@@ -189,7 +189,7 @@ const MyPageScreen = ({ navigation, route }) => {
               onPress={() => handleFolderOption()}
             />
           );
-        })}
+        })} */}
       </ScrollView>
       <View style={styles.insight}>
         <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>

@@ -42,6 +42,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
       toScreen: 'ProfileEdit',
     });
   };
+
   const handleTitle = () =>
     navigation.navigate('Title', {
       // nickname,
@@ -50,7 +51,9 @@ const ProfileEditScreen = ({ navigation, route }) => {
       // selectedCategory,
       // toScreen: 'ProfileEdit',
       userId,
+      isEnteredByProfileEdit: true,
     });
+
   const handleIntroduction = () =>
     navigation.navigate('IntroductionEditing', {
       nickname,

@@ -9,9 +9,15 @@ interface TitleStickerProp {
   achievedTitles: Title['data']['achievedTitles'];
   titleMeta: TitleMeta;
   repTitleId: number | null;
+  isEnteredByProfileEdit: boolean;
 }
 
-const TitleSticker = ({ achievedTitles, titleMeta, repTitleId }: TitleStickerProp) => {
+const TitleSticker = ({
+  achievedTitles,
+  titleMeta,
+  repTitleId,
+  isEnteredByProfileEdit,
+}: TitleStickerProp) => {
   const { fonts } = useTheme();
   const navigation = useNavigation();
 
@@ -23,6 +29,9 @@ const TitleSticker = ({ achievedTitles, titleMeta, repTitleId }: TitleStickerPro
   });
 
   const handleChangeTitle = () => {
+    if (!isEnteredByProfileEdit) {
+      return;
+    }
     if (!source) {
       alert('아직 획득하지 못한 타이틀은 등록할 수 없습니다.');
       return;
