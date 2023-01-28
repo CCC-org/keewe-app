@@ -21,16 +21,9 @@ const MyPageScreen = ({ navigation, route }) => {
   }
   const theme = useTheme();
   const [profileImage, setProfileImage] = useState<string>('');
-  const [nickname, setNickname] = useState<string>('닉네임');
-  const [title, setTitle] = useState<string>('대표 타이틀');
-  const [follower, setFollower] = useState<number>(0);
-  const [following, setFollowing] = useState<number>(0);
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
-  const [introduction, setIntroduction] = useState<string>('소개글');
   const [representativeTitleList, setRepresentativeTitleList] = useState<AchievedTitle[]>([]);
   const [titleTotal, setTitleTotal] = useState<number>(0);
-  const [folderList, setFolderList] = useState<FolderData[]>([]);
-  const [selectedFolder, setSelectedFolder] = useState<boolean[]>([]);
   const [iconColor, setIconColor] = useState([
     [theme.colors.graphic.purple, `${theme.colors.graphic.purple}1a`],
     [theme.colors.graphic.sky, `${theme.colors.graphic.sky}1a`],
@@ -63,12 +56,8 @@ const MyPageScreen = ({ navigation, route }) => {
   // })
 
   useEffect(() => {
-    setTitle(profile?.data?.title ?? '');
     setSelectedCategory(profile?.data?.interests ?? []);
     setProfileImage(profile?.data?.image);
-    setIntroduction(profile?.data?.introduction ?? '');
-    setFollower(profile?.data?.followerCount ?? 0);
-    setFollowing(profile?.data?.followingCount ?? 0);
     setRepresentativeTitleList(representativeTitles?.data?.achievedTitles ?? []);
     setTitleTotal(representativeTitles?.data?.total ?? 0);
   }, [
@@ -115,10 +104,10 @@ const MyPageScreen = ({ navigation, route }) => {
         <View style={{ marginLeft: 16, marginBottom: 24 }}>
           <MypageProfile
             nickname={profile?.data?.nickname ?? ''}
-            title={title}
+            title={profile?.data?.title ?? ''}
             image={profileImage}
-            follower={follower}
-            following={following}
+            follower={profile?.data?.followerCount ?? 0}
+            following={profile?.data?.followingCount ?? 0}
           />
         </View>
         <View
@@ -137,7 +126,7 @@ const MyPageScreen = ({ navigation, route }) => {
           <Text
             style={{ ...theme.fonts.text.body2.regular, color: `${theme.colors.graphic.black}cc` }}
           >
-            {introduction}
+            {profile?.data?.introduction ?? ''}
           </Text>
         </View>
         <View style={{ alignItems: 'center' }}>
@@ -146,9 +135,9 @@ const MyPageScreen = ({ navigation, route }) => {
             onPress={() =>
               navigation.navigate('ProfileEdit', {
                 nickname: profile?.data?.nickname ?? '',
-                title,
+                title: profile?.data?.title ?? '',
                 selectedCategory,
-                introduction,
+                introduction: profile?.data?.introduction ?? '',
                 userId,
               })
             }
@@ -176,7 +165,7 @@ const MyPageScreen = ({ navigation, route }) => {
               key={idx}
               label={cur['name']}
               condition={cur['introduction']}
-              date={cur['achievedDate']}
+              date={cur['achievedDate'].slice(0, cur['achievedDate'].indexOf('T'))}
             />
           );
         })}
