@@ -9,8 +9,8 @@ const OnboardingLottie = () => {
       loop
       autoPlay={true}
       style={{
-        width: '60%',
-        height: '60%',
+        width: 300,
+        height: 240,
         justifyContent: 'center',
         alignItems: 'center',
       }}

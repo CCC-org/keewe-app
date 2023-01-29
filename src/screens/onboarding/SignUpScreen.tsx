@@ -16,7 +16,11 @@ const SignUpScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <OnboardingLottie />
+      <View
+        style={{ justifyContent: 'center', alignItems: 'center', width: '100%', height: '62%' }}
+      >
+        <OnboardingLottie />
+      </View>
       <View style={styles.login}>
         <Text style={styles.agree}>
           <Text style={styles.greeny}>Keewe 약관</Text>에 모두 동의합니다.
