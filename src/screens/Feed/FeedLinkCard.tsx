@@ -17,8 +17,6 @@ const FeedLinkWithBookMark = ({
 }: FeedLinkCard) => {
   const styles = createStyles();
 
-  // useE]);
-
   const handleOnPress = () => {
     onBookmarkPress();
   };
