@@ -63,10 +63,11 @@ const styles = StyleSheet.create({
   },
   achievementContainer: {},
   titlesContainer: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    paddingHorizontal: 12,
     flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingHorizontal: 12,
     marginBottom: 18,
   },
 });
