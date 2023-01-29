@@ -45,11 +45,6 @@ const ProfileEditScreen = ({ navigation, route }) => {
 
   const handleTitle = () =>
     navigation.navigate('Title', {
-      // nickname,
-      // title,
-      // introduction,
-      // selectedCategory,
-      // toScreen: 'ProfileEdit',
       userId,
       isEnteredByProfileEdit: true,
     });
