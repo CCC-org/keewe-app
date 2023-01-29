@@ -57,6 +57,9 @@ const FeedList = ({
               if (!insight.writer && writer) {
                 insight.writer = writer;
               }
+              if (!insight.writer && writer) {
+                insight.writer = writer;
+              }
               if (group.length - 1 === idx && feedList.pages.length - 1 === i) {
                 return (
                   <InView key={insight.id} onChange={() => fetchNextPage()}>
