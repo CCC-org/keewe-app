@@ -107,7 +107,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
                   title: profile ? profile.data.title : 'null ',
                   image: profile ? profile.data.image : 'null ',
                   challenge: currentChallenge,
-                  insightText: insightResponse.contents,
+                  insightText: insightResponse?.data?.contents ?? '',
                 })
               }
             >
