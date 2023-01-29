@@ -9,13 +9,18 @@ interface TitleStickerProp {
   achievedTitles: Title['data']['achievedTitles'];
   titleMeta: TitleMeta;
   repTitleId: number | null;
+  isEnteredByProfileEdit: boolean;
 }
 
-const TitleSticker = ({ achievedTitles, titleMeta, repTitleId }: TitleStickerProp) => {
+const TitleSticker = ({
+  achievedTitles,
+  titleMeta,
+  repTitleId,
+  isEnteredByProfileEdit,
+}: TitleStickerProp) => {
   const { fonts } = useTheme();
   const navigation = useNavigation();
-
-  // source is the matching title. if undefined, the sticker will be an empty box.
+  // source is t-+he matching title. if undefined, the sticker will be an empty box.
   const source = achievedTitles?.find((title) => {
     if (title.titleId === titleMeta.id) {
       return true;
@@ -23,6 +28,9 @@ const TitleSticker = ({ achievedTitles, titleMeta, repTitleId }: TitleStickerPro
   });
 
   const handleChangeTitle = () => {
+    if (!isEnteredByProfileEdit) {
+      return;
+    }
     if (!source) {
       alert('아직 획득하지 못한 타이틀은 등록할 수 없습니다.');
       return;
@@ -54,6 +62,11 @@ const TitleSticker = ({ achievedTitles, titleMeta, repTitleId }: TitleStickerPro
               }}
               source={titleMeta.url}
             />
+            {repTitleId === source.titleId ? (
+              <View style={styles.check}>
+                <Image source={require('../../../assets/images/titles/small_check.png')} />
+              </View>
+            ) : null}
           </Pressable>
         </>
       ) : (
@@ -109,5 +122,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 15,
+  },
+  check: {
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
   },
 });

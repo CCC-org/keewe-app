@@ -22,6 +22,8 @@ import { ReplyInfo } from '../../components/comments/CommentInput';
 import Comment from '../../components/comments/Comment';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { FollowAPI } from '../../utils/api/FollowAPI';
+import { MypageQueryKeys } from '../../utils/api/mypageAPI';
+import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 
 const DetailedPostScreen = ({ navigation, route }) => {
   const { insightId } = route.params;
@@ -41,13 +43,11 @@ const DetailedPostScreen = ({ navigation, route }) => {
 
   const followMutation = useMutation({
     mutationFn: () => FollowAPI.follow(profile.data.authorId),
-    onMutate: async (isFollowing: any) => {
+    onMutate: async () => {
       const key = InsightQueryKeys.getProfile({ insightId });
       await queryClient.cancelQueries({ queryKey: key });
-
       // Snapshot the previous value
       const prevState = queryClient.getQueryData<any>(key);
-
       // Optimistically update to the new value
       queryClient.setQueryData(key, (old: any) => {
         const newProfile = {
@@ -71,6 +71,8 @@ const DetailedPostScreen = ({ navigation, route }) => {
       queryClient.setQueryData(key, context?.prevState);
     },
   });
+
+  followMutation.mutate;
 
   const { data: insightResponse, isLoading: isInsightLoading } = useQuery(
     InsightQueryKeys.getInsight({ insightId }),
