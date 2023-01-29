@@ -8,6 +8,12 @@ export const MypageQueryKeys = {
     request.userId,
   ],
   getFolderList: (request: UserFolderListGetRequest) => ['folderList', request.userId],
+  getFolderInsight: (drawerId: number | string, userId: number | string) => [
+    'profile',
+    'insight',
+    drawerId,
+    userId,
+  ],
 };
 
 export const MypageAPI = {

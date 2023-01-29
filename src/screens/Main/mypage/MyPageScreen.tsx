@@ -6,11 +6,12 @@ import { Feather, Ionicons } from '@expo/vector-icons';
 import MypageTitle from '../../../components/title/MypageTitle';
 import DividerBar from '../../../components/bars/DividerBar';
 import InterestIcon from './InterestIcon';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { MypageAPI, MypageQueryKeys, TabInfo } from '../../../utils/api/mypageAPI';
 import { querySuccessError } from '../../../utils/helper/queryReponse/querySuccessError';
 import FolderOption from './FolderOption';
-import MyPageFeedList from './MyPageFeedList';
+import { useInfiniteFeed } from '../../../utils/hooks/feedInifiniteScroll/useInfiniteFeed';
+import FeedList from '../../Feed/FeedList';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
 const MyPageScreen = ({ navigation, route }) => {
@@ -20,6 +21,7 @@ const MyPageScreen = ({ navigation, route }) => {
     return null;
   }
   const theme = useTheme();
+
   const [profileImage, setProfileImage] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [representativeTitleList, setRepresentativeTitleList] = useState<AchievedTitle[]>([]);
@@ -49,6 +51,20 @@ const MyPageScreen = ({ navigation, route }) => {
   );
 
   const queryClient = useQueryClient();
+  const drawerId =
+    isUserFolderListLoading === true || userFolderList.selectedTab.id === 0
+      ? ''
+      : String(userFolderList.selectedTab.id);
+  const {
+    feedList,
+    feedListIsLoading,
+    touchBookMark,
+    bookMarkIsLoading,
+    fetchNextPage,
+    feedListQueryClient,
+  } = useInfiniteFeed(
+    'https://api-keewe.com/api/v1/insight/my-page/' + userId + '?drawerId=' + drawerId,
+  );
 
   // const forderMutation = useMutation({
   //   mutationFn: (tabId: number) => {
@@ -200,21 +216,27 @@ const MyPageScreen = ({ navigation, route }) => {
               );
             })}
           </ScrollView>
+          <View style={styles.insight}>
+            <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>
+              인사이트
+            </Text>
+          </View>
+          <FeedList
+            writer={{
+              writerId: Number(userId),
+              nickname: profile?.data?.nickname ?? '',
+              title: profile?.data?.title ?? '',
+              image: profileImage,
+            }}
+            feedList={feedList}
+            feedListQueryClient={feedListQueryClient}
+            fetchNextPage={fetchNextPage}
+            touchBookMark={touchBookMark}
+            bookMarkIsLoading={bookMarkIsLoading}
+            feedListIsLoading={feedListIsLoading}
+          />
         </>
       )}
-
-      <View style={styles.insight}>
-        <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>
-          인사이트{' '}
-        </Text>
-        <Text style={{ ...theme.fonts.text.headline2, color: `${theme.colors.graphic.black}4d` }}>
-          581
-        </Text>
-      </View>
-      <MyPageFeedList
-        id={userFolderList.selectedTab.id === 0 ? '' : userFolderList.selectedTab.id}
-        userId={userId}
-      />
     </ScrollView>
   );
 };
