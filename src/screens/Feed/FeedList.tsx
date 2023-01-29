@@ -17,6 +17,7 @@ interface FeedListProps {
   feedListQueryClient: QueryClient;
   feedListIsLoading: boolean;
   writer?: { writerId: number; nickname: string; title: string; image: string };
+  scrollViewRef: React.RefObject<any>;
 }
 
 const FeedList = ({
@@ -26,6 +27,7 @@ const FeedList = ({
   touchBookMark,
   feedListQueryClient,
   feedListIsLoading,
+  scrollViewRef,
   writer,
 }: FeedListProps) => {
   const [pageRefreshing, setPageRefreshing] = useState(false);
@@ -40,6 +42,7 @@ const FeedList = ({
 
   return (
     <IOScrollView
+      ref={scrollViewRef}
       refreshControl={<RefreshControl refreshing={pageRefreshing} onRefresh={onRefresh} />}
       contentContainerStyle={styles.feedCtn}
     >

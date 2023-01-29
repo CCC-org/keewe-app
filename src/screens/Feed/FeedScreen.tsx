@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import FeedList from './FeedList';
 import { useInfiniteFeed } from '../../utils/hooks/feedInifiniteScroll/useInfiniteFeed';
 import FeedScreenChallenge from '../../components/challenge/FeedScreenChallenge';
 import { SvgXml } from 'react-native-svg';
 import { pencil } from '../../constants/Icons/home/pencil';
 import { Pressable, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { useScrollToTop } from '@react-navigation/native';
 const FeedScreen = ({ navigation }) => {
+  const scrollViewRef = useRef<any>(null);
+  useScrollToTop(scrollViewRef);
+
   const { feedList, feedListIsLoading, touchBookMark, fetchNextPage, feedListQueryClient } =
     useInfiniteFeed('https://api-keewe.com/api/v1/insight');
-
-  // challenge section.
 
   // if (feedListIsLoading || challengeData.isLoading) {
   //   return <MainLottie />;
@@ -21,6 +24,7 @@ const FeedScreen = ({ navigation }) => {
   return (
     <>
       <FeedList
+        scrollViewRef={scrollViewRef}
         upperComponent={<FeedScreenChallenge />}
         feedList={feedList}
         feedListQueryClient={feedListQueryClient}
