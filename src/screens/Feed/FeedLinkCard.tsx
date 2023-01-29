@@ -7,7 +7,6 @@ interface FeedLinkCard {
   text: string;
   onBookmarkPress: () => void;
   isBookMarked?: boolean;
-  // bookMarkIsLoading: boolean;
 }
 
 const FeedLinkWithBookMark = ({
