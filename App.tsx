@@ -52,9 +52,9 @@ const headerOptions = {
   headerLeft: () => <HeaderBackButton />,
 };
 // Text style. font-family : pretendard
+const queryClient = new QueryClient();
 export default function App() {
   const isLoadingComplete = useCachedResources();
-  const queryClient = new QueryClient();
 
   if (!isLoadingComplete) {
     return null;

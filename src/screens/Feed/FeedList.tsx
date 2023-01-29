@@ -16,6 +16,7 @@ interface FeedListProps {
   upperComponent?: React.ReactNode;
   feedListQueryClient: QueryClient;
   feedListIsLoading: boolean;
+  writer?: { writerId: number; nickname: string; title: string; image: string };
 }
 
 const FeedList = ({
@@ -24,6 +25,8 @@ const FeedList = ({
   fetchNextPage,
   touchBookMark,
   feedListQueryClient,
+  feedListIsLoading,
+  writer,
 }: FeedListProps) => {
   const [pageRefreshing, setPageRefreshing] = useState(false);
 
@@ -48,6 +51,9 @@ const FeedList = ({
         return (
           <Fragment key={i}>
             {group?.map((insight, idx) => {
+              if (!insight.writer && writer) {
+                insight.writer = writer;
+              }
               if (group.length - 1 === idx && feedList.pages.length - 1 === i) {
                 return (
                   <InView key={insight.id} onChange={() => fetchNextPage()}>
