@@ -10,6 +10,12 @@ export const MypageQueryKeys = {
     request.userId,
   ],
   getFolderList: (request: UserFolderListGetRequest) => ['folderList', request.userId],
+  getFolderInsight: (drawerId: number | string, userId: number | string) => [
+    'profile',
+    'insight',
+    drawerId,
+    userId,
+  ],
 };
 
 export const MypageAPI = {
@@ -72,7 +78,20 @@ export const MypageAPI = {
   },
 };
 
-function modifyData(data: UserFolderListGetResponse['data']) {
+export interface TabInfo {
+  tabs: {
+    isClicked: boolean;
+    id: number;
+    name: string;
+  }[];
+  selectedTab: {
+    isClicked: boolean;
+    id: number;
+    name: string;
+  };
+}
+
+export function modifyData(data: UserFolderListGetResponse['data']): TabInfo {
   const mappedData = data.map((data) => {
     return {
       ...data,

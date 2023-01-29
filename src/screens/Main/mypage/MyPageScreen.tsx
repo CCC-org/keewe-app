@@ -6,10 +6,12 @@ import { Feather, Ionicons } from '@expo/vector-icons';
 import MypageTitle from '../../../components/title/MypageTitle';
 import DividerBar from '../../../components/bars/DividerBar';
 import InterestIcon from './InterestIcon';
-import { useQuery } from '@tanstack/react-query';
-import { MypageAPI, MypageQueryKeys } from '../../../utils/api/mypageAPI';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { MypageAPI, MypageQueryKeys, TabInfo } from '../../../utils/api/mypageAPI';
 import { querySuccessError } from '../../../utils/helper/queryReponse/querySuccessError';
 import FolderOption from './FolderOption';
+import { useInfiniteFeed } from '../../../utils/hooks/feedInifiniteScroll/useInfiniteFeed';
+import FeedList from '../../Feed/FeedList';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
 const MyPageScreen = ({ navigation, route }) => {
@@ -19,17 +21,11 @@ const MyPageScreen = ({ navigation, route }) => {
     return null;
   }
   const theme = useTheme();
+
   const [profileImage, setProfileImage] = useState<string>('');
-  const [nickname, setNickname] = useState<string>('닉네임');
-  const [title, setTitle] = useState<string>('대표 타이틀');
-  const [follower, setFollower] = useState<number>(0);
-  const [following, setFollowing] = useState<number>(0);
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
-  const [introduction, setIntroduction] = useState<string>('소개글');
   const [representativeTitleList, setRepresentativeTitleList] = useState<AchievedTitle[]>([]);
   const [titleTotal, setTitleTotal] = useState<number>(0);
-  const [folderList, setFolderList] = useState<FolderData[]>([]);
-  const [selectedFolder, setSelectedFolder] = useState<boolean[]>([]);
   const [iconColor, setIconColor] = useState([
     [theme.colors.graphic.purple, `${theme.colors.graphic.purple}1a`],
     [theme.colors.graphic.sky, `${theme.colors.graphic.sky}1a`],
@@ -57,20 +53,30 @@ const MyPageScreen = ({ navigation, route }) => {
     querySuccessError,
   );
 
-  // useEffect(() => {
-  //   const initialSelectedFolder = new Array(userFolderList?.data?.length).fill(false);
-  //   initialSelectedFolder.unshift(true);
-  //   setSelectedFolder(initialSelectedFolder);
-  // }, []);
+  const queryClient = useQueryClient();
+  const drawerId =
+    isUserFolderListLoading === true || userFolderList.selectedTab.id === 0
+      ? ''
+      : String(userFolderList.selectedTab.id);
+  const {
+    feedList,
+    feedListIsLoading,
+    touchBookMark,
+    bookMarkIsLoading,
+    fetchNextPage,
+    feedListQueryClient,
+  } = useInfiniteFeed(
+    'https://api-keewe.com/api/v1/insight/my-page/' + userId + '?drawerId=' + drawerId,
+  );
+
+  // const forderMutation = useMutation({
+  //   mutationFn: (tabId: number) => {
+  //   }
+  // })
 
   useEffect(() => {
-    setNickname(profile?.data?.nickname ?? '');
-    setTitle(profile?.data?.title ?? '');
     setSelectedCategory(profile?.data?.interests ?? []);
     setProfileImage(profile?.data?.image);
-    setIntroduction(profile?.data?.introduction ?? '');
-    setFollower(profile?.data?.followerCount ?? 0);
-    setFollowing(profile?.data?.followingCount ?? 0);
     setRepresentativeTitleList(representativeTitles?.data?.achievedTitles ?? []);
     setTitleTotal(representativeTitles?.data?.total ?? 0);
   }, [
@@ -82,8 +88,25 @@ const MyPageScreen = ({ navigation, route }) => {
     isUserFolderListLoading,
   ]);
 
-  const handleFolderOption = () => {
-    return;
+  const handleFolderOption = (tabId: number) => {
+    const key = MypageQueryKeys.getFolderList({ userId: userId });
+    const data = queryClient.getQueryState(key)!.data as TabInfo;
+    const newTabs = data.tabs.map((tab) => {
+      return {
+        ...tab,
+        isClicked: false,
+      };
+    });
+    for (const tab of newTabs) {
+      if (tab.id === tabId) {
+        tab.isClicked = true;
+      }
+    }
+    const newSelectedTab = newTabs.find((tab) => tab.id === tabId);
+    queryClient.setQueryData(key, {
+      tabs: newTabs,
+      selectedTab: newSelectedTab,
+    });
   };
 
   return (
@@ -99,11 +122,11 @@ const MyPageScreen = ({ navigation, route }) => {
         </View>
         <View style={{ marginLeft: 16, marginBottom: 24 }}>
           <MypageProfile
-            nickname={nickname}
-            title={title}
+            nickname={profile?.data?.nickname ?? ''}
+            title={profile?.data?.title ?? ''}
             image={profileImage}
-            follower={follower}
-            following={following}
+            follower={profile?.data?.followerCount ?? 0}
+            following={profile?.data?.followingCount ?? 0}
           />
         </View>
         <View
@@ -122,7 +145,7 @@ const MyPageScreen = ({ navigation, route }) => {
           <Text
             style={{ ...theme.fonts.text.body2.regular, color: `${theme.colors.graphic.black}cc` }}
           >
-            {introduction}
+            {profile?.data?.introduction ?? ''}
           </Text>
         </View>
         <View style={{ alignItems: 'center' }}>
@@ -130,10 +153,10 @@ const MyPageScreen = ({ navigation, route }) => {
             style={styles.editBtn}
             onPress={() =>
               navigation.navigate('ProfileEdit', {
-                nickname,
-                title,
+                nickname: profile?.data?.nickname ?? '',
+                title: profile?.data?.title ?? '',
                 selectedCategory,
-                introduction,
+                introduction: profile?.data?.introduction ?? '',
                 userId,
               })
             }
@@ -161,7 +184,7 @@ const MyPageScreen = ({ navigation, route }) => {
               key={idx}
               label={cur['name']}
               condition={cur['introduction']}
-              date={cur['achievedDate']}
+              date={cur['achievedDate'].slice(0, cur['achievedDate'].indexOf('T'))}
             />
           );
         })}
@@ -178,30 +201,45 @@ const MyPageScreen = ({ navigation, route }) => {
         <Feather name="chevron-right" size={24} color={`${theme.colors.graphic.black}cc`} />
       </Pressable>
       <DividerBar style={styles.divider} />
-      <ScrollView
-        horizontal={true}
-        contentContainerStyle={styles.group}
-        showsHorizontalScrollIndicator={false}
-      >
-        {/* {userFolderList.tabs.map((cur, idx) => {
-          return (
-            <FolderOption
-              key={idx}
-              title={cur.name}
-              selected={cur.isClicked}
-              onPress={() => handleFolderOption()}
-            />
-          );
-        })} */}
-      </ScrollView>
-      <View style={styles.insight}>
-        <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>
-          인사이트{' '}
-        </Text>
-        <Text style={{ ...theme.fonts.text.headline2, color: `${theme.colors.graphic.black}4d` }}>
-          581
-        </Text>
-      </View>
+      {userFolderList && (
+        <>
+          <ScrollView
+            horizontal={true}
+            contentContainerStyle={styles.group}
+            showsHorizontalScrollIndicator={false}
+          >
+            {userFolderList.tabs.map((cur, idx) => {
+              return (
+                <FolderOption
+                  key={idx}
+                  title={cur.name}
+                  selected={cur.isClicked}
+                  onPress={() => handleFolderOption(cur.id)}
+                />
+              );
+            })}
+          </ScrollView>
+          <View style={styles.insight}>
+            <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>
+              인사이트
+            </Text>
+          </View>
+          <FeedList
+            writer={{
+              writerId: Number(userId),
+              nickname: profile?.data?.nickname ?? '',
+              title: profile?.data?.title ?? '',
+              image: profileImage,
+            }}
+            feedList={feedList}
+            feedListQueryClient={feedListQueryClient}
+            fetchNextPage={fetchNextPage}
+            touchBookMark={touchBookMark}
+            bookMarkIsLoading={bookMarkIsLoading}
+            feedListIsLoading={feedListIsLoading}
+          />
+        </>
+      )}
     </ScrollView>
   );
 };
