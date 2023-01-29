@@ -12,7 +12,6 @@ interface FeedListProps {
   feedList: InfiniteData<InsightData[] | undefined> | undefined;
   fetchNextPage: () => void;
   touchBookMark: UseMutateFunction<void, unknown, number, unknown>;
-  // UpperComponent is not required, but used in FeedScreen.tsx for to display the user's current streak
   upperComponent?: React.ReactNode;
   feedListQueryClient: QueryClient;
   feedListIsLoading: boolean;
@@ -26,7 +25,6 @@ const FeedList = ({
   fetchNextPage,
   touchBookMark,
   feedListQueryClient,
-  feedListIsLoading,
   scrollViewRef,
   writer,
 }: FeedListProps) => {
@@ -46,7 +44,6 @@ const FeedList = ({
       refreshControl={<RefreshControl refreshing={pageRefreshing} onRefresh={onRefresh} />}
       contentContainerStyle={styles.feedCtn}
     >
-      {/* UpperComponent will render undefined, which does not affect this component.  */}
       {UpperComponent}
       <DividerBar style={styles.divider} />
 
@@ -69,7 +66,6 @@ const FeedList = ({
               }
               return (
                 <Fragment key={insight.id}>
-                  <Text>{insight.id}</Text>
                   <FeedItem onBookMarkClick={touchBookMark} key={insight.id} insight={insight} />
                 </Fragment>
               );
