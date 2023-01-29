@@ -21,7 +21,7 @@ const falseObject = {
 };
 
 const ShareScreen = ({ navigation, route }) => {
-  const { challenge, image, name, title, insightText } = route.params;
+  const { challenge, image, name, insightText } = route.params;
   const [color, setColor] = useState('#f1f1e9');
   const [buttonColorSelected, setButtonColorSelected] = useState({
     first: true,

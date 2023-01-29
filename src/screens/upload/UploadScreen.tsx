@@ -18,6 +18,7 @@ import EditButton from './EditButton';
 import FolderSheetContent from './FolderSheetContent';
 import LinkSheetContent from './LinkSheetContent';
 import UploadBottomContainer from './UploadBottomContainer';
+import { useGetUserId } from '../../utils/hooks/useGetUserId';
 
 const UploadScreen = ({ navigation }) => {
   const [linkText, setLinkText] = useState<string>('');
@@ -28,9 +29,10 @@ const UploadScreen = ({ navigation }) => {
   const [selectedFolder, setSelectedFolder] = useState<string>('');
   const linkSheetRef = useRef<BottomSheetModal>(null);
   const folderSheetRef = useRef<BottomSheetModal>(null);
-  // SnackBar states
   const [isLinkSnackBarOpen, setIsLinkSnackBarOpen] = useState(false);
   const [isFolderSnackBarOpen, setIsFolderSnackBarOpen] = useState(false);
+  const [isClicked, setIsClicked] = useState<boolean>(false);
+  const userId = useGetUserId();
 
   const snapPoints = useMemo(() => ['50%', '80%'], []);
   React.useLayoutEffect(() => {
@@ -38,23 +40,44 @@ const UploadScreen = ({ navigation }) => {
       headerRight: () => (
         <HeaderRightButton
           backGroundColor={
-            isValidSite && !!linkText.length && !!insightText.length ? '#b0e817' : '#12131420'
+            isValidSite && !!linkText.length && !!insightText.length && !isClicked
+              ? '#b0e817'
+              : '#12131420'
           }
-          textColor={isValidSite && !!linkText.length && !!insightText.length ? 'black' : 'white'}
+          textColor={
+            isValidSite && !!linkText.length && !!insightText.length && !isClicked
+              ? 'black'
+              : 'white'
+          }
           borderLine={false}
-          disabled={isValidSite && !!linkText.length && !!insightText.length ? false : true}
+          disabled={
+            isValidSite && !!linkText.length && !!insightText.length && !isClicked ? false : true
+          }
           text="완료"
-          handlePress={() => handleSubmit()}
+          handlePress={() => {
+            setIsClicked(true);
+            handleSubmit();
+          }}
         />
       ),
     });
-  }, [linkText, insightText, navigation, selectedFolder, isSwitchOn, isValidSite]);
+  }, [
+    linkText,
+    insightText,
+    navigation,
+    selectedFolder,
+    isSwitchOn,
+    isValidSite,
+    isClicked,
+    setIsClicked,
+  ]);
 
   useEffect(() => {
     UploadApis.getFolderList().then(setFolders);
   }, []);
 
   const handleSubmit = async () => {
+    alert(isClicked);
     const drawerId = folders.find((folder) => folder.name === selectedFolder)?.id || null;
     const data = {
       participation: isSwitchOn,
@@ -73,6 +96,7 @@ const UploadScreen = ({ navigation }) => {
     } catch (error: unknown) {
       alert(error);
     }
+    return;
   };
 
   const renderBackdrop = useCallback(

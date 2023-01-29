@@ -30,7 +30,7 @@ export const InsightAPI = {
   react: async (params: InsightReactRequest) => {
     try {
       const token = await getAccessToken();
-      const { data } = await httpClient.post<InsightGetReponse>(
+      const { data } = await httpClient.post<InsightReactResponse>(
         'https://api-keewe.com/api/v1/reaction',
         params,
         {
