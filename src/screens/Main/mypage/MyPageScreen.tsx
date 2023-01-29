@@ -200,7 +200,6 @@ const MyPageScreen = ({ navigation, route }) => {
               );
             })}
           </ScrollView>
-          <MyPageFeedList id={userFolderList.selectedTab.id} userId={userId} />
         </>
       )}
 
@@ -212,6 +211,10 @@ const MyPageScreen = ({ navigation, route }) => {
           581
         </Text>
       </View>
+      <MyPageFeedList
+        id={userFolderList.selectedTab.id === 0 ? '' : userFolderList.selectedTab.id}
+        userId={userId}
+      />
     </ScrollView>
   );
 };
