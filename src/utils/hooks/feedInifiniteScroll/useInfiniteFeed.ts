@@ -1,7 +1,7 @@
-import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { InfiniteData, useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { FeedAPI, FeedQueryKeys } from '../../api/FeedAPI';
-import { FeedInsight } from '../../../types/Feed/Feedinsights';
+import { FeedInsight, InsightData } from '../../../types/Feed/Feedinsights';
 import { postFeedBookMark } from '../../api/FeedBookMark';
 
 export function useInfiniteFeed(fetchUrl: string) {
@@ -27,8 +27,23 @@ export function useInfiniteFeed(fetchUrl: string) {
       return lastFeedId;
     },
   });
-  const { mutate: touchBookMark, isLoading: bookMarkIsLoading } = useMutation({
+  const { mutate: touchBookMark } = useMutation({
     mutationFn: postFeedBookMark,
+    onMutate: (id: number) => {
+      feedListQueryClient.cancelQueries(FeedQueryKeys.getFeed());
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const prev = feedListQueryClient.getQueryData<InfiniteData<InsightData[]>>(
+        FeedQueryKeys.getFeed(),
+      )!;
+      for (const page of prev.pages) {
+        for (const info of page) {
+          if (info.id === id) {
+            info.bookmark = !info.bookmark;
+          }
+        }
+      }
+      feedListQueryClient.setQueryData(FeedQueryKeys.getFeed(), prev);
+    },
     onSettled: () => {
       feedListQueryClient.invalidateQueries(FeedQueryKeys.getFeed());
     },
@@ -38,7 +53,6 @@ export function useInfiniteFeed(fetchUrl: string) {
     feedList,
     feedListIsLoading,
     touchBookMark,
-    bookMarkIsLoading,
     fetchNextPage,
     feedListQueryClient,
   };

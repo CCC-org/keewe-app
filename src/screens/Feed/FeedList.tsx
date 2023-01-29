@@ -12,7 +12,7 @@ interface FeedListProps {
   feedList: InfiniteData<InsightData[] | undefined> | undefined;
   fetchNextPage: () => void;
   touchBookMark: UseMutateFunction<void, unknown, number, unknown>;
-  bookMarkIsLoading: boolean;
+  // bookMarkIsLoading: boolean;
   // UpperComponent is not required, but used in FeedScreen.tsx for to display the user's current streak
   upperComponent?: React.ReactNode;
   feedListQueryClient: QueryClient;
@@ -24,7 +24,7 @@ const FeedList = ({
   feedList,
   fetchNextPage,
   touchBookMark,
-  bookMarkIsLoading,
+  // bookMarkIsLoading,
   feedListQueryClient,
   feedListIsLoading,
 }: FeedListProps) => {
@@ -54,23 +54,14 @@ const FeedList = ({
               if (group.length - 1 === idx && feedList.pages.length - 1 === i) {
                 return (
                   <InView key={insight.id} onChange={() => fetchNextPage()}>
-                    <FeedItem
-                      bookMarkIsLoading={bookMarkIsLoading}
-                      onBookMarkClick={touchBookMark}
-                      insight={insight}
-                    />
+                    <FeedItem onBookMarkClick={touchBookMark} insight={insight} />
                   </InView>
                 );
               }
               return (
                 <Fragment key={insight.id}>
                   <Text>{insight.id}</Text>
-                  <FeedItem
-                    bookMarkIsLoading={bookMarkIsLoading}
-                    onBookMarkClick={touchBookMark}
-                    key={insight.id}
-                    insight={insight}
-                  />
+                  <FeedItem onBookMarkClick={touchBookMark} key={insight.id} insight={insight} />
                 </Fragment>
               );
             })}

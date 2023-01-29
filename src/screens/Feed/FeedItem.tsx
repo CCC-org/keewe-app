@@ -11,10 +11,9 @@ import ReactIconButton from '../../components/emoticons/ReactIconButton';
 interface FeedItemProps {
   insight: InsightData;
   onBookMarkClick: (id: number) => void;
-  bookMarkIsLoading: boolean;
 }
 
-const FeedItem = ({ insight, onBookMarkClick, bookMarkIsLoading }: FeedItemProps) => {
+const FeedItem = ({ insight, onBookMarkClick }: FeedItemProps) => {
   const { id, contents, createdAt, link, reaction, writer, bookmark } = insight;
 
   const handleOnBookMarkPress = () => {
@@ -45,7 +44,6 @@ const FeedItem = ({ insight, onBookMarkClick, bookMarkIsLoading }: FeedItemProps
       <View style={styles.contentCtn}>
         <FeedTextContent contents={contents} insightId={id} />
         <FeedLinkWithBookMark
-          bookMarkIsLoading={bookMarkIsLoading}
           text={insight.link.url}
           onBookmarkPress={handleOnBookMarkPress}
           isBookMarked={bookmark}

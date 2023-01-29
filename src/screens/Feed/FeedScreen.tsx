@@ -6,14 +6,8 @@ import { SvgXml } from 'react-native-svg';
 import { pencil } from '../../constants/Icons/home/pencil';
 import { Pressable, StyleSheet } from 'react-native';
 const FeedScreen = ({ navigation }) => {
-  const {
-    feedList,
-    feedListIsLoading,
-    touchBookMark,
-    bookMarkIsLoading,
-    fetchNextPage,
-    feedListQueryClient,
-  } = useInfiniteFeed('https://api-keewe.com/api/v1/insight');
+  const { feedList, feedListIsLoading, touchBookMark, fetchNextPage, feedListQueryClient } =
+    useInfiniteFeed('https://api-keewe.com/api/v1/insight');
 
   // challenge section.
 
@@ -32,7 +26,6 @@ const FeedScreen = ({ navigation }) => {
         feedListQueryClient={feedListQueryClient}
         fetchNextPage={fetchNextPage}
         touchBookMark={touchBookMark}
-        bookMarkIsLoading={bookMarkIsLoading}
         feedListIsLoading={feedListIsLoading}
       />
       <Pressable style={styles.pencil} onPress={handleNavigateToUpload}>

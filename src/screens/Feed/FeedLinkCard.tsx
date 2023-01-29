@@ -7,29 +7,20 @@ interface FeedLinkCard {
   text: string;
   onBookmarkPress: () => void;
   isBookMarked?: boolean;
-  bookMarkIsLoading: boolean;
+  // bookMarkIsLoading: boolean;
 }
 
 const FeedLinkWithBookMark = ({
   text,
   onBookmarkPress,
   isBookMarked = false,
-  bookMarkIsLoading,
   ...props
 }: FeedLinkCard) => {
-  const [isLoading, setIsLoading] = useState(false);
   const styles = createStyles();
 
-  useEffect(() => {
-    if (isLoading && !bookMarkIsLoading) {
-      setTimeout(() => {
-        setIsLoading(bookMarkIsLoading);
-      }, 300);
-    }
-  }, [bookMarkIsLoading]);
+  // useE]);
 
   const handleOnPress = () => {
-    setIsLoading(true);
     onBookmarkPress();
   };
 
@@ -58,11 +49,7 @@ const FeedLinkWithBookMark = ({
           );
         }}
       />
-      {isLoading ? (
-        <Text>loading... </Text>
-      ) : (
-        <FeedBookMarkIcon onPress={handleOnPress} isMarked={isBookMarked} />
-      )}
+      <FeedBookMarkIcon onPress={handleOnPress} isMarked={isBookMarked} />
     </View>
   );
 };
