@@ -72,7 +72,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
     navigation.navigate('ChallengeJoinApproved', {
       form: response,
     });
-  console.log(route.params.form.purpose);
+
   const handleSkipPress = () => {
     if (route.params.form.purpose === 'create') {
       createChallenge(createRequestParams);
