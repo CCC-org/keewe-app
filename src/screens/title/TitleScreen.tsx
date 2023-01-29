@@ -8,6 +8,7 @@ import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 
 const TitleScreen = ({ route, navigation }) => {
   const userId = route.params?.userId ?? getUserId().then((id) => id);
+  const isEnteredByProfileEdit = route.params?.isEnteredByProfileEdit ?? false;
   const [userTitles] = useTitles(userId);
   const theme = useTheme();
 
@@ -35,6 +36,7 @@ const TitleScreen = ({ route, navigation }) => {
                 return (
                   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                   <TitleSticker
+                    isEnteredByProfileEdit={isEnteredByProfileEdit}
                     key={titleMeta.id}
                     achievedTitles={userTitles.achievedTitles}
                     repTitleId={userTitles.repTitleId}
@@ -61,10 +63,11 @@ const styles = StyleSheet.create({
   },
   achievementContainer: {},
   titlesContainer: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    paddingHorizontal: 12,
-
     flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingHorizontal: 12,
+    marginBottom: 18,
   },
 });

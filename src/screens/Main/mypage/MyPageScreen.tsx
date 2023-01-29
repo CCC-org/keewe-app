@@ -38,16 +38,19 @@ const MyPageScreen = ({ navigation, route }) => {
     [theme.colors.graphic.green, `${theme.colors.graphic.green}1a`],
   ]);
 
-  const { data: profile, isLoading: isProfileLoading } = useQuery(
-    MypageQueryKeys.getProfile({ targetId: userId }),
-    () => MypageAPI.getProfile({ targetId: userId }),
-    querySuccessError,
-  );
+  // Erased onSetteled: querySuccessError fn.
+  const { data: profile, isLoading: isProfileLoading } = useQuery({
+    queryKey: MypageQueryKeys.getProfile({ targetId: userId }),
+    queryFn: () => MypageAPI.getProfile({ targetId: userId }),
+    refetchInterval: 1000 * 120,
+  });
+
   const { data: representativeTitles, isLoading: isrepresentativeTitlesLoading } = useQuery(
     MypageQueryKeys.getRepresentativeTitles({ userId: userId }),
     () => MypageAPI.getRepresentativeTitles({ userId: userId }),
     querySuccessError,
   );
+
   const { data: userFolderList, isLoading: isUserFolderListLoading } = useQuery(
     MypageQueryKeys.getFolderList({ userId: userId }),
     () => MypageAPI.getFolderList({ userId: userId }),
@@ -180,7 +183,7 @@ const MyPageScreen = ({ navigation, route }) => {
         contentContainerStyle={styles.group}
         showsHorizontalScrollIndicator={false}
       >
-        {userFolderList.tabs.map((cur, idx) => {
+        {/* {userFolderList.tabs.map((cur, idx) => {
           return (
             <FolderOption
               key={idx}
@@ -189,7 +192,7 @@ const MyPageScreen = ({ navigation, route }) => {
               onPress={() => handleFolderOption()}
             />
           );
-        })}
+        })} */}
       </ScrollView>
       <View style={styles.insight}>
         <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>
