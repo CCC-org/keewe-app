@@ -51,3 +51,11 @@ interface InsightReactRequest {
   insightId: Insight['id'];
   value: number;
 }
+
+interface InsightReactResponse {
+  message: string;
+  code: number;
+  data: {
+    count: number;
+  };
+}

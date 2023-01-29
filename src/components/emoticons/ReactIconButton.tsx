@@ -22,8 +22,7 @@ const ReactIconButton = ({ xml, color, taps, name, insightId }: ReactIconButtonP
 
   const { mutate: insightReact } = useMutation(InsightAPI.react, {
     onSuccess: (response) => {
-      // BUG: insightGetResponse doesnlt contain count property.
-      // setText(response.data.count);
+      setText(response?.data.count);
     },
   });
 
