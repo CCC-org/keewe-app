@@ -65,9 +65,8 @@ const TitleSticker = ({
               source={titleMeta.url}
             />
             {tempRepTitleId === source.titleId ? (
-              <View>
+              <View style={styles.check}>
                 <Image source={require('../../../assets/images/titles/small_check.png')} />
-                <Text>asdf</Text>
               </View>
             ) : null}
           </Pressable>
@@ -125,5 +124,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 15,
+  },
+  check: {
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
   },
 });
