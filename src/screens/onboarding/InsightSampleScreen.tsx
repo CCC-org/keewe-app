@@ -19,7 +19,12 @@ const InsightSampleScreen = ({ navigation, route }) => {
   const [reaction, setReaction] = useState<boolean>(false);
   const [show, setShow] = useState<boolean>(false);
 
-  const sampleData = INSIGHT_SAMPLE[route.params.category[0]];
+  const [sampleData] = useState(
+    INSIGHT_SAMPLE[route.params.category[0]] ??
+      INSIGHT_SAMPLE[
+        Object.keys(INSIGHT_SAMPLE)[Math.floor(Math.random() * Object.keys(INSIGHT_SAMPLE).length)]
+      ],
+  );
 
   const handleSkipPress = () => {
     navigation.navigate('ServiceIntroOne');
@@ -114,8 +119,6 @@ const InsightSampleScreen = ({ navigation, route }) => {
                 text={sampleData.link}
                 renderLinkPreview={(pre) => {
                   const title = pre.previewData?.title;
-                  // make the link only to contain the domain name
-
                   const description =
                     pre.previewData?.link?.replace(/(^\w+:|^)\/\//, '').split('/')[0] ||
                     pre.previewData?.description;
