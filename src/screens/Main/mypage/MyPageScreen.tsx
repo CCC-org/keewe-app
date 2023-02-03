@@ -23,7 +23,7 @@ const MyPageScreen = ({ navigation, route }) => {
   const theme = useTheme();
 
   const [profileImage, setProfileImage] = useState<string>('');
-  const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<Record<string, string>[]>([]);
   const [representativeTitleList, setRepresentativeTitleList] = useState<AchievedTitle[]>([]);
   const [titleTotal, setTitleTotal] = useState<number>(0);
   const [iconColor, setIconColor] = useState([
@@ -76,7 +76,7 @@ const MyPageScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     setSelectedCategory(profile?.data?.interests ?? []);
-    setProfileImage(profile?.data?.image);
+    setProfileImage(profile?.data?.image ?? '');
     setRepresentativeTitleList(representativeTitles?.data?.achievedTitles ?? []);
     setTitleTotal(representativeTitles?.data?.total ?? 0);
   }, [
