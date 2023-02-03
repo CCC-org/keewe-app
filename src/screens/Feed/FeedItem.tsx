@@ -7,6 +7,7 @@ import FeedVerticalDots from './FeedVerticalDots';
 import FeedTextContent from './FeedTextContent';
 import { REACTIONS } from './constant';
 import ReactIconButton from '../../components/emoticons/ReactIconButton';
+import { useNavigation } from '@react-navigation/native';
 
 interface FeedItemProps {
   insight: InsightData;
@@ -15,7 +16,7 @@ interface FeedItemProps {
 
 const FeedItem = ({ insight, onBookMarkClick }: FeedItemProps) => {
   const { id, contents, createdAt, link, reaction, writer, bookmark } = insight;
-
+  const navigation = useNavigation();
   const handleOnBookMarkPress = () => {
     onBookMarkClick(id);
   };
@@ -25,7 +26,7 @@ const FeedItem = ({ insight, onBookMarkClick }: FeedItemProps) => {
   };
 
   const handleProfilePress = () => {
-    alert(`writerId:${writer.writerId} profile pressed`);
+    navigation.navigate('Profile', { userId: writer.writerId });
   };
 
   return (

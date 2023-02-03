@@ -44,6 +44,7 @@ import ChallengeJoinScreen from './src/screens/challenge/ChallengeJoinScreen';
 import ChallengeJoinApprovedScreen from './src/screens/challenge/ChallengeJoinApprovedScreen';
 import TitleScreen from './src/screens/title/TitleScreen';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import ProfileScreen from './src/screens/Main/mypage/ProfileScreen';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator();
@@ -113,6 +114,11 @@ export default function App() {
                   <Stack.Screen
                     name={'InterestEditing'}
                     component={InterestEditingScreen}
+                    options={{ ...headerOptions, title: '' }}
+                  />
+                  <Stack.Screen
+                    name={'Profile'}
+                    component={ProfileScreen}
                     options={{ ...headerOptions, title: '' }}
                   />
                   {/* 챌린지 그룹 */}
