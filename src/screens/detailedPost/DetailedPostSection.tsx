@@ -14,6 +14,7 @@ interface DetailedPostSectionProps {
   currentChallenge: string;
   link: string;
   reaction: Reaction;
+  authorId: number;
 }
 
 const DetailedPostSection = ({
@@ -23,6 +24,7 @@ const DetailedPostSection = ({
   currentChallenge,
   link,
   reaction,
+  authorId,
 }: DetailedPostSectionProps) => {
   const theme = useTheme();
   const navigation = useNavigation();
@@ -50,7 +52,7 @@ const DetailedPostSection = ({
       <Pressable
         onPress={() => {
           // 지금은 임시적인 버튼이지만, 나중에는 글쓴이의 팔로우, 팔로잉 숫자에 붙어있을 navigate 함수임.
-          navigation.navigate('FollowTopTabs');
+          navigation.navigate('FollowTopTabs', { userId: authorId });
         }}
       >
         <Text>팔로우 팔로잉 페이지로 이동</Text>

@@ -6,11 +6,36 @@ import UserFollowingScreen from '../../screens/follow/UserFollowingScreen';
 
 const Tab = createMaterialTopTabNavigator();
 
-const FollowTopTabs = () => {
+const FollowTopTabs = ({ route }) => {
+  const { userId } = route.params;
+
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Followers" component={UserFollowersScreen} />
-      <Tab.Screen name="Following" component={UserFollowingScreen} />
+    <Tab.Navigator sceneContainerStyle={{ backgroundColor: 'white' }}>
+      <Tab.Group
+        screenOptions={{
+          tabBarLabelStyle: { fontSize: 14 },
+          tabBarIndicatorStyle: {
+            backgroundColor: '#B0E817',
+          },
+        }}
+      >
+        <Tab.Screen
+          name="Followers"
+          component={UserFollowersScreen}
+          initialParams={{ userId }}
+          options={{
+            title: '팔로워',
+          }}
+        />
+        <Tab.Screen
+          name="Following"
+          component={UserFollowingScreen}
+          initialParams={{ userId }}
+          options={{
+            title: '팔로잉',
+          }}
+        />
+      </Tab.Group>
     </Tab.Navigator>
   );
 };
