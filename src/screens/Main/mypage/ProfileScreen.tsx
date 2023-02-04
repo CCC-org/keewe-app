@@ -12,6 +12,7 @@ import { querySuccessError } from '../../../utils/helper/queryReponse/querySucce
 import FolderOption from './FolderOption';
 import { useInfiniteFeed } from '../../../utils/hooks/feedInifiniteScroll/useInfiniteFeed';
 import FeedList from '../../Feed/FeedList';
+import BottomFixButton from '../../../components/buttons/BottomFixButton';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
 const ProfileScreen = ({ navigation, route }) => {
@@ -26,6 +27,7 @@ const ProfileScreen = ({ navigation, route }) => {
   const [selectedCategory, setSelectedCategory] = useState<Record<string, string>[]>([]);
   const [representativeTitleList, setRepresentativeTitleList] = useState<AchievedTitle[]>([]);
   const [titleTotal, setTitleTotal] = useState<number>(0);
+  const [isFollowing, setIsFollowing] = useState<boolean>(false);
   const [iconColor, setIconColor] = useState([
     [theme.colors.graphic.purple, `${theme.colors.graphic.purple}1a`],
     [theme.colors.graphic.sky, `${theme.colors.graphic.sky}1a`],
@@ -58,16 +60,10 @@ const ProfileScreen = ({ navigation, route }) => {
     isUserFolderListLoading === true || userFolderList.selectedTab.id === 0
       ? ''
       : String(userFolderList.selectedTab.id);
-  const {
-    feedList,
-    feedListIsLoading,
-    touchBookMark,
-    bookMarkIsLoading,
-    fetchNextPage,
-    feedListQueryClient,
-  } = useInfiniteFeed(
-    'https://api-keewe.com/api/v1/insight/my-page/' + userId + '?drawerId=' + drawerId,
-  );
+  const { feedList, feedListIsLoading, touchBookMark, fetchNextPage, feedListQueryClient } =
+    useInfiniteFeed(
+      'https://api-keewe.com/api/v1/insight/my-page/' + userId + '?drawerId=' + drawerId,
+    );
 
   // const forderMutation = useMutation({
   //   mutationFn: (tabId: number) => {
@@ -150,23 +146,34 @@ const ProfileScreen = ({ navigation, route }) => {
         </View>
         <View style={{ alignItems: 'center' }}>
           <Pressable
-            style={styles.editBtn}
-            onPress={() =>
-              navigation.navigate('ProfileEdit', {
-                nickname: profile?.data?.nickname ?? '',
-                title: profile?.data?.title ?? '',
-                selectedCategory,
-                introduction: profile?.data?.introduction ?? '',
-                userId,
-              })
-            }
+            style={{
+              ...styles.btn,
+              backgroundColor: isFollowing ? '#e1e1d0' : theme.colors.graphic.black,
+            }}
+            onPress={() => setIsFollowing(!isFollowing)}
           >
-            <Text
-              style={{ ...theme.fonts.text.body1.bold, color: `${theme.colors.graphic.black}cc` }}
-            >
-              프로필 수정
-            </Text>
+            {isFollowing ? (
+              <Text
+                style={{ ...theme.fonts.text.body1.bold, color: `${theme.colors.graphic.black}cc` }}
+              >
+                팔로잉
+              </Text>
+            ) : (
+              <Text style={{ ...theme.fonts.text.body1.bold, color: theme.colors.graphic.white }}>
+                팔로우
+              </Text>
+            )}
           </Pressable>
+          <BottomFixButton
+            isActive={true}
+            text={`${profile?.data?.challengeName} 챌린지 중 `}
+            width={343}
+            height={48}
+            chevron={true}
+            onPress={() => alert('pressed')}
+            buttonStyle={styles.button}
+            textStyle={styles.buttonText}
+          />
         </View>
       </View>
       <View style={styles.mid}>
@@ -189,17 +196,21 @@ const ProfileScreen = ({ navigation, route }) => {
           );
         })}
       </View>
-      <Pressable
-        onPress={() => alert('view every title!')}
-        style={{ ...styles.viewAll, borderTopColor: `${theme.colors.graphic.black}1a` }}
-      >
-        <Text
-          style={{ ...theme.fonts.text.body1.regular, color: `${theme.colors.graphic.black}cc` }}
+      {representativeTitleList.length > 3 ? (
+        <Pressable
+          onPress={() => alert('view every title!')}
+          style={{ ...styles.viewAll, borderTopColor: `${theme.colors.graphic.black}1a` }}
         >
-          전체보기
-        </Text>
-        <Feather name="chevron-right" size={24} color={`${theme.colors.graphic.black}cc`} />
-      </Pressable>
+          <Text
+            style={{ ...theme.fonts.text.body1.regular, color: `${theme.colors.graphic.black}cc` }}
+          >
+            전체보기
+          </Text>
+          <Feather name="chevron-right" size={24} color={`${theme.colors.graphic.black}cc`} />
+        </Pressable>
+      ) : (
+        <View style={{ height: 24 }}></View>
+      )}
       <DividerBar style={styles.divider} />
       {userFolderList && (
         <>
@@ -235,7 +246,6 @@ const ProfileScreen = ({ navigation, route }) => {
             feedListQueryClient={feedListQueryClient}
             fetchNextPage={fetchNextPage}
             touchBookMark={touchBookMark}
-            bookMarkIsLoading={bookMarkIsLoading}
             feedListIsLoading={feedListIsLoading}
           />
         </>
@@ -256,9 +266,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     paddingVertical: 14,
   },
-  editBtn: {
-    backgroundColor: '#e1e1d0',
-    marginVertical: 32,
+  btn: {
+    marginTop: 32,
+    marginBottom: 12,
     borderRadius: 12,
     width: 343,
     height: 48,
@@ -297,5 +307,13 @@ const styles = StyleSheet.create({
     paddingTop: 24,
     paddingBottom: 10,
     marginLeft: 16,
+  },
+  button: {
+    borderRadius: 12,
+    backgroundColor: '#e0f6a2',
+    marginBottom: 32,
+  },
+  buttonText: {
+    color: '#486006',
   },
 });

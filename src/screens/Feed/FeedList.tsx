@@ -17,6 +17,7 @@ interface FeedListProps {
   feedListQueryClient: QueryClient;
   feedListIsLoading: boolean;
   writer?: { writerId: number; nickname: string; title: string; image: string };
+  topDividerBar?: boolean;
 }
 
 const FeedList = ({
@@ -27,6 +28,7 @@ const FeedList = ({
   feedListQueryClient,
   feedListIsLoading,
   writer,
+  topDividerBar,
 }: FeedListProps) => {
   const [pageRefreshing, setPageRefreshing] = useState(false);
 
@@ -45,7 +47,7 @@ const FeedList = ({
     >
       {/* UpperComponent will render undefined, which does not affect this component.  */}
       {UpperComponent}
-      <DividerBar style={styles.divider} />
+      {topDividerBar ? <DividerBar style={styles.divider} /> : null}
 
       {feedList?.pages.map((group, i) => {
         return (

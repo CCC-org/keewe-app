@@ -27,6 +27,7 @@ const FeedScreen = ({ navigation }) => {
         fetchNextPage={fetchNextPage}
         touchBookMark={touchBookMark}
         feedListIsLoading={feedListIsLoading}
+        topDividerBar={true}
       />
       <Pressable style={styles.pencil} onPress={handleNavigateToUpload}>
         <SvgXml xml={pencil} />
