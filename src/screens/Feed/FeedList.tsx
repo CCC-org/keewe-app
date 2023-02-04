@@ -16,7 +16,7 @@ interface FeedListProps {
   feedListQueryClient: QueryClient;
   feedListIsLoading: boolean;
   writer?: { writerId: number; nickname: string; title: string; image: string };
-  scrollViewRef: React.RefObject<any>;
+  scrollViewRef?: React.RefObject<any>;
 }
 
 const FeedList = ({
