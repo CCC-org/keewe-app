@@ -28,51 +28,51 @@ const Tab = createBottomTabNavigator();
 const Tabs = () => {
   const userId = useGetUserId();
   return (
-    <QueryClientProvider client={queryClient}>
-      <Tab.Navigator
-        screenOptions={{
-          tabBarShowLabel: false,
+    // <QueryClientProvider client={queryClient}>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarShowLabel: false,
+      }}
+      sceneContainerStyle={{ backgroundColor: 'white' }}
+    >
+      <Tab.Screen
+        options={{
+          tabBarIcon: ({ focused }) =>
+            focused ? <SvgXml xml={homeOn} /> : <SvgXml xml={homeOff} />,
         }}
-        sceneContainerStyle={{ backgroundColor: 'white' }}
-      >
-        <Tab.Screen
-          options={{
-            tabBarIcon: ({ focused }) =>
-              focused ? <SvgXml xml={homeOn} /> : <SvgXml xml={homeOff} />,
-          }}
-          name="Feed"
-          component={FeedScreen}
-        />
-        <Tab.Screen
-          options={{
-            tabBarIcon: ({ focused }) =>
-              focused ? <SvgXml xml={challengeOn} /> : <SvgXml xml={challengeOff} />,
-          }}
-          name="Challenges"
-          component={ChallengesScreen}
-        />
-        <Tab.Screen
-          options={{
-            tabBarIcon: ({ focused }) =>
-              focused ? <SvgXml xml={bookmarkOn} /> : <SvgXml xml={bookmarkOff} />,
-          }}
-          name="BookMark"
-          component={BookMarkScreen}
-        />
-        <Tab.Screen
-          options={{
-            tabBarIcon: ({ focused }) =>
-              focused ? <SvgXml xml={mypageOn} /> : <SvgXml xml={mypageOff} />,
-          }}
-          name="MyPage"
-          component={MyPageScreen}
-          initialParams={{
-            userId: String(userId),
-          }}
-        />
-        <Tab.Screen name="Root" component={RootScreen} />
-      </Tab.Navigator>
-    </QueryClientProvider>
+        name="Feed"
+        component={FeedScreen}
+      />
+      <Tab.Screen
+        options={{
+          tabBarIcon: ({ focused }) =>
+            focused ? <SvgXml xml={challengeOn} /> : <SvgXml xml={challengeOff} />,
+        }}
+        name="Challenges"
+        component={ChallengesScreen}
+      />
+      <Tab.Screen
+        options={{
+          tabBarIcon: ({ focused }) =>
+            focused ? <SvgXml xml={bookmarkOn} /> : <SvgXml xml={bookmarkOff} />,
+        }}
+        name="BookMark"
+        component={BookMarkScreen}
+      />
+      <Tab.Screen
+        options={{
+          tabBarIcon: ({ focused }) =>
+            focused ? <SvgXml xml={mypageOn} /> : <SvgXml xml={mypageOff} />,
+        }}
+        name="MyPage"
+        component={MyPageScreen}
+        initialParams={{
+          userId: String(userId),
+        }}
+      />
+      <Tab.Screen name="Root" component={RootScreen} />
+    </Tab.Navigator>
+    // </QueryClientProvider>
   );
 };
 
