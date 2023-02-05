@@ -266,6 +266,7 @@ export default function App() {
                       name={'Upload'}
                       component={UploadScreen}
                       options={{
+                        ...headerOptions,
                         title: '',
                         cardStyle: { backgroundColor: 'white' },
                       }}
@@ -286,6 +287,7 @@ export default function App() {
                       name={'Title'}
                       component={TitleScreen}
                       options={{
+                        ...headerOptions,
                         title: '달성',
                         cardStyle: { backgroundColor: 'white' },
                       }}
