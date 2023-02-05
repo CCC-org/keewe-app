@@ -5,6 +5,7 @@ import { Octicons } from '@expo/vector-icons';
 import LinkCard from '../../components/cards/LinkCard';
 import { REACTIONS } from './constant';
 import ReactIconButton from '../../components/emoticons/ReactIconButton';
+import { useNavigation } from '@react-navigation/native';
 
 interface DetailedPostSectionProps {
   insightText: string;
@@ -13,6 +14,7 @@ interface DetailedPostSectionProps {
   currentChallenge: string;
   link: string;
   reaction: Reaction;
+  authorId: number;
 }
 
 const DetailedPostSection = ({
@@ -22,8 +24,10 @@ const DetailedPostSection = ({
   currentChallenge,
   link,
   reaction,
+  authorId,
 }: DetailedPostSectionProps) => {
   const theme = useTheme();
+  const navigation = useNavigation();
 
   return (
     <View style={{ backgroundColor: '#F1F1E9' }}>
@@ -44,6 +48,15 @@ const DetailedPostSection = ({
           <Octicons name="chevron-right" size={17} color={`${theme.colors.graphic.black}cc`} />
         </Pressable>
       </View>
+      {/* 여기는 글 작성자의 프로필과 대표타이틀, 팔로워, 관심사등이 올라갈 부분. 임시적으로 팔로워, 팔로잉 페이지로 이동하는 버튼 만듦 */}
+      <Pressable
+        onPress={() => {
+          // 지금은 임시적인 버튼이지만, 나중에는 글쓴이의 팔로우, 팔로잉 숫자에 붙어있을 navigate 함수임.
+          navigation.navigate('FollowTopTabs', { userId: authorId });
+        }}
+      >
+        <Text>팔로우 팔로잉 페이지로 이동</Text>
+      </Pressable>
       <View style={styles.insightText}>
         <Text style={[theme.fonts.text.body1.regular, { lineHeight: 28 }]}>{insightText}</Text>
       </View>
