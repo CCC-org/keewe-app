@@ -72,7 +72,7 @@ const MyPageScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     setSelectedCategory(profile?.data?.interests ?? []);
-    setProfileImage(profile?.data?.image ?? '');
+    setProfileImage(profile?.data?.image || '');
     setRepresentativeTitleList(representativeTitles?.data?.achievedTitles ?? []);
     setTitleTotal(representativeTitles?.data?.total ?? 0);
   }, [

@@ -48,6 +48,10 @@ export type RootStackParamList = {
   interestEditing: undefined;
   Profile: undefined;
   Title: undefined;
+  UserFollowers: undefined;
+  FollowTopTabs: {
+    userId: number;
+  };
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

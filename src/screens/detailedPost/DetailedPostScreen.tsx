@@ -145,6 +145,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
               link={insightResponse?.data?.link ?? ''}
               currentChallenge={currentChallenge}
               reaction={insightResponse.data.reaction}
+              authorId={profile?.data?.authorId ?? -1}
             />
           )}
 

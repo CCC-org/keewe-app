@@ -107,7 +107,10 @@ const ShareScreen = ({ navigation, route }) => {
           <Text
             style={{
               ...theme.fonts.text.ridi,
-              ...{ color: color === '#f1f1e9' ? 'black' : 'white', marginTop: 4 },
+              ...{
+                color: color === '#f1f1e9' ? 'black' : 'white',
+                marginTop: 4,
+              },
             }}
           >
             {insightText}
@@ -166,7 +169,7 @@ const styles = StyleSheet.create({
     height: 80,
     width: '100%',
   },
-  textContainer: {},
+  textContainer: { width: '100%', height: '100%' },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
