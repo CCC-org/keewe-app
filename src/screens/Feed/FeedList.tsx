@@ -45,7 +45,6 @@ const FeedList = ({
       contentContainerStyle={styles.feedCtn}
     >
       {UpperComponent}
-      <DividerBar style={styles.divider} />
 
       {feedList?.pages.map((group, i) => {
         return (
@@ -82,14 +81,5 @@ export default FeedList;
 const styles = StyleSheet.create({
   feedCtn: {
     padding: 16.5,
-  },
-  divider: {
-    backgroundColor: '#f8f8f4',
-    borderBottomColor: '#f8f8f4',
-    marginBottom: 24,
-    height: 12,
-    width: '150%',
-    marginLeft: 0,
-    left: -50,
   },
 });
