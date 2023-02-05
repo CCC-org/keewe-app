@@ -12,6 +12,8 @@ import { querySuccessError } from '../../../utils/helper/queryReponse/querySucce
 import FolderOption from './FolderOption';
 import { useInfiniteFeed } from '../../../utils/hooks/feedInifiniteScroll/useInfiniteFeed';
 import FeedList from '../../Feed/FeedList';
+import { SvgXml } from 'react-native-svg';
+import { pencil } from '../../../constants/Icons/home/pencil';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
 const MyPageScreen = ({ navigation, route }) => {
@@ -102,138 +104,160 @@ const MyPageScreen = ({ navigation, route }) => {
       selectedTab: newSelectedTab,
     });
   };
+  const handleNavigateToUpload = () => {
+    navigation.navigate('Upload');
+  };
 
   return (
-    <ScrollView>
-      <View style={styles.top}>
-        <View style={styles.setting}>
-          <Pressable onPress={() => alert('setting')}>
-            <Ionicons name="settings-outline" size={24} color={`${theme.colors.graphic.black}cc`} />
-          </Pressable>
-          <Pressable onPress={() => alert('more')}>
-            <Feather name="more-vertical" size={24} color={`${theme.colors.graphic.black}cc`} />
-          </Pressable>
-        </View>
-        <View style={{ marginLeft: 16, marginBottom: 24 }}>
-          <MypageProfile
-            nickname={profile?.data?.nickname ?? ''}
-            title={profile?.data?.title ?? ''}
-            image={profileImage}
-            follower={profile?.data?.followerCount ?? 0}
-            following={profile?.data?.followingCount ?? 0}
-          />
-        </View>
-        <View
-          style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: 20, marginHorizontal: 14 }}
-        >
-          {selectedCategory.map((cur, idx) => (
-            <InterestIcon
-              key={idx}
-              title={cur}
-              textColor={iconColor[idx][0]}
-              backgroundColor={iconColor[idx][1]}
+    <>
+      <ScrollView>
+        <View style={styles.top}>
+          <View style={styles.setting}>
+            <Pressable onPress={() => alert('setting')}>
+              <Ionicons
+                name="settings-outline"
+                size={24}
+                color={`${theme.colors.graphic.black}cc`}
+              />
+            </Pressable>
+            <Pressable onPress={() => alert('more')}>
+              <Feather name="more-vertical" size={24} color={`${theme.colors.graphic.black}cc`} />
+            </Pressable>
+          </View>
+          <View style={{ marginLeft: 16, marginBottom: 24 }}>
+            <MypageProfile
+              nickname={profile?.data?.nickname ?? ''}
+              title={profile?.data?.title ?? ''}
+              image={profileImage}
+              follower={profile?.data?.followerCount ?? 0}
+              following={profile?.data?.followingCount ?? 0}
             />
-          ))}
-        </View>
-        <View style={{ marginHorizontal: 16 }}>
-          <Text
-            style={{ ...theme.fonts.text.body2.regular, color: `${theme.colors.graphic.black}cc` }}
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              marginBottom: 20,
+              marginHorizontal: 14,
+            }}
           >
-            {profile?.data?.introduction ?? ''}
-          </Text>
-        </View>
-        <View style={{ alignItems: 'center' }}>
-          <Pressable
-            style={styles.editBtn}
-            onPress={() =>
-              navigation.navigate('ProfileEdit', {
-                nickname: profile?.data?.nickname ?? '',
-                title: profile?.data?.title ?? '',
-                selectedCategory,
-                introduction: profile?.data?.introduction ?? '',
-                userId,
-              })
-            }
-          >
+            {selectedCategory.map((cur, idx) => (
+              <InterestIcon
+                key={idx}
+                title={cur}
+                textColor={iconColor[idx][0]}
+                backgroundColor={iconColor[idx][1]}
+              />
+            ))}
+          </View>
+          <View style={{ marginHorizontal: 16 }}>
             <Text
-              style={{ ...theme.fonts.text.body1.bold, color: `${theme.colors.graphic.black}cc` }}
+              style={{
+                ...theme.fonts.text.body2.regular,
+                color: `${theme.colors.graphic.black}cc`,
+              }}
             >
-              프로필 수정
-            </Text>
-          </Pressable>
-        </View>
-      </View>
-      <View style={styles.mid}>
-        <View style={styles.title}>
-          <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>
-            타이틀{' '}
-          </Text>
-          <Text style={{ ...theme.fonts.text.headline2, color: `${theme.colors.graphic.black}4d` }}>
-            {titleTotal}
-          </Text>
-        </View>
-        {representativeTitleList.map((cur, idx) => {
-          return (
-            <MypageTitle
-              key={idx}
-              label={cur['name']}
-              condition={cur['introduction']}
-              date={cur['achievedDate'].slice(0, cur['achievedDate'].indexOf('T'))}
-            />
-          );
-        })}
-      </View>
-      <Pressable
-        onPress={() => alert('view every title!')}
-        style={{ ...styles.viewAll, borderTopColor: `${theme.colors.graphic.black}1a` }}
-      >
-        <Text
-          style={{ ...theme.fonts.text.body1.regular, color: `${theme.colors.graphic.black}cc` }}
-        >
-          전체보기
-        </Text>
-        <Feather name="chevron-right" size={24} color={`${theme.colors.graphic.black}cc`} />
-      </Pressable>
-      <DividerBar style={styles.divider} />
-      {userFolderList && (
-        <>
-          <ScrollView
-            horizontal={true}
-            contentContainerStyle={styles.group}
-            showsHorizontalScrollIndicator={false}
-          >
-            {userFolderList.tabs.map((cur, idx) => {
-              return (
-                <FolderOption
-                  key={idx}
-                  title={cur.name}
-                  selected={cur.isClicked}
-                  onPress={() => handleFolderOption(cur.id)}
-                />
-              );
-            })}
-          </ScrollView>
-          <View style={styles.insight}>
-            <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>
-              인사이트
+              {profile?.data?.introduction ?? ''}
             </Text>
           </View>
-          <FeedList
-            writer={{
-              writerId: Number(userId),
-              nickname: profile?.data?.nickname ?? '',
-              title: profile?.data?.title ?? '',
-              image: profileImage,
-            }}
-            feedList={feedList}
-            feedListQueryClient={feedListQueryClient}
-            fetchNextPage={fetchNextPage}
-            touchBookMark={touchBookMark}
-            feedListIsLoading={feedListIsLoading}
-          />
-        </>
-      )}
-    </ScrollView>
+          <View style={{ alignItems: 'center' }}>
+            <Pressable
+              style={styles.editBtn}
+              onPress={() =>
+                navigation.navigate('ProfileEdit', {
+                  nickname: profile?.data?.nickname ?? '',
+                  title: profile?.data?.title ?? '',
+                  selectedCategory,
+                  introduction: profile?.data?.introduction ?? '',
+                  userId,
+                })
+              }
+            >
+              <Text
+                style={{ ...theme.fonts.text.body1.bold, color: `${theme.colors.graphic.black}cc` }}
+              >
+                프로필 수정
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+        <View style={styles.mid}>
+          <View style={styles.title}>
+            <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>
+              타이틀{' '}
+            </Text>
+            <Text
+              style={{ ...theme.fonts.text.headline2, color: `${theme.colors.graphic.black}4d` }}
+            >
+              {titleTotal}
+            </Text>
+          </View>
+          {representativeTitleList.map((cur, idx) => {
+            return (
+              <MypageTitle
+                key={idx}
+                label={cur['name']}
+                condition={cur['introduction']}
+                date={cur['achievedDate'].slice(0, cur['achievedDate'].indexOf('T'))}
+              />
+            );
+          })}
+        </View>
+        <Pressable
+          onPress={() => alert('view every title!')}
+          style={{ ...styles.viewAll, borderTopColor: `${theme.colors.graphic.black}1a` }}
+        >
+          <Text
+            style={{ ...theme.fonts.text.body1.regular, color: `${theme.colors.graphic.black}cc` }}
+          >
+            전체보기
+          </Text>
+          <Feather name="chevron-right" size={24} color={`${theme.colors.graphic.black}cc`} />
+        </Pressable>
+        <DividerBar style={styles.divider} />
+        {userFolderList && (
+          <>
+            <ScrollView
+              horizontal={true}
+              contentContainerStyle={styles.group}
+              showsHorizontalScrollIndicator={false}
+            >
+              {userFolderList.tabs.map((cur, idx) => {
+                return (
+                  <FolderOption
+                    key={idx}
+                    title={cur.name}
+                    selected={cur.isClicked}
+                    onPress={() => handleFolderOption(cur.id)}
+                  />
+                );
+              })}
+            </ScrollView>
+            <View style={styles.insight}>
+              <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>
+                인사이트
+              </Text>
+            </View>
+            <FeedList
+              writer={{
+                writerId: Number(userId),
+                nickname: profile?.data?.nickname ?? '',
+                title: profile?.data?.title ?? '',
+                image: profileImage,
+              }}
+              feedList={feedList}
+              feedListQueryClient={feedListQueryClient}
+              fetchNextPage={fetchNextPage}
+              touchBookMark={touchBookMark}
+              feedListIsLoading={feedListIsLoading}
+            />
+          </>
+        )}
+      </ScrollView>
+      <Pressable style={styles.pencil} onPress={handleNavigateToUpload}>
+        <SvgXml xml={pencil} />
+      </Pressable>
+    </>
   );
 };
 
@@ -290,5 +314,24 @@ const styles = StyleSheet.create({
     paddingTop: 24,
     paddingBottom: 10,
     marginLeft: 16,
+  },
+  pencil: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    width: 64,
+    height: 64,
+    borderRadius: 16,
+    backgroundColor: '#b0e817',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });
