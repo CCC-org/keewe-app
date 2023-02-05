@@ -114,7 +114,7 @@ export default TitleSticker;
 
 const styles = StyleSheet.create({
   mainContainer: {
-    margin: 10,
+    margin: 5,
     width: 100,
   },
   metaContainer: {
