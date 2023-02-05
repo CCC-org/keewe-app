@@ -64,11 +64,6 @@ const MyPageScreen = ({ navigation, route }) => {
     useInfiniteFeed(
       'https://api-keewe.com/api/v1/insight/my-page/' + userId + '?drawerId=' + drawerId,
     );
-  const { feedList, feedListIsLoading, touchBookMark, fetchNextPage, feedListQueryClient } =
-    useInfiniteFeed(
-      'https://api-keewe.com/api/v1/insight/my-page/' + userId + '?drawerId=' + drawerId,
-    );
-
   // const forderMutation = useMutation({
   //   mutationFn: (tabId: number) => {
   //   }

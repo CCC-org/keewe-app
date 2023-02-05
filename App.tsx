@@ -104,14 +104,6 @@ export default function App() {
                         cardStyle: { backgroundColor: 'white' },
                       }}
                     />
-                    <Stack.Screen
-                      name={'FollowTopTabs'}
-                      component={FollowTopTabs}
-                      options={{
-                        headerShown: true,
-                        cardStyle: { backgroundColor: 'white' },
-                      }}
-                    />
                     {/* <Stack.Screen name={'Home'} component={HomeScreen}></Stack.Screen> */}
                   </Stack.Group>
                   <Stack.Screen
@@ -312,28 +304,6 @@ export default function App() {
                       component={TitleScreen}
                       options={{
                         ...headerOptions,
-                        title: '달성',
-                        cardStyle: { backgroundColor: 'white' },
-                      }}
-                    />
-                  </Stack.Group>
-                  {/* 팔로우 팔로잉 페이지 */}
-                  <Stack.Group>
-                    <Stack.Screen
-                      name={'UserFollowers'}
-                      component={UserFollowersScreen}
-                      options={{
-                        title: '달성',
-                        cardStyle: { backgroundColor: 'white' },
-                      }}
-                    />
-                  </Stack.Group>
-                  {/* 팔로우 팔로잉 페이지 */}
-                  <Stack.Group>
-                    <Stack.Screen
-                      name={'UserFollowers'}
-                      component={UserFollowersScreen}
-                      options={{
                         title: '달성',
                         cardStyle: { backgroundColor: 'white' },
                       }}

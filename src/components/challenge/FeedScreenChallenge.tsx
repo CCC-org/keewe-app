@@ -7,6 +7,7 @@ import {
   UserSpecificChallengeQueryKeys,
 } from '../../utils/api/UserSpecificChallenge';
 import UserSpecificChallengeSection from '../../screens/Feed/UserSpecificChallengeSection';
+import DividerBar from '../bars/DividerBar';
 
 const FeedScreenChallenge = () => {
   const { data: userSpecificChallenge, ...challengeData } = useQuery<
@@ -14,11 +15,6 @@ const FeedScreenChallenge = () => {
   >(UserSpecificChallengeQueryKeys.getUserSpecificChallenge(), () =>
     UserSpecificChallengeAPI.getUserSpecificChallenge(),
   );
-  console.log(
-    '🚀 ~ file: FeedScreenChallenge.tsx:13 ~ FeedScreenChallenge ~ userSpecificChallenge',
-    userSpecificChallenge,
-  );
-
   if (!userSpecificChallenge) return null;
 
   return (
@@ -27,7 +23,6 @@ const FeedScreenChallenge = () => {
         {userSpecificChallenge && (
           <UserSpecificChallengeSection userSpecificChallenge={userSpecificChallenge} />
         )}
-        <Text>FeedScreen Challenge. </Text>
       </View>
       <DividerBar style={styles.divider} />
     </>
