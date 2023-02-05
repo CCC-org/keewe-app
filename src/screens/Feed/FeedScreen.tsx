@@ -26,6 +26,7 @@ const FeedScreen = () => {
         fetchNextPage={fetchNextPage}
         touchBookMark={touchBookMark}
         feedListIsLoading={feedListIsLoading}
+        topDividerBar={true}
       />
       <GoToUploadButton />
     </>
