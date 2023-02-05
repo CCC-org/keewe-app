@@ -14,17 +14,36 @@ const FeedScreenChallenge = () => {
   >(UserSpecificChallengeQueryKeys.getUserSpecificChallenge(), () =>
     UserSpecificChallengeAPI.getUserSpecificChallenge(),
   );
+  console.log(
+    '🚀 ~ file: FeedScreenChallenge.tsx:13 ~ FeedScreenChallenge ~ userSpecificChallenge',
+    userSpecificChallenge,
+  );
+
+  if (!userSpecificChallenge) return null;
 
   return (
-    <View>
-      {userSpecificChallenge && (
-        <UserSpecificChallengeSection userSpecificChallenge={userSpecificChallenge} />
-      )}
-      <Text>FeedScreen Challenge. </Text>
-    </View>
+    <>
+      <View>
+        {userSpecificChallenge && (
+          <UserSpecificChallengeSection userSpecificChallenge={userSpecificChallenge} />
+        )}
+        <Text>FeedScreen Challenge. </Text>
+      </View>
+      <DividerBar style={styles.divider} />
+    </>
   );
 };
 
 export default FeedScreenChallenge;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  divider: {
+    backgroundColor: '#f8f8f4',
+    borderBottomColor: '#f8f8f4',
+    marginBottom: 24,
+    height: 12,
+    width: '150%',
+    marginLeft: 0,
+    left: -50,
+  },
+});

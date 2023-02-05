@@ -58,16 +58,10 @@ const MyPageScreen = ({ navigation, route }) => {
     isUserFolderListLoading === true || userFolderList.selectedTab.id === 0
       ? ''
       : String(userFolderList.selectedTab.id);
-  const {
-    feedList,
-    feedListIsLoading,
-    touchBookMark,
-    bookMarkIsLoading,
-    fetchNextPage,
-    feedListQueryClient,
-  } = useInfiniteFeed(
-    'https://api-keewe.com/api/v1/insight/my-page/' + userId + '?drawerId=' + drawerId,
-  );
+  const { feedList, feedListIsLoading, touchBookMark, fetchNextPage, feedListQueryClient } =
+    useInfiniteFeed(
+      'https://api-keewe.com/api/v1/insight/my-page/' + userId + '?drawerId=' + drawerId,
+    );
 
   // const forderMutation = useMutation({
   //   mutationFn: (tabId: number) => {
@@ -76,7 +70,7 @@ const MyPageScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     setSelectedCategory(profile?.data?.interests ?? []);
-    setProfileImage(profile?.data?.image);
+    setProfileImage(profile?.data?.image || '');
     setRepresentativeTitleList(representativeTitles?.data?.achievedTitles ?? []);
     setTitleTotal(representativeTitles?.data?.total ?? 0);
   }, [
@@ -235,7 +229,6 @@ const MyPageScreen = ({ navigation, route }) => {
             feedListQueryClient={feedListQueryClient}
             fetchNextPage={fetchNextPage}
             touchBookMark={touchBookMark}
-            bookMarkIsLoading={bookMarkIsLoading}
             feedListIsLoading={feedListIsLoading}
           />
         </>
