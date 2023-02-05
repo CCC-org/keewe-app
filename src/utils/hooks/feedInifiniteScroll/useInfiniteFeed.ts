@@ -22,10 +22,7 @@ export function useInfiniteFeed(fetchUrl: string) {
   const {
     data: feedList,
     isLoading: feedListIsLoading,
-    hasNextPage,
     fetchNextPage,
-    isFetching,
-    isFetchingNextPage,
   } = useInfiniteQuery<FeedInsight['data'] | undefined>({
     queryKey: key,
     queryFn: (context) => {
@@ -36,14 +33,12 @@ export function useInfiniteFeed(fetchUrl: string) {
       return lastFeedId;
     },
   });
-  const { mutate: touchBookMark, isLoading: bookMarkIsLoading } = useMutation({
+  const { mutate: touchBookMark } = useMutation({
     mutationFn: postFeedBookMark,
     onMutate: (id: number) => {
-      feedListQueryClient.cancelQueries(FeedQueryKeys.getFeed());
+      feedListQueryClient.cancelQueries(key);
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const prev = feedListQueryClient.getQueryData<InfiniteData<InsightData[]>>(
-        FeedQueryKeys.getFeed(),
-      )!;
+      const prev = feedListQueryClient.getQueryData<InfiniteData<InsightData[]>>(key)!;
       for (const page of prev.pages) {
         for (const info of page) {
           if (info.id === id) {
@@ -51,10 +46,10 @@ export function useInfiniteFeed(fetchUrl: string) {
           }
         }
       }
-      feedListQueryClient.setQueryData(FeedQueryKeys.getFeed(), prev);
+      feedListQueryClient.setQueryData(key, prev);
     },
     onSettled: () => {
-      feedListQueryClient.invalidateQueries(FeedQueryKeys.getFeed());
+      feedListQueryClient.invalidateQueries(key);
     },
   });
 

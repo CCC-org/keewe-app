@@ -46,6 +46,7 @@ export type RootStackParamList = {
   ProfileEdit: undefined;
   NicknameEditing: undefined;
   interestEditing: undefined;
+  Profile: undefined;
   Title: undefined;
   UserFollowers: undefined;
   FollowTopTabs: {

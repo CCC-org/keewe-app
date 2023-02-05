@@ -27,6 +27,7 @@ const FeedList = ({
   feedListQueryClient,
   scrollViewRef,
   writer,
+  topDividerBar,
 }: FeedListProps) => {
   const [pageRefreshing, setPageRefreshing] = useState(false);
 
@@ -41,15 +42,20 @@ const FeedList = ({
   return (
     <IOScrollView
       ref={scrollViewRef}
+      ref={scrollViewRef}
       refreshControl={<RefreshControl refreshing={pageRefreshing} onRefresh={onRefresh} />}
       contentContainerStyle={styles.feedCtn}
     >
       {UpperComponent}
+      <DividerBar style={styles.divider} />
 
       {feedList?.pages.map((group, i) => {
         return (
           <Fragment key={i}>
             {group?.map((insight, idx) => {
+              if (!insight.writer && writer) {
+                insight.writer = writer;
+              }
               if (!insight.writer && writer) {
                 insight.writer = writer;
               }

@@ -12,11 +12,10 @@ import { querySuccessError } from '../../../utils/helper/queryReponse/querySucce
 import FolderOption from './FolderOption';
 import { useInfiniteFeed } from '../../../utils/hooks/feedInifiniteScroll/useInfiniteFeed';
 import FeedList from '../../Feed/FeedList';
-import { SvgXml } from 'react-native-svg';
-import { pencil } from '../../../constants/Icons/home/pencil';
+import BottomFixButton from '../../../components/buttons/BottomFixButton';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
-const MyPageScreen = ({ navigation, route }) => {
+const ProfileScreen = ({ navigation, route }) => {
   const { userId } = route.params;
   if (userId === null || userId === undefined) {
     alert('userId를 인식할 수 없었습니다.');
@@ -28,6 +27,7 @@ const MyPageScreen = ({ navigation, route }) => {
   const [selectedCategory, setSelectedCategory] = useState<Record<string, string>[]>([]);
   const [representativeTitleList, setRepresentativeTitleList] = useState<AchievedTitle[]>([]);
   const [titleTotal, setTitleTotal] = useState<number>(0);
+  const [isFollowing, setIsFollowing] = useState<boolean>(false);
   const [iconColor, setIconColor] = useState([
     [theme.colors.graphic.purple, `${theme.colors.graphic.purple}1a`],
     [theme.colors.graphic.sky, `${theme.colors.graphic.sky}1a`],
@@ -64,10 +64,6 @@ const MyPageScreen = ({ navigation, route }) => {
     useInfiniteFeed(
       'https://api-keewe.com/api/v1/insight/my-page/' + userId + '?drawerId=' + drawerId,
     );
-  const { feedList, feedListIsLoading, touchBookMark, fetchNextPage, feedListQueryClient } =
-    useInfiniteFeed(
-      'https://api-keewe.com/api/v1/insight/my-page/' + userId + '?drawerId=' + drawerId,
-    );
 
   // const forderMutation = useMutation({
   //   mutationFn: (tabId: number) => {
@@ -76,8 +72,7 @@ const MyPageScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     setSelectedCategory(profile?.data?.interests ?? []);
-    setProfileImage(profile?.data?.image || '');
-    setProfileImage(profile?.data?.image || '');
+    setProfileImage(profile?.data?.image ?? '');
     setRepresentativeTitleList(representativeTitles?.data?.achievedTitles ?? []);
     setTitleTotal(representativeTitles?.data?.total ?? 0);
   }, [
@@ -108,9 +103,7 @@ const MyPageScreen = ({ navigation, route }) => {
       tabs: newTabs,
       selectedTab: newSelectedTab,
     });
-  };
-  const handleNavigateToUpload = () => {
-    navigation.navigate('Upload');
+    console.log('feddlist:', feedList);
   };
 
   return (
@@ -154,23 +147,34 @@ const MyPageScreen = ({ navigation, route }) => {
         </View>
         <View style={{ alignItems: 'center' }}>
           <Pressable
-            style={styles.editBtn}
-            onPress={() =>
-              navigation.navigate('ProfileEdit', {
-                nickname: profile?.data?.nickname ?? '',
-                title: profile?.data?.title ?? '',
-                selectedCategory,
-                introduction: profile?.data?.introduction ?? '',
-                userId,
-              })
-            }
+            style={{
+              ...styles.btn,
+              backgroundColor: isFollowing ? '#e1e1d0' : theme.colors.graphic.black,
+            }}
+            onPress={() => setIsFollowing(!isFollowing)}
           >
-            <Text
-              style={{ ...theme.fonts.text.body1.bold, color: `${theme.colors.graphic.black}cc` }}
-            >
-              프로필 수정
-            </Text>
+            {isFollowing ? (
+              <Text
+                style={{ ...theme.fonts.text.body1.bold, color: `${theme.colors.graphic.black}cc` }}
+              >
+                팔로잉
+              </Text>
+            ) : (
+              <Text style={{ ...theme.fonts.text.body1.bold, color: theme.colors.graphic.white }}>
+                팔로우
+              </Text>
+            )}
           </Pressable>
+          <BottomFixButton
+            isActive={true}
+            text={`${profile?.data?.challengeName} 챌린지 중 `}
+            width={343}
+            height={48}
+            chevron={true}
+            onPress={() => alert('pressed')}
+            buttonStyle={styles.button}
+            textStyle={styles.buttonText}
+          />
         </View>
       </View>
       <View style={styles.mid}>
@@ -193,17 +197,21 @@ const MyPageScreen = ({ navigation, route }) => {
           );
         })}
       </View>
-      <Pressable
-        onPress={() => alert('view every title!')}
-        style={{ ...styles.viewAll, borderTopColor: `${theme.colors.graphic.black}1a` }}
-      >
-        <Text
-          style={{ ...theme.fonts.text.body1.regular, color: `${theme.colors.graphic.black}cc` }}
+      {representativeTitleList.length > 3 ? (
+        <Pressable
+          onPress={() => alert('view every title!')}
+          style={{ ...styles.viewAll, borderTopColor: `${theme.colors.graphic.black}1a` }}
         >
-          전체보기
-        </Text>
-        <Feather name="chevron-right" size={24} color={`${theme.colors.graphic.black}cc`} />
-      </Pressable>
+          <Text
+            style={{ ...theme.fonts.text.body1.regular, color: `${theme.colors.graphic.black}cc` }}
+          >
+            전체보기
+          </Text>
+          <Feather name="chevron-right" size={24} color={`${theme.colors.graphic.black}cc`} />
+        </Pressable>
+      ) : (
+        <View style={{ height: 24 }}></View>
+      )}
       <DividerBar style={styles.divider} />
       {userFolderList && (
         <>
@@ -223,31 +231,47 @@ const MyPageScreen = ({ navigation, route }) => {
               );
             })}
           </ScrollView>
-          <View style={styles.insight}>
-            <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>
-              인사이트
-            </Text>
-          </View>
-          <FeedList
-            writer={{
-              writerId: Number(userId),
-              nickname: profile?.data?.nickname ?? '',
-              title: profile?.data?.title ?? '',
-              image: profileImage,
-            }}
-            feedList={feedList}
-            feedListQueryClient={feedListQueryClient}
-            fetchNextPage={fetchNextPage}
-            touchBookMark={touchBookMark}
-            feedListIsLoading={feedListIsLoading}
-          />
+          {feedList?.pages[0]?.length !== 0 ? (
+            <>
+              <View style={styles.insight}>
+                <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>
+                  인사이트
+                </Text>
+              </View>
+
+              <FeedList
+                writer={{
+                  writerId: Number(userId),
+                  nickname: profile?.data?.nickname ?? '',
+                  title: profile?.data?.title ?? '',
+                  image: profileImage,
+                }}
+                feedList={feedList}
+                feedListQueryClient={feedListQueryClient}
+                fetchNextPage={fetchNextPage}
+                touchBookMark={touchBookMark}
+                feedListIsLoading={feedListIsLoading}
+              />
+            </>
+          ) : (
+            <View style={styles.noInsight}>
+              <Text
+                style={{
+                  ...theme.fonts.text.body1.regular,
+                  color: `${theme.colors.graphic.black}80`,
+                }}
+              >
+                아직 인사이트가 없어요.
+              </Text>
+            </View>
+          )}
         </>
       )}
     </ScrollView>
   );
 };
 
-export default MyPageScreen;
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
   top: {
@@ -259,9 +283,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     paddingVertical: 14,
   },
-  editBtn: {
-    backgroundColor: '#e1e1d0',
-    marginVertical: 32,
+  btn: {
+    marginTop: 32,
+    marginBottom: 12,
     borderRadius: 12,
     width: 343,
     height: 48,
@@ -301,23 +325,18 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     marginLeft: 16,
   },
-  pencil: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    width: 64,
-    height: 64,
-    borderRadius: 16,
-    backgroundColor: '#b0e817',
+  button: {
+    borderRadius: 12,
+    backgroundColor: '#e0f6a2',
+    marginBottom: 32,
+  },
+  buttonText: {
+    color: '#486006',
+  },
+  noInsight: {
+    marginTop: 74,
+    marginBottom: 100,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
 });
