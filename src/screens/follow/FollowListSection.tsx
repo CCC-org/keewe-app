@@ -4,6 +4,8 @@ import {
   FetchNextPageOptions,
   InfiniteData,
   InfiniteQueryObserverResult,
+  UseMutateFunction,
+  UseMutationResult,
 } from '@tanstack/react-query';
 import { FollowData } from '../../types/followerList/followers';
 import ProfileImage from '../Main/mypage/ProfileImage';
@@ -12,22 +14,24 @@ import person from '../../constants/Icons/Avatar/personXml';
 import { useTheme } from 'react-native-paper';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import FollowListFollowButton from './FollowListFollowButton';
+import { Data } from '../../utils/api/FollowAPI';
 interface FollowListSectionProps {
   followList: InfiniteData<FollowData | undefined> | undefined;
   fetchNextPage: (
     options?: FetchNextPageOptions | undefined,
   ) => Promise<InfiniteQueryObserverResult<FollowData | undefined, unknown>>;
+  mutation: UseMutationResult<unknown, unknown, string | number, void>;
 }
 
-const FollowListSection = ({ followList }: FollowListSectionProps) => {
+const FollowListSection = ({ followList, mutation }: FollowListSectionProps) => {
   const flattenData = followList?.pages.flatMap((page) => {
     return page?.users;
   });
 
   const theme = useTheme();
 
-  const handlePressForFollow = () => {
-    alert('pressed follow');
+  const handlePressForFollow = (id: string | number) => {
+    mutation.mutate(id);
   };
 
   return (
@@ -61,7 +65,10 @@ const FollowListSection = ({ followList }: FollowListSectionProps) => {
                 </View>
               </>
             </View>
-            <FollowListFollowButton onPress={handlePressForFollow} isFollowing={item.follow} />
+            <FollowListFollowButton
+              onPress={() => handlePressForFollow(item.id)}
+              isFollowing={item.follow}
+            />
           </View>
         ) : null
       }
