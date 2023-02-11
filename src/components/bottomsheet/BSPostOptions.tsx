@@ -9,6 +9,9 @@ import HeaderRightButton from '../header/HeaderRightButton';
 import CountingTextArea from '../texts/CountingTextArea';
 import TwoButtonModal from '../modal/TwoButtonModal';
 import { blockUser } from '../../utils/api/user/profile/block';
+import { reportInsight, reportType } from '../../utils/api/report/insight/insightReport';
+import SnackBar from '../bars/SnackBar';
+import { clockRunning } from 'react-native-reanimated';
 
 interface BSPostOptionsProps {
   modalRef: React.RefObject<BottomSheetModalMethods>;
@@ -24,7 +27,7 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedReport, setSelectedReport] = useState<number | null>(null);
   const [reportText, setReportText] = useState('');
-
+  const [isSnackBarVisible, setIsSnackBarVisible] = useState(false);
   const handlePress = () => {
     setIsReport(true);
     modalRef.current?.snapToIndex(1);
@@ -38,11 +41,29 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
   const handleExitText = () => {
     modalRef.current?.snapToIndex(1);
     setSelectedReport(null);
+    setReportText('');
   };
 
   const handleBlockUser = () => {
     blockUser(userId).then(alert).catch(alert);
     setIsModalVisible(false);
+  };
+
+  const handleReportSubmit = () => {
+    const reportType =
+      reportOptions.find((option) => option.id === selectedReport)?.reportType ||
+      ('OTHERS' as const);
+
+    reportInsight({ insightId, reason: reportText, reportType }).then((res) => {
+      console.log('🚀 ~ file: BSPostOptions.tsx:57 ~ reportInsight ~ res', res);
+      if (res?.code === 200) {
+        setIsSnackBarVisible(true);
+        setSelectedReport(null);
+        setTimeout(() => {
+          setIsSnackBarVisible(false);
+        }, 3000);
+      }
+    });
   };
 
   if (selectedReport === -1) {
@@ -59,7 +80,7 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
               textColor={reportText.length ? 'black' : '#ffffff'}
               disabled={!reportText.length}
               borderLine={false}
-              handlePress={() => alert('right')}
+              handlePress={handleReportSubmit}
             />
           )}
         />
@@ -100,7 +121,7 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
             <Text>기타 사유 신고</Text>
           </Text>
         </Pressable>
-        <Pressable onPress={() => console.log('신고하기')} style={{ marginTop: 72 }}>
+        <Pressable onPress={handleReportSubmit} style={{ marginTop: 72 }}>
           <ConditionalButton
             isActive={selectedReport !== null}
             // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -133,6 +154,7 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
         rightButtonPress={handleBlockUser}
         rightButtonColor="#f24822"
       />
+      <SnackBar text="인사이트를 신고했어요" visible={isSnackBarVisible} />
     </ScrollView>
   );
 };
@@ -170,21 +192,29 @@ function createStyles(fonts: ReactNativePaper.ThemeFonts) {
   return styles;
 }
 
-const reportOptions = [
+const reportOptions: {
+  id: number;
+  title: string;
+  reportType: reportType['reportType'];
+}[] = [
   {
     id: 1,
     title: '스팸',
+    reportType: 'SPAM',
   },
   {
     id: 2,
     title: '부적절한 내용(혐오/음란)',
+    reportType: 'INAPPROPRIATE_CONTENT',
   },
   {
     id: 3,
     title: '과도한 비속어/욕설',
+    reportType: 'ABUSE',
   },
   {
     id: 4,
     title: '사칭/사기 의심',
+    reportType: 'IMPERSONATION',
   },
 ];
