@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { getUserId } from './asyncStorage/Login';
 
 export const useGetUserId = () => {
-  const [userId, setUserId] = useState<string | null | undefined>();
+  const [userId, setUserId] = useState<number | null | undefined>();
 
   useEffect(() => {
-    getUserId().then(setUserId);
+    getUserId().then((res) => setUserId(Number(res)));
   });
   return userId;
 };

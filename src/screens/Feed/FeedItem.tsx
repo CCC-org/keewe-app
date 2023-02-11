@@ -21,10 +21,6 @@ const FeedItem = ({ insight, onBookMarkClick }: FeedItemProps) => {
     onBookMarkClick(id);
   };
 
-  const handleVerticalDotsPress = () => {
-    alert(`id:${id} vertical dots pressed`);
-  };
-
   const handleProfilePress = () => {
     navigation.navigate('Profile', { userId: writer.writerId });
   };
@@ -40,7 +36,7 @@ const FeedItem = ({ insight, onBookMarkClick }: FeedItemProps) => {
             createdAt={createdAt}
           />
         </Pressable>
-        <FeedVerticalDots onPress={handleVerticalDotsPress} />
+        <FeedVerticalDots userId={writer.writerId} />
       </View>
       <View style={styles.contentCtn}>
         <FeedTextContent contents={contents} insightId={id} />
