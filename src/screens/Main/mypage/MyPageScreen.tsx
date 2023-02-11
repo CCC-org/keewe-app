@@ -14,6 +14,7 @@ import { useInfiniteFeed } from '../../../utils/hooks/feedInifiniteScroll/useInf
 import FeedList from '../../Feed/FeedList';
 import { SvgXml } from 'react-native-svg';
 import { pencil } from '../../../constants/Icons/home/pencil';
+import GoToUploadButton from '../../../components/buttons/GoToUploadButton';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
 const MyPageScreen = ({ navigation, route }) => {
@@ -103,9 +104,6 @@ const MyPageScreen = ({ navigation, route }) => {
       tabs: newTabs,
       selectedTab: newSelectedTab,
     });
-  };
-  const handleNavigateToUpload = () => {
-    navigation.navigate('Upload');
   };
 
   return (
@@ -271,9 +269,7 @@ const MyPageScreen = ({ navigation, route }) => {
           </>
         )}
       </ScrollView>
-      <Pressable style={styles.pencil} onPress={handleNavigateToUpload}>
-        <SvgXml xml={pencil} />
-      </Pressable>
+      <GoToUploadButton />
     </>
   );
 };
@@ -331,25 +327,6 @@ const styles = StyleSheet.create({
     paddingTop: 24,
     paddingBottom: 10,
     marginLeft: 16,
-  },
-  pencil: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    width: 64,
-    height: 64,
-    borderRadius: 16,
-    backgroundColor: '#b0e817',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
   noInsight: {
     marginTop: 74,
