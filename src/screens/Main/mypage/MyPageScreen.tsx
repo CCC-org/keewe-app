@@ -12,8 +12,6 @@ import { querySuccessError } from '../../../utils/helper/queryReponse/querySucce
 import FolderOption from './FolderOption';
 import { useInfiniteFeed } from '../../../utils/hooks/feedInifiniteScroll/useInfiniteFeed';
 import FeedList from '../../Feed/FeedList';
-import { SvgXml } from 'react-native-svg';
-import { pencil } from '../../../constants/Icons/home/pencil';
 import GoToUploadButton from '../../../components/buttons/GoToUploadButton';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
