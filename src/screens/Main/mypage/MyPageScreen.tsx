@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, ScrollView, Pressable, RefreshControl } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
 import MypageProfile from '../../../components/profile/MypageProfile';
 import { useTheme } from 'react-native-paper';
 import { Feather, Ionicons } from '@expo/vector-icons';
@@ -13,6 +13,7 @@ import FolderOption from './FolderOption';
 import { useInfiniteFeed } from '../../../utils/hooks/feedInifiniteScroll/useInfiniteFeed';
 import FeedList from '../../Feed/FeedList';
 import GoToUploadButton from '../../../components/buttons/GoToUploadButton';
+import { IOScrollView } from 'react-native-intersection-observer';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
 const MyPageScreen = ({ navigation, route }) => {
@@ -64,6 +65,20 @@ const MyPageScreen = ({ navigation, route }) => {
       'https://api-keewe.com/api/v1/insight/my-page/' + userId + '?drawerId=' + drawerId,
     );
 
+  const scrollViewRef = useRef<any>(null);
+  const [pageRefreshing, setPageRefreshing] = useState(false);
+  const onRefresh = () => {
+    setPageRefreshing(true);
+    feedListQueryClient.invalidateQueries(MypageQueryKeys.getProfile({ targetId: userId }));
+    feedListQueryClient.invalidateQueries(
+      MypageQueryKeys.getRepresentativeTitles({ userId: userId }),
+    );
+    feedListQueryClient.invalidateQueries(MypageQueryKeys.getFolderList({ userId: userId }));
+    feedListQueryClient
+      .invalidateQueries(MypageQueryKeys.getFolderInsight(drawerId, userId))
+      .then(() => setPageRefreshing(false));
+  };
+
   // const forderMutation = useMutation({
   //   mutationFn: (tabId: number) => {
   //   }
@@ -106,7 +121,10 @@ const MyPageScreen = ({ navigation, route }) => {
 
   return (
     <>
-      <ScrollView>
+      <IOScrollView
+        ref={scrollViewRef}
+        refreshControl={<RefreshControl refreshing={pageRefreshing} onRefresh={onRefresh} />}
+      >
         <View style={styles.top}>
           <View style={styles.setting}>
             <Pressable onPress={() => alert('setting')}>
@@ -266,7 +284,7 @@ const MyPageScreen = ({ navigation, route }) => {
             )}
           </>
         )}
-      </ScrollView>
+      </IOScrollView>
       <GoToUploadButton />
     </>
   );
