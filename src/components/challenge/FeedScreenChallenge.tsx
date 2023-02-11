@@ -7,6 +7,7 @@ import {
   UserSpecificChallengeQueryKeys,
 } from '../../utils/api/UserSpecificChallenge';
 import UserSpecificChallengeSection from '../../screens/Feed/UserSpecificChallengeSection';
+import DividerBar from '../bars/DividerBar';
 
 const FeedScreenChallenge = () => {
   const { data: userSpecificChallenge, ...challengeData } = useQuery<
