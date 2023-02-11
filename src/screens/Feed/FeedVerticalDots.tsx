@@ -1,9 +1,11 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import React, { useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
+import BSMyPostOptions from '../../components/bottomsheet/BSMyPostOptions';
+import BSPostOptions from '../../components/bottomsheet/BSPostOptions';
 
 interface FeedVerticalDotsProps {
   userId: number;
@@ -14,8 +16,12 @@ const FeedVerticalDots = ({ userId }: FeedVerticalDotsProps) => {
   const isMyPost = myUserId === userId;
   const modalRef = useRef<BottomSheetModal>(null);
 
+  const renderBackdrop = useCallback(
+    (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
+    [],
+  );
+
   const handleVerticalDotsPress = () => {
-    // alert(`id:${userId} vertical dots pressed!!`);
     modalRef.current?.present();
   };
   return (
@@ -23,16 +29,12 @@ const FeedVerticalDots = ({ userId }: FeedVerticalDotsProps) => {
       <Pressable onPress={handleVerticalDotsPress}>
         <Feather name="more-vertical" size={24} color="black" />
       </Pressable>
-      <BottomSheetModal ref={modalRef} snapPoints={['25%', '50%', '75%']}>
-        {isMyPost ? (
-          <View>
-            <Text>se</Text>
-          </View>
-        ) : (
-          <View>
-            <Text>Shit</Text>
-          </View>
-        )}
+      <BottomSheetModal
+        ref={modalRef}
+        snapPoints={['25%', '65%', '90%']}
+        backdropComponent={renderBackdrop}
+      >
+        {isMyPost ? <BSMyPostOptions modalRef={modalRef} /> : <BSPostOptions modalRef={modalRef} />}
       </BottomSheetModal>
     </>
   );
