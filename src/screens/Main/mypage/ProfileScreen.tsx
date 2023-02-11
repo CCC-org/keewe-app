@@ -165,16 +165,20 @@ const ProfileScreen = ({ navigation, route }) => {
               </Text>
             )}
           </Pressable>
-          <BottomFixButton
-            isActive={true}
-            text={`${profile?.data?.challengeName} 챌린지 중 `}
-            width={343}
-            height={48}
-            chevron={true}
-            onPress={() => alert('pressed')}
-            buttonStyle={styles.button}
-            textStyle={styles.buttonText}
-          />
+          {profile?.data?.challengeName !== null ? (
+            <BottomFixButton
+              isActive={true}
+              text={`${profile?.data?.challengeName} 챌린지 중 `}
+              width={343}
+              height={48}
+              chevron={true}
+              onPress={() => alert(profile?.data?.challengeName)}
+              buttonStyle={styles.button}
+              textStyle={styles.buttonText}
+            />
+          ) : (
+            <View style={{ marginBottom: 24 }}></View>
+          )}
         </View>
       </View>
       <View style={styles.mid}>
