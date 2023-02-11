@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import HeaderRightButton from '../../../components/header/HeaderRightButton';
 import { useTheme } from 'react-native-paper';
@@ -6,7 +6,7 @@ import SmallTextInput from '../../../components/texts/SmallTextInput';
 
 const NicknameEditingScreen = ({ navigation, route }) => {
   const theme = useTheme();
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [errorMessage] = useState<string>('');
   const [input, setInput] = useState<string>('');
   const [title] = useState(route.params.title);
   const [introduction] = useState(route.params.introduction);
