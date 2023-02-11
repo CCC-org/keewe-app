@@ -233,24 +233,41 @@ const MyPageScreen = ({ navigation, route }) => {
                 );
               })}
             </ScrollView>
-            <View style={styles.insight}>
-              <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>
-                인사이트
-              </Text>
-            </View>
-            <FeedList
-              writer={{
-                writerId: Number(userId),
-                nickname: profile?.data?.nickname ?? '',
-                title: profile?.data?.title ?? '',
-                image: profileImage,
-              }}
-              feedList={feedList}
-              feedListQueryClient={feedListQueryClient}
-              fetchNextPage={fetchNextPage}
-              touchBookMark={touchBookMark}
-              feedListIsLoading={feedListIsLoading}
-            />
+            {feedList?.pages[0]?.length !== 0 ? (
+              <>
+                <View style={styles.insight}>
+                  <Text
+                    style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}
+                  >
+                    인사이트
+                  </Text>
+                </View>
+                <FeedList
+                  writer={{
+                    writerId: Number(userId),
+                    nickname: profile?.data?.nickname ?? '',
+                    title: profile?.data?.title ?? '',
+                    image: profileImage,
+                  }}
+                  feedList={feedList}
+                  feedListQueryClient={feedListQueryClient}
+                  fetchNextPage={fetchNextPage}
+                  touchBookMark={touchBookMark}
+                  feedListIsLoading={feedListIsLoading}
+                />
+              </>
+            ) : (
+              <View style={styles.noInsight}>
+                <Text
+                  style={{
+                    ...theme.fonts.text.body1.regular,
+                    color: `${theme.colors.graphic.black}80`,
+                  }}
+                >
+                  아직 인사이트가 없어요.
+                </Text>
+              </View>
+            )}
           </>
         )}
       </ScrollView>
@@ -333,5 +350,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  noInsight: {
+    marginTop: 74,
+    marginBottom: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
