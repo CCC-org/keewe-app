@@ -7,17 +7,24 @@ import ConditionalButton from '../buttons/ConditionalButton';
 import BottomSheetHeader from '../header/BottomSheetHeader';
 import HeaderRightButton from '../header/HeaderRightButton';
 import CountingTextArea from '../texts/CountingTextArea';
+import TwoButtonModal from '../modal/TwoButtonModal';
+import { blockUser } from '../../utils/api/user/profile/block';
 
 interface BSPostOptionsProps {
   modalRef: React.RefObject<BottomSheetModalMethods>;
+  insightId: number;
+  userId: number;
+  userName: string;
 }
 
-const BSPostOptions = ({ modalRef }: BSPostOptionsProps) => {
+const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsProps) => {
   const { fonts } = useTheme();
   const styles = createStyles(fonts);
   const [isReport, setIsReport] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedReport, setSelectedReport] = useState<number | null>(null);
   const [reportText, setReportText] = useState('');
+
   const handlePress = () => {
     setIsReport(true);
     modalRef.current?.snapToIndex(1);
@@ -31,6 +38,11 @@ const BSPostOptions = ({ modalRef }: BSPostOptionsProps) => {
   const handleExitText = () => {
     modalRef.current?.snapToIndex(1);
     setSelectedReport(null);
+  };
+
+  const handleBlockUser = () => {
+    blockUser(userId).then(alert).catch(alert);
+    setIsModalVisible(false);
   };
 
   if (selectedReport === -1) {
@@ -83,8 +95,8 @@ const BSPostOptions = ({ modalRef }: BSPostOptionsProps) => {
             {selectedReport === option.id && <Feather name="check" size={22} color="#486006" />}
           </Pressable>
         ))}
-        <Pressable onPress={handleEtcReason}>
-          <Text style={styles.clickableOption}>
+        <Pressable onPress={handleEtcReason} style={styles.clickableOption}>
+          <Text style={styles.optionTitle}>
             <Text>기타 사유 신고</Text>
           </Text>
         </Pressable>
@@ -106,9 +118,21 @@ const BSPostOptions = ({ modalRef }: BSPostOptionsProps) => {
       <Pressable style={styles.option} onPress={handlePress}>
         <Text style={[fonts.text.body1.regular]}>신고하기</Text>
       </Pressable>
-      <Pressable style={styles.option}>
-        <Text style={[fonts.text.body1.regular]}>Option 2</Text>
+      <Pressable style={styles.option} onPress={() => setIsModalVisible(true)}>
+        <Text style={[fonts.text.body1.regular]}>사용자 차단하기</Text>
       </Pressable>
+      <TwoButtonModal
+        dismissable={false}
+        mainTitle={`${userName}님을 차단할까요?`}
+        subTitle="서로에게 남긴 댓글과 반응이 모두 삭제되며 복구가 불가능해요. 서로의 댓글, 기록, 프로필을 볼 수 없어요."
+        visible={isModalVisible}
+        onDismiss={() => setIsModalVisible(false)}
+        leftButtonText="취소"
+        rightButtonText="차단"
+        leftButtonPress={() => setIsModalVisible(false)}
+        rightButtonPress={handleBlockUser}
+        rightButtonColor="#f24822"
+      />
     </ScrollView>
   );
 };

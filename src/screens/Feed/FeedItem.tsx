@@ -36,7 +36,7 @@ const FeedItem = ({ insight, onBookMarkClick }: FeedItemProps) => {
             createdAt={createdAt}
           />
         </Pressable>
-        <FeedVerticalDots userId={writer.writerId} />
+        <FeedVerticalDots userName={writer.nickname} userId={writer.writerId} insightId={id} />
       </View>
       <View style={styles.contentCtn}>
         <FeedTextContent contents={contents} insightId={id} />

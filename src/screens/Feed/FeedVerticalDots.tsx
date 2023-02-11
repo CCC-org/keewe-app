@@ -9,9 +9,11 @@ import BSPostOptions from '../../components/bottomsheet/BSPostOptions';
 
 interface FeedVerticalDotsProps {
   userId: number;
+  insightId: number;
+  userName: string;
 }
 
-const FeedVerticalDots = ({ userId }: FeedVerticalDotsProps) => {
+const FeedVerticalDots = ({ userId, userName, insightId }: FeedVerticalDotsProps) => {
   const myUserId = useGetUserId();
   const isMyPost = myUserId === userId;
   const modalRef = useRef<BottomSheetModal>(null);
@@ -34,7 +36,16 @@ const FeedVerticalDots = ({ userId }: FeedVerticalDotsProps) => {
         snapPoints={['25%', '65%', '90%']}
         backdropComponent={renderBackdrop}
       >
-        {isMyPost ? <BSMyPostOptions modalRef={modalRef} /> : <BSPostOptions modalRef={modalRef} />}
+        {isMyPost ? (
+          <BSMyPostOptions modalRef={modalRef} />
+        ) : (
+          <BSPostOptions
+            modalRef={modalRef}
+            userName={userName}
+            userId={userId}
+            insightId={insightId}
+          />
+        )}
       </BottomSheetModal>
     </>
   );
