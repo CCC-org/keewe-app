@@ -7,7 +7,6 @@ import { ReplyInfo } from '../../components/comments/CommentInput';
 import CommentInput from '../../components/comments/CommentInput';
 import CommentXml from '../../constants/Icons/Comment/CommentXml';
 import { SvgXml } from 'react-native-svg';
-import { View } from '../../components/Themed';
 
 const COMMENT_LIMIT = 10;
 
@@ -35,8 +34,8 @@ const CommentsScreen = ({ navigation, route }) => {
     }),
     () => InsightAPI.getCommentList({ insightId, cursor: commentCursor, limit: COMMENT_LIMIT }),
     {
-      onSuccess: (response) => {
-        setData((prev) => [...prev, ...response.data]);
+      onSuccess: (response: CommentGetListResponse) => {
+        setData((prev) => [...prev, ...response.data.comments]);
       },
     },
   );
@@ -57,13 +56,13 @@ const CommentsScreen = ({ navigation, route }) => {
       }),
     {
       enabled: replyCursor?.parentId !== undefined,
-      onSuccess: async (response) => {
+      onSuccess: async (response: ReplyGetListResponse) => {
         await setData((prev) => {
           const idx = prev.findIndex((item) => item.id === replyCursor?.parentId);
           prev[idx].replies.push(...response.data);
           return [...prev];
         });
-        if (response.data.length < COMMENT_LIMIT) {
+        if (response?.data?.length ?? 0 < COMMENT_LIMIT) {
           setReplyCursor(undefined);
         } // return to comment
       },
