@@ -11,7 +11,7 @@ import TwoButtonModal from '../modal/TwoButtonModal';
 import { blockUser } from '../../utils/api/user/profile/block';
 import { reportInsight, reportType } from '../../utils/api/report/insight/insightReport';
 import SnackBar from '../bars/SnackBar';
-import { clockRunning } from 'react-native-reanimated';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 interface BSPostOptionsProps {
   modalRef: React.RefObject<BottomSheetModalMethods>;
@@ -45,7 +45,21 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
   };
 
   const handleBlockUser = () => {
-    blockUser(userId).then(alert).catch(alert);
+    blockUser(userId)
+      .then(() => {
+        Toast.show({
+          type: 'success',
+          text1: '사용자를 차단했어요.',
+          position: 'bottom',
+        });
+      })
+      .catch((res) => {
+        Toast.show({
+          type: 'success',
+          text1: res,
+          position: 'bottom',
+        });
+      });
     setIsModalVisible(false);
   };
 
@@ -55,13 +69,22 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
       ('OTHERS' as const);
 
     reportInsight({ insightId, reason: reportText, reportType }).then((res) => {
-      console.log('🚀 ~ file: BSPostOptions.tsx:57 ~ reportInsight ~ res', res);
       if (res?.code === 200) {
-        setIsSnackBarVisible(true);
+        console.log('🚀 ~ file: BSPostOptions.tsx:57 ~ reportInsight ~ res', res);
         setSelectedReport(null);
-        setTimeout(() => {
-          setIsSnackBarVisible(false);
-        }, 3000);
+        setIsReport(false);
+        // setTimeout(() => {
+        //   modalRef.current?.snapToIndex(-1);
+        // }, 1000);
+        // setTimeout(() => {
+        //   setIsSnackBarVisible(false);
+        // }, 3000);
+        modalRef.current?.dismiss();
+        Toast.show({
+          type: 'success',
+          text1: '인사이트를 신고했어요.',
+          position: 'bottom',
+        });
       }
     });
   };
