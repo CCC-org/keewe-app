@@ -48,11 +48,13 @@
     "expo-updates": "^0.4.2",
     "expo-web-browser": "~10.2.0",
     "lottie-react-native": "5.0.1",
+    "mime": "^3.0.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-native": "0.68.2",
     "react-native-gesture-handler": "~2.2.1",
     "react-native-intersection-observer": "^0.0.9",
+    "react-native-pager-view": "5.4.15",
     "react-native-paper": "^4.12.3",
     "react-native-reanimated": "^2.11.0",
     "react-native-reanimated-carousel": "^3.1.5",
@@ -68,8 +70,7 @@
     "react-native-webview": "11.18.1",
     "rn-faded-scrollview": "^1.0.13",
     "unimodel-core": "^2.0.0",
-    "unimodules-permissions-interface": "^6.1.0",
-    "react-native-pager-view": "5.4.15"
+    "unimodules-permissions-interface": "^6.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

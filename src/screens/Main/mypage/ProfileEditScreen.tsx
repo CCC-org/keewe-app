@@ -1,3 +1,4 @@
+/* eslint-disable no-var */
 import { Linking, StyleSheet, View } from 'react-native';
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import HeaderRightButton from '../../../components/header/HeaderRightButton';
@@ -13,6 +14,9 @@ import {
 } from '@gorhom/bottom-sheet';
 import BottomSheetOption from '../../../components/bottomsheet/BottomSheetOption';
 import * as ImagePicker from 'expo-image-picker';
+import { getAccessToken } from '../../../utils/hooks/asyncStorage/Login';
+import axios from 'axios';
+import mime from 'mime';
 
 const ProfileEditScreen = ({ navigation, route }) => {
   const theme = useTheme();
@@ -136,9 +140,8 @@ const ProfileEditScreen = ({ navigation, route }) => {
       aspect: [4, 3],
       quality: 1,
     });
-
-    console.log(result);
-
+    console.log('🚀 ~ file: ProfileEditScreen.tsx:139 ~ pickImage ~ result', result);
+    // "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540akdlsz21%252Fkeewe/ImagePicker/29c5936e-b619-4667-9aa0-292686e75bb6.jpg"
     if (!result.cancelled) {
       setImage(result.uri);
     }
@@ -153,9 +156,10 @@ const ProfileEditScreen = ({ navigation, route }) => {
       return;
     }
 
-    const result = await ImagePicker.launchCameraAsync();
-
-    console.log(result);
+    const result = await ImagePicker.launchCameraAsync({
+      base64: true,
+    });
+    console.log('🚀 ~ file: ProfileEditScreen.tsx:156 ~ openCamera ~ result', result);
 
     if (!result.cancelled) {
       setImage(result.uri);
@@ -167,6 +171,59 @@ const ProfileEditScreen = ({ navigation, route }) => {
     (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
     [],
   );
+  const handleSaveProfileInfo = () => {
+    if (!image) return;
+    const formData = new FormData();
+    formData.append('nickname', nickname);
+    for (const inter of selectedCategory) {
+      formData.append('interests', inter);
+    }
+    formData.append('repTitleId', '2000');
+    formData.append('introduction', introduction);
+    formData.append('updatePhoto', 'true');
+    console.log('image', image);
+
+    formData.append('profileImage', {
+      uri: image,
+      type: mime.getType(image),
+      name: 'image.jpg',
+    });
+
+    // fetch(image)
+    //   .then((res) => {
+    //     return res.blob();
+    //   })
+    //   .then((res) => {
+    //     console.log('🚀 ~ file: ProfileEditScreen.tsx:186 ~ .then ~ res', res);
+    //     formData.append('profileImage', res);
+    //   });
+
+    // const temp = dataURItoBlob(image);
+    // console.log('🚀 ~ file: ProfileEditScreen.tsx:193 ~ handleSaveProfileInfo ~ temp', temp);
+    // formData.append('profileImage', temp);
+
+    // formData.append('profileImage', datauritoBlob(image), 'image.jpg');
+
+    async function patchProfileEditInfo(formData: any) {
+      const token = await getAccessToken();
+      try {
+        const res = await axios.patch('https://api-keewe.com/api/v1/user/profile', formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        console.log('🚀 ~ file: ProfileEditScreen.tsx:193 ~ patchProfileEditInfo ~ res', res.data);
+
+        return res.data;
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    patchProfileEditInfo(formData);
+  };
+
   return (
     <>
       <BottomSheetModalProvider>
@@ -179,7 +236,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
           rightButtonText={'저장'}
           leftButtonPress={() => setModalVisible(false)}
           rightButtonPress={() => {
-            alert('저장은 타이틀 작업이 된 후에 작업할 예정입니다!');
+            handleSaveProfileInfo();
             setModalVisible(false);
           }}
         />
@@ -256,3 +313,21 @@ const styles = StyleSheet.create({
     height: 168,
   },
 });
+
+function dataURItoBlob(dataURI) {
+  // convert base64/URLEncoded data component to raw binary data held in a string
+  var byteString;
+  if (dataURI.split(',')[0].indexOf('base64') >= 0) byteString = atob(dataURI.split(',')[1]);
+  else byteString = unescape(dataURI.split(',')[1]);
+
+  // separate out the mime component
+  var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+  // write the bytes of the string to a typed array
+  var ia = new Uint8Array(byteString.length);
+  for (var i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+
+  return new Blob([ia], { type: mimeString });
+}
