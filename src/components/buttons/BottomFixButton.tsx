@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Pressable, ViewStyle, TextStyle } from 'react-native';
 import React from 'react';
 import { useTheme } from 'react-native-paper';
+import { Feather } from '@expo/vector-icons';
 
 interface BottomFixButtonProps {
   buttonStyle?: ViewStyle;
@@ -11,6 +12,7 @@ interface BottomFixButtonProps {
   textColor?: string;
   width: number;
   height?: number;
+  chevron?: boolean;
   onPress: () => void;
 }
 
@@ -21,6 +23,7 @@ const BottomFixButton = ({
   textColor,
   width,
   height,
+  chevron,
   onPress,
   ...props
 }: BottomFixButtonProps) => {
@@ -52,6 +55,10 @@ const BottomFixButton = ({
         >
           {text}
         </Text>
+        {chevron &&
+          (chevron ? (
+            <Feather name="chevron-right" size={20} color={`${theme.colors.graphic.black}cc`} />
+          ) : null)}
       </View>
     </Pressable>
   );
@@ -62,6 +69,7 @@ export default BottomFixButton;
 const styles = StyleSheet.create({
   Bottom: {
     borderRadius: 50,
+    flexDirection: 'row',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',

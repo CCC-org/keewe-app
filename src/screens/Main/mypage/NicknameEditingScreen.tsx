@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import HeaderRightButton from '../../../components/header/HeaderRightButton';
 import { useTheme } from 'react-native-paper';
@@ -6,11 +6,12 @@ import SmallTextInput from '../../../components/texts/SmallTextInput';
 
 const NicknameEditingScreen = ({ navigation, route }) => {
   const theme = useTheme();
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [errorMessage] = useState<string>('');
   const [input, setInput] = useState<string>('');
   const [title] = useState(route.params.title);
   const [introduction] = useState(route.params.introduction);
   const [selectedCategory] = useState(route.params.selectedCategory);
+  const [buttonOn, setButtonOn] = useState<boolean>(false);
   useEffect(() => {
     navigation.setOptions({
       headerTitle: '이름',
@@ -30,19 +31,28 @@ const NicknameEditingScreen = ({ navigation, route }) => {
       headerRight: () => (
         <HeaderRightButton
           text="완료"
-          backGroundColor={theme.colors.brand.primary.main}
-          textColor={theme.colors.graphic.black}
+          backGroundColor={
+            buttonOn ? theme.colors.brand.primary.main : `${theme.colors.graphic.black}33`
+          }
+          textColor={buttonOn ? theme.colors.graphic.black : theme.colors.graphic.white}
           borderLine={false}
-          disabled={false}
+          disabled={buttonOn}
           handlePress={() => handleComplete()}
         />
       ),
     });
-  }, [input, errorMessage]);
+  }, [input, errorMessage, buttonOn]);
 
   useEffect(() => {
     setInput(route.params?.nickname ?? '');
   }, [route.params]);
+
+  useEffect(() => {
+    if (input.length === 0 || input.length > 12) setButtonOn(false);
+    else if (route.params?.nickname === input) setButtonOn(false);
+    else setButtonOn(true);
+  }, [input]);
+
   return (
     <View style={styles.container}>
       <SmallTextInput

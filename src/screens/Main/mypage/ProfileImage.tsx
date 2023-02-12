@@ -6,7 +6,7 @@ import person from '../../../constants/Icons/Avatar/personXml';
 import smallCameraXml from '../../../constants/Icons/Avatar/smallCameraXml';
 
 interface ProfileImageProps {
-  image: string | undefined;
+  image: string;
   onPress?: () => void;
 }
 
@@ -15,7 +15,7 @@ const ProfileImage = ({ image, onPress }: ProfileImageProps) => {
   return (
     <View style={styles.svg}>
       <Pressable onPress={onPress}>
-        {image !== undefined ? (
+        {image !== '' ? (
           <Image source={{ uri: image }} style={styles.image} />
         ) : (
           <View

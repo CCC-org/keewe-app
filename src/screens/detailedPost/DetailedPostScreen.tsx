@@ -7,7 +7,7 @@ import {
   Platform,
   KeyboardAvoidingView,
 } from 'react-native';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import DetailedPostSection from './DetailedPostSection';
@@ -136,15 +136,16 @@ const DetailedPostScreen = ({ navigation, route }) => {
         behavior={Platform.select({ ios: 'position' })} // position || padding
         keyboardVerticalOffset={Platform.select({ ios: 90 })}
       >
-        <ScrollView style={{ marginBottom: 70 }}>
+        <ScrollView style={{ paddingBottom: '100%', marginBottom: 70 }}>
           {!isInsightLoading && (
             <DetailedPostSection
               insightId={insightId}
               insightText={insightResponse?.data?.contents ?? ''}
               views={views}
-              link={insightResponse?.data?.link ?? ''}
+              url={insightResponse?.data?.link?.url ?? ''}
               currentChallenge={currentChallenge}
               reaction={insightResponse.data.reaction}
+              authorId={profile?.data?.authorId ?? -1}
             />
           )}
 

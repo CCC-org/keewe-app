@@ -44,6 +44,10 @@ import ChallengeJoinScreen from './src/screens/challenge/ChallengeJoinScreen';
 import ChallengeJoinApprovedScreen from './src/screens/challenge/ChallengeJoinApprovedScreen';
 import TitleScreen from './src/screens/title/TitleScreen';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import ProfileScreen from './src/screens/Main/mypage/ProfileScreen';
+import UserFollowersScreen from './src/screens/follow/UserFollowersScreen';
+import FollowTopTabs from './src/navigation/tabs/FollowTopTabs';
+
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator();
@@ -93,6 +97,14 @@ export default function App() {
                         cardStyle: { backgroundColor: 'white' },
                       }}
                     />
+                    <Stack.Screen
+                      name={'FollowTopTabs'}
+                      component={FollowTopTabs}
+                      options={{
+                        headerShown: true,
+                        cardStyle: { backgroundColor: 'white' },
+                      }}
+                    />
                     {/* <Stack.Screen name={'Home'} component={HomeScreen}></Stack.Screen> */}
                   </Stack.Group>
                   <Stack.Screen
@@ -113,6 +125,11 @@ export default function App() {
                   <Stack.Screen
                     name={'InterestEditing'}
                     component={InterestEditingScreen}
+                    options={{ ...headerOptions, title: '' }}
+                  />
+                  <Stack.Screen
+                    name={'Profile'}
+                    component={ProfileScreen}
                     options={{ ...headerOptions, title: '' }}
                   />
                   {/* 챌린지 그룹 */}
@@ -266,6 +283,7 @@ export default function App() {
                       name={'Upload'}
                       component={UploadScreen}
                       options={{
+                        ...headerOptions,
                         title: '',
                         cardStyle: { backgroundColor: 'white' },
                       }}
@@ -285,6 +303,18 @@ export default function App() {
                     <Stack.Screen
                       name={'Title'}
                       component={TitleScreen}
+                      options={{
+                        ...headerOptions,
+                        title: '달성',
+                        cardStyle: { backgroundColor: 'white' },
+                      }}
+                    />
+                  </Stack.Group>
+                  {/* 팔로우 팔로잉 페이지 */}
+                  <Stack.Group>
+                    <Stack.Screen
+                      name={'UserFollowers'}
+                      component={UserFollowersScreen}
                       options={{
                         title: '달성',
                         cardStyle: { backgroundColor: 'white' },

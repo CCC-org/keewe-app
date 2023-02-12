@@ -1,5 +1,5 @@
 import { Pressable, FlatList, Text, Platform, KeyboardAvoidingView } from 'react-native';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Comment from '../../components/comments/Comment';
 import { useQuery } from '@tanstack/react-query';
 import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
@@ -18,6 +18,7 @@ type ReplyCursor = {
 const CommentsScreen = ({ navigation, route }) => {
   const { insightId } = route.params;
   const [data, setData] = useState<Comment[]>([]);
+  const [refreshIndex, setRefreshIndex] = useState<number | undefined>(undefined);
   const [commentCursor, setCommentCursor] = useState<number | undefined>(undefined);
   const [replyCursor, setReplyCursor] = useState<ReplyCursor | undefined>(undefined);
   const [replyInfo, setReplyInfo] = useState<ReplyInfo | undefined>(undefined);
@@ -34,7 +35,7 @@ const CommentsScreen = ({ navigation, route }) => {
     }),
     () => InsightAPI.getCommentList({ insightId, cursor: commentCursor, limit: COMMENT_LIMIT }),
     {
-      onSuccess: (response) => {
+      onSuccess: (response: CommentGetListResponse) => {
         setData((prev) => [...prev, ...response.data]);
       },
     },
@@ -56,15 +57,12 @@ const CommentsScreen = ({ navigation, route }) => {
       }),
     {
       enabled: replyCursor?.parentId !== undefined,
-      onSuccess: async (response) => {
+      onSuccess: async (response: ReplyGetListResponse) => {
         await setData((prev) => {
           const idx = prev.findIndex((item) => item.id === replyCursor?.parentId);
           prev[idx].replies.push(...response.data);
           return [...prev];
         });
-        if (response.data.length < COMMENT_LIMIT) {
-          setReplyCursor(undefined);
-        } // return to comment
       },
     },
   );
@@ -72,18 +70,19 @@ const CommentsScreen = ({ navigation, route }) => {
   const renderItem = ({ item, index }) => {
     const comment = [
       <Comment
-        key={item.id}
+        key={`${item.id} ${index}`}
         content={item.content}
         nickname={item.writer.name}
         title={item.writer.title}
         createdAt={item.createdAt}
         isReply={false}
         onReply={() => handleReplyClick({ id: item.id, nickname: item.writer.name })}
+        highlight={refreshIndex !== undefined && refreshIndex < item.id}
       />,
     ];
     const repies = item.replies.map((reply) => (
       <Comment
-        key={`${item.id} reply ${reply.id}`}
+        key={`${item.id} reply ${reply.id} ${index}`}
         content={reply.content}
         nickname={reply.writer.name}
         createdAt={reply.createdAt}
@@ -98,12 +97,11 @@ const CommentsScreen = ({ navigation, route }) => {
           <Pressable
             style={{ marginLeft: 100, flexDirection: 'row', alignItems: 'center' }}
             onPress={() => {
-              setData((prev) => {
-                prev[index].replies = [];
-                return [...prev.slice(0, index + 1)];
+              const parentData = data.find((comment) => comment.id === item.id);
+              setReplyCursor({
+                parentId: item.id,
+                cursor: parentData?.replies[parentData?.replies.length - 1].id,
               });
-              setCommentCursor(data[index].id);
-              setReplyCursor({ parentId: item.id });
             }}
           >
             <SvgXml xml={CommentXml} />
@@ -115,39 +113,48 @@ const CommentsScreen = ({ navigation, route }) => {
   };
 
   const onEndReached = () => {
-    if (replyCursor?.parentId === undefined) setCommentCursor(data[data.length - 1].id);
-    else {
-      setReplyCursor((prev) => {
-        const parentData = data.find((comment) => comment.id === replyCursor.parentId);
-        return {
-          ...prev,
-          cursor:
-            parentData?.replies.length != 0
-              ? parentData?.replies[parentData?.replies.length - 1].id
-              : undefined,
-        };
-      });
-    }
-    return;
+    setCommentCursor(data[data.length - 1].id);
   };
+
+  const onViewableItemsChanged = ({ viewableItems }) => {
+    viewableItems.map((item) => {
+      if (
+        item.item.replies.length > 1 &&
+        item.item.replies.length < item.item.totalReply &&
+        item.item.totalReply > 1
+      ) {
+        setReplyCursor({
+          parentId: item.item.id,
+          cursor: item.item.replies[item.item.replies.length - 1].id,
+        });
+      }
+    });
+  };
+
+  const viewabilityConfigCallbackPairs = useRef([{ onViewableItemsChanged }]);
 
   return (
     <>
       <KeyboardAvoidingView
         behavior={Platform.select({ ios: 'position' })} // position || padding
         keyboardVerticalOffset={Platform.select({ ios: 90 })}
+        style={{ flex: 1 }}
       >
         <FlatList
           data={data}
           renderItem={renderItem}
           onEndReached={onEndReached}
-          style={{ marginBottom: 80 }}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
+          style={{ paddingBottom: '100%', marginBottom: 80 }}
         />
         <CommentInput
           insightId={insightId}
           replyInfo={replyInfo}
           onCancelReply={() => setReplyInfo(undefined)}
           onCreate={() => {
+            setRefreshIndex(data[0].id);
             setData([]);
             setCommentCursor(undefined);
             setReplyCursor(undefined);
