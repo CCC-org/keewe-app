@@ -47,7 +47,7 @@ const FeedList = ({
       contentContainerStyle={styles.feedCtn}
     >
       {UpperComponent}
-      {topDividerBar ? <DividerBar style={styles.divider} /> : null}
+      {topDividerBar ? <DividerBar /> : null}
 
       {feedList?.pages.map((group, i) => {
         return (
