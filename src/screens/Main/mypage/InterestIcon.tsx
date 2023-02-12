@@ -3,7 +3,7 @@ import React from 'react';
 import { useTheme } from 'react-native-paper';
 
 interface InterestIconProps {
-  title: string;
+  title: Record<string, string>;
   textColor: string;
   backgroundColor: string;
 }

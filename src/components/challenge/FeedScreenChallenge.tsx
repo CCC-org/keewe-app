@@ -7,6 +7,7 @@ import {
   UserSpecificChallengeQueryKeys,
 } from '../../utils/api/UserSpecificChallenge';
 import UserSpecificChallengeSection from '../../screens/Feed/UserSpecificChallengeSection';
+import DividerBar from '../bars/DividerBar';
 
 const FeedScreenChallenge = () => {
   const { data: userSpecificChallenge, ...challengeData } = useQuery<
@@ -14,17 +15,30 @@ const FeedScreenChallenge = () => {
   >(UserSpecificChallengeQueryKeys.getUserSpecificChallenge(), () =>
     UserSpecificChallengeAPI.getUserSpecificChallenge(),
   );
+  if (!userSpecificChallenge) return null;
 
   return (
-    <View>
-      {userSpecificChallenge && (
-        <UserSpecificChallengeSection userSpecificChallenge={userSpecificChallenge} />
-      )}
-      <Text>FeedScreen Challenge. </Text>
-    </View>
+    <>
+      <View>
+        {userSpecificChallenge && (
+          <UserSpecificChallengeSection userSpecificChallenge={userSpecificChallenge} />
+        )}
+      </View>
+      <DividerBar style={styles.divider} />
+    </>
   );
 };
 
 export default FeedScreenChallenge;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  divider: {
+    backgroundColor: '#f8f8f4',
+    borderBottomColor: '#f8f8f4',
+    marginBottom: 24,
+    height: 12,
+    width: '150%',
+    marginLeft: 0,
+    left: -50,
+  },
+});

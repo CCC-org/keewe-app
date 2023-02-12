@@ -4,22 +4,28 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
 interface BottomSheetHeaderProps {
-  onPress: () => void;
   onLeftButtonPress: () => void;
   title: string;
   headerRightButton: () => JSX.Element;
+  iconName?: 'arrowleft';
 }
 
 const BottomSheetHeader = ({
-  onPress,
   onLeftButtonPress,
   title,
   headerRightButton,
+  iconName,
 }: BottomSheetHeaderProps) => {
   const theme = useTheme();
   return (
     <View style={styles.container}>
-      <AntDesign name="close" size={24} color="black" onPress={onLeftButtonPress} />
+      <AntDesign
+        style={{ marginLeft: 4 }}
+        name={iconName || 'close'}
+        size={24}
+        color="black"
+        onPress={onLeftButtonPress}
+      />
       <Text style={{ ...theme.fonts.text.body1.bold, ...styles.text }}>{title}</Text>
       {headerRightButton()}
     </View>
@@ -34,7 +40,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 10,
+    paddingHorizontal: 12,
     paddingBottom: 12,
   },
   text: {

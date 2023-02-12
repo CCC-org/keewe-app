@@ -7,6 +7,8 @@ import FeedVerticalDots from './FeedVerticalDots';
 import FeedTextContent from './FeedTextContent';
 import { REACTIONS } from './constant';
 import ReactIconButton from '../../components/emoticons/ReactIconButton';
+import { useNavigation } from '@react-navigation/native';
+import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 
 interface FeedItemProps {
   insight: InsightData;
@@ -15,17 +17,15 @@ interface FeedItemProps {
 
 const FeedItem = ({ insight, onBookMarkClick }: FeedItemProps) => {
   const { id, contents, createdAt, link, reaction, writer, bookmark } = insight;
-
+  const navigation = useNavigation();
   const handleOnBookMarkPress = () => {
     onBookMarkClick(id);
   };
 
-  const handleVerticalDotsPress = () => {
-    alert(`id:${id} vertical dots pressed`);
-  };
-
-  const handleProfilePress = () => {
-    alert(`writerId:${writer.writerId} profile pressed`);
+  const handleProfilePress = async () => {
+    const localId = await getUserId();
+    if (localId === '' + writer.writerId) navigation.navigate('MyPage', { userId: localId });
+    else navigation.navigate('Profile', { userId: writer.writerId });
   };
 
   return (
@@ -39,7 +39,7 @@ const FeedItem = ({ insight, onBookMarkClick }: FeedItemProps) => {
             createdAt={createdAt}
           />
         </Pressable>
-        <FeedVerticalDots onPress={handleVerticalDotsPress} />
+        <FeedVerticalDots userName={writer.nickname} userId={writer.writerId} insightId={id} />
       </View>
       <View style={styles.contentCtn}>
         <FeedTextContent contents={contents} insightId={id} />

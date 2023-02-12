@@ -20,10 +20,7 @@ interface CommentGetListRequest {
 interface CommentGetListResponse {
   message: string;
   code: number;
-  data: {
-    total: number;
-    comments: Comment[];
-  };
+  data: Comment[];
 }
 
 interface ReplyGetListRequest {

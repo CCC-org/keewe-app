@@ -12,11 +12,11 @@ interface FeedListProps {
   feedList: InfiniteData<InsightData[] | undefined> | undefined;
   fetchNextPage: () => void;
   touchBookMark: UseMutateFunction<void, unknown, number, unknown>;
-  // UpperComponent is not required, but used in FeedScreen.tsx for to display the user's current streak
   upperComponent?: React.ReactNode;
   feedListQueryClient: QueryClient;
   feedListIsLoading: boolean;
   writer?: { writerId: number; nickname: string; title: string; image: string };
+  scrollViewRef?: React.RefObject<any>;
 }
 
 const FeedList = ({
@@ -25,7 +25,7 @@ const FeedList = ({
   fetchNextPage,
   touchBookMark,
   feedListQueryClient,
-  feedListIsLoading,
+  scrollViewRef,
   writer,
 }: FeedListProps) => {
   const [pageRefreshing, setPageRefreshing] = useState(false);
@@ -40,17 +40,21 @@ const FeedList = ({
 
   return (
     <IOScrollView
+      ref={scrollViewRef}
       refreshControl={<RefreshControl refreshing={pageRefreshing} onRefresh={onRefresh} />}
       contentContainerStyle={styles.feedCtn}
     >
-      {/* UpperComponent will render undefined, which does not affect this component.  */}
       {UpperComponent}
-      <DividerBar style={styles.divider} />
-
       {feedList?.pages.map((group, i) => {
         return (
           <Fragment key={i}>
             {group?.map((insight, idx) => {
+              if (!insight.writer && writer) {
+                insight.writer = writer;
+              }
+              if (!insight.writer && writer) {
+                insight.writer = writer;
+              }
               if (!insight.writer && writer) {
                 insight.writer = writer;
               }
@@ -63,7 +67,6 @@ const FeedList = ({
               }
               return (
                 <Fragment key={insight.id}>
-                  <Text>{insight.id}</Text>
                   <FeedItem onBookMarkClick={touchBookMark} key={insight.id} insight={insight} />
                 </Fragment>
               );
@@ -80,14 +83,5 @@ export default FeedList;
 const styles = StyleSheet.create({
   feedCtn: {
     padding: 16.5,
-  },
-  divider: {
-    backgroundColor: '#f8f8f4',
-    borderBottomColor: '#f8f8f4',
-    marginBottom: 24,
-    height: 12,
-    width: '150%',
-    marginLeft: 0,
-    left: -50,
   },
 });
