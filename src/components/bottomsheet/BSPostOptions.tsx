@@ -70,16 +70,13 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
 
     reportInsight({ insightId, reason: reportText, reportType }).then((res) => {
       if (res?.code === 200) {
-        console.log('🚀 ~ file: BSPostOptions.tsx:57 ~ reportInsight ~ res', res);
         setSelectedReport(null);
         setIsReport(false);
-        // setTimeout(() => {
-        //   modalRef.current?.snapToIndex(-1);
-        // }, 1000);
-        // setTimeout(() => {
-        //   setIsSnackBarVisible(false);
-        // }, 3000);
-        modalRef.current?.dismiss();
+        // BUG: 기타 사유 사항으로 신고를 할때, settimeout을 하지 않으면,
+        // 모달창이 dismiss하지 않기 때문에, settimeout을 이용해서 dismiss를 해준다.
+        setTimeout(() => {
+          modalRef.current?.dismiss();
+        }, 100);
         Toast.show({
           type: 'success',
           text1: '인사이트를 신고했어요.',
