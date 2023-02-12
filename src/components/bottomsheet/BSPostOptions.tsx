@@ -1,4 +1,4 @@
-import { FlatList, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import { useTheme } from 'react-native-paper';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
