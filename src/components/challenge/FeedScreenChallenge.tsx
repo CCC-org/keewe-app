@@ -15,11 +15,6 @@ const FeedScreenChallenge = () => {
   >(UserSpecificChallengeQueryKeys.getUserSpecificChallenge(), () =>
     UserSpecificChallengeAPI.getUserSpecificChallenge(),
   );
-  console.log(
-    '🚀 ~ file: FeedScreenChallenge.tsx:13 ~ FeedScreenChallenge ~ userSpecificChallenge',
-    userSpecificChallenge,
-  );
-
   if (!userSpecificChallenge) return null;
 
   return (
@@ -28,7 +23,6 @@ const FeedScreenChallenge = () => {
         {userSpecificChallenge && (
           <UserSpecificChallengeSection userSpecificChallenge={userSpecificChallenge} />
         )}
-        <Text>FeedScreen Challenge. </Text>
       </View>
       <DividerBar style={styles.divider} />
     </>

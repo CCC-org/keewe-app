@@ -16,7 +16,6 @@ interface FeedListProps {
   feedListQueryClient: QueryClient;
   feedListIsLoading: boolean;
   writer?: { writerId: number; nickname: string; title: string; image: string };
-  topDividerBar?: boolean;
   scrollViewRef?: React.RefObject<any>;
 }
 
@@ -28,7 +27,6 @@ const FeedList = ({
   feedListQueryClient,
   scrollViewRef,
   writer,
-  topDividerBar,
 }: FeedListProps) => {
   const [pageRefreshing, setPageRefreshing] = useState(false);
 
@@ -47,12 +45,13 @@ const FeedList = ({
       contentContainerStyle={styles.feedCtn}
     >
       {UpperComponent}
-      {topDividerBar ? <DividerBar /> : null}
-
       {feedList?.pages.map((group, i) => {
         return (
           <Fragment key={i}>
             {group?.map((insight, idx) => {
+              if (!insight.writer && writer) {
+                insight.writer = writer;
+              }
               if (!insight.writer && writer) {
                 insight.writer = writer;
               }

@@ -29,7 +29,6 @@ const LinkSheetContent = ({
     <View style={styles.contentContainer}>
       <BottomSheetHeader
         onLeftButtonPress={onHeaderLeftPress}
-        onPress={handleSheetComplete}
         title="링크"
         headerRightButton={() => (
           <HeaderRightButton

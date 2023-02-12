@@ -7,6 +7,7 @@ import {
   Platform,
   Dimensions,
   LayoutChangeEvent,
+  ViewStyle,
 } from 'react-native';
 import React, { useState } from 'react';
 import { useTheme } from 'react-native-paper';
@@ -16,9 +17,10 @@ interface ConditionalButtonProps {
   text: string;
   color?: string;
   textColor?: string;
-  width: number;
+  width: number | string;
   borderRadius?: number;
   onPress: () => void;
+  style?: ViewStyle;
 }
 
 const fullHeightOfScreen = Dimensions.get('window').height;
@@ -31,6 +33,7 @@ const ConditionalButton = ({
   color,
   textColor,
   borderRadius,
+  style: styleProp,
 }: ConditionalButtonProps) => {
   const [offset, setOffset] = useState(0);
 
@@ -48,16 +51,23 @@ const ConditionalButton = ({
       style={styles.container}
     >
       <View
-        style={{
-          ...styles.btn,
-          width: width,
-          borderRadius: borderRadius ?? 50,
-          backgroundColor: color || theme.colors.graphic.black,
-          opacity: isActive ? 1 : 0.2,
-        }}
+        style={[
+          {
+            ...styles.btn,
+            width: width,
+            borderRadius: borderRadius ?? 50,
+            backgroundColor: color || theme.colors.graphic.black,
+            opacity: isActive ? 1 : 0.2,
+          },
+          styleProp,
+        ]}
       >
         <Pressable
-          hitSlop={{ bottom: 25, left: width / 2, right: width / 2, top: 25 }}
+          hitSlop={
+            typeof width === 'number'
+              ? { bottom: 25, left: width / 2, right: width / 2, top: 25 }
+              : 0
+          }
           onPress={() => {
             if (!isActive) return;
             onPress();

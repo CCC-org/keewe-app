@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import UserFollowersScreen from '../../screens/follow/UserFollowersScreen';
-import UserFollowingScreen from '../../screens/follow/UserFollowingScreen';
+import UserFolloweeScreen from '../../screens/follow/UserFollowingScreen';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -29,7 +29,7 @@ const FollowTopTabs = ({ route }) => {
         />
         <Tab.Screen
           name="Following"
-          component={UserFollowingScreen}
+          component={UserFolloweeScreen}
           initialParams={{ userId }}
           options={{
             title: '팔로잉',

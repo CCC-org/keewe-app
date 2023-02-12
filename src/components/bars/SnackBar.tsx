@@ -1,7 +1,6 @@
 import { Pressable, Text } from 'react-native';
 import React from 'react';
-import { Snackbar } from 'react-native-paper';
-import { useTheme } from 'react-native-paper';
+import { Snackbar, useTheme } from 'react-native-paper';
 
 interface SnackBarProps {
   visible: boolean;
