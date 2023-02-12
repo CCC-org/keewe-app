@@ -1,5 +1,6 @@
 import { getAccessToken } from '../hooks/asyncStorage/Login';
 import httpClient from './BaseHttpClient';
+import axios from 'axios';
 
 export const ChallengeQueryKeys = {
   create: (request: ChallengeCreateRequest) => ['challenge', request],
@@ -17,6 +18,30 @@ export const ChallengeAPI = {
       .then((res) => res.data)
       .catch((err) => {
         throw new Error(err);
+      });
+  },
+  participationCheck: async () => {
+    const token = await getAccessToken();
+    return axios
+      .post('https://api-keewe.com/api/v1/challenge/participation/check', null, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        return res.data.data;
+      });
+  },
+  getChallenge: async () => {
+    const token = await getAccessToken();
+    return axios
+      .post<ChallengeGetResponse>('https://api-keewe.com/api/v1/challenge/participation', null, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        return res.data.data;
       });
   },
 };

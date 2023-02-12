@@ -21,3 +21,15 @@ interface ChallengeCreateResponse {
     endDate: string;
   };
 }
+
+interface ChallengeGetResponse {
+  message: string;
+  code: number;
+  data: {
+    challengeId: number;
+    name: string;
+    participatingUserNumber: number;
+    interest: string;
+    startDate: string;
+  };
+}
