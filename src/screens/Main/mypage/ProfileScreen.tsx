@@ -1,18 +1,20 @@
-import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, ScrollView, Pressable, RefreshControl } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
 import MypageProfile from '../../../components/profile/MypageProfile';
 import { useTheme } from 'react-native-paper';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import MypageTitle from '../../../components/title/MypageTitle';
 import DividerBar from '../../../components/bars/DividerBar';
 import InterestIcon from './InterestIcon';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { MypageAPI, MypageQueryKeys, TabInfo } from '../../../utils/api/mypageAPI';
 import { querySuccessError } from '../../../utils/helper/queryReponse/querySuccessError';
 import FolderOption from './FolderOption';
 import { useInfiniteFeed } from '../../../utils/hooks/feedInifiniteScroll/useInfiniteFeed';
 import FeedList from '../../Feed/FeedList';
 import BottomFixButton from '../../../components/buttons/BottomFixButton';
+import { IOScrollView } from 'react-native-intersection-observer';
+import { FollowAPI } from '../../../utils/api/FollowAPI';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
 const ProfileScreen = ({ navigation, route }) => {
@@ -27,7 +29,6 @@ const ProfileScreen = ({ navigation, route }) => {
   const [selectedCategory, setSelectedCategory] = useState<Record<string, string>[]>([]);
   const [representativeTitleList, setRepresentativeTitleList] = useState<AchievedTitle[]>([]);
   const [titleTotal, setTitleTotal] = useState<number>(0);
-  const [isFollowing, setIsFollowing] = useState<boolean>(false);
   const [iconColor, setIconColor] = useState([
     [theme.colors.graphic.purple, `${theme.colors.graphic.purple}1a`],
     [theme.colors.graphic.sky, `${theme.colors.graphic.sky}1a`],
@@ -65,10 +66,52 @@ const ProfileScreen = ({ navigation, route }) => {
       'https://api-keewe.com/api/v1/insight/my-page/' + userId + '?drawerId=' + drawerId,
     );
 
-  // const forderMutation = useMutation({
-  //   mutationFn: (tabId: number) => {
-  //   }
-  // })
+  const scrollViewRef = useRef<any>(null);
+  const [pageRefreshing, setPageRefreshing] = useState(false);
+  const onRefresh = () => {
+    setPageRefreshing(true);
+    feedListQueryClient.invalidateQueries(MypageQueryKeys.getProfile({ targetId: userId }));
+    feedListQueryClient.invalidateQueries(
+      MypageQueryKeys.getRepresentativeTitles({ userId: userId }),
+    );
+    feedListQueryClient.invalidateQueries(MypageQueryKeys.getFolderList({ userId: userId }));
+    feedListQueryClient
+      .invalidateQueries(MypageQueryKeys.getFolderInsight(drawerId, userId))
+      .then(() => setPageRefreshing(false));
+  };
+
+  const followMutation = useMutation({
+    mutationFn: () => FollowAPI.follow(userId),
+    onMutate: async () => {
+      const key = MypageQueryKeys.getProfile({ targetId: userId });
+      await queryClient.cancelQueries({ queryKey: key });
+      // Snapshot the previous value
+      const prevState = queryClient.getQueryData<any>(key);
+      // Optimistically update to the new value
+      queryClient.setQueryData(key, (old: any) => {
+        const newProfile = {
+          ...old,
+          data: {
+            ...old.data,
+            follow: !old.data.follow,
+          },
+        };
+
+        return newProfile;
+      });
+
+      // Return a context object with the snapshotted value
+      return { prevState };
+    },
+
+    onError: (err, variables, context) => {
+      console.log('profile mutate err');
+      const key = MypageQueryKeys.getProfile({ targetId: userId });
+      queryClient.setQueryData(key, context?.prevState);
+    },
+  });
+
+  followMutation.mutate;
 
   useEffect(() => {
     setSelectedCategory(profile?.data?.interests ?? []);
@@ -107,7 +150,10 @@ const ProfileScreen = ({ navigation, route }) => {
   };
 
   return (
-    <ScrollView>
+    <IOScrollView
+      ref={scrollViewRef}
+      refreshControl={<RefreshControl refreshing={pageRefreshing} onRefresh={onRefresh} />}
+    >
       <View style={styles.top}>
         <View style={styles.setting}>
           <Pressable onPress={() => alert('setting')}>
@@ -149,11 +195,13 @@ const ProfileScreen = ({ navigation, route }) => {
           <Pressable
             style={{
               ...styles.btn,
-              backgroundColor: isFollowing ? '#e1e1d0' : theme.colors.graphic.black,
+              backgroundColor: profile?.data?.follow ? '#e1e1d0' : theme.colors.graphic.black,
             }}
-            onPress={() => setIsFollowing(!isFollowing)}
+            onPress={() => {
+              followMutation?.mutate();
+            }}
           >
-            {isFollowing ? (
+            {profile?.data?.follow ? (
               <Text
                 style={{ ...theme.fonts.text.body1.bold, color: `${theme.colors.graphic.black}cc` }}
               >
@@ -165,16 +213,20 @@ const ProfileScreen = ({ navigation, route }) => {
               </Text>
             )}
           </Pressable>
-          <BottomFixButton
-            isActive={true}
-            text={`${profile?.data?.challengeName} 챌린지 중 `}
-            width={343}
-            height={48}
-            chevron={true}
-            onPress={() => alert('pressed')}
-            buttonStyle={styles.button}
-            textStyle={styles.buttonText}
-          />
+          {profile?.data?.challengeName !== null ? (
+            <BottomFixButton
+              isActive={true}
+              text={`${profile?.data?.challengeName} 챌린지 중 `}
+              width={343}
+              height={48}
+              chevron={true}
+              onPress={() => alert(profile?.data?.challengeName)}
+              buttonStyle={styles.button}
+              textStyle={styles.buttonText}
+            />
+          ) : (
+            <View style={{ marginBottom: 24 }}></View>
+          )}
         </View>
       </View>
       <View style={styles.mid}>
@@ -267,7 +319,7 @@ const ProfileScreen = ({ navigation, route }) => {
           )}
         </>
       )}
-    </ScrollView>
+    </IOScrollView>
   );
 };
 

@@ -8,6 +8,7 @@ import FeedTextContent from './FeedTextContent';
 import { REACTIONS } from './constant';
 import ReactIconButton from '../../components/emoticons/ReactIconButton';
 import { useNavigation } from '@react-navigation/native';
+import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 
 interface FeedItemProps {
   insight: InsightData;
@@ -21,8 +22,10 @@ const FeedItem = ({ insight, onBookMarkClick }: FeedItemProps) => {
     onBookMarkClick(id);
   };
 
-  const handleProfilePress = () => {
-    navigation.navigate('Profile', { userId: writer.writerId });
+  const handleProfilePress = async () => {
+    const localId = await getUserId();
+    if (localId === '' + writer.writerId) navigation.navigate('MyPage', { userId: localId });
+    else navigation.navigate('Profile', { userId: writer.writerId });
   };
 
   return (

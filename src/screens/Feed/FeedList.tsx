@@ -45,7 +45,6 @@ const FeedList = ({
       contentContainerStyle={styles.feedCtn}
     >
       {UpperComponent}
-
       {feedList?.pages.map((group, i) => {
         return (
           <Fragment key={i}>
