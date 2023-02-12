@@ -1,5 +1,6 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+/* eslint-disable indent */
+import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
+import React, { useRef } from 'react';
 import MiniProfile from '../profile/MiniProfile';
 import { useTheme } from 'react-native-paper';
 import { Entypo } from '@expo/vector-icons';
@@ -13,6 +14,7 @@ interface CommentsProps {
   insightWriter?: boolean;
   isReply?: boolean;
   onReply?: () => void;
+  highlight?: boolean;
 }
 
 const Comment = ({
@@ -24,14 +26,35 @@ const Comment = ({
   image,
   isReply = false,
   onReply,
+  highlight,
 }: CommentsProps) => {
+  const opacityValue = useRef(new Animated.Value(0)).current;
+  Animated.timing(opacityValue, {
+    toValue: 1,
+    duration: 1500,
+    useNativeDriver: false,
+  }).start();
+
   const theme = useTheme();
   return (
-    <View style={{ marginLeft: isReply ? 60 : 16, ...styles.container }}>
+    <Animated.View
+      style={{
+        backgroundColor:
+          highlight === true
+            ? opacityValue.interpolate({
+                inputRange: [0, 1],
+                outputRange: [theme.colors.brand.primary.container, '#FFFFFF'],
+              })
+            : '#FFFFF',
+        paddingLeft: isReply ? 60 : 16,
+        ...styles.container,
+      }}
+    >
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
         <MiniProfile
           nickname={nickname}
           title={title}
+          image={image}
           insightWriter={insightWriter}
           createdAt={createdAt}
         />
@@ -53,7 +76,7 @@ const Comment = ({
           </Pressable>
         )}
       </View>
-    </View>
+    </Animated.View>
   );
 };
 
@@ -61,8 +84,8 @@ export default Comment;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 14,
-    marginHorizontal: 16,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
   },
   content: {
     marginLeft: 48,
