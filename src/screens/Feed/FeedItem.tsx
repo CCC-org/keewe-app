@@ -24,7 +24,8 @@ const FeedItem = ({ insight, onBookMarkClick }: FeedItemProps) => {
 
   const handleProfilePress = async () => {
     const localId = await getUserId();
-    if (localId === '' + writer.writerId) navigation.navigate('MyPage', { userId: localId });
+    if (localId === '' + writer.writerId)
+      navigation.navigate('MyPage', { userId: localId, enteredByTab: false });
     else navigation.navigate('Profile', { userId: writer.writerId });
   };
 

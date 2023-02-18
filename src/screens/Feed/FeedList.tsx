@@ -6,7 +6,6 @@ import { IOScrollView, InView } from 'react-native-intersection-observer';
 import FeedItem from './FeedItem';
 import { FeedQueryKeys } from '../../utils/api/FeedAPI';
 import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChallenge';
-import DividerBar from '../../components/bars/DividerBar';
 
 interface FeedListProps {
   feedList: InfiniteData<InsightData[] | undefined> | undefined;

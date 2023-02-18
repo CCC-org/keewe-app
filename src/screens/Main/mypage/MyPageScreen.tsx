@@ -14,6 +14,7 @@ import { useInfiniteFeed } from '../../../utils/hooks/feedInifiniteScroll/useInf
 import FeedList from '../../Feed/FeedList';
 import GoToUploadButton from '../../../components/buttons/GoToUploadButton';
 import { IOScrollView } from 'react-native-intersection-observer';
+import HeaderBackButton from '../../../components/header/HeaderBackButton';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
 const MyPageScreen = ({ navigation, route }) => {
@@ -23,6 +24,13 @@ const MyPageScreen = ({ navigation, route }) => {
     return null;
   }
   const theme = useTheme();
+  useEffect(() => {
+    if (!route?.params?.enteredByTab) {
+      navigation.setOptions({
+        headerLeft: () => <HeaderBackButton />,
+      });
+    }
+  }, [navigation, route]);
 
   const [profileImage, setProfileImage] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<Record<string, string>[]>([]);
