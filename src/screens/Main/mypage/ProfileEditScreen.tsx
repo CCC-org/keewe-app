@@ -28,7 +28,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
   const [introduction, setIntroduction] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [customCategory, setCustomCategory] = useState<string[]>([]);
-  const [image, setImage] = useState<string | undefined>(undefined);
+  const [image, setImage] = useState<string>('');
   const [userId, setUserId] = useState<string>('');
 
   const handleComplete = () => setModalVisible(true);
@@ -206,7 +206,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
           rightButtonText={'삭제하기'}
           leftButtonPress={() => setDeleteModal(false)}
           rightButtonPress={() => {
-            setImage(undefined);
+            setImage('');
             setDeleteModal(false);
           }}
           rightButtonColor={theme.colors.graphic.red}
@@ -223,7 +223,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
           <View style={styles.sheet}>
             <BottomSheetOption title="라이브러리에서 선택" onPress={handleLibraryPress} />
             <BottomSheetOption title="사진 찍기" onPress={handleShotPress} />
-            {image !== undefined ? (
+            {image !== '' ? (
               <BottomSheetOption title="현재 사진 삭제" onPress={handleDeletePress} />
             ) : null}
           </View>

@@ -36,7 +36,7 @@ const NicknameEditingScreen = ({ navigation, route }) => {
           }
           textColor={buttonOn ? theme.colors.graphic.black : theme.colors.graphic.white}
           borderLine={false}
-          disabled={buttonOn}
+          disabled={!buttonOn}
           handlePress={() => handleComplete()}
         />
       ),
