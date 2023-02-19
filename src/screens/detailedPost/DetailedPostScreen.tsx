@@ -7,9 +7,7 @@ import {
   Platform,
   KeyboardAvoidingView,
 } from 'react-native';
-import React, { useLayoutEffect, useState } from 'react';
-import { Feather } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import DetailedPostSection from './DetailedPostSection';
 import { useIncreaseView } from '../../utils/hooks/DetailedInsight/useIncreaseView';
 import { useTheme } from 'react-native-paper';
@@ -24,6 +22,13 @@ import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { FollowAPI } from '../../utils/api/FollowAPI';
 import { MypageQueryKeys } from '../../utils/api/mypageAPI';
 import { getUserId } from '../../utils/hooks/asyncStorage/Login';
+import { SvgXml } from 'react-native-svg';
+import { DetailedPostApi } from '../../utils/api/DetailedPostAPI';
+import BookMarkOffXml from '../../constants/Icons/DetailedPost/BookMarkOffXml';
+import BookMarkOnXml from '../../constants/Icons/DetailedPost/BookMarkOnXml';
+import ShareIconXml from '../../constants/Icons/DetailedPost/ShareIconXml';
+import ThreeDotsXml from '../../constants/Icons/DetailedPost/ThreeDotsXml';
+import SnackBar from '../../components/bars/SnackBar';
 
 const DetailedPostScreen = ({ navigation, route }) => {
   const { insightId } = route.params;
@@ -31,6 +36,8 @@ const DetailedPostScreen = ({ navigation, route }) => {
   const [views] = useIncreaseView(insightId);
   const [replyInfo, setReplyInfo] = useState<ReplyInfo | undefined>();
   const [representiveReplies, setRepresentiveReplies] = useState(0);
+  const [bookmarkOn, setBookmarkOn] = useState<boolean | undefined>(false);
+  const [snackBarOn, setSnackBarOn] = useState<boolean>(false);
 
   const queryClient = useQueryClient();
   const theme = useTheme();
@@ -74,6 +81,17 @@ const DetailedPostScreen = ({ navigation, route }) => {
 
   followMutation.mutate;
 
+  const handleBookmark = () => {
+    DetailedPostApi.BookMark(insightId)
+      .then((value) => {
+        setBookmarkOn(value?.bookmark);
+        setSnackBarOn(true);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   const { data: insightResponse, isLoading: isInsightLoading } = useQuery(
     InsightQueryKeys.getInsight({ insightId }),
     () => InsightAPI.getInsight({ insightId }),
@@ -92,13 +110,17 @@ const DetailedPostScreen = ({ navigation, route }) => {
     },
   );
 
+  useEffect(() => {
+    setBookmarkOn(route?.params?.bookmark);
+  }, []);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => {
         return (
           <View style={styles.headerRight}>
-            <Pressable onPress={() => alert('bookmark')}>
-              <Feather name="bookmark" size={24} color="black" />
+            <Pressable onPress={handleBookmark}>
+              <SvgXml xml={bookmarkOn ? BookMarkOnXml : BookMarkOffXml} />
             </Pressable>
             <Pressable
               onPress={() =>
@@ -111,16 +133,16 @@ const DetailedPostScreen = ({ navigation, route }) => {
                 })
               }
             >
-              <Feather name="share" size={24} color="black" />
+              <SvgXml xml={ShareIconXml} />
             </Pressable>
             <Pressable onPress={() => alert('three dots')}>
-              <Entypo name="dots-three-vertical" size={24} color="black" />
+              <SvgXml xml={ThreeDotsXml} />
             </Pressable>
           </View>
         );
       },
     });
-  }, [profile, insightResponse, currentChallenge]);
+  }, [profile, insightResponse, currentChallenge, bookmarkOn]);
 
   const handleMoreCommentsPress = () => {
     navigation.navigate('Comments', { insightId });
@@ -233,6 +255,12 @@ const DetailedPostScreen = ({ navigation, route }) => {
               </View>
             </>
           )}
+          <SnackBar
+            text={bookmarkOn ? '북마크에 저장했어요.' : '북마크에서 삭제했어요.'}
+            visible={snackBarOn}
+            duration={1000}
+            onDismiss={() => setSnackBarOn(false)}
+          />
         </ScrollView>
         <CommentInput
           insightId={insightId}
