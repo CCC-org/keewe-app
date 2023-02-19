@@ -25,9 +25,6 @@ const BSMyComment = ({ modalRef }: BSMyPostOptionsProps) => {
 
   return (
     <ScrollView style={styles.optionContainer}>
-      <Pressable style={styles.option} onPress={() => alert('수정 api 개발 요함')}>
-        <Text style={[fonts.text.body1.regular]}>수정하기</Text>
-      </Pressable>
       <Pressable style={styles.option} onPress={() => setIsModalVisible(true)}>
         <Text style={[fonts.text.body1.regular]}>삭제하기</Text>
       </Pressable>

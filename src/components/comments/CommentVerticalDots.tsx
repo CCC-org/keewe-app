@@ -17,7 +17,7 @@ interface FeedVerticalDotsProps {
 
 const CommentVerticalDots = ({ userId, userName, commentId }: FeedVerticalDotsProps) => {
   const myUserId = useGetUserId();
-  const isMyPost = myUserId === userId;
+  const isMyComment = myUserId === userId;
   const modalRef = useRef<BottomSheetModal>(null);
 
   const renderBackdrop = useCallback(
@@ -26,7 +26,13 @@ const CommentVerticalDots = ({ userId, userName, commentId }: FeedVerticalDotsPr
   );
 
   const handleVerticalDotsPress = () => {
-    modalRef.current?.present();
+    const { current } = modalRef;
+    if (!current) return;
+    if (isMyComment) {
+      modalRef.current?.present();
+    } else {
+      modalRef.current?.present();
+    }
   };
   return (
     <>
@@ -38,15 +44,9 @@ const CommentVerticalDots = ({ userId, userName, commentId }: FeedVerticalDotsPr
         snapPoints={['20%', '65%', '90%']}
         backdropComponent={renderBackdrop}
       >
-        {isMyPost ? (
+        {isMyComment ? (
           <BSMyComment modalRef={modalRef} />
         ) : (
-          //  <BSPostOptions
-          //    modalRef={modalRef}
-          //    userName={userName}
-          //    userId={userId}
-          //    insightId={insightId}
-          //  />
           <BSOthersComment
             modalRef={modalRef}
             userName={userName}
