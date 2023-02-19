@@ -1,10 +1,12 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { useTheme } from 'react-native-paper';
 import { SvgXml } from 'react-native-svg';
 import person from '../../constants/Icons/Avatar/personXml';
+import { useNavigation } from '@react-navigation/native';
 
 interface MypageProfileProps {
+  profileUserId: number;
   nickname: string;
   title: string;
   image: string | undefined;
@@ -12,8 +14,16 @@ interface MypageProfileProps {
   following: number;
 }
 
-const MypageProfile = ({ nickname, title, image, follower, following }: MypageProfileProps) => {
+const MypageProfile = ({
+  profileUserId,
+  nickname,
+  title,
+  image,
+  follower,
+  following,
+}: MypageProfileProps) => {
   const theme = useTheme();
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       {image !== '' ? (
@@ -41,7 +51,17 @@ const MypageProfile = ({ nickname, title, image, follower, following }: MypagePr
         >
           {title}
         </Text>
-        <View style={{ flexDirection: 'row', marginTop: 8 }}>
+        <Pressable
+          onPress={() => {
+            navigation.navigate('FollowTopTabs', {
+              userId: profileUserId,
+              nickname,
+              follower,
+              following,
+            });
+          }}
+          style={{ flexDirection: 'row', marginTop: 8 }}
+        >
           <Text
             style={{ ...theme.fonts.text.body1.regular, color: `${theme.colors.graphic.black}cc` }}
           >
@@ -60,7 +80,7 @@ const MypageProfile = ({ nickname, title, image, follower, following }: MypagePr
           <Text style={{ ...theme.fonts.text.body1.bold, color: theme.colors.graphic.black }}>
             {following}
           </Text>
-        </View>
+        </Pressable>
       </View>
     </View>
   );

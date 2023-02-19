@@ -4,17 +4,13 @@ import {
   FetchNextPageOptions,
   InfiniteData,
   InfiniteQueryObserverResult,
-  UseMutateFunction,
   UseMutationResult,
 } from '@tanstack/react-query';
 import { FollowData } from '../../types/followerList/followers';
-import ProfileImage from '../Main/mypage/ProfileImage';
 import { SvgXml } from 'react-native-svg';
 import person from '../../constants/Icons/Avatar/personXml';
 import { useTheme } from 'react-native-paper';
-import HeaderRightButton from '../../components/header/HeaderRightButton';
 import FollowListFollowButton from './FollowListFollowButton';
-import { Data } from '../../utils/api/FollowAPI';
 interface FollowListSectionProps {
   followList: InfiniteData<FollowData | undefined> | undefined;
   fetchNextPage: (
@@ -58,9 +54,9 @@ const FollowListSection = ({ followList, mutation }: FollowListSectionProps) => 
                     alignItems: 'flex-start',
                   }}
                 >
-                  <Text style={[theme.fonts.text.body1.bold]}>{item?.title || 'NO TITLE'}</Text>
+                  <Text style={[theme.fonts.text.body1.bold]}>{item?.nickname}</Text>
                   <Text style={[theme.fonts.text.body2.regular, { color: '#12131480' }]}>
-                    {item?.nickname}
+                    {item?.title || 'NO TITLE'}
                   </Text>
                 </View>
               </>

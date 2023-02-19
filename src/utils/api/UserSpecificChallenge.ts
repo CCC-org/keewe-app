@@ -19,10 +19,6 @@ export const UserSpecificChallengeAPI = {
         },
       );
       if (response.data.code !== 200) throw new Error(response.data.message);
-      console.log(
-        '🚀 ~ file: UserSpecificChallenge.ts:26 ~ getUserSpecificChallenge: ~ response.data.data',
-        response.data,
-      );
       return response.data.data;
     } catch (err) {
       alert(err);

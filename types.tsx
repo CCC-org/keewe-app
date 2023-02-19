@@ -51,6 +51,9 @@ export type RootStackParamList = {
   UserFollowers: undefined;
   FollowTopTabs: {
     userId: number;
+    nickname: string;
+    follower: number;
+    following: number;
   };
 };
 
