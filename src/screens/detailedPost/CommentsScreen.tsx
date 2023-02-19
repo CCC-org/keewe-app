@@ -75,7 +75,8 @@ const CommentsScreen = ({ navigation, route }) => {
         nickname={item.writer.name}
         title={item.writer.title}
         createdAt={item.createdAt}
-        insightWriter={item.writer.id === contentWriterId}
+        isInsightWriter={item.writer.id === contentWriterId}
+        commentWriterId={item.writer.id}
         isReply={false}
         onReply={() => handleReplyClick({ id: item.id, nickname: item.writer.name })}
         highlight={refreshIndex !== undefined && refreshIndex < item.id}
@@ -85,6 +86,8 @@ const CommentsScreen = ({ navigation, route }) => {
       <Comment
         key={`${item.id} reply ${reply.id} ${index}`}
         content={reply.content}
+        commentWriterId={reply.writer.id}
+        isInsightWriter={item.writer.id === contentWriterId}
         nickname={reply.writer.name}
         createdAt={reply.createdAt}
         title={reply.writer.title}

@@ -201,7 +201,8 @@ const DetailedPostScreen = ({ navigation, route }) => {
                         key={cur.id}
                         content={cur.content}
                         nickname={cur.writer.name}
-                        insightWriter={profile.data.authorId === cur.writer.id}
+                        isInsightWriter={profile.data.authorId === cur.writer.id}
+                        commentWriterId={cur.writer.id}
                         title={cur.writer.title}
                         createdAt={cur.createdAt}
                         isReply={false}
@@ -213,7 +214,8 @@ const DetailedPostScreen = ({ navigation, route }) => {
                         key={`${cur.id} reply ${reply.id}`}
                         content={reply.content}
                         nickname={reply.writer.name}
-                        insightWriter={profile.data.authorId === cur.writer.id}
+                        isInsightWriter={profile.data.authorId === cur.writer.id}
+                        commentWriterId={reply.writer.id}
                         createdAt={reply.createdAt}
                         title={reply.writer.title}
                         isReply={true}

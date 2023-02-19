@@ -4,6 +4,7 @@ import React, { useRef } from 'react';
 import MiniProfile from '../profile/MiniProfile';
 import { useTheme } from 'react-native-paper';
 import { Entypo } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 interface CommentsProps {
   nickname: string;
@@ -11,9 +12,10 @@ interface CommentsProps {
   content: string;
   createdAt: string;
   image?: string;
-  insightWriter?: boolean;
+  isInsightWriter?: boolean;
   isReply?: boolean;
   onReply?: () => void;
+  commentWriterId: number | string;
   highlight?: boolean;
 }
 
@@ -21,12 +23,13 @@ const Comment = ({
   nickname,
   title,
   content,
-  insightWriter,
+  isInsightWriter: insightWriter,
   createdAt,
   image,
   isReply = false,
   onReply,
   highlight,
+  commentWriterId,
 }: CommentsProps) => {
   const opacityValue = useRef(new Animated.Value(0)).current;
   Animated.timing(opacityValue, {
@@ -34,6 +37,8 @@ const Comment = ({
     duration: 1500,
     useNativeDriver: false,
   }).start();
+
+  const navigation = useNavigation();
 
   const theme = useTheme();
   return (
@@ -51,13 +56,19 @@ const Comment = ({
       }}
     >
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-        <MiniProfile
-          nickname={nickname}
-          title={title}
-          image={image}
-          insightWriter={insightWriter}
-          createdAt={createdAt}
-        />
+        <Pressable
+          onPress={() => {
+            navigation.navigate('Profile', { userId: commentWriterId });
+          }}
+        >
+          <MiniProfile
+            nickname={nickname}
+            title={title}
+            image={image}
+            insightWriter={insightWriter}
+            createdAt={createdAt}
+          />
+        </Pressable>
         <Pressable>
           <Entypo name="dots-three-vertical" size={20} color="black" />
         </Pressable>
