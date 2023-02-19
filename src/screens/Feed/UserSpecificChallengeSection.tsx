@@ -48,7 +48,7 @@ const UserSpecificChallengeSection = ({
           return (
             <View key={challenge.day} style={styles.day}>
               {today === challenge.day && <TodayBubble isFirst={today === firstDay} />}
-              <CircularCheckbox disabled={true} />
+              <CircularCheckbox disabled={challenge.progress.check} />
               <Text>{challenge.day}</Text>
             </View>
           );
