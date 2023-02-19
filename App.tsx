@@ -1,4 +1,4 @@
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import HeaderBackButton from './src/components/header/HeaderBackButton';
@@ -48,9 +48,10 @@ import ProfileScreen from './src/screens/Main/mypage/ProfileScreen';
 import UserFollowersScreen from './src/screens/follow/UserFollowersScreen';
 import FollowTopTabs from './src/navigation/tabs/FollowTopTabs';
 import Toasts from './src/components/bars/Toasts';
+import { RootStackParamList } from './types';
 
 // const Stack = createNativeStackNavigator();
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 const headerOptions = {
   headerBackVisible: false,
   headerLeft: () => <HeaderBackButton />,
@@ -102,9 +103,12 @@ export default function App() {
                       <Stack.Screen
                         name={'FollowTopTabs'}
                         component={FollowTopTabs}
-                        options={{
-                          headerShown: true,
-                          cardStyle: { backgroundColor: 'white' },
+                        options={({ route }) => {
+                          return {
+                            headerShown: true,
+                            cardStyle: { backgroundColor: 'white' },
+                            title: route.params.nickname ?? 'follows',
+                          };
                         }}
                       />
                       {/* <Stack.Screen name={'Home'} component={HomeScreen}></Stack.Screen> */}
@@ -342,4 +346,6 @@ export default function App() {
       </>
     );
   }
+  console.log('🚀 ~ file: App.tsx:348 ~ App ~ route', route);
+  console.log('🚀 ~ file: App.tsx:348 ~ App ~ route', route);
 }

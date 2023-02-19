@@ -199,6 +199,7 @@ const ProfileScreen = ({ navigation, route }) => {
             }}
             onPress={() => {
               followMutation?.mutate();
+              alert('ah');
             }}
           >
             {profile?.data?.follow ? (
