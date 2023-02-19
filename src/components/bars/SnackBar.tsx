@@ -10,16 +10,17 @@ interface SnackBarProps {
   onPressSnackBar?: () => void;
   onPressAction?: () => void;
   style?: any;
+  duration?: number;
 }
 
 const SnackBar = (props: SnackBarProps) => {
   const theme = useTheme();
-  const { visible, text, actionText, onDismiss, onPressSnackBar, onPressAction } = props;
+  const { visible, text, actionText, onDismiss, onPressSnackBar, onPressAction, duration } = props;
   return (
     <>
       <Pressable onPress={onPressSnackBar} style={[props.style, { marginBottom: 20 }]}>
         <Snackbar
-          duration={3000}
+          duration={duration ?? 3000}
           visible={visible}
           // eslint-disable-next-line @typescript-eslint/no-empty-function
           onDismiss={onDismiss || (() => {})}
@@ -34,6 +35,7 @@ const SnackBar = (props: SnackBarProps) => {
             paddingHorizontal: 10,
             marginLeft: 'auto',
             marginRight: 'auto',
+            backgroundColor: `${theme.colors.graphic.black}cc`,
           }}
         >
           <Text>{text}</Text>

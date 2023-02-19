@@ -6,9 +6,10 @@ import { useNavigation } from '@react-navigation/native';
 interface FeedTextContent {
   contents: string;
   insightId: number;
+  bookmark: boolean;
 }
 
-const FeedTextContent = ({ contents, insightId }: FeedTextContent) => {
+const FeedTextContent = ({ contents, insightId, bookmark }: FeedTextContent) => {
   const theme = useTheme();
   const modifiedContents = contents.length > 200 ? contents.slice(0, 200) + '...' : contents;
   const navigation = useNavigation();
@@ -16,6 +17,7 @@ const FeedTextContent = ({ contents, insightId }: FeedTextContent) => {
     navigation.navigate('DetailedPost', {
       screen: 'DetailedPost',
       insightId,
+      bookmark,
     });
   };
 

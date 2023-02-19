@@ -217,7 +217,10 @@ const ProfileScreen = ({ navigation, route }) => {
           {profile?.data?.challengeName !== null ? (
             <BottomFixButton
               isActive={true}
-              text={`${profile?.data?.challengeName} 챌린지 중 `}
+              // text={`${profile?.data?.challengeName} 챌린지 중 `}
+              text={`${profile?.data?.challengeName.slice(0, 9)}${
+                (profile?.data?.challengeName.length ?? 11) > 10 ? '...' : ''
+              } 챌린지 중`}
               width={343}
               height={48}
               chevron={true}

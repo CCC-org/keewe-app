@@ -62,6 +62,7 @@ const Tabs = () => {
         component={MyPageScreen}
         initialParams={{
           userId: String(userId),
+          enteredByTab: true,
         }}
       />
       <Tab.Screen name="Root" component={RootScreen} />

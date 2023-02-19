@@ -24,7 +24,8 @@ const FeedItem = ({ insight, onBookMarkClick }: FeedItemProps) => {
 
   const handleProfilePress = async () => {
     const localId = await getUserId();
-    if (localId === '' + writer.writerId) navigation.navigate('MyPage', { userId: localId });
+    if (localId === '' + writer.writerId)
+      navigation.navigate('MyPage', { userId: localId, enteredByTab: false });
     else navigation.navigate('Profile', { userId: writer.writerId });
   };
 
@@ -42,7 +43,7 @@ const FeedItem = ({ insight, onBookMarkClick }: FeedItemProps) => {
         <FeedVerticalDots userName={writer.nickname} userId={writer.writerId} insightId={id} />
       </View>
       <View style={styles.contentCtn}>
-        <FeedTextContent contents={contents} insightId={id} />
+        <FeedTextContent contents={contents} insightId={id} bookmark={bookmark} />
         <FeedLinkWithBookMark
           text={insight.link.url}
           onBookmarkPress={handleOnBookMarkPress}
