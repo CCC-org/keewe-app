@@ -66,6 +66,7 @@ const Comment = ({
         <Text style={{ fontWeight: '400', fontSize: 14, color: `${theme.colors.graphic.black}cc` }}>
           {content}
         </Text>
+
         {!isReply && (
           <Pressable onPress={onReply}>
             <View

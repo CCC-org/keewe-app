@@ -40,6 +40,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
     () => InsightAPI.getProfile({ insightId }),
     querySuccessError,
   );
+  console.log('🚀 ~ file: DetailedPostScreen.tsx:43 ~ profile', profile);
 
   const followMutation = useMutation({
     mutationFn: () => FollowAPI.follow(profile.data.authorId),
@@ -123,7 +124,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
   }, [profile, insightResponse, currentChallenge]);
 
   const handleMoreCommentsPress = () => {
-    navigation.navigate('Comments', { insightId });
+    navigation.navigate('Comments', { insightId, contentWriterId: profile?.data.authorId });
   };
 
   const handleReplyClick = (info: ReplyInfo) => {
@@ -190,11 +191,17 @@ const DetailedPostScreen = ({ navigation, route }) => {
               <View style={{ backgroundColor: 'white', paddingBottom: 16 }}>
                 <>
                   {getCommentResponse?.data.comments.map((cur) => {
+                    console.log(
+                      '🚀 ~ file: DetailedPostScreen.tsx:193 ~ {getCommentResponse?.data.comments.map ~ cur',
+                      cur,
+                    );
+
                     const comment = [
                       <Comment
                         key={cur.id}
                         content={cur.content}
                         nickname={cur.writer.name}
+                        insightWriter={profile.data.authorId === cur.writer.id}
                         title={cur.writer.title}
                         createdAt={cur.createdAt}
                         isReply={false}
@@ -206,6 +213,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
                         key={`${cur.id} reply ${reply.id}`}
                         content={reply.content}
                         nickname={reply.writer.name}
+                        insightWriter={profile.data.authorId === cur.writer.id}
                         createdAt={reply.createdAt}
                         title={reply.writer.title}
                         isReply={true}

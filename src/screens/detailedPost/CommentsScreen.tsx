@@ -16,7 +16,7 @@ type ReplyCursor = {
 };
 
 const CommentsScreen = ({ navigation, route }) => {
-  const { insightId } = route.params;
+  const { insightId, contentWriterId } = route.params;
   const [data, setData] = useState<Comment[]>([]);
   const [refreshIndex, setRefreshIndex] = useState<number | undefined>(undefined);
   const [commentCursor, setCommentCursor] = useState<number | undefined>(undefined);
@@ -75,6 +75,7 @@ const CommentsScreen = ({ navigation, route }) => {
         nickname={item.writer.name}
         title={item.writer.title}
         createdAt={item.createdAt}
+        insightWriter={item.writer.id === contentWriterId}
         isReply={false}
         onReply={() => handleReplyClick({ id: item.id, nickname: item.writer.name })}
         highlight={refreshIndex !== undefined && refreshIndex < item.id}
