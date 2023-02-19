@@ -165,6 +165,7 @@ const ProfileScreen = ({ navigation, route }) => {
         </View>
         <View style={{ marginLeft: 16, marginBottom: 24 }}>
           <MypageProfile
+            profileUserId={userId}
             nickname={profile?.data?.nickname ?? ''}
             title={profile?.data?.title ?? ''}
             image={profileImage}
@@ -199,7 +200,6 @@ const ProfileScreen = ({ navigation, route }) => {
             }}
             onPress={() => {
               followMutation?.mutate();
-              alert('ah');
             }}
           >
             {profile?.data?.follow ? (

@@ -7,14 +7,7 @@ import UserFolloweeScreen from '../../screens/follow/UserFollowingScreen';
 const Tab = createMaterialTopTabNavigator();
 
 const FollowTopTabs = ({ route }) => {
-  const { userId, nickname, follower, following } = route.params;
-  console.log(
-    '🚀 ~ file: FollowTopTabs.tsx:11 ~ FollowTopTabs ~  userId, nickname, follower, following',
-    userId,
-    nickname,
-    follower,
-    following,
-  );
+  const { userId, follower, following } = route.params;
 
   return (
     <Tab.Navigator
@@ -36,7 +29,7 @@ const FollowTopTabs = ({ route }) => {
           component={UserFollowersScreen}
           initialParams={{ userId }}
           options={{
-            title: '팔로워',
+            title: follower + ' ' + '팔로워',
           }}
         />
         <Tab.Screen
@@ -44,7 +37,7 @@ const FollowTopTabs = ({ route }) => {
           component={UserFolloweeScreen}
           initialParams={{ userId }}
           options={{
-            title: '팔로잉',
+            title: following + ' ' + '팔로잉',
           }}
         />
       </Tab.Group>
