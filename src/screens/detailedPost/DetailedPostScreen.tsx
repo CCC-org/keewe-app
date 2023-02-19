@@ -202,6 +202,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
                         content={cur.content}
                         nickname={cur.writer.name}
                         isInsightWriter={profile.data.authorId === cur.writer.id}
+                        commentId={cur.id}
                         commentWriterId={cur.writer.id}
                         title={cur.writer.title}
                         createdAt={cur.createdAt}
@@ -219,6 +220,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
                         createdAt={reply.createdAt}
                         title={reply.writer.title}
                         isReply={true}
+                        commentId={reply.id}
                       />
                     ));
                     return comment.concat(repies);

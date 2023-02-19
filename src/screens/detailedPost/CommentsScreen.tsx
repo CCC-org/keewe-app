@@ -80,10 +80,12 @@ const CommentsScreen = ({ navigation, route }) => {
         isReply={false}
         onReply={() => handleReplyClick({ id: item.id, nickname: item.writer.name })}
         highlight={refreshIndex !== undefined && refreshIndex < item.id}
+        commentId={item.id}
       />,
     ];
     const repies = item.replies.map((reply) => (
       <Comment
+        commentId={reply.id}
         key={`${item.id} reply ${reply.id} ${index}`}
         content={reply.content}
         commentWriterId={reply.writer.id}

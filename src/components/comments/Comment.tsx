@@ -5,6 +5,7 @@ import MiniProfile from '../profile/MiniProfile';
 import { useTheme } from 'react-native-paper';
 import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import CommentVerticalDots from './CommentVerticalDots';
 
 interface CommentsProps {
   nickname: string;
@@ -17,6 +18,7 @@ interface CommentsProps {
   onReply?: () => void;
   commentWriterId: number | string;
   highlight?: boolean;
+  commentId: number;
 }
 
 const Comment = ({
@@ -30,6 +32,7 @@ const Comment = ({
   onReply,
   highlight,
   commentWriterId,
+  commentId,
 }: CommentsProps) => {
   const opacityValue = useRef(new Animated.Value(0)).current;
   Animated.timing(opacityValue, {
@@ -69,9 +72,7 @@ const Comment = ({
             createdAt={createdAt}
           />
         </Pressable>
-        <Pressable>
-          <Entypo name="dots-three-vertical" size={20} color="black" />
-        </Pressable>
+        <CommentVerticalDots commentId={commentId} userId={commentWriterId} userName={nickname} />
       </View>
       <View style={styles.content}>
         <Text style={{ fontWeight: '400', fontSize: 14, color: `${theme.colors.graphic.black}cc` }}>
