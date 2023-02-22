@@ -5,7 +5,7 @@ import { SvgXml } from 'react-native-svg';
 import { useTheme } from 'react-native-paper';
 import HeaderText from '../../components/texts/HeaderText';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
-import chevron_right from '../../constants/Icons/Chevrons/ChevronRightSmallXml';
+import chevron_right from '../../constants/Icons/Chevrons/lightChevronRightSmallXml';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import BezierAnimatedPopupView from '../../components/views/BezierAnimatedPopupView';
 import { INSIGHT_SAMPLE, REACTIONS } from './constant';

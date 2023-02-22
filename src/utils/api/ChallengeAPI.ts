@@ -23,7 +23,7 @@ export const ChallengeAPI = {
   participationCheck: async () => {
     const token = await getAccessToken();
     return axios
-      .post('https://api-keewe.com/api/v1/challenge/participation/check', null, {
+      .get('https://api-keewe.com/api/v1/challenge/participation/check', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -35,10 +35,36 @@ export const ChallengeAPI = {
   getChallenge: async () => {
     const token = await getAccessToken();
     return axios
-      .post<ChallengeGetResponse>('https://api-keewe.com/api/v1/challenge/participation', null, {
+      .get<ChallengeGetResponse>('https://api-keewe.com/api/v1/challenge/participating', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+      })
+      .then((res) => {
+        return res.data.data;
+      });
+  },
+  getChallengeHistory: async (params: ChallengeHistoryGetRequest) => {
+    const token = await getAccessToken();
+    return axios
+      .get<ChallengeHistoryGetResponse>('https://api-keewe.com/api/v1/challenge/history', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params,
+      })
+      .then((res) => {
+        return res.data.data;
+      });
+  },
+  getChallengeCurrent: async (params: ChallengeCurrentGetRequest) => {
+    const token = await getAccessToken();
+    return axios
+      .get<ChallengeCurrentGetResponse>('https://api-keewe.com/api/v1/challenge/specified-size', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params,
       })
       .then((res) => {
         return res.data.data;
