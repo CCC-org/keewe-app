@@ -1,10 +1,14 @@
-import { StyleSheet } from 'react-native';
-import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BookMarkScreen from './BookMarkScreen';
 import ChallengesScreen from './ChallengesScreen';
 import { RootScreen } from '../../navigation';
 import FeedScreen from '../Feed/FeedScreen';
+import HomeScreen from '../Home/HomeScreen';
+import App from '../../../App';
+import { NavigationContainer } from '@react-navigation/native';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SvgXml } from 'react-native-svg';
 import {
   homeOn,
@@ -18,21 +22,16 @@ import {
 } from '../../constants/Icons/Navigation/NavigationIconsXml';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
 import MyPageScreen from './mypage/MyPageScreen';
+const queryClient = new QueryClient();
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
   const userId = useGetUserId();
   return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarShowLabel: false,
-      }}
-      sceneContainerStyle={{ backgroundColor: 'white' }}
-    >
-      <Tab.Screen
-        options={{
-          tabBarIcon: ({ focused }) =>
-            focused ? <SvgXml xml={homeOn} /> : <SvgXml xml={homeOff} />,
+    <QueryClientProvider client={queryClient}>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarShowLabel: false,
         }}
         name="Feed"
         component={FeedScreen}

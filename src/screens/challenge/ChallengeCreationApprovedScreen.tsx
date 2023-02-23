@@ -33,7 +33,7 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
       <View style={{ marginTop: 16 }}>
         <Image
           style={styles.image}
-          source={require('../../../assets/images/챌린지/챌린지생성.png')}
+          source={require('../../../assets/images/challenge/challengeCreate.png')}
         />
       </View>
       <View style={styles.infoContainer}>
