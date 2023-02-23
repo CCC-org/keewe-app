@@ -44,7 +44,7 @@ export const ChallengeAPI = {
         return res.data.data;
       });
   },
-  getChallengeHistory: async (params: ChallengeHistoryGetRequest) => {
+  getChallengeHistory: async (params?: ChallengeHistoryGetRequest) => {
     const token = await getAccessToken();
     return axios
       .get<ChallengeHistoryGetResponse>('https://api-keewe.com/api/v1/challenge/history', {

@@ -54,15 +54,16 @@ const CurrentChallengeProfile = ({
                 color: theme.colors.brand.onprimary.container,
               }}
             >
-              {interest}⋅
+              {interest} ⋅
             </Text>
             <Text
               style={{
-                fontFamily: 'pretendardSemiBold',
+                fontFamily: 'pretendardMedium',
                 fontSize: 12,
                 color: `${theme.colors.graphic.black}50`,
               }}
             >
+              {' '}
               인사이트 {insightNumber}개
             </Text>
           </View>

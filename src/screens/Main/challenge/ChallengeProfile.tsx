@@ -57,15 +57,26 @@ const ChallengeProfile = ({
               </>
             )}
           </View>
-          <Text
-            style={{
-              fontFamily: 'pretendardSemiBold',
-              fontSize: 14,
-              color: theme.colors.brand.onprimary.container,
-            }}
-          >
-            {interest}⋅{Date}
-          </Text>
+          <View style={{ flexDirection: 'row' }}>
+            <Text
+              style={{
+                fontFamily: 'pretendardSemiBold',
+                fontSize: 14,
+                color: theme.colors.brand.onprimary.container,
+              }}
+            >
+              {interest} ⋅
+            </Text>
+            <Text
+              style={{
+                fontFamily: 'pretendard',
+                fontSize: 14,
+                color: theme.colors.brand.onprimary.container,
+              }}
+            >
+              {' ' + Date}
+            </Text>
+          </View>
         </View>
         <SvgXml xml={darkChevronRightSmallXml} />
         {/* 옆으로가기 버튼  */}

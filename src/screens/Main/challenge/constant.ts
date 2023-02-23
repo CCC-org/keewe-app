@@ -53,3 +53,7 @@ export const INTEREST_ICONS = {
   취미덕질: 취미덕질,
   패션: 패션,
 };
+
+export const timeConverter = (time: string) => {
+  return time.replaceAll('-', '.');
+};

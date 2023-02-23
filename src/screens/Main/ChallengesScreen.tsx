@@ -1,5 +1,5 @@
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
 import { useQuery } from '@tanstack/react-query';
 import ChallengeProfile from './challenge/ChallengeProfile';
@@ -8,12 +8,16 @@ import theme from '../../theme/light';
 import { SvgXml } from 'react-native-svg';
 import darkChevronRightSmallXml from '../../constants/Icons/Chevrons/darkChevronRightSmallXml';
 import CurrentChallengeProfile from './challenge/ChallengeProfileCurrent';
+import { timeConverter } from './challenge/constant';
+import TwoButtonModal from '../../components/modal/TwoButtonModal';
 
-const ChallengesScreen = () => {
+const ChallengesScreen = ({ navigation, route }) => {
   // const { data: check, isLoading: isCheckLoading } = useQuery(
   //   ['challenge'],
   //   ChallengeAPI.participationCheck,
   // );
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const hideModal = () => setModalVisible(false);
 
   const { data: currentChallenge, isLoading: isCurrentChallengeLoading } = useQuery(
     ['challenge'],
@@ -32,8 +36,24 @@ const ChallengesScreen = () => {
 
   return (
     <ScrollView>
+      <TwoButtonModal
+        dismissable={false}
+        mainTitle={'새로운 챌린지를 만들까요?'}
+        subTitle={
+          '한 번에 하나의 챌린지에만 참여할 수 있어요.\n 현재 참여 중인 챌린지는 자동 탈퇴됩니다.'
+        }
+        visible={modalVisible}
+        onDismiss={hideModal}
+        leftButtonText={'취소'}
+        rightButtonText={'만들러 가기'}
+        leftButtonPress={() => setModalVisible(false)}
+        rightButtonPress={() => {
+          setModalVisible(false);
+          navigation.navigate('CategorySelect');
+        }}
+      />
       {currentChallenge ? (
-        <View>
+        <View style={{ marginBottom: 8 }}>
           <Text
             style={{
               fontFamily: 'pretendardSemiBold',
@@ -52,18 +72,30 @@ const ChallengesScreen = () => {
             name={currentChallenge?.name ?? ''}
             participatingUserNumber={currentChallenge?.participatingUserNumber ?? 0}
             interest={currentChallenge?.interest ?? ''}
-            Date={currentChallenge?.startDate ?? ''}
+            Date={timeConverter(currentChallenge?.startDate) ?? ''}
             highlight={true}
           />
         </View>
       ) : (
-        <Image source={require('../../../assets/images/challenge/challengeEmpty.png')} />
+        <View style={{ alignItems: 'center', marginBottom: 16 }}>
+          <Image source={require('../../../assets/images/challenge/challengeEmpty.png')} />
+          <Text
+            style={{
+              marginTop: 20,
+              fontFamily: 'pretendard',
+              fontSize: 16,
+              color: `${theme.colors.graphic.black}80`,
+            }}
+          >
+            챌린지에 참여해보세요.
+          </Text>
+        </View>
       )}
       <BottomFixButton
         isActive={true}
         text={'새로운 챌린지 만들기'}
         width={100}
-        onPress={() => alert('pressed')}
+        onPress={() => setModalVisible(true)}
         buttonStyle={styles.button}
         textStyle={styles.buttonText}
       />
@@ -88,7 +120,7 @@ const ChallengesScreen = () => {
               key={index}
               name={history.challengeName}
               interest={history.challengeCategory}
-              Date={history.startDate + ' ~ ' + history.endDate}
+              Date={timeConverter(history.startDate + ' ~ ' + history.endDate)}
             />
           ))}
           <View
@@ -142,7 +174,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
   },
   buttonText: {
-    marginTop: 6,
     color: '#486006',
   },
   divider: {
