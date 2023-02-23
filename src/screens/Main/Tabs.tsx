@@ -25,6 +25,7 @@ const Tabs = () => {
       screenOptions={{
         tabBarShowLabel: false,
       }}
+      sceneContainerStyle={{ backgroundColor: 'white' }}
     >
       <Tab.Screen
         options={{
