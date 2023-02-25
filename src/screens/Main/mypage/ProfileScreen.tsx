@@ -249,7 +249,9 @@ const ProfileScreen = ({ navigation, route }) => {
               key={idx}
               label={cur['name']}
               condition={cur['introduction']}
-              date={cur['achievedDate'].slice(0, cur['achievedDate'].indexOf('T'))}
+              date={cur['achievedDate']
+                .slice(0, cur['achievedDate'].indexOf('T'))
+                .replaceAll('-', '.')}
             />
           );
         })}

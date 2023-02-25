@@ -139,7 +139,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
 
     console.log(result);
 
-    if (!result.cancelled) {
+    if (!result.canceled) {
       setImage(result.uri);
     }
     bottomSheetModalRef.current?.dismiss();
@@ -157,7 +157,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
 
     console.log(result);
 
-    if (!result.cancelled) {
+    if (!result.canceled) {
       setImage(result.uri);
     }
     bottomSheetModalRef.current?.dismiss();
