@@ -87,7 +87,6 @@
     "eslint-plugin-react": "^7.30.1",
     "prettier": "^2.7.1",
     "react-query": "^4.0.0",
-    "react-test-renderer": "17.0.2",
     "typescript": "^4.6.3"
   },
   "private": true

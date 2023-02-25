@@ -20,8 +20,6 @@ import { ReplyInfo } from '../../components/comments/CommentInput';
 import Comment from '../../components/comments/Comment';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { FollowAPI } from '../../utils/api/FollowAPI';
-import { MypageQueryKeys } from '../../utils/api/mypageAPI';
-import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 import { SvgXml } from 'react-native-svg';
 import { DetailedPostApi } from '../../utils/api/DetailedPostAPI';
 import BookMarkOffXml from '../../constants/Icons/DetailedPost/BookMarkOffXml';
