@@ -245,6 +245,7 @@ const ProfileScreen = ({ navigation, route }) => {
         {representativeTitleList.map((cur, idx) => {
           return (
             <MypageTitle
+              titleId={cur['titleId']}
               key={idx}
               label={cur['name']}
               condition={cur['introduction']}
@@ -265,9 +266,7 @@ const ProfileScreen = ({ navigation, route }) => {
           </Text>
           <Feather name="chevron-right" size={24} color={`${theme.colors.graphic.black}cc`} />
         </Pressable>
-      ) : (
-        <View style={{ height: 24 }}></View>
-      )}
+      ) : null}
       <DividerBar style={styles.divider} />
       {userFolderList && (
         <>
@@ -354,7 +353,7 @@ const styles = StyleSheet.create({
   title: {
     flexDirection: 'row',
     paddingTop: 24,
-    paddingBottom: 10,
+    paddingBottom: 22,
   },
   viewAll: {
     flexDirection: 'row',

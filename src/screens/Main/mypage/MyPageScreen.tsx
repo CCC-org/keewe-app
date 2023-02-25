@@ -217,10 +217,13 @@ const MyPageScreen = ({ navigation, route }) => {
           {representativeTitleList.map((cur, idx) => {
             return (
               <MypageTitle
+                titleId={cur['titleId']}
                 key={idx}
                 label={cur['name']}
                 condition={cur['introduction']}
-                date={cur['achievedDate'].slice(0, cur['achievedDate'].indexOf('T'))}
+                date={cur['achievedDate']
+                  .slice(0, cur['achievedDate'].indexOf('T'))
+                  .replaceAll('-', '.')}
               />
             );
           })}
@@ -328,7 +331,7 @@ const styles = StyleSheet.create({
   title: {
     flexDirection: 'row',
     paddingTop: 24,
-    paddingBottom: 10,
+    paddingBottom: 22,
   },
   viewAll: {
     flexDirection: 'row',
