@@ -15,6 +15,7 @@ import FeedList from '../../Feed/FeedList';
 import GoToUploadButton from '../../../components/buttons/GoToUploadButton';
 import { IOScrollView } from 'react-native-intersection-observer';
 import HeaderBackButton from '../../../components/header/HeaderBackButton';
+import { useScrollToTop } from '@react-navigation/native';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
 const MyPageScreen = ({ navigation, route }) => {
@@ -72,8 +73,8 @@ const MyPageScreen = ({ navigation, route }) => {
     useInfiniteFeed(
       'https://api-keewe.com/api/v1/insight/my-page/' + userId + '?drawerId=' + drawerId,
     );
-
   const scrollViewRef = useRef<any>(null);
+  useScrollToTop(scrollViewRef);
   const [pageRefreshing, setPageRefreshing] = useState(false);
   const onRefresh = () => {
     setPageRefreshing(true);
@@ -86,11 +87,6 @@ const MyPageScreen = ({ navigation, route }) => {
       .invalidateQueries(MypageQueryKeys.getFolderInsight(drawerId, userId))
       .then(() => setPageRefreshing(false));
   };
-
-  // const forderMutation = useMutation({
-  //   mutationFn: (tabId: number) => {
-  //   }
-  // })
 
   useEffect(() => {
     setSelectedCategory(profile?.data?.interests ?? []);
@@ -197,7 +193,10 @@ const MyPageScreen = ({ navigation, route }) => {
               }
             >
               <Text
-                style={{ ...theme.fonts.text.body1.bold, color: `${theme.colors.graphic.black}cc` }}
+                style={{
+                  ...theme.fonts.text.body1.bold,
+                  color: `${theme.colors.graphic.black}cc`,
+                }}
               >
                 프로필 수정
               </Text>
@@ -231,7 +230,10 @@ const MyPageScreen = ({ navigation, route }) => {
           style={{ ...styles.viewAll, borderTopColor: `${theme.colors.graphic.black}1a` }}
         >
           <Text
-            style={{ ...theme.fonts.text.body1.regular, color: `${theme.colors.graphic.black}cc` }}
+            style={{
+              ...theme.fonts.text.body1.regular,
+              color: `${theme.colors.graphic.black}cc`,
+            }}
           >
             전체보기
           </Text>

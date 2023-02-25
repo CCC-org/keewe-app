@@ -214,7 +214,7 @@ const ProfileScreen = ({ navigation, route }) => {
               </Text>
             )}
           </Pressable>
-          {profile?.data?.challengeName !== null ? (
+          {profile?.data?.challengeName ? (
             <BottomFixButton
               isActive={true}
               // text={`${profile?.data?.challengeName} 챌린지 중 `}
