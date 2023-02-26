@@ -6,13 +6,15 @@ import CountingTextArea from '../../../components/texts/CountingTextArea';
 
 const IntroductionEditingScreen = ({ navigation, route }) => {
   const theme = useTheme();
-  const [input, setInput] = useState('');
-  const [nickname] = useState(route.params.nickname);
-  const [title] = useState(route.params.title);
-  const [selectedCategory] = useState(route.params.selectedCategory);
+  const [input, setInput] = useState<string>('');
+  const [nickname] = useState(route?.params?.nickname);
+  const [image] = useState(route?.params?.image);
+  const [title] = useState(route?.params?.title);
+  const [selectedCategory] = useState(route?.params?.selectedCategory);
   const handleComplete = () => {
     navigation.navigate(route.params?.toScreen, {
       nickname,
+      image,
       title,
       selectedCategory,
       introduction: input,
@@ -45,9 +47,11 @@ const IntroductionEditingScreen = ({ navigation, route }) => {
       ),
     });
   }, [input]);
+
   useEffect(() => {
     setInput(route.params?.introduction ?? '');
   }, [route.params]);
+
   return (
     <View style={styles.container}>
       <CountingTextArea

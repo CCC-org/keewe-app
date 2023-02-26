@@ -15,6 +15,7 @@ import FeedList from '../../Feed/FeedList';
 import GoToUploadButton from '../../../components/buttons/GoToUploadButton';
 import { IOScrollView } from 'react-native-intersection-observer';
 import HeaderBackButton from '../../../components/header/HeaderBackButton';
+import { useScrollToTop } from '@react-navigation/native';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
 const MyPageScreen = ({ navigation, route }) => {
@@ -32,7 +33,6 @@ const MyPageScreen = ({ navigation, route }) => {
     }
   }, [navigation, route]);
 
-  const [profileImage, setProfileImage] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<Record<string, string>[]>([]);
   const [representativeTitleList, setRepresentativeTitleList] = useState<AchievedTitle[]>([]);
   const [titleTotal, setTitleTotal] = useState<number>(0);
@@ -72,8 +72,8 @@ const MyPageScreen = ({ navigation, route }) => {
     useInfiniteFeed(
       'https://api-keewe.com/api/v1/insight/my-page/' + userId + '?drawerId=' + drawerId,
     );
-
   const scrollViewRef = useRef<any>(null);
+  useScrollToTop(scrollViewRef);
   const [pageRefreshing, setPageRefreshing] = useState(false);
   const onRefresh = () => {
     setPageRefreshing(true);
@@ -87,14 +87,8 @@ const MyPageScreen = ({ navigation, route }) => {
       .then(() => setPageRefreshing(false));
   };
 
-  // const forderMutation = useMutation({
-  //   mutationFn: (tabId: number) => {
-  //   }
-  // })
-
   useEffect(() => {
     setSelectedCategory(profile?.data?.interests ?? []);
-    setProfileImage(profile?.data?.image || '');
     setRepresentativeTitleList(representativeTitles?.data?.achievedTitles ?? []);
     setTitleTotal(representativeTitles?.data?.total ?? 0);
   }, [
@@ -151,7 +145,7 @@ const MyPageScreen = ({ navigation, route }) => {
               profileUserId={userId}
               nickname={profile?.data?.nickname ?? ''}
               title={profile?.data?.title ?? ''}
-              image={profileImage}
+              image={profile?.data?.image ?? ''}
               follower={profile?.data?.followerCount ?? 0}
               following={profile?.data?.followingCount ?? 0}
             />
@@ -188,6 +182,7 @@ const MyPageScreen = ({ navigation, route }) => {
               style={styles.editBtn}
               onPress={() =>
                 navigation.navigate('ProfileEdit', {
+                  image: profile?.data?.image ?? '',
                   nickname: profile?.data?.nickname ?? '',
                   title: profile?.data?.title ?? '',
                   selectedCategory,
@@ -197,7 +192,10 @@ const MyPageScreen = ({ navigation, route }) => {
               }
             >
               <Text
-                style={{ ...theme.fonts.text.body1.bold, color: `${theme.colors.graphic.black}cc` }}
+                style={{
+                  ...theme.fonts.text.body1.bold,
+                  color: `${theme.colors.graphic.black}cc`,
+                }}
               >
                 프로필 수정
               </Text>
@@ -218,10 +216,13 @@ const MyPageScreen = ({ navigation, route }) => {
           {representativeTitleList.map((cur, idx) => {
             return (
               <MypageTitle
+                titleId={cur['titleId']}
                 key={idx}
                 label={cur['name']}
                 condition={cur['introduction']}
-                date={cur['achievedDate'].slice(0, cur['achievedDate'].indexOf('T'))}
+                date={cur['achievedDate']
+                  .slice(0, cur['achievedDate'].indexOf('T'))
+                  .replaceAll('-', '.')}
               />
             );
           })}
@@ -231,7 +232,10 @@ const MyPageScreen = ({ navigation, route }) => {
           style={{ ...styles.viewAll, borderTopColor: `${theme.colors.graphic.black}1a` }}
         >
           <Text
-            style={{ ...theme.fonts.text.body1.regular, color: `${theme.colors.graphic.black}cc` }}
+            style={{
+              ...theme.fonts.text.body1.regular,
+              color: `${theme.colors.graphic.black}cc`,
+            }}
           >
             전체보기
           </Text>
@@ -270,7 +274,7 @@ const MyPageScreen = ({ navigation, route }) => {
                     writerId: Number(userId),
                     nickname: profile?.data?.nickname ?? '',
                     title: profile?.data?.title ?? '',
-                    image: profileImage,
+                    image: profile?.data?.image ?? '',
                   }}
                   feedList={feedList}
                   feedListQueryClient={feedListQueryClient}
@@ -326,7 +330,7 @@ const styles = StyleSheet.create({
   title: {
     flexDirection: 'row',
     paddingTop: 24,
-    paddingBottom: 10,
+    paddingBottom: 22,
   },
   viewAll: {
     flexDirection: 'row',

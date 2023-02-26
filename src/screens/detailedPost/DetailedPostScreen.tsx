@@ -20,8 +20,6 @@ import { ReplyInfo } from '../../components/comments/CommentInput';
 import Comment from '../../components/comments/Comment';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { FollowAPI } from '../../utils/api/FollowAPI';
-import { MypageQueryKeys } from '../../utils/api/mypageAPI';
-import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 import { SvgXml } from 'react-native-svg';
 import { DetailedPostApi } from '../../utils/api/DetailedPostAPI';
 import BookMarkOffXml from '../../constants/Icons/DetailedPost/BookMarkOffXml';
@@ -267,12 +265,6 @@ const DetailedPostScreen = ({ navigation, route }) => {
               </View>
             </>
           )}
-          <SnackBar
-            text={bookmarkOn ? '북마크에 저장했어요.' : '북마크에서 삭제했어요.'}
-            visible={snackBarOn}
-            duration={1000}
-            onDismiss={() => setSnackBarOn(false)}
-          />
         </ScrollView>
         <CommentInput
           insightId={insightId}
@@ -283,6 +275,14 @@ const DetailedPostScreen = ({ navigation, route }) => {
           }}
         />
       </KeyboardAvoidingView>
+      <View style={styles.snack}>
+        <SnackBar
+          text={bookmarkOn ? '북마크에 저장했어요.' : '북마크에서 삭제했어요.'}
+          visible={snackBarOn}
+          duration={900}
+          onDismiss={() => setSnackBarOn(false)}
+        />
+      </View>
     </>
   );
 };
@@ -307,5 +307,11 @@ const styles = StyleSheet.create({
   },
   commentDivider: {
     height: 12,
+  },
+  snack: {
+    position: 'absolute',
+    bottom: 80,
+    left: 16,
+    right: 16,
   },
 });

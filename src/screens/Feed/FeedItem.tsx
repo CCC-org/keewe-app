@@ -37,6 +37,7 @@ const FeedItem = ({ insight, onBookMarkClick }: FeedItemProps) => {
             style={styles.MiniProfile}
             nickname={writer.nickname}
             title={writer.title}
+            image={writer.image}
             createdAt={createdAt}
           />
         </Pressable>
