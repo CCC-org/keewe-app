@@ -8,9 +8,10 @@ const NicknameEditingScreen = ({ navigation, route }) => {
   const theme = useTheme();
   const [errorMessage] = useState<string>('');
   const [input, setInput] = useState<string>('');
-  const [title] = useState(route.params.title);
-  const [introduction] = useState(route.params.introduction);
-  const [selectedCategory] = useState(route.params.selectedCategory);
+  const [image] = useState(route?.params?.image);
+  const [title] = useState(route?.params?.title);
+  const [introduction] = useState(route?.params?.introduction);
+  const [selectedCategory] = useState(route?.params?.selectedCategory);
   const [buttonOn, setButtonOn] = useState<boolean>(false);
   useEffect(() => {
     navigation.setOptions({
@@ -21,6 +22,7 @@ const NicknameEditingScreen = ({ navigation, route }) => {
   const handleComplete = () => {
     navigation.navigate(route.params?.toScreen, {
       nickname: input,
+      image,
       title,
       selectedCategory,
       introduction,

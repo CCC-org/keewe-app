@@ -39,7 +39,7 @@ const TitleScreen = ({ route, navigation }) => {
                     isEnteredByProfileEdit={isEnteredByProfileEdit}
                     key={titleMeta.id}
                     achievedTitles={userTitles.achievedTitles}
-                    repTitleId={userTitles.repTitleId}
+                    repTitleId={userTitles?.repTitleId}
                     titleMeta={titleMeta}
                   />
                 );

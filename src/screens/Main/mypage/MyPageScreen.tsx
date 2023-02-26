@@ -33,7 +33,6 @@ const MyPageScreen = ({ navigation, route }) => {
     }
   }, [navigation, route]);
 
-  const [profileImage, setProfileImage] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<Record<string, string>[]>([]);
   const [representativeTitleList, setRepresentativeTitleList] = useState<AchievedTitle[]>([]);
   const [titleTotal, setTitleTotal] = useState<number>(0);
@@ -90,7 +89,6 @@ const MyPageScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     setSelectedCategory(profile?.data?.interests ?? []);
-    setProfileImage(profile?.data?.image || '');
     setRepresentativeTitleList(representativeTitles?.data?.achievedTitles ?? []);
     setTitleTotal(representativeTitles?.data?.total ?? 0);
   }, [
@@ -147,7 +145,7 @@ const MyPageScreen = ({ navigation, route }) => {
               profileUserId={userId}
               nickname={profile?.data?.nickname ?? ''}
               title={profile?.data?.title ?? ''}
-              image={profileImage}
+              image={profile?.data?.image ?? ''}
               follower={profile?.data?.followerCount ?? 0}
               following={profile?.data?.followingCount ?? 0}
             />
@@ -184,6 +182,7 @@ const MyPageScreen = ({ navigation, route }) => {
               style={styles.editBtn}
               onPress={() =>
                 navigation.navigate('ProfileEdit', {
+                  image: profile?.data?.image ?? '',
                   nickname: profile?.data?.nickname ?? '',
                   title: profile?.data?.title ?? '',
                   selectedCategory,
@@ -275,7 +274,7 @@ const MyPageScreen = ({ navigation, route }) => {
                     writerId: Number(userId),
                     nickname: profile?.data?.nickname ?? '',
                     title: profile?.data?.title ?? '',
-                    image: profileImage,
+                    image: profile?.data?.image ?? '',
                   }}
                   feedList={feedList}
                   feedListQueryClient={feedListQueryClient}

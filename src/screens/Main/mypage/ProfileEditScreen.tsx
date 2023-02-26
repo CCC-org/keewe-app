@@ -13,6 +13,9 @@ import {
 } from '@gorhom/bottom-sheet';
 import BottomSheetOption from '../../../components/bottomsheet/BottomSheetOption';
 import * as ImagePicker from 'expo-image-picker';
+import { getAccessToken } from '../../../utils/hooks/asyncStorage/Login';
+import axios from 'axios';
+import mime from 'mime';
 
 const ProfileEditScreen = ({ navigation, route }) => {
   const theme = useTheme();
@@ -36,6 +39,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
   const handleNickname = () => {
     navigation.navigate('NicknameEditing', {
       nickname,
+      image,
       title,
       introduction,
       selectedCategory,
@@ -52,6 +56,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
   const handleIntroduction = () =>
     navigation.navigate('IntroductionEditing', {
       nickname,
+      image,
       title,
       introduction,
       selectedCategory,
@@ -60,6 +65,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
   const handleInterests = () =>
     navigation.navigate('InterestEditing', {
       nickname,
+      image,
       title,
       introduction,
       selectedCategory,
@@ -95,9 +101,10 @@ const ProfileEditScreen = ({ navigation, route }) => {
   }, [route]);
 
   useEffect(() => {
-    const { nickname, title, introduction, selectedCategory, userId } = route.params;
+    const { nickname, image, title, introduction, selectedCategory, userId } = route.params;
     setUserId(userId);
     setNickname(nickname);
+    setImage(image);
     setTitle(title);
     setSelectedCategory(selectedCategory);
     setIntroduction(introduction);
@@ -137,7 +144,8 @@ const ProfileEditScreen = ({ navigation, route }) => {
       quality: 1,
     });
 
-    console.log(result);
+    console.log('🚀 ~ file: ProfileEditScreen.tsx:139 ~ pickImage ~ result', result);
+    // "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540akdlsz21%252Fkeewe/ImagePicker/29c5936e-b619-4667-9aa0-292686e75bb6.jpg"
 
     if (!result.canceled) {
       setImage(result.uri);
@@ -153,9 +161,10 @@ const ProfileEditScreen = ({ navigation, route }) => {
       return;
     }
 
-    const result = await ImagePicker.launchCameraAsync();
-
-    console.log(result);
+    const result = await ImagePicker.launchCameraAsync({
+      base64: true,
+    });
+    console.log('🚀 ~ file: ProfileEditScreen.tsx:156 ~ openCamera ~ result', result);
 
     if (!result.canceled) {
       setImage(result.uri);
@@ -167,6 +176,47 @@ const ProfileEditScreen = ({ navigation, route }) => {
     (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
     [],
   );
+
+  const handleSaveProfileInfo = () => {
+    // if (!image) return;
+    const formData = new FormData();
+    if (image) {
+      formData.append('profileImage', {
+        uri: image,
+        type: mime.getType(image),
+        name: 'image.jpg',
+      });
+    }
+    formData.append('nickname', nickname);
+    for (const inter of selectedCategory) {
+      formData.append('interests', inter);
+    }
+    formData.append('repTitleId', '2000');
+    // alert(introduction);
+    formData.append('introduction', introduction);
+    formData.append('updatePhoto', 'true');
+    // console.log('image', image);
+
+    async function patchProfileEditInfo(formData: any) {
+      const token = await getAccessToken();
+      try {
+        const res = await axios.patch('https://api-keewe.com/api/v1/user/profile', formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        console.log('🚀 ~ file: ProfileEditScreen.tsx:193 ~ patchProfileEditInfo ~ res', res.data);
+
+        return res.data;
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    patchProfileEditInfo(formData);
+  };
+
   return (
     <>
       <BottomSheetModalProvider>
@@ -179,7 +229,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
           rightButtonText={'저장'}
           leftButtonPress={() => setModalVisible(false)}
           rightButtonPress={() => {
-            alert('저장은 타이틀 작업이 된 후에 작업할 예정입니다!');
+            handleSaveProfileInfo();
             setModalVisible(false);
           }}
         />

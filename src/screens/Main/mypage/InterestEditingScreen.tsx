@@ -11,9 +11,10 @@ const InterestEditingScreen = ({ navigation, route }) => {
   const [customCategory, setCustomCategory] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [conditionalText, setConditionalText] = useState<string>('관심사를 선택하세요');
-  const [title] = useState(route.params.title);
-  const [introduction] = useState(route.params.introduction);
-  const [nickname] = useState(route.params.nickname);
+  const [title] = useState(route?.params?.title);
+  const [introduction] = useState(route?.params?.introduction);
+  const [nickname] = useState(route?.params?.nickname);
+  const [image] = useState(route?.params?.image);
   const [btnActive, setBtnActive] = useState<boolean>(true);
 
   const handleSelectTag = (tag: string) => {
@@ -33,6 +34,7 @@ const InterestEditingScreen = ({ navigation, route }) => {
   const handleNextScreen = () => {
     navigation.navigate('ProfileEdit', {
       nickname,
+      image,
       title,
       selectedCategory,
       introduction,
