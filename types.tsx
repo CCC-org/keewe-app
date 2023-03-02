@@ -33,6 +33,8 @@ export type RootStackParamList = {
   ChallengeJoin: undefined;
   ChallengeJoinApproved: undefined;
   ServiceIntroOne: undefined;
+  ServiceIntroTwo: undefined;
+  ServiceIntroThree: undefined;
   InterestChoose: undefined;
   BottomSheetExperimental: undefined;
   InsightSample: undefined;
@@ -49,6 +51,9 @@ export type RootStackParamList = {
   Profile: undefined;
   Title: undefined;
   UserFollowers: undefined;
+  IntroductionEditing: undefined;
+  InterestEditing: undefined;
+  TempSheet: undefined;
   FollowTopTabs: {
     userId: number;
     nickname: string;

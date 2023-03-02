@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-import { InsightProfileRequest, ProfileData } from '../../types/insight/profile';
 import { getAccessToken } from '../hooks/asyncStorage/Login';
 import httpClient from './BaseHttpClient';
 
@@ -24,6 +23,7 @@ export const InsightQueryKeys = {
     request.cursor,
     request.limit,
   ],
+  getChallengeRecord: (request: ChallengeRecordRequest) => ['insight', request.insightId],
 };
 
 export const InsightAPI = {
@@ -150,5 +150,36 @@ export const InsightAPI = {
     } catch (err) {
       console.error('api error: ', err);
     }
+  },
+  getChallengeRecord: async (request: ChallengeRecordRequest) => {
+    const { insightId } = request;
+
+    try {
+      const token = await getAccessToken();
+      const { data } = await httpClient.get<ChallengeRecordResponse>(
+        `https://api-keewe.com/api/v1/insight/${insightId}/challenge-record`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      return data;
+    } catch (err) {
+      console.error('api error: ', err);
+    }
+  },
+  insightReport: async (params: InsightReportRequest) => {
+    const token = await getAccessToken();
+    const { data } = await httpClient.post<InsightReportResponse>(
+      'https://api-keewe.com/api/v1/report/insight',
+      params,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return data;
   },
 };

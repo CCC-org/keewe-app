@@ -9,7 +9,7 @@ interface CountingTextAreaProps {
   setInputValue: (input: string) => void;
   limit?: number;
   style?: any;
-  height?: number;
+  height?: any;
   autoFocus?: boolean;
   limitTextStyle?: any;
 }
@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     height: '100%',
     textAlignVertical: 'top',
+    fontFamily: 'pretendard',
   },
   letterNumber: {
     flex: 1,

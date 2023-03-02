@@ -1,10 +1,10 @@
-export interface Profile {
+interface Profile {
   message: string;
   code: number;
   data: ProfileData;
 }
 
-export interface ProfileData {
+interface ProfileData {
   data: {
     authorId: number;
     nickname: string;
@@ -19,10 +19,25 @@ export interface ProfileData {
   code: number;
 }
 
-export interface InsightProfileRequest {
+interface InsightProfileRequest {
   insightId: number;
 }
 
-export interface Interest {
+interface Interest {
   name: string;
+}
+
+interface ChallengeRecordRequest {
+  insightId: number;
+}
+
+interface ChallengeRecordResponse {
+  message: string;
+  code: number;
+  data: {
+    challengeId: number;
+    challengeName: string;
+    order: number;
+    total: number;
+  };
 }

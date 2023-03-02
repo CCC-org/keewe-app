@@ -38,7 +38,7 @@ const ConditionalButton = ({
   const [offset, setOffset] = useState(0);
 
   function handleLayout(event: LayoutChangeEvent) {
-    const { y: yCoordinate, height } = event.nativeEvent.layout;
+    const { y: yCoordinate = 0, height = 0 } = event.nativeEvent.layout;
     setOffset(fullHeightOfScreen - yCoordinate - height);
   }
 

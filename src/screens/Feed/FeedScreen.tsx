@@ -1,16 +1,27 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import FeedList from './FeedList';
 import { useInfiniteFeed } from '../../utils/hooks/feedInifiniteScroll/useInfiniteFeed';
 import FeedScreenChallenge from '../../components/challenge/FeedScreenChallenge';
 import { useScrollToTop } from '@react-navigation/native';
 import GoToUploadButton from '../../components/buttons/GoToUploadButton';
-const FeedScreen = () => {
+import { useQueryClient } from '@tanstack/react-query';
+import { FeedQueryKeys } from '../../utils/api/FeedAPI';
+
+const FeedScreen = ({ navigation }) => {
   const scrollViewRef = useRef<any>(null);
+  const queryClient = useQueryClient();
   useScrollToTop(scrollViewRef);
 
   const { feedList, feedListIsLoading, touchBookMark, fetchNextPage, feedListQueryClient } =
     useInfiniteFeed('https://api-keewe.com/api/v1/insight');
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      queryClient.invalidateQueries(FeedQueryKeys.getFeed());
+    });
+
+    return unsubscribe;
+  }, [navigation]);
   // if (feedListIsLoading || challengeData.isLoading) {
   //   return <MainLottie />;
   // }

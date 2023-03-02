@@ -4,15 +4,26 @@ import { useTheme } from 'react-native-paper';
 
 interface BottomSheetOptionProps {
   title: string;
+  select?: boolean;
+  leftIcon?: JSX.Element;
   onPress: () => void;
 }
 
-const BottomSheetOption = ({ title, onPress }: BottomSheetOptionProps) => {
+const BottomSheetOption = ({ title, select, leftIcon, onPress }: BottomSheetOptionProps) => {
   const theme = useTheme();
   return (
     <Pressable onPress={onPress}>
       <View style={styles.title}>
-        <Text style={theme.fonts.text.body1.regular}>{title}</Text>
+        <Text
+          style={{
+            fontFamily: 'pretendard',
+            fontSize: 14,
+            color: select ? theme.colors.brand.onprimary.container : theme.colors.graphic.black,
+          }}
+        >
+          {title}
+        </Text>
+        {leftIcon}
       </View>
     </Pressable>
   );
@@ -22,7 +33,10 @@ export default BottomSheetOption;
 
 const styles = StyleSheet.create({
   title: {
-    justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     padding: 16,
+    height: 56,
   },
 });

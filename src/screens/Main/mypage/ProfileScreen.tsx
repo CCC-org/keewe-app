@@ -251,7 +251,7 @@ const ProfileScreen = ({ navigation, route }) => {
               condition={cur['introduction']}
               date={cur['achievedDate']
                 .slice(0, cur['achievedDate'].indexOf('T'))
-                .replaceAll('-', '.')}
+                .replace(/-/g, '.')}
             />
           );
         })}

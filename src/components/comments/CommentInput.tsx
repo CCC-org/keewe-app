@@ -42,13 +42,22 @@ const CommentInput = ({ insightId, replyInfo, onCancelReply, onCreate }: Comment
           <View style={styles.reply}>
             <Text
               style={{
+                ...styles.replyText,
                 ...theme.fonts.text.body2.regular,
                 color: `${theme.colors.graphic.black}30`,
               }}
             >
               {replyInfo.nickname}님에게 답글 남기는 중
             </Text>
-            <Pressable onPress={handleCancelReply}>
+            <Pressable
+              style={{
+                height: 'auto',
+                width: 48,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              onPress={handleCancelReply}
+            >
               <SvgXml xml={ClearSmallXml} />
             </Pressable>
           </View>
@@ -121,9 +130,10 @@ const styles = StyleSheet.create({
     height: 44,
     width: '100%',
     backgroundColor: `${theme.colors.brand.surface.container2}`,
+  },
+  replyText: {
     paddingTop: 12,
     paddingBottom: 12,
-    paddingRight: 20,
     paddingLeft: 20,
   },
 });

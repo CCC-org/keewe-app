@@ -34,7 +34,6 @@ const HeaderRightButton = (props: HeaderRightButtonProps) => {
         style={[
           {
             padding: 0,
-            marginRight: 15,
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',

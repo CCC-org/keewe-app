@@ -12,10 +12,6 @@ import { timeConverter } from './challenge/constant';
 import TwoButtonModal from '../../components/modal/TwoButtonModal';
 
 const ChallengesScreen = ({ navigation, route }) => {
-  // const { data: check, isLoading: isCheckLoading } = useQuery(
-  //   ['challenge'],
-  //   ChallengeAPI.participationCheck,
-  // );
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const hideModal = () => setModalVisible(false);
 
@@ -103,7 +99,7 @@ const ChallengesScreen = ({ navigation, route }) => {
         <>
           <View style={{ backgroundColor: theme.colors.brand.surface.main, ...styles.divider }} />
           <View style={styles.title}>
-            <Text style={{ fontFamily: 'pretendardSemiBold', fontSize: 16 }}>종료된 첼린지</Text>
+            <Text style={{ fontFamily: 'pretendardSemiBold', fontSize: 16 }}>종료된 챌린지</Text>
             <Text
               style={{
                 fontFamily: 'pretendardSemiBold',
@@ -140,7 +136,7 @@ const ChallengesScreen = ({ navigation, route }) => {
         <>
           <View style={{ backgroundColor: theme.colors.brand.surface.main, ...styles.divider }} />
           <View style={styles.title}>
-            <Text style={{ fontFamily: 'pretendardSemiBold', fontSize: 16 }}>모든 첼린지</Text>
+            <Text style={{ fontFamily: 'pretendardSemiBold', fontSize: 16 }}>모든 챌린지</Text>
           </View>
           {challengeCurrent?.map((current, index) => (
             <CurrentChallengeProfile

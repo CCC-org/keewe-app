@@ -7,7 +7,7 @@ import {
   Platform,
   KeyboardAvoidingView,
 } from 'react-native';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import DetailedPostSection from './DetailedPostSection';
 import { useIncreaseView } from '../../utils/hooks/DetailedInsight/useIncreaseView';
 import { useTheme } from 'react-native-paper';
@@ -25,16 +25,15 @@ import { DetailedPostApi } from '../../utils/api/DetailedPostAPI';
 import BookMarkOffXml from '../../constants/Icons/DetailedPost/BookMarkOffXml';
 import BookMarkOnXml from '../../constants/Icons/DetailedPost/BookMarkOnXml';
 import ShareIconXml from '../../constants/Icons/DetailedPost/ShareIconXml';
-import ThreeDotsXml from '../../constants/Icons/DetailedPost/ThreeDotsXml';
 import SnackBar from '../../components/bars/SnackBar';
+import { FeedQueryKeys } from '../../utils/api/FeedAPI';
+import FeedVerticalDots from '../Feed/FeedVerticalDots';
 
 const DetailedPostScreen = ({ navigation, route }) => {
   const { insightId } = route.params;
-  const [currentChallenge, setCurrentChallenge] = useState('내가 참여중인 챌린지');
   const [views] = useIncreaseView(insightId);
   const [replyInfo, setReplyInfo] = useState<ReplyInfo | undefined>();
   const [representiveReplies, setRepresentiveReplies] = useState(0);
-  const [bookmarkOn, setBookmarkOn] = useState<boolean | undefined>(false);
   const [snackBarOn, setSnackBarOn] = useState<boolean>(false);
 
   const queryClient = useQueryClient();
@@ -48,7 +47,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
   console.log('🚀 ~ file: DetailedPostScreen.tsx:43 ~ profile', profile);
 
   const followMutation = useMutation({
-    mutationFn: () => FollowAPI.follow(profile.data.authorId),
+    mutationFn: () => FollowAPI.follow(profile?.data?.authorId),
     onMutate: async () => {
       const key = InsightQueryKeys.getProfile({ insightId });
       await queryClient.cancelQueries({ queryKey: key });
@@ -83,8 +82,9 @@ const DetailedPostScreen = ({ navigation, route }) => {
   const handleBookmark = () => {
     DetailedPostApi.BookMark(insightId)
       .then((value) => {
-        setBookmarkOn(value?.bookmark);
         setSnackBarOn(true);
+        queryClient.invalidateQueries(InsightQueryKeys.getInsight({ insightId }));
+        queryClient.invalidateQueries(FeedQueryKeys.getFeed());
       })
       .catch((e) => {
         console.log(e);
@@ -108,10 +108,10 @@ const DetailedPostScreen = ({ navigation, route }) => {
       },
     },
   );
-
-  useEffect(() => {
-    setBookmarkOn(route?.params?.bookmark);
-  }, []);
+  const { data: getChallengeRecordResponse, isLoading: isChallengeRecordLoading } = useQuery(
+    InsightQueryKeys.getChallengeRecord({ insightId }),
+    () => InsightAPI.getChallengeRecord({ insightId }),
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -119,29 +119,31 @@ const DetailedPostScreen = ({ navigation, route }) => {
         return (
           <View style={styles.headerRight}>
             <Pressable onPress={handleBookmark}>
-              <SvgXml xml={bookmarkOn ? BookMarkOnXml : BookMarkOffXml} />
+              <SvgXml xml={insightResponse?.data?.bookmark ? BookMarkOnXml : BookMarkOffXml} />
             </Pressable>
             <Pressable
               onPress={() =>
                 navigation.navigate('Share', {
-                  name: profile ? profile.data.nickname : 'null ',
-                  title: profile ? profile.data.title : 'null ',
-                  image: profile ? profile.data.image : 'null ',
-                  challenge: currentChallenge,
+                  name: profile ? profile?.data?.nickname : 'null ',
+                  title: profile ? profile?.data?.title : 'null ',
+                  image: profile ? profile?.data?.image : 'null ',
+                  challenge: getChallengeRecordResponse?.data?.challengeName ?? '',
                   insightText: insightResponse?.data?.contents ?? '',
                 })
               }
             >
               <SvgXml xml={ShareIconXml} />
             </Pressable>
-            <Pressable onPress={() => alert('three dots')}>
-              <SvgXml xml={ThreeDotsXml} />
-            </Pressable>
+            <FeedVerticalDots
+              userName={profile?.data?.nickname}
+              userId={profile?.data?.authorId}
+              insightId={insightId}
+            />
           </View>
         );
       },
     });
-  }, [profile, insightResponse, currentChallenge, bookmarkOn]);
+  }, [profile, insightResponse, getChallengeRecordResponse]);
 
   const handleMoreCommentsPress = () => {
     navigation.navigate('Comments', { insightId, contentWriterId: profile?.data.authorId });
@@ -164,27 +166,34 @@ const DetailedPostScreen = ({ navigation, route }) => {
               insightText={insightResponse?.data?.contents ?? ''}
               views={views}
               url={insightResponse?.data?.link?.url ?? ''}
-              currentChallenge={currentChallenge}
+              currentChallenge={getChallengeRecordResponse?.data?.challengeName}
               reaction={insightResponse.data.reaction}
               authorId={profile?.data?.authorId ?? -1}
+              recordText={`${getChallengeRecordResponse?.data?.order}/${getChallengeRecordResponse?.data?.total}번째 기록중`}
             />
           )}
 
           {isProfileLoading ? null : (
-            <Profile
-              nickname={profile?.data?.nickname ?? '-'}
-              title={profile?.data?.title ?? '-'}
-              self={profile?.data?.author ?? '-'}
-              follow={profile?.data?.following}
-              interests={profile?.data?.interests ?? []}
-              createdAt={profile?.data?.createdAt ?? '-'}
-              image={profile?.data?.image ?? ''}
-              followMutation={followMutation}
-              style={{
-                backgroundColor: theme.colors.graphic.white,
-                padding: 16,
+            <Pressable
+              onPress={() => {
+                navigation.navigate('Profile', { userId: profile?.data?.authorId });
               }}
-            />
+            >
+              <Profile
+                nickname={profile?.data?.nickname ?? '-'}
+                title={profile?.data?.title ?? '-'}
+                self={profile?.data?.author ?? '-'}
+                follow={profile?.data?.following}
+                interests={profile?.data?.interests ?? []}
+                createdAt={profile?.data?.createdAt ?? '-'}
+                image={profile?.data?.image ?? ''}
+                followMutation={followMutation}
+                style={{
+                  backgroundColor: theme.colors.graphic.white,
+                  padding: 16,
+                }}
+              />
+            </Pressable>
           )}
           <View
             style={{ ...styles.commentDivider, backgroundColor: theme.colors.brand.surface.main }}
@@ -204,65 +213,83 @@ const DetailedPostScreen = ({ navigation, route }) => {
                     color: `${theme.colors.graphic.black}4d`,
                   }}
                 >
-                  {getCommentResponse?.data.total}
+                  {getCommentResponse?.data.total !== 0 ? getCommentResponse?.data.total : ''}
                 </Text>
               </View>
-
-              <View style={{ backgroundColor: 'white', paddingBottom: 16 }}>
-                <>
-                  {getCommentResponse?.data.comments.map((cur) => {
-                    console.log(
-                      '🚀 ~ file: DetailedPostScreen.tsx:193 ~ {getCommentResponse?.data.comments.map ~ cur',
-                      cur,
-                    );
-
-                    const comment = [
-                      <Comment
-                        key={cur.id}
-                        content={cur.content}
-                        nickname={cur.writer.name}
-                        isInsightWriter={profile.data.authorId === cur.writer.id}
-                        commentId={cur.id}
-                        commentWriterId={cur.writer.id}
-                        title={cur.writer.title}
-                        createdAt={cur.createdAt}
-                        isReply={false}
-                        onReply={() => handleReplyClick({ id: cur.id, nickname: cur.writer.name })}
-                      />,
-                    ];
-                    const repies = cur.replies.map((reply) => (
-                      <Comment
-                        key={`${cur.id} reply ${reply.id}`}
-                        content={reply.content}
-                        nickname={reply.writer.name}
-                        isInsightWriter={profile.data.authorId === cur.writer.id}
-                        commentWriterId={reply.writer.id}
-                        createdAt={reply.createdAt}
-                        title={reply.writer.title}
-                        isReply={true}
-                        commentId={reply.id}
-                      />
-                    ));
-                    return comment.concat(repies);
-                  })}
-                  {getCommentResponse.data.total > representiveReplies && (
-                    <View
-                      style={{
-                        marginTop: 16,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <MoreCommentsButton
-                        onPress={handleMoreCommentsPress}
-                        number={getCommentResponse.data.total - representiveReplies}
-                        textColor={'white'}
-                        backgroundColor={`${theme.colors.graphic.black}cc`}
-                      />
-                    </View>
-                  )}
-                </>
-              </View>
+              {getCommentResponse?.data.total !== 0 ? (
+                <View style={{ backgroundColor: 'white', paddingBottom: 16 }}>
+                  <>
+                    {getCommentResponse?.data.comments.map((cur) => {
+                      const comment = [
+                        <Comment
+                          key={cur.id}
+                          content={cur.content}
+                          nickname={cur.writer.name}
+                          isInsightWriter={profile?.data?.authorId === cur.writer.id}
+                          commentId={cur.id}
+                          commentWriterId={cur.writer.id}
+                          title={cur.writer.title}
+                          createdAt={cur.createdAt}
+                          isReply={false}
+                          onReply={() =>
+                            handleReplyClick({ id: cur.id, nickname: cur.writer.name })
+                          }
+                        />,
+                      ];
+                      const repies = cur.replies.map((reply) => (
+                        <Comment
+                          key={`${cur.id} reply ${reply.id}`}
+                          content={reply.content}
+                          nickname={reply.writer.name}
+                          isInsightWriter={profile?.data?.authorId === cur.writer.id}
+                          commentWriterId={reply.writer.id}
+                          createdAt={reply.createdAt}
+                          title={reply.writer.title}
+                          isReply={true}
+                          commentId={reply.id}
+                        />
+                      ));
+                      return comment.concat(repies);
+                    })}
+                    {getCommentResponse && getCommentResponse.data.total > representiveReplies && (
+                      <View
+                        style={{
+                          marginTop: 16,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <MoreCommentsButton
+                          onPress={handleMoreCommentsPress}
+                          number={getCommentResponse.data.total - representiveReplies}
+                          textColor={'white'}
+                          backgroundColor={`${theme.colors.graphic.black}cc`}
+                        />
+                      </View>
+                    )}
+                  </>
+                </View>
+              ) : (
+                <View
+                  style={{
+                    backgroundColor: 'white',
+                    width: '100%',
+                    alignItems: 'center',
+                    height: 200,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: 'pretendard',
+                      fontSize: 16,
+                      color: `${theme.colors.graphic.black}50`,
+                      marginTop: 32,
+                    }}
+                  >
+                    아직 댓글이 없어요.
+                  </Text>
+                </View>
+              )}
             </>
           )}
         </ScrollView>
@@ -277,9 +304,9 @@ const DetailedPostScreen = ({ navigation, route }) => {
       </KeyboardAvoidingView>
       <View style={styles.snack}>
         <SnackBar
-          text={bookmarkOn ? '북마크에 저장했어요.' : '북마크에서 삭제했어요.'}
+          text={insightResponse?.data?.bookmark ? '북마크에 저장했어요.' : '북마크에서 삭제했어요.'}
           visible={snackBarOn}
-          duration={900}
+          duration={90}
           onDismiss={() => setSnackBarOn(false)}
         />
       </View>
@@ -314,4 +341,13 @@ const styles = StyleSheet.create({
     left: 16,
     right: 16,
   },
+  moreSheet: { height: 168 },
+  reportSheet: { height: 375 },
+  button: {
+    width: 'auto',
+    borderRadius: 100,
+    marginHorizontal: 16,
+    top: 16,
+  },
+  buttonText: { fontFamily: 'pretendardSemiBold', fontSize: 18 },
 });
