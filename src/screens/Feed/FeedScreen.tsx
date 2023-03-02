@@ -17,9 +17,7 @@ const FeedScreen = ({ navigation }) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      console.log('Screen is focused');
       queryClient.invalidateQueries(FeedQueryKeys.getFeed());
-      // 실행하고자 하는 함수 또는 코드 작성
     });
 
     return unsubscribe;
