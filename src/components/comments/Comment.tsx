@@ -31,7 +31,7 @@ const Comment = ({
   isReply = false,
   onReply,
   highlight,
-  commentWriterId,
+  commentWriterId = 0,
   commentId,
 }: CommentsProps) => {
   const opacityValue = useRef(new Animated.Value(0)).current;

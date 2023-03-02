@@ -1,17 +1,15 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text } from 'react-native';
 import React, { useState } from 'react';
 import { useTheme } from 'react-native-paper';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { Feather } from '@expo/vector-icons';
 import ConditionalButton from '../buttons/ConditionalButton';
-import BottomSheetHeader from '../header/BottomSheetHeader';
-import HeaderRightButton from '../header/HeaderRightButton';
-import CountingTextArea from '../texts/CountingTextArea';
 import TwoButtonModal from '../modal/TwoButtonModal';
 import { blockUser } from '../../utils/api/user/profile/block';
 import { reportInsight, reportType } from '../../utils/api/report/insight/insightReport';
 import SnackBar from '../bars/SnackBar';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import DetailReportSheetContent from '../../screens/detailedPost/DetailReportSheetContent';
 
 interface BSPostOptionsProps {
   modalRef: React.RefObject<BottomSheetModalMethods>;
@@ -48,14 +46,14 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
     blockUser(userId)
       .then(() => {
         Toast.show({
-          type: 'success',
+          type: 'snackbar',
           text1: '사용자를 차단했어요.',
           position: 'bottom',
         });
       })
       .catch((res) => {
         Toast.show({
-          type: 'success',
+          type: 'snackbar',
           text1: res,
           position: 'bottom',
         });
@@ -78,7 +76,7 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
           modalRef.current?.dismiss();
         }, 100);
         Toast.show({
-          type: 'success',
+          type: 'snackbar',
           text1: '인사이트를 신고했어요.',
           position: 'bottom',
         });
@@ -88,30 +86,14 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
 
   if (selectedReport === -1) {
     return (
-      <View style={styles.contentContainer}>
-        <BottomSheetHeader
-          onLeftButtonPress={handleExitText}
-          title="기타 신고 사유"
-          iconName="arrowleft"
-          headerRightButton={() => (
-            <HeaderRightButton
-              text="완료"
-              backGroundColor={reportText.length ? '#b0e817' : '#12131420'}
-              textColor={reportText.length ? 'black' : '#ffffff'}
-              disabled={!reportText.length}
-              borderLine={false}
-              handlePress={handleReportSubmit}
-            />
-          )}
-        />
-        <CountingTextArea
-          inputValue={reportText}
-          placeholder="인사이트를 얻은 링크"
-          setInputValue={setReportText}
-          autoFocus={true}
-          limit={150}
-        />
-      </View>
+      <DetailReportSheetContent
+        reasonText={reportText}
+        setReasonText={setReportText}
+        handleSheetComplete={handleReportSubmit}
+        onHeaderLeftPress={handleExitText}
+        overflow={reportText !== undefined && reportText.length > 0 && reportText.length <= 150}
+        limit={150}
+      />
     );
   }
 

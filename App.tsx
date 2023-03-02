@@ -1,4 +1,4 @@
-import { NavigationContainer, RouteProp } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import HeaderBackButton from './src/components/header/HeaderBackButton';
@@ -15,12 +15,11 @@ import useCachedResources from './src/utils/hooks/useCachedResources';
 
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Provider as PaperProvider, useTheme } from 'react-native-paper';
+import { Provider as PaperProvider } from 'react-native-paper';
 import OnboardingIntroHeaderButton from './src/components/buttons/OnboardingIntroHeaderButton';
 import { RootScreen } from './src/navigation';
-//import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ChallengeSubjectCreationScreen from './src/screens/challenge/ChallengeSubjectCreationScreen';
 import ServiceIntroOneScreen from './src/screens/onboarding/ServiceIntroOneScreen';
 import ServiceIntroTwoScreen from './src/screens/onboarding/ServiceIntroTwoScreen';
@@ -33,9 +32,6 @@ import InsightSampleScreen from './src/screens/onboarding/InsightSampleScreen';
 import Tabs from './src/screens/Main/Tabs';
 import ShareScreen from './src/screens/detailedPost/ShareScreen';
 import CommentsScreen from './src/screens/detailedPost/CommentsScreen';
-import { TransitionPresets } from '@react-navigation/stack';
-import HomeScreen from './src/screens/Home/HomeScreen';
-import FeedScreen from './src/screens/Feed/FeedScreen';
 import ProfileEditScreen from './src/screens/Main/mypage/ProfileEditScreen';
 import NicknameEditingScreen from './src/screens/Main/mypage/NicknameEditingScreen';
 import IntroductionEditingScreen from './src/screens/Main/mypage/IntroductionEditingScreen';
@@ -346,6 +342,4 @@ export default function App() {
       </>
     );
   }
-  console.log('🚀 ~ file: App.tsx:348 ~ App ~ route', route);
-  console.log('🚀 ~ file: App.tsx:348 ~ App ~ route', route);
 }

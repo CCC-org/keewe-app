@@ -53,14 +53,14 @@ const BSOthersComment = ({
     blockUser(userId)
       .then(() => {
         Toast.show({
-          type: 'success',
+          type: 'snackbar',
           text1: '사용자를 차단했어요.',
           position: 'bottom',
         });
       })
       .catch((res) => {
         Toast.show({
-          type: 'success',
+          type: 'snackbar',
           text1: res,
           position: 'bottom',
         });
@@ -83,7 +83,7 @@ const BSOthersComment = ({
           modalRef.current?.dismiss();
         }, 100);
         Toast.show({
-          type: 'success',
+          type: 'snackbar',
           text1: '인사이트를 신고했어요.',
           position: 'bottom',
         });

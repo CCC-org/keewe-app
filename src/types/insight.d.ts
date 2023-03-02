@@ -25,12 +25,21 @@ interface InsightGetReponse {
   code: number;
   data: Insight;
 }
-
+interface InsightReportRequest {
+  reportType: string;
+  reason?: string;
+  insightId: number;
+}
+interface InsightReportResponse {
+  message: string;
+  code: number;
+}
 interface Insight {
   id: number;
   contents: string;
   link: Link;
   reaction: Reaction;
+  bookmark: boolean;
 }
 
 interface Link {

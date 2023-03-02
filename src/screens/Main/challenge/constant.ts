@@ -55,5 +55,5 @@ export const INTEREST_ICONS = {
 };
 
 export const timeConverter = (time: string) => {
-  return time.replaceAll('-', '.');
+  return time.replace(/-/g, '.');
 };

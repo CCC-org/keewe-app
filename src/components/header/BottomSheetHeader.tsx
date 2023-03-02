@@ -19,13 +19,7 @@ const BottomSheetHeader = ({
   const theme = useTheme();
   return (
     <View style={styles.container}>
-      <AntDesign
-        style={{ marginLeft: 4 }}
-        name={iconName || 'close'}
-        size={24}
-        color="black"
-        onPress={onLeftButtonPress}
-      />
+      <AntDesign name={iconName || 'close'} size={24} color="black" onPress={onLeftButtonPress} />
       <Text style={{ ...theme.fonts.text.body1.bold, ...styles.text }}>{title}</Text>
       {headerRightButton()}
     </View>
@@ -45,6 +39,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    marginLeft: 38,
+    marginLeft: 24,
   },
 });
