@@ -22,10 +22,6 @@ const FeedScreen = ({ navigation }) => {
 
     return unsubscribe;
   }, [navigation]);
-  // if (feedListIsLoading || challengeData.isLoading) {
-  //   return <MainLottie />;
-  // }
-  // <Text style={[theme.fonts.text.display, { marginBottom: 32 }]}>홈</Text>
 
   return (
     <>
