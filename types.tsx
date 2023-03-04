@@ -32,6 +32,7 @@ export type RootStackParamList = {
   ChallengeGoalSetting: undefined;
   ChallengeJoin: undefined;
   ChallengeJoinApproved: undefined;
+  ChallengeDetail: undefined;
   ServiceIntroOne: undefined;
   ServiceIntroTwo: undefined;
   ServiceIntroThree: undefined;

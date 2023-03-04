@@ -2,7 +2,7 @@ import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
 import { useQuery } from '@tanstack/react-query';
-import ChallengeProfile from './challenge/ChallengeProfile';
+import ChallengeProfile from '../../components/profile/ChallengeProfile';
 import BottomFixButton from '../../components/buttons/BottomFixButton';
 import theme from '../../theme/light';
 import { SvgXml } from 'react-native-svg';

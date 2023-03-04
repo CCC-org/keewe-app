@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { ScrollView } from 'react-native';
 import { ChallengeAPI } from '../../../utils/api/ChallengeAPI';
-import ChallengeProfile from './ChallengeProfile';
+import ChallengeProfile from '../../../components/profile/ChallengeProfile';
 
 const HistoryChallengeScreen = () => {
   const { data: challengeHistory, isLoading: isChallengeHIstoryLoading } = useQuery(

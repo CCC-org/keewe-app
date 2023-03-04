@@ -1,10 +1,10 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { SvgXml } from 'react-native-svg';
-import SmallPersonXml from '../../../constants/Icons/Avatar/\bsmallPersonXml';
-import darkChevronRightSmallXml from '../../../constants/Icons/Chevrons/darkChevronRightSmallXml';
-import { SelectedIconXml } from '../../../constants/InterestsIconXml';
-import theme from '../../../theme/light';
+import SmallPersonXml from '../../constants/Icons/Avatar/smallPersonXml';
+import darkChevronRightSmallXml from '../../constants/Icons/Chevrons/darkChevronRightSmallXml';
+import { SelectedIconXml } from '../../constants/InterestsIconXml';
+import theme from '../../theme/light';
 import { INTEREST_ICONS } from './constant';
 
 interface ChallengeProfileProps {

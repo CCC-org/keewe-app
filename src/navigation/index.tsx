@@ -168,20 +168,18 @@ export function RootScreen() {
             <Text> InsightScreen.tsx</Text>
           </View>
         </Pressable>
+        <Pressable onPress={() => navigation.navigate('ChallengeDetail', { challengeId: 0 })}>
+          <View
+            style={{
+              backgroundColor: 'red',
+              height: 100,
+              width: 150,
+            }}
+          >
+            <Text> ChallengeDetailScreen.tsx</Text>
+          </View>
+        </Pressable>
       </ScrollView>
-      {/*
-      <Pressable onPress={() => navigation.navigate('Stack.screen.name String')}>
-        <View
-          style={{
-            backgroundColor: 'Color of any',
-            width: 150,
-            height: 100,
-          }}
-        >
-          <Text> Component name</Text>
-        </View>
-      </Pressable>
-        */}
     </ScrollView>
   );
 }
