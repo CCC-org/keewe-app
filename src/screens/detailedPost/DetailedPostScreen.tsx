@@ -44,7 +44,6 @@ const DetailedPostScreen = ({ navigation, route }) => {
     () => InsightAPI.getProfile({ insightId }),
     querySuccessError,
   );
-  console.log('🚀 ~ file: DetailedPostScreen.tsx:43 ~ profile', profile);
 
   const followMutation = useMutation({
     mutationFn: () => FollowAPI.follow(profile?.data?.authorId),
@@ -87,7 +86,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
         queryClient.invalidateQueries(FeedQueryKeys.getFeed());
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e);
       });
   };
 

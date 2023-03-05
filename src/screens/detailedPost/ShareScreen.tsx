@@ -41,8 +41,6 @@ const ShareScreen = ({ navigation, route }) => {
       if (permissionResponse.status === 'granted') {
         const asset = await MediaLibrary.createAssetAsync(uri);
         await MediaLibrary.createAlbumAsync('Keewe', asset, false);
-        // console.log('asset: ', asset);
-        // await downloadToFolder(uri, String(new Date().getTime()), 'Keewe', 'image/jpeg');
       }
     } catch (error) {
       alert(error);

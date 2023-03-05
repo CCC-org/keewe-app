@@ -25,7 +25,6 @@ const App = () => {
     fetch('https://jsonplaceholder.typicode.com/posts')
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log('datasourcecords: ', responseJson.slice(0, 2));
         setDataSource(responseJson);
       })
       .catch((error) => {
@@ -34,9 +33,7 @@ const App = () => {
   }, []);
 
   const scrollHandler = () => {
-    console.log(dataSourceCords.length, scrollToIndex);
     if (dataSourceCords.length > scrollToIndex) {
-      console.log('target: ', dataSourceCords[scrollToIndex]);
       ref?.current?.scrollTo({
         x: 0,
         y: dataSourceCords[scrollToIndex - 1],
@@ -57,11 +54,6 @@ const App = () => {
           const layout = event.nativeEvent.layout;
           dataSourceCords[key] = layout.y;
           setDataSourceCords(dataSourceCords);
-          console.log(dataSourceCords);
-          console.log('height:', layout.height);
-          console.log('width:', layout.width);
-          console.log('x:', layout.x);
-          console.log('y:', layout.y);
         }}
       >
         <Text style={styles.itemStyle} onPress={() => getItem(item)}>

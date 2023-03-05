@@ -20,7 +20,6 @@ export const UploadApis = {
   },
   uploadInsight: async (datas: UploadRequest) => {
     const token = await getAccessToken();
-    console.log(datas);
     return axios
       .post('https://api-keewe.com/api/v1/insight', datas, {
         headers: {
@@ -28,7 +27,6 @@ export const UploadApis = {
         },
       })
       .then((res) => {
-        console.log('UploadInsight response object:', res);
         return res.data;
       });
   },
