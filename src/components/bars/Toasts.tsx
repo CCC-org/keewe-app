@@ -11,6 +11,7 @@ const toastConfig = {
         height: 60,
         borderRadius: 8,
         paddingHorizontal: 10,
+        marginBottom: 48,
         marginLeft: 'auto',
         marginRight: 'auto',
         backgroundColor: `${theme.colors.graphic.black}cc`,
