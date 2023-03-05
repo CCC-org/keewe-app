@@ -60,6 +60,8 @@ export type RootStackParamList = {
     follower: number;
     following: number;
   };
+  Settings: undefined;
+  PushNotificationSetting: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

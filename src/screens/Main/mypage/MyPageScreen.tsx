@@ -129,7 +129,7 @@ const MyPageScreen = ({ navigation, route }) => {
       >
         <View style={styles.top}>
           <View style={styles.setting}>
-            <Pressable onPress={() => alert('setting')}>
+            <Pressable onPress={() => navigation.navigate('Settings')}>
               <Ionicons
                 name="settings-outline"
                 size={24}

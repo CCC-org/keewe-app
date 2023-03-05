@@ -45,6 +45,8 @@ import UserFollowersScreen from './src/screens/follow/UserFollowersScreen';
 import FollowTopTabs from './src/navigation/tabs/FollowTopTabs';
 import Toasts from './src/components/bars/Toasts';
 import { RootStackParamList } from './types';
+import SettingsScreen from './src/screens/settings/SettingsScreen';
+import PushNotificationSettingScreen from './src/screens/settings/PushNotificationSettingScreen';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator<RootStackParamList>();
@@ -116,8 +118,26 @@ export default function App() {
                     />
                     <Stack.Screen
                       name={'NicknameEditing'}
-                      component={NicknameEditingScreen}
                       options={headerOptions}
+                      component={NicknameEditingScreen}
+                    />
+                    <Stack.Screen
+                      name={'Settings'}
+                      component={SettingsScreen}
+                      options={{
+                        ...headerOptions,
+                        title: '설정',
+                        cardStyle: { backgroundColor: '#f8f8f4' },
+                      }}
+                    />
+                    <Stack.Screen
+                      name={'PushNotificationSetting'}
+                      component={PushNotificationSettingScreen}
+                      options={{
+                        ...headerOptions,
+                        title: '푸시알림 설정',
+                        cardStyle: { backgroundColor: '#f8f8f4' },
+                      }}
                     />
                     <Stack.Screen
                       name={'IntroductionEditing'}
