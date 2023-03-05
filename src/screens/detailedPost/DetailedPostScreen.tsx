@@ -7,7 +7,7 @@ import {
   Platform,
   KeyboardAvoidingView,
 } from 'react-native';
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import DetailedPostSection from './DetailedPostSection';
 import { useIncreaseView } from '../../utils/hooks/DetailedInsight/useIncreaseView';
 import { useTheme } from 'react-native-paper';
@@ -25,16 +25,15 @@ import { DetailedPostApi } from '../../utils/api/DetailedPostAPI';
 import BookMarkOffXml from '../../constants/Icons/DetailedPost/BookMarkOffXml';
 import BookMarkOnXml from '../../constants/Icons/DetailedPost/BookMarkOnXml';
 import ShareIconXml from '../../constants/Icons/DetailedPost/ShareIconXml';
-import SnackBar from '../../components/bars/SnackBar';
 import { FeedQueryKeys } from '../../utils/api/FeedAPI';
 import FeedVerticalDots from '../Feed/FeedVerticalDots';
+import Toast from 'react-native-toast-message';
 
 const DetailedPostScreen = ({ navigation, route }) => {
   const { insightId } = route.params;
   const [views] = useIncreaseView(insightId);
   const [replyInfo, setReplyInfo] = useState<ReplyInfo | undefined>();
   const [representiveReplies, setRepresentiveReplies] = useState(0);
-  const [snackBarOn, setSnackBarOn] = useState<boolean>(false);
 
   const queryClient = useQueryClient();
   const theme = useTheme();
@@ -82,7 +81,13 @@ const DetailedPostScreen = ({ navigation, route }) => {
   const handleBookmark = () => {
     DetailedPostApi.BookMark(insightId)
       .then((value) => {
-        setSnackBarOn(true);
+        Toast.show({
+          type: 'snackbar',
+          text1: insightResponse?.data?.bookmark
+            ? '북마크에 저장했어요.'
+            : '북마크에서 삭제했어요.',
+          position: 'bottom',
+        });
         queryClient.invalidateQueries(InsightQueryKeys.getInsight({ insightId }));
         queryClient.invalidateQueries(FeedQueryKeys.getFeed());
       })
@@ -302,14 +307,6 @@ const DetailedPostScreen = ({ navigation, route }) => {
           }}
         />
       </KeyboardAvoidingView>
-      <View style={styles.snack}>
-        <SnackBar
-          text={insightResponse?.data?.bookmark ? '북마크에 저장했어요.' : '북마크에서 삭제했어요.'}
-          visible={snackBarOn}
-          duration={90}
-          onDismiss={() => setSnackBarOn(false)}
-        />
-      </View>
     </>
   );
 };

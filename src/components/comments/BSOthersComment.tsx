@@ -10,7 +10,6 @@ import CountingTextArea from '../texts/CountingTextArea';
 import TwoButtonModal from '../modal/TwoButtonModal';
 import { blockUser } from '../../utils/api/user/profile/block';
 import { reportInsight, reportType } from '../../utils/api/report/insight/insightReport';
-import SnackBar from '../bars/SnackBar';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 interface BSPostOptionsProps {
@@ -179,7 +178,6 @@ const BSOthersComment = ({
         rightButtonPress={handleBlockUser}
         rightButtonColor="#f24822"
       />
-      <SnackBar text="인사이트를 신고했어요" visible={isSnackBarVisible} />
     </ScrollView>
   );
 };

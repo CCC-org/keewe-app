@@ -4,6 +4,7 @@ import { FeedAPI, FeedQueryKeys } from '../../api/FeedAPI';
 import { FeedInsight, InsightData } from '../../../types/Feed/Feedinsights';
 import { postFeedBookMark } from '../../api/FeedBookMark';
 import { MypageQueryKeys } from '../../api/mypageAPI';
+import Toast from 'react-native-toast-message';
 
 export function useInfiniteFeed(fetchUrl: string) {
   const feedListQueryClient = useQueryClient();
@@ -43,6 +44,11 @@ export function useInfiniteFeed(fetchUrl: string) {
         for (const info of page) {
           if (info.id === id) {
             info.bookmark = !info.bookmark;
+            Toast.show({
+              type: 'snackbar',
+              text1: info.bookmark ? '북마크에 저장했어요.' : '북마크에서 삭제했어요.',
+              position: 'bottom',
+            });
           }
         }
       }

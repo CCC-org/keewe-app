@@ -156,7 +156,6 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
         rightButtonPress={handleBlockUser}
         rightButtonColor="#f24822"
       />
-      <SnackBar text="인사이트를 신고했어요" visible={isSnackBarVisible} />
     </ScrollView>
   );
 };
