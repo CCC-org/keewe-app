@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native';
 import { ChallengeAPI } from '../../../utils/api/ChallengeAPI';
 import CurrentChallengeProfile from './ChallengeProfileCurrent';
 
-const HistoryChallengeScreen = () => {
+const CurrentChallengeScreen = () => {
   const { data: challengeCurrent, isLoading: isChallengeCurrentLoading } = useQuery(
     ['challenge', { size: 5 }],
     () => ChallengeAPI.getChallengeCurrent({ size: 5 }),
@@ -25,4 +25,4 @@ const HistoryChallengeScreen = () => {
   );
 };
 
-export default HistoryChallengeScreen;
+export default CurrentChallengeScreen;
