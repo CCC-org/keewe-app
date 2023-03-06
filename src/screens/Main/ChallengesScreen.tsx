@@ -7,7 +7,7 @@ import BottomFixButton from '../../components/buttons/BottomFixButton';
 import theme from '../../theme/light';
 import { SvgXml } from 'react-native-svg';
 import darkChevronRightSmallXml from '../../constants/Icons/Chevrons/darkChevronRightSmallXml';
-import CurrentChallengeProfile from './challenge/ChallengeProfileCurrent';
+import CurrentChallengeProfile from '../../components/profile/ChallengeProfileCurrent';
 import { timeConverter } from './challenge/constant';
 import TwoButtonModal from '../../components/modal/TwoButtonModal';
 
