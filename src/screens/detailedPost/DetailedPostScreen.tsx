@@ -83,7 +83,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
       .then((value) => {
         Toast.show({
           type: 'snackbar',
-          text1: insightResponse?.data?.bookmark
+          text1: !insightResponse?.data?.bookmark
             ? '북마크에 저장했어요.'
             : '북마크에서 삭제했어요.',
           position: 'bottom',
