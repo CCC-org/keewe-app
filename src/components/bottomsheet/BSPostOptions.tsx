@@ -120,7 +120,7 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
         ))}
         <Pressable onPress={handleEtcReason} style={styles.clickableOption}>
           <Text style={styles.optionTitle}>
-            <Text>기타 사유 신고</Text>
+            <Text>기타 신고 사유</Text>
           </Text>
         </Pressable>
         <Pressable onPress={handleReportSubmit} style={{ marginTop: 72 }}>

@@ -6,6 +6,8 @@ import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
 import BSMyPostOptions from '../../components/bottomsheet/BSMyPostOptions';
 import BSPostOptions from '../../components/bottomsheet/BSPostOptions';
+import { SvgXml } from 'react-native-svg';
+import { threeDots } from '../../../assets/svgs/constantSvgs/threeDots';
 
 interface FeedVerticalDotsProps {
   userId: number;
@@ -29,7 +31,7 @@ const FeedVerticalDots = ({ userId, userName, insightId }: FeedVerticalDotsProps
   return (
     <>
       <Pressable onPress={handleVerticalDotsPress}>
-        <Feather name="more-vertical" size={24} color="black" />
+        <SvgXml xml={threeDots} />
       </Pressable>
       <BottomSheetModal
         ref={modalRef}

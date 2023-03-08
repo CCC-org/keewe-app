@@ -9,6 +9,8 @@ import { REACTIONS } from './constant';
 import ReactIconButton from '../../components/emoticons/ReactIconButton';
 import { useNavigation } from '@react-navigation/native';
 import { getUserId } from '../../utils/hooks/asyncStorage/Login';
+import { SvgXml } from 'react-native-svg';
+import ThreeDotsXml from '../../constants/Icons/DetailedPost/ThreeDotsXml';
 
 interface FeedItemProps {
   insight: InsightData;
