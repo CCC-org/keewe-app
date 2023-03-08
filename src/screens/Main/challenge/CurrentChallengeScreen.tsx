@@ -1,28 +1,48 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
-import { ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { FlatList } from 'react-native';
 import { ChallengeAPI } from '../../../utils/api/ChallengeAPI';
-import CurrentChallengeProfile from './ChallengeProfileCurrent';
+import CurrentChallengeProfile from '../../../components/profile/ChallengeProfileCurrent';
 
-const HistoryChallengeScreen = () => {
-  const { data: challengeCurrent, isLoading: isChallengeCurrentLoading } = useQuery(
-    ['challenge', { size: 5 }],
-    () => ChallengeAPI.getChallengeCurrent({ size: 5 }),
+const CurrentChallengeScreen = () => {
+  const [data, setData] = useState<CurrentChallenge[]>([]);
+  const [cursor, setCursor] = useState<number>();
+  const { isLoading: isChallengeLoading } = useQuery(
+    ['challenge', { cursor, limit: 10 }],
+    () => ChallengeAPI.getChallengeCurrent({ cursor, limit: 10 }),
+    {
+      onSuccess: (response: CurrentChallenge[]) => {
+        setData((prev) => [...prev, ...response]);
+      },
+    },
   );
+
+  const renderItem = ({ item, index }) => {
+    return (
+      <CurrentChallengeProfile
+        key={index}
+        name={item.challengeName}
+        interest={item.challengeCategory}
+        challengeDescription={item.challengeIntroduction}
+        insightNumber={item.insightCount}
+      />
+    );
+  };
+
+  const onEndReached = () => {
+    setCursor(data[data.length - 1].challengeId);
+  };
+
   return (
-    <ScrollView>
-      {!isChallengeCurrentLoading &&
-        challengeCurrent?.map((current, index) => (
-          <CurrentChallengeProfile
-            key={index}
-            name={current.challengeName}
-            interest={current.challengeCategory}
-            challengeDescription={current.challengeIntroduction}
-            insightNumber={current.insightCount}
-          />
-        ))}
-    </ScrollView>
+    <FlatList
+      data={data}
+      renderItem={renderItem}
+      onEndReached={onEndReached}
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      style={{ paddingBottom: '100%', marginBottom: 80 }}
+    />
   );
 };
 
-export default HistoryChallengeScreen;
+export default CurrentChallengeScreen;

@@ -35,35 +35,49 @@ interface ChallengeGetResponse {
 }
 
 interface ChallengeHistoryGetRequest {
-  size: number;
+  cursor?: number;
+  limit: number;
 }
 
 interface ChallengeHistoryGetResponse {
   message: string;
   code: number;
-  data: {
-    historyNumber: number;
-    challengeHistories: {
-      challengeId: number;
-      challengeCategory: string;
-      challengeName: string;
-      startDate: string;
-      endDate: string;
-    }[];
-  };
+  data: HistoryChallenge[];
+}
+
+interface ChallengeHistoryCountGetResponse {
+  message: string;
+  code: number;
+  data: { count: number };
+}
+interface HistoryChallenge {
+  challengeParticipationId: number;
+  challengeId: number;
+  challengeCategory: string;
+  challengeName: string;
+  startDate: string;
+  endDate: string;
 }
 interface ChallengeCurrentGetRequest {
-  size: number;
+  cursor?: number;
+  limit: number;
 }
 
 interface ChallengeCurrentGetResponse {
   message: string;
   code: number;
-  data: {
-    challengeId: number;
-    challengeCategory: string;
-    challengeIntroduction: string;
-    challengeName: string;
-    insightCount: string;
-  }[];
+  data: CurrentChallenge[];
+}
+
+interface CurrentChallenge {
+  challengeId: number;
+  challengeCategory: string;
+  challengeIntroduction: string;
+  challengeName: string;
+  insightCount: string;
+}
+interface ChallengeProgressGetResponse {
+  message: string;
+  code: number;
+  data: { name: string; current: number; total: number };
 }

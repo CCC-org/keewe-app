@@ -1,26 +1,46 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
-import { ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { FlatList } from 'react-native';
 import { ChallengeAPI } from '../../../utils/api/ChallengeAPI';
-import ChallengeProfile from './ChallengeProfile';
+import ChallengeProfile from '../../../components/profile/ChallengeProfile';
 
 const HistoryChallengeScreen = () => {
-  const { data: challengeHistory, isLoading: isChallengeHIstoryLoading } = useQuery(
-    ['challenge'],
-    () => ChallengeAPI.getChallengeHistory(),
+  const [data, setData] = useState<HistoryChallenge[]>([]);
+  const [cursor, setCursor] = useState<number>();
+  const { isLoading: isChallengeLoading } = useQuery(
+    ['challenge', { cursor, limit: 10 }],
+    () => ChallengeAPI.getChallengeHistory({ cursor, limit: 10 }),
+    {
+      onSuccess: (response: HistoryChallenge[]) => {
+        setData((prev) => [...prev, ...response]);
+      },
+    },
   );
+
+  const renderItem = ({ item, index }) => {
+    return (
+      <ChallengeProfile
+        key={index}
+        name={item.challengeName}
+        interest={item.challengeCategory}
+        Date={item.startDate + ' ~ ' + item.endDate}
+      />
+    );
+  };
+
+  const onEndReached = () => {
+    setCursor(data[data.length - 1].challengeParticipationId);
+  };
+
   return (
-    <ScrollView>
-      {!isChallengeHIstoryLoading &&
-        challengeHistory?.challengeHistories?.map((history, index) => (
-          <ChallengeProfile
-            key={index}
-            name={history.challengeName}
-            interest={history.challengeCategory}
-            Date={history.startDate + ' ~ ' + history.endDate}
-          />
-        ))}
-    </ScrollView>
+    <FlatList
+      data={data}
+      renderItem={renderItem}
+      onEndReached={onEndReached}
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      style={{ paddingBottom: '100%', marginBottom: 80 }}
+    />
   );
 };
 

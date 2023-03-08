@@ -1,35 +1,35 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { SvgXml } from 'react-native-svg';
-import SmallPersonXml from '../../../constants/Icons/Avatar/\bsmallPersonXml';
-import darkChevronRightSmallXml from '../../../constants/Icons/Chevrons/darkChevronRightSmallXml';
-import { SelectedIconXml } from '../../../constants/InterestsIconXml';
-import theme from '../../../theme/light';
+import theme from '../../theme/light';
 import { INTEREST_ICONS } from './constant';
 
-interface ChallengeProfileProps {
+interface CurrentChallengeProfileProps {
   name: string;
-  participatingUserNumber?: number;
+  challengeDescription?: string;
   interest: string;
-  Date?: string;
+  insightNumber: string;
   highlight?: boolean;
 }
 
-const ChallengeProfile = ({
+const CurrentChallengeProfile = ({
   name,
-  participatingUserNumber,
+  challengeDescription,
   interest,
-  Date,
-  highlight,
-}: ChallengeProfileProps) => {
+  insightNumber,
+}: CurrentChallengeProfileProps) => {
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        ...styles.container,
+        borderBottomWidth: 1,
+        borderColor: `${theme.colors.graphic.black}10`,
+      }}
+    >
       <View
         style={{
           ...styles.profile,
-          backgroundColor: highlight
-            ? theme.colors.brand.primary.container
-            : theme.colors.brand.surface.container1,
+          backgroundColor: theme.colors.brand.surface.container1,
           marginRight: 10,
         }}
       >
@@ -38,30 +38,21 @@ const ChallengeProfile = ({
       <View style={styles.description}>
         <View style={styles.texts}>
           <View style={styles.title}>
-            <Text
-              style={{
-                fontFamily: 'pretendardSemiBold',
-                fontSize: 16,
-                marginRight: 16,
-                marginBottom: 4,
-              }}
-            >
+            <Text style={{ fontFamily: 'pretendardSemiBold', fontSize: 16, marginRight: 16 }}>
               {name}
             </Text>
-            {participatingUserNumber !== undefined && (
-              <>
-                <SvgXml xml={SmallPersonXml} />
-                <Text style={{ fontFamily: 'pretendard', fontSize: 14 }}>
-                  {participatingUserNumber}
-                </Text>
-              </>
-            )}
           </View>
+          <Text
+            numberOfLines={2}
+            style={{ fontFamily: 'pretendard', height: 32, fontSize: 12, marginVertical: 4 }}
+          >
+            {challengeDescription}
+          </Text>
           <View style={{ flexDirection: 'row' }}>
             <Text
               style={{
                 fontFamily: 'pretendardSemiBold',
-                fontSize: 14,
+                fontSize: 12,
                 color: theme.colors.brand.onprimary.container,
               }}
             >
@@ -69,17 +60,16 @@ const ChallengeProfile = ({
             </Text>
             <Text
               style={{
-                fontFamily: 'pretendard',
-                fontSize: 14,
-                color: theme.colors.brand.onprimary.container,
+                fontFamily: 'pretendardMedium',
+                fontSize: 12,
+                color: `${theme.colors.graphic.black}50`,
               }}
             >
-              {' ' + Date}
+              {' '}
+              인사이트 {insightNumber}개
             </Text>
           </View>
         </View>
-        <SvgXml xml={darkChevronRightSmallXml} />
-        {/* 옆으로가기 버튼  */}
       </View>
     </View>
   );
@@ -87,7 +77,7 @@ const ChallengeProfile = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 12,
+    paddingVertical: 12,
     marginHorizontal: 16,
     flexDirection: 'row',
   },
@@ -112,4 +102,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChallengeProfile;
+export default CurrentChallengeProfile;

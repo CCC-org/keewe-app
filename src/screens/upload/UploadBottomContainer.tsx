@@ -1,7 +1,9 @@
 import { Feather } from '@expo/vector-icons';
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Switch, useTheme } from 'react-native-paper';
+import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
 
 interface UploadBottomContainerProps {
   isSwitchOn: boolean;
@@ -21,21 +23,30 @@ const UploadBottomContainer = ({
 
   const theme = useTheme();
 
+  const { data: ChallengeProgress, isLoading: isChallengeProgressLoading } = useQuery(
+    ['challenge', 'participation'],
+    ChallengeAPI.getChallengeProgress,
+  );
+
   return (
     <View style={styles.container}>
-      <View style={styles.bottomContainer}>
-        <View>
-          <Text style={theme.fonts.text.body1.bold}>챌린지 명</Text>
-          <Text style={theme.fonts.text.body2.regular}>6/12번째 기록 중</Text>
+      {ChallengeProgress && (
+        <View style={styles.bottomContainer}>
+          <View>
+            <Text style={theme.fonts.text.body1.bold}>{ChallengeProgress.name}</Text>
+            <Text style={theme.fonts.text.body2.regular}>
+              {ChallengeProgress.current}/{ChallengeProgress.total}번째 기록 중
+            </Text>
+          </View>
+          <View>
+            <Switch
+              value={isSwitchOn}
+              onValueChange={() => setIsSwitchOn((prev) => !prev)}
+              color={'#b0e817'}
+            />
+          </View>
         </View>
-        <View>
-          <Switch
-            value={isSwitchOn}
-            onValueChange={() => setIsSwitchOn((prev) => !prev)}
-            color={'#b0e817'}
-          />
-        </View>
-      </View>
+      )}
       <Pressable style={styles.bottomContainer} onPress={presentFolderSheet}>
         <View
           style={{

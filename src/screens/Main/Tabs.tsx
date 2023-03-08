@@ -39,6 +39,7 @@ const Tabs = () => {
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? <SvgXml xml={challengeOn} /> : <SvgXml xml={challengeOff} />,
+          title: '',
         }}
         name="Challenges"
         component={ChallengesScreen}
