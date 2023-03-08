@@ -10,6 +10,7 @@ export function useInfiniteFeed(fetchUrl: string) {
   const [cursor, setCursor] = useState(0);
   const [limit, setLimit] = useState(5);
   const [follow, setFollow] = useState(false);
+
   let key;
   if (fetchUrl.includes('drawerId')) {
     key = MypageQueryKeys.getFolderInsight(
@@ -19,6 +20,7 @@ export function useInfiniteFeed(fetchUrl: string) {
   } else {
     key = FeedQueryKeys.getFeed();
   }
+
   const {
     data: feedList,
     isLoading: feedListIsLoading,

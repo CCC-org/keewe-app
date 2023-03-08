@@ -69,10 +69,12 @@ const MyPageScreen = ({ navigation, route }) => {
     isUserFolderListLoading === true || userFolderList.selectedTab.id === 0
       ? ''
       : String(userFolderList.selectedTab.id);
+  console.log('drawerId', drawerId);
   const { feedList, feedListIsLoading, touchBookMark, fetchNextPage, feedListQueryClient } =
     useInfiniteFeed(
       'https://api-keewe.com/api/v1/insight/my-page/' + userId + '?drawerId=' + drawerId,
     );
+
   const scrollViewRef = useRef<any>(null);
   useScrollToTop(scrollViewRef);
   const [pageRefreshing, setPageRefreshing] = useState(false);
@@ -101,9 +103,11 @@ const MyPageScreen = ({ navigation, route }) => {
     isUserFolderListLoading,
   ]);
 
-  const handleFolderOption = (tabId: number) => {
+  const handleFolderOption = async (tabId: number) => {
+    // await queryClient.cancelQueries(MypageQueryKeys.getFolderList({ userId: userId }));
     const key = MypageQueryKeys.getFolderList({ userId: userId });
     const data = queryClient.getQueryState(key)!.data as TabInfo;
+
     const newTabs = data.tabs.map((tab) => {
       return {
         ...tab,
