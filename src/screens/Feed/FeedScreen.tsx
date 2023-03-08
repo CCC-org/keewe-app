@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import FeedList from './FeedList';
 import { useInfiniteFeed } from '../../utils/hooks/feedInifiniteScroll/useInfiniteFeed';
 import FeedScreenChallenge from '../../components/challenge/FeedScreenChallenge';
-import { useScrollToTop } from '@react-navigation/native';
+import { useFocusEffect, useScrollToTop } from '@react-navigation/native';
 import GoToUploadButton from '../../components/buttons/GoToUploadButton';
 import { useQueryClient } from '@tanstack/react-query';
 import { FeedQueryKeys } from '../../utils/api/FeedAPI';
@@ -14,14 +14,6 @@ const FeedScreen = ({ navigation }) => {
 
   const { feedList, feedListIsLoading, touchBookMark, fetchNextPage, feedListQueryClient } =
     useInfiniteFeed('https://api-keewe.com/api/v1/insight');
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      queryClient.invalidateQueries(FeedQueryKeys.getFeed());
-    });
-
-    return unsubscribe;
-  }, [navigation]);
 
   return (
     <>
