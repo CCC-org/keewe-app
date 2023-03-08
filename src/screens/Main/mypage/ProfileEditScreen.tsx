@@ -96,7 +96,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     //const { nickname: a, title: b, introduction: c, selectedCategory: d } = route.params;
-    //프로필 수정 api 나오면 btnAbled 논리 들어갈 예정
+    //btnAbled 논리
     setBtnAbled(true);
   }, [route]);
 
@@ -148,7 +148,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
     // "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540akdlsz21%252Fkeewe/ImagePicker/29c5936e-b619-4667-9aa0-292686e75bb6.jpg"
 
     if (!result.canceled) {
-      setImage(result.uri);
+      setImage(result.assets[0].uri);
     }
     bottomSheetModalRef.current?.dismiss();
   };
@@ -167,7 +167,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
     console.log('🚀 ~ file: ProfileEditScreen.tsx:156 ~ openCamera ~ result', result);
 
     if (!result.canceled) {
-      setImage(result.uri);
+      setImage(result.assets[0].uri);
     }
     bottomSheetModalRef.current?.dismiss();
   };
@@ -210,6 +210,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
 
         return res.data;
       } catch (err) {
+        alert(`에러 발생 : ${err}`);
         console.log(err);
       }
     }
@@ -231,6 +232,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
           rightButtonPress={() => {
             handleSaveProfileInfo();
             setModalVisible(false);
+            navigation.navigate('MyPage');
           }}
         />
         <TwoButtonModal
