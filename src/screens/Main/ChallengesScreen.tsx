@@ -1,7 +1,7 @@
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
-import { useQuery } from '@tanstack/react-query';
+import { QueryClient, useQuery, useQueryClient } from '@tanstack/react-query';
 import ChallengeProfile from '../../components/profile/ChallengeProfile';
 import BottomFixButton from '../../components/buttons/BottomFixButton';
 import theme from '../../theme/light';
@@ -10,10 +10,12 @@ import darkChevronRightSmallXml from '../../constants/Icons/Chevrons/darkChevron
 import CurrentChallengeProfile from '../../components/profile/ChallengeProfileCurrent';
 import { timeConverter } from './challenge/constant';
 import TwoButtonModal from '../../components/modal/TwoButtonModal';
+import { useFocusEffect } from '@react-navigation/native';
 
 const ChallengesScreen = ({ navigation, route }) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const hideModal = () => setModalVisible(false);
+  const queryClient = useQueryClient();
 
   const { data: challengeParticipation, isLoading: isChallengeParticipationLoading } = useQuery(
     ['challenge', 'participation'],
@@ -34,7 +36,13 @@ const ChallengesScreen = ({ navigation, route }) => {
     ['challenge', { limit: 5 }],
     () => ChallengeAPI.getChallengeCurrent({ limit: 5 }),
   );
-  console.log(challengeHistoryCount);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      queryClient.invalidateQueries(['challenge']);
+    }, []),
+  );
+
   return (
     <ScrollView>
       <TwoButtonModal

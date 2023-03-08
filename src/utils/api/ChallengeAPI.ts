@@ -85,4 +85,19 @@ export const ChallengeAPI = {
         return res.data.data;
       });
   },
+  getChallengeProgress: async () => {
+    const token = await getAccessToken();
+    return axios
+      .get<ChallengeProgressGetResponse>(
+        'https://api-keewe.com/api/v1/challenge/participation/progress/insight',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
+      .then((res) => {
+        return res.data.data;
+      });
+  },
 };
