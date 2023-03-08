@@ -46,6 +46,8 @@ import FollowTopTabs from './src/navigation/tabs/FollowTopTabs';
 import Toasts from './src/components/bars/Toasts';
 import { RootStackParamList } from './types';
 import ChallengeDetailScreen from './src/screens/Main/challenge/ChallengeDetailScreen';
+import CurrentChallengeScreen from './src/screens/Main/challenge/CurrentChallengeScreen';
+import HistoryChallengeScreen from './src/screens/Main/challenge/HistoryChallengeScreen';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator<RootStackParamList>();
@@ -203,6 +205,16 @@ export default function App() {
                         name="ChallengeJoinApproved"
                         component={ChallengeJoinApprovedScreen}
                         options={headerOptions}
+                      />
+                      <Stack.Screen
+                        name="ChallengeCurrent"
+                        component={CurrentChallengeScreen}
+                        options={{ ...headerOptions, title: '모든 챌린지' }}
+                      />
+                      <Stack.Screen
+                        name="ChallengeHistory"
+                        component={HistoryChallengeScreen}
+                        options={{ ...headerOptions, title: '종료된 챌린지' }}
                       />
                     </Stack.Group>
                     <Stack.Group

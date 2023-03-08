@@ -1,4 +1,4 @@
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
 import { useQuery } from '@tanstack/react-query';
@@ -15,21 +15,26 @@ const ChallengesScreen = ({ navigation, route }) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const hideModal = () => setModalVisible(false);
 
-  const { data: currentChallenge, isLoading: isCurrentChallengeLoading } = useQuery(
-    ['challenge'],
-    ChallengeAPI.getChallenge,
+  const { data: challengeParticipation, isLoading: isChallengeParticipationLoading } = useQuery(
+    ['challenge', 'participation'],
+    ChallengeAPI.getChallengeParticipation,
   );
 
   const { data: challengeHistory, isLoading: isChallengeHIstoryLoading } = useQuery(
-    ['challenge', { size: 3 }],
-    () => ChallengeAPI.getChallengeHistory({ size: 3 }),
+    ['challenge', { limit: 3 }],
+    () => ChallengeAPI.getChallengeHistory({ limit: 3 }),
+  );
+
+  const { data: challengeHistoryCount, isLoading: isChallengeHIstoryCountLoading } = useQuery(
+    ['challenge', 'count'],
+    () => ChallengeAPI.getChallengeHistoryCount(),
   );
 
   const { data: challengeCurrent, isLoading: isChallengeCurrentLoading } = useQuery(
-    ['challenge', { size: 5 }],
-    () => ChallengeAPI.getChallengeCurrent({ size: 5 }),
+    ['challenge', { limit: 5 }],
+    () => ChallengeAPI.getChallengeCurrent({ limit: 5 }),
   );
-
+  console.log(challengeHistoryCount);
   return (
     <ScrollView>
       <TwoButtonModal
@@ -48,7 +53,7 @@ const ChallengesScreen = ({ navigation, route }) => {
           navigation.navigate('CategorySelect');
         }}
       />
-      {currentChallenge ? (
+      {challengeParticipation ? (
         <View style={{ marginBottom: 8 }}>
           <Text
             style={{
@@ -65,10 +70,10 @@ const ChallengesScreen = ({ navigation, route }) => {
             <Image source={require('../../../assets/images/challenge/challengeView.png')} />
           </View>
           <ChallengeProfile
-            name={currentChallenge?.name ?? ''}
-            participatingUserNumber={currentChallenge?.participatingUserNumber ?? 0}
-            interest={currentChallenge?.interest ?? ''}
-            Date={timeConverter(currentChallenge?.startDate) ?? ''}
+            name={challengeParticipation?.name ?? ''}
+            participatingUserNumber={challengeParticipation?.participatingUserNumber ?? 0}
+            interest={challengeParticipation?.interest ?? ''}
+            Date={timeConverter(challengeParticipation?.startDate ?? '')}
             highlight={true}
           />
         </View>
@@ -95,7 +100,7 @@ const ChallengesScreen = ({ navigation, route }) => {
         buttonStyle={styles.button}
         textStyle={styles.buttonText}
       />
-      {!isChallengeHIstoryLoading && challengeHistory?.historyNumber !== 0 && (
+      {!isChallengeHIstoryCountLoading && challengeHistoryCount?.count !== 0 && (
         <>
           <View style={{ backgroundColor: theme.colors.brand.surface.main, ...styles.divider }} />
           <View style={styles.title}>
@@ -108,10 +113,10 @@ const ChallengesScreen = ({ navigation, route }) => {
                 marginLeft: 6,
               }}
             >
-              {challengeHistory?.historyNumber}
+              {challengeHistoryCount?.count}
             </Text>
           </View>
-          {challengeHistory?.challengeHistories?.map((history, index) => (
+          {challengeHistory?.map((history, index) => (
             <ChallengeProfile
               key={index}
               name={history.challengeName}
@@ -119,17 +124,13 @@ const ChallengesScreen = ({ navigation, route }) => {
               Date={timeConverter(history.startDate + ' ~ ' + history.endDate)}
             />
           ))}
-          <View
-            style={{
-              ...styles.borderContainer,
-              borderTopWidth: 1,
-              borderColor: `${theme.colors.graphic.black}10`,
-            }}
+          <Pressable
+            onPress={() => navigation.navigate('ChallengeHistory')}
+            style={{ ...styles.borderContainer }}
           >
             <Text style={{ fontFamily: 'pretendard', fontSize: 16, marginRight: 4 }}>전체보기</Text>
             <SvgXml xml={darkChevronRightSmallXml} />
-            {/* 전체보기 페이지로 이동 */}
-          </View>
+          </Pressable>
         </>
       )}
       {!isChallengeCurrentLoading && challengeCurrent?.length !== 0 && (
@@ -147,11 +148,13 @@ const ChallengesScreen = ({ navigation, route }) => {
               insightNumber={current.insightCount}
             />
           ))}
-          <View style={{ ...styles.borderContainer }}>
+          <Pressable
+            onPress={() => navigation.navigate('ChallengeCurrent')}
+            style={{ ...styles.borderContainer }}
+          >
             <Text style={{ fontFamily: 'pretendard', fontSize: 16, marginRight: 4 }}>전체보기</Text>
             <SvgXml xml={darkChevronRightSmallXml} />
-            {/* 전체보기 페이지로 이동 */}
-          </View>
+          </Pressable>
         </>
       )}
       <View style={{ backgroundColor: theme.colors.brand.surface.main, ...styles.divider }} />

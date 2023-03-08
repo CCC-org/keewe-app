@@ -42,7 +42,10 @@ const CurrentChallengeProfile = ({
               {name}
             </Text>
           </View>
-          <Text style={{ fontFamily: 'pretendard', fontSize: 12, marginVertical: 4 }}>
+          <Text
+            numberOfLines={2}
+            style={{ fontFamily: 'pretendard', height: 32, fontSize: 12, marginVertical: 4 }}
+          >
             {challengeDescription}
           </Text>
           <View style={{ flexDirection: 'row' }}>

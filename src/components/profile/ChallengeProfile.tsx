@@ -78,8 +78,6 @@ const ChallengeProfile = ({
             </Text>
           </View>
         </View>
-        <SvgXml xml={darkChevronRightSmallXml} />
-        {/* 옆으로가기 버튼  */}
       </View>
     </View>
   );
