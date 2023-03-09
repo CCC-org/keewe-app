@@ -10,5 +10,6 @@ interface LoginResponse {
   data: {
     userId: number;
     accessToken: string;
+    alreadySignedUp: boolean;
   };
 }

@@ -1,19 +1,41 @@
-import { Text } from 'react-native';
+import { Text, Pressable } from 'react-native';
 import React from 'react';
-import { Button } from 'react-native-paper';
+import { SvgXml } from 'react-native-svg';
 
 interface SocialLoginButtonProps {
   text: string;
-  icon?: string;
+  textColor: string;
+  xml?: string;
   color: string;
   onPress: () => void;
 }
 
-const SocialLoginButton = ({ onPress, color, icon, text }: SocialLoginButtonProps) => {
+const SocialLoginButton = ({ onPress, textColor, color, xml, text }: SocialLoginButtonProps) => {
   return (
-    <Button onPress={onPress} mode="contained" color={color} icon={icon}>
-      <Text>{text}</Text>
-    </Button>
+    <Pressable
+      onPress={onPress}
+      style={{
+        width: 343,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 100,
+        backgroundColor: color,
+      }}
+    >
+      {xml && <SvgXml xml={xml} style={{ marginRight: 8 }} />}
+      <Text
+        style={{
+          fontFamily: 'pretendardSemiBold',
+          fontSize: 16,
+          marginVertical: 16,
+          lineHeight: 24,
+          color: textColor,
+        }}
+      >
+        {text}
+      </Text>
+    </Pressable>
   );
 };
 

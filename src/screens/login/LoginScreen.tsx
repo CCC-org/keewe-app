@@ -19,6 +19,7 @@ function Login({ navigation, route }) {
     onSuccess: (response) => {
       setAccessToken(response.data.accessToken);
       setUserId(response.data.userId);
+      if (response.data.alreadySignedUp) navigation.navigate('Tabs');
       navigation.navigate('CategorySelect');
     },
     onError: (e) => {
