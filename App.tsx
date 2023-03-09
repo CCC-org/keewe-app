@@ -152,7 +152,9 @@ export default function App() {
                       <Stack.Screen
                         name="SignUp"
                         component={SignUpScreen}
-                        options={headerOptions}
+                        options={{
+                          headerLeft: () => <View></View>,
+                        }}
                       />
                       <Stack.Screen name="Login" component={LoginScreen} options={headerOptions} />
                       <Stack.Screen

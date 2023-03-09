@@ -13,7 +13,7 @@ import React, { useState } from 'react';
 import { useTheme } from 'react-native-paper';
 
 interface ConditionalButtonProps {
-  isActive: boolean;
+  isActive?: boolean;
   text: string;
   color?: string;
   textColor?: string;
@@ -26,7 +26,7 @@ interface ConditionalButtonProps {
 const fullHeightOfScreen = Dimensions.get('window').height;
 
 const ConditionalButton = ({
-  isActive,
+  isActive = true,
   onPress,
   text,
   width,
