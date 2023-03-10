@@ -36,6 +36,7 @@ const MyPageScreen = ({ navigation, route }) => {
   const [selectedCategory, setSelectedCategory] = useState<Record<string, string>[]>([]);
   const [representativeTitleList, setRepresentativeTitleList] = useState<AchievedTitle[]>([]);
   const [titleTotal, setTitleTotal] = useState<number>(0);
+
   const [iconColor, setIconColor] = useState([
     [theme.colors.graphic.purple, `${theme.colors.graphic.purple}1a`],
     [theme.colors.graphic.sky, `${theme.colors.graphic.sky}1a`],
@@ -64,12 +65,13 @@ const MyPageScreen = ({ navigation, route }) => {
   );
 
   const queryClient = useQueryClient();
-  queryClient.invalidateQueries({ queryKey: ['profile'] });
+  // queryClient.invalidateQueries({ queryKey: ['profile'] });
   const drawerId =
     isUserFolderListLoading === true || userFolderList.selectedTab.id === 0
       ? ''
       : String(userFolderList.selectedTab.id);
   console.log('drawerId', drawerId);
+
   const { feedList, feedListIsLoading, touchBookMark, fetchNextPage, feedListQueryClient } =
     useInfiniteFeed(
       'https://api-keewe.com/api/v1/insight/my-page/' + userId + '?drawerId=' + drawerId,
@@ -125,6 +127,10 @@ const MyPageScreen = ({ navigation, route }) => {
       selectedTab: newSelectedTab,
     });
   };
+
+  const [scrollHeight, setScrollHeight] = useState(0);
+
+  if (isUserFolderListLoading) return null;
 
   return (
     <>
@@ -266,8 +272,8 @@ const MyPageScreen = ({ navigation, route }) => {
               })}
             </ScrollView>
             {feedList?.pages[0]?.length !== 0 ? (
-              <>
-                <View style={styles.insight}>
+              <View>
+                <View style={[styles.insight]}>
                   <Text
                     style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}
                   >
@@ -287,7 +293,7 @@ const MyPageScreen = ({ navigation, route }) => {
                   touchBookMark={touchBookMark}
                   feedListIsLoading={feedListIsLoading}
                 />
-              </>
+              </View>
             ) : (
               <View style={styles.noInsight}>
                 <Text
