@@ -191,7 +191,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
     for (const inter of selectedCategory) {
       formData.append('interests', inter);
     }
-    formData.append('repTitleId', '2000');
+    formData.append('repTitleId', route?.params?.titleId);
     // alert(introduction);
     formData.append('introduction', introduction);
     formData.append('updatePhoto', 'true');
