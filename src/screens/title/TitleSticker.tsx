@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 15,
+    marginBottom: 24,
   },
   check: {
     position: 'absolute',

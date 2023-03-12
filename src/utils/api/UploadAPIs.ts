@@ -28,7 +28,6 @@ export const UploadApis = {
         },
       })
       .then((res) => {
-        console.log('UploadInsight response object:', res);
         return res.data;
       });
   },

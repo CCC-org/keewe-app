@@ -5,6 +5,8 @@ import MiniProfile from '../profile/MiniProfile';
 import { useTheme } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import CommentVerticalDots from './CommentVerticalDots';
+import { getUserId } from '../../utils/hooks/asyncStorage/Login';
+import { useGetUserId } from '../../utils/hooks/useGetUserId';
 
 interface CommentsProps {
   nickname: string;
@@ -42,6 +44,7 @@ const Comment = ({
 
   const navigation = useNavigation();
 
+  const userId = useGetUserId();
   const theme = useTheme();
   return (
     <Animated.View
@@ -60,7 +63,9 @@ const Comment = ({
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
         <Pressable
           onPress={() => {
-            navigation.navigate('Profile', { userId: commentWriterId });
+            if (userId !== commentWriterId)
+              navigation.navigate('Profile', { userId: commentWriterId });
+            else navigation.navigate('MyPage', { userId, enteredByTab: false });
           }}
         >
           <MiniProfile

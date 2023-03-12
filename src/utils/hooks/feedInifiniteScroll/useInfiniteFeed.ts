@@ -1,5 +1,5 @@
 import { InfiniteData, useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FeedAPI, FeedQueryKeys } from '../../api/FeedAPI';
 import { FeedInsight, InsightData } from '../../../types/Feed/Feedinsights';
 import { postFeedBookMark } from '../../api/FeedBookMark';
@@ -11,6 +11,7 @@ export function useInfiniteFeed(fetchUrl: string) {
   const [cursor, setCursor] = useState(0);
   const [limit, setLimit] = useState(5);
   const [follow, setFollow] = useState(false);
+
   let key;
   if (fetchUrl.includes('drawerId')) {
     key = MypageQueryKeys.getFolderInsight(
@@ -20,13 +21,15 @@ export function useInfiniteFeed(fetchUrl: string) {
   } else {
     key = FeedQueryKeys.getFeed();
   }
+
   const {
     data: feedList,
     isLoading: feedListIsLoading,
-    fetchNextPage,
+    fetchNextPage: temp,
   } = useInfiniteQuery<FeedInsight['data'] | undefined>({
     queryKey: key,
     queryFn: (context) => {
+      // taping folder tabs will trigger queryFn before MyPagecreen comp re-renders, resulting in api request before tap.
       return FeedAPI.getFeed(fetchUrl, context.pageParam, limit, follow);
     },
     getNextPageParam: (lastpage) => {
@@ -63,7 +66,10 @@ export function useInfiniteFeed(fetchUrl: string) {
     feedList,
     feedListIsLoading,
     touchBookMark,
-    fetchNextPage,
+    fetchNextPage: () => {
+      console.log('temp');
+      temp();
+    },
     feedListQueryClient,
   };
 }

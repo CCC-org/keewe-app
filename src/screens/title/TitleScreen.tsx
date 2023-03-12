@@ -60,8 +60,11 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     padding: 10,
     paddingTop: 20,
+    paddingLeft: 16,
   },
-  achievementContainer: {},
+  achievementContainer: {
+    paddingBottom: 8,
+  },
   titlesContainer: {
     flex: 1,
     flexDirection: 'row',

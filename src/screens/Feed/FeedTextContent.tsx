@@ -31,10 +31,7 @@ const FeedTextContent = ({ contents, insightId, bookmark }: FeedTextContent) => 
       >
         {modifiedContents}
         {modifiedContents.length >= 99 ? (
-          <Text style={[theme.fonts.text.body1.regular, { color: '#12131450' }]}>
-            {'  '}
-            더보기
-          </Text>
+          <Text style={[theme.fonts.text.body1.regular, { color: '#12131450' }]}>... 더보기</Text>
         ) : null}
       </Text>
     </Pressable>

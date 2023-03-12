@@ -146,7 +146,6 @@ const ProfileScreen = ({ navigation, route }) => {
       tabs: newTabs,
       selectedTab: newSelectedTab,
     });
-    console.log('feddlist:', feedList);
   };
 
   return (
