@@ -16,7 +16,6 @@ export const FeedAPI = {
         limit,
       )}&follow=${follow}`;
     }
-    console.log('URL', URL);
     const token = await getAccessToken();
     try {
       const response = await axios.get<FeedInsight>(URL, {

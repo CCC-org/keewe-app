@@ -6,9 +6,8 @@ import { useScrollToTop } from '@react-navigation/native';
 import GoToUploadButton from '../../components/buttons/GoToUploadButton';
 import { useQueryClient } from '@tanstack/react-query';
 import { FeedQueryKeys } from '../../utils/api/FeedAPI';
-import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
+import { RefreshControl, StyleSheet } from 'react-native';
 import { IOScrollView } from 'react-native-intersection-observer';
-import MemoizedFeedList from '../Main/mypage/MemoizedFeedList';
 import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChallenge';
 
 const FeedScreen = ({ navigation }) => {
@@ -26,11 +25,6 @@ const FeedScreen = ({ navigation }) => {
 
     return unsubscribe;
   }, [navigation]);
-  // if (feedListIsLoading || challengeData.isLoading) {
-  //   return <MainLottie />;
-  // }
-  // <Text style={[theme.fonts.text.display, { marginBottom: 32 }]}>홈</Text>
-  const [scrollHeight, setScrollHeight] = useState(0);
   const [pageRefreshing, setPageRefreshing] = useState(false);
 
   const onRefresh = () => {
@@ -47,7 +41,6 @@ const FeedScreen = ({ navigation }) => {
         ref={scrollViewRef}
         refreshControl={<RefreshControl refreshing={pageRefreshing} onRefresh={onRefresh} />}
       >
-        {/* <View style={{ height: scrollHeight }}> */}
         <FeedList
           scrollViewRef={scrollViewRef}
           upperComponent={<FeedScreenChallenge />}
@@ -57,16 +50,6 @@ const FeedScreen = ({ navigation }) => {
           touchBookMark={touchBookMark}
           feedListIsLoading={feedListIsLoading}
         />
-        {/* <MemoizedFeedList
-        scrollViewRef={scrollViewRef}
-        upperComponent={<FeedScreenChallenge />}
-        feedList={feedList}
-        feedListQueryClient={feedListQueryClient}
-        fetchNextPage={fetchNextPage}
-        touchBookMark={touchBookMark}
-        feedListIsLoading={feedListIsLoading}
-      /> */}
-        {/* </View> */}
       </IOScrollView>
       <GoToUploadButton />
     </>

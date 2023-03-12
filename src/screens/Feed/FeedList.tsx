@@ -28,16 +28,6 @@ const FeedList = ({
   scrollViewRef,
   writer,
 }: FeedListProps) => {
-  const [pageRefreshing, setPageRefreshing] = useState(false);
-
-  const onRefresh = () => {
-    setPageRefreshing(true);
-    feedListQueryClient.invalidateQueries(FeedQueryKeys.getFeed());
-    feedListQueryClient
-      .invalidateQueries(UserSpecificChallengeQueryKeys.getUserSpecificChallenge())
-      .then(() => setPageRefreshing(false));
-  };
-
   return (
     <ScrollView contentContainerStyle={styles.feedCtn} ref={scrollViewRef}>
       {UpperComponent}

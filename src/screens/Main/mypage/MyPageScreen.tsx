@@ -128,8 +128,6 @@ const MyPageScreen = ({ navigation, route }) => {
     });
   };
 
-  const [scrollHeight, setScrollHeight] = useState(0);
-
   if (isUserFolderListLoading) return null;
 
   return (

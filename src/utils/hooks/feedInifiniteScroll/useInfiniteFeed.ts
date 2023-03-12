@@ -21,14 +21,6 @@ export function useInfiniteFeed(fetchUrl: string) {
     key = FeedQueryKeys.getFeed();
   }
 
-  // useEffect(() => {
-  //   return () => {
-  //     (async function () {
-  //       feedListQueryClient.cancelQueries({ queryKey: ['feed'] });
-  //     })();
-  //   };
-  // }, []);
-
   const {
     data: feedList,
     isLoading: feedListIsLoading,
@@ -36,7 +28,6 @@ export function useInfiniteFeed(fetchUrl: string) {
   } = useInfiniteQuery<FeedInsight['data'] | undefined>({
     queryKey: key,
     queryFn: (context) => {
-      console.log('queryFn');
       // taping folder tabs will trigger queryFn before MyPagecreen comp re-renders, resulting in api request before tap.
       return FeedAPI.getFeed(fetchUrl, context.pageParam, limit, follow);
     },
