@@ -131,11 +131,12 @@ const ProfileEditScreen = ({ navigation, route }) => {
   const handleShotPress = () => openCamera();
 
   const pickImage = async () => {
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (permissionResult.granted === false) {
-      changePermission();
-      return;
-    }
+    // BUG: Android에 권한 부여 원할하지 않음
+    // const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    // if (permissionResult.granted === false) {
+    //   changePermission();
+    //   return;
+    // }
 
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -154,12 +155,12 @@ const ProfileEditScreen = ({ navigation, route }) => {
   };
 
   const openCamera = async () => {
-    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
-
-    if (permissionResult.granted === false) {
-      changePermission();
-      return;
-    }
+    // BUG: Android에 권한 부여 원할하지 않음
+    // const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+    // if (permissionResult.granted === false) {
+    //   changePermission();
+    //   return;
+    // }
 
     const result = await ImagePicker.launchCameraAsync({
       base64: true,
@@ -192,10 +193,8 @@ const ProfileEditScreen = ({ navigation, route }) => {
       formData.append('interests', inter);
     }
     formData.append('repTitleId', route?.params?.titleId);
-    // alert(introduction);
     formData.append('introduction', introduction);
     formData.append('updatePhoto', 'true');
-    // console.log('image', image);
 
     async function patchProfileEditInfo(formData: any) {
       const token = await getAccessToken();
