@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { FeedInsight } from '../../types/Feed/Feedinsights';
 import { getAccessToken } from '../hooks/asyncStorage/Login';
+import httpClient from './BaseHttpClient';
 
 export const FeedQueryKeys = {
   getFeed: () => ['feed'],
@@ -18,7 +18,7 @@ export const FeedAPI = {
     }
     const token = await getAccessToken();
     try {
-      const response = await axios.get<FeedInsight>(URL, {
+      const response = await httpClient.get<FeedInsight>(URL, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

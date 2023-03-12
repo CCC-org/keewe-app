@@ -124,13 +124,7 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
           </Text>
         </Pressable>
         <Pressable onPress={handleReportSubmit} style={{ marginTop: 72 }}>
-          <ConditionalButton
-            isActive={selectedReport !== null}
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            onPress={() => {}}
-            width={'100%'}
-            text="신고하기"
-          />
+          <ConditionalButton isActive={selectedReport !== null} width={'100%'} text="신고하기" />
         </Pressable>
       </ScrollView>
     );
@@ -156,7 +150,6 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
         rightButtonPress={handleBlockUser}
         rightButtonColor="#f24822"
       />
-      <SnackBar text="인사이트를 신고했어요" visible={isSnackBarVisible} />
     </ScrollView>
   );
 };

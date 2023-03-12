@@ -47,6 +47,10 @@ import Toasts from './src/components/bars/Toasts';
 import { RootStackParamList } from './types';
 import SettingsScreen from './src/screens/settings/SettingsScreen';
 import PushNotificationSettingScreen from './src/screens/settings/PushNotificationSettingScreen';
+import ChallengeDetailScreen from './src/screens/Main/challenge/ChallengeDetailScreen';
+import CurrentChallengeScreen from './src/screens/Main/challenge/CurrentChallengeScreen';
+import HistoryChallengeScreen from './src/screens/Main/challenge/HistoryChallengeScreen';
+import { navigationRef } from './src/utils/hooks/navigaton/navigator';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator<RootStackParamList>();
@@ -67,7 +71,7 @@ export default function App() {
       <>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <PaperProvider theme={light}>
-            <NavigationContainer>
+            <NavigationContainer ref={navigationRef}>
               <BottomSheetModalProvider>
                 <QueryClientProvider client={queryClient}>
                   <Stack.Navigator
@@ -154,7 +158,6 @@ export default function App() {
                       component={ProfileScreen}
                       options={{ ...headerOptions, title: '' }}
                     />
-                    {/* 챌린지 그룹 */}
                     <Stack.Group
                       screenOptions={{
                         headerStyle: { backgroundColor: 'white' },
@@ -170,7 +173,9 @@ export default function App() {
                       <Stack.Screen
                         name="SignUp"
                         component={SignUpScreen}
-                        options={headerOptions}
+                        options={{
+                          headerLeft: () => <View></View>,
+                        }}
                       />
                       <Stack.Screen name="Login" component={LoginScreen} options={headerOptions} />
                       <Stack.Screen
@@ -200,6 +205,11 @@ export default function App() {
                         options={headerOptions}
                       />
                       <Stack.Screen
+                        name="ChallengeDetail"
+                        component={ChallengeDetailScreen}
+                        options={headerOptions}
+                      />
+                      <Stack.Screen
                         name="ChallengeGoalSetting"
                         component={ChallengeGoalSettingScreen}
                         options={headerOptions}
@@ -219,8 +229,17 @@ export default function App() {
                         component={ChallengeJoinApprovedScreen}
                         options={headerOptions}
                       />
+                      <Stack.Screen
+                        name="ChallengeCurrent"
+                        component={CurrentChallengeScreen}
+                        options={{ ...headerOptions, title: '모든 챌린지' }}
+                      />
+                      <Stack.Screen
+                        name="ChallengeHistory"
+                        component={HistoryChallengeScreen}
+                        options={{ ...headerOptions, title: '종료된 챌린지' }}
+                      />
                     </Stack.Group>
-
                     <Stack.Group
                       screenOptions={{
                         title: '',

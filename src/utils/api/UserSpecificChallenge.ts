@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { UserSpecificChallenge } from '../../types/Feed/UserSpecificChallenge';
 import { getAccessToken } from '../hooks/asyncStorage/Login';
+import httpClient from './BaseHttpClient';
 
 export const UserSpecificChallengeQueryKeys = {
   getUserSpecificChallenge: () => ['userSpecificChallenge'],
@@ -10,7 +10,7 @@ export const UserSpecificChallengeAPI = {
   getUserSpecificChallenge: async () => {
     const token = await getAccessToken();
     try {
-      const response = await axios.get<UserSpecificChallenge>(
+      const response = await httpClient.get<UserSpecificChallenge>(
         'https://api-keewe.com/api/v1/challenge/participation/my-week-progress',
         {
           headers: {

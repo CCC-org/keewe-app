@@ -81,13 +81,14 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
             isActive={true}
             text={'확인'}
             width={168}
-            onPress={() => alert('pressed')}
+            onPress={() => navigation.navigate('Tabs')}
           />
         </View>
       </View>
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

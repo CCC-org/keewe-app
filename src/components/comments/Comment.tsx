@@ -3,7 +3,6 @@ import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
 import React, { useRef } from 'react';
 import MiniProfile from '../profile/MiniProfile';
 import { useTheme } from 'react-native-paper';
-import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import CommentVerticalDots from './CommentVerticalDots';
 import { getUserId } from '../../utils/hooks/asyncStorage/Login';

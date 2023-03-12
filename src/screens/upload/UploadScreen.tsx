@@ -1,8 +1,7 @@
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import DividerBar from '../../components/bars/DividerBar';
-import SnackBar from '../../components/bars/SnackBar';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
 import UploadLinkCard from '../../components/cards/LinkCardForUpload';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
@@ -18,7 +17,7 @@ import EditButton from './EditButton';
 import FolderSheetContent from './FolderSheetContent';
 import LinkSheetContent from './LinkSheetContent';
 import UploadBottomContainer from './UploadBottomContainer';
-import { useGetUserId } from '../../utils/hooks/useGetUserId';
+import Toast from 'react-native-toast-message';
 
 const UploadScreen = ({ navigation }) => {
   const [linkText, setLinkText] = useState<string>('');
@@ -29,10 +28,7 @@ const UploadScreen = ({ navigation }) => {
   const [selectedFolder, setSelectedFolder] = useState<string>('');
   const linkSheetRef = useRef<BottomSheetModal>(null);
   const folderSheetRef = useRef<BottomSheetModal>(null);
-  const [isLinkSnackBarOpen, setIsLinkSnackBarOpen] = useState(false);
-  const [isFolderSnackBarOpen, setIsFolderSnackBarOpen] = useState(false);
   const [isClicked, setIsClicked] = useState<boolean>(false);
-  const userId = useGetUserId();
 
   const snapPoints = useMemo(() => ['50%', '80%'], []);
   React.useLayoutEffect(() => {
@@ -105,7 +101,13 @@ const UploadScreen = ({ navigation }) => {
   );
 
   const checkIsValidSite = async () => {
-    handleSheetLinkComplete(linkText, linkSheetRef, setIsValidSite, setIsLinkSnackBarOpen);
+    handleSheetLinkComplete(linkText, linkSheetRef, setIsValidSite, () =>
+      Toast.show({
+        type: 'snackbar',
+        text1: '올바른 링크인지 확인해주세요.',
+        position: 'bottom',
+      }),
+    );
   };
 
   const handleEditPress = () => {
@@ -119,10 +121,11 @@ const UploadScreen = ({ navigation }) => {
       const completeRes = await UploadApis.createNewFolder(selectedFolder);
       if (completeRes.code === 200) {
         setFolders([...folders, { name: selectedFolder, id: completeRes.data.drawerId }]);
-        setIsFolderSnackBarOpen(true);
-        setTimeout(() => {
-          setIsFolderSnackBarOpen(false);
-        }, 3000);
+        Toast.show({
+          type: 'snackbar',
+          text1: '새로운 폴더를 추가했어요.',
+          position: 'bottom',
+        });
       } else {
         throw new Error('폴더 생성 실패');
       }
@@ -194,8 +197,6 @@ const UploadScreen = ({ navigation }) => {
 
         {/* Invalid Link snackbar */}
       </ScrollView>
-      <SnackBar visible={isLinkSnackBarOpen} text="올바른 링크인지 확인해주세요." />
-      <SnackBar visible={isFolderSnackBarOpen} text="새로운 폴더를 추가했어요" />
     </>
   );
 };

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import FeedList from './FeedList';
 import { useInfiniteFeed } from '../../utils/hooks/feedInifiniteScroll/useInfiniteFeed';
 import FeedScreenChallenge from '../../components/challenge/FeedScreenChallenge';
-import { useNavigationState, useScrollToTop } from '@react-navigation/native';
+import { useFocusEffect, useScrollToTop } from '@react-navigation/native';
 import GoToUploadButton from '../../components/buttons/GoToUploadButton';
 import { useQueryClient } from '@tanstack/react-query';
 import { FeedQueryKeys } from '../../utils/api/FeedAPI';
@@ -19,22 +19,12 @@ const FeedScreen = ({ navigation }) => {
     useInfiniteFeed('https://api-keewe.com/api/v1/insight');
 
   useEffect(() => {
-    console.log('first');
     const unsubscribe = navigation.addListener('focus', () => {
       queryClient.invalidateQueries(FeedQueryKeys.getFeed());
     });
 
     return unsubscribe;
   }, [navigation]);
-
-  // useEffect(() => {
-  //   console.log('mounted');
-
-  //   return () => {
-  //     console.log('unmounted');
-  //     console.log('**********************');
-  //   };
-  // });
 
   const [pageRefreshing, setPageRefreshing] = useState(false);
 

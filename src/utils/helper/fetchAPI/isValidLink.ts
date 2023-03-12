@@ -5,7 +5,7 @@ const handleSheetLinkComplete = async (
   linkText: string,
   linkSheetRef: React.RefObject<BottomSheetModalMethods>,
   setIsValidSite: React.Dispatch<React.SetStateAction<boolean>>,
-  setIsLinkSnackBarOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  isError: () => void,
 ) => {
   try {
     const URL = linkText.includes('http') ? linkText : `http://${linkText}`;
@@ -18,12 +18,8 @@ const handleSheetLinkComplete = async (
       throw new Error('Invalid link');
     }
   } catch (error) {
-    setIsValidSite(false);
     linkSheetRef.current?.close();
-    setIsLinkSnackBarOpen(true);
-    setTimeout(() => {
-      setIsLinkSnackBarOpen(false);
-    }, 3000);
+    isError();
   }
 };
 

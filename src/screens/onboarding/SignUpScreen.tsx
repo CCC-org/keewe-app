@@ -1,17 +1,29 @@
 import { StyleSheet, View, Text } from 'react-native';
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import SocialLoginButton from '../../components/buttons/SocialLoginButton';
 import { useTheme } from 'react-native-paper';
 import OnboardingLottie from '../../components/lotties/OnboardingLottie';
+import kakao from '../../constants/Icons/Signin/kakao';
+import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
+import apple from '../../constants/Icons/Signin/apple';
+import google from '../../constants/Icons/Signin/google';
+import naver from '../../constants/Icons/Signin/naver';
 
 const SignUpScreen = ({ navigation }) => {
+  const modalRef = useRef<BottomSheetModal>(null);
   const theme = useTheme();
   const handleLoginPress = (oauth: string) => {
     navigation.navigate('Login', { oauth });
+    modalRef.current?.close();
   };
 
+  const renderBackdrop = useCallback(
+    (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
+    [],
+  );
+
   const handleOtherPress = () => {
-    alert('started by other ways.');
+    modalRef.current?.present();
   };
 
   return (
@@ -28,35 +40,68 @@ const SignUpScreen = ({ navigation }) => {
         <View style={styles.kakao}>
           <SocialLoginButton
             text="카카오로 시작하기"
-            icon="facebook-messenger"
+            textColor={theme.colors.graphic.black}
+            xml={kakao}
             color={theme.colors.graphic.yellow}
             onPress={() => handleLoginPress('kakao')}
-          ></SocialLoginButton>
-        </View>
-        <View style={styles.kakao}>
-          <SocialLoginButton
-            text="네이버로 시작하기"
-            icon="facebook-messenger"
-            color={theme.colors.graphic.green}
-            onPress={() => handleLoginPress('naver')}
-          ></SocialLoginButton>
-        </View>
-        <View style={styles.kakao}>
-          <SocialLoginButton
-            text="구글로 시작하기"
-            icon="facebook-messenger"
-            color={theme.colors.graphic.violet}
-            onPress={() => handleLoginPress('google')}
-          ></SocialLoginButton>
+          />
         </View>
         <View style={styles.other}>
           <SocialLoginButton
             text="다른 방법으로 시작하기"
+            textColor={theme.colors.graphic.black}
             color="#E1E1D0"
             onPress={handleOtherPress}
-          ></SocialLoginButton>
+          />
         </View>
       </View>
+      <BottomSheetModal ref={modalRef} snapPoints={['40%']} backdropComponent={renderBackdrop}>
+        <Text
+          style={{
+            fontFamily: 'pretendardSemiBold',
+            fontSize: 22,
+            marginHorizontal: 16,
+            marginVertical: 24,
+          }}
+        >
+          다른 방법으로 시작하기
+        </Text>
+        <View
+          style={{
+            width: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <View style={styles.kakao}>
+            <SocialLoginButton
+              text="Apple로 로그인"
+              textColor={theme.colors.graphic.white}
+              xml={apple}
+              color={theme.colors.graphic.black}
+              onPress={() => handleLoginPress('apple')}
+            />
+          </View>
+          <View style={styles.other}>
+            <SocialLoginButton
+              text="Google 계정으로 시작하기"
+              textColor={`${theme.colors.graphic.black}54`}
+              xml={google}
+              color="#EEEEEE"
+              onPress={() => handleLoginPress('google')}
+            />
+          </View>
+          <View style={styles.other}>
+            <SocialLoginButton
+              text="네이버로 시작하기"
+              textColor={theme.colors.graphic.white}
+              xml={naver}
+              color={'#03C75A'}
+              onPress={() => handleLoginPress('naver')}
+            />
+          </View>
+        </View>
+      </BottomSheetModal>
     </View>
   );
 };

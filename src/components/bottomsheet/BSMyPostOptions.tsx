@@ -14,7 +14,7 @@ const BSMyPostOptions = ({ modalRef }: BSMyPostOptionsProps) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const handleDeleteInsight = () => {
     Toast.show({
-      type: 'success',
+      type: 'snackbar',
       text1: '인사이트를 삭제했어요.',
       position: 'bottom',
       text2: '아직 인사이트 삭제 api가 개발이안된듯',
@@ -33,7 +33,7 @@ const BSMyPostOptions = ({ modalRef }: BSMyPostOptionsProps) => {
       </Pressable>
       <TwoButtonModal
         dismissable={false}
-        mainTitle={`인사이트를 삭제할까요?`}
+        mainTitle={'인사이트를 삭제할까요?'}
         visible={isModalVisible}
         onDismiss={() => setIsModalVisible(false)}
         leftButtonText="취소"
