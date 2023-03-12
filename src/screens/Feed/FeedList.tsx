@@ -1,4 +1,4 @@
-import { RefreshControl, StyleSheet, Text, View } from 'react-native';
+import { RefreshControl, StyleSheet } from 'react-native';
 import React, { Fragment, useState } from 'react';
 import { InfiniteData, QueryClient, UseMutateFunction } from '@tanstack/react-query';
 import { InsightData } from '../../types/Feed/Feedinsights';
@@ -7,6 +7,7 @@ import FeedItem from './FeedItem';
 import { FeedQueryKeys } from '../../utils/api/FeedAPI';
 import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChallenge';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useGetUserId } from '../../utils/hooks/useGetUserId';
 
 interface FeedListProps {
   feedList: InfiniteData<InsightData[] | undefined> | undefined;
@@ -28,6 +29,15 @@ const FeedList = ({
   scrollViewRef,
   writer,
 }: FeedListProps) => {
+  const [pageRefreshing, setPageRefreshing] = useState(false);
+  const userId = useGetUserId();
+  const onRefresh = () => {
+    setPageRefreshing(true);
+    feedListQueryClient.invalidateQueries(FeedQueryKeys.getFeed());
+    feedListQueryClient
+      .invalidateQueries(UserSpecificChallengeQueryKeys.getUserSpecificChallenge())
+      .then(() => setPageRefreshing(false));
+  };
   return (
     <ScrollView contentContainerStyle={styles.feedCtn} ref={scrollViewRef}>
       {UpperComponent}
@@ -49,14 +59,19 @@ const FeedList = ({
                     }}
                   >
                     <View style={{ borderWidth: 1, borderColor: 'red' }}>
-                      <FeedItem onBookMarkClick={touchBookMark} insight={insight} />
+                      <FeedItem onBookMarkClick={touchBookMark} insight={insight} localId={String(userId)} />
                     </View>
                   </InView>
                 );
               }
               return (
                 <Fragment key={insight.id}>
-                  <FeedItem onBookMarkClick={touchBookMark} key={insight.id} insight={insight} />
+                  <FeedItem
+                    onBookMarkClick={touchBookMark}
+                    key={insight.id}
+                    insight={insight}
+                    localId={String(userId)}
+                  />
                 </Fragment>
               );
             })}

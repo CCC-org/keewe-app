@@ -16,7 +16,6 @@ import GoToUploadButton from '../../../components/buttons/GoToUploadButton';
 import { IOScrollView } from 'react-native-intersection-observer';
 import HeaderBackButton from '../../../components/header/HeaderBackButton';
 import { useScrollToTop } from '@react-navigation/native';
-//import RNFadedScrollView from 'rn-faded-scrollview';
 
 const MyPageScreen = ({ navigation, route }) => {
   const { userId } = route.params;

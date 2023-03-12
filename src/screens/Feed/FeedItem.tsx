@@ -8,25 +8,26 @@ import FeedTextContent from './FeedTextContent';
 import { REACTIONS } from './constant';
 import ReactIconButton from '../../components/emoticons/ReactIconButton';
 import { useNavigation } from '@react-navigation/native';
-import { getUserId } from '../../utils/hooks/asyncStorage/Login';
-import { SvgXml } from 'react-native-svg';
-import ThreeDotsXml from '../../constants/Icons/DetailedPost/ThreeDotsXml';
 
 interface FeedItemProps {
   insight: InsightData;
+  localId?: string;
   onBookMarkClick: (id: number) => void;
 }
 
-const FeedItem = ({ insight, onBookMarkClick }: FeedItemProps) => {
+const FeedItem = ({ insight, localId, onBookMarkClick }: FeedItemProps) => {
   const { id, contents, createdAt, link, reaction, writer, bookmark } = insight;
   const navigation = useNavigation();
   const handleOnBookMarkPress = () => {
     onBookMarkClick(id);
   };
 
-  const handleProfilePress = async () => {
-    const localId = await getUserId();
-    if (localId === '' + writer.writerId)
+  const handleProfilePress = () => {
+    if (localId === null || localId === undefined) {
+      alert('잠시 후 다시 시도하세요.');
+      return;
+    }
+    if (localId === String(writer.writerId))
       navigation.navigate('MyPage', { userId: localId, enteredByTab: false });
     else navigation.navigate('Profile', { userId: writer.writerId });
   };
