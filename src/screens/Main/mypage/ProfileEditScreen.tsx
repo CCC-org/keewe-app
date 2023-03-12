@@ -16,6 +16,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { getAccessToken } from '../../../utils/hooks/asyncStorage/Login';
 import axios from 'axios';
 import mime from 'mime';
+import { titleNameToId } from '../../../constants/title/titleData';
 
 const ProfileEditScreen = ({ navigation, route }) => {
   const theme = useTheme();
@@ -192,7 +193,8 @@ const ProfileEditScreen = ({ navigation, route }) => {
     for (const inter of selectedCategory) {
       formData.append('interests', inter);
     }
-    formData.append('repTitleId', route?.params?.titleId);
+    formData.append('repTitleId', titleNameToId[title] ?? '');
+    // formData.append('repTitleId', '');
     formData.append('introduction', introduction);
     formData.append('updatePhoto', 'true');
 
@@ -205,12 +207,12 @@ const ProfileEditScreen = ({ navigation, route }) => {
             'Content-Type': 'multipart/form-data',
           },
         });
-        console.log('🚀 ~ file: ProfileEditScreen.tsx:193 ~ patchProfileEditInfo ~ res', res.data);
+        console.log('🚀 ~ file: ProfileEditScreen.tsx:193 ~ patchProfileEditInfo ~ res', res);
 
         return res.data;
       } catch (err) {
         alert(`에러 발생 : ${err}`);
-        console.log(err);
+        console.log('에러:', err);
       }
     }
 
