@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import {
   Pressable,
   ScrollView,
@@ -33,7 +34,6 @@ const DetailedPostScreen = ({ navigation, route }) => {
   const { insightId } = route.params;
   const [views] = useIncreaseView(insightId);
   const [replyInfo, setReplyInfo] = useState<ReplyInfo | undefined>();
-  const [representiveReplies, setRepresentiveReplies] = useState(0);
 
   const queryClient = useQueryClient();
   const theme = useTheme();
@@ -103,16 +103,15 @@ const DetailedPostScreen = ({ navigation, route }) => {
   );
 
   const { data: getCommentResponse, isLoading: isCommentLoading } = useQuery(
-    InsightQueryKeys.getRepresentiveCommentList({ insightId }),
-    () => InsightAPI.getRepresentiveCommentList({ insightId }),
-    {
-      onSuccess: (response) => {
-        response?.data.comments.map((comment) =>
-          setRepresentiveReplies((prev) => prev + comment.replies.length + 1),
-        );
-      },
-    },
+    InsightQueryKeys.getCommentPreviewList({ insightId }),
+    () => InsightAPI.getCommentPreviewList({ insightId }),
   );
+
+  const { data: getCountResponse, isLoading: isCountLoading } = useQuery(
+    InsightQueryKeys.getCommentPreviewCount({ insightId }),
+    () => InsightAPI.getCommentPreviewCount({ insightId }),
+  );
+
   const { data: getChallengeRecordResponse, isLoading: isChallengeRecordLoading } = useQuery(
     InsightQueryKeys.getChallengeRecord({ insightId }),
     () => InsightAPI.getChallengeRecord({ insightId }),
@@ -203,7 +202,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
           <View
             style={{ ...styles.commentDivider, backgroundColor: theme.colors.brand.surface.main }}
           />
-          {!isCommentLoading && (
+          {!isCommentLoading && !isCountLoading && (
             <>
               <View style={styles.commentsHeader}>
                 <Text
@@ -218,60 +217,48 @@ const DetailedPostScreen = ({ navigation, route }) => {
                     color: `${theme.colors.graphic.black}4d`,
                   }}
                 >
-                  {getCommentResponse?.data.total !== 0 ? getCommentResponse?.data.total : ''}
+                  {getCountResponse?.data.commentCount !== 0
+                    ? getCountResponse?.data?.commentCount
+                    : ''}
                 </Text>
               </View>
-              {getCommentResponse?.data.total !== 0 ? (
+              {getCountResponse?.data.commentCount !== 0 ? (
                 <View style={{ backgroundColor: 'white', paddingBottom: 16 }}>
                   <>
-                    {getCommentResponse?.data.comments.map((cur) => {
-                      const comment = [
-                        <Comment
-                          key={cur.id}
-                          content={cur.content}
-                          nickname={cur.writer.name}
-                          isInsightWriter={profile?.data?.authorId === cur.writer.id}
-                          commentId={cur.id}
-                          commentWriterId={cur.writer.id}
-                          title={cur.writer.title}
-                          createdAt={cur.createdAt}
-                          isReply={false}
-                          onReply={() =>
-                            handleReplyClick({ id: cur.id, nickname: cur.writer.name })
-                          }
-                        />,
-                      ];
-                      const repies = cur.replies.map((reply) => (
-                        <Comment
-                          key={`${cur.id} reply ${reply.id}`}
-                          content={reply.content}
-                          nickname={reply.writer.name}
-                          isInsightWriter={profile?.data?.authorId === cur.writer.id}
-                          commentWriterId={reply.writer.id}
-                          createdAt={reply.createdAt}
-                          title={reply.writer.title}
-                          isReply={true}
-                          commentId={reply.id}
-                        />
-                      ));
-                      return comment.concat(repies);
-                    })}
-                    {getCommentResponse && getCommentResponse.data.total > representiveReplies && (
-                      <View
-                        style={{
-                          marginTop: 16,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <MoreCommentsButton
-                          onPress={handleMoreCommentsPress}
-                          number={getCommentResponse.data.total - representiveReplies}
-                          textColor={'white'}
-                          backgroundColor={`${theme.colors.graphic.black}cc`}
-                        />
-                      </View>
-                    )}
+                    {getCommentResponse?.data.map((cur) => (
+                      <Comment
+                        key={cur.id}
+                        content={cur.content}
+                        nickname={cur.writer.name}
+                        isInsightWriter={profile?.data?.authorId === cur.writer.id}
+                        commentId={cur.id}
+                        commentWriterId={cur.writer.id}
+                        title={cur.writer.title}
+                        createdAt={cur.createdAt}
+                        isReply={false}
+                        onReply={() => handleReplyClick({ id: cur.id, nickname: cur.writer.name })}
+                      />
+                    ))}
+                    {getCommentResponse &&
+                      getCountResponse &&
+                      getCountResponse.data.commentCount - getCommentResponse.data.length > 0 && (
+                        <View
+                          style={{
+                            marginTop: 16,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <MoreCommentsButton
+                            onPress={handleMoreCommentsPress}
+                            number={
+                              getCountResponse.data.commentCount - getCommentResponse.data.length
+                            }
+                            textColor={'white'}
+                            backgroundColor={`${theme.colors.graphic.black}cc`}
+                          />
+                        </View>
+                      )}
                   </>
                 </View>
               ) : (

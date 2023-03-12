@@ -20,7 +20,6 @@ export const MypageQueryKeys = {
 
 export const MypageAPI = {
   getProfile: async (request: ProfileGetRequest) => {
-    console.log('get profile');
     const { targetId } = request;
     try {
       const token = await getAccessToken();

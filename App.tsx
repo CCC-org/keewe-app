@@ -48,6 +48,7 @@ import { RootStackParamList } from './types';
 import ChallengeDetailScreen from './src/screens/Main/challenge/ChallengeDetailScreen';
 import CurrentChallengeScreen from './src/screens/Main/challenge/CurrentChallengeScreen';
 import HistoryChallengeScreen from './src/screens/Main/challenge/HistoryChallengeScreen';
+import { navigationRef } from './src/utils/hooks/navigaton/navigator';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator<RootStackParamList>();
@@ -68,7 +69,7 @@ export default function App() {
       <>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <PaperProvider theme={light}>
-            <NavigationContainer>
+            <NavigationContainer ref={navigationRef}>
               <BottomSheetModalProvider>
                 <QueryClientProvider client={queryClient}>
                   <Stack.Navigator

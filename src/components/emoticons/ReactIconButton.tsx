@@ -19,12 +19,15 @@ const ReactIconButton = ({ xml, color, taps, name, insightId }: ReactIconButtonP
   const opacityValue = useRef(new Animated.Value(0)).current;
   const [animate, setAnimate] = useState<string[]>([]);
   const [text, setText] = useState<number>();
-
   const { mutate: insightReact } = useMutation(InsightAPI.react, {
     onSuccess: (response) => {
       setText(response?.data.count);
     },
   });
+
+  useEffect(() => {
+    setText(taps ?? 0);
+  }, [taps]);
 
   const handleClick = () => {
     insightReact({ insightId, reactionType: name, value: 1 });
@@ -40,10 +43,6 @@ const ReactIconButton = ({ xml, color, taps, name, insightId }: ReactIconButtonP
       useNativeDriver: false,
     }).start();
   };
-
-  useEffect(() => {
-    setText(taps ?? 0);
-  }, [taps]);
 
   return (
     <>

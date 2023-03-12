@@ -1,16 +1,17 @@
-interface RepresentiveCommentGetListRequest {
+interface CommentPreviewGetRequest {
   insightId: number;
 }
 
-interface RepresentiveCommentGetListResponse {
+interface CommentPreviewGetListResponse {
   message: string;
   code: number;
-  data: {
-    total: number;
-    comments: Comment[];
-  };
+  data: Comment[];
 }
-
+interface CommentPreviewCountGetResponse {
+  message: string;
+  code: number;
+  data: { commentCount: number };
+}
 interface CommentGetListRequest {
   insightId: number;
   cursor?: number;
@@ -54,8 +55,8 @@ interface Comment {
   writer: Writer;
   content: string;
   createdAt: string;
-  replies: Reply[];
-  totalReply: number;
+  replies?: Reply[];
+  totalReply?: number;
 }
 
 interface Reply {

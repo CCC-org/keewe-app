@@ -1,14 +1,19 @@
-import axios from 'axios';
-
 import { getAccessToken } from '../hooks/asyncStorage/Login';
 import httpClient from './BaseHttpClient';
 
 export const InsightQueryKeys = {
   getInsight: (request: InsightGetRequest) => ['Insight', request.insightId],
   getProfile: (request: InsightProfileRequest) => ['profile', request.insightId],
-  getRepresentiveCommentList: (request: RepresentiveCommentGetListRequest) => [
+  getCommentPreviewList: (request: CommentPreviewGetRequest) => [
     'comment',
     'representive',
+    'list',
+    request.insightId,
+  ],
+  getCommentPreviewCount: (request: CommentPreviewGetRequest) => [
+    'comment',
+    'representive',
+    'count',
     request.insightId,
   ],
   getCommentList: (request: CommentGetListRequest) => [
@@ -93,14 +98,33 @@ export const InsightAPI = {
     );
     return data;
   },
-  getRepresentiveCommentList: async (request: RepresentiveCommentGetListRequest) => {
+  getCommentPreviewCount: async (request: CommentPreviewGetRequest) => {
     const { insightId } = request;
 
     try {
       const token = await getAccessToken();
 
-      const { data } = await httpClient.get<RepresentiveCommentGetListResponse>(
-        `https://api-keewe.com/api/v1/comments/representative/insights/${insightId}`,
+      const { data } = await httpClient.get<CommentPreviewCountGetResponse>(
+        `https://api-keewe.com/api/v1/comments/insights/${insightId}/count`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      return data;
+    } catch (err) {
+      console.error('api error: ', err);
+    }
+  },
+  getCommentPreviewList: async (request: CommentPreviewGetRequest) => {
+    const { insightId } = request;
+
+    try {
+      const token = await getAccessToken();
+
+      const { data } = await httpClient.get<CommentPreviewGetListResponse>(
+        `https://api-keewe.com/api/v1/comments/insights/${insightId}/preview`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -1,6 +1,6 @@
 import { Title } from '../../types/title/title';
 import { getAccessToken } from '../hooks/asyncStorage/Login';
-import axios from 'axios';
+import httpClient from './BaseHttpClient';
 
 export const TitleApiKeys = {
   //TODO: func should return array of string, and user info.
@@ -10,7 +10,7 @@ export const TitleApiKeys = {
 export const TitleApis = {
   getTitleList: async (userId: string | number): Promise<Title['data']> => {
     const token = await getAccessToken();
-    return axios
+    return httpClient
       .get<Title['data']>(
         'https://api-keewe.com/api/v1/user/profile/all-achieved-title/' + String(userId),
         {

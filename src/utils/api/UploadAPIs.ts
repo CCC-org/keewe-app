@@ -1,10 +1,10 @@
 import { getAccessToken } from '../hooks/asyncStorage/Login';
-import axios from 'axios';
 import { UploadRequest } from '../../types/upload';
+import httpClient from './BaseHttpClient';
 export const UploadApis = {
   createNewFolder: async (folderName: string) => {
     const token = await getAccessToken();
-    return axios
+    return httpClient
       .post(
         'https://api-keewe.com/api/v1/drawer',
         { name: folderName },
@@ -21,7 +21,7 @@ export const UploadApis = {
   uploadInsight: async (datas: UploadRequest) => {
     const token = await getAccessToken();
     console.log(datas);
-    return axios
+    return httpClient
       .post('https://api-keewe.com/api/v1/insight', datas, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -34,7 +34,7 @@ export const UploadApis = {
   },
   getFolderList: async () => {
     const token = await getAccessToken();
-    return axios
+    return httpClient
       .get('https://api-keewe.com/api/v1/drawer', {
         headers: {
           Authorization: `Bearer ${token}`,

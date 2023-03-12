@@ -1,6 +1,5 @@
 import { getAccessToken } from '../hooks/asyncStorage/Login';
 import httpClient from './BaseHttpClient';
-import axios from 'axios';
 
 export const ChallengeQueryKeys = {
   create: (request: ChallengeCreateRequest) => ['challenge', request],
@@ -22,7 +21,7 @@ export const ChallengeAPI = {
   },
   participationCheck: async () => {
     const token = await getAccessToken();
-    return axios
+    return httpClient
       .get('https://api-keewe.com/api/v1/challenge/participation/check', {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -34,7 +33,7 @@ export const ChallengeAPI = {
   },
   getChallengeParticipation: async () => {
     const token = await getAccessToken();
-    return axios
+    return httpClient
       .get<ChallengeGetResponse>('https://api-keewe.com/api/v1/challenge/participating', {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -46,7 +45,7 @@ export const ChallengeAPI = {
   },
   getChallengeHistory: async (params?: ChallengeHistoryGetRequest) => {
     const token = await getAccessToken();
-    return axios
+    return httpClient
       .get<ChallengeHistoryGetResponse>('https://api-keewe.com/api/v1/challenge/finished', {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -59,7 +58,7 @@ export const ChallengeAPI = {
   },
   getChallengeHistoryCount: async () => {
     const token = await getAccessToken();
-    return axios
+    return httpClient
       .get<ChallengeHistoryCountGetResponse>(
         'https://api-keewe.com/api/v1/challenge/finished/count',
         {
@@ -74,7 +73,7 @@ export const ChallengeAPI = {
   },
   getChallengeCurrent: async (params: ChallengeCurrentGetRequest) => {
     const token = await getAccessToken();
-    return axios
+    return httpClient
       .get<ChallengeCurrentGetResponse>('https://api-keewe.com/api/v1/challenge', {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -87,7 +86,7 @@ export const ChallengeAPI = {
   },
   getChallengeProgress: async () => {
     const token = await getAccessToken();
-    return axios
+    return httpClient
       .get<ChallengeProgressGetResponse>(
         'https://api-keewe.com/api/v1/challenge/participation/progress/insight',
         {
