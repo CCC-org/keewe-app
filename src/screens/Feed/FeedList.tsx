@@ -1,4 +1,4 @@
-import { RefreshControl, StyleSheet, Text, View } from 'react-native';
+import { RefreshControl, StyleSheet } from 'react-native';
 import React, { Fragment, useState } from 'react';
 import { InfiniteData, QueryClient, UseMutateFunction } from '@tanstack/react-query';
 import { InsightData } from '../../types/Feed/Feedinsights';
@@ -6,6 +6,7 @@ import { IOScrollView, InView } from 'react-native-intersection-observer';
 import FeedItem from './FeedItem';
 import { FeedQueryKeys } from '../../utils/api/FeedAPI';
 import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChallenge';
+import { useGetUserId } from '../../utils/hooks/useGetUserId';
 
 interface FeedListProps {
   feedList: InfiniteData<InsightData[] | undefined> | undefined;
@@ -28,7 +29,7 @@ const FeedList = ({
   writer,
 }: FeedListProps) => {
   const [pageRefreshing, setPageRefreshing] = useState(false);
-
+  const userId = useGetUserId();
   const onRefresh = () => {
     setPageRefreshing(true);
     feedListQueryClient.invalidateQueries(FeedQueryKeys.getFeed());
@@ -60,13 +61,22 @@ const FeedList = ({
               if (group.length - 1 === idx && feedList.pages.length - 1 === i) {
                 return (
                   <InView key={insight.id} onChange={() => fetchNextPage()}>
-                    <FeedItem onBookMarkClick={touchBookMark} insight={insight} />
+                    <FeedItem
+                      onBookMarkClick={touchBookMark}
+                      insight={insight}
+                      localId={String(userId)}
+                    />
                   </InView>
                 );
               }
               return (
                 <Fragment key={insight.id}>
-                  <FeedItem onBookMarkClick={touchBookMark} key={insight.id} insight={insight} />
+                  <FeedItem
+                    onBookMarkClick={touchBookMark}
+                    key={insight.id}
+                    insight={insight}
+                    localId={String(userId)}
+                  />
                 </Fragment>
               );
             })}
