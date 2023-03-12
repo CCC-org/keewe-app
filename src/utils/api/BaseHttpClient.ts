@@ -1,24 +1,14 @@
 import axios from 'axios';
-import { getAccessToken } from '../hooks/asyncStorage/Login';
+import { navigate } from '../hooks/navigaton/navigator';
 
 const httpClient = axios.create();
+httpClient.interceptors.response.use(async (response) => {
+  const data = response.data;
 
-// httpClient.interceptors.request.use(async (config) => {
-//   const token = await getAccessToken();
-//   config.headers?.Authorization && (config.headers.Authorization = `Bearer ${token}`);
-// });
-
-httpClient.interceptors.response.use(
-  async (response) => response,
-  async (error) => {
-    const response = error.response;
-    if (typeof window === 'object') {
-      // if (response.code === 401) {
-      //   //logout
-      // }
-    }
-    throw error;
-  },
-);
+  if (data.code === 403) {
+    navigate('SignUp', undefined);
+  }
+  return response;
+});
 
 export default httpClient;
