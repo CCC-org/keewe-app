@@ -70,7 +70,6 @@ const MyPageScreen = ({ navigation, route }) => {
     isUserFolderListLoading === true || userFolderList.selectedTab.id === 0
       ? ''
       : String(userFolderList.selectedTab.id);
-  console.log('drawerId', drawerId);
 
   const { feedList, feedListIsLoading, touchBookMark, fetchNextPage, feedListQueryClient } =
     useInfiniteFeed(
