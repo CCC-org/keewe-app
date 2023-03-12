@@ -36,7 +36,7 @@ const TitleSticker = ({
       return;
     }
     const res = navigation.getState().routes.filter((route) => route.name === 'ProfileEdit')[0];
-    const mergedRouteParams = { ...res.params, title: titleMeta.name, titleId: titleMeta.id };
+    const mergedRouteParams = { ...res.params, title: titleMeta.name };
     navigation.navigate('ProfileEdit', mergedRouteParams);
   };
 

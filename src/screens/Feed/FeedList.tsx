@@ -1,4 +1,4 @@
-import { RefreshControl, StyleSheet, Text, View } from 'react-native';
+import { RefreshControl, StyleSheet } from 'react-native';
 import React, { Fragment, useState } from 'react';
 import { InfiniteData, QueryClient, UseMutateFunction } from '@tanstack/react-query';
 import { InsightData } from '../../types/Feed/Feedinsights';
