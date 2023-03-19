@@ -79,5 +79,11 @@ interface CurrentChallenge {
 interface ChallengeProgressGetResponse {
   message: string;
   code: number;
-  data: { name: string; current: number; total: number };
+  data: {
+    name: string;
+    current: number;
+    total: number;
+    todayRecorded: boolean;
+    weekCompleted: boolean;
+  };
 }

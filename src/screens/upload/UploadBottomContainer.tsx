@@ -1,6 +1,6 @@
 import { Feather } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Switch, useTheme } from 'react-native-paper';
 import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
@@ -28,15 +28,19 @@ const UploadBottomContainer = ({
     ChallengeAPI.getChallengeProgress,
   );
 
+  const ProgressText = useMemo(() => {
+    if (ChallengeProgress?.weekCompleted) return '이번주 챌린지를 완료했어요';
+    if (ChallengeProgress?.todayRecorded) return '오늘 챌린지 기록을 완료했어요';
+    return `${ChallengeProgress?.current}/${ChallengeProgress?.total}번째 기록 중`;
+  }, [ChallengeProgress]);
+
   return (
     <View style={styles.container}>
       {ChallengeProgress && (
         <View style={styles.bottomContainer}>
           <View>
-            <Text style={theme.fonts.text.body1.bold}>{ChallengeProgress.name}</Text>
-            <Text style={theme.fonts.text.body2.regular}>
-              {ChallengeProgress.current}/{ChallengeProgress.total}번째 기록 중
-            </Text>
+            <Text style={theme.fonts.text.body1.bold}>{ChallengeProgress.name}에 기록</Text>
+            <Text style={theme.fonts.text.body2.regular}>{ProgressText}</Text>
           </View>
           <View>
             <Switch

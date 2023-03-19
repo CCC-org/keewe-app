@@ -2,13 +2,11 @@ import axios from 'axios';
 import { navigate } from '../hooks/navigaton/navigator';
 
 const httpClient = axios.create();
-httpClient.interceptors.response.use(async (response) => {
-  const data = response.data;
-
-  if (data.code === 403) {
-    navigate('SignUp', undefined);
-  }
-  return response;
-});
+httpClient.interceptors.response.use(
+  async (response) => response,
+  (error) => {
+    if (error.message == 'Request failed with status code 401') navigate('SignUp', undefined);
+  },
+);
 
 export default httpClient;
