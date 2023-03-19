@@ -22,7 +22,7 @@ import Toast from 'react-native-toast-message';
 const UploadScreen = ({ navigation }) => {
   const [linkText, setLinkText] = useState<string>('');
   const [insightText, setInsightText] = useState<string>('');
-  const [isSwitchOn, setIsSwitchOn] = useState(false);
+  const [isSwitchOn, setIsSwitchOn] = useState(true);
   const [isValidSite, setIsValidSite] = useState(false);
   const [folders, setFolders] = useState<IFolder[]>([]);
   const [selectedFolder, setSelectedFolder] = useState<string>('');

@@ -17,16 +17,11 @@ export const FeedAPI = {
       )}&follow=${follow}`;
     }
     const token = await getAccessToken();
-    try {
-      const response = await httpClient.get<FeedInsight>(URL, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response.data.code !== 200) throw new Error(response.data.message);
-      return response.data.data;
-    } catch (err) {
-      console.log('Feedapi.ts', err);
-    }
+    const response = await httpClient.get<FeedInsight>(URL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data.data;
   },
 };
