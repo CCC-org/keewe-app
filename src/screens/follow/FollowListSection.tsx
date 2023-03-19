@@ -12,6 +12,7 @@ import person from '../../constants/Icons/Avatar/personXml';
 import { useTheme } from 'react-native-paper';
 import FollowListFollowButton from './FollowListFollowButton';
 import { useNavigation } from '@react-navigation/native';
+import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 interface FollowListSectionProps {
   followList: InfiniteData<FollowData | undefined> | undefined;
   fetchNextPage: (
@@ -33,8 +34,13 @@ const FollowListSection = ({ followList, mutation }: FollowListSectionProps) => 
     mutation.mutate(id);
   };
 
-  const handleGoToProfileOnImagePress = (userId: string) => {
-    navigation.navigate('Profile', { userId });
+  const handleGoToProfileOnImagePress = async (itemUserId: number) => {
+    const localUserId = await getUserId();
+    if (localUserId === String(itemUserId)) {
+      navigation.navigate('MyPage', { userId: localUserId, enteredByTab: false });
+    } else {
+      navigation.navigate('Profile', { userId: itemUserId });
+    }
   };
 
   return (
