@@ -7,8 +7,9 @@ import {
   Text,
   Platform,
   KeyboardAvoidingView,
+  TextInput,
 } from 'react-native';
-import React, { useLayoutEffect, useState } from 'react';
+import React, { forwardRef, useLayoutEffect, useRef, useState } from 'react';
 import DetailedPostSection from './DetailedPostSection';
 import { useIncreaseView } from '../../utils/hooks/DetailedInsight/useIncreaseView';
 import { useTheme } from 'react-native-paper';
@@ -34,6 +35,8 @@ const DetailedPostScreen = ({ navigation, route }) => {
   const { insightId } = route.params;
   const [views] = useIncreaseView(insightId);
   const [replyInfo, setReplyInfo] = useState<ReplyInfo | undefined>();
+
+  const ref = useRef<TextInput>(null);
 
   const queryClient = useQueryClient();
   const theme = useTheme();
@@ -162,7 +165,11 @@ const DetailedPostScreen = ({ navigation, route }) => {
         behavior={Platform.select({ ios: 'position' })} // position || padding
         keyboardVerticalOffset={Platform.select({ ios: 90 })}
       >
-        <ScrollView style={{ paddingBottom: '100%', marginBottom: 70 }}>
+        <ScrollView
+          bounces={false}
+          alwaysBounceVertical={false}
+          style={{ paddingBottom: '100%', marginBottom: 70 }}
+        >
           {!isInsightLoading && (
             <DetailedPostSection
               insightId={insightId}
@@ -233,9 +240,13 @@ const DetailedPostScreen = ({ navigation, route }) => {
                         commentId={cur.id}
                         commentWriterId={cur.writer.id}
                         title={cur.writer.title}
+                        image={cur.writer.image}
                         createdAt={cur.createdAt}
                         isReply={false}
-                        onReply={() => handleReplyClick({ id: cur.id, nickname: cur.writer.name })}
+                        onReply={() => {
+                          ref?.current?.focus();
+                          handleReplyClick({ id: cur.id, nickname: cur.writer.name });
+                        }}
                       />
                     ))}
                     {getCommentResponse &&
@@ -285,11 +296,16 @@ const DetailedPostScreen = ({ navigation, route }) => {
           )}
         </ScrollView>
         <CommentInput
+          ref={ref}
           insightId={insightId}
           replyInfo={replyInfo}
-          onCancelReply={() => setReplyInfo(undefined)}
+          onCancelReply={() => {
+            setReplyInfo(undefined);
+            ref.current?.blur();
+          }}
           onCreate={() => {
-            return;
+            setReplyInfo(undefined);
+            ref.current?.blur();
           }}
         />
       </KeyboardAvoidingView>

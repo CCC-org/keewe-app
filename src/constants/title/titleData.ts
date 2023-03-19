@@ -188,7 +188,6 @@ export const titleMetaArr = [
     category: 'SHARE',
     category_kor: '공유',
     url: require('../../../assets/images/titles/6000.png'),
-
     name: '혼자 보기 아까운',
     introduction: '누적 공유 10번',
   },
@@ -198,7 +197,6 @@ export const titleMetaArr = [
     category_kor: '북마크',
     url: require('../../../assets/images/titles/7000.png'),
     name: '인사이트 수집가',
-
     introduction: '첫 북마크 저장',
   },
   {
@@ -206,7 +204,6 @@ export const titleMetaArr = [
     category: 'BOOKMARK',
     category_kor: '북마크',
     url: require('../../../assets/images/titles/7001.png'),
-
     name: '간직하고 싶은 인사이트',
     introduction: '타인이 내 인사이트를 첫 북마크',
   },
@@ -214,7 +211,7 @@ export const titleMetaArr = [
     id: 8000,
     category: 'FRIEND_INVITATION',
     url: require('../../../assets/images/titles/8000.png'),
-    category_kor: '친구초대',
+    category_kor: '친구 초대',
     name: '함께하는 즐거움',
     introduction: '첫 친구 초대',
   },

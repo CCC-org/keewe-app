@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { Text, View, TextInput, StyleSheet, Pressable } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import theme from '../../theme/light';
@@ -21,78 +21,88 @@ export type ReplyInfo = {
   nickname: string;
 };
 
-const CommentInput = ({ insightId, replyInfo, onCancelReply, onCreate }: CommentInputProps) => {
-  const [input, setInput] = useState<string>('');
-  const queryClient = useQueryClient();
-  const { mutate: createComment } = useMutation(InsightAPI.createComment, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['comment']);
-      onCreate();
-    },
-  });
+const CommentInput = forwardRef(
+  (
+    { insightId, replyInfo, onCancelReply, onCreate }: CommentInputProps,
+    ref: React.LegacyRef<TextInput>,
+  ) => {
+    const [input, setInput] = useState<string>('');
+    const queryClient = useQueryClient();
+    const { mutate: createComment } = useMutation(InsightAPI.createComment, {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['comment']);
+        onCreate();
+      },
+    });
 
-  const handleCancelReply = () => {
-    onCancelReply();
-  };
+    const handleCancelReply = () => {
+      onCancelReply();
+    };
 
-  return (
-    <View style={styles.Container}>
-      {replyInfo && (
-        <AnimatedHeightView startHeight={0} endHeight={44} duration={200}>
-          <View style={styles.reply}>
-            <Text
-              style={{
-                ...styles.replyText,
-                ...theme.fonts.text.body2.regular,
-                color: `${theme.colors.graphic.black}30`,
-              }}
-            >
-              {replyInfo.nickname}님에게 답글 남기는 중
-            </Text>
-            <Pressable
-              style={{
-                height: 'auto',
-                width: 48,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-              onPress={handleCancelReply}
-            >
-              <SvgXml xml={ClearSmallXml} />
-            </Pressable>
+    return (
+      <View style={styles.Container}>
+        {replyInfo && (
+          <AnimatedHeightView startHeight={0} endHeight={44} duration={200}>
+            <View style={styles.reply}>
+              <Text
+                style={{
+                  ...styles.replyText,
+                  ...theme.fonts.text.body2.regular,
+                  color: `${theme.colors.graphic.black}30`,
+                }}
+              >
+                {replyInfo.nickname}님에게 답글 남기는 중
+              </Text>
+              <Pressable
+                style={{
+                  height: 'auto',
+                  width: 48,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                onPress={() => {
+                  handleCancelReply();
+                }}
+              >
+                <SvgXml xml={ClearSmallXml} />
+              </Pressable>
+            </View>
+          </AnimatedHeightView>
+        )}
+        <View style={styles.inputContainer}>
+          <View style={styles.input}>
+            <TextInput
+              ref={ref}
+              value={input}
+              autoFocus={false}
+              onChangeText={(value) => setInput(value)}
+              placeholder="댓글 입력"
+              multiline={true}
+              style={{ ...theme.fonts.text.body2.regular }}
+              selectionColor={'black'}
+            />
           </View>
-        </AnimatedHeightView>
-      )}
-      <View style={styles.inputContainer}>
-        <View style={styles.input}>
-          <TextInput
-            value={input}
-            autoFocus={false}
-            onChangeText={(value) => setInput(value)}
-            placeholder="댓글 입력"
-            multiline={true}
-            style={{ ...theme.fonts.text.body2.regular }}
-            selectionColor={'black'}
-          ></TextInput>
+          <Pressable
+            onPress={() => {
+              createComment({
+                insightId,
+                content: input,
+                parentId: replyInfo?.id,
+              });
+              setInput('');
+              return;
+            }}
+            style={{ alignItems: 'center', justifyContent: 'center' }}
+          >
+            <SvgXml xml={input === '' ? shadow : main} />
+          </Pressable>
         </View>
-        <Pressable
-          onPress={() => {
-            createComment({
-              insightId,
-              content: input,
-              parentId: replyInfo?.id,
-            });
-            setInput('');
-            return;
-          }}
-          style={{ alignItems: 'center', justifyContent: 'center' }}
-        >
-          <SvgXml xml={input === '' ? shadow : main} />
-        </Pressable>
       </View>
-    </View>
-  );
-};
+    );
+  },
+);
+
+CommentInput.displayName = 'CommentInput';
 
 export default CommentInput;
 

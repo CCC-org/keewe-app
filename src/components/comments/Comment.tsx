@@ -5,7 +5,6 @@ import MiniProfile from '../profile/MiniProfile';
 import { useTheme } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import CommentVerticalDots from './CommentVerticalDots';
-import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
 
 interface CommentsProps {
@@ -115,7 +114,7 @@ const styles = StyleSheet.create({
     paddingBottom: 2,
     paddingRight: 4,
     paddingLeft: 4,
-    marginTop: 6,
+    marginTop: 12,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 4,

@@ -1,4 +1,4 @@
-import { RefreshControl, StyleSheet } from 'react-native';
+import { RefreshControl, StyleSheet, View } from 'react-native';
 import React, { Fragment, useState } from 'react';
 import { InfiniteData, QueryClient, UseMutateFunction } from '@tanstack/react-query';
 import { InsightData } from '../../types/Feed/Feedinsights';
@@ -59,7 +59,11 @@ const FeedList = ({
                     }}
                   >
                     <View style={{ borderWidth: 1, borderColor: 'red' }}>
-                      <FeedItem onBookMarkClick={touchBookMark} insight={insight} localId={String(userId)} />
+                      <FeedItem
+                        onBookMarkClick={touchBookMark}
+                        insight={insight}
+                        localId={String(userId)}
+                      />
                     </View>
                   </InView>
                 );
