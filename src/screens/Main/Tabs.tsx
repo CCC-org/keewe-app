@@ -58,6 +58,10 @@ const Tabs = () => {
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? <SvgXml xml={mypageOn} /> : <SvgXml xml={mypageOff} />,
+          title: '마이페이지',
+          headerStyle: {
+            backgroundColor: '#F1F1E9',
+          },
         }}
         name="MyPage"
         component={MyPageScreen}

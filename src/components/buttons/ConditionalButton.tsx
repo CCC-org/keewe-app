@@ -35,7 +35,7 @@ const ConditionalButton = ({
   textColor,
   borderRadius,
   style: styleProp,
-  keyboardResponsive,
+  keyboardResponsive = false,
 }: ConditionalButtonProps) => {
   const theme = useTheme();
   return (
