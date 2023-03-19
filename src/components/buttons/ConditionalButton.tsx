@@ -21,6 +21,7 @@ interface ConditionalButtonProps {
   borderRadius?: number;
   onPress: () => void;
   style?: ViewStyle;
+  keyboardResponsive?: boolean;
 }
 
 const fullHeightOfScreen = Dimensions.get('window').height;
@@ -34,11 +35,13 @@ const ConditionalButton = ({
   textColor,
   borderRadius,
   style: styleProp,
+  keyboardResponsive,
 }: ConditionalButtonProps) => {
   const theme = useTheme();
   return (
     <KeyboardAvoidingView
-      behavior={Platform.select({ ios: 'padding' })} // position || padding
+      behavior={Platform.select({ ios: 'position' })} // position || padding
+      keyboardVerticalOffset={Platform.select({ ios: keyboardResponsive ? 105 : 0 })}
       style={styles.container}
     >
       <View

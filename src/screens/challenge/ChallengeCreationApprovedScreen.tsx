@@ -39,16 +39,36 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
       <View style={styles.infoContainer}>
         <View style={styles.info}>
           <Text style={{ fontSize: 16 }}>챌린지 이름</Text>
-          <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
-            {challengeName}
-          </Text>
+          <View style={{ width: '20%' }}></View>
+          <View style={{ width: '60%' }}>
+            <Text
+              numberOfLines={2}
+              style={{
+                textAlign: 'right',
+                fontSize: 16,
+                color: theme.colors.brand.onprimary.container,
+              }}
+            >
+              {challengeName}
+            </Text>
+          </View>
         </View>
         {!!myTopic.length && (
           <View style={styles.info}>
             <Text style={{ fontSize: 16 }}>나의 주제</Text>
-            <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
-              {myTopic}
-            </Text>
+            <View style={{ width: '20%' }}></View>
+            <View style={{ width: '60%' }}>
+              <Text
+                numberOfLines={2}
+                style={{
+                  textAlign: 'right',
+                  fontSize: 16,
+                  color: theme.colors.brand.onprimary.container,
+                }}
+              >
+                {myTopic}
+              </Text>
+            </View>
           </View>
         )}
         <View style={styles.info}>
@@ -104,12 +124,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   info: {
-    marginTop: 20,
+    marginTop: 28,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   buttonContainer: {
-    marginTop: 40,
+    marginTop: 50,
     flexDirection: 'row',
     justifyContent: 'center',
   },

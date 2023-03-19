@@ -95,7 +95,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
         <View style={{ marginHorizontal: 10 }}>
           <HeaderText
             header="나만의 주제를 정해보세요"
-            subTitle={`${route.params.form.selectedCategory}에 관한 주제면 좋아요. `}
+            subTitle={`"${route.params.form.selectedCategory}"에 관한 주제면 좋아요. `}
           />
         </View>
         {route.params.form.purpose === 'join' ? (
@@ -108,18 +108,17 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
           setInputValue={setSubject}
           label={''}
           placeholder={'나의 주제'}
-          letterLimit={100}
+          letterLimit={25}
           errorMessage={errorMessage}
         />
       </View>
-      <View style={styles.buttonCtn}>
-        <ConditionalButton
-          isActive={!!subject.length}
-          text={'완료'}
-          width={343}
-          onPress={handleCompletePress}
-        />
-      </View>
+      <ConditionalButton
+        isActive={!!subject.length}
+        text={'완료'}
+        width={343}
+        onPress={handleCompletePress}
+        keyboardResponsive={true}
+      />
     </View>
   );
 };
@@ -130,11 +129,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 10,
-    paddingHorizontal: 16,
+    paddingHorizontal: 10,
     flexDirection: 'column',
     justifyContent: 'space-between',
-  },
-  buttonCtn: {
-    marginBottom: 16,
   },
 });

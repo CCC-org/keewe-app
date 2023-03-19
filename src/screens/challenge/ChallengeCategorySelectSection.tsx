@@ -71,7 +71,14 @@ const ChallengeCategorySelectSection = ({
 };
 
 const styles = StyleSheet.create({
-  accordion: { display: 'flex', flexDirection: 'row', justifyContent: 'space-between', margin: 8 },
+  accordion: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 24,
+    marginHorizontal: 10,
+    marginBottom: 8,
+  },
   tagList: {
     display: 'flex',
     flexDirection: 'row',
