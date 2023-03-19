@@ -38,6 +38,7 @@ function createStyles(theme) {
       marginTop: 8,
       marginHorizontal: 2,
       fontSize: 14,
+      lineHeight: 20,
       textAlign: 'left',
       color: '#121314',
       opacity: 0.6,

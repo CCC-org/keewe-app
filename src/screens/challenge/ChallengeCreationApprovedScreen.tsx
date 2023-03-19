@@ -27,7 +27,7 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
       <HeaderText
         header={'챌린지를 만들었어요!'}
         subTitle={
-          '챌린지 목표를 성공하면 타이틀을 획득해요. 자세한 내용은 마이페이지에서 확인하세요'
+          '챌린지 목표를 성공하면 타이틀을 획득해요. 자세한 내용은 마이페이지에서 확인하세요.'
         }
       ></HeaderText>
       <View style={{ marginTop: 16 }}>
@@ -86,7 +86,7 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <View style={{ marginRight: 4 }}>
+        <View>
           <ConditionalButton
             isActive={true}
             text={'친구 초대하기'}
@@ -96,7 +96,7 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
             onPress={() => alert('pressed')}
           />
         </View>
-        <View style={{ marginLeft: 4 }}>
+        <View>
           <ConditionalButton
             isActive={true}
             text={'확인'}
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 50,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
 });
 

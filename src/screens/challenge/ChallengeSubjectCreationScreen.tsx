@@ -92,7 +92,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <View style={{ flex: 10 }}>
-        <View style={{ marginHorizontal: 10 }}>
+        <View style={{ marginHorizontal: 10, marginBottom: 24 }}>
           <HeaderText
             header="나만의 주제를 정해보세요"
             subTitle={`"${route.params.form.selectedCategory}"에 관한 주제면 좋아요. `}

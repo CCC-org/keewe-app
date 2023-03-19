@@ -41,7 +41,7 @@ const ConditionalButton = ({
   return (
     <KeyboardAvoidingView
       behavior={Platform.select({ ios: 'position' })} // position || padding
-      keyboardVerticalOffset={Platform.select({ ios: keyboardResponsive ? 105 : 0 })}
+      keyboardVerticalOffset={Platform.select({ ios: keyboardResponsive ? 120 : 0 })}
       style={styles.container}
     >
       <View
