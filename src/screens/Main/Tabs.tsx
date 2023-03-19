@@ -7,6 +7,8 @@ import { RootScreen } from '../../navigation';
 import FeedScreen from '../Feed/FeedScreen';
 import { SvgXml } from 'react-native-svg';
 import {
+  homeOn,
+  homeOff,
   bookmarkOn,
   bookmarkOff,
   challengeOn,
@@ -30,7 +32,7 @@ const Tabs = () => {
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused }) =>
-            focused ? <SvgXml xml={challengeOn} /> : <SvgXml xml={challengeOff} />,
+            focused ? <SvgXml xml={homeOn} /> : <SvgXml xml={homeOff} />,
         }}
         name="Feed"
         component={FeedScreen}
