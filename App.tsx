@@ -313,7 +313,6 @@ export default function App() {
                         options={{
                           ...headerOptions,
                           headerStyle: { backgroundColor: '#F1F1E9' },
-                          cardStyle: { backgroundColor: '#F1F1E9' },
                         }}
                       />
                       <Stack.Screen

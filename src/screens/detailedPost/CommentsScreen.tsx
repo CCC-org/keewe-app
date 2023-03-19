@@ -1,4 +1,4 @@
-import { Pressable, FlatList, Text, Platform, KeyboardAvoidingView } from 'react-native';
+import { Pressable, FlatList, Text, Platform, KeyboardAvoidingView, TextInput } from 'react-native';
 import React, { useRef, useState } from 'react';
 import Comment from '../../components/comments/Comment';
 import { useQuery } from '@tanstack/react-query';
@@ -23,7 +23,10 @@ const CommentsScreen = ({ navigation, route }) => {
   const [replyCursor, setReplyCursor] = useState<ReplyCursor | undefined>(undefined);
   const [replyInfo, setReplyInfo] = useState<ReplyInfo | undefined>(undefined);
 
+  const ref = useRef<TextInput>(null);
+
   const handleReplyClick = (info: ReplyInfo) => {
+    ref?.current?.focus();
     setReplyInfo(info);
   };
 
@@ -60,7 +63,7 @@ const CommentsScreen = ({ navigation, route }) => {
       onSuccess: async (response: ReplyGetListResponse) => {
         await setData((prev) => {
           const idx = prev.findIndex((item) => item.id === replyCursor?.parentId);
-          prev[idx].replies.push(...response.data);
+          prev[idx]?.replies?.push(...response.data);
           return [...prev];
         });
       },
@@ -77,6 +80,7 @@ const CommentsScreen = ({ navigation, route }) => {
         createdAt={item.createdAt}
         isInsightWriter={item.writer.id === contentWriterId}
         commentWriterId={item.writer.id}
+        image={item.writer.image}
         isReply={false}
         onReply={() => handleReplyClick({ id: item.id, nickname: item.writer.name })}
         highlight={refreshIndex !== undefined && refreshIndex < item.id}
@@ -89,7 +93,8 @@ const CommentsScreen = ({ navigation, route }) => {
         key={`${item.id} reply ${reply.id} ${index}`}
         content={reply.content}
         commentWriterId={reply.writer.id}
-        isInsightWriter={item.writer.id === contentWriterId}
+        image={reply.writer.image}
+        isInsightWriter={reply.writer.id === contentWriterId}
         nickname={reply.writer.name}
         createdAt={reply.createdAt}
         title={reply.writer.title}
@@ -103,10 +108,10 @@ const CommentsScreen = ({ navigation, route }) => {
           <Pressable
             style={{ marginLeft: 100, flexDirection: 'row', alignItems: 'center' }}
             onPress={() => {
-              const parentData = data.find((comment) => comment.id === item.id);
+              const parentData = data.find((comment) => comment.id === item.id)?.replies ?? [];
               setReplyCursor({
                 parentId: item.id,
-                cursor: parentData?.replies[parentData?.replies.length - 1].id,
+                cursor: parentData[parentData?.length - 1].id,
               });
             }}
           >
@@ -156,15 +161,20 @@ const CommentsScreen = ({ navigation, route }) => {
           style={{ paddingBottom: '100%', marginBottom: 80 }}
         />
         <CommentInput
+          ref={ref}
           insightId={insightId}
           replyInfo={replyInfo}
-          onCancelReply={() => setReplyInfo(undefined)}
+          onCancelReply={() => {
+            setReplyInfo(undefined);
+            ref.current?.blur();
+          }}
           onCreate={() => {
             setRefreshIndex(data[0].id);
             setData([]);
             setCommentCursor(undefined);
             setReplyCursor(undefined);
             setReplyInfo(undefined);
+            ref.current?.blur();
           }}
         />
       </KeyboardAvoidingView>
