@@ -1,5 +1,5 @@
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import React, { useMemo } from 'react';
 import {
   FetchNextPageOptions,
   InfiniteData,
@@ -11,6 +11,7 @@ import { SvgXml } from 'react-native-svg';
 import person from '../../constants/Icons/Avatar/personXml';
 import { useTheme } from 'react-native-paper';
 import FollowListFollowButton from './FollowListFollowButton';
+import { useNavigation } from '@react-navigation/native';
 interface FollowListSectionProps {
   followList: InfiniteData<FollowData | undefined> | undefined;
   fetchNextPage: (
@@ -20,14 +21,20 @@ interface FollowListSectionProps {
 }
 
 const FollowListSection = ({ followList, mutation }: FollowListSectionProps) => {
-  const flattenData = followList?.pages.flatMap((page) => {
-    return page?.users;
-  });
+  const flattenData = useMemo(() => {
+    return followList?.pages.flatMap((page) => {
+      return page?.users;
+    });
+  }, [followList]);
 
   const theme = useTheme();
-
+  const navigation = useNavigation();
   const handlePressForFollow = (id: string | number) => {
     mutation.mutate(id);
+  };
+
+  const handleGoToProfileOnImagePress = (userId: string) => {
+    navigation.navigate('Profile', { userId });
   };
 
   return (
@@ -38,14 +45,16 @@ const FollowListSection = ({ followList, mutation }: FollowListSectionProps) => 
           <View style={styles.container}>
             <View style={styles.profile}>
               <>
-                {item?.imageURL ? (
-                  <Image
-                    source={{ uri: item?.imageURL }}
-                    style={{ width: 50, height: 50, borderRadius: 100 }}
-                  />
-                ) : (
-                  <SvgXml xml={person} width={48} height={48} />
-                )}
+                <Pressable onPress={() => handleGoToProfileOnImagePress(item.id)}>
+                  {item?.imageURL ? (
+                    <Image
+                      source={{ uri: item?.imageURL }}
+                      style={{ width: 50, height: 50, borderRadius: 100 }}
+                    />
+                  ) : (
+                    <SvgXml xml={person} width={48} height={48} />
+                  )}
+                </Pressable>
                 <View
                   style={{
                     marginLeft: 12,
