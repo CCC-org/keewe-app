@@ -15,6 +15,7 @@ const InterestEditingScreen = ({ navigation, route }) => {
   const [introduction] = useState(route?.params?.introduction);
   const [nickname] = useState(route?.params?.nickname);
   const [image] = useState(route?.params?.image);
+  const [userId] = useState(route?.params?.userId);
   const [btnActive, setBtnActive] = useState<boolean>(true);
 
   const handleSelectTag = (tag: string) => {
@@ -38,6 +39,7 @@ const InterestEditingScreen = ({ navigation, route }) => {
       title,
       selectedCategory,
       introduction,
+      userId,
     });
   };
 

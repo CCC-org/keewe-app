@@ -12,6 +12,7 @@ const NicknameEditingScreen = ({ navigation, route }) => {
   const [title] = useState(route?.params?.title);
   const [introduction] = useState(route?.params?.introduction);
   const [selectedCategory] = useState(route?.params?.selectedCategory);
+  const [userId] = useState(route?.params?.userId);
   const [buttonOn, setButtonOn] = useState<boolean>(false);
   useEffect(() => {
     navigation.setOptions({
@@ -26,6 +27,7 @@ const NicknameEditingScreen = ({ navigation, route }) => {
       title,
       selectedCategory,
       introduction,
+      userId,
     });
   };
   useLayoutEffect(() => {
