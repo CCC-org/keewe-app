@@ -17,7 +17,6 @@ interface UserSpecificChallengeSectionProps {
 const UserSpecificChallengeSection = ({
   userSpecificChallenge: challenge,
 }: UserSpecificChallengeSectionProps) => {
-  console.log('🚀 ~ file: UserSpecificChallengeSection.tsx:20 ~ challenge:', challenge);
   if (!challenge) return null;
 
   const theme = useTheme();
@@ -27,11 +26,8 @@ const UserSpecificChallengeSection = ({
     [challenge],
   );
 
-  console.log(
-    '🚀 ~ file: UserSpecificChallengeSection.tsx:26 ~ formattedWeekWithCheck:',
-    formattedWeekWithCheck,
-  );
   const challengeHeaderText = formatChallengeText(challenge.remain, challenge.startDate);
+
   const firstDay = formattedWeekWithCheck[0].day;
   return (
     <View style={{ paddingBottom: 8 }}>

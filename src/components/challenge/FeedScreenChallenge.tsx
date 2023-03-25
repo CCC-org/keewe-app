@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { UserSpecificChallenge } from '../../types/Feed/UserSpecificChallenge';
 import {
@@ -14,12 +14,6 @@ const FeedScreenChallenge = () => {
     UserSpecificChallengeQueryKeys.getUserSpecificChallenge(),
     () => UserSpecificChallengeAPI.getUserSpecificChallenge(),
   );
-  console.log(
-    '🚀 ~ file: FeedScreenChallenge.tsx:17 ~ FeedScreenChallenge ~ userSpecificChallenge:',
-    userSpecificChallenge,
-  );
-
-  if (!userSpecificChallenge) return null;
 
   return (
     <>
