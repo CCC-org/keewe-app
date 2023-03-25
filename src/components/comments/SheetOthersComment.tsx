@@ -182,7 +182,7 @@ const SheetOthersComment = ({
         leftButtonText="취소"
         rightButtonText="차단"
         leftButtonPress={() => setIsModalVisible(false)}
-        rightButtonPress={() => handleBlockUser(userId)}
+        rightButtonPress={() => handleBlockUser(Number(userId))}
         rightButtonColor="#f24822"
       />
     </ScrollView>

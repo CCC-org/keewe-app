@@ -28,7 +28,6 @@ export const blockApi = {
     }
   },
   postBlockUser: async (targetId: number) => {
-    console.log('🚀 ~ file: block.ts:31 ~ postBlockUser: ~ targetId:', targetId);
     const token = await getAccessToken();
     const URL = 'https://api-keewe.com/api/v1/user/profile/block/' + targetId;
     try {

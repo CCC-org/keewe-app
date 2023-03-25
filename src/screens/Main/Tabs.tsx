@@ -13,6 +13,8 @@ import {
   challengeOff,
   mypageOn,
   mypageOff,
+  homeOff,
+  homeOn,
 } from '../../constants/Icons/Navigation/NavigationIconsXml';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
 import MyPageScreen from './mypage/MyPageScreen';
@@ -30,7 +32,7 @@ const Tabs = () => {
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused }) =>
-            focused ? <SvgXml xml={challengeOn} /> : <SvgXml xml={challengeOff} />,
+            focused ? <SvgXml xml={homeOn} /> : <SvgXml xml={homeOff} />,
         }}
         name="Feed"
         component={FeedScreen}

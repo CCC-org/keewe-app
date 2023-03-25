@@ -3,16 +3,16 @@ import React from 'react';
 import { Feather } from '@expo/vector-icons';
 
 interface CircularCheckboxProps {
-  disabled: boolean;
+  isChecked: boolean;
 }
 
-const CircularCheckbox = ({ disabled }: CircularCheckboxProps) => {
-  if (disabled) {
+const CircularCheckbox = ({ isChecked }: CircularCheckboxProps) => {
+  if (!isChecked) {
     return <View style={styles.container}></View>;
   }
   return (
     <View style={styles.validContainer}>
-      {disabled || <Feather name="check" size={14} color={'white'} />}
+      {!isChecked || <Feather name="check" size={14} color={'white'} />}
     </View>
   );
 };
@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     height: 24,
     borderRadius: 12,
     backgroundColor: '#f1f1e9',
+    marginBottom: 4,
   },
   validContainer: {
     width: 24,
@@ -33,5 +34,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#b0e817',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 4,
   },
 });

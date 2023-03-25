@@ -17,6 +17,7 @@ interface UserSpecificChallengeSectionProps {
 const UserSpecificChallengeSection = ({
   userSpecificChallenge: challenge,
 }: UserSpecificChallengeSectionProps) => {
+  console.log('🚀 ~ file: UserSpecificChallengeSection.tsx:20 ~ challenge:', challenge);
   if (!challenge) return null;
 
   const theme = useTheme();
@@ -26,10 +27,14 @@ const UserSpecificChallengeSection = ({
     [challenge],
   );
 
+  console.log(
+    '🚀 ~ file: UserSpecificChallengeSection.tsx:26 ~ formattedWeekWithCheck:',
+    formattedWeekWithCheck,
+  );
   const challengeHeaderText = formatChallengeText(challenge.remain, challenge.startDate);
   const firstDay = formattedWeekWithCheck[0].day;
   return (
-    <View>
+    <View style={{ paddingBottom: 8 }}>
       <View style={styles.headerCtn}>
         <Text style={styles.headerText}>{challengeHeaderText}</Text>
         <AntDesign
@@ -48,8 +53,8 @@ const UserSpecificChallengeSection = ({
           return (
             <View key={challenge.day} style={styles.day}>
               {today === challenge.day && <TodayBubble isFirst={today === firstDay} />}
-              <CircularCheckbox disabled={challenge.progress.check} />
-              <Text>{challenge.day}</Text>
+              <CircularCheckbox isChecked={challenge.progress.check} />
+              <Text style={{ color: '#00000050' }}>{challenge.day}</Text>
             </View>
           );
         })}
