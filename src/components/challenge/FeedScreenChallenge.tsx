@@ -14,6 +14,10 @@ const FeedScreenChallenge = () => {
     UserSpecificChallengeQueryKeys.getUserSpecificChallenge(),
     () => UserSpecificChallengeAPI.getUserSpecificChallenge(),
   );
+  console.log(
+    '🚀 ~ file: FeedScreenChallenge.tsx:17 ~ FeedScreenChallenge ~ userSpecificChallenge:',
+    userSpecificChallenge,
+  );
 
   if (!userSpecificChallenge) return null;
 
