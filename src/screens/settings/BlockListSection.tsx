@@ -1,5 +1,5 @@
 import { FlatList, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   FetchNextPageOptions,
   InfiniteData,
@@ -13,6 +13,7 @@ import { useTheme } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 import { BlockedUser } from '../../types/block/block';
+import TwoButtonModal from '../../components/modal/TwoButtonModal';
 interface FollowListSectionProps {
   blockList: BlockedUser[];
   mutation: UseMutationResult<unknown, unknown, number, void>;
@@ -21,8 +22,10 @@ interface FollowListSectionProps {
 const BlockListSection = ({ blockList, mutation }: FollowListSectionProps) => {
   const theme = useTheme();
   const navigation = useNavigation();
+  const [isModal, setIsModal] = useState(false);
   const handleUnblockUser = (id: string | number) => {
     mutation.mutate(Number(id));
+    setIsModal(false);
   };
 
   const handleGoToProfileOnImagePress = async (itemUserId: number) => {
@@ -70,9 +73,21 @@ const BlockListSection = ({ blockList, mutation }: FollowListSectionProps) => {
                 </View>
               </>
             </View>
-            <Pressable onPress={() => handleUnblockUser(item.id)} style={styles.button}>
+            <Pressable onPress={() => setIsModal(true)} style={styles.button}>
               <Text style={[theme.fonts.text.body2.bold, { color: '#121314' }]}>차단 해제</Text>
             </Pressable>
+
+            <TwoButtonModal
+              dismissable={true}
+              visible={isModal}
+              onDismiss={() => setIsModal(false)}
+              mainTitle="title"
+              subTitle="subTitle"
+              leftButtonText="취소"
+              rightButtonText="해제하기"
+              leftButtonPress={() => setIsModal(false)}
+              rightButtonPress={() => handleUnblockUser(item.id)}
+            />
           </View>
         );
       })}

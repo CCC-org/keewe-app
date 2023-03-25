@@ -53,7 +53,8 @@ const BlockedScreen = () => {
     },
   });
 
-  if (isError || !blockList?.length) return <Text>Something went wrong</Text>;
+  if (!blockList?.length) return <Text>There is nothing to display</Text>;
+  if (isError) return <Text>Something went wrong</Text>;
   if (isLoading) return <Text>로딩중</Text>;
 
   return <BlockListSection blockList={blockList} mutation={mutation} />;

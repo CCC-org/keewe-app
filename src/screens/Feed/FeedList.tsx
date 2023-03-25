@@ -58,14 +58,12 @@ const FeedList = ({
                       fetchNextPage();
                     }}
                   >
-                    <View style={{ borderWidth: 1, borderColor: 'red' }}>
-                      <Text>{insight.writer.writerId}</Text>
-                      <FeedItem
-                        onBookMarkClick={touchBookMark}
-                        insight={insight}
-                        localId={String(userId)}
-                      />
-                    </View>
+                    <Text>{insight.writer.writerId}</Text>
+                    <FeedItem
+                      onBookMarkClick={touchBookMark}
+                      insight={insight}
+                      localId={String(userId)}
+                    />
                   </InView>
                 );
               }

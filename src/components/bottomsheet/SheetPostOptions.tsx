@@ -63,21 +63,6 @@ const SheetPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptio
       }
     }
 
-    // blockUser(userId)
-    //   .then(() => {
-    //     Toast.show({
-    //       type: 'snackbar',
-    //       text1: '사용자를 차단했어요.',
-    //       position: 'bottom',
-    //     });
-    //   })
-    //   .catch((res) => {
-    //     Toast.show({
-    //       type: 'snackbar',
-    //       text1: res,
-    //       position: 'bottom',
-    //     });
-    //   });
     setIsModalVisible(false);
   };
 
