@@ -28,6 +28,7 @@ export const blockApi = {
     }
   },
   postBlockUser: async (targetId: number) => {
+    console.log('🚀 ~ file: block.ts:31 ~ postBlockUser: ~ targetId:', targetId);
     const token = await getAccessToken();
     const URL = 'https://api-keewe.com/api/v1/user/profile/block/' + targetId;
     try {
@@ -36,6 +37,7 @@ export const blockApi = {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log('🚀 ~ file: block.ts:39 ~ postBlockUser: ~ response:', response.data);
 
       if (response.data.code !== 200) throw new Error('post block status code is not 200');
       return !!response.data.code;

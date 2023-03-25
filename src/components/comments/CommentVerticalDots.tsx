@@ -6,8 +6,8 @@ import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
 import SheetMyPostOptions from '../bottomsheet/SheetMyPostOptions';
 import SheetPostOptions from '../bottomsheet/SheetPostOptions';
-import BSMyComment from './BSMyComment';
-import BSOthersComment from './BSOthersComment';
+import SheetMyComment from './SheetMyComment';
+import SheetOthersComment from './SheetOthersComment';
 
 interface FeedVerticalDotsProps {
   userId: number | string;
@@ -45,9 +45,9 @@ const CommentVerticalDots = ({ userId, userName, commentId }: FeedVerticalDotsPr
         backdropComponent={renderBackdrop}
       >
         {isMyComment ? (
-          <BSMyComment modalRef={modalRef} />
+          <SheetMyComment modalRef={modalRef} />
         ) : (
-          <BSOthersComment
+          <SheetOthersComment
             modalRef={modalRef}
             userName={userName}
             userId={userId}

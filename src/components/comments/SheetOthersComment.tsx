@@ -19,7 +19,7 @@ interface BSPostOptionsProps {
   userName: string;
 }
 
-const BSOthersComment = ({
+const SheetOthersComment = ({
   modalRef,
   userId,
   userName,
@@ -48,23 +48,29 @@ const BSOthersComment = ({
     setReportText('');
   };
 
-  const handleBlockUser = () => {
-    blockApi
-      .postBlockUser(Number(userId))
-      .then(() => {
+  const handleBlockUser = async (userId: number) => {
+    try {
+      const response = await blockApi.postBlockUser(userId);
+      console.log('🚀 ~ file: SheetOthersComment.tsx:54 ~ handleBlockUser ~ response:', response);
+      if (response === true) {
         Toast.show({
           type: 'snackbar',
           text1: '사용자를 차단했어요.',
           position: 'bottom',
         });
-      })
-      .catch((res) => {
+        modalRef.current?.close();
+      } else throw new Error('사용자를 차단하는데 실패했어요.');
+    } catch (error) {
+      if (error instanceof Error) {
         Toast.show({
           type: 'snackbar',
-          text1: res,
+          text1: error.message,
           position: 'bottom',
         });
-      });
+        modalRef.current?.close();
+      }
+    }
+
     setIsModalVisible(false);
   };
 
@@ -176,14 +182,14 @@ const BSOthersComment = ({
         leftButtonText="취소"
         rightButtonText="차단"
         leftButtonPress={() => setIsModalVisible(false)}
-        rightButtonPress={handleBlockUser}
+        rightButtonPress={() => handleBlockUser(userId)}
         rightButtonColor="#f24822"
       />
     </ScrollView>
   );
 };
 
-export default BSOthersComment;
+export default SheetOthersComment;
 function createStyles(fonts: ReactNativePaper.ThemeFonts) {
   const styles = StyleSheet.create({
     contentContainer: {

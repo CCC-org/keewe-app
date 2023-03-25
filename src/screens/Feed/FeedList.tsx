@@ -58,7 +58,6 @@ const FeedList = ({
                       fetchNextPage();
                     }}
                   >
-                    <Text>{insight.writer.writerId}</Text>
                     <FeedItem
                       onBookMarkClick={touchBookMark}
                       insight={insight}
@@ -69,8 +68,6 @@ const FeedList = ({
               }
               return (
                 <Fragment key={insight.id}>
-                  <Text>{insight.writer.writerId}</Text>
-
                   <FeedItem
                     onBookMarkClick={touchBookMark}
                     key={insight.id}

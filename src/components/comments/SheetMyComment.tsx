@@ -9,7 +9,7 @@ interface BSMyPostOptionsProps {
   modalRef: React.RefObject<BottomSheetModalMethods>;
 }
 
-const BSMyComment = ({ modalRef }: BSMyPostOptionsProps) => {
+const SheetMyComment = ({ modalRef }: BSMyPostOptionsProps) => {
   const { fonts } = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const handleDeleteInsight = () => {
@@ -43,7 +43,7 @@ const BSMyComment = ({ modalRef }: BSMyPostOptionsProps) => {
   );
 };
 
-export default BSMyComment;
+export default SheetMyComment;
 
 const styles = StyleSheet.create({
   optionContainer: {
