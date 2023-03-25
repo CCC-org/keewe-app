@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { UserSpecificChallenge } from '../../types/Feed/UserSpecificChallenge';
 import {

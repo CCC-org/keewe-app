@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useEffect, useMemo, useState } from 'react';
-import { UserSpecificChallenge, Data } from '../../types/Feed/UserSpecificChallenge';
-import { isDatePassedMoreThanOneWeek } from '../../utils/string/userSpecificDataDateInterval';
+import React, { useMemo } from 'react';
+import { UserSpecificChallenge } from '../../types/Feed/UserSpecificChallenge';
 import { useTheme } from 'react-native-paper';
 import { getFormattedDateArray } from '../../utils/helper/UserSpecificChallengeDateFormatter/formatter';
 import CircularCheckbox from '../../components/checkbox/CircularCheckbox';
