@@ -51,6 +51,7 @@ import ChallengeDetailScreen from './src/screens/Main/challenge/ChallengeDetailS
 import CurrentChallengeScreen from './src/screens/Main/challenge/CurrentChallengeScreen';
 import HistoryChallengeScreen from './src/screens/Main/challenge/HistoryChallengeScreen';
 import { navigationRef } from './src/utils/hooks/navigaton/navigator';
+import BlockedScreen from './src/screens/settings/BlockedScreen';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator<RootStackParamList>();
@@ -125,6 +126,7 @@ export default function App() {
                       options={headerOptions}
                       component={NicknameEditingScreen}
                     />
+                    {/* Settings */}
                     <Stack.Screen
                       name={'Settings'}
                       component={SettingsScreen}
@@ -132,6 +134,15 @@ export default function App() {
                         ...headerOptions,
                         title: '설정',
                         cardStyle: { backgroundColor: '#f8f8f4' },
+                      }}
+                    />
+                    <Stack.Screen
+                      name={'Block'}
+                      component={BlockedScreen}
+                      options={{
+                        ...headerOptions,
+                        title: '차단한 계정',
+                        cardStyle: { backgroundColor: 'white' },
                       }}
                     />
                     <Stack.Screen

@@ -4,8 +4,8 @@ import { Feather } from '@expo/vector-icons';
 import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
-import BSMyPostOptions from '../../components/bottomsheet/BSMyPostOptions';
-import BSPostOptions from '../../components/bottomsheet/BSPostOptions';
+import SheetMyPostOptions from '../../components/bottomsheet/SheetMyPostOptions';
+import SheetPostOptions from '../../components/bottomsheet/SheetPostOptions';
 import { SvgXml } from 'react-native-svg';
 import { threeDots } from '../../../assets/svgs/constantSvgs/threeDots';
 
@@ -39,9 +39,9 @@ const FeedVerticalDots = ({ userId, userName, insightId }: FeedVerticalDotsProps
         backdropComponent={renderBackdrop}
       >
         {isMyPost ? (
-          <BSMyPostOptions modalRef={modalRef} />
+          <SheetMyPostOptions modalRef={modalRef} />
         ) : (
-          <BSPostOptions
+          <SheetPostOptions
             modalRef={modalRef}
             userName={userName}
             userId={userId}

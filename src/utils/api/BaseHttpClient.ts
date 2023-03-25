@@ -4,7 +4,6 @@ import { navigate } from '../hooks/navigaton/navigator';
 const httpClient = axios.create();
 httpClient.interceptors.response.use(async (response) => {
   const data = response.data;
-
   if (data.code === 403) {
     navigate('SignUp', undefined);
   }

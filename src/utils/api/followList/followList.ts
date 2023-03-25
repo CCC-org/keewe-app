@@ -11,13 +11,13 @@ export const FollowListKeys = {
 export const FollowListApi = {
   getFollowerList: async (userId: number) => {
     const token = await getAccessToken();
-    const query = new URLSearchParams({
-      limit: '10',
-      cursor: getTime(),
-    });
+
     try {
       const response = await httpClient.get<Follows>(
-        'https://api-keewe.com/api/v1/user/profile/follower/' + userId + '?' + query.toString(),
+        'https://api-keewe.com/api/v1/user/profile/follower/' +
+          userId +
+          '?' +
+          `limit=20&cursor=${getTime()}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -28,6 +28,7 @@ export const FollowListApi = {
       if (response.data.code !== 200) {
         throw new Error(response.data.message);
       }
+      console.log('follower', response.data.data);
       return response.data.data;
     } catch (error) {
       alert(error);
@@ -35,13 +36,13 @@ export const FollowListApi = {
   },
   getFolloweeList: async (userId: number) => {
     const token = await getAccessToken();
-    const query = new URLSearchParams({
-      limit: '10',
-      cursor: getTime(),
-    });
+
     try {
       const response = await httpClient.get<Follows>(
-        'https://api-keewe.com/api/v1/user/profile/followee/' + userId + '?' + query.toString(),
+        'https://api-keewe.com/api/v1/user/profile/followee/' +
+          userId +
+          '?' +
+          `limit=20&cursor=${getTime()}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -52,6 +53,8 @@ export const FollowListApi = {
       if (response.data.code !== 200) {
         throw new Error(response.data.message);
       }
+      console.log('followee', response.data.data);
+
       return response.data.data;
     } catch (error) {
       alert(error);

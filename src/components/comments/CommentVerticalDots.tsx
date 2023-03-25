@@ -4,8 +4,8 @@ import { Feather } from '@expo/vector-icons';
 import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
-import BSMyPostOptions from '../../components/bottomsheet/BSMyPostOptions';
-import BSPostOptions from '../../components/bottomsheet/BSPostOptions';
+import SheetMyPostOptions from '../bottomsheet/SheetMyPostOptions';
+import SheetPostOptions from '../bottomsheet/SheetPostOptions';
 import BSMyComment from './BSMyComment';
 import BSOthersComment from './BSOthersComment';
 

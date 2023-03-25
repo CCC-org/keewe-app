@@ -22,7 +22,7 @@ const SettingsScreen = ({ navigation }) => {
       <Pressable onPress={() => alert('What')} style={styles.settingOption}>
         <Text style={theme.fonts.text.body1.regular}>폴더 편집</Text>
       </Pressable>
-      <Pressable onPress={() => alert('What')} style={styles.settingOption}>
+      <Pressable onPress={() => navigation.navigate('Block')} style={styles.settingOption}>
         <Text style={theme.fonts.text.body1.regular}>차단한 계정</Text>
       </Pressable>
       <DividerBar style={styles.divider} />

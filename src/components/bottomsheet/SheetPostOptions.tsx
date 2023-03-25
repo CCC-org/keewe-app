@@ -5,11 +5,10 @@ import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/typ
 import { Feather } from '@expo/vector-icons';
 import ConditionalButton from '../buttons/ConditionalButton';
 import TwoButtonModal from '../modal/TwoButtonModal';
-import { blockUser } from '../../utils/api/user/profile/block';
 import { reportInsight, reportType } from '../../utils/api/report/insight/insightReport';
-import SnackBar from '../bars/SnackBar';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import DetailReportSheetContent from '../../screens/detailedPost/DetailReportSheetContent';
+import { blockApi } from '../../utils/api/block/block';
 
 interface BSPostOptionsProps {
   modalRef: React.RefObject<BottomSheetModalMethods>;
@@ -18,7 +17,7 @@ interface BSPostOptionsProps {
   userName: string;
 }
 
-const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsProps) => {
+const SheetPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsProps) => {
   const { fonts } = useTheme();
   const styles = createStyles(fonts);
   const [isReport, setIsReport] = useState(false);
@@ -42,22 +41,43 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
     setReportText('');
   };
 
-  const handleBlockUser = () => {
-    blockUser(userId)
-      .then(() => {
+  const handleBlockUser = async (userId: number) => {
+    try {
+      const response = await blockApi.postBlockUser(userId);
+      if (response === true) {
         Toast.show({
           type: 'snackbar',
           text1: '사용자를 차단했어요.',
           position: 'bottom',
         });
-      })
-      .catch((res) => {
+        modalRef.current?.close();
+      } else throw new Error('사용자를 차단하는데 실패했어요.');
+    } catch (error) {
+      if (error instanceof Error) {
         Toast.show({
           type: 'snackbar',
-          text1: res,
+          text1: error.message,
           position: 'bottom',
         });
-      });
+        modalRef.current?.close();
+      }
+    }
+
+    // blockUser(userId)
+    //   .then(() => {
+    //     Toast.show({
+    //       type: 'snackbar',
+    //       text1: '사용자를 차단했어요.',
+    //       position: 'bottom',
+    //     });
+    //   })
+    //   .catch((res) => {
+    //     Toast.show({
+    //       type: 'snackbar',
+    //       text1: res,
+    //       position: 'bottom',
+    //     });
+    //   });
     setIsModalVisible(false);
   };
 
@@ -124,7 +144,12 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
           </Text>
         </Pressable>
         <Pressable onPress={handleReportSubmit} style={{ marginTop: 72 }}>
-          <ConditionalButton isActive={selectedReport !== null} width={'100%'} text="신고하기" />
+          <ConditionalButton
+            isActive={selectedReport !== null}
+            width={'100%'}
+            text="신고하기"
+            onPress={() => alert('report')}
+          />
         </Pressable>
       </ScrollView>
     );
@@ -135,7 +160,12 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
       <Pressable style={styles.option} onPress={handlePress}>
         <Text style={[fonts.text.body1.regular]}>신고하기</Text>
       </Pressable>
-      <Pressable style={styles.option} onPress={() => setIsModalVisible(true)}>
+      <Pressable
+        style={styles.option}
+        onPress={() => {
+          setIsModalVisible(true);
+        }}
+      >
         <Text style={[fonts.text.body1.regular]}>사용자 차단하기</Text>
       </Pressable>
       <TwoButtonModal
@@ -147,14 +177,14 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
         leftButtonText="취소"
         rightButtonText="차단"
         leftButtonPress={() => setIsModalVisible(false)}
-        rightButtonPress={handleBlockUser}
+        rightButtonPress={() => handleBlockUser(userId)}
         rightButtonColor="#f24822"
       />
     </ScrollView>
   );
 };
 
-export default BSPostOptions;
+export default SheetPostOptions;
 function createStyles(fonts: ReactNativePaper.ThemeFonts) {
   const styles = StyleSheet.create({
     contentContainer: {

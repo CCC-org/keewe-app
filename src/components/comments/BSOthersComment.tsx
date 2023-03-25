@@ -8,9 +8,9 @@ import BottomSheetHeader from '../header/BottomSheetHeader';
 import HeaderRightButton from '../header/HeaderRightButton';
 import CountingTextArea from '../texts/CountingTextArea';
 import TwoButtonModal from '../modal/TwoButtonModal';
-import { blockUser } from '../../utils/api/user/profile/block';
 import { reportInsight, reportType } from '../../utils/api/report/insight/insightReport';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { blockApi } from '../../utils/api/block/block';
 
 interface BSPostOptionsProps {
   modalRef: React.RefObject<BottomSheetModalMethods>;
@@ -49,7 +49,8 @@ const BSOthersComment = ({
   };
 
   const handleBlockUser = () => {
-    blockUser(userId)
+    blockApi
+      .postBlockUser(Number(userId))
       .then(() => {
         Toast.show({
           type: 'snackbar',
