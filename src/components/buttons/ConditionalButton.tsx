@@ -5,11 +5,9 @@ import {
   Pressable,
   KeyboardAvoidingView,
   Platform,
-  Dimensions,
-  LayoutChangeEvent,
   ViewStyle,
 } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import { useTheme } from 'react-native-paper';
 
 interface ConditionalButtonProps {
@@ -24,7 +22,7 @@ interface ConditionalButtonProps {
   keyboardResponsive?: boolean;
 }
 
-const fullHeightOfScreen = Dimensions.get('window').height;
+// const fullHeightOfScreen = Dimensions.get('window').height;
 
 const ConditionalButton = ({
   isActive = true,

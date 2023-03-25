@@ -5,6 +5,7 @@ import Tag from '../../components/buttons/tag';
 import { useTheme } from 'react-native-paper';
 
 interface ChallengeCategorySelectSectionProps {
+  myInterests: string[] | undefined;
   totalCategory: string[];
   selectedCategory?: string;
   onSelect: (value: string) => void;
@@ -12,6 +13,7 @@ interface ChallengeCategorySelectSectionProps {
 }
 
 const ChallengeCategorySelectSection = ({
+  myInterests,
   totalCategory,
   selectedCategory,
   onSelect,
@@ -27,10 +29,10 @@ const ChallengeCategorySelectSection = ({
         isOpen={isOpen}
         onClick={() => setIsOpen(!isOpen)}
         duration={300}
-        openHeight={200}
+        openHeight={80}
       >
         <View style={styles.tagList}>
-          {totalCategory.map((category) => (
+          {myInterests?.map((category) => (
             <Tag
               key={category}
               title={category}
@@ -75,16 +77,16 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 48,
+    marginTop: 12,
     marginHorizontal: 10,
-    marginBottom: 8,
+    marginBottom: 16,
   },
   tagList: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     flexWrap: 'wrap',
-    margin: 8,
+    marginHorizontal: 8,
   },
 });
 
