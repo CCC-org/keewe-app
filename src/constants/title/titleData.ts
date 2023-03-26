@@ -192,6 +192,14 @@ export const titleMetaArr = [
     introduction: '두번째 챌린지',
   },
   {
+    id: 5004,
+    category: 'CHALLENGE',
+    category_kor: '챌린지',
+    url: require('../../../assets/images/titles/5004.png'),
+    name: '실패는 성공의 어머니',
+    introduction: '첫 챌린지 실패',
+  },
+  {
     id: 6000,
     category: 'SHARE',
     category_kor: '공유',
