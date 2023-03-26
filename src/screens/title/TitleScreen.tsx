@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTitles } from '../../utils/hooks/title/useTitles';
 import TitleSticker from './TitleSticker';
 import { useTheme } from 'react-native-paper';
@@ -8,9 +8,23 @@ import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 
 const TitleScreen = ({ route, navigation }) => {
   const userId = route.params?.userId ?? getUserId().then((id) => id);
-  const isEnteredByProfileEdit = route.params?.isEnteredByProfileEdit ?? false;
+  const isEnteredByProfileEdit: boolean = route.params?.isEnteredByProfileEdit ?? false;
   const [userTitles] = useTitles(userId);
+  const [nickname] = useState<string>(route?.params?.nickname);
+  const [image] = useState(route?.params?.image);
+  const [title] = useState(route?.params?.title);
+  const [introduction] = useState(route?.params?.introduction);
+  const [selectedCategory] = useState(route?.params?.selectedCategory);
   const theme = useTheme();
+
+  const editObject = {
+    nickname: nickname,
+    image: image,
+    title: title,
+    introduction: introduction,
+    selectedCategory: selectedCategory,
+    toScreen: 'ProfileEdit',
+  };
 
   return (
     <ScrollView style={styles.mainContainer} contentContainerStyle={{ paddingBottom: 100 }}>
@@ -41,6 +55,7 @@ const TitleScreen = ({ route, navigation }) => {
                     achievedTitles={userTitles.achievedTitles}
                     repTitleId={userTitles?.repTitleId}
                     titleMeta={titleMeta}
+                    editObject={isEnteredByProfileEdit ? editObject : null}
                   />
                 );
               })}

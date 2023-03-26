@@ -15,7 +15,7 @@ import useCachedResources from './src/utils/hooks/useCachedResources';
 
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider as PaperProvider } from 'react-native-paper';
 import OnboardingIntroHeaderButton from './src/components/buttons/OnboardingIntroHeaderButton';
@@ -53,6 +53,7 @@ import HistoryChallengeScreen from './src/screens/Main/challenge/HistoryChalleng
 import { navigationRef } from './src/utils/hooks/navigaton/navigator';
 import BlockedScreen from './src/screens/settings/BlockedScreen';
 import FolderEditScreen from './src/screens/settings/FolderEditScreen';
+import { Feather } from '@expo/vector-icons';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator<RootStackParamList>();
@@ -60,7 +61,6 @@ const headerOptions = {
   headerBackVisible: false,
   headerLeft: () => <HeaderBackButton />,
 };
-
 // Text style. font-family : pretendard
 const queryClient = new QueryClient();
 export default function App() {
@@ -177,7 +177,18 @@ export default function App() {
                     <Stack.Screen
                       name={'Profile'}
                       component={ProfileScreen}
-                      options={{ ...headerOptions, title: '' }}
+                      options={{
+                        headerLeft: () => <HeaderBackButton />,
+                        headerRight: () => {
+                          return (
+                            <Pressable style={{ marginRight: 12 }} onPress={() => alert('more')}>
+                              <Feather name="more-vertical" size={24} color={'#000000'} />
+                            </Pressable>
+                          );
+                        },
+                        headerStyle: { backgroundColor: '#F1F1E9' },
+                        title: '',
+                      }}
                     />
                     <Stack.Group
                       screenOptions={{

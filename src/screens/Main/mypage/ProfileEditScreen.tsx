@@ -37,41 +37,28 @@ const ProfileEditScreen = ({ navigation, route }) => {
 
   const handleComplete = () => setModalVisible(true);
   const changePermission = () => setPermissionModal(true);
+  const editObject = {
+    nickname,
+    image,
+    title,
+    introduction,
+    selectedCategory,
+    userId,
+    toScreen: 'ProfileEdit',
+  };
   const handleNickname = () => {
-    navigation.navigate('NicknameEditing', {
-      nickname,
-      image,
-      title,
-      introduction,
-      selectedCategory,
-      toScreen: 'ProfileEdit',
-    });
+    navigation.navigate('NicknameEditing', editObject);
   };
 
   const handleTitle = () =>
     navigation.navigate('Title', {
+      ...editObject,
       userId,
       isEnteredByProfileEdit: true,
     });
 
-  const handleIntroduction = () =>
-    navigation.navigate('IntroductionEditing', {
-      nickname,
-      image,
-      title,
-      introduction,
-      selectedCategory,
-      toScreen: 'ProfileEdit',
-    });
-  const handleInterests = () =>
-    navigation.navigate('InterestEditing', {
-      nickname,
-      image,
-      title,
-      introduction,
-      selectedCategory,
-      customCategory,
-    });
+  const handleIntroduction = () => navigation.navigate('IntroductionEditing', editObject);
+  const handleInterests = () => navigation.navigate('InterestEditing', editObject);
   useEffect(() => {
     navigation.setOptions({
       headerTitle: '프로필 수정',

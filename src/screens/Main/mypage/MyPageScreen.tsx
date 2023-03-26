@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, ScrollView, Pressable, RefreshControl } from 'r
 import React, { useEffect, useRef, useState } from 'react';
 import MypageProfile from '../../../components/profile/MypageProfile';
 import { useTheme } from 'react-native-paper';
-import { Feather, Ionicons } from '@expo/vector-icons';
+import { SvgXml } from 'react-native-svg';
 import MypageTitle from '../../../components/title/MypageTitle';
 import DividerBar from '../../../components/bars/DividerBar';
 import InterestIcon from './InterestIcon';
@@ -16,6 +16,9 @@ import GoToUploadButton from '../../../components/buttons/GoToUploadButton';
 import { IOScrollView } from 'react-native-intersection-observer';
 import HeaderBackButton from '../../../components/header/HeaderBackButton';
 import { useScrollToTop } from '@react-navigation/native';
+import { settingsIcon } from '../../../../assets/svgs/settingsIcon';
+import { Feather } from '@expo/vector-icons';
+import { threeDots } from '../../../../assets/svgs/constantSvgs/threeDots';
 
 const MyPageScreen = ({ navigation, route }) => {
   const { userId } = route.params;
@@ -64,7 +67,7 @@ const MyPageScreen = ({ navigation, route }) => {
   );
 
   const queryClient = useQueryClient();
-  // queryClient.invalidateQueries({ queryKey: ['profile'] });
+  queryClient.invalidateQueries({ queryKey: ['profile'] });
   const drawerId =
     isUserFolderListLoading === true || userFolderList.selectedTab.id === 0
       ? ''
@@ -137,14 +140,10 @@ const MyPageScreen = ({ navigation, route }) => {
         <View style={styles.top}>
           <View style={styles.setting}>
             <Pressable onPress={() => navigation.navigate('Settings')}>
-              <Ionicons
-                name="settings-outline"
-                size={24}
-                color={`${theme.colors.graphic.black}cc`}
-              />
+              <SvgXml xml={settingsIcon} />
             </Pressable>
             <Pressable onPress={() => alert('more')}>
-              <Feather name="more-vertical" size={24} color={`${theme.colors.graphic.black}cc`} />
+              <SvgXml xml={threeDots} />
             </Pressable>
           </View>
           <View style={{ marginLeft: 16, marginBottom: 24 }}>

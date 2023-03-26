@@ -154,14 +154,6 @@ const ProfileScreen = ({ navigation, route }) => {
       refreshControl={<RefreshControl refreshing={pageRefreshing} onRefresh={onRefresh} />}
     >
       <View style={styles.top}>
-        <View style={styles.setting}>
-          <Pressable onPress={() => alert('setting')}>
-            <Ionicons name="settings-outline" size={24} color={`${theme.colors.graphic.black}cc`} />
-          </Pressable>
-          <Pressable onPress={() => alert('more')}>
-            <Feather name="more-vertical" size={24} color={`${theme.colors.graphic.black}cc`} />
-          </Pressable>
-        </View>
         <View style={{ marginLeft: 16, marginBottom: 24 }}>
           <MypageProfile
             profileUserId={userId}
@@ -332,12 +324,7 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   top: {
     backgroundColor: '#F1F1E9',
-  },
-  setting: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 18,
-    paddingVertical: 14,
+    paddingTop: 8,
   },
   btn: {
     marginTop: 32,
