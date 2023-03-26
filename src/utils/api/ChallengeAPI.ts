@@ -3,6 +3,7 @@ import httpClient from './BaseHttpClient';
 
 export const ChallengeQueryKeys = {
   create: (request: ChallengeCreateRequest) => ['challenge', request],
+  getMyInterests: () => ['myInterests'],
 };
 
 export const ChallengeAPI = {
@@ -17,6 +18,18 @@ export const ChallengeAPI = {
       .then((res) => res.data)
       .catch((err) => {
         throw new Error(err);
+      });
+  },
+  getMyInterests: async () => {
+    const token = await getAccessToken();
+    return httpClient
+      .get<MyInterestsGetResponse>('https://api-keewe.com/api/v1/user/profile/interests', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        return res.data.data;
       });
   },
   participationCheck: async () => {

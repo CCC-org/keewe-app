@@ -1,8 +1,6 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import React, { useCallback, useRef } from 'react';
-import { Feather } from '@expo/vector-icons';
 import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
-import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
 import BSMyPostOptions from '../../components/bottomsheet/BSMyPostOptions';
 import BSPostOptions from '../../components/bottomsheet/BSPostOptions';

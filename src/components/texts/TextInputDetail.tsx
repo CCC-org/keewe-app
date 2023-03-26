@@ -54,46 +54,48 @@ const TextInputDetail = (props: TextInputDetailProps) => {
           {infoText}
         </Text>
       </View>
-      <TextInput
-        label={label}
-        autoFocus={true}
-        selectionColor={'black'}
-        right={
-          <TextInput.Icon
-            style={{ opacity: isButtonEnabled ? 0.2 : 0, marginRight: -15 }}
-            onPress={handleTextInputButton}
-            name="close-circle"
-          />
-        }
-        value={inputValue}
-        placeholder={placeholder}
-        onChangeText={(text) => handleChangeText(text)}
-        underlineColor={inputUnderlineColor}
-        activeUnderlineColor={inputUnderlineColor}
-        style={{
-          fontWeight: '600',
-          fontSize: 22,
-          backgroundColor: 'white',
-          marginHorizontal: 0,
-          paddingHorizontal: 0,
-        }}
-        dense={true}
-        onFocus={() => {
-          setFocused(true);
-          setIsButtonEnabled(true);
-        }}
-        onEndEditing={() => {
-          setFocused(false);
-          setIsButtonEnabled(false);
-        }}
-        placeholderTextColor={'rgba(18, 19, 20, 0.3)'}
-        theme={{
-          colors: {
-            text: inputValueColor,
-          },
-        }}
-      />
-      {errorMessage.length > 0 && <Text style={styles.error}>{errorMessage}</Text>}
+      <View style={{ marginHorizontal: 13 }}>
+        <TextInput
+          label={label}
+          autoFocus={true}
+          selectionColor={'black'}
+          right={
+            <TextInput.Icon
+              style={{ opacity: isButtonEnabled ? 0.2 : 0, marginRight: -15 }}
+              onPress={handleTextInputButton}
+              name="close-circle"
+            />
+          }
+          value={inputValue}
+          placeholder={placeholder}
+          onChangeText={(text) => handleChangeText(text)}
+          underlineColor={inputUnderlineColor}
+          activeUnderlineColor={inputUnderlineColor}
+          style={{
+            fontWeight: '600',
+            fontSize: 22,
+            backgroundColor: 'white',
+            marginHorizontal: 0,
+            paddingHorizontal: 0,
+          }}
+          dense={true}
+          onFocus={() => {
+            setFocused(true);
+            setIsButtonEnabled(true);
+          }}
+          onEndEditing={() => {
+            setFocused(false);
+            setIsButtonEnabled(false);
+          }}
+          placeholderTextColor={'rgba(18, 19, 20, 0.3)'}
+          theme={{
+            colors: {
+              text: inputValueColor,
+            },
+          }}
+        />
+        {errorMessage.length > 0 && <Text style={styles.error}>{errorMessage}</Text>}
+      </View>
     </>
   );
 };
@@ -103,7 +105,7 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 12,
     fontWeight: '500',
-    // marginLeft: 12,
+    marginTop: 4,
   },
 });
 

@@ -5,14 +5,19 @@ import { TOTAL_TAG } from '../../constants/Interests';
 import ChallengeCategorySelectSection from './ChallengeCategorySelectSection';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import Stepper from '../../components/stepper/Stepper';
+import { ChallengeAPI, ChallengeQueryKeys } from '../../utils/api/ChallengeAPI';
+import { useQuery } from '@tanstack/react-query';
 
 const CategorySelectScreen = ({ navigation, route }) => {
   const theme = useTheme();
   const totalCategory = TOTAL_TAG;
   const [customCategory, setCustomCategory] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
-
   const isActive = useMemo(() => selectedCategory !== undefined, [selectedCategory]);
+  const { data: myInterests, isLoading: isMyInterestsLoading } = useQuery({
+    queryKey: ChallengeQueryKeys.getMyInterests(),
+    queryFn: () => ChallengeAPI.getMyInterests(),
+  });
 
   const handleSelectTag = (tag: string) =>
     setSelectedCategory(selectedCategory === tag ? undefined : tag);
@@ -36,10 +41,11 @@ const CategorySelectScreen = ({ navigation, route }) => {
             <Text style={theme.fonts.text.display}>챌린지 카테고리를</Text>
             <Text style={theme.fonts.text.display}>1개 선택하세요</Text>
           </View>
-          <View style={{ marginHorizontal: 6 }}>
+          <View style={{ marginHorizontal: 6, marginBottom: 20 }}>
             <Stepper totalStep={3} currentStep={1} />
           </View>
           <ChallengeCategorySelectSection
+            myInterests={myInterests?.interests}
             totalCategory={[...customCategory, ...totalCategory]}
             selectedCategory={selectedCategory}
             onSelect={handleSelectTag}
