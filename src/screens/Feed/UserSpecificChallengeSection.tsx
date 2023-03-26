@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useEffect, useMemo, useState } from 'react';
-import { UserSpecificChallenge, Data } from '../../types/Feed/UserSpecificChallenge';
-import { isDatePassedMoreThanOneWeek } from '../../utils/string/userSpecificDataDateInterval';
+import React, { useMemo } from 'react';
+import { UserSpecificChallenge } from '../../types/Feed/UserSpecificChallenge';
 import { useTheme } from 'react-native-paper';
 import { getFormattedDateArray } from '../../utils/helper/UserSpecificChallengeDateFormatter/formatter';
 import CircularCheckbox from '../../components/checkbox/CircularCheckbox';
@@ -27,9 +26,10 @@ const UserSpecificChallengeSection = ({
   );
 
   const challengeHeaderText = formatChallengeText(challenge.remain, challenge.startDate);
+
   const firstDay = formattedWeekWithCheck[0].day;
   return (
-    <View>
+    <View style={{ paddingBottom: 8 }}>
       <View style={styles.headerCtn}>
         <Text style={styles.headerText}>{challengeHeaderText}</Text>
         <AntDesign
@@ -48,8 +48,8 @@ const UserSpecificChallengeSection = ({
           return (
             <View key={challenge.day} style={styles.day}>
               {today === challenge.day && <TodayBubble isFirst={today === firstDay} />}
-              <CircularCheckbox disabled={challenge.progress.check} />
-              <Text>{challenge.day}</Text>
+              <CircularCheckbox isChecked={challenge.progress.check} />
+              <Text style={{ color: '#00000050' }}>{challenge.day}</Text>
             </View>
           );
         })}

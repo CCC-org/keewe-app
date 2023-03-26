@@ -15,6 +15,8 @@ import {
   challengeOff,
   mypageOn,
   mypageOff,
+  homeOff,
+  homeOn,
 } from '../../constants/Icons/Navigation/NavigationIconsXml';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
 import MyPageScreen from './mypage/MyPageScreen';

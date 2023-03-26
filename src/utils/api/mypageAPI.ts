@@ -32,6 +32,7 @@ export const MypageAPI = {
           },
         },
       );
+      console.log('mypageData', data);
       return data;
     } catch (err) {
       console.error('api error2: ', err);

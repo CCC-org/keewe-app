@@ -1,24 +1,30 @@
-import { Pressable, ScrollView, StyleSheet, Text } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import { useTheme } from 'react-native-paper';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { Feather } from '@expo/vector-icons';
 import ConditionalButton from '../buttons/ConditionalButton';
+import BottomSheetHeader from '../header/BottomSheetHeader';
+import HeaderRightButton from '../header/HeaderRightButton';
+import CountingTextArea from '../texts/CountingTextArea';
 import TwoButtonModal from '../modal/TwoButtonModal';
-import { blockUser } from '../../utils/api/user/profile/block';
 import { reportInsight, reportType } from '../../utils/api/report/insight/insightReport';
-import SnackBar from '../bars/SnackBar';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import DetailReportSheetContent from '../../screens/detailedPost/DetailReportSheetContent';
+import { blockApi } from '../../utils/api/block/block';
 
 interface BSPostOptionsProps {
   modalRef: React.RefObject<BottomSheetModalMethods>;
-  insightId: number;
-  userId: number;
+  commentId: number;
+  userId: number | string;
   userName: string;
 }
 
-const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsProps) => {
+const SheetOthersComment = ({
+  modalRef,
+  userId,
+  userName,
+  commentId: insightId,
+}: BSPostOptionsProps) => {
   const { fonts } = useTheme();
   const styles = createStyles(fonts);
   const [isReport, setIsReport] = useState(false);
@@ -42,22 +48,29 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
     setReportText('');
   };
 
-  const handleBlockUser = () => {
-    blockUser(userId)
-      .then(() => {
+  const handleBlockUser = async (userId: number) => {
+    try {
+      const response = await blockApi.postBlockUser(userId);
+      console.log('🚀 ~ file: SheetOthersComment.tsx:54 ~ handleBlockUser ~ response:', response);
+      if (response === true) {
         Toast.show({
           type: 'snackbar',
           text1: '사용자를 차단했어요.',
           position: 'bottom',
         });
-      })
-      .catch((res) => {
+        modalRef.current?.close();
+      } else throw new Error('사용자를 차단하는데 실패했어요.');
+    } catch (error) {
+      if (error instanceof Error) {
         Toast.show({
           type: 'snackbar',
-          text1: res,
+          text1: error.message,
           position: 'bottom',
         });
-      });
+        modalRef.current?.close();
+      }
+    }
+
     setIsModalVisible(false);
   };
 
@@ -86,14 +99,30 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
 
   if (selectedReport === -1) {
     return (
-      <DetailReportSheetContent
-        reasonText={reportText}
-        setReasonText={setReportText}
-        handleSheetComplete={handleReportSubmit}
-        onHeaderLeftPress={handleExitText}
-        overflow={reportText !== undefined && reportText.length > 0 && reportText.length <= 150}
-        limit={150}
-      />
+      <View style={styles.contentContainer}>
+        <BottomSheetHeader
+          onLeftButtonPress={handleExitText}
+          title="기타 신고 사유"
+          iconName="arrowleft"
+          headerRightButton={() => (
+            <HeaderRightButton
+              text="완료"
+              backGroundColor={reportText.length ? '#b0e817' : '#12131420'}
+              textColor={reportText.length ? 'black' : '#ffffff'}
+              disabled={!reportText.length}
+              borderLine={false}
+              handlePress={handleReportSubmit}
+            />
+          )}
+        />
+        <CountingTextArea
+          inputValue={reportText}
+          placeholder="인사이트를 얻은 링크"
+          setInputValue={setReportText}
+          autoFocus={true}
+          limit={150}
+        />
+      </View>
     );
   }
 
@@ -120,11 +149,17 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
         ))}
         <Pressable onPress={handleEtcReason} style={styles.clickableOption}>
           <Text style={styles.optionTitle}>
-            <Text>기타 신고 사유</Text>
+            <Text>기타 사유 신고</Text>
           </Text>
         </Pressable>
         <Pressable onPress={handleReportSubmit} style={{ marginTop: 72 }}>
-          <ConditionalButton isActive={selectedReport !== null} width={'100%'} text="신고하기" />
+          <ConditionalButton
+            isActive={selectedReport !== null}
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            onPress={() => {}}
+            width={'100%'}
+            text="신고하기"
+          />
         </Pressable>
       </ScrollView>
     );
@@ -147,14 +182,14 @@ const BSPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsP
         leftButtonText="취소"
         rightButtonText="차단"
         leftButtonPress={() => setIsModalVisible(false)}
-        rightButtonPress={handleBlockUser}
+        rightButtonPress={() => handleBlockUser(Number(userId))}
         rightButtonColor="#f24822"
       />
     </ScrollView>
   );
 };
 
-export default BSPostOptions;
+export default SheetOthersComment;
 function createStyles(fonts: ReactNativePaper.ThemeFonts) {
   const styles = StyleSheet.create({
     contentContainer: {

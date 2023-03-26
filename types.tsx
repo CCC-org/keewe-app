@@ -65,6 +65,8 @@ export type RootStackParamList = {
   };
   Settings: undefined;
   PushNotificationSetting: undefined;
+  Block: undefined;
+  FolderEdit: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

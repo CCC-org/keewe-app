@@ -22,13 +22,13 @@ export default TodayBubble;
 const createStyle = (isFirst: boolean) =>
   StyleSheet.create({
     bubble: {
-      top: -32,
+      top: -36,
       position: 'absolute',
       left: isFirst ? -12 : -8,
       width: isFirst ? 82 : 37,
       height: 24,
       borderRadius: 4,
-      backgroundColor: '#121314',
+      backgroundColor: '#12131480',
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -41,6 +41,7 @@ const createStyle = (isFirst: boolean) =>
       borderLeftWidth: 6.5,
       borderRightWidth: 6.5,
       borderTopWidth: 6,
+      borderTopColor: '#12131480',
       borderStyle: 'solid',
       backgroundColor: 'transparent',
       borderLeftColor: 'transparent',
