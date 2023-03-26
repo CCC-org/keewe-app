@@ -47,7 +47,6 @@ const MyPageScreen = ({ navigation, route }) => {
     [theme.colors.graphic.green, `${theme.colors.graphic.green}1a`],
   ]);
 
-  // Erased onSetteled: querySuccessError fn.
   const { data: profile, isLoading: isProfileLoading } = useQuery({
     queryKey: MypageQueryKeys.getProfile({ targetId: userId }),
     queryFn: () => MypageAPI.getProfile({ targetId: userId }),
@@ -67,7 +66,6 @@ const MyPageScreen = ({ navigation, route }) => {
   );
 
   const queryClient = useQueryClient();
-  queryClient.invalidateQueries({ queryKey: ['profile'] });
   const drawerId =
     isUserFolderListLoading === true || userFolderList.selectedTab.id === 0
       ? ''
