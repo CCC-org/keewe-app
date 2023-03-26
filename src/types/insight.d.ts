@@ -68,3 +68,8 @@ interface InsightReactResponse {
     count: number;
   };
 }
+
+interface BookMarkRequest {
+  cursor: string;
+  limit: string;
+}

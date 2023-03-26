@@ -67,7 +67,7 @@ const MyPageScreen = ({ navigation, route }) => {
   );
 
   const queryClient = useQueryClient();
-  queryClient.invalidateQueries({ queryKey: ['profile'] });
+  // queryClient.invalidateQueries({ queryKey: ['profile'] });
   const drawerId =
     isUserFolderListLoading === true || userFolderList.selectedTab.id === 0
       ? ''
