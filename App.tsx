@@ -52,6 +52,7 @@ import CurrentChallengeScreen from './src/screens/Main/challenge/CurrentChalleng
 import HistoryChallengeScreen from './src/screens/Main/challenge/HistoryChallengeScreen';
 import { navigationRef } from './src/utils/hooks/navigaton/navigator';
 import BlockedScreen from './src/screens/settings/BlockedScreen';
+import FolderEditScreen from './src/screens/settings/FolderEditScreen';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator<RootStackParamList>();
@@ -142,6 +143,15 @@ export default function App() {
                       options={{
                         ...headerOptions,
                         title: '차단한 계정',
+                        cardStyle: { backgroundColor: 'white' },
+                      }}
+                    />
+                    <Stack.Screen
+                      name={'FolderEdit'}
+                      component={FolderEditScreen}
+                      options={{
+                        ...headerOptions,
+                        title: '폴더 편집',
                         cardStyle: { backgroundColor: 'white' },
                       }}
                     />
