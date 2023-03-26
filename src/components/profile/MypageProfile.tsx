@@ -51,36 +51,66 @@ const MypageProfile = ({
         >
           {title}
         </Text>
-        <Pressable
-          onPress={() => {
-            navigation.navigate('FollowTopTabs', {
-              userId: profileUserId,
-              nickname,
-              follower,
-              following,
-            });
-          }}
+        <View
+          // onPress={() => {
+          //   navigation.navigate('FollowTopTabs', {
+          //     userId: profileUserId,
+          //     nickname,
+          //     follower,
+          //     following,
+          //   });
+          // }}
           style={{ flexDirection: 'row', marginTop: 8 }}
         >
-          <Text
-            style={{ ...theme.fonts.text.body1.regular, color: `${theme.colors.graphic.black}cc` }}
+          <Pressable
+            onPress={() =>
+              navigation.navigate('FollowTopTabs', {
+                screen: 'Followers',
+                userId: profileUserId,
+                follower,
+                following,
+              })
+            }
+            style={{ flexDirection: 'row', marginTop: 8 }}
           >
-            팔로워
-          </Text>
-          <Text style={{ ...theme.fonts.text.body1.bold, color: theme.colors.graphic.black }}>
-            {' '}
-            {follower}{' '}
-          </Text>
-          <Text
-            style={{ ...theme.fonts.text.body1.regular, color: `${theme.colors.graphic.black}cc` }}
+            <Text
+              style={{
+                ...theme.fonts.text.body1.regular,
+                color: `${theme.colors.graphic.black}cc`,
+              }}
+            >
+              팔로워
+            </Text>
+            <Text style={{ ...theme.fonts.text.body1.bold, color: theme.colors.graphic.black }}>
+              {' '}
+              {follower}{' '}
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={() =>
+              navigation.navigate('FollowTopTabs', {
+                screen: 'Following',
+                userId: profileUserId,
+                follower,
+                following,
+              })
+            }
+            style={{ flexDirection: 'row', marginTop: 8 }}
           >
-            {' '}
-            팔로잉{' '}
-          </Text>
-          <Text style={{ ...theme.fonts.text.body1.bold, color: theme.colors.graphic.black }}>
-            {following}
-          </Text>
-        </Pressable>
+            <Text
+              style={{
+                ...theme.fonts.text.body1.regular,
+                color: `${theme.colors.graphic.black}cc`,
+              }}
+            >
+              {' '}
+              팔로잉{' '}
+            </Text>
+            <Text style={{ ...theme.fonts.text.body1.bold, color: theme.colors.graphic.black }}>
+              {following}
+            </Text>
+          </Pressable>
+        </View>
       </View>
     </View>
   );

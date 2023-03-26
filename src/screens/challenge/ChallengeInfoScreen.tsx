@@ -12,7 +12,7 @@ const ChallengeInfoScreen = ({ navigation, route }) => {
   const [challengeInfo, setChallengeInfo] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const isActive = useMemo(
-    () => challengeName !== '' && challengeInfo !== '',
+    () => challengeName !== '' && challengeInfo !== '' && challengeInfo.length <= 150,
     [challengeName, challengeInfo],
   );
 

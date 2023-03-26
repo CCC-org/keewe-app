@@ -5,11 +5,9 @@ import {
   Pressable,
   KeyboardAvoidingView,
   Platform,
-  Dimensions,
-  LayoutChangeEvent,
   ViewStyle,
 } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import { useTheme } from 'react-native-paper';
 
 interface ConditionalButtonProps {
@@ -21,9 +19,10 @@ interface ConditionalButtonProps {
   borderRadius?: number;
   onPress: () => void;
   style?: ViewStyle;
+  keyboardResponsive?: boolean;
 }
 
-const fullHeightOfScreen = Dimensions.get('window').height;
+// const fullHeightOfScreen = Dimensions.get('window').height;
 
 const ConditionalButton = ({
   isActive = true,
@@ -34,11 +33,13 @@ const ConditionalButton = ({
   textColor,
   borderRadius,
   style: styleProp,
+  keyboardResponsive = false,
 }: ConditionalButtonProps) => {
   const theme = useTheme();
   return (
     <KeyboardAvoidingView
-      behavior={Platform.select({ ios: 'padding' })} // position || padding
+      behavior={Platform.select({ ios: 'position' })} // position || padding
+      keyboardVerticalOffset={Platform.select({ ios: keyboardResponsive ? 120 : 0 })}
       style={styles.container}
     >
       <View

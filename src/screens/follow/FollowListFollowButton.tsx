@@ -17,22 +17,22 @@ export default function FollowListFollowButton({ isFollowing, onPress }: Props) 
         paddingHorizontal: 12,
         paddingVertical: 8,
         borderRadius: 24,
-        backgroundColor: isFollowing ? '#B0E817' : 'white',
+        backgroundColor: isFollowing ? 'white' : '#B0E817',
         zIndex: 0,
         borderWidth: 1,
-        borderColor: isFollowing ? '#B0E817' : '#12131410',
+        borderColor: isFollowing ? '#12131410' : '#B0E817',
       }}
     >
       <Text
         style={[
           theme.fonts.text.body1.bold,
           {
-            color: isFollowing ? '#121314' : '#12131490',
+            color: isFollowing ? '#12131490' : '#121314',
             zIndex: 1,
           },
         ]}
       >
-        {isFollowing ? '팔로우' : '팔로잉'}
+        {isFollowing ? '팔로잉' : '팔로우'}
       </Text>
     </Pressable>
   );

@@ -10,6 +10,14 @@ interface TitleStickerProp {
   titleMeta: TitleMeta;
   repTitleId: number | null;
   isEnteredByProfileEdit: boolean;
+  editObject?: {
+    nickname: string;
+    image: string;
+    title: string;
+    introduction: string;
+    selectedCategory: string[];
+    toScreen: string;
+  } | null;
 }
 
 const TitleSticker = ({
@@ -17,6 +25,7 @@ const TitleSticker = ({
   titleMeta,
   repTitleId,
   isEnteredByProfileEdit,
+  editObject,
 }: TitleStickerProp) => {
   const { fonts } = useTheme();
   const navigation = useNavigation();
@@ -36,7 +45,7 @@ const TitleSticker = ({
       return;
     }
     const res = navigation.getState().routes.filter((route) => route.name === 'ProfileEdit')[0];
-    const mergedRouteParams = { ...res.params, title: titleMeta.name };
+    const mergedRouteParams = { ...res.params, ...editObject, title: titleMeta.name };
     navigation.navigate('ProfileEdit', mergedRouteParams);
   };
 

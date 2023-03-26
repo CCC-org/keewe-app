@@ -4,10 +4,10 @@ import { Feather } from '@expo/vector-icons';
 import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
-import BSMyPostOptions from '../../components/bottomsheet/BSMyPostOptions';
-import BSPostOptions from '../../components/bottomsheet/BSPostOptions';
-import BSMyComment from './BSMyComment';
-import BSOthersComment from './BSOthersComment';
+import SheetMyPostOptions from '../bottomsheet/SheetMyPostOptions';
+import SheetPostOptions from '../bottomsheet/SheetPostOptions';
+import SheetMyComment from './SheetMyComment';
+import SheetOthersComment from './SheetOthersComment';
 
 interface FeedVerticalDotsProps {
   userId: number | string;
@@ -45,9 +45,9 @@ const CommentVerticalDots = ({ userId, userName, commentId }: FeedVerticalDotsPr
         backdropComponent={renderBackdrop}
       >
         {isMyComment ? (
-          <BSMyComment modalRef={modalRef} />
+          <SheetMyComment modalRef={modalRef} />
         ) : (
-          <BSOthersComment
+          <SheetOthersComment
             modalRef={modalRef}
             userName={userName}
             userId={userId}

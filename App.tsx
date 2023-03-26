@@ -15,7 +15,7 @@ import useCachedResources from './src/utils/hooks/useCachedResources';
 
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider as PaperProvider } from 'react-native-paper';
 import OnboardingIntroHeaderButton from './src/components/buttons/OnboardingIntroHeaderButton';
@@ -52,6 +52,9 @@ import ChallengeDetailScreen from './src/screens/Main/challenge/ChallengeDetailS
 import CurrentChallengeScreen from './src/screens/Main/challenge/CurrentChallengeScreen';
 import HistoryChallengeScreen from './src/screens/Main/challenge/HistoryChallengeScreen';
 import { navigationRef } from './src/utils/hooks/navigaton/navigator';
+import BlockedScreen from './src/screens/settings/BlockedScreen';
+import FolderEditScreen from './src/screens/settings/FolderEditScreen';
+import { Feather } from '@expo/vector-icons';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator<RootStackParamList>();
@@ -59,7 +62,6 @@ const headerOptions = {
   headerBackVisible: false,
   headerLeft: () => <HeaderBackButton />,
 };
-
 // Text style. font-family : pretendard
 const queryClient = new QueryClient();
 export default function App() {
@@ -126,6 +128,7 @@ export default function App() {
                       options={headerOptions}
                       component={NicknameEditingScreen}
                     />
+                    {/* Settings */}
                     <Stack.Screen
                       name={'Settings'}
                       component={SettingsScreen}
@@ -133,6 +136,24 @@ export default function App() {
                         ...headerOptions,
                         title: '설정',
                         cardStyle: { backgroundColor: '#f8f8f4' },
+                      }}
+                    />
+                    <Stack.Screen
+                      name={'Block'}
+                      component={BlockedScreen}
+                      options={{
+                        ...headerOptions,
+                        title: '차단한 계정',
+                        cardStyle: { backgroundColor: 'white' },
+                      }}
+                    />
+                    <Stack.Screen
+                      name={'FolderEdit'}
+                      component={FolderEditScreen}
+                      options={{
+                        ...headerOptions,
+                        title: '폴더 편집',
+                        cardStyle: { backgroundColor: 'white' },
                       }}
                     />
                     <Stack.Screen
@@ -157,7 +178,18 @@ export default function App() {
                     <Stack.Screen
                       name={'Profile'}
                       component={ProfileScreen}
-                      options={{ ...headerOptions, title: '' }}
+                      options={{
+                        headerLeft: () => <HeaderBackButton />,
+                        headerRight: () => {
+                          return (
+                            <Pressable style={{ marginRight: 12 }} onPress={() => alert('more')}>
+                              <Feather name="more-vertical" size={24} color={'#000000'} />
+                            </Pressable>
+                          );
+                        },
+                        headerStyle: { backgroundColor: '#F1F1E9' },
+                        title: '',
+                      }}
                     />
                     <Stack.Group
                       screenOptions={{

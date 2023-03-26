@@ -1,30 +1,23 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text } from 'react-native';
 import React, { useState } from 'react';
 import { useTheme } from 'react-native-paper';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { Feather } from '@expo/vector-icons';
 import ConditionalButton from '../buttons/ConditionalButton';
-import BottomSheetHeader from '../header/BottomSheetHeader';
-import HeaderRightButton from '../header/HeaderRightButton';
-import CountingTextArea from '../texts/CountingTextArea';
 import TwoButtonModal from '../modal/TwoButtonModal';
-import { blockUser } from '../../utils/api/user/profile/block';
 import { reportInsight, reportType } from '../../utils/api/report/insight/insightReport';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import DetailReportSheetContent from '../../screens/detailedPost/DetailReportSheetContent';
+import { blockApi } from '../../utils/api/block/block';
 
 interface BSPostOptionsProps {
   modalRef: React.RefObject<BottomSheetModalMethods>;
-  commentId: number;
-  userId: number | string;
+  insightId: number;
+  userId: number;
   userName: string;
 }
 
-const BSOthersComment = ({
-  modalRef,
-  userId,
-  userName,
-  commentId: insightId,
-}: BSPostOptionsProps) => {
+const SheetPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsProps) => {
   const { fonts } = useTheme();
   const styles = createStyles(fonts);
   const [isReport, setIsReport] = useState(false);
@@ -48,22 +41,28 @@ const BSOthersComment = ({
     setReportText('');
   };
 
-  const handleBlockUser = () => {
-    blockUser(userId)
-      .then(() => {
+  const handleBlockUser = async (userId: number) => {
+    try {
+      const response = await blockApi.postBlockUser(userId);
+      if (response === true) {
         Toast.show({
           type: 'snackbar',
           text1: '사용자를 차단했어요.',
           position: 'bottom',
         });
-      })
-      .catch((res) => {
+        modalRef.current?.close();
+      } else throw new Error('사용자를 차단하는데 실패했어요.');
+    } catch (error) {
+      if (error instanceof Error) {
         Toast.show({
           type: 'snackbar',
-          text1: res,
+          text1: error.message,
           position: 'bottom',
         });
-      });
+        modalRef.current?.close();
+      }
+    }
+
     setIsModalVisible(false);
   };
 
@@ -92,30 +91,14 @@ const BSOthersComment = ({
 
   if (selectedReport === -1) {
     return (
-      <View style={styles.contentContainer}>
-        <BottomSheetHeader
-          onLeftButtonPress={handleExitText}
-          title="기타 신고 사유"
-          iconName="arrowleft"
-          headerRightButton={() => (
-            <HeaderRightButton
-              text="완료"
-              backGroundColor={reportText.length ? '#b0e817' : '#12131420'}
-              textColor={reportText.length ? 'black' : '#ffffff'}
-              disabled={!reportText.length}
-              borderLine={false}
-              handlePress={handleReportSubmit}
-            />
-          )}
-        />
-        <CountingTextArea
-          inputValue={reportText}
-          placeholder="인사이트를 얻은 링크"
-          setInputValue={setReportText}
-          autoFocus={true}
-          limit={150}
-        />
-      </View>
+      <DetailReportSheetContent
+        reasonText={reportText}
+        setReasonText={setReportText}
+        handleSheetComplete={handleReportSubmit}
+        onHeaderLeftPress={handleExitText}
+        overflow={reportText !== undefined && reportText.length > 0 && reportText.length <= 150}
+        limit={150}
+      />
     );
   }
 
@@ -142,16 +125,15 @@ const BSOthersComment = ({
         ))}
         <Pressable onPress={handleEtcReason} style={styles.clickableOption}>
           <Text style={styles.optionTitle}>
-            <Text>기타 사유 신고</Text>
+            <Text>기타 신고 사유</Text>
           </Text>
         </Pressable>
         <Pressable onPress={handleReportSubmit} style={{ marginTop: 72 }}>
           <ConditionalButton
             isActive={selectedReport !== null}
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            onPress={() => {}}
             width={'100%'}
             text="신고하기"
+            onPress={() => alert('report')}
           />
         </Pressable>
       </ScrollView>
@@ -163,7 +145,12 @@ const BSOthersComment = ({
       <Pressable style={styles.option} onPress={handlePress}>
         <Text style={[fonts.text.body1.regular]}>신고하기</Text>
       </Pressable>
-      <Pressable style={styles.option} onPress={() => setIsModalVisible(true)}>
+      <Pressable
+        style={styles.option}
+        onPress={() => {
+          setIsModalVisible(true);
+        }}
+      >
         <Text style={[fonts.text.body1.regular]}>사용자 차단하기</Text>
       </Pressable>
       <TwoButtonModal
@@ -175,14 +162,14 @@ const BSOthersComment = ({
         leftButtonText="취소"
         rightButtonText="차단"
         leftButtonPress={() => setIsModalVisible(false)}
-        rightButtonPress={handleBlockUser}
+        rightButtonPress={() => handleBlockUser(userId)}
         rightButtonColor="#f24822"
       />
     </ScrollView>
   );
 };
 
-export default BSOthersComment;
+export default SheetPostOptions;
 function createStyles(fonts: ReactNativePaper.ThemeFonts) {
   const styles = StyleSheet.create({
     contentContainer: {

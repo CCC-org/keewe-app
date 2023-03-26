@@ -1,5 +1,5 @@
-import { FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import React, { useMemo } from 'react';
+import { FlatList, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useMemo, useState } from 'react';
 import {
   FetchNextPageOptions,
   InfiniteData,
@@ -10,28 +10,22 @@ import { FollowData } from '../../types/followerList/followers';
 import { SvgXml } from 'react-native-svg';
 import person from '../../constants/Icons/Avatar/personXml';
 import { useTheme } from 'react-native-paper';
-import FollowListFollowButton from './FollowListFollowButton';
 import { useNavigation } from '@react-navigation/native';
 import { getUserId } from '../../utils/hooks/asyncStorage/Login';
+import { BlockedUser } from '../../types/block/block';
+import TwoButtonModal from '../../components/modal/TwoButtonModal';
 interface FollowListSectionProps {
-  followList: InfiniteData<FollowData | undefined> | undefined;
-  fetchNextPage: (
-    options?: FetchNextPageOptions | undefined,
-  ) => Promise<InfiniteQueryObserverResult<FollowData | undefined, unknown>>;
-  mutation: UseMutationResult<unknown, unknown, string | number, void>;
+  blockList: BlockedUser[];
+  mutation: UseMutationResult<unknown, unknown, number, void>;
 }
 
-const FollowListSection = ({ followList, mutation }: FollowListSectionProps) => {
-  const flattenData = useMemo(() => {
-    return followList?.pages.flatMap((page) => {
-      return page?.users;
-    });
-  }, [followList]);
-
+const BlockListSection = ({ blockList, mutation }: FollowListSectionProps) => {
   const theme = useTheme();
   const navigation = useNavigation();
-  const handlePressForFollow = (id: string | number) => {
-    mutation.mutate(id);
+  const [isModal, setIsModal] = useState(false);
+  const handleUnblockUser = (id: string | number) => {
+    mutation.mutate(Number(id));
+    setIsModal(false);
   };
 
   const handleGoToProfileOnImagePress = async (itemUserId: number) => {
@@ -44,11 +38,14 @@ const FollowListSection = ({ followList, mutation }: FollowListSectionProps) => 
   };
 
   return (
-    <FlatList
-      data={flattenData}
-      renderItem={({ item }) =>
-        item ? (
-          <View style={styles.container}>
+    <ScrollView
+      style={{
+        padding: 10,
+      }}
+    >
+      {blockList.map((item, idx) => {
+        return (
+          <View key={idx} style={styles.container}>
             <View style={styles.profile}>
               <>
                 <Pressable onPress={() => handleGoToProfileOnImagePress(item.id)}>
@@ -76,19 +73,29 @@ const FollowListSection = ({ followList, mutation }: FollowListSectionProps) => 
                 </View>
               </>
             </View>
-            <FollowListFollowButton
-              onPress={() => handlePressForFollow(item.id)}
-              isFollowing={item.follow}
+            <Pressable onPress={() => setIsModal(true)} style={styles.button}>
+              <Text style={[theme.fonts.text.body2.bold, { color: '#121314' }]}>차단 해제</Text>
+            </Pressable>
+
+            <TwoButtonModal
+              dismissable={true}
+              visible={isModal}
+              onDismiss={() => setIsModal(false)}
+              mainTitle="title"
+              subTitle="subTitle"
+              leftButtonText="취소"
+              rightButtonText="해제하기"
+              leftButtonPress={() => setIsModal(false)}
+              rightButtonPress={() => handleUnblockUser(item.id)}
             />
           </View>
-        ) : null
-      }
-      keyExtractor={(item) => item?.id.toString() as string}
-    ></FlatList>
+        );
+      })}
+    </ScrollView>
   );
 };
 
-export default FollowListSection;
+export default BlockListSection;
 
 const styles = StyleSheet.create({
   container: {
@@ -100,6 +107,18 @@ const styles = StyleSheet.create({
   profile: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  button: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 24,
+    backgroundColor: '#B0E817',
+    zIndex: 0,
+    width: 76,
+    height: 32,
+    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
   },
 });

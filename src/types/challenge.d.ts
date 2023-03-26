@@ -22,6 +22,14 @@ interface ChallengeCreateResponse {
   };
 }
 
+interface MyInterestsGetResponse {
+  message: string;
+  code: number;
+  data: {
+    interests: string[];
+  };
+}
+
 interface ChallengeGetResponse {
   message: string;
   code: number;

@@ -12,7 +12,7 @@ const CategoryCreateScreen = ({ navigation, route }) => {
 
   const handleComplete = () => {
     navigation.navigate(route.params?.toScreen, {
-      selectedCategory: [input],
+      selectedCategory: input,
       customCategory: [input, ...customCategory],
     });
   };
@@ -74,7 +74,7 @@ const CategoryCreateScreen = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    paddingHorizontal: 17,
     paddingTop: 20,
   },
 });
