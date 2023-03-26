@@ -34,6 +34,14 @@ interface ChallengeGetResponse {
   };
 }
 
+interface ChallengeParticipationGetResponse {
+  message: string;
+  code: number;
+  data: {
+    participation: boolean;
+  };
+}
+
 interface ChallengeHistoryGetRequest {
   cursor?: number;
   limit: number;
@@ -86,4 +94,47 @@ interface ChallengeProgressGetResponse {
     todayRecorded: boolean;
     weekCompleted: boolean;
   };
+}
+
+interface ChallengeDetailGetRequest {
+  challengeId: number;
+}
+
+interface ChallengeDetailGetResponse {
+  message: string;
+  code: number;
+  data: {
+    challengeName: string;
+    challengeIntroduction: string;
+    insightCount: number;
+    createdAt: string;
+  };
+}
+
+interface ChallengeFriendsGetRequest {
+  challengeId: number;
+  page?: number;
+  size: number;
+}
+
+interface ChallengeFriendsGetResponse {
+  message: string;
+  code: number;
+  data: {
+    nickname: string;
+    imageURL: string;
+    currentRecord: number;
+    goalRecord: number;
+    following: boolean;
+  }[];
+}
+
+interface ChallengeFriendsCountGetRequest {
+  challengeId: number;
+}
+
+interface ChallengeFriendsCountGetResponse {
+  message: string;
+  code: number;
+  data: { challengerCount: number };
 }

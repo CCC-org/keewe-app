@@ -3,9 +3,9 @@ import { navigate } from '../hooks/navigaton/navigator';
 
 const httpClient = axios.create();
 httpClient.interceptors.response.use(
-  async (response) => response,
+  (response) => response,
   (error) => {
-    if (error.message == 'Request failed with status code 401') navigate('SignUp', undefined);
+    if (error.response.data == 402) navigate('SignUp', undefined);
   },
 );
 

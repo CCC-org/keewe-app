@@ -21,6 +21,7 @@ const HistoryChallengeScreen = () => {
     return (
       <ChallengeProfile
         key={index}
+        challengeId={item.challengeId}
         name={item.challengeName}
         interest={item.challengeCategory}
         Date={item.startDate + ' ~ ' + item.endDate}

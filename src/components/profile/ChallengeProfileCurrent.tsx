@@ -1,7 +1,8 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import theme from '../../theme/light';
+import { navigate } from '../../utils/hooks/navigaton/navigator';
 import { INTEREST_ICONS } from './constant';
 
 interface CurrentChallengeProfileProps {
@@ -10,6 +11,7 @@ interface CurrentChallengeProfileProps {
   interest: string;
   insightNumber: string;
   highlight?: boolean;
+  challengeId: number;
 }
 
 const CurrentChallengeProfile = ({
@@ -17,9 +19,11 @@ const CurrentChallengeProfile = ({
   challengeDescription,
   interest,
   insightNumber,
+  challengeId,
 }: CurrentChallengeProfileProps) => {
   return (
-    <View
+    <Pressable
+      onPress={() => navigate('ChallengeParticipation', { challengeId })}
       style={{
         ...styles.container,
         borderBottomWidth: 1,
@@ -71,7 +75,7 @@ const CurrentChallengeProfile = ({
           </View>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

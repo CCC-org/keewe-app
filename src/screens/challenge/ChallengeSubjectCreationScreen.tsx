@@ -25,7 +25,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
   };
   const joinRequestParams = {
     duration: route.params.form.participationPerWeek,
-    challengeId: {},
+    challengeId: route.params.challengeId,
     insightPerWeek: route.params.form.recordPerWeek,
     myTopic: subject,
   };

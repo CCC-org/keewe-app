@@ -79,6 +79,7 @@ const ChallengesScreen = ({ navigation, route }) => {
           </View>
           <ChallengeProfile
             name={challengeParticipation?.name ?? ''}
+            challengeId={challengeParticipation.challengeId}
             participatingUserNumber={challengeParticipation?.participatingUserNumber ?? 0}
             interest={challengeParticipation?.interest ?? ''}
             Date={timeConverter(challengeParticipation?.startDate ?? '')}
@@ -127,6 +128,7 @@ const ChallengesScreen = ({ navigation, route }) => {
           {challengeHistory?.map((history, index) => (
             <ChallengeProfile
               key={index}
+              challengeId={history.challengeId}
               name={history.challengeName}
               interest={history.challengeCategory}
               Date={timeConverter(history.startDate + ' ~ ' + history.endDate)}
@@ -150,6 +152,7 @@ const ChallengesScreen = ({ navigation, route }) => {
           {challengeCurrent?.map((current, index) => (
             <CurrentChallengeProfile
               key={index}
+              challengeId={current.challengeId}
               name={current.challengeName}
               interest={current.challengeCategory}
               challengeDescription={current.challengeIntroduction}
