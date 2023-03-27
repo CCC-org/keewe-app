@@ -3,7 +3,7 @@ import React from 'react';
 import { useTheme } from 'react-native-paper';
 
 interface HeaderTextProps {
-  header: string;
+  header?: string;
   subTitle?: string;
 }
 const HeaderText = ({ header, subTitle }: HeaderTextProps) => {

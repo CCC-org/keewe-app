@@ -1,10 +1,9 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import SmallPersonXml from '../../constants/Icons/Avatar/smallPersonXml';
-import darkChevronRightSmallXml from '../../constants/Icons/Chevrons/darkChevronRightSmallXml';
-import { SelectedIconXml } from '../../constants/InterestsIconXml';
 import theme from '../../theme/light';
+import { navigate } from '../../utils/hooks/navigaton/navigator';
 import { INTEREST_ICONS } from './constant';
 
 interface ChallengeProfileProps {
@@ -13,6 +12,7 @@ interface ChallengeProfileProps {
   interest: string;
   Date?: string;
   highlight?: boolean;
+  challengeId: number;
 }
 
 const ChallengeProfile = ({
@@ -21,9 +21,15 @@ const ChallengeProfile = ({
   interest,
   Date,
   highlight,
+  challengeId,
 }: ChallengeProfileProps) => {
   return (
-    <View style={styles.container}>
+    <Pressable
+      onPress={() =>
+        navigate('ChallengeParticipation', { challengeId, challengeName: name, interest })
+      }
+      style={styles.container}
+    >
       <View
         style={{
           ...styles.profile,
@@ -79,7 +85,7 @@ const ChallengeProfile = ({
           </View>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

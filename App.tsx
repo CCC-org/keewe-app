@@ -30,6 +30,7 @@ import light from './src/theme/light';
 import ServiceIntroThreeScreen from './src/screens/onboarding/ServiceIntroThreeScreen';
 import InsightSampleScreen from './src/screens/onboarding/InsightSampleScreen';
 import Tabs from './src/screens/Main/Tabs';
+import ChallengeParticipationScreen from './src/screens/Main/challenge/ChallengeParticipationScreen';
 import ShareScreen from './src/screens/detailedPost/ShareScreen';
 import CommentsScreen from './src/screens/detailedPost/CommentsScreen';
 import ProfileEditScreen from './src/screens/Main/mypage/ProfileEditScreen';
@@ -270,6 +271,11 @@ export default function App() {
                         name="ChallengeHistory"
                         component={HistoryChallengeScreen}
                         options={{ ...headerOptions, title: '종료된 챌린지' }}
+                      />
+                      <Stack.Screen
+                        name="ChallengeParticipation"
+                        component={ChallengeParticipationScreen}
+                        options={{ ...headerOptions, title: '챌린지 참여하기' }}
                       />
                     </Stack.Group>
                     <Stack.Group

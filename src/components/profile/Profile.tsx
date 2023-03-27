@@ -5,7 +5,6 @@ import theme from '../../theme/light';
 import ProfileAvatar from './ProfileAvatar';
 import InterestItem from './InterestItem';
 import { getTimeInterval } from '../../utils/string/timeInterval';
-import { Interest } from '../../types/insight/profile';
 
 interface ProfileProps {
   nickname: string;
