@@ -2,8 +2,6 @@ import React from 'react';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import SmallPersonXml from '../../constants/Icons/Avatar/smallPersonXml';
-import darkChevronRightSmallXml from '../../constants/Icons/Chevrons/darkChevronRightSmallXml';
-import { SelectedIconXml } from '../../constants/InterestsIconXml';
 import theme from '../../theme/light';
 import { navigate } from '../../utils/hooks/navigaton/navigator';
 import { INTEREST_ICONS } from './constant';
@@ -27,7 +25,9 @@ const ChallengeProfile = ({
 }: ChallengeProfileProps) => {
   return (
     <Pressable
-      onPress={() => navigate('ChallengeParticipation', { challengeId })}
+      onPress={() =>
+        navigate('ChallengeParticipation', { challengeId, challengeName: name, interest })
+      }
       style={styles.container}
     >
       <View

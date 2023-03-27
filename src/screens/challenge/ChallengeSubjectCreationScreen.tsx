@@ -13,6 +13,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
   const theme = useTheme();
   const [subject, setSubject] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
+
   const createRequestParams = {
     participate: {
       duration: route.params.form.participationPerWeek[0],
@@ -24,9 +25,9 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
     introduction: route.params.form.challengeInfo,
   };
   const joinRequestParams = {
-    duration: route.params.form.participationPerWeek,
-    challengeId: route.params.challengeId,
-    insightPerWeek: route.params.form.recordPerWeek,
+    challengeId: route.params.form.challengeId,
+    duration: route.params.form.participationPerWeek[0],
+    insightPerWeek: route.params.form.recordPerWeek[0],
     myTopic: subject,
   };
   useEffect(() => {
@@ -68,10 +69,16 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
     },
   });
 
-  const joinChallenge = (response) =>
-    navigation.navigate('ChallengeJoinApproved', {
-      form: response,
-    });
+  const { mutate: joinChallenge } = useMutation(ChallengeAPI.join, {
+    onSuccess: (response) => {
+      navigation.navigate('ChallengeJoinApproved', {
+        form: { challengeName: route.params.form.challengeName, ...response },
+      });
+    },
+    onError: (error) => {
+      alert(error);
+    },
+  });
 
   const handleSkipPress = () => {
     if (route.params.form.purpose === 'create') {
@@ -95,7 +102,11 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
         <View style={{ marginHorizontal: 10, marginBottom: 24 }}>
           <HeaderText
             header="나만의 주제를 정해보세요"
-            subTitle={`"${route.params.form.selectedCategory}"에 관한 주제면 좋아요. `}
+            subTitle={
+              route.params.form.selectedCategory !== undefined
+                ? `"${route.params.form.selectedCategory}"에 관한 주제면 좋아요. `
+                : `"${route.params.form.interest}"에 관한 주제면 좋아요. `
+            }
           />
         </View>
         {route.params.form.purpose === 'join' ? (

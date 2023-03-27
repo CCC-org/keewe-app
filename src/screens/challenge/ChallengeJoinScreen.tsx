@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import React, { useMemo, useState } from 'react';
 import Stepper from '../../components/stepper/Stepper';
 import ChallengeGoalSettingSection from './ChallengeGoalSettingSection';
@@ -11,7 +11,6 @@ import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
 const UNSELECTED = 1;
 
 const ChallengeJoinScreen = ({ navigation, route }) => {
-  const { challengeId } = route.params;
   const theme = useTheme();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const hideModal = () => setModalVisible(false);
@@ -22,7 +21,6 @@ const ChallengeJoinScreen = ({ navigation, route }) => {
   const isNext = useMemo(() => {
     return step !== 2;
   }, [step]);
-
   const handleNextClick = () => {
     setIsExpanded(!isExpanded);
     if (isNext) {
@@ -30,7 +28,7 @@ const ChallengeJoinScreen = ({ navigation, route }) => {
       return;
     }
     navigation.navigate('ChallengeSubjectCreation', {
-      form: { challengeId, recordPerWeek, participationPerWeek, purpose: 'join' },
+      form: { recordPerWeek, participationPerWeek, purpose: 'join', ...route.params },
     });
   };
 
@@ -46,7 +44,7 @@ const ChallengeJoinScreen = ({ navigation, route }) => {
 
   return (
     <>
-      {isCheckLoading && (
+      {!isCheckLoading && (
         <>
           <View style={{ marginHorizontal: 10 }}>
             <Text style={theme.fonts.text.display}>나만의 목표를 세우세요</Text>
@@ -84,7 +82,10 @@ const ChallengeJoinScreen = ({ navigation, route }) => {
           onDismiss={hideModal}
           leftButtonText={'취소'}
           rightButtonText={'탈퇴하고 참여'}
-          leftButtonPress={() => setModalVisible(false)}
+          leftButtonPress={() => {
+            setModalVisible(false);
+            navigation.goBack();
+          }}
           rightButtonPress={() => setModalVisible(false)}
         />
       </View>
@@ -93,5 +94,3 @@ const ChallengeJoinScreen = ({ navigation, route }) => {
 };
 
 export default ChallengeJoinScreen;
-
-const styles = StyleSheet.create({});

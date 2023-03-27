@@ -33,6 +33,19 @@ export const ChallengeAPI = {
         throw new Error(err);
       });
   },
+  join: async (params: ChallengeJoinRequest) => {
+    const token = await getAccessToken();
+    return httpClient
+      .post<ChallengeJoinResponse>('https://api-keewe.com/api/v1/challenge/participation', params, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => res.data.data)
+      .catch((err) => {
+        throw new Error(err);
+      });
+  },
   getMyInterests: async () => {
     const token = await getAccessToken();
     return httpClient

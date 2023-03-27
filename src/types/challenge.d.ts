@@ -22,6 +22,23 @@ interface ChallengeCreateResponse {
   };
 }
 
+interface ChallengeJoinRequest {
+  duration: number;
+  challengeId: number;
+  insightPerWeek: number;
+  myTopic: string;
+}
+
+interface ChallengeJoinResponse {
+  message: string;
+  code: number;
+  data: {
+    myTopic: string;
+    insightPerWeek: number;
+    duration: number;
+    endDate: string;
+  };
+}
 interface MyInterestsGetResponse {
   message: string;
   code: number;
@@ -36,7 +53,6 @@ interface ChallengeGetResponse {
   data: {
     challengeId: number;
     name: string;
-    participatingUserNumber: number;
     interest: string;
     startDate: string;
   };

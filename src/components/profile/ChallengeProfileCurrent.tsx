@@ -23,7 +23,9 @@ const CurrentChallengeProfile = ({
 }: CurrentChallengeProfileProps) => {
   return (
     <Pressable
-      onPress={() => navigate('ChallengeParticipation', { challengeId })}
+      onPress={() =>
+        navigate('ChallengeParticipation', { challengeId, challengeName: name, interest })
+      }
       style={{
         ...styles.container,
         borderBottomWidth: 1,

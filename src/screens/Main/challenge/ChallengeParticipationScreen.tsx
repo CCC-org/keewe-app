@@ -13,6 +13,7 @@ import TwoButtonModal from '../../../components/modal/TwoButtonModal';
 
 const ChallengeParticipationScreen = ({ route }) => {
   const { challengeId } = route.params;
+  console.log(route.params);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   const { data: challengeDetail, isLoading: isChallengeDetailLoading } = useQuery(
@@ -150,7 +151,7 @@ const ChallengeParticipationScreen = ({ route }) => {
         rightButtonText={'참여하기'}
         leftButtonPress={() => setModalVisible(false)}
         rightButtonPress={() => {
-          navigate('ChallengeJoin', { challengeId });
+          navigate('ChallengeJoin', { ...route.params });
           setModalVisible(false);
         }}
       />

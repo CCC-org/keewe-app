@@ -1,7 +1,7 @@
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
-import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
-import { QueryClient, useQuery, useQueryClient } from '@tanstack/react-query';
+import { ChallengeAPI, ChallengeQueryKeys } from '../../utils/api/ChallengeAPI';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import ChallengeProfile from '../../components/profile/ChallengeProfile';
 import BottomFixButton from '../../components/buttons/BottomFixButton';
 import theme from '../../theme/light';
@@ -12,18 +12,44 @@ import { timeConverter } from './challenge/constant';
 import TwoButtonModal from '../../components/modal/TwoButtonModal';
 import { useFocusEffect } from '@react-navigation/native';
 
-const ChallengesScreen = ({ navigation, route }) => {
+const ChallengesScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [participated, setParticipated] = useState<boolean>(false);
   const hideModal = () => setModalVisible(false);
   const queryClient = useQueryClient();
+
+  const { data: participationCheck } = useQuery(
+    ['challenge', 'participation', 'check'],
+    () => ChallengeAPI.getParticipationCheck(),
+    { onSuccess: () => setParticipated(true) },
+  );
 
   const { data: challengeParticipation, isLoading: isChallengeParticipationLoading } = useQuery(
     ['challenge', 'participation'],
     ChallengeAPI.getChallengeParticipation,
+    { enabled: participated },
+  );
+
+  const { data: count, isLoading: isCountLoading } = useQuery(
+    ChallengeQueryKeys.getChallengeFriendsCount({
+      challengeId: challengeParticipation?.challengeId ?? 0,
+    }),
+    () =>
+      ChallengeAPI.getChallengeFriendsCount({
+        challengeId: challengeParticipation?.challengeId ?? 0,
+      }),
+    {
+      enabled: participated,
+    },
+  );
+
+  const { data: challengeCurrent, isLoading: isChallengeCurrentLoading } = useQuery(
+    ['challenge', 'current', { limit: 5 }],
+    () => ChallengeAPI.getChallengeCurrent({ limit: 5 }),
   );
 
   const { data: challengeHistory, isLoading: isChallengeHIstoryLoading } = useQuery(
-    ['challenge', { limit: 3 }],
+    ['challenge', 'history', { limit: 3 }],
     () => ChallengeAPI.getChallengeHistory({ limit: 3 }),
   );
 
@@ -32,13 +58,9 @@ const ChallengesScreen = ({ navigation, route }) => {
     () => ChallengeAPI.getChallengeHistoryCount(),
   );
 
-  const { data: challengeCurrent, isLoading: isChallengeCurrentLoading } = useQuery(
-    ['challenge', { limit: 5 }],
-    () => ChallengeAPI.getChallengeCurrent({ limit: 5 }),
-  );
-
   useFocusEffect(
     React.useCallback(() => {
+      setParticipated(false);
       queryClient.invalidateQueries(['challenge']);
     }, []),
   );
@@ -61,7 +83,7 @@ const ChallengesScreen = ({ navigation, route }) => {
           navigation.navigate('CategorySelect');
         }}
       />
-      {challengeParticipation ? (
+      {participationCheck?.participation ? (
         <View style={{ marginBottom: 8 }}>
           <Text
             style={{
@@ -79,8 +101,8 @@ const ChallengesScreen = ({ navigation, route }) => {
           </View>
           <ChallengeProfile
             name={challengeParticipation?.name ?? ''}
-            challengeId={challengeParticipation.challengeId}
-            participatingUserNumber={challengeParticipation?.participatingUserNumber ?? 0}
+            challengeId={challengeParticipation?.challengeId ?? 0}
+            participatingUserNumber={count?.challengerCount}
             interest={challengeParticipation?.interest ?? ''}
             Date={timeConverter(challengeParticipation?.startDate ?? '')}
             highlight={true}
@@ -125,15 +147,16 @@ const ChallengesScreen = ({ navigation, route }) => {
               {challengeHistoryCount?.count}
             </Text>
           </View>
-          {challengeHistory?.map((history, index) => (
-            <ChallengeProfile
-              key={index}
-              challengeId={history.challengeId}
-              name={history.challengeName}
-              interest={history.challengeCategory}
-              Date={timeConverter(history.startDate + ' ~ ' + history.endDate)}
-            />
-          ))}
+          {!isChallengeHIstoryLoading &&
+            challengeHistory?.map((history, index) => (
+              <ChallengeProfile
+                key={index}
+                challengeId={history.challengeId}
+                name={history.challengeName}
+                interest={history.challengeCategory}
+                Date={timeConverter(history.startDate + ' ~ ' + history.endDate)}
+              />
+            ))}
           <Pressable
             onPress={() => navigation.navigate('ChallengeHistory')}
             style={{ ...styles.borderContainer }}

@@ -3,10 +3,11 @@ import React, { useEffect } from 'react';
 import { useTheme } from 'react-native-paper';
 import HeaderText from '../../components/texts/HeaderText';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
+import { timeConverter } from '../Main/challenge/constant';
 
 const ChallengeJoinApprovedScreen = ({ navigation, route }) => {
-  const { challengeId, duration, insightPerWeek, myTopic, endDate } = route.params.form;
-
+  const { challengeName, duration, insightPerWeek, myTopic, endDate } = route.params.form;
+  console.log(route.params);
   const theme = useTheme();
   useEffect(() => {
     navigation.setOptions({
@@ -14,7 +15,6 @@ const ChallengeJoinApprovedScreen = ({ navigation, route }) => {
       headerTitle: '',
       headerShadowVisible: false,
       headerLeft: () => <View></View>,
-      // headerLeft: () => null <- doesnt work.
     });
   }, []);
 
@@ -36,10 +36,10 @@ const ChallengeJoinApprovedScreen = ({ navigation, route }) => {
         <View style={styles.info}>
           <Text style={{ fontSize: 16 }}>참여 챌린지</Text>
           <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
-            {challengeId}
+            {challengeName}
           </Text>
         </View>
-        {!!myTopic.length && (
+        {!!myTopic?.length && (
           <View style={styles.info}>
             <Text style={{ fontSize: 16 }}>나의 주제</Text>
             <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
@@ -56,8 +56,7 @@ const ChallengeJoinApprovedScreen = ({ navigation, route }) => {
         <View style={styles.info}>
           <Text style={{ fontSize: 16 }}>종료일</Text>
           <Text style={{ fontSize: 16, color: theme.colors.brand.onprimary.container }}>
-            2023.02.28 까지
-            {/* {mutateDate(endDate)} 까지 */}
+            {timeConverter(endDate)} 까지
           </Text>
         </View>
       </View>
@@ -78,7 +77,7 @@ const ChallengeJoinApprovedScreen = ({ navigation, route }) => {
             isActive={true}
             text={'확인'}
             width={168}
-            onPress={() => alert('pressed')}
+            onPress={() => navigation.navigate('Tabs')}
           />
         </View>
       </View>
