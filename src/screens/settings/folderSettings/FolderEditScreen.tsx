@@ -11,7 +11,7 @@ const FolderEditScreen = () => {
 
   const {
     data: userFolderList,
-    isLoading: isUserFolderListLoading,
+    isLoading,
     ...folderListQuery
   } = useQuery(
     MypageQueryKeys.getFolderList({ userId: String(userId) }),
@@ -21,7 +21,7 @@ const FolderEditScreen = () => {
 
   if (folderListQuery.isError) return <Text>에러가 발생했습니다.</Text>;
   if (!userId && userId !== 0) return <MainLottie />;
-
+  console.log('userFolderList', userFolderList);
   return (
     <ScrollView>
       <Text>{JSON.stringify(userFolderList)}</Text>

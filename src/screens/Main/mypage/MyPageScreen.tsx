@@ -106,7 +106,6 @@ const MyPageScreen = ({ navigation, route }) => {
   ]);
 
   const handleFolderOption = async (tabId: number) => {
-    // await queryClient.cancelQueries(MypageQueryKeys.getFolderList({ userId: userId }));
     const key = MypageQueryKeys.getFolderList({ userId: userId });
     const data = queryClient.getQueryState(key)!.data as TabInfo;
 
@@ -132,7 +131,7 @@ const MyPageScreen = ({ navigation, route }) => {
     isProfileLoading ||
     isrepresentativeTitlesLoading ||
     isUserFolderListLoading ||
-    !userFolderList
+    !userFolderList.tabs
   ) {
     return <MainLottie />;
   }
