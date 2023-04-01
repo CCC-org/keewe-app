@@ -10,6 +10,11 @@ export const MypageQueryKeys = {
     'representativeTitles',
     request.userId,
   ],
+  getNonModifiedList: (request: UserFolderListGetRequest) => [
+    'folderList',
+    'nonModified',
+    request.userId,
+  ],
   getFolderList: (request: UserFolderListGetRequest) => ['folderList', request.userId],
   getFolderInsight: (drawerId: number | string, userId: number | string) => [
     'profile',
@@ -71,7 +76,7 @@ export const MypageAPI = {
           },
         },
       );
-
+      console.log('data', data.data);
       return data.data;
     } catch (err) {
       if (err instanceof AxiosError) {

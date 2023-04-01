@@ -5,6 +5,7 @@ import { MypageAPI, MypageQueryKeys } from '../../../utils/api/mypageAPI';
 import { querySuccessError } from '../../../utils/helper/queryReponse/querySuccessError';
 import { useGetUserId } from '../../../utils/hooks/useGetUserId';
 import MainLottie from '../../../components/lotties/MainLottie';
+import FolderEditSection from './FolderEditSection';
 
 const FolderEditScreen = () => {
   const userId = useGetUserId();
@@ -13,20 +14,16 @@ const FolderEditScreen = () => {
     data: userFolderList,
     isLoading,
     ...folderListQuery
-  } = useQuery(
-    MypageQueryKeys.getFolderList({ userId: String(userId) }),
-    () => MypageAPI.getFolderList({ userId: String(userId) }),
-    querySuccessError,
-  );
+  } = useQuery({
+    queryKey: MypageQueryKeys.getNonModifiedList({ userId: String(userId) }),
+    queryFn: () => MypageAPI.getFolderList({ userId: String(userId) }),
+  });
 
   if (folderListQuery.isError) return <Text>에러가 발생했습니다.</Text>;
-  if (!userId && userId !== 0) return <MainLottie />;
-  console.log('userFolderList', userFolderList);
-  return (
-    <ScrollView>
-      <Text>{JSON.stringify(userFolderList)}</Text>
-    </ScrollView>
-  );
+  if ((!userId && userId !== 0) || isLoading) return <MainLottie />;
+  if (!userFolderList) return <Text>FETCHING FOLDERS UNSUCCESSFUL</Text>;
+
+  return <FolderEditSection userFolderList={userFolderList} />;
 };
 
 export default FolderEditScreen;
