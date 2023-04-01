@@ -50,6 +50,7 @@ const Tabs = () => {
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? <SvgXml xml={bookmarkOn} /> : <SvgXml xml={bookmarkOff} />,
+          title: '',
         }}
         name="BookMark"
         component={BookMarkScreen}

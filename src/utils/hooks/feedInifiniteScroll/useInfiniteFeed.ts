@@ -18,6 +18,8 @@ export function useInfiniteFeed(fetchUrl: string) {
       fetchUrl.slice(fetchUrl.indexOf('?') + 10),
       fetchUrl.slice(45, fetchUrl.indexOf('?')),
     );
+  } else if (fetchUrl.includes('bookmark')) {
+    key = FeedQueryKeys.getBookMarkFeed();
   } else {
     key = FeedQueryKeys.getFeed();
   }

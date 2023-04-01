@@ -131,7 +131,7 @@ const SheetPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptio
         <Pressable onPress={handleReportSubmit} style={{ marginTop: 72 }}>
           <ConditionalButton
             isActive={selectedReport !== null}
-            width={'100%'}
+            width={343}
             text="신고하기"
             onPress={() => alert('report')}
           />

@@ -29,7 +29,6 @@ export const InsightQueryKeys = {
     request.limit,
   ],
   getChallengeRecord: (request: ChallengeRecordRequest) => ['insight', request.insightId],
-  getBookMarkList: (request) => ['bookmark'],
 };
 
 export const InsightAPI = {
