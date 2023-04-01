@@ -80,16 +80,12 @@ export default function App() {
                   <Stack.Navigator
                     screenOptions={{
                       cardStyle: { backgroundColor: 'white' },
-                      // contentStyle: { backgroundColor: 'white' },
                       headerTitleAlign: 'center',
                       headerTitleStyle: {
                         fontSize: 16,
                       },
                       headerShadowVisible: false,
                       animationEnabled: false,
-                      //...TransitionPresets.DefaultTransition,
-                      // animation: 'slide_from_right',
-                      // animationDuration: 1000,
                     }}
                   >
                     {/* Tabs  */}

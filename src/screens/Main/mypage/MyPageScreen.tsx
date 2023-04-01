@@ -19,6 +19,7 @@ import { useScrollToTop } from '@react-navigation/native';
 import { settingsIcon } from '../../../../assets/svgs/settingsIcon';
 import { Feather } from '@expo/vector-icons';
 import { threeDots } from '../../../../assets/svgs/constantSvgs/threeDots';
+import MainLottie from '../../../components/lotties/MainLottie';
 
 const MyPageScreen = ({ navigation, route }) => {
   const { userId } = route.params;
@@ -127,7 +128,9 @@ const MyPageScreen = ({ navigation, route }) => {
     });
   };
 
-  if (isUserFolderListLoading) return null;
+  if (isProfileLoading || isrepresentativeTitlesLoading || isUserFolderListLoading) {
+    return <MainLottie />;
+  }
 
   return (
     <>
