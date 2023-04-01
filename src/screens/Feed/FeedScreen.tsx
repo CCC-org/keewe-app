@@ -9,6 +9,7 @@ import { FeedQueryKeys } from '../../utils/api/FeedAPI';
 import { RefreshControl, ScrollView, StyleSheet, Text } from 'react-native';
 import { IOScrollView } from 'react-native-intersection-observer';
 import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChallenge';
+import MainLottie from '../../components/lotties/MainLottie';
 
 const FeedScreen = ({ navigation }) => {
   const scrollViewRef = useRef<any>(null);
@@ -47,6 +48,10 @@ const FeedScreen = ({ navigation }) => {
       clearInterval(te);
     };
   }, [yPos]);
+
+  if (feedListIsLoading) {
+    return <MainLottie />;
+  }
 
   return (
     <>
