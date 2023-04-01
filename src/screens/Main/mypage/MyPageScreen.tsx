@@ -62,15 +62,15 @@ const MyPageScreen = ({ navigation, route }) => {
 
   const { data: userFolderList, isLoading: isUserFolderListLoading } = useQuery(
     MypageQueryKeys.getFolderList({ userId: userId }),
-    () => MypageAPI.getFolderList({ userId: userId }),
+    () => MypageAPI.getModifiedFolderList({ userId: userId }),
     querySuccessError,
   );
 
   const queryClient = useQueryClient();
   const drawerId =
-    isUserFolderListLoading === true || userFolderList.selectedTab.id === 0
+    isUserFolderListLoading === true || userFolderList?.selectedTab?.id === 0
       ? ''
-      : String(userFolderList.selectedTab.id);
+      : String(userFolderList?.selectedTab?.id);
 
   const { feedList, feedListIsLoading, touchBookMark, fetchNextPage, feedListQueryClient } =
     useInfiniteFeed(
@@ -128,7 +128,12 @@ const MyPageScreen = ({ navigation, route }) => {
     });
   };
 
-  if (isProfileLoading || isrepresentativeTitlesLoading || isUserFolderListLoading) {
+  if (
+    isProfileLoading ||
+    isrepresentativeTitlesLoading ||
+    isUserFolderListLoading ||
+    !userFolderList
+  ) {
     return <MainLottie />;
   }
 

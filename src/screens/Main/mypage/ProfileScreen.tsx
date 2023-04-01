@@ -53,7 +53,7 @@ const ProfileScreen = ({ navigation, route }) => {
 
   const { data: userFolderList, isLoading: isUserFolderListLoading } = useQuery(
     MypageQueryKeys.getFolderList({ userId: userId }),
-    () => MypageAPI.getFolderList({ userId: userId }),
+    () => MypageAPI.getModifiedFolderList({ userId: userId }),
     querySuccessError,
   );
 

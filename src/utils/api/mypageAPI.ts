@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { getAccessToken } from '../hooks/asyncStorage/Login';
 import httpClient from './BaseHttpClient';
 
@@ -58,6 +59,7 @@ export const MypageAPI = {
   },
   getFolderList: async (request: UserFolderListGetRequest) => {
     const { userId } = request;
+    if (!userId) return;
     try {
       const token = await getAccessToken();
 
@@ -70,10 +72,19 @@ export const MypageAPI = {
         },
       );
 
-      return modifyData(data.data);
+      return data.data;
     } catch (err) {
-      console.error('api error2: ', err);
+      if (err instanceof AxiosError) {
+        console.error('api error2: ', err.message);
+      }
     }
+  },
+  getModifiedFolderList: async (request: UserFolderListGetRequest) => {
+    return MypageAPI.getFolderList(request)
+      .then(modifyData)
+      .catch((err) => {
+        console.error('getModifiedFolderList: ', err);
+      });
   },
 };
 
@@ -90,7 +101,11 @@ export interface TabInfo {
   };
 }
 
-export function modifyData(data: UserFolderListGetResponse['data']): TabInfo {
+export function modifyData(data: UserFolderListGetResponse['data'] | undefined): TabInfo {
+  // base case 1: data가 없을 때 or data가 undefined일때
+  if (!data?.length || data === undefined)
+    return { tabs: [], selectedTab: { isClicked: false, id: 0, name: '' } };
+
   const mappedData = data.map((data) => {
     return {
       ...data,
