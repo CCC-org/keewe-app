@@ -30,6 +30,7 @@ import ShareIconXml from '../../constants/Icons/DetailedPost/ShareIconXml';
 import { FeedQueryKeys } from '../../utils/api/FeedAPI';
 import FeedVerticalDots from '../Feed/FeedVerticalDots';
 import Toast from 'react-native-toast-message';
+import MainLottie from '../../components/lotties/MainLottie';
 
 const DetailedPostScreen = ({ navigation, route }) => {
   const { insightId } = route.params;
@@ -77,8 +78,6 @@ const DetailedPostScreen = ({ navigation, route }) => {
       queryClient.setQueryData(key, context?.prevState);
     },
   });
-
-  followMutation.mutate;
 
   const handleBookmark = () => {
     DetailedPostApi.BookMark(insightId)
@@ -158,6 +157,10 @@ const DetailedPostScreen = ({ navigation, route }) => {
   const handleReplyClick = (info: ReplyInfo) => {
     setReplyInfo(info);
   };
+
+  if (isProfileLoading || isInsightLoading) {
+    return <MainLottie />;
+  }
 
   return (
     <>
