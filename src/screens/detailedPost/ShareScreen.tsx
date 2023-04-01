@@ -6,11 +6,7 @@ import ColorSelectRadioButton from '../../components/buttons/ColorSelectRadioBut
 import ShareButton from '../../components/buttons/ShareButton';
 import { Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import * as Permissions from 'expo-permissions';
 import * as MediaLibrary from 'expo-media-library';
-import { downloadToFolder } from 'expo-file-dl';
-import theme from '../../theme/light';
-import Profile from '../../components/profile/Profile';
 import ProfileAvatar from '../../components/profile/ProfileAvatar';
 import { useTheme } from 'react-native-paper';
 
@@ -20,7 +16,7 @@ const falseObject = {
   third: false,
 };
 
-const ShareScreen = ({ navigation, route }) => {
+const ShareScreen = ({ route }) => {
   const { challenge, image, name, insightText } = route.params;
   const [color, setColor] = useState('#f1f1e9');
   const [buttonColorSelected, setButtonColorSelected] = useState({
