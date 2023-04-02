@@ -7,8 +7,6 @@ import { RootScreen } from '../../navigation';
 import FeedScreen from '../Feed/FeedScreen';
 import { SvgXml } from 'react-native-svg';
 import {
-  homeOn,
-  homeOff,
   bookmarkOn,
   bookmarkOff,
   challengeOn,

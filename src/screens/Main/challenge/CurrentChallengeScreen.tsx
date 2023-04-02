@@ -22,6 +22,7 @@ const CurrentChallengeScreen = () => {
       <CurrentChallengeProfile
         key={index}
         name={item.challengeName}
+        challengeId={item.challengeId}
         interest={item.challengeCategory}
         challengeDescription={item.challengeIntroduction}
         insightNumber={item.insightCount}

@@ -179,6 +179,19 @@ export function RootScreen() {
             <Text> ChallengeDetailScreen.tsx</Text>
           </View>
         </Pressable>
+        <Pressable
+          onPress={() => navigation.navigate('ChallengeParticipation', { challengeId: 5 })}
+        >
+          <View
+            style={{
+              backgroundColor: 'blue',
+              height: 100,
+              width: 150,
+            }}
+          >
+            <Text> ChallengeParticipationScreen.tsx</Text>
+          </View>
+        </Pressable>
       </ScrollView>
     </ScrollView>
   );
