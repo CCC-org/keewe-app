@@ -24,6 +24,7 @@ const Tabs = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarShowLabel: false,
+        headerShadowVisible: false,
       }}
       sceneContainerStyle={{ backgroundColor: 'white' }}
     >

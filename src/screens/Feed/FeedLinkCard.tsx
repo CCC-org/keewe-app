@@ -36,7 +36,7 @@ const FeedLinkWithBookMark = ({
             <View style={[styles.container]}>
               <View>
                 <Text style={styles.title}>
-                  {title ? title.slice(0, 20) + (title.length > 20 ? '... >' : '') : 'No title'}
+                  {title ? title.slice(0, 20) + (title.length > 20 ? '...' : '') : 'No title'}
                   <Entypo name="chevron-right" size={12} color="#12131450" />
                 </Text>
 
