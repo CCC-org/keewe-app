@@ -15,7 +15,6 @@ interface FeedVerticalDotsProps {
   title?: string;
   image?: string;
   contents?: string;
-  challenge?: string;
 }
 
 const FeedVerticalDots = ({
@@ -26,7 +25,6 @@ const FeedVerticalDots = ({
   title,
   image,
   contents,
-  challenge,
 }: FeedVerticalDotsProps) => {
   const myUserId = useGetUserId();
   const isMyPost = myUserId === userId;
@@ -62,7 +60,6 @@ const FeedVerticalDots = ({
             title={title}
             image={image}
             contents={contents}
-            challenge={challenge}
           />
         )}
       </BottomSheetModal>

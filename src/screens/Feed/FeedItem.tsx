@@ -8,9 +8,6 @@ import FeedTextContent from './FeedTextContent';
 import { REACTIONS } from './constant';
 import ReactIconButton from '../../components/emoticons/ReactIconButton';
 import { useNavigation } from '@react-navigation/native';
-import { useQuery } from '@tanstack/react-query';
-import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
-
 interface FeedItemProps {
   insight: InsightData;
   localId?: string;
@@ -34,11 +31,6 @@ const FeedItem = ({ insight, localId, onBookMarkClick }: FeedItemProps) => {
     else navigation.navigate('Profile', { userId: writer.writerId });
   };
 
-  const { data: getChallengeRecordResponse, isLoading: isChallengeRecordLoading } = useQuery(
-    InsightQueryKeys.getChallengeRecord({ insightId: id }),
-    () => InsightAPI.getChallengeRecord({ insightId: id }),
-  );
-
   return (
     <View style={styles.Feed}>
       <View style={styles.Profilecontainer}>
@@ -59,7 +51,6 @@ const FeedItem = ({ insight, localId, onBookMarkClick }: FeedItemProps) => {
           title={writer.title}
           image={writer.image}
           contents={contents}
-          challenge={getChallengeRecordResponse?.data?.challengeName ?? ''}
         />
       </View>
       <View style={styles.contentCtn}>

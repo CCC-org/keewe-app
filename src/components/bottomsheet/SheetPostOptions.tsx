@@ -10,6 +10,7 @@ import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import DetailReportSheetContent from '../../screens/detailedPost/DetailReportSheetContent';
 import { blockApi } from '../../utils/api/block/block';
 import { useNavigation } from '@react-navigation/native';
+import { InsightAPI } from '../../utils/api/InsightAPI';
 
 interface BSPostOptionsProps {
   modalRef: React.RefObject<BottomSheetModalMethods>;
@@ -20,7 +21,6 @@ interface BSPostOptionsProps {
   title?: string;
   image?: string;
   contents?: string;
-  challenge?: string;
 }
 
 const SheetPostOptions = ({
@@ -32,7 +32,6 @@ const SheetPostOptions = ({
   title,
   image,
   contents,
-  challenge,
 }: BSPostOptionsProps) => {
   const { fonts } = useTheme();
   const styles = createStyles(fonts);
@@ -162,12 +161,13 @@ const SheetPostOptions = ({
     <ScrollView style={styles.optionContainer}>
       <Pressable
         style={styles.option}
-        onPress={() => {
+        onPress={async () => {
+          const challengeData = await InsightAPI.getChallengeRecord({ insightId });
           navigation.navigate('Share', {
             name: nickname ?? '',
             title: title ?? '',
             image: image ?? '',
-            challenge: challenge ?? '',
+            challenge: challengeData?.data?.challengeName ?? '',
             insightText: contents ?? '',
           });
           modalRef.current?.dismiss();
