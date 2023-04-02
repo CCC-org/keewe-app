@@ -8,7 +8,6 @@ import FeedTextContent from './FeedTextContent';
 import { REACTIONS } from './constant';
 import ReactIconButton from '../../components/emoticons/ReactIconButton';
 import { useNavigation } from '@react-navigation/native';
-
 interface FeedItemProps {
   insight: InsightData;
   localId?: string;
@@ -44,7 +43,15 @@ const FeedItem = ({ insight, localId, onBookMarkClick }: FeedItemProps) => {
             createdAt={createdAt}
           />
         </Pressable>
-        <FeedVerticalDots userName={writer.nickname} userId={writer.writerId} insightId={id} />
+        <FeedVerticalDots
+          userName={writer.nickname}
+          userId={writer.writerId}
+          insightId={id}
+          nickname={writer.nickname}
+          title={writer.title}
+          image={writer.image}
+          contents={contents}
+        />
       </View>
       <View style={styles.contentCtn}>
         <FeedTextContent contents={contents} insightId={id} bookmark={bookmark} />

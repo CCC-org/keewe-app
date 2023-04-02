@@ -343,7 +343,7 @@ export default function App() {
                       <Stack.Screen
                         name={'Share'}
                         component={ShareScreen}
-                        options={{ title: '공유하기' }}
+                        options={{ ...headerOptions, title: '공유하기' }}
                       />
                       <Stack.Screen
                         name={'DetailedPost'}
