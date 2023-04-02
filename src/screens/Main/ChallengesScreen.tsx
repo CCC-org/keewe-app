@@ -106,6 +106,7 @@ const ChallengesScreen = ({ navigation }) => {
             interest={challengeParticipation?.interest ?? ''}
             Date={timeConverter(challengeParticipation?.startDate ?? '')}
             highlight={true}
+            participate={true}
           />
         </View>
       ) : (
@@ -155,6 +156,7 @@ const ChallengesScreen = ({ navigation }) => {
                 name={history.challengeName}
                 interest={history.challengeCategory}
                 Date={timeConverter(history.startDate + ' ~ ' + history.endDate)}
+                participate={challengeParticipation?.challengeId === history.challengeId}
               />
             ))}
           <Pressable
@@ -180,6 +182,7 @@ const ChallengesScreen = ({ navigation }) => {
               interest={current.challengeCategory}
               challengeDescription={current.challengeIntroduction}
               insightNumber={current.insightCount}
+              participate={challengeParticipation?.challengeId === current.challengeId}
             />
           ))}
           <Pressable

@@ -13,7 +13,6 @@ import TwoButtonModal from '../../../components/modal/TwoButtonModal';
 
 const ChallengeParticipationScreen = ({ route }) => {
   const { challengeId } = route.params;
-  console.log(route.params);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   const { data: challengeDetail, isLoading: isChallengeDetailLoading } = useQuery(

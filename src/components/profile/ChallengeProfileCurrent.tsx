@@ -12,6 +12,7 @@ interface CurrentChallengeProfileProps {
   insightNumber: string;
   highlight?: boolean;
   challengeId: number;
+  participate: boolean;
 }
 
 const CurrentChallengeProfile = ({
@@ -20,11 +21,14 @@ const CurrentChallengeProfile = ({
   interest,
   insightNumber,
   challengeId,
+  participate,
 }: CurrentChallengeProfileProps) => {
   return (
     <Pressable
       onPress={() =>
-        navigate('ChallengeParticipation', { challengeId, challengeName: name, interest })
+        participate
+          ? navigate('ChallengeDetail', { challengeId, challengeName: name, interest })
+          : navigate('ChallengeParticipation', { challengeId, challengeName: name, interest })
       }
       style={{
         ...styles.container,
@@ -39,7 +43,7 @@ const CurrentChallengeProfile = ({
           marginRight: 10,
         }}
       >
-        <SvgXml xml={INTEREST_ICONS[interest] ?? INTEREST_ICONS['사진']} />
+        <SvgXml xml={INTEREST_ICONS[interest] ?? INTEREST_ICONS['기본']} />
       </View>
       <View style={styles.description}>
         <View style={styles.texts}>

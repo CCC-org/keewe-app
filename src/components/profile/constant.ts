@@ -24,6 +24,7 @@ import 주식 from '../../../assets/svgs/InterestsIcon/주식';
 import 창업 from '../../../assets/svgs/InterestsIcon/창업';
 import 취미덕질 from '../../../assets/svgs/InterestsIcon/취미덕질';
 import 패션 from '../../../assets/svgs/InterestsIcon/패션';
+import 기본 from '../../../assets/svgs/InterestsIcon/기본';
 
 export const INTEREST_ICONS = {
   가상자산: 가상자산,
@@ -52,4 +53,5 @@ export const INTEREST_ICONS = {
   창업: 창업,
   취미덕질: 취미덕질,
   패션: 패션,
+  기본: 기본,
 };
