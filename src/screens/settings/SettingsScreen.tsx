@@ -35,7 +35,7 @@ const SettingsScreen = ({ navigation }) => {
         >
           <Text style={theme.fonts.text.body1.regular}>푸쉬알림 설정</Text>
         </Pressable>
-        <Pressable onPress={() => alert('What')} style={styles.settingOption}>
+        <Pressable onPress={() => navigation.navigate('FolderEdit')} style={styles.settingOption}>
           <Text style={theme.fonts.text.body1.regular}>폴더 편집</Text>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('Block')} style={styles.settingOption}>

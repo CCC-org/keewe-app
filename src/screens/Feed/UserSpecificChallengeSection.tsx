@@ -49,7 +49,7 @@ const UserSpecificChallengeSection = ({
             <View key={challenge.day} style={styles.day}>
               {today === challenge.day && <TodayBubble isFirst={today === firstDay} />}
               <CircularCheckbox isChecked={challenge.progress.check} />
-              <Text style={{ color: '#00000050' }}>{challenge.day}</Text>
+              <Text style={{ color: '#000000cc' }}>{challenge.day}</Text>
             </View>
           );
         })}
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     fontFamily: 'pretendardSemiBold',
   },
   challengeText: {
-    color: '#12131450',
+    color: '#12131480',
     marginTop: 2,
   },
   weekProgress: {

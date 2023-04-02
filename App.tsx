@@ -53,7 +53,7 @@ import CurrentChallengeScreen from './src/screens/Main/challenge/CurrentChalleng
 import HistoryChallengeScreen from './src/screens/Main/challenge/HistoryChallengeScreen';
 import { navigationRef } from './src/utils/hooks/navigaton/navigator';
 import BlockedScreen from './src/screens/settings/BlockedScreen';
-import FolderEditScreen from './src/screens/settings/FolderEditScreen';
+import FolderEditScreen from './src/screens/settings/folderSettings/FolderEditScreen';
 import { Feather } from '@expo/vector-icons';
 
 // const Stack = createNativeStackNavigator();
@@ -80,16 +80,12 @@ export default function App() {
                   <Stack.Navigator
                     screenOptions={{
                       cardStyle: { backgroundColor: 'white' },
-                      // contentStyle: { backgroundColor: 'white' },
                       headerTitleAlign: 'center',
                       headerTitleStyle: {
                         fontSize: 16,
                       },
                       headerShadowVisible: false,
                       animationEnabled: false,
-                      //...TransitionPresets.DefaultTransition,
-                      // animation: 'slide_from_right',
-                      // animationDuration: 1000,
                     }}
                   >
                     {/* Tabs  */}
@@ -343,7 +339,7 @@ export default function App() {
                       <Stack.Screen
                         name={'Share'}
                         component={ShareScreen}
-                        options={{ title: '공유하기' }}
+                        options={{ ...headerOptions, title: '공유하기' }}
                       />
                       <Stack.Screen
                         name={'DetailedPost'}

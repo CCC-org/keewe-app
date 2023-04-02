@@ -1,11 +1,9 @@
-import { RefreshControl, StyleSheet, Text, View } from 'react-native';
-import React, { Fragment, useState } from 'react';
+import { StyleSheet } from 'react-native';
+import React, { Fragment } from 'react';
 import { InfiniteData, QueryClient, UseMutateFunction } from '@tanstack/react-query';
 import { InsightData } from '../../types/Feed/Feedinsights';
-import { IOScrollView, InView } from 'react-native-intersection-observer';
+import { InView } from 'react-native-intersection-observer';
 import FeedItem from './FeedItem';
-import { FeedQueryKeys } from '../../utils/api/FeedAPI';
-import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChallenge';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
 
@@ -29,15 +27,8 @@ const FeedList = ({
   scrollViewRef,
   writer,
 }: FeedListProps) => {
-  const [pageRefreshing, setPageRefreshing] = useState(false);
   const userId = useGetUserId();
-  const onRefresh = () => {
-    setPageRefreshing(true);
-    feedListQueryClient.invalidateQueries(FeedQueryKeys.getFeed());
-    feedListQueryClient
-      .invalidateQueries(UserSpecificChallengeQueryKeys.getUserSpecificChallenge())
-      .then(() => setPageRefreshing(false));
-  };
+
   return (
     <ScrollView contentContainerStyle={styles.feedCtn} ref={scrollViewRef}>
       {UpperComponent}

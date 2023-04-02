@@ -15,6 +15,7 @@ import FeedList from '../../Feed/FeedList';
 import BottomFixButton from '../../../components/buttons/BottomFixButton';
 import { IOScrollView } from 'react-native-intersection-observer';
 import { FollowAPI } from '../../../utils/api/FollowAPI';
+import MainLottie from '../../../components/lotties/MainLottie';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
 const ProfileScreen = ({ navigation, route }) => {
@@ -52,7 +53,7 @@ const ProfileScreen = ({ navigation, route }) => {
 
   const { data: userFolderList, isLoading: isUserFolderListLoading } = useQuery(
     MypageQueryKeys.getFolderList({ userId: userId }),
-    () => MypageAPI.getFolderList({ userId: userId }),
+    () => MypageAPI.getModifiedFolderList({ userId: userId }),
     querySuccessError,
   );
 
@@ -147,6 +148,10 @@ const ProfileScreen = ({ navigation, route }) => {
       selectedTab: newSelectedTab,
     });
   };
+
+  if (isProfileLoading || isrepresentativeTitlesLoading) {
+    return <MainLottie />;
+  }
 
   return (
     <IOScrollView

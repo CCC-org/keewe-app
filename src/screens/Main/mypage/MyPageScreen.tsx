@@ -19,6 +19,7 @@ import { useScrollToTop } from '@react-navigation/native';
 import { settingsIcon } from '../../../../assets/svgs/settingsIcon';
 import { Feather } from '@expo/vector-icons';
 import { threeDots } from '../../../../assets/svgs/constantSvgs/threeDots';
+import MainLottie from '../../../components/lotties/MainLottie';
 
 const MyPageScreen = ({ navigation, route }) => {
   const { userId } = route.params;
@@ -47,7 +48,6 @@ const MyPageScreen = ({ navigation, route }) => {
     [theme.colors.graphic.green, `${theme.colors.graphic.green}1a`],
   ]);
 
-  // Erased onSetteled: querySuccessError fn.
   const { data: profile, isLoading: isProfileLoading } = useQuery({
     queryKey: MypageQueryKeys.getProfile({ targetId: userId }),
     queryFn: () => MypageAPI.getProfile({ targetId: userId }),
@@ -62,16 +62,15 @@ const MyPageScreen = ({ navigation, route }) => {
 
   const { data: userFolderList, isLoading: isUserFolderListLoading } = useQuery(
     MypageQueryKeys.getFolderList({ userId: userId }),
-    () => MypageAPI.getFolderList({ userId: userId }),
+    () => MypageAPI.getModifiedFolderList({ userId: userId }),
     querySuccessError,
   );
 
   const queryClient = useQueryClient();
-  queryClient.invalidateQueries({ queryKey: ['profile'] });
   const drawerId =
-    isUserFolderListLoading === true || userFolderList.selectedTab.id === 0
+    isUserFolderListLoading === true || userFolderList?.selectedTab?.id === 0
       ? ''
-      : String(userFolderList.selectedTab.id);
+      : String(userFolderList?.selectedTab?.id);
 
   const { feedList, feedListIsLoading, touchBookMark, fetchNextPage, feedListQueryClient } =
     useInfiniteFeed(
@@ -107,7 +106,6 @@ const MyPageScreen = ({ navigation, route }) => {
   ]);
 
   const handleFolderOption = async (tabId: number) => {
-    // await queryClient.cancelQueries(MypageQueryKeys.getFolderList({ userId: userId }));
     const key = MypageQueryKeys.getFolderList({ userId: userId });
     const data = queryClient.getQueryState(key)!.data as TabInfo;
 
@@ -129,7 +127,14 @@ const MyPageScreen = ({ navigation, route }) => {
     });
   };
 
-  if (isUserFolderListLoading) return null;
+  if (
+    isProfileLoading ||
+    isrepresentativeTitlesLoading ||
+    isUserFolderListLoading ||
+    !userFolderList.tabs
+  ) {
+    return <MainLottie />;
+  }
 
   return (
     <>
