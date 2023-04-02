@@ -41,6 +41,7 @@ const FeedScreen = ({ navigation }) => {
 
   useEffect(() => {
     const te = setInterval(() => {
+      if (!scrollViewRef?.current) return;
       scrollViewRef.current.scrollTo({ y: yPos });
     }, 1000);
 

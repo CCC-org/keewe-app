@@ -2,15 +2,16 @@ import { StyleSheet, Text, View, TextInput } from 'react-native';
 import React from 'react';
 
 interface BlandTextInputProps {
-  textVal: string;
+  textVal?: string;
+  placeHolder?: string;
   setTextVal: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const BlandTextInput = ({ setTextVal }: BlandTextInputProps) => {
+const BlandTextInput = ({ setTextVal, placeHolder }: BlandTextInputProps) => {
   return (
     <TextInput
       style={styles.textInput}
-      placeholder={'새 폴더의 이름을 적어주세요.'}
+      placeholder={placeHolder ?? '새 폴더의 이름을 적어주세요.'}
       onChangeText={(text) => setTextVal(text)}
       autoFocus={true}
     />

@@ -7,7 +7,7 @@ interface BottomSheetHeaderProps {
   onLeftButtonPress: () => void;
   title: string;
   headerRightButton: () => JSX.Element;
-  iconName?: 'arrowleft';
+  iconName?: 'arrowleft' | 'close';
 }
 
 const BottomSheetHeader = ({
@@ -19,7 +19,9 @@ const BottomSheetHeader = ({
   const theme = useTheme();
   return (
     <View style={styles.container}>
-      <AntDesign name={iconName || 'close'} size={24} color="black" onPress={onLeftButtonPress} />
+      <View style={{ width: 46 }}>
+        <AntDesign name={iconName || 'close'} size={24} color="black" onPress={onLeftButtonPress} />
+      </View>
       <Text style={{ ...theme.fonts.text.body1.bold, ...styles.text }}>{title}</Text>
       {headerRightButton()}
     </View>
@@ -36,9 +38,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingLeft: 12,
     paddingBottom: 12,
+    paddingRight: 12,
   },
   text: {
     fontSize: 16,
-    marginLeft: 24,
   },
 });
