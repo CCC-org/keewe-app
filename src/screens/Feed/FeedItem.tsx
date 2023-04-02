@@ -8,6 +8,8 @@ import FeedTextContent from './FeedTextContent';
 import { REACTIONS } from './constant';
 import ReactIconButton from '../../components/emoticons/ReactIconButton';
 import { useNavigation } from '@react-navigation/native';
+import { useQuery } from '@tanstack/react-query';
+import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
 
 interface FeedItemProps {
   insight: InsightData;
@@ -32,6 +34,11 @@ const FeedItem = ({ insight, localId, onBookMarkClick }: FeedItemProps) => {
     else navigation.navigate('Profile', { userId: writer.writerId });
   };
 
+  const { data: getChallengeRecordResponse, isLoading: isChallengeRecordLoading } = useQuery(
+    InsightQueryKeys.getChallengeRecord({ insightId: id }),
+    () => InsightAPI.getChallengeRecord({ insightId: id }),
+  );
+
   return (
     <View style={styles.Feed}>
       <View style={styles.Profilecontainer}>
@@ -44,7 +51,16 @@ const FeedItem = ({ insight, localId, onBookMarkClick }: FeedItemProps) => {
             createdAt={createdAt}
           />
         </Pressable>
-        <FeedVerticalDots userName={writer.nickname} userId={writer.writerId} insightId={id} />
+        <FeedVerticalDots
+          userName={writer.nickname}
+          userId={writer.writerId}
+          insightId={id}
+          nickname={writer.nickname}
+          title={writer.title}
+          image={writer.image}
+          contents={contents}
+          challenge={getChallengeRecordResponse?.data?.challengeName ?? ''}
+        />
       </View>
       <View style={styles.contentCtn}>
         <FeedTextContent contents={contents} insightId={id} bookmark={bookmark} />

@@ -9,15 +9,31 @@ import { reportInsight, reportType } from '../../utils/api/report/insight/insigh
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import DetailReportSheetContent from '../../screens/detailedPost/DetailReportSheetContent';
 import { blockApi } from '../../utils/api/block/block';
+import { useNavigation } from '@react-navigation/native';
 
 interface BSPostOptionsProps {
   modalRef: React.RefObject<BottomSheetModalMethods>;
   insightId: number;
   userId: number;
   userName: string;
+  nickname?: string;
+  title?: string;
+  image?: string;
+  contents?: string;
+  challenge?: string;
 }
 
-const SheetPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptionsProps) => {
+const SheetPostOptions = ({
+  modalRef,
+  userId,
+  userName,
+  insightId,
+  nickname,
+  title,
+  image,
+  contents,
+  challenge,
+}: BSPostOptionsProps) => {
   const { fonts } = useTheme();
   const styles = createStyles(fonts);
   const [isReport, setIsReport] = useState(false);
@@ -25,6 +41,8 @@ const SheetPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptio
   const [selectedReport, setSelectedReport] = useState<number | null>(null);
   const [reportText, setReportText] = useState('');
   const [isSnackBarVisible, setIsSnackBarVisible] = useState(false);
+  const navigation = useNavigation();
+
   const handlePress = () => {
     setIsReport(true);
     modalRef.current?.snapToIndex(1);
@@ -142,6 +160,21 @@ const SheetPostOptions = ({ modalRef, userId, userName, insightId }: BSPostOptio
 
   return (
     <ScrollView style={styles.optionContainer}>
+      <Pressable
+        style={styles.option}
+        onPress={() => {
+          navigation.navigate('Share', {
+            name: nickname ?? '',
+            title: title ?? '',
+            image: image ?? '',
+            challenge: challenge ?? '',
+            insightText: contents ?? '',
+          });
+          modalRef.current?.dismiss();
+        }}
+      >
+        <Text style={[fonts.text.body1.regular]}>공유하기</Text>
+      </Pressable>
       <Pressable style={styles.option} onPress={handlePress}>
         <Text style={[fonts.text.body1.regular]}>신고하기</Text>
       </Pressable>

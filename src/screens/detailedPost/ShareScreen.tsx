@@ -26,6 +26,7 @@ const ShareScreen = ({ route }) => {
   });
   const viewRef = useRef(null);
   const theme = useTheme();
+
   const handleDownload = async () => {
     try {
       const uri = await captureRef(viewRef, {
@@ -96,7 +97,9 @@ const ShareScreen = ({ route }) => {
                   fontSize: 12,
                   color: color === '#f1f1e9' ? '#12131450' : '#ffffff50',
                 }}
-              >{`${challenge}에 대한 인사이트`}</Text>
+              >
+                {challenge ? `${challenge}에 대한 인사이트` : '인사이트'}
+              </Text>
             </View>
           </View>
         </View>

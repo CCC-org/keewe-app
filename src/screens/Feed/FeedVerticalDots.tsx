@@ -11,9 +11,23 @@ interface FeedVerticalDotsProps {
   userId: number;
   insightId: number;
   userName: string;
+  nickname?: string;
+  title?: string;
+  image?: string;
+  contents?: string;
+  challenge?: string;
 }
 
-const FeedVerticalDots = ({ userId, userName, insightId }: FeedVerticalDotsProps) => {
+const FeedVerticalDots = ({
+  userId,
+  userName,
+  insightId,
+  nickname,
+  title,
+  image,
+  contents,
+  challenge,
+}: FeedVerticalDotsProps) => {
   const myUserId = useGetUserId();
   const isMyPost = myUserId === userId;
   const modalRef = useRef<BottomSheetModal>(null);
@@ -33,7 +47,7 @@ const FeedVerticalDots = ({ userId, userName, insightId }: FeedVerticalDotsProps
       </Pressable>
       <BottomSheetModal
         ref={modalRef}
-        snapPoints={['25%', '65%', '90%']}
+        snapPoints={['30%', '50%']}
         backdropComponent={renderBackdrop}
       >
         {isMyPost ? (
@@ -44,6 +58,11 @@ const FeedVerticalDots = ({ userId, userName, insightId }: FeedVerticalDotsProps
             userName={userName}
             userId={userId}
             insightId={insightId}
+            nickname={nickname}
+            title={title}
+            image={image}
+            contents={contents}
+            challenge={challenge}
           />
         )}
       </BottomSheetModal>
