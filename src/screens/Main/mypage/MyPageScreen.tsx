@@ -23,11 +23,14 @@ import MainLottie from '../../../components/lotties/MainLottie';
 
 const MyPageScreen = ({ navigation, route }) => {
   const { userId } = route.params;
+  const queryClient = useQueryClient();
+
   if (userId === null || userId === undefined) {
     alert('userId를 인식할 수 없었습니다.');
     return null;
   }
   const theme = useTheme();
+
   useEffect(() => {
     if (!route?.params?.enteredByTab) {
       navigation.setOptions({
@@ -66,7 +69,6 @@ const MyPageScreen = ({ navigation, route }) => {
     querySuccessError,
   );
 
-  const queryClient = useQueryClient();
   const drawerId =
     isUserFolderListLoading === true || userFolderList?.selectedTab?.id === 0
       ? ''
