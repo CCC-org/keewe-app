@@ -16,8 +16,7 @@ const BottomSheetOption = ({ title, select, leftIcon, onPress }: BottomSheetOpti
       <View style={styles.title}>
         <Text
           style={{
-            fontFamily: 'pretendard',
-            fontSize: 14,
+            ...theme.fonts.text.body1.regular,
             color: select ? theme.colors.brand.onprimary.container : theme.colors.graphic.black,
           }}
         >
