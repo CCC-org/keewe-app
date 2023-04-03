@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 import React, { Fragment } from 'react';
 import { InfiniteData, QueryClient, UseMutateFunction } from '@tanstack/react-query';
-import { InsightData } from '../../types/Feed/Feedinsights';
 import { InView } from 'react-native-intersection-observer';
 import FeedItem from './FeedItem';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -14,7 +13,7 @@ interface FeedListProps {
   upperComponent?: React.ReactNode;
   feedListQueryClient: QueryClient;
   feedListIsLoading: boolean;
-  writer?: { writerId: number; nickname: string; title: string; image: string };
+  writer?: InsightWriter;
   scrollViewRef?: React.RefObject<any>;
 }
 

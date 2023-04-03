@@ -160,7 +160,11 @@ const ChallengesScreen = ({ navigation }) => {
               />
             ))}
           <Pressable
-            onPress={() => navigation.navigate('ChallengeHistory')}
+            onPress={() =>
+              navigation.navigate('ChallengeHistory', {
+                currentChallenge: challengeParticipation?.challengeId,
+              })
+            }
             style={{ ...styles.borderContainer }}
           >
             <Text style={{ fontFamily: 'pretendard', fontSize: 16, marginRight: 4 }}>전체보기</Text>
@@ -186,7 +190,11 @@ const ChallengesScreen = ({ navigation }) => {
             />
           ))}
           <Pressable
-            onPress={() => navigation.navigate('ChallengeCurrent')}
+            onPress={() =>
+              navigation.navigate('ChallengeCurrent', {
+                currentChallenge: challengeParticipation?.challengeId,
+              })
+            }
             style={{ ...styles.borderContainer }}
           >
             <Text style={{ fontFamily: 'pretendard', fontSize: 16, marginRight: 4 }}>전체보기</Text>

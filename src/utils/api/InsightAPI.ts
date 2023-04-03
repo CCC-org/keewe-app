@@ -29,6 +29,11 @@ export const InsightQueryKeys = {
     request.limit,
   ],
   getChallengeRecord: (request: ChallengeRecordRequest) => ['insight', request.insightId],
+  getChallengeInsight: (request: ChallengeInsightGetRequest) => [
+    'insight',
+    'challenge',
+    { ...request },
+  ],
 };
 
 export const InsightAPI = {
@@ -205,5 +210,23 @@ export const InsightAPI = {
       },
     );
     return data;
+  },
+  getChallengeInsight: async (request: ChallengeInsightGetRequest) => {
+    const { ...params } = request;
+    try {
+      const token = await getAccessToken();
+      const { data } = await httpClient.get<ChallengeInsightGetResponse>(
+        'https://api-keewe.com/api/v1/insight/challenge/my',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params,
+        },
+      );
+      return data;
+    } catch (err) {
+      console.error('api error: ', err);
+    }
   },
 };

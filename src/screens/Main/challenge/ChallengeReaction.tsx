@@ -10,14 +10,12 @@ interface ChallengeReactionProps {
 
 const ChallengeReaction = ({ challengeId }: ChallengeReactionProps) => {
   return (
-    <View style={{ height: 500 }}>
-      <View style={{ backgroundColor: theme.colors.brand.surface.container1, ...styles.container }}>
-        <Text style={{ fontFamily: 'pretendard', fontSize: 14 }}>내 챌린지 통계</Text>
-        <View style={styles.buttonList}>
-          {STATISTIC.map((item, index) => (
-            <StatisticIcon key={index} xml={item.xml} count={0} />
-          ))}
-        </View>
+    <View style={{ backgroundColor: theme.colors.brand.surface.container1, ...styles.container }}>
+      <Text style={{ fontFamily: 'pretendard', fontSize: 14 }}>내 챌린지 통계</Text>
+      <View style={styles.buttonList}>
+        {STATISTIC.map((item, index) => (
+          <StatisticIcon key={index} xml={item.xml} count={0} />
+        ))}
       </View>
     </View>
   );

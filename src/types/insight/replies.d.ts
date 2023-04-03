@@ -1,20 +1,13 @@
-export interface Replies {
+interface Replies {
   message: string;
   code: number;
   data: Data[];
 }
 
-export interface Data {
-  writer: Writer;
+interface Data {
+  writer: CommentWriter;
   id: number;
   parentId: number;
   content: string;
   createdAt: Date;
-}
-
-export interface Writer {
-  id: number;
-  name: string;
-  title: string;
-  image: string;
 }

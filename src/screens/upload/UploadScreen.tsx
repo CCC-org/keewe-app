@@ -18,6 +18,8 @@ import FolderSheetContent from './FolderSheetContent';
 import LinkSheetContent from './LinkSheetContent';
 import UploadBottomContainer from './UploadBottomContainer';
 import Toast from 'react-native-toast-message';
+import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
+import { useQuery } from '@tanstack/react-query';
 
 const UploadScreen = ({ navigation }) => {
   const [linkText, setLinkText] = useState<string>('');
@@ -29,6 +31,11 @@ const UploadScreen = ({ navigation }) => {
   const linkSheetRef = useRef<BottomSheetModal>(null);
   const folderSheetRef = useRef<BottomSheetModal>(null);
   const [isClicked, setIsClicked] = useState<boolean>(false);
+
+  const { data: challengeProgress, isLoading: isChallengeProgressLoading } = useQuery(
+    ['challenge', 'participation'],
+    ChallengeAPI.getChallengeProgress,
+  );
 
   const snapPoints = useMemo(() => ['50%', '80%'], []);
   React.useLayoutEffect(() => {
@@ -76,7 +83,7 @@ const UploadScreen = ({ navigation }) => {
     alert(isClicked);
     const drawerId = folders.find((folder) => folder.name === selectedFolder)?.id || null;
     const data = {
-      participation: isSwitchOn,
+      participation: isSwitchOn && challengeProgress?.name !== undefined,
       link: linkText,
       contents: insightText,
       drawerId: drawerId,
@@ -133,6 +140,7 @@ const UploadScreen = ({ navigation }) => {
       alert(error);
     }
   };
+
   return (
     <>
       <ScrollView scrollToOverflowEnabled={true} contentContainerStyle={styles.container}>
@@ -164,6 +172,7 @@ const UploadScreen = ({ navigation }) => {
           setIsSwitchOn={setIsSwitchOn}
           presentFolderSheet={() => handleSheetPresent(folderSheetRef)}
           insightText={insightText}
+          challengeProgress={challengeProgress}
         />
 
         <BottomSheetModal

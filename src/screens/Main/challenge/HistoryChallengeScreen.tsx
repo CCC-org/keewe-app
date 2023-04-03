@@ -4,10 +4,11 @@ import { FlatList } from 'react-native';
 import { ChallengeAPI } from '../../../utils/api/ChallengeAPI';
 import ChallengeProfile from '../../../components/profile/ChallengeProfile';
 
-const HistoryChallengeScreen = () => {
+const HistoryChallengeScreen = ({ route }) => {
+  const { currentChallenge } = route.params;
   const [data, setData] = useState<HistoryChallenge[]>([]);
   const [cursor, setCursor] = useState<number>();
-  const { isLoading: isChallengeLoading } = useQuery(
+  useQuery(
     ['challenge', { cursor, limit: 10 }],
     () => ChallengeAPI.getChallengeHistory({ cursor, limit: 10 }),
     {
@@ -25,6 +26,7 @@ const HistoryChallengeScreen = () => {
         name={item.challengeName}
         interest={item.challengeCategory}
         Date={item.startDate + ' ~ ' + item.endDate}
+        participate={currentChallenge === item.challengeId}
       />
     );
   };
