@@ -52,7 +52,7 @@ interface CommentCreateResponse {
 
 interface Comment {
   id: number;
-  writer: Writer;
+  writer: CommentWriter;
   content: string;
   createdAt: string;
   replies?: Reply[];
@@ -60,14 +60,14 @@ interface Comment {
 }
 
 interface Reply {
-  writer: Writer;
+  writer: CommentWriter;
   id: number;
   parentId: number;
   content: string;
   createdAt: string;
 }
 
-interface Writer {
+interface CommentWriter {
   id: number;
   name: string;
   title: string;

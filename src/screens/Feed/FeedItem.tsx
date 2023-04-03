@@ -1,6 +1,5 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 import React from 'react';
-import { InsightData } from '../../types/Feed/Feedinsights';
 import MiniProfile from '../../components/profile/MiniProfile';
 import FeedLinkWithBookMark from './FeedLinkCard';
 import FeedVerticalDots from './FeedVerticalDots';

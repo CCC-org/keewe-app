@@ -4,7 +4,8 @@ import { FlatList } from 'react-native';
 import { ChallengeAPI } from '../../../utils/api/ChallengeAPI';
 import CurrentChallengeProfile from '../../../components/profile/ChallengeProfileCurrent';
 
-const CurrentChallengeScreen = () => {
+const CurrentChallengeScreen = ({ route }) => {
+  const { currentChallenge } = route.params;
   const [data, setData] = useState<CurrentChallenge[]>([]);
   const [cursor, setCursor] = useState<number>();
   const { isLoading: isChallengeLoading } = useQuery(
@@ -26,6 +27,7 @@ const CurrentChallengeScreen = () => {
         interest={item.challengeCategory}
         challengeDescription={item.challengeIntroduction}
         insightNumber={item.insightCount}
+        participate={currentChallenge === item.challengeId}
       />
     );
   };

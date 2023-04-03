@@ -73,3 +73,15 @@ interface BookMarkRequest {
   cursor: string;
   limit: string;
 }
+
+interface ChallengeInsightGetRequest {
+  cursor?: number;
+  limit: number;
+  writerId?: string;
+}
+
+interface ChallengeInsightGetResponse {
+  message: string;
+  code: number;
+  data: InsightData[];
+}

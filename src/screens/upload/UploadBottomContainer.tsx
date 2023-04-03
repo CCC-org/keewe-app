@@ -12,34 +12,31 @@ interface UploadBottomContainerProps {
   setPosition?: React.Dispatch<React.SetStateAction<number>>;
   insightText: string;
   selectedFolder: string;
+  challengeProgress: any;
 }
 const UploadBottomContainer = ({
   isSwitchOn,
   setIsSwitchOn,
   selectedFolder,
   presentFolderSheet,
+  challengeProgress,
 }: UploadBottomContainerProps) => {
   // console log the components height when it is rendered
 
   const theme = useTheme();
 
-  const { data: ChallengeProgress, isLoading: isChallengeProgressLoading } = useQuery(
-    ['challenge', 'participation'],
-    ChallengeAPI.getChallengeProgress,
-  );
-
   const ProgressText = useMemo(() => {
-    if (ChallengeProgress?.weekCompleted) return '이번주 챌린지를 완료했어요';
-    if (ChallengeProgress?.todayRecorded) return '오늘 챌린지 기록을 완료했어요';
-    return `${ChallengeProgress?.current}/${ChallengeProgress?.total}번째 기록 중`;
-  }, [ChallengeProgress]);
+    if (challengeProgress?.weekCompleted) return '이번주 챌린지를 완료했어요';
+    if (challengeProgress?.todayRecorded) return '오늘 챌린지 기록을 완료했어요';
+    return `${challengeProgress?.current}/${challengeProgress?.total}번째 기록 중`;
+  }, [challengeProgress]);
 
   return (
     <View style={styles.container}>
-      {ChallengeProgress && (
+      {challengeProgress && (
         <View style={styles.bottomContainer}>
           <View>
-            <Text style={theme.fonts.text.body1.bold}>{ChallengeProgress.name}에 기록</Text>
+            <Text style={theme.fonts.text.body1.bold}>{challengeProgress.name}에 기록</Text>
             <Text style={theme.fonts.text.body2.regular}>{ProgressText}</Text>
           </View>
           <View>

@@ -84,7 +84,7 @@ const FollowListSection = ({ followList, mutation }: FollowListSectionProps) => 
         ) : null
       }
       keyExtractor={(item) => item?.id.toString() as string}
-    ></FlatList>
+    />
   );
 };
 

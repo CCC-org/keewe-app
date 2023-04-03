@@ -106,6 +106,7 @@ const ChallengesScreen = ({ navigation }) => {
             interest={challengeParticipation?.interest ?? ''}
             Date={timeConverter(challengeParticipation?.startDate ?? '')}
             highlight={true}
+            participate={true}
           />
         </View>
       ) : (
@@ -155,10 +156,15 @@ const ChallengesScreen = ({ navigation }) => {
                 name={history.challengeName}
                 interest={history.challengeCategory}
                 Date={timeConverter(history.startDate + ' ~ ' + history.endDate)}
+                participate={challengeParticipation?.challengeId === history.challengeId}
               />
             ))}
           <Pressable
-            onPress={() => navigation.navigate('ChallengeHistory')}
+            onPress={() =>
+              navigation.navigate('ChallengeHistory', {
+                currentChallenge: challengeParticipation?.challengeId,
+              })
+            }
             style={{ ...styles.borderContainer }}
           >
             <Text style={{ fontFamily: 'pretendard', fontSize: 16, marginRight: 4 }}>전체보기</Text>
@@ -180,10 +186,15 @@ const ChallengesScreen = ({ navigation }) => {
               interest={current.challengeCategory}
               challengeDescription={current.challengeIntroduction}
               insightNumber={current.insightCount}
+              participate={challengeParticipation?.challengeId === current.challengeId}
             />
           ))}
           <Pressable
-            onPress={() => navigation.navigate('ChallengeCurrent')}
+            onPress={() =>
+              navigation.navigate('ChallengeCurrent', {
+                currentChallenge: challengeParticipation?.challengeId,
+              })
+            }
             style={{ ...styles.borderContainer }}
           >
             <Text style={{ fontFamily: 'pretendard', fontSize: 16, marginRight: 4 }}>전체보기</Text>

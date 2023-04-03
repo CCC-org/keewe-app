@@ -22,14 +22,14 @@ const ChallengeTitle = ({ title, category, startDate, challengeIntroduction }: C
             marginRight: 12,
           }}
         >
-          <SvgXml xml={INTEREST_ICONS[category] ?? INTEREST_ICONS['사진']} />
+          <SvgXml xml={INTEREST_ICONS[category] ?? INTEREST_ICONS['기본']} />
         </View>
         <Text style={{ fontFamily: 'pretendardSemiBold', fontSize: 22 }}>{title}</Text>
       </View>
       <Text style={{ fontFamily: 'pretendardSemiBold', fontSize: 14 }}>{category}</Text>
       <Text
         style={{
-          fontFamily: 'pretendard',
+          fontFamily: 'pretendardSemiBold',
           fontSize: 14,
           color: theme.colors.brand.onprimary.container,
         }}
@@ -37,7 +37,9 @@ const ChallengeTitle = ({ title, category, startDate, challengeIntroduction }: C
         {startDate} 생성됨
       </Text>
 
-      <Text style={{ fontFamily: 'pretendard', fontSize: 14 }}>{challengeIntroduction}</Text>
+      <Text style={{ fontFamily: 'pretendard', fontSize: 14, marginTop: 12 }}>
+        {challengeIntroduction}
+      </Text>
     </View>
   );
 };
