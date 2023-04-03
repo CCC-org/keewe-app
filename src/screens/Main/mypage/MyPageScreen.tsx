@@ -241,7 +241,7 @@ const MyPageScreen = ({ navigation, route }) => {
           })}
         </View>
         <Pressable
-          onPress={() => alert('view every title!')}
+          onPress={() => navigation.navigate('Title', { userId })}
           style={{ ...styles.viewAll, borderTopColor: `${theme.colors.graphic.black}1a` }}
         >
           <Text
