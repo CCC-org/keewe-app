@@ -7,6 +7,7 @@ import { useInfiniteFeed } from '../../utils/hooks/feedInifiniteScroll/useInfini
 import { FeedQueryKeys } from '../../utils/api/FeedAPI';
 import { IOScrollView } from 'react-native-intersection-observer';
 import { RefreshControl } from 'react-native-gesture-handler';
+import MainTabHeader from '../../components/header/MainTabHeader';
 
 const BookMarkScreen = ({ navigation }) => {
   const theme = useTheme();
@@ -56,9 +57,7 @@ const BookMarkScreen = ({ navigation }) => {
           setYPos(y);
         }}
       >
-        <View style={styles.header}>
-          <Text style={theme.fonts.text.display}>북마크</Text>
-        </View>
+        <MainTabHeader text="북마크" />
         <FeedList
           scrollViewRef={scrollViewRef}
           feedList={feedList}

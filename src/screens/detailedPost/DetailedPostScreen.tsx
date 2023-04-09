@@ -158,9 +158,17 @@ const DetailedPostScreen = ({ navigation, route }) => {
     setReplyInfo(info);
   };
 
-  if (isProfileLoading || isInsightLoading) {
-    return <MainLottie />;
-  }
+  // if (isProfileLoading || isInsightLoading) {
+  //   return <MainLottie />;
+  // }
+  const tempReaction = {
+    clap: 38,
+    eyes: 27,
+    fire: 22,
+    heart: 33,
+    sad: 78,
+    surprise: 45,
+  };
 
   return (
     <>
@@ -173,8 +181,10 @@ const DetailedPostScreen = ({ navigation, route }) => {
           alwaysBounceVertical={false}
           style={{ paddingBottom: '100%', marginBottom: 70 }}
         >
-          {!isInsightLoading && (
+          {!isInsightLoading ? (
             <DetailedPostSection
+              isProfileLoading={isProfileLoading}
+              isInsightLoading={isInsightLoading}
               insightId={insightId}
               insightText={insightResponse?.data?.contents ?? ''}
               views={views}
@@ -184,6 +194,22 @@ const DetailedPostScreen = ({ navigation, route }) => {
               authorId={profile?.data?.authorId ?? -1}
               recordText={`${getChallengeRecordResponse?.data?.order}/${getChallengeRecordResponse?.data?.total}번째 기록중`}
             />
+          ) : (
+            <DetailedPostSection
+              isProfileLoading={isProfileLoading}
+              isInsightLoading={isInsightLoading}
+              insightId={insightId}
+              insightText={''}
+              views={views}
+              url={''}
+              currentChallenge={'temp'}
+              reaction={tempReaction}
+              authorId={profile?.data?.authorId ?? -1}
+              recordText={'temp record Text'}
+            />
+            // <View>
+            //   <Text>temp</Text>
+            // </View>
           )}
 
           {isProfileLoading ? null : (
