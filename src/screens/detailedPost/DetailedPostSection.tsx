@@ -33,7 +33,6 @@ const DetailedPostSection = ({
   isInsightLoading,
 }: DetailedPostSectionProps) => {
   const theme = useTheme();
-  const navigation = useNavigation();
   return (
     <View style={{ backgroundColor: '#F1F1E9' }}>
       {currentChallenge && (

@@ -14,7 +14,7 @@ import MainLottie from '../../components/lotties/MainLottie';
 const FeedScreen = ({ navigation }) => {
   const scrollViewRef = useRef<any>(null);
   const queryClient = useQueryClient();
-  // useScrollToTop(scrollViewRef);
+  useScrollToTop(scrollViewRef);
 
   const { feedList, feedListIsLoading, touchBookMark, fetchNextPage, feedListQueryClient } =
     useInfiniteFeed('https://api-keewe.com/api/v1/insight');
