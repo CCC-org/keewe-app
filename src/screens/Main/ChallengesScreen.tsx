@@ -97,7 +97,10 @@ const ChallengesScreen = ({ navigation }) => {
             참여중인 챌린지
           </Text>
           <View style={{ alignItems: 'center' }}>
-            <Image source={require('../../../assets/images/challenge/challengeView.png')} />
+            <Image
+              style={{ width: 343, height: 140 }}
+              source={require('../../../assets/images/challenge/ChallengeHome.png')}
+            />
           </View>
           <ChallengeProfile
             name={challengeParticipation?.name ?? ''}
@@ -111,7 +114,10 @@ const ChallengesScreen = ({ navigation }) => {
         </View>
       ) : (
         <View style={{ alignItems: 'center', marginBottom: 16 }}>
-          <Image source={require('../../../assets/images/challenge/challengeEmpty.png')} />
+          <Image
+            style={{ width: 343, height: 140 }}
+            source={require('../../../assets/images/challenge/ChallengeEmpty.png')}
+          />
           <Text
             style={{
               marginTop: 20,

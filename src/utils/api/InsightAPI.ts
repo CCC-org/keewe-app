@@ -29,11 +29,7 @@ export const InsightQueryKeys = {
     request.limit,
   ],
   getChallengeRecord: (request: ChallengeRecordRequest) => ['insight', request.insightId],
-  getChallengeInsight: (request: ChallengeInsightGetRequest) => [
-    'insight',
-    'challenge',
-    { ...request },
-  ],
+  getChallengeInsight: (request: ChallengeInsightGetRequest) => ['insight', 'challenge', request],
 };
 
 export const InsightAPI = {

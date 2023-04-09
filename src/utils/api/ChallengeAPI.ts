@@ -4,6 +4,7 @@ import httpClient from './BaseHttpClient';
 export const ChallengeQueryKeys = {
   create: (request: ChallengeCreateRequest) => ['challenge', request],
   getChallengeDetail: (request: ChallengeDetailGetRequest) => ['challenge', 'detail', request],
+  getChallengeMyDetail: () => ['challenge', 'my', 'detail'],
   getChallengeFriendsCount: (request: ChallengeFriendsCountGetRequest) => [
     'challenge',
     'count',
@@ -14,9 +15,15 @@ export const ChallengeQueryKeys = {
     'challenge',
     'list',
     'friends',
-    request,
+    request.page,
   ],
   getMyInterests: () => ['myInterests'],
+  getChallengeStatistics: () => ['challenge', 'statistics'],
+  getChallengeInsightCount: (request: ChallengeInsightCountGetRequest) => [
+    'challenge',
+    'count',
+    request,
+  ],
 };
 
 export const ChallengeAPI = {
@@ -169,6 +176,18 @@ export const ChallengeAPI = {
         return res.data.data;
       });
   },
+  getChallengeMyDetail: async () => {
+    const token = await getAccessToken();
+    return httpClient
+      .get<ChallengeMyDetailGetResponse>('https://api-keewe.com/api/v1/challenge/my/detail', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        return res.data.data;
+      });
+  },
   getChallengeFriends: async (params: ChallengeFriendsGetRequest) => {
     const token = await getAccessToken();
     const { challengeId, ...otherParams } = params;
@@ -179,7 +198,7 @@ export const ChallengeAPI = {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          ...otherParams,
+          params: otherParams,
         },
       )
       .then((res) => {
@@ -195,6 +214,34 @@ export const ChallengeAPI = {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+        },
+      )
+      .then((res) => {
+        return res.data.data;
+      });
+  },
+  getChallengeStatistics: async () => {
+    const token = await getAccessToken();
+    return httpClient
+      .get<ChallengeStatisticsGetResponse>('https://api-keewe.com/api/v1/challenge/statistics', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        return res.data.data;
+      });
+  },
+  getChallengeInsightCount: async (params: ChallengeInsightCountGetRequest) => {
+    const token = await getAccessToken();
+    return httpClient
+      .get<ChallengeInsightCountGetResponse>(
+        'https://api-keewe.com/api/v1/challenge/my/insight/count',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params,
         },
       )
       .then((res) => {
