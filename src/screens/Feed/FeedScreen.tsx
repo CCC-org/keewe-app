@@ -10,6 +10,7 @@ import { RefreshControl, ScrollView, StyleSheet, Text } from 'react-native';
 import { IOScrollView } from 'react-native-intersection-observer';
 import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChallenge';
 import MainLottie from '../../components/lotties/MainLottie';
+import MainTabHeader from '../../components/header/MainTabHeader';
 
 const FeedScreen = ({ navigation }) => {
   const scrollViewRef = useRef<any>(null);
@@ -65,6 +66,7 @@ const FeedScreen = ({ navigation }) => {
           setYPos(y);
         }}
       >
+        <MainTabHeader text="홈" />
         <FeedList
           scrollViewRef={scrollViewRef}
           upperComponent={<FeedScreenChallenge />}

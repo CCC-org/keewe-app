@@ -27,6 +27,7 @@ const Tabs = () => {
       screenOptions={{
         tabBarShowLabel: false,
         headerShadowVisible: false,
+        headerTitle: '',
       }}
       sceneContainerStyle={{ backgroundColor: 'white' }}
     >
