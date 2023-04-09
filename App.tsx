@@ -55,6 +55,7 @@ import { navigationRef } from './src/utils/hooks/navigaton/navigator';
 import BlockedScreen from './src/screens/settings/BlockedScreen';
 import FolderEditScreen from './src/screens/settings/folderSettings/FolderEditScreen';
 import { Feather } from '@expo/vector-icons';
+import NotificationScreen from './src/screens/notification/NotificationScreen';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator<RootStackParamList>();
@@ -125,6 +126,15 @@ export default function App() {
                       component={NicknameEditingScreen}
                     />
                     {/* Settings */}
+                    <Stack.Screen
+                      name={'Notification'}
+                      component={NotificationScreen}
+                      options={{
+                        ...headerOptions,
+                        title: '',
+                        cardStyle: { backgroundColor: '#f8f8f4' },
+                      }}
+                    />
                     <Stack.Screen
                       name={'Settings'}
                       component={SettingsScreen}

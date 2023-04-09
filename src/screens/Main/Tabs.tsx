@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BookMarkScreen from './BookMarkScreen';
@@ -18,16 +18,27 @@ import {
 } from '../../constants/Icons/Navigation/NavigationIconsXml';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
 import MyPageScreen from './mypage/MyPageScreen';
+import HeaderRightButton from '../../components/header/HeaderRightButton';
+import { alarm } from '../../constants/Icons/alarm/alarm';
+import { useNavigation } from '@react-navigation/native';
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
   const userId = useGetUserId();
+
+  const navigation = useNavigation();
+
   return (
     <Tab.Navigator
       screenOptions={{
         tabBarShowLabel: false,
         headerShadowVisible: false,
         headerTitle: '',
+        headerRight: () => (
+          <Pressable onPress={() => navigation.navigate('Notification')}>
+            <SvgXml style={{ marginRight: 16 }} xml={alarm} />
+          </Pressable>
+        ),
       }}
       sceneContainerStyle={{ backgroundColor: 'white' }}
     >
