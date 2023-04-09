@@ -74,7 +74,16 @@ const BlockListSection = ({ blockList, mutation }: FollowListSectionProps) => {
               </>
             </View>
             <Pressable onPress={() => setIsModal(true)} style={styles.button}>
-              <Text style={[theme.fonts.text.body2.bold, { color: '#121314' }]}>차단 해제</Text>
+              <Text
+                style={[
+                  theme.fonts.text.body2.bold,
+                  {
+                    color: '#121314',
+                  },
+                ]}
+              >
+                차단 해제
+              </Text>
             </Pressable>
 
             <TwoButtonModal
@@ -111,7 +120,7 @@ const styles = StyleSheet.create({
   },
   button: {
     paddingHorizontal: 12,
-    paddingVertical: 8,
+    paddingVertical: 0,
     borderRadius: 24,
     backgroundColor: '#B0E817',
     zIndex: 0,
