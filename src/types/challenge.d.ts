@@ -135,6 +135,17 @@ interface ChallengeDetailGetResponse {
   };
 }
 
+interface ChallengeMyDetailGetResponse {
+  message: string;
+  code: number;
+  data: {
+    challengeName: string;
+    challengeCategory: string;
+    challengeIntroduction: string;
+    createdAt: string;
+  };
+}
+
 interface ChallengeFriendsGetRequest {
   challengeId: number;
   page?: number;
@@ -161,4 +172,28 @@ interface ChallengeFriendsCountGetResponse {
   message: string;
   code: number;
   data: { challengerCount: number };
+}
+
+interface ChallengeStatisticsGetResponse {
+  message: string;
+  code: number;
+  data: {
+    viewCount: number;
+    reactionCount: number;
+    commentCount: number;
+    bookmarkCount: number;
+    shareCount: number;
+  };
+}
+
+interface ChallengeInsightCountGetRequest {
+  writerId?: string;
+}
+
+interface ChallengeInsightCountGetResponse {
+  message: string;
+  code: number;
+  data: {
+    insightNumber: number;
+  };
 }
