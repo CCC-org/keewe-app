@@ -12,8 +12,6 @@ export const FeedAPI = {
     let URL;
     if (fetchUrl.includes('drawerId')) {
       URL = `${fetchUrl}&cursor=${!cursor ? '' : String(cursor)}&limit=${limit}`;
-    } else if (fetchUrl.includes('bookmark')) {
-      URL = `${fetchUrl}?cursor=${!cursor ? '' : String(cursor)}&limit=${String(limit)}`;
     } else {
       URL = `${fetchUrl}?cursor=${!cursor ? '' : String(cursor)}&limit=${String(
         limit,
@@ -31,7 +29,7 @@ export const FeedAPI = {
     try {
       const token = await getAccessToken();
       const response = await httpClient.get<FeedInsight>(
-        `https://api-keewe.com/api/v1/insight/bookmark?cursur=${
+        `https://api-keewe.com/api/v1/insight/bookmark?cursor=${
           !cursor ? '' : String(cursor)
         }&limit=${String(limit)}`,
         {

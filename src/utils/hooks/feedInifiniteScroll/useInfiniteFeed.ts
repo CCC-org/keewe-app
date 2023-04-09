@@ -1,5 +1,5 @@
 import { InfiniteData, useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FeedAPI, FeedQueryKeys } from '../../api/FeedAPI';
 import { FeedInsight, InsightData } from '../../../types/Feed/Feedinsights';
 import { postFeedBookMark } from '../../api/FeedBookMark';
@@ -32,7 +32,11 @@ export function useInfiniteFeed(fetchUrl: string) {
     queryKey: key,
     queryFn: (context) => {
       // taping folder tabs will trigger queryFn before MyPagecreen comp re-renders, resulting in api request before tap.
-      return FeedAPI.getFeed(fetchUrl, context.pageParam, limit, follow);
+      if (fetchUrl.includes('bookmark')) {
+        return FeedAPI.getBookMarkFeed(context.pageParam, limit);
+      } else {
+        return FeedAPI.getFeed(fetchUrl, context.pageParam, limit, follow);
+      }
     },
     getNextPageParam: (lastpage) => {
       const lastFeedId = lastpage?.[lastpage.length - 1]?.id || 0;
