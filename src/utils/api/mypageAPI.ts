@@ -76,7 +76,6 @@ export const MypageAPI = {
           },
         },
       );
-      console.log('data', data.data);
       return data.data;
     } catch (err) {
       if (err instanceof AxiosError) {

@@ -4,6 +4,7 @@ import httpClient from './BaseHttpClient';
 export const UploadApis = {
   createNewFolder: async (folderName: string) => {
     const token = await getAccessToken();
+    console.log('folderName', folderName);
     return httpClient
       .post(
         'https://api-keewe.com/api/v1/drawer',
@@ -15,6 +16,7 @@ export const UploadApis = {
         },
       )
       .then((res) => {
+        console.log('res.data', res.data);
         return res.data;
       });
   },

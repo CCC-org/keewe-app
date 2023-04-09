@@ -252,9 +252,9 @@ const ProfileScreen = ({ navigation, route }) => {
           );
         })}
       </View>
-      {representativeTitleList.length > 3 ? (
+      {titleTotal > 3 ? (
         <Pressable
-          onPress={() => alert('view every title!')}
+          onPress={() => navigation.navigate('Title', { userId })}
           style={{ ...styles.viewAll, borderTopColor: `${theme.colors.graphic.black}1a` }}
         >
           <Text
