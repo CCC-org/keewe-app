@@ -8,6 +8,13 @@ import BottomSheetHeader from '../../../components/header/BottomSheetHeader';
 import HeaderRightButton from '../../../components/header/HeaderRightButton';
 import BlandTextInput from '../../../components/texts/BlandTextInput';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
+import { UploadApis } from '../../../utils/api/UploadAPIs';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { MypageQueryKeys } from '../../../utils/api/mypageAPI';
+import { Updater, useQueryClient } from '@tanstack/react-query';
+import { drawerApi } from '../../../utils/api/drawer/drawerApi';
+import { getUserId } from '../../../utils/hooks/asyncStorage/Login';
+import { useGetUserId } from '../../../utils/hooks/useGetUserId';
 
 interface FolderEditSectionProps {
   userFolderList: FolderData[];
@@ -18,10 +25,36 @@ const FolderEditSection = ({ userFolderList }: FolderEditSectionProps) => {
   const [pressedFolderId, setPressedFolderId] = useState<number | null>(null);
   const [folderName, setFolderName] = useState<string>('');
   const modalRefEdit = useRef<BottomSheetModal>(null);
+  const userId = useGetUserId();
   const handleDeleteFolder = () => {
     if (pressedFolderId === null) return;
-    alert('delete folder ' + pressedFolderId);
+    const folderListKey = MypageQueryKeys.getNonModifiedList({
+      userId: String(userId),
+    });
+
     setIsModalVisible(false);
+    drawerApi
+      .deleteFolder(pressedFolderId)
+      .then((res) => {
+        if (!res) throw new Error();
+
+        const newFolderList = userFolderList.filter((folder) => folder.id !== pressedFolderId);
+
+        queryClient.setQueryData(folderListKey, newFolderList);
+
+        Toast.show({
+          type: 'snackbar',
+          text1: '폴더를 삭제했어요',
+          position: 'bottom',
+        });
+      })
+      .catch(() => {
+        Toast.show({
+          type: 'snackbar',
+          text1: '폴더 삭제 실패',
+          position: 'bottom',
+        });
+      });
   };
 
   const handlePressDeleteFolder = (id: number) => {
@@ -34,29 +67,48 @@ const FolderEditSection = ({ userFolderList }: FolderEditSectionProps) => {
     [],
   );
 
+  const queryClient = useQueryClient();
+
   const handleEditFolderName = () => {
-    alert(`folder Id: ${pressedFolderId}, folderName: ${folderName} `);
-    // if (!folderName.length) return;
-    // UploadApis.createNewFolder(folderName)
-    //   .then((res) => {
-    //     modalRefAdd.current?.dismiss();
-    //     setFolderName('');
-    //     Toast.show({
-    //       type: 'snackbar',
-    //       text1: '폴더를 만들었어요',
-    //       position: 'bottom',
-    //     });
-    //     queryClient.invalidateQueries(
-    //       MypageQueryKeys.getNonModifiedList({ userId: String(userId) }),
-    //     );
-    //   })
-    //   .catch(() => {
-    //     Toast.show({
-    //       type: 'snackbar',
-    //       text1: '폴더 생성 실패',
-    //       position: 'bottom',
-    //     });
-    //   });
+    if (!folderName.length) return;
+    if (pressedFolderId === null) return;
+    const folderListKey = MypageQueryKeys.getNonModifiedList({
+      userId: String(userId),
+    });
+    drawerApi
+      .editFolderName(pressedFolderId, folderName)
+      .then((res) => {
+        modalRefEdit?.current?.dismiss();
+        if (!res) throw new Error();
+        const newFolderList = userFolderList.map((folder) => {
+          if (folder.id === pressedFolderId) {
+            return {
+              ...folder,
+              name: folderName,
+            };
+          }
+          return folder;
+        });
+        queryClient.setQueryData(folderListKey, newFolderList);
+
+        setFolderName('');
+
+        Toast.show({
+          type: 'snackbar',
+          text1: '폴더 이름을 수정했어요',
+          position: 'bottom',
+        });
+        queryClient.invalidateQueries(
+          MypageQueryKeys.getNonModifiedList({ userId: String(getUserId().then((res) => res)) }),
+        );
+      })
+      .catch(() => {
+        Toast.show({
+          type: 'snackbar',
+          text1: '폴더 수정 실패',
+          position: 'bottom',
+        });
+      });
   };
 
   return (
