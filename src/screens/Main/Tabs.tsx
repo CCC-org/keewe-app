@@ -60,7 +60,7 @@ const Tabs = () => {
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? <SvgXml xml={mypageOn} /> : <SvgXml xml={mypageOff} />,
-          title: '마이페이지',
+          title: '',
           headerStyle: {
             backgroundColor: '#F1F1E9',
           },

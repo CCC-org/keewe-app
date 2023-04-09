@@ -17,6 +17,7 @@ import { getAccessToken } from '../../../utils/hooks/asyncStorage/Login';
 import axios from 'axios';
 import mime from 'mime';
 import { titleNameToId } from '../../../constants/title/titleData';
+import { useQueryClient } from '@tanstack/react-query';
 
 const ProfileEditScreen = ({ navigation, route }) => {
   const theme = useTheme();
@@ -166,7 +167,9 @@ const ProfileEditScreen = ({ navigation, route }) => {
     [],
   );
 
-  const handleSaveProfileInfo = () => {
+  const queryClient = useQueryClient();
+
+  const handleSaveProfileInfo = async () => {
     // if (!image) return;
     const formData = new FormData();
     if (image) {
@@ -185,25 +188,23 @@ const ProfileEditScreen = ({ navigation, route }) => {
     formData.append('introduction', introduction);
     formData.append('updatePhoto', 'true');
 
-    async function patchProfileEditInfo(formData: any) {
-      const token = await getAccessToken();
-      try {
-        const res = await axios.patch('https://api-keewe.com/api/v1/user/profile', formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        console.log('🚀 ~ file: ProfileEditScreen.tsx:193 ~ patchProfileEditInfo ~ res', res);
+    const token = await getAccessToken();
+    try {
+      const res = await axios.patch('https://api-keewe.com/api/v1/user/profile', formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('🚀 ~ file: ProfileEditScreen.tsx:193 ~ patchProfileEditInfo ~ res', res);
 
-        return res.data;
-      } catch (err) {
-        alert(`에러 발생 : ${err}`);
-        console.log('에러:', err);
-      }
+      queryClient.invalidateQueries(['profile']);
+
+      return res.data;
+    } catch (err) {
+      alert(`에러 발생 : ${err}`);
+      console.log('에러:', err);
     }
-
-    patchProfileEditInfo(formData);
   };
 
   return (

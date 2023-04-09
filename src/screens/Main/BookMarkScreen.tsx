@@ -44,6 +44,7 @@ const BookMarkScreen = ({ navigation }) => {
       clearInterval(te);
     };
   }, [yPos]);
+
   return (
     <>
       <IOScrollView
