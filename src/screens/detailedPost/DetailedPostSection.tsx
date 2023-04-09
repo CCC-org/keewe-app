@@ -8,6 +8,7 @@ import ReactIconButton from '../../components/emoticons/ReactIconButton';
 import { useNavigation } from '@react-navigation/native';
 
 interface DetailedPostSectionProps {
+  isProfileLoading: boolean;
   insightText: string;
   insightId: number;
   views: number | string;
@@ -16,6 +17,7 @@ interface DetailedPostSectionProps {
   url: string;
   reaction: Reaction;
   authorId: number;
+  isInsightLoading: boolean;
 }
 
 const DetailedPostSection = ({
@@ -27,10 +29,11 @@ const DetailedPostSection = ({
   url,
   reaction,
   authorId,
+  isProfileLoading,
+  isInsightLoading,
 }: DetailedPostSectionProps) => {
   const theme = useTheme();
   const navigation = useNavigation();
-
   return (
     <View style={{ backgroundColor: '#F1F1E9' }}>
       {currentChallenge && (
@@ -50,7 +53,7 @@ const DetailedPostSection = ({
               flexWrap: 'nowrap',
             }}
           >
-            {currentChallenge}
+            {isInsightLoading || isProfileLoading ? '-' : currentChallenge}
           </Text>
           <Pressable style={{ flexDirection: 'row' }}>
             <Text
@@ -60,7 +63,7 @@ const DetailedPostSection = ({
                 color: `${theme.colors.graphic.black}80`,
               }}
             >
-              {recordText}
+              {isInsightLoading || isProfileLoading ? '--' : recordText}
             </Text>
             <Octicons name="chevron-right" size={17} color={`${theme.colors.graphic.black}cc`} />
           </Pressable>
@@ -68,19 +71,15 @@ const DetailedPostSection = ({
       )}
 
       {/* 여기는 글 작성자의 프로필과 대표타이틀, 팔로워, 관심사등이 올라갈 부분. 임시적으로 팔로워, 팔로잉 페이지로 이동하는 버튼 만듦 */}
-      <Pressable
-        onPress={() => {
-          // 지금은 임시적인 버튼이지만, 나중에는 글쓴이의 팔로우, 팔로잉 숫자에 붙어있을 navigate 함수임.
-        }}
-      ></Pressable>
-      <View style={styles.insightText}>
+
+      <View style={[styles.insightText]}>
         <Text
           style={[
             theme.fonts.text.body1.regular,
             { color: `${theme.colors.graphic.black}80`, lineHeight: 28 },
           ]}
         >
-          {insightText}
+          {isInsightLoading || isProfileLoading ? '---' : insightText}
         </Text>
       </View>
       <View style={styles.link}>
