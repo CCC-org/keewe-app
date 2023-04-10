@@ -76,5 +76,5 @@ issue_number: 해당 이슈가 진행되는 스프린트에서 할당받은 고�
 - 리액션을 통한 반응하기  
 ![KakaoTalk_Video_2023-04-10-21-41-46_AdobeExpress](https://user-images.githubusercontent.com/29995264/230903880-ea78fbd2-70e7-43b3-bfd3-db258170707e.gif)
 
-- 마이페이지
+- 마이프로필  
 ![KakaoTalk_Video_2023-04-10-22-11-12_AdobeExpress](https://user-images.githubusercontent.com/29995264/230907597-f4c3bbe4-939b-4f64-8a5a-247532521199.gif)
