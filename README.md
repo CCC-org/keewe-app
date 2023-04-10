@@ -67,12 +67,13 @@ issue_number: 해당 이슈가 진행되는 스프린트에서 할당받은 고�
 
 **6. 주요 기능**
 
-피드 기능
+- 피드 기능
+![KakaoTalk_Video_2023-04-10-21-49-04_AdobeExpress](https://user-images.githubusercontent.com/29995264/230905134-ee7c5c62-25fc-417e-9c2a-1b0bd48ef8d0.gif)
 
-공유하기 기능
 
-이모티콘 반응하기
+- 공유하기 기능
 
-타이틀 
-![KakaoTalk_Video_2023-04-10-21-35-34_AdobeExpress](https://user-images.githubusercontent.com/29995264/230902888-50ad1605-ba43-43c9-99a8-395f9ed3465c.gif)
+- 리액션을 통한 반응하기
+![KakaoTalk_Video_2023-04-10-21-41-46_AdobeExpress](https://user-images.githubusercontent.com/29995264/230903880-ea78fbd2-70e7-43b3-bfd3-db258170707e.gif)
+
 
