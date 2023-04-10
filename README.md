@@ -68,13 +68,18 @@ issue_number: 해당 이슈가 진행되는 스프린트에서 할당받은 고�
 **6. 주요 기능**
 
 - 피드 스크린  
+
 ![KakaoTalk_Video_2023-04-10-21-49-04_AdobeExpress (1)](https://user-images.githubusercontent.com/29995264/230905389-224d683b-d9fe-40d4-93cb-f3655b975cb1.gif)
 
 - 공유하기  
-![KakaoTalk_Video_2023-04-10-22-00-48_AdobeExpress](https://user-images.githubusercontent.com/29995264/230906240-969de73f-1b8f-450d-bde7-f1cd6f834961.gif)
+
+![KakaoTalk_Video_2023-04-10-22-00-48_AdobeExpress (1)](https://user-images.githubusercontent.com/29995264/230908358-29ad8351-58f3-470a-bd3a-a048702a3c03.gif)
+
 
 - 리액션을 통한 반응하기  
+
 ![KakaoTalk_Video_2023-04-10-21-41-46_AdobeExpress](https://user-images.githubusercontent.com/29995264/230903880-ea78fbd2-70e7-43b3-bfd3-db258170707e.gif)
 
 - 마이프로필  
+
 ![KakaoTalk_Video_2023-04-10-22-11-12_AdobeExpress](https://user-images.githubusercontent.com/29995264/230907597-f4c3bbe4-939b-4f64-8a5a-247532521199.gif)
