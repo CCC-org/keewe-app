@@ -12,35 +12,48 @@ import ChallengeTitle from '../../../components/header/ChallengeTitle';
 import ChallengeReaction from './ChallengeReaction';
 import { useGetUserId } from '../../../utils/hooks/useGetUserId';
 import { InsightAPI, InsightQueryKeys } from '../../../utils/api/InsightAPI';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import FeedItem from '../../Feed/FeedItem';
 import ChallengeUserProfile from '../../../components/profile/ChallengeUserProfile';
 import { ChallengeAPI, ChallengeQueryKeys } from '../../../utils/api/ChallengeAPI';
 import theme from '../../../theme/light';
+import { postFeedBookMark } from '../../../utils/api/FeedBookMark';
+import Toast from 'react-native-toast-message';
+import { FeedQueryKeys } from '../../../utils/api/FeedAPI';
 
 const { width } = Dimensions.get('window');
 
-const ChallengeDetailScreen = ({ navigation, route }) => {
+const ChallengeDetailScreen = ({ route }) => {
+  const userId = useGetUserId();
+  const queryClient = useQueryClient();
   const { challengeId, challengeName, interest } = route.params;
   const [tabIndex, setTabIndex] = useState<number>(0);
   const [datas, setDatas] = useState<any[][]>([[], [], []]);
   const [cursors, setCursors] = useState<any[]>([undefined, undefined, 0]);
   const [pageEmpty, setPageEmpty] = useState<boolean>(false);
-  const tabs = ['전체기록', '내기록', '친구'];
+  const { data: TotalCount, isLoading: isTotalCountLoading } = useQuery(
+    ChallengeQueryKeys.getChallengeInsightCount({}),
+    () => ChallengeAPI.getChallengeInsightCount({}),
+  );
+  const { data: MyCount, isLoading: isMyCountLoading } = useQuery(
+    ChallengeQueryKeys.getChallengeInsightCount({ writerId: String(userId) }),
+    () => ChallengeAPI.getChallengeInsightCount({ writerId: String(userId) }),
+  );
+  const tabs = [
+    `전체기록 ${TotalCount?.insightNumber}`,
+    `내기록 ${MyCount?.insightNumber}`,
+    '친구',
+  ];
   const spacing = 16;
   const tabWidth = (width - (tabs.length + 1) * spacing) / tabs.length;
   const animatedValue = useRef(new Animated.Value(0 * (tabWidth + spacing) + spacing)).current;
 
   useEffect(() => {
-    console.log(tabIndex * (tabWidth + spacing) + spacing);
     Animated.spring(animatedValue, {
       toValue: tabIndex * (tabWidth + spacing) + spacing,
       useNativeDriver: true,
     }).start();
   }, [tabIndex]);
-
-  const userId = useGetUserId();
-  const queryClient = useQueryClient();
 
   const { data: challengeResponse, isLoading: challengeLoading } = useQuery(
     ChallengeQueryKeys.getChallengeMyDetail(),
@@ -104,22 +117,23 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           newData[2] = [...newData[2], ...response];
-          // console.log(newData[2]);
           return newData;
         });
       },
     },
   );
 
-  const { data: TotalCount, isLoading: isTotalCountLoading } = useQuery(
-    ChallengeQueryKeys.getChallengeInsightCount({}),
-    () => ChallengeAPI.getChallengeInsightCount({}),
-  );
-
-  const { data: MyCount, isLoading: isMyCountLoading } = useQuery(
-    ChallengeQueryKeys.getChallengeInsightCount({ writerId: String(userId) }),
-    () => ChallengeAPI.getChallengeInsightCount({ writerId: String(userId) }),
-  );
+  const { mutate: touchBookMark, isLoading: bookMarkIsLoading } = useMutation(postFeedBookMark, {
+    onSuccess: (data: any) => {
+      Toast.show({
+        type: 'snackbar',
+        text1: data?.data?.bookmark ? '북마크에 저장했어요.' : '북마크에서 삭제했어요.',
+        position: 'bottom',
+      });
+      queryClient.invalidateQueries(FeedQueryKeys.getFeed());
+      return;
+    },
+  });
 
   const renderItem = ({ item, index }) => {
     if (tabIndex == 2) {
@@ -139,6 +153,8 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
       <View key={`${tabIndex} ${index}`} style={{ marginHorizontal: 16 }}>
         <FeedItem
           onBookMarkClick={() => {
+            touchBookMark(item.id);
+            item.bookmark = !item.bookmark;
             return;
           }}
           insight={item}
@@ -160,31 +176,6 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
           />
           <ChallengeReaction challengeId={challengeId} />
         </View>
-        {/* <Tab
-          tabs={[
-            `전체기록 ${TotalCount?.insightNumber ?? '-'}`,
-            `내기록 ${MyCount?.insightNumber ?? '-'}`,
-            '친구',
-          ]}
-          selectedTab={tabIndex}
-          prevTab={prevIndex}
-          spacing={16}
-          setSelectedTab={(v) => {
-            queryClient.invalidateQueries(['insight', 'challenge']);
-            if (v !== 2) {
-              setDatas((prev) => {
-                prev[v] = [];
-                return prev;
-              });
-              setCursors((prev) => {
-                prev[v] = undefined;
-                return prev;
-              });
-            }
-            setTabIndex(v);
-          }}
-          setPrevTab={setPrevIndex}
-        /> */}
         <>
           <View style={{ ...styles.tabContainer, borderColor: `${theme.colors.graphic.black}10` }}>
             {tabs.map((tab, index) => (
