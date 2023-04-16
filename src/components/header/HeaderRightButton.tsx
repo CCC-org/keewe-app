@@ -42,7 +42,7 @@ const HeaderRightButton = (props: HeaderRightButtonProps) => {
             borderColor: borderColor ?? '#121314',
             height: height ? height : 32,
             width: width ? width : 49,
-            // marginRight: 16,
+            marginRight: 16,
           },
           styles.btn,
           pressableStyle,

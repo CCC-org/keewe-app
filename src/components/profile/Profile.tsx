@@ -51,12 +51,12 @@ const Profile = ({
               onPress={() => {
                 followMutation?.mutate();
               }}
-              style={follow ? styles.Follow : styles.Following}
+              style={follow ? styles.Following : styles.Follow}
             >
               <Text
                 style={{
                   ...theme.fonts.text.body2.bold,
-                  color: follow ? theme.colors.graphic.white : theme.colors.graphic.black,
+                  color: follow ? theme.colors.graphic.black : theme.colors.graphic.white,
                 }}
               >
                 {follow ? '팔로잉' : '팔로우'}

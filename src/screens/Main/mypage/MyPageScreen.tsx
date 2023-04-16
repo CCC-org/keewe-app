@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ScrollView, Pressable, RefreshControl } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import MypageProfile from '../../../components/profile/MypageProfile';
 import { useTheme } from 'react-native-paper';
 import { SvgXml } from 'react-native-svg';
@@ -14,7 +14,6 @@ import { useInfiniteFeed } from '../../../utils/hooks/feedInifiniteScroll/useInf
 import FeedList from '../../Feed/FeedList';
 import GoToUploadButton from '../../../components/buttons/GoToUploadButton';
 import { IOScrollView } from 'react-native-intersection-observer';
-import HeaderBackButton from '../../../components/header/HeaderBackButton';
 import { useScrollToTop } from '@react-navigation/native';
 import { settingsIcon } from '../../../../assets/svgs/settingsIcon';
 import { Feather } from '@expo/vector-icons';
@@ -31,13 +30,27 @@ const MyPageScreen = ({ navigation, route }) => {
   }
   const theme = useTheme();
 
-  useEffect(() => {
-    if (!route?.params?.enteredByTab) {
-      navigation.setOptions({
-        headerLeft: () => <HeaderBackButton />,
-      });
-    }
-  }, [navigation, route]);
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => {
+        return (
+          <Pressable
+            style={{ marginHorizontal: 18 }}
+            onPress={() => navigation.navigate('Settings')}
+          >
+            <SvgXml xml={settingsIcon} />
+          </Pressable>
+        );
+      },
+      headerRight: () => {
+        return (
+          <Pressable style={{ marginHorizontal: 18 }} onPress={() => alert('more')}>
+            <SvgXml xml={threeDots} />
+          </Pressable>
+        );
+      },
+    });
+  }, []);
 
   const [selectedCategory, setSelectedCategory] = useState<Record<string, string>[]>([]);
   const [representativeTitleList, setRepresentativeTitleList] = useState<AchievedTitle[]>([]);
@@ -145,14 +158,6 @@ const MyPageScreen = ({ navigation, route }) => {
         refreshControl={<RefreshControl refreshing={pageRefreshing} onRefresh={onRefresh} />}
       >
         <View style={styles.top}>
-          <View style={styles.setting}>
-            <Pressable onPress={() => navigation.navigate('Settings')}>
-              <SvgXml xml={settingsIcon} />
-            </Pressable>
-            <Pressable onPress={() => alert('more')}>
-              <SvgXml xml={threeDots} />
-            </Pressable>
-          </View>
           <View style={{ marginLeft: 16, marginBottom: 24 }}>
             <MypageProfile
               profileUserId={userId}
@@ -321,12 +326,7 @@ export default MyPageScreen;
 const styles = StyleSheet.create({
   top: {
     backgroundColor: '#F1F1E9',
-  },
-  setting: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 18,
-    paddingVertical: 14,
+    paddingTop: 14,
   },
   editBtn: {
     backgroundColor: '#e1e1d0',

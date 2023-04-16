@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import { useTheme } from 'react-native-paper';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
@@ -32,6 +32,8 @@ const SheetOthersComment = ({
   const [selectedReport, setSelectedReport] = useState<number | null>(null);
   const [reportText, setReportText] = useState('');
   const [isSnackBarVisible, setIsSnackBarVisible] = useState(false);
+  const screenWidth = Dimensions.get('window').width;
+
   const handlePress = () => {
     setIsReport(true);
     modalRef.current?.snapToIndex(1);
@@ -157,7 +159,7 @@ const SheetOthersComment = ({
             isActive={selectedReport !== null}
             // eslint-disable-next-line @typescript-eslint/no-empty-function
             onPress={() => {}}
-            width={'100%'}
+            width={screenWidth - 32}
             text="신고하기"
           />
         </Pressable>

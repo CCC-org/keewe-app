@@ -106,7 +106,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
-  const snapPoints = useMemo(() => ['28%', '28%'], []);
+  const snapPoints = useMemo(() => ['30%', '30%'], []);
 
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
