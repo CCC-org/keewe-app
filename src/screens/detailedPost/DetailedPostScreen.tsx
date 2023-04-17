@@ -33,7 +33,7 @@ import Toast from 'react-native-toast-message';
 import MainLottie from '../../components/lotties/MainLottie';
 
 const DetailedPostScreen = ({ navigation, route }) => {
-  const { insightId } = route.params;
+  const { insightId, contents } = route.params;
   const [views] = useIncreaseView(insightId);
   const [replyInfo, setReplyInfo] = useState<ReplyInfo | undefined>();
 
@@ -190,6 +190,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
               views={views}
               url={insightResponse?.data?.link?.url ?? ''}
               currentChallenge={getChallengeRecordResponse?.data?.challengeName}
+              contents={contents}
               reaction={insightResponse.data.reaction}
               authorId={profile?.data?.authorId ?? -1}
               recordText={`${getChallengeRecordResponse?.data?.order}/${getChallengeRecordResponse?.data?.total}번째 기록중`}
@@ -200,6 +201,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
               isInsightLoading={isInsightLoading}
               insightId={insightId}
               insightText={''}
+              contents={contents}
               views={views}
               url={''}
               currentChallenge={'temp'}

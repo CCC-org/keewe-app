@@ -18,6 +18,7 @@ const FeedTextContent = ({ contents, insightId, bookmark }: FeedTextContent) => 
       screen: 'DetailedPost',
       insightId,
       bookmark,
+      contents,
     });
   };
 
