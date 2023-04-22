@@ -154,7 +154,7 @@ const SheetOthersComment = ({
             <Text>기타 사유 신고</Text>
           </Text>
         </Pressable>
-        <Pressable onPress={handleReportSubmit} style={{ marginTop: 72 }}>
+        <Pressable onPress={handleReportSubmit} style={{ marginTop: 30 }}>
           <ConditionalButton
             isActive={selectedReport !== null}
             // eslint-disable-next-line @typescript-eslint/no-empty-function
