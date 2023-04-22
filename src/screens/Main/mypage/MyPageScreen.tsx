@@ -245,20 +245,22 @@ const MyPageScreen = ({ navigation, route }) => {
             );
           })}
         </View>
-        <Pressable
-          onPress={() => navigation.navigate('Title', { userId })}
-          style={{ ...styles.viewAll, borderTopColor: `${theme.colors.graphic.black}1a` }}
-        >
-          <Text
-            style={{
-              ...theme.fonts.text.body1.regular,
-              color: `${theme.colors.graphic.black}cc`,
-            }}
+        {titleTotal > 3 ? (
+          <Pressable
+            onPress={() => navigation.navigate('Title', { userId })}
+            style={{ ...styles.viewAll, borderTopColor: `${theme.colors.graphic.black}1a` }}
           >
-            전체보기
-          </Text>
-          <Feather name="chevron-right" size={24} color={`${theme.colors.graphic.black}cc`} />
-        </Pressable>
+            <Text
+              style={{
+                ...theme.fonts.text.body1.regular,
+                color: `${theme.colors.graphic.black}cc`,
+              }}
+            >
+              전체보기
+            </Text>
+            <Feather name="chevron-right" size={24} color={`${theme.colors.graphic.black}cc`} />
+          </Pressable>
+        ) : null}
         <DividerBar style={styles.divider} />
         {userFolderList && (
           <>
