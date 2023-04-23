@@ -119,6 +119,9 @@ const DetailedPostScreen = ({ navigation, route }) => {
     () => InsightAPI.getChallengeRecord({ insightId }),
   );
 
+  const recordOrder = getChallengeRecordResponse?.data?.order;
+  const recordTotal = getChallengeRecordResponse?.data?.total;
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => {
@@ -171,16 +174,6 @@ const DetailedPostScreen = ({ navigation, route }) => {
     surprise: 45,
   };
 
-  const recordOrder = getChallengeRecordResponse?.data?.order;
-  const recordTotal = getChallengeRecordResponse?.data?.total;
-  
-  let recordText;
-  if(recordOrder && recordTotal) {
-    recordText = `${recordOrder}/${recordTotal}번째 기록중`;
-  } else {
-    recordText = '';
-  }
-
   return (
     <>
       <KeyboardAvoidingView
@@ -203,7 +196,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
               currentChallenge={getChallengeRecordResponse?.data?.challengeName}
               reaction={insightResponse.data.reaction}
               authorId={profile?.data?.authorId ?? -1}
-              recordText={recordText}
+              recordText={recordOrder && recordTotal ? `${recordOrder}/${recordTotal}번째 기록중` : ''}
             />
           ) : (
             <DetailedPostSection
@@ -213,10 +206,10 @@ const DetailedPostScreen = ({ navigation, route }) => {
               insightText={''}
               views={views}
               url={''}
-              currentChallenge={'temp'}
+              currentChallenge={''}
               reaction={tempReaction}
               authorId={profile?.data?.authorId ?? -1}
-              recordText={'temp record Text'}
+              recordText={''}
             />
             // <View>
             //   <Text>temp</Text>
