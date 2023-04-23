@@ -3,7 +3,6 @@ import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { notificationApi, notificationKeys } from '../../utils/api/notification/notification';
-import { NotificationElement } from '../../types/notification/notification';
 import { SvgXml } from 'react-native-svg';
 import { notificationXml } from '../../constants/Icons/notifications/notification';
 import { useTheme } from 'react-native-paper';
