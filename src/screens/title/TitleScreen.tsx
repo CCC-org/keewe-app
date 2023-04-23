@@ -15,14 +15,16 @@ const TitleScreen = ({ route, navigation }) => {
   const [title] = useState(route?.params?.title);
   const [introduction] = useState(route?.params?.introduction);
   const [selectedCategory] = useState(route?.params?.selectedCategory);
+  const [customCategory] = useState(route?.params?.customCategory);
   const theme = useTheme();
 
   const editObject = {
-    nickname: nickname,
-    image: image,
-    title: title,
-    introduction: introduction,
-    selectedCategory: selectedCategory,
+    nickname,
+    image,
+    title,
+    introduction,
+    selectedCategory,
+    customCategory,
     toScreen: 'ProfileEdit',
   };
 

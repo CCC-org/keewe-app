@@ -86,7 +86,7 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <View>
+        <View style={styles.buttons}>
           <ConditionalButton
             isActive={true}
             text={'친구 초대하기'}
@@ -96,7 +96,7 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
             onPress={() => alert('pressed')}
           />
         </View>
-        <View>
+        <View style={styles.buttons}>
           <ConditionalButton
             isActive={true}
             text={'확인'}
@@ -131,7 +131,10 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 50,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+  },
+  buttons: {
+    marginHorizontal: 4,
   },
 });
 

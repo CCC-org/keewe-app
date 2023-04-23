@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ScrollView, Pressable, RefreshControl } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import MypageProfile from '../../../components/profile/MypageProfile';
 import { useTheme } from 'react-native-paper';
 import { Feather, Ionicons } from '@expo/vector-icons';
@@ -58,6 +58,13 @@ const ProfileScreen = ({ navigation, route }) => {
   );
 
   const queryClient = useQueryClient();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: profile?.data?.nickname ?? '',
+    });
+  }, []);
+
   const drawerId =
     isUserFolderListLoading === true || userFolderList.selectedTab.id === 0
       ? ''

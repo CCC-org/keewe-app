@@ -6,13 +6,14 @@ import { StyleSheet, View, Text } from 'react-native';
 
 const CategoryCreateScreen = ({ navigation, route }) => {
   const theme = useTheme();
+  const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [customCategory, setCustomCategory] = useState<string[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [input, setInput] = useState<string>('');
 
   const handleComplete = () => {
     navigation.navigate(route.params?.toScreen, {
-      selectedCategory: input,
+      selectedCategory: [input, ...selectedCategory],
       customCategory: [input, ...customCategory],
     });
   };
@@ -34,6 +35,7 @@ const CategoryCreateScreen = ({ navigation, route }) => {
   }, [input]);
 
   useEffect(() => {
+    setSelectedCategory(route.params?.selectedCategory ?? []);
     setCustomCategory(route.params?.customCategory ?? []);
   }, [route.params]);
 

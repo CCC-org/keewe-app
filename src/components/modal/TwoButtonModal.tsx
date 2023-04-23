@@ -78,10 +78,11 @@ const styles = StyleSheet.create({
   },
   modalButtonGroup: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     marginTop: 20,
   },
   modalButton: {
     borderRadius: 12,
+    marginHorizontal: 4,
   },
 });

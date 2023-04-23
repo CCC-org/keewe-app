@@ -30,28 +30,6 @@ const MyPageScreen = ({ navigation, route }) => {
   }
   const theme = useTheme();
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => {
-        return (
-          <Pressable
-            style={{ marginHorizontal: 18 }}
-            onPress={() => navigation.navigate('Settings')}
-          >
-            <SvgXml xml={settingsIcon} />
-          </Pressable>
-        );
-      },
-      headerRight: () => {
-        return (
-          <Pressable style={{ marginHorizontal: 18 }} onPress={() => alert('more')}>
-            <SvgXml xml={threeDots} />
-          </Pressable>
-        );
-      },
-    });
-  }, []);
-
   const [selectedCategory, setSelectedCategory] = useState<Record<string, string>[]>([]);
   const [representativeTitleList, setRepresentativeTitleList] = useState<AchievedTitle[]>([]);
   const [titleTotal, setTitleTotal] = useState<number>(0);
@@ -81,6 +59,29 @@ const MyPageScreen = ({ navigation, route }) => {
     () => MypageAPI.getModifiedFolderList({ userId: userId }),
     querySuccessError,
   );
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: profile?.data?.nickname ?? '',
+      headerLeft: () => {
+        return (
+          <Pressable
+            style={{ marginHorizontal: 18 }}
+            onPress={() => navigation.navigate('Settings')}
+          >
+            <SvgXml xml={settingsIcon} />
+          </Pressable>
+        );
+      },
+      headerRight: () => {
+        return (
+          <Pressable style={{ marginHorizontal: 18 }} onPress={() => alert('more')}>
+            <SvgXml xml={threeDots} />
+          </Pressable>
+        );
+      },
+    });
+  }, []);
 
   const drawerId =
     isUserFolderListLoading === true || userFolderList?.selectedTab?.id === 0
@@ -245,20 +246,22 @@ const MyPageScreen = ({ navigation, route }) => {
             );
           })}
         </View>
-        <Pressable
-          onPress={() => navigation.navigate('Title', { userId })}
-          style={{ ...styles.viewAll, borderTopColor: `${theme.colors.graphic.black}1a` }}
-        >
-          <Text
-            style={{
-              ...theme.fonts.text.body1.regular,
-              color: `${theme.colors.graphic.black}cc`,
-            }}
+        {titleTotal > 3 ? (
+          <Pressable
+            onPress={() => navigation.navigate('Title', { userId })}
+            style={{ ...styles.viewAll, borderTopColor: `${theme.colors.graphic.black}1a` }}
           >
-            전체보기
-          </Text>
-          <Feather name="chevron-right" size={24} color={`${theme.colors.graphic.black}cc`} />
-        </Pressable>
+            <Text
+              style={{
+                ...theme.fonts.text.body1.regular,
+                color: `${theme.colors.graphic.black}cc`,
+              }}
+            >
+              전체보기
+            </Text>
+            <Feather name="chevron-right" size={24} color={`${theme.colors.graphic.black}cc`} />
+          </Pressable>
+        ) : null}
         <DividerBar style={styles.divider} />
         {userFolderList && (
           <>

@@ -85,7 +85,7 @@ const SignUpScreen = ({ navigation }) => {
           <View style={styles.other}>
             <SocialLoginButton
               text="Google 계정으로 시작하기"
-              textColor={`${theme.colors.graphic.black}54`}
+              textColor={`${theme.colors.graphic.black}8A`}
               xml={google}
               color="#EEEEEE"
               onPress={() => handleLoginPress('google')}
@@ -124,13 +124,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   agree: {
-    margin: 15,
+    margin: 18,
   },
   kakao: {
-    margin: 10,
+    margin: 6,
   },
   other: {
-    margin: 10,
+    margin: 6,
   },
   greeny: {
     color: '#486006',

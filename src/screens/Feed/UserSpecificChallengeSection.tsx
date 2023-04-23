@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 48,
-    marginBottom: 18,
+    marginBottom: 24,
     paddingHorizontal: 8,
   },
   day: {

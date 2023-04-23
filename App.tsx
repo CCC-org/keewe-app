@@ -327,7 +327,6 @@ export default function App() {
                           headerTransparent: true,
                           headerTitle: '',
                           headerLeft: () => <View></View>,
-                          headerRight: () => <OnboardingIntroHeaderButton />,
                           headerStyle: {
                             backgroundColor: 'transparent',
                           },

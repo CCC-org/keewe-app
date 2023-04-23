@@ -6,12 +6,13 @@ import SmallTextInput from '../../../components/texts/SmallTextInput';
 
 const NicknameEditingScreen = ({ navigation, route }) => {
   const theme = useTheme();
-  const [errorMessage] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [input, setInput] = useState<string>('');
   const [image] = useState(route?.params?.image);
   const [title] = useState(route?.params?.title);
   const [introduction] = useState(route?.params?.introduction);
   const [selectedCategory] = useState(route?.params?.selectedCategory);
+  const [customCategory] = useState(route?.params?.customCategory);
   const [userId] = useState(route?.params?.userId);
   const [buttonOn, setButtonOn] = useState<boolean>(false);
   useEffect(() => {
@@ -26,6 +27,7 @@ const NicknameEditingScreen = ({ navigation, route }) => {
       image,
       title,
       selectedCategory,
+      customCategory,
       introduction,
       userId,
     });
@@ -52,9 +54,15 @@ const NicknameEditingScreen = ({ navigation, route }) => {
   }, [route.params]);
 
   useEffect(() => {
-    if (input.length === 0 || input.length > 12) setButtonOn(false);
-    else if (route.params?.nickname === input) setButtonOn(false);
-    else setButtonOn(true);
+    if (input.length > 8) {
+      setButtonOn(false);
+      setErrorMessage('8자 이내로 입력하세요.');
+    } else {
+      setErrorMessage('');
+      if (input.length === 0) setButtonOn(false);
+      else if (route.params?.nickname === input) setButtonOn(false);
+      else setButtonOn(true);
+    }
   }, [input]);
 
   return (

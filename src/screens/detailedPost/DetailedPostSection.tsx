@@ -136,8 +136,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   emoticonBox: {
-    marginTop: 16,
-    marginBottom: 16,
+    marginBottom: 8,
     marginHorizontal: 16,
   },
   insightView: {

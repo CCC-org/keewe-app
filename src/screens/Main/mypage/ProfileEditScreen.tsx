@@ -44,6 +44,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
     title,
     introduction,
     selectedCategory,
+    customCategory,
     userId,
     toScreen: 'ProfileEdit',
   };

@@ -49,9 +49,9 @@ const FollowListSection = ({ followList, mutation }: FollowListSectionProps) => 
       renderItem={({ item }) =>
         item ? (
           <View style={styles.container}>
-            <View style={styles.profile}>
-              <>
-                <Pressable onPress={() => handleGoToProfileOnImagePress(item.id)}>
+            <Pressable onPress={() => handleGoToProfileOnImagePress(item.id)}>
+              <View style={styles.profile}>
+                <>
                   {item?.imageURL ? (
                     <Image
                       source={{ uri: item?.imageURL }}
@@ -60,22 +60,22 @@ const FollowListSection = ({ followList, mutation }: FollowListSectionProps) => 
                   ) : (
                     <SvgXml xml={person} width={48} height={48} />
                   )}
-                </Pressable>
-                <View
-                  style={{
-                    marginLeft: 12,
-                    flexDirection: 'column',
-                    justifyContent: 'flex-end',
-                    alignItems: 'flex-start',
-                  }}
-                >
-                  <Text style={[theme.fonts.text.body1.bold]}>{item?.nickname}</Text>
-                  <Text style={[theme.fonts.text.body2.regular, { color: '#12131480' }]}>
-                    {item?.title || 'NO TITLE'}
-                  </Text>
-                </View>
-              </>
-            </View>
+                  <View
+                    style={{
+                      marginLeft: 12,
+                      flexDirection: 'column',
+                      justifyContent: 'flex-end',
+                      alignItems: 'flex-start',
+                    }}
+                  >
+                    <Text style={[theme.fonts.text.body1.bold]}>{item?.nickname}</Text>
+                    <Text style={[theme.fonts.text.body2.regular, { color: '#12131480' }]}>
+                      {item?.title || 'NO TITLE'}
+                    </Text>
+                  </View>
+                </>
+              </View>
+            </Pressable>
             <FollowListFollowButton
               onPress={() => handlePressForFollow(item.id)}
               isFollowing={item.follow}

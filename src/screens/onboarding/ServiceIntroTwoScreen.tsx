@@ -1,6 +1,5 @@
-import { StyleSheet, View, Image, ScrollView } from 'react-native';
+import { View, Image, ScrollView } from 'react-native';
 import React from 'react';
-import OnboardingIntroHeaderButton from '../../components/buttons/OnboardingIntroHeaderButton';
 import HeaderText from '../../components/texts/HeaderText';
 import Stepper from '../../components/stepper/Stepper';
 import ConditionalButton from '../../components/buttons/ConditionalButton';

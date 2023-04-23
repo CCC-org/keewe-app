@@ -1,11 +1,9 @@
 /* eslint-disable quotes */
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Pressable, Text, View, StyleSheet, ScrollView } from 'react-native';
-import { SvgXml } from 'react-native-svg';
 import { useTheme } from 'react-native-paper';
 import HeaderText from '../../components/texts/HeaderText';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
-import chevron_right from '../../constants/Icons/Chevrons/lightChevronRightSmallXml';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import BezierAnimatedPopupView from '../../components/views/BezierAnimatedPopupView';
 import { INSIGHT_SAMPLE, REACTIONS } from './constant';
@@ -48,12 +46,13 @@ const InsightSampleScreen = ({ navigation, route }) => {
         <HeaderRightButton
           text="건너뛰기"
           backGroundColor="#F8F8F4"
-          textColor={`${theme.colors.graphic.black}50`}
-          borderColor={`${theme.colors.graphic.black}50`}
+          textColor={`${theme.colors.graphic.black}80`}
+          borderColor={`${theme.colors.graphic.black}1A`}
           borderLine={true}
           disabled={false}
           handlePress={handleSkipPress}
-          width={64}
+          width={73}
+          height={36}
         />
       ),
     });
@@ -93,7 +92,15 @@ const InsightSampleScreen = ({ navigation, route }) => {
           >
             <View style={styles.Insight}>
               <View style={styles.Text}>
-                <Text style={theme.fonts.text.body1.regular} numberOfLines={show ? undefined : 7}>
+                <Text
+                  style={{
+                    ...theme.fonts.text.body1.regular,
+                    color: `${theme.colors.graphic.black}cc`,
+                    fontSize: 16,
+                    lineHeight: 28,
+                  }}
+                  numberOfLines={show ? undefined : 7}
+                >
                   {sampleData.content}
                 </Text>
                 {!show && (
@@ -106,7 +113,7 @@ const InsightSampleScreen = ({ navigation, route }) => {
                   >
                     <Text
                       style={{
-                        color: `${theme.colors.graphic.black}50`,
+                        color: `${theme.colors.graphic.black}80`,
                         ...theme.fonts.text.body1.regular,
                       }}
                     >
@@ -232,7 +239,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
     borderRadius: 30,
-    height: 70,
+    height: 56,
     width: 'auto',
     marginLeft: 10,
     marginRight: 10,

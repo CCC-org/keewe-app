@@ -29,6 +29,8 @@ const InterestEditingScreen = ({ navigation, route }) => {
 
   const handleCreateCategory = () =>
     navigation.navigate('CategoryCreate', {
+      selectedCategory,
+      customCategory,
       toScreen: 'InterestEditing',
     });
 
@@ -47,9 +49,6 @@ const InterestEditingScreen = ({ navigation, route }) => {
     if (selectedCategory.length < 1) setConditionalText('관심사를 선택하세요');
     else if (selectedCategory.length > 5) setConditionalText('5개 이하로 선택하세요');
     else setConditionalText('완료');
-    JSON.stringify(selectedCategory.sort()) === JSON.stringify(route.params.selectedCategory.sort())
-      ? setBtnActive(false)
-      : setBtnActive(true);
   }, [selectedCategory]);
 
   useEffect(() => {
@@ -57,8 +56,9 @@ const InterestEditingScreen = ({ navigation, route }) => {
     if (!route.params.hasOwnProperty('customCategory')) return;
     const { customCategory: paramCustomArr, selectedCategory: paramSelectedArr } = route.params;
     if (customCategory) {
-      setCustomCategory([...paramCustomArr, ...customCategory]);
-      setSelectedCategory([...paramSelectedArr, ...selectedCategory].sort());
+      const newCustomArr = paramCustomArr.filter((i) => !customCategory.includes(i));
+      setCustomCategory([...newCustomArr, ...customCategory]);
+      setSelectedCategory(paramSelectedArr.sort());
     } else {
       setCustomCategory([]);
     }
