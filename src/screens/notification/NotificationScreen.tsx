@@ -71,10 +71,10 @@ const NotificationScreen = ({ navigation }) => {
     return page?.notifications ?? [];
   });
 
-  const handleOnEndReached = async () => {
+  const handleOnEndReached = () => {
     if (isLoading) return;
     if (data.pages[data.pages.length - 1]?.nextCursor === null) return;
-    await fetchNextPage();
+    fetchNextPage();
   };
 
   const renderItem = ({ item }: { item: NotificationElement }) => {
@@ -92,7 +92,6 @@ const NotificationScreen = ({ navigation }) => {
       >
         <SvgXml style={{ marginRight: 16 }} xml={notificationXml[item.category.toLowerCase()]} />
         <View>
-          <Text>{item.read ? 'true' : 'false'}</Text>
           <Text style={[fonts.text.body2.regular, { color: '#12131480' }]}>{item.title}</Text>
           <Text>{item.contents}</Text>
           <Text style={[fonts.text.body2.regular, { color: '#12131480' }]}>time placeholder</Text>

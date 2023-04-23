@@ -37,16 +37,16 @@ export const notificationApi = {
     try {
       const response = await httpClient.patch(
         `https://api-keewe.com/api/v1/notification/${id}/read`,
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         },
       );
-      // if (response.data.code !== 200) {
-      //   throw new Error('patch mark as read error');
-      // }
-      console.log('response.data.code', response);
+      if (response.data.code !== 200) {
+        throw new Error('patch mark as read error');
+      }
       return true;
     } catch (e) {
       if (e instanceof Error) {
