@@ -2,7 +2,6 @@
 import {
   Pressable,
   ScrollView,
-  RefreshControl,
   StyleSheet,
   View,
   Text,
