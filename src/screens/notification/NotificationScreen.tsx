@@ -51,13 +51,13 @@ const NotificationScreen = ({ navigation }) => {
   }) => {
     mutation.mutate(refInfo.id);
     switch (refInfo.category) {
+      case 'REACTION':
       case 'COMMENT':
         navigation.navigate('DetailedPost', {
           screen: 'DetailedPost',
           insightId: refInfo.referenceId,
         });
         break;
-      case 'REACTION':
       case 'FOLLOW':
         navigation.navigate('Profile', {
           screen: 'Profile',
