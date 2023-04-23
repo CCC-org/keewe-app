@@ -1,12 +1,11 @@
-import { StyleSheet, View, Image, ScrollView } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import OnboardingIntroHeaderButton from '../../components/buttons/OnboardingIntroHeaderButton';
+import { View, Image, ScrollView } from 'react-native';
+import React, { useEffect } from 'react';
 import HeaderText from '../../components/texts/HeaderText';
 import Stepper from '../../components/stepper/Stepper';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import { createStyle } from './ServiceIntroOneScreen';
 
-const ServiceIntroThreeScreen = ({ navigation, route }) => {
+const ServiceIntroThreeScreen = ({ navigation }) => {
   const styles = createStyle();
 
   useEffect(() => {

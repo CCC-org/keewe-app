@@ -34,18 +34,12 @@ const NicknameCreationScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View>
-        <View
-          style={{
-            height: 90,
-            justifyContent: 'space-between',
-            marginBottom: 20,
-          }}
-        >
+        <View style={styles.header}>
           <HeaderText header={`반가워요 키위새님\n이름이 무엇인가요?`} />
           <Stepper currentStep={1} totalStep={2} />
         </View>
 
-        <View style={{ marginTop: 0 }}>
+        <View style={{ marginHorizontal: 3 }}>
           <TextInputDetail
             inputValue={nickname}
             setInputValue={setNickname}
@@ -55,14 +49,13 @@ const NicknameCreationScreen = ({ navigation }) => {
           />
         </View>
       </View>
-      <View style={{ marginBottom: 16 }}>
-        <ConditionalButton
-          isActive={!errorMessage.length && nickname.length > 0}
-          onPress={handleNextScreen}
-          text={'다음'}
-          width={343}
-        />
-      </View>
+      <ConditionalButton
+        isActive={!errorMessage.length && nickname.length > 0}
+        onPress={handleNextScreen}
+        text={'다음'}
+        width={343}
+        keyboardResponsive={true}
+      />
     </View>
   );
 };
@@ -70,9 +63,14 @@ const NicknameCreationScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
     flexDirection: 'column',
     justifyContent: 'space-between',
+  },
+  header: {
+    height: 90,
+    justifyContent: 'space-between',
+    marginBottom: 20,
+    marginHorizontal: 16,
   },
 });
 

@@ -1,11 +1,11 @@
-import { StyleSheet, View, Image, Dimensions, ScrollView } from 'react-native';
-import React, { useRef, useState } from 'react';
-import OnboardingIntroHeaderButton from '../../components/buttons/OnboardingIntroHeaderButton';
+import { StyleSheet, View, Dimensions, ScrollView } from 'react-native';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import HeaderText from '../../components/texts/HeaderText';
 import Stepper from '../../components/stepper/Stepper';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import Carousel from 'react-native-reanimated-carousel';
 import OnboardingLottie from '../../components/lotties/OnboardingLottie';
+import OnboardingIntroHeaderButton from '../../components/buttons/OnboardingIntroHeaderButton';
 
 const fullScreenHeight = Dimensions.get('window').height;
 const fullScreenWidth = Dimensions.get('window').width;
@@ -29,6 +29,18 @@ const ServiceIntroOneScreen = ({ navigation }) => {
       carouselRef.current.next();
     }
   }
+
+  useLayoutEffect(() => {
+    if (step === 2) {
+      navigation.setOptions({
+        headerRight: () => null,
+      });
+    } else {
+      navigation.setOptions({
+        headerRight: () => <OnboardingIntroHeaderButton />,
+      });
+    }
+  }, [step]);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
