@@ -57,6 +57,7 @@ const NotificationScreen = ({ navigation }) => {
           insightId: refInfo.referenceId,
         });
         break;
+      case 'REACTION':
       case 'FOLLOW':
         navigation.navigate('Profile', {
           screen: 'Profile',
