@@ -16,11 +16,11 @@ export interface InsightData {
   writer: InsightWriter;
 }
 
-interface Link {
+export interface Link {
   url: string;
 }
 
-interface Reaction {
+export interface Reaction {
   clap: number;
   heart: number;
   sad: number;
@@ -29,7 +29,7 @@ interface Reaction {
   eyes: number;
 }
 
-interface InsightWriter {
+export interface InsightWriter {
   writerId: number;
   nickname: string;
   title: string;

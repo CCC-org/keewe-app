@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderRadius: 40,
     marginRight: 8,
-    marginBottom: 12,
   },
 });
 

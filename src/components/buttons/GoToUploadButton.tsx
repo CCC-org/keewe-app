@@ -30,13 +30,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#b0e817',
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 1.84,
+    // shadowColor: '#000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 1,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 1.84,
     elevation: 1,
   },
 });

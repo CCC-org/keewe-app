@@ -7,6 +7,7 @@ import FeedTextContent from './FeedTextContent';
 import { REACTIONS } from './constant';
 import ReactIconButton from '../../components/emoticons/ReactIconButton';
 import { useNavigation } from '@react-navigation/native';
+import { InsightData } from '../../types/Feed/Feedinsights';
 interface FeedItemProps {
   insight: InsightData;
   localId?: string;

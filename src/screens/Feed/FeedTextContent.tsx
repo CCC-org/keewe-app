@@ -26,12 +26,19 @@ const FeedTextContent = ({ contents, insightId, bookmark }: FeedTextContent) => 
       <Text
         style={[
           theme.fonts.text.body1.regular,
-          { paddingBottom: modifiedContents.length < 100 ? 20 : 4 },
+          {
+            paddingBottom: modifiedContents.length < 100 ? 20 : 4,
+            color: `${theme.colors.graphic.black}cc`,
+          },
         ]}
       >
         {modifiedContents}
         {modifiedContents.length >= 99 ? (
-          <Text style={[theme.fonts.text.body1.regular, { color: '#12131450' }]}>... 더보기</Text>
+          <Text
+            style={[theme.fonts.text.body1.regular, { color: `${theme.colors.graphic.black}80` }]}
+          >
+            ... 더보기
+          </Text>
         ) : null}
       </Text>
     </Pressable>

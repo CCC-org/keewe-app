@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { LinkPreview } from '@flyerhq/react-native-link-preview';
 import FeedBookMarkIcon from './FeedBookMarkIcon';
 import { Entypo } from '@expo/vector-icons';
+import { useTheme } from 'react-native-paper';
 interface FeedLinkCard {
   text: string;
   onBookmarkPress: () => void;
@@ -16,7 +17,7 @@ const FeedLinkWithBookMark = ({
   ...props
 }: FeedLinkCard) => {
   const styles = createStyles();
-
+  const theme = useTheme();
   const handleOnPress = () => {
     onBookmarkPress();
   };
@@ -35,12 +36,18 @@ const FeedLinkWithBookMark = ({
           return (
             <View style={[styles.container]}>
               <View>
-                <Text style={styles.title}>
+                <Text style={{ ...styles.title, color: `${theme.colors.graphic.black}80` }}>
                   {title ? title.slice(0, 20) + (title.length > 20 ? '...' : '') : 'No title'}
-                  <Entypo name="chevron-right" size={12} color="#12131450" />
+                  <Entypo
+                    name="chevron-right"
+                    size={12}
+                    color={`${theme.colors.graphic.black}80`}
+                  />
                 </Text>
 
-                <Text style={styles.description}>{description}</Text>
+                <Text style={{ ...styles.description, color: `${theme.colors.graphic.black}80` }}>
+                  {description}
+                </Text>
               </View>
             </View>
           );
@@ -69,15 +76,16 @@ function createStyles() {
     },
     title: {
       fontSize: 12,
-      fontFamily: 'pretendardSemiBold',
+      fontFamily: 'pretendard',
+      fontWeight: '500',
       marginBottom: 2,
-      color: '#12131450',
+      lineHeight: 16,
     },
     description: {
-      fontFamily: 'pretendardSemiBold',
-      fontWeight: '500',
       fontSize: 12,
-      color: '#12131450',
+      fontFamily: 'pretendard',
+      fontWeight: '500',
+      lineHeight: 16,
     },
   });
 
