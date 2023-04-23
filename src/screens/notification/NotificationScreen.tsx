@@ -7,6 +7,7 @@ import { NotificationElement } from '../../types/notification/notification';
 import { SvgXml } from 'react-native-svg';
 import { notificationXml } from '../../constants/Icons/notifications/notification';
 import { useTheme } from 'react-native-paper';
+import MainLottie from '../../components/lotties/MainLottie';
 
 const NotificationScreen = ({ navigation }) => {
   const queryClient = useQueryClient();
@@ -67,7 +68,7 @@ const NotificationScreen = ({ navigation }) => {
     }
   };
 
-  if (!data) return <Text> data is being fetched...</Text>;
+  if (!data) return <MainLottie />;
   const flatData = data.pages.flatMap((page: Notification['data']) => {
     return page?.notifications ?? [];
   });
@@ -100,6 +101,8 @@ const NotificationScreen = ({ navigation }) => {
       </Pressable>
     );
   };
+
+  if (isLoading) return <MainLottie />;
 
   return <FlatList data={flatData} renderItem={renderItem} onEndReached={handleOnEndReached} />;
 };
