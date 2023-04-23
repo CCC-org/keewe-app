@@ -131,8 +131,8 @@ export default function App() {
                       component={NotificationScreen}
                       options={{
                         ...headerOptions,
-                        title: '',
-                        cardStyle: { backgroundColor: '#f8f8f4' },
+                        title: '알림',
+                        cardStyle: { backgroundColor: 'white' },
                       }}
                     />
                     <Stack.Screen

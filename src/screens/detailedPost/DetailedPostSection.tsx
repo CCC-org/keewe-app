@@ -18,6 +18,7 @@ interface DetailedPostSectionProps {
   reaction: Reaction;
   authorId: number;
   isInsightLoading: boolean;
+  contents: string;
 }
 
 const DetailedPostSection = ({
@@ -29,6 +30,7 @@ const DetailedPostSection = ({
   url,
   reaction,
   authorId,
+  contents,
   isProfileLoading,
   isInsightLoading,
 }: DetailedPostSectionProps) => {
@@ -78,7 +80,7 @@ const DetailedPostSection = ({
             { color: `${theme.colors.graphic.black}80`, lineHeight: 28 },
           ]}
         >
-          {isInsightLoading || isProfileLoading ? '---' : insightText}
+          {isInsightLoading || isProfileLoading ? contents : insightText}
         </Text>
       </View>
       <View style={styles.link}>
