@@ -118,6 +118,9 @@ const DetailedPostScreen = ({ navigation, route }) => {
     () => InsightAPI.getChallengeRecord({ insightId }),
   );
 
+  const recordOrder = getChallengeRecordResponse?.data?.order;
+  const recordTotal = getChallengeRecordResponse?.data?.total;
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => {
@@ -192,7 +195,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
               currentChallenge={getChallengeRecordResponse?.data?.challengeName}
               reaction={insightResponse.data.reaction}
               authorId={profile?.data?.authorId ?? -1}
-              recordText={`${getChallengeRecordResponse?.data?.order}/${getChallengeRecordResponse?.data?.total}번째 기록중`}
+              recordText={recordOrder && recordTotal ? `${recordOrder}/${recordTotal}번째 기록중` : ''}
             />
           ) : (
             <DetailedPostSection
@@ -202,10 +205,10 @@ const DetailedPostScreen = ({ navigation, route }) => {
               insightText={''}
               views={views}
               url={''}
-              currentChallenge={'temp'}
+              currentChallenge={''}
               reaction={tempReaction}
               authorId={profile?.data?.authorId ?? -1}
-              recordText={'temp record Text'}
+              recordText={''}
             />
             // <View>
             //   <Text>temp</Text>
