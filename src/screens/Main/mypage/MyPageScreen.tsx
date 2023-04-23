@@ -30,28 +30,6 @@ const MyPageScreen = ({ navigation, route }) => {
   }
   const theme = useTheme();
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => {
-        return (
-          <Pressable
-            style={{ marginHorizontal: 18 }}
-            onPress={() => navigation.navigate('Settings')}
-          >
-            <SvgXml xml={settingsIcon} />
-          </Pressable>
-        );
-      },
-      headerRight: () => {
-        return (
-          <Pressable style={{ marginHorizontal: 18 }} onPress={() => alert('more')}>
-            <SvgXml xml={threeDots} />
-          </Pressable>
-        );
-      },
-    });
-  }, []);
-
   const [selectedCategory, setSelectedCategory] = useState<Record<string, string>[]>([]);
   const [representativeTitleList, setRepresentativeTitleList] = useState<AchievedTitle[]>([]);
   const [titleTotal, setTitleTotal] = useState<number>(0);
@@ -81,6 +59,29 @@ const MyPageScreen = ({ navigation, route }) => {
     () => MypageAPI.getModifiedFolderList({ userId: userId }),
     querySuccessError,
   );
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: profile?.data?.nickname ?? '',
+      headerLeft: () => {
+        return (
+          <Pressable
+            style={{ marginHorizontal: 18 }}
+            onPress={() => navigation.navigate('Settings')}
+          >
+            <SvgXml xml={settingsIcon} />
+          </Pressable>
+        );
+      },
+      headerRight: () => {
+        return (
+          <Pressable style={{ marginHorizontal: 18 }} onPress={() => alert('more')}>
+            <SvgXml xml={threeDots} />
+          </Pressable>
+        );
+      },
+    });
+  }, []);
 
   const drawerId =
     isUserFolderListLoading === true || userFolderList?.selectedTab?.id === 0

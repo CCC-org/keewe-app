@@ -11,6 +11,7 @@ const IntroductionEditingScreen = ({ navigation, route }) => {
   const [image] = useState(route?.params?.image);
   const [title] = useState(route?.params?.title);
   const [selectedCategory] = useState(route?.params?.selectedCategory);
+  const [customCategory] = useState(route?.params?.customCategory);
   const [userId] = useState(route?.params?.userId);
   const handleComplete = () => {
     navigation.navigate(route.params?.toScreen, {
@@ -18,6 +19,7 @@ const IntroductionEditingScreen = ({ navigation, route }) => {
       image,
       title,
       selectedCategory,
+      customCategory,
       introduction: input,
       userId,
     });
