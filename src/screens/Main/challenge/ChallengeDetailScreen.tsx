@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   Animated,
   TouchableOpacity,
   Dimensions,
+  Pressable,
 } from 'react-native';
 import ChallengeTitle from '../../../components/header/ChallengeTitle';
 import ChallengeReaction from './ChallengeReaction';
@@ -17,6 +18,9 @@ import FeedItem from '../../Feed/FeedItem';
 import ChallengeUserProfile from '../../../components/profile/ChallengeUserProfile';
 import { ChallengeAPI, ChallengeQueryKeys } from '../../../utils/api/ChallengeAPI';
 import theme from '../../../theme/light';
+import { SvgXml } from 'react-native-svg';
+import { pencil } from '../../../constants/Icons/home/pencil';
+import ChallengeInvite from './ChallengeInvite';
 
 const { width } = Dimensions.get('window');
 
@@ -30,6 +34,21 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
   const spacing = 16;
   const tabWidth = (width - (tabs.length + 1) * spacing) / tabs.length;
   const animatedValue = useRef(new Animated.Value(0 * (tabWidth + spacing) + spacing)).current;
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <View style={{ flexDirection: 'row' }}>
+            <ChallengeInvite />
+            <Pressable style={{ marginRight: 19, paddingTop: 3 }} onPress={() => alert('!!')}>
+              <SvgXml xml={pencil} />
+            </Pressable>
+          </View>
+        );
+      },
+    });
+  }, []);
 
   useEffect(() => {
     console.log(tabIndex * (tabWidth + spacing) + spacing);
