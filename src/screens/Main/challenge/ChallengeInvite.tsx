@@ -1,11 +1,13 @@
-import { Pressable, StyleSheet } from 'react-native';
+import { View, Pressable, StyleSheet, Text } from 'react-native';
 import React, { useCallback, useRef } from 'react';
 import { SvgXml } from 'react-native-svg';
 import { addFriend } from '../../../../assets/svgs/addFriend';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
-import { View } from '../../../components/Themed';
+import InviteOptions from './InviteOptions';
+import { useTheme } from 'react-native-paper';
 
 const ChallengeInvite = () => {
+  const theme = useTheme();
   const modalRef = useRef<BottomSheetModal>(null);
 
   const renderBackdrop = useCallback(
@@ -26,7 +28,14 @@ const ChallengeInvite = () => {
         snapPoints={['50%', '85%']}
         backdropComponent={renderBackdrop}
       >
-        <View></View>
+        <InviteOptions />
+        <View style={{ ...styles.search, borderColor: `${theme.colors.graphic.black}1a` }}>
+          <Text
+            style={{ ...theme.fonts.text.body1.regular, color: `${theme.colors.graphic.black}80` }}
+          >
+            팔로잉/팔로워 검색
+          </Text>
+        </View>
       </BottomSheetModal>
     </>
   );
@@ -34,4 +43,13 @@ const ChallengeInvite = () => {
 
 export default ChallengeInvite;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  search: {
+    marginHorizontal: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderWidth: 1,
+    borderRadius: 12,
+    justifyContent: 'center',
+  },
+});
