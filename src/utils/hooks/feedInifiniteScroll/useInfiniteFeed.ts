@@ -1,5 +1,5 @@
 import { InfiniteData, useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FeedAPI, FeedQueryKeys } from '../../api/FeedAPI';
 import { FeedInsight, InsightData } from '../../../types/Feed/Feedinsights';
 import { postFeedBookMark } from '../../api/FeedBookMark';
