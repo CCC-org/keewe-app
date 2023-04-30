@@ -39,7 +39,7 @@ const ChallengesScreen = ({ navigation }) => {
         challengeId: challengeParticipation?.challengeId ?? 0,
       }),
     {
-      enabled: participated,
+      enabled: participated && challengeParticipation?.challengeId !== undefined,
     },
   );
 
@@ -116,7 +116,7 @@ const ChallengesScreen = ({ navigation }) => {
         <View style={{ alignItems: 'center', marginBottom: 16 }}>
           <Image
             style={{ width: 343, height: 140 }}
-            source={require('../../../assets/images/challenge/challengeEmpty.png')}
+            source={require('../../../assets/images/challenge/ChallengeEmpty.png')}
           />
           <Text
             style={{
