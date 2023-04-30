@@ -20,7 +20,7 @@ function Login({ navigation, route }) {
       setAccessToken(response.data.accessToken);
       setUserId(response.data.userId);
       if (response.data.alreadySignedUp) navigation.navigate('Tabs');
-      navigation.navigate('CategorySelect');
+      else navigation.navigate('CategorySelect');
     },
     onError: (e) => {
       alert('인증에 실패했습니다.');

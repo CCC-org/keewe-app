@@ -64,13 +64,11 @@ const ChallengeDetailScreen = ({ route }) => {
     InsightQueryKeys.getChallengeInsight({
       cursor: cursors[0],
       limit: 5,
-      writerId: undefined,
     }),
     () =>
       InsightAPI.getChallengeInsight({
         cursor: cursors[0],
         limit: 5,
-        writerId: undefined,
       }),
     {
       onSuccess: (response: ChallengeInsightGetResponse) => {
@@ -87,13 +85,13 @@ const ChallengeDetailScreen = ({ route }) => {
     InsightQueryKeys.getChallengeInsight({
       cursor: cursors[1],
       limit: 5,
-      writerId: String(userId),
+      writerId: '5',
     }),
     () =>
       InsightAPI.getChallengeInsight({
         cursor: cursors[1],
         limit: 5,
-        writerId: String(userId),
+        writerId: '5',
       }),
     {
       onSuccess: (response: ChallengeInsightGetResponse) => {
@@ -178,46 +176,48 @@ const ChallengeDetailScreen = ({ route }) => {
         </View>
         <>
           <View style={{ ...styles.tabContainer, borderColor: `${theme.colors.graphic.black}10` }}>
-            {tabs.map((tab, index) => (
-              <TouchableOpacity
-                key={index}
-                disabled={index === tabIndex}
-                style={[
-                  styles.tab,
-                  {
-                    width: tabWidth,
-                    marginRight: index === tabs.length - 1 ? 0 : spacing,
-                  },
-                ]}
-                onPress={() => {
-                  queryClient.invalidateQueries(['insight', 'challenge']);
-                  if (index !== 2) {
-                    setDatas((prev) => {
-                      prev[index] = [];
-                      return prev;
-                    });
-                    setCursors((prev) => {
-                      prev[index] = undefined;
-                      return prev;
-                    });
-                  }
-                  setTabIndex(index);
-                }}
-              >
-                <Text
-                  style={{
-                    fontFamily: 'pretendardSemiBold',
-                    fontSize: 14,
-                    color:
-                      index === tabIndex
-                        ? theme.colors.graphic.black
-                        : `${theme.colors.graphic.black}50`,
+            {!isTotalCountLoading &&
+              !isMyCountLoading &&
+              tabs.map((tab, index) => (
+                <TouchableOpacity
+                  key={index}
+                  disabled={index === tabIndex}
+                  style={[
+                    styles.tab,
+                    {
+                      width: tabWidth,
+                      marginRight: index === tabs.length - 1 ? 0 : spacing,
+                    },
+                  ]}
+                  onPress={() => {
+                    queryClient.invalidateQueries(['insight', 'challenge']);
+                    if (index !== 2) {
+                      setDatas((prev) => {
+                        prev[index] = [];
+                        return prev;
+                      });
+                      setCursors((prev) => {
+                        prev[index] = undefined;
+                        return prev;
+                      });
+                    }
+                    setTabIndex(index);
                   }}
                 >
-                  {tab}
-                </Text>
-              </TouchableOpacity>
-            ))}
+                  <Text
+                    style={{
+                      fontFamily: 'pretendardSemiBold',
+                      fontSize: 14,
+                      color:
+                        index === tabIndex
+                          ? theme.colors.graphic.black
+                          : `${theme.colors.graphic.black}50`,
+                    }}
+                  >
+                    {tab}
+                  </Text>
+                </TouchableOpacity>
+              ))}
           </View>
           <Animated.View
             style={[

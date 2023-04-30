@@ -21,9 +21,10 @@ import Toast from 'react-native-toast-message';
 import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
 import { useQuery } from '@tanstack/react-query';
 
-const UploadScreen = ({ navigation }) => {
-  const [linkText, setLinkText] = useState<string>('');
-  const [insightText, setInsightText] = useState<string>('');
+const UploadScreen = ({ navigation, route }) => {
+  const { isEdit, insight, link } = route?.params ?? {};
+  const [linkText, setLinkText] = useState<string>(link ?? '');
+  const [insightText, setInsightText] = useState<string>(insight ?? '');
   const [isSwitchOn, setIsSwitchOn] = useState(true);
   const [isValidSite, setIsValidSite] = useState(false);
   const [folders, setFolders] = useState<IFolder[]>([]);
@@ -92,7 +93,7 @@ const UploadScreen = ({ navigation }) => {
     try {
       const response = await UploadApis.uploadInsight(data);
       if (response.code === 200) {
-        alert('everything is fine, go back to home');
+        navigation.navigate('Feed');
       } else {
         throw new Error(response.message);
       }
@@ -203,8 +204,6 @@ const UploadScreen = ({ navigation }) => {
             setSelectedFolder={setSelectedFolder}
           />
         </BottomSheetModal>
-
-        {/* Invalid Link snackbar */}
       </ScrollView>
     </>
   );
