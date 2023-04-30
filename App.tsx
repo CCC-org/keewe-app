@@ -56,6 +56,7 @@ import BlockedScreen from './src/screens/settings/BlockedScreen';
 import FolderEditScreen from './src/screens/settings/folderSettings/FolderEditScreen';
 import { Feather } from '@expo/vector-icons';
 import NotificationScreen from './src/screens/notification/NotificationScreen';
+import ErrorScreen from './src/screens/error/ErrorScreen';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator<RootStackParamList>();
@@ -64,7 +65,13 @@ const headerOptions = {
   headerLeft: () => <HeaderBackButton />,
 };
 // Text style. font-family : pretendard
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
 export default function App() {
   const isLoadingComplete = useCachedResources();
 
@@ -408,6 +415,17 @@ export default function App() {
                         component={UserFollowersScreen}
                         options={{
                           title: '달성',
+                          cardStyle: { backgroundColor: 'white' },
+                        }}
+                      />
+                    </Stack.Group>
+                    <Stack.Group>
+                      <Stack.Screen
+                        name={'Error'}
+                        component={ErrorScreen}
+                        options={{
+                          title: '',
+                          headerLeft: () => <View></View>,
                           cardStyle: { backgroundColor: 'white' },
                         }}
                       />

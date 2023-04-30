@@ -69,6 +69,7 @@ export type RootStackParamList = {
   Block: undefined;
   FolderEdit: undefined;
   Notification: undefined;
+  Error: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
