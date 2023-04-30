@@ -5,7 +5,10 @@ const httpClient = axios.create();
 httpClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response.data == 402) navigate('SignUp', undefined);
+    if (error.response.data == 402) navigate('SignUp', undefined); // 토큰 만료시
+    else {
+      return navigate('Error', { error });
+    }
   },
 );
 
