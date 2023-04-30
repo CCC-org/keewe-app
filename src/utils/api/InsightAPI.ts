@@ -209,7 +209,6 @@ export const InsightAPI = {
   },
   getChallengeInsight: async (request: ChallengeInsightGetRequest) => {
     const { ...params } = request;
-    console.log(params);
     try {
       const token = await getAccessToken();
       const { data } = await httpClient.get<ChallengeInsightGetResponse>(
