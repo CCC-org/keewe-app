@@ -56,6 +56,7 @@ import BlockedScreen from './src/screens/settings/BlockedScreen';
 import FolderEditScreen from './src/screens/settings/folderSettings/FolderEditScreen';
 import { Feather } from '@expo/vector-icons';
 import NotificationScreen from './src/screens/notification/NotificationScreen';
+import StatisticsScreen from './src/screens/statistics/StatisticsScreen';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator<RootStackParamList>();
@@ -365,6 +366,15 @@ export default function App() {
                           ...headerOptions,
                           cardStyle: { backgroundColor: 'white' },
                           title: '댓글',
+                        }}
+                      />
+                      <Stack.Screen
+                        name={'Statistics'}
+                        component={StatisticsScreen}
+                        options={{
+                          ...headerOptions,
+                          cardStyle: { backgroundColor: 'white' },
+                          title: '이 글의 통계',
                         }}
                       />
                     </Stack.Group>

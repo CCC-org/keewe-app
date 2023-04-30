@@ -35,6 +35,11 @@ const DetailedPostSection = ({
   isInsightLoading,
 }: DetailedPostSectionProps) => {
   const theme = useTheme();
+  const navigation = useNavigation();
+  const handleNaviateToStatistics = () => {
+    navigation.navigate('Statistics', {});
+  };
+
   return (
     <View style={{ backgroundColor: '#F1F1E9' }}>
       {currentChallenge && (
@@ -103,6 +108,13 @@ const DetailedPostSection = ({
         </ScrollView>
       </View>
       <View style={{ ...styles.insightView, backgroundColor: '#E1E1D0' }}>
+        <Pressable
+          onPress={() => {
+            handleNaviateToStatistics();
+          }}
+        >
+          <Text>이 글의 통계</Text>
+        </Pressable>
         <Text
           style={{
             ...theme.fonts.text.caption1,

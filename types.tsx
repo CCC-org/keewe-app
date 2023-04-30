@@ -69,6 +69,18 @@ export type RootStackParamList = {
   Block: undefined;
   FolderEdit: undefined;
   Notification: undefined;
+  Statistics: {
+    userId: number;
+    nickname: string;
+    date: string;
+    content: string;
+    insightTitle: string;
+    insightContent: string;
+    viewCount: number;
+    reactionCount: number;
+    commentCount: number;
+    bookmarkCount: number;
+  };
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
