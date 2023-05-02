@@ -27,7 +27,7 @@ import { FeedQueryKeys } from '../../../utils/api/FeedAPI';
 
 const { width } = Dimensions.get('window');
 
-const ChallengeDetailScreen = ({ route }) => {
+const ChallengeDetailScreen = ({ navigation, route }) => {
   const userId = useGetUserId();
   const queryClient = useQueryClient();
   const { challengeId, challengeName, interest } = route.params;
