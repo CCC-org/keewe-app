@@ -24,7 +24,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.akdlsz21.keewe"
+      "package": "com.akdlsz21.keewe",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
