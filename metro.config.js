@@ -11,6 +11,7 @@ module.exports = (async () => {
         transform: {
           experimentalImportSupport: false,
           inlineRequires: true,
+          assetPlugins: ['expo-asset/tools/hashAssetFiles'],
         },
       }),
     },
