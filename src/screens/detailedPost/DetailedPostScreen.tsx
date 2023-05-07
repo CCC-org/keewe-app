@@ -218,9 +218,6 @@ const DetailedPostScreen = ({ navigation, route }) => {
               userName={profile?.data?.nickname ?? ''}
               createdAt={profile?.data?.createdAt ?? '-'}
             />
-            // <View>
-            //   <Text>temp</Text>
-            // </View>
           )}
 
           {isProfileLoading ? null : (

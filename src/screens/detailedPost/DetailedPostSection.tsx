@@ -122,13 +122,14 @@ const DetailedPostSection = ({
         </ScrollView>
       </View>
       <View style={{ ...styles.insightView, backgroundColor: '#E1E1D0' }}>
-        <Pressable
+        {/* 지훈: 개인적인 생각으론, api가 더 나올때까진 대기하는게 맞느듯.  */}
+        {/* <Pressable
           onPress={() => {
             handleNaviateToStatistics();
           }}
         >
           <Text>이 글의 통계</Text>
-        </Pressable>
+        </Pressable> */}
         <Text
           style={{
             ...theme.fonts.text.caption1,

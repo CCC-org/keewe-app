@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View, Linking } from 'react-native';
 import React, { useState } from 'react';
 import { useTheme } from 'react-native-paper';
 import DividerBar from '../../components/bars/DividerBar';
@@ -20,21 +20,35 @@ const SettingsScreen = ({ navigation }) => {
     setIsWithdrawalModalVisible(false);
   };
 
+  const handleNoticePress = () => {
+    Linking.openURL('https://www.notion.so/a0395d1a23bf413ea60b7402ac6b4c03');
+  };
+
+  const handleCustomerServicePress = () => {
+    Linking.openURL('https://pf.kakao.com/_xjZxfnxj');
+  };
+
+  const handleTermsOfServicePress = () => {
+    Linking.openURL(
+      'https://www.notion.so/15db3e731d7d42539858ad37eee15776?v=58ca3d5f772f49a6ae15b309a0b5409e',
+    );
+  };
+
   return (
     <>
       <ScrollView>
-        <View style={styles.settingOption}>
+        {/* <View style={styles.settingOption}>
           <Text style={theme.fonts.text.body1.regular}>연결된 계정</Text>
           <Text style={[theme.fonts.text.body1.regular, { color: '#486006' }]}>
             한밤중에 목이말라 냉장고를 열어보니
           </Text>
-        </View>
-        <Pressable
+        </View> */}
+        {/* <Pressable
           onPress={() => navigation.navigate('PushNotificationSetting')}
           style={styles.settingOption}
         >
           <Text style={theme.fonts.text.body1.regular}>푸쉬알림 설정</Text>
-        </Pressable>
+        </Pressable> */}
         <Pressable onPress={() => navigation.navigate('FolderEdit')} style={styles.settingOption}>
           <Text style={theme.fonts.text.body1.regular}>폴더 편집</Text>
         </Pressable>
@@ -42,15 +56,16 @@ const SettingsScreen = ({ navigation }) => {
           <Text style={theme.fonts.text.body1.regular}>차단한 계정</Text>
         </Pressable>
         <DividerBar style={styles.divider} />
-        <Pressable onPress={() => alert('What')} style={styles.settingOption}>
+        <Pressable onPress={handleNoticePress} style={styles.settingOption}>
           <Text style={theme.fonts.text.body1.regular}>공지사항</Text>
         </Pressable>
-        <Pressable onPress={() => alert('What')} style={styles.settingOption}>
+        <Pressable onPress={handleCustomerServicePress} style={styles.settingOption}>
           <Text style={theme.fonts.text.body1.regular}>고객센터</Text>
         </Pressable>
-        <Pressable onPress={() => alert('What')} style={styles.settingOption}>
+        <Pressable onPress={handleTermsOfServicePress} style={styles.settingOption}>
           <Text style={theme.fonts.text.body1.regular}>이용약관</Text>
         </Pressable>
+
         <View style={styles.settingOption}>
           <Text style={theme.fonts.text.body1.regular}>버전</Text>
           <Text style={[theme.fonts.text.body1.regular, { color: '#486006' }]}>1.0.0</Text>
