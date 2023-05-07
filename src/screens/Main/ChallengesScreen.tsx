@@ -117,7 +117,7 @@ const ChallengesScreen = ({ navigation }) => {
           <Image
             style={{ width: 343, height: 140 }}
             // source={require('../../../assets/images/challenge/ChallengeEmpty.png')}
-            source={require('../../../assets/images/challenge/challengeEmpty.png')}
+            source={require('../../../assets/images/challenge/ChallengeEmpty.png')}
           />
           <Text
             style={{
