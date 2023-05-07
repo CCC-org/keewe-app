@@ -1,7 +1,6 @@
 import { useBottomSheet } from '@gorhom/bottom-sheet';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Text } from 'react-native-paper';
 import BottomSheetHeader from '../../components/header/BottomSheetHeader';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import CountingTextArea from '../../components/texts/CountingTextArea';

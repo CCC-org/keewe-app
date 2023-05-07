@@ -35,6 +35,7 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
   const [datas, setDatas] = useState<any[][]>([[], [], []]);
   const [cursors, setCursors] = useState<any[]>([undefined, undefined, 0]);
   const [pageEmpty, setPageEmpty] = useState<boolean>(false);
+
   const { data: TotalCount, isLoading: isTotalCountLoading } = useQuery(
     ChallengeQueryKeys.getChallengeInsightCount({}),
     () => ChallengeAPI.getChallengeInsightCount({}),

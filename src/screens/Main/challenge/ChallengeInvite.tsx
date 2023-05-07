@@ -6,7 +6,6 @@ import { BottomSheetBackdrop, BottomSheetModal, BottomSheetScrollView } from '@g
 import InviteOptions from './InviteOptions';
 import { useTheme } from 'react-native-paper';
 import FollowersAndFollowings from './FollowersAndFollowings';
-import { clearInput } from '../../../../assets/svgs/clearInput';
 
 const ChallengeInvite = () => {
   const theme = useTheme();
@@ -69,6 +68,7 @@ const ChallengeInvite = () => {
 
   const handleChangeText = (inputValue: string) => {
     setSearchValue(inputValue);
+    console.log(searchValue);
   };
 
   return (
@@ -88,9 +88,10 @@ const ChallengeInvite = () => {
               <View style={styles.onSearchHeader}>
                 <TextInput
                   autoFocus={true}
-                  value={searchValue}
+                  // value={searchValue}
                   onChangeText={handleChangeText}
                   style={{ ...styles.searchBox, borderColor: `${theme.colors.graphic.black}1a` }}
+                  textContentType="none"
                 ></TextInput>
                 <Pressable onPress={handleSearchCancel}>
                   <Text
