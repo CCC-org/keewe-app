@@ -1,12 +1,11 @@
 import { View, Pressable, StyleSheet, Text, TextInput } from 'react-native';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { SvgXml } from 'react-native-svg';
 import { addFriend } from '../../../../assets/svgs/addFriend';
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import InviteOptions from './InviteOptions';
 import { useTheme } from 'react-native-paper';
 import FollowersAndFollowings from './FollowersAndFollowings';
-import { clearInput } from '../../../../assets/svgs/clearInput';
 
 const ChallengeInvite = () => {
   const theme = useTheme();
@@ -67,6 +66,10 @@ const ChallengeInvite = () => {
     modalRef.current?.dismiss();
   };
 
+  const handleChangeText = (inputValue: string) => {
+    setSearchValue(inputValue);
+  };
+
   return (
     <>
       <Pressable style={{ marginRight: 19 }} onPress={handlePress}>
@@ -84,9 +87,9 @@ const ChallengeInvite = () => {
               <View style={styles.onSearchHeader}>
                 <TextInput
                   autoFocus={true}
-                  onChangeText={setSearchValue}
-                  value={searchValue}
+                  onChangeText={handleChangeText}
                   style={{ ...styles.searchBox, borderColor: `${theme.colors.graphic.black}1a` }}
+                  textContentType="none"
                 ></TextInput>
                 <Pressable onPress={handleSearchCancel}>
                   <Text

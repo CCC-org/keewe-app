@@ -45,7 +45,7 @@ const FeedVerticalDots = ({
       </Pressable>
       <BottomSheetModal
         ref={modalRef}
-        snapPoints={isMyPost ? ['25%', '63%'] : ['30%', '63%']}
+        snapPoints={isMyPost ? ['25%', '63%'] : ['33%', '65%', '90%']}
         backdropComponent={renderBackdrop}
       >
         {isMyPost ? (

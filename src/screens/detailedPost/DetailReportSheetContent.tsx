@@ -1,7 +1,6 @@
 import { useBottomSheet } from '@gorhom/bottom-sheet';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Text } from 'react-native-paper';
 import BottomSheetHeader from '../../components/header/BottomSheetHeader';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import CountingTextArea from '../../components/texts/CountingTextArea';
@@ -46,13 +45,13 @@ const DetailReportSheetContent = ({
       />
       <CountingTextArea
         inputValue={reasonText}
-        placeholder="신고사유를 입력해주세요."
+        placeholder="신고 사유를 입력해주세요."
         setInputValue={setReasonText}
         autoFocus={true}
         limit={limit}
         limitTextStyle={{ color: `${theme.colors.graphic.black}50` }}
         style={{ height: 500 }}
-        height={340}
+        height={350}
       />
     </View>
   );
