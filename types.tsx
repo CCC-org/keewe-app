@@ -78,6 +78,7 @@ export type RootStackParamList = {
     insightContent: string;
     insightId: number | string;
   };
+  Error: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

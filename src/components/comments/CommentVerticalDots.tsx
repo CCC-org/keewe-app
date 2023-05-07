@@ -2,10 +2,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import React, { useCallback, useRef } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
-import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
-import SheetMyPostOptions from '../bottomsheet/SheetMyPostOptions';
-import SheetPostOptions from '../bottomsheet/SheetPostOptions';
 import SheetMyComment from './SheetMyComment';
 import SheetOthersComment from './SheetOthersComment';
 
@@ -41,7 +38,7 @@ const CommentVerticalDots = ({ userId, userName, commentId }: FeedVerticalDotsPr
       </Pressable>
       <BottomSheetModal
         ref={modalRef}
-        snapPoints={isMyComment ? ['19%', '30%', '60%'] : ['26%', '64%', '67%']}
+        snapPoints={isMyComment ? ['19%', '30%'] : ['25%', '64%', '90%']}
         backdropComponent={renderBackdrop}
       >
         {isMyComment ? (

@@ -119,10 +119,11 @@ const SheetOthersComment = ({
         />
         <CountingTextArea
           inputValue={reportText}
-          placeholder="인사이트를 얻은 링크"
+          placeholder="신고 사유를 입력해주세요."
           setInputValue={setReportText}
           autoFocus={true}
           limit={150}
+          height={350}
         />
       </View>
     );
