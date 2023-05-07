@@ -20,14 +20,21 @@
       "supportsTablet": true
     },
     "android": {
+      "jsEngine": "hermes",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.akdlsz21.keewe"
+      "package": "com.akdlsz21.keewe",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "662b6040-56c8-42ea-9623-ec66e4cfd04f"
+      }
     }
   }
 }

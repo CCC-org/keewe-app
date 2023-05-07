@@ -29,7 +29,7 @@ const ChallengeJoinApprovedScreen = ({ navigation, route }) => {
       <View style={{ marginTop: 16 }}>
         <Image
           style={styles.image}
-          source={require('../../../assets/images/challenge/challengeCreate.png')}
+          source={require('../../../assets/images/challenge/ChallengeCreate.png')}
         />
       </View>
       <View style={styles.infoContainer}>
