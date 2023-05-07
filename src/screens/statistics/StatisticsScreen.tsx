@@ -16,32 +16,26 @@ const StatisticsScreen = ({ route }) => {
     nickname,
     date,
     content,
-    insightTitle,
-    insightContent,
+    insightTitle: linkTitle,
+    insightContent: linkPreviewContent,
+    insightId,
     viewCount,
     reactionCount,
     commentCount,
     bookmarkCount,
-  } = route;
-
+  } = route.params;
+  console.log('route', route);
   const theme = useTheme();
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.main}>
-        <StatisticsProfile name="meanjeong" />
+        <StatisticsProfile name={nickname} />
         <View>
-          <Text style={[theme.fonts.text.body2.regular]}>
-            대통령은 조국의 평화적 통일을 위한 성실한 의무를 진다. 공무원의 신분과 정치적 중립성은
-            법률이 정하는 바에 의하여 보장된다. 농업생산성의 제고와 농지의 합리적인 이용을 위하거나
-            불가피한 사정으로 발생하는 농지의 임대차와 위탁경영은 법률이 정하는 바에 의하여
-            인정된다. 대통령은 법률에서 구체적으로 범위를 정하여 위임받은 사항과 법률을 집행하기
-            위하여 필요한 사항에 관하여 대통령령을 발할 수 있다. 국무회의는 정부의 권한에 속하는
-            중요한 정책을 심의한다.
-          </Text>
+          <Text style={[theme.fonts.text.body2.regular]}>{content}</Text>
         </View>
         <DividerBar style={styles.divider} />
-        <StatisticsLinkInfo />
+        <StatisticsLinkInfo title={linkTitle} content={linkPreviewContent} />
       </View>
       <StatisticsReactionInfo
         viewCount={viewCount}

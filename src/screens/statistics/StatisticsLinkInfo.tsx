@@ -18,9 +18,9 @@ const StatisticsLinkInfo = ({ title, content }: StatisticsLinkInfoProps) => {
 
       <View style={styles.linkTextInfo}>
         <Text style={[theme.fonts.text.caption1, { fontSize: 14 }]}>
-          웹소설 웹툰의 어휘가 갈수록 단순하고 유채힞는 이유
+          {title ? title.slice(0, 40) + (title.length > 40 ? '...' : '') : 'No title'}
         </Text>
-        <Text style={[theme.fonts.text.caption1, { color: '#12131470' }]}>careerly.co.kr</Text>
+        <Text style={[theme.fonts.text.caption1, { color: '#12131470' }]}>{content}</Text>
       </View>
     </View>
   );

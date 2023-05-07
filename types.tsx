@@ -76,10 +76,7 @@ export type RootStackParamList = {
     content: string;
     insightTitle: string;
     insightContent: string;
-    viewCount: number;
-    reactionCount: number;
-    commentCount: number;
-    bookmarkCount: number;
+    insightId: number | string;
   };
 };
 

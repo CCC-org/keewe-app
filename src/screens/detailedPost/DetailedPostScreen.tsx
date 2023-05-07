@@ -196,7 +196,11 @@ const DetailedPostScreen = ({ navigation, route }) => {
               contents={contents}
               reaction={insightResponse.data.reaction}
               authorId={profile?.data?.authorId ?? -1}
-              recordText={recordOrder && recordTotal ? `${recordOrder}/${recordTotal}번째 기록중` : ''}
+              recordText={
+                recordOrder && recordTotal ? `${recordOrder}/${recordTotal}번째 기록중` : ''
+              }
+              userName={profile?.data?.nickname ?? ''}
+              createdAt={profile?.data?.createdAt ?? '-'}
             />
           ) : (
             <DetailedPostSection
@@ -211,6 +215,8 @@ const DetailedPostScreen = ({ navigation, route }) => {
               reaction={tempReaction}
               authorId={profile?.data?.authorId ?? -1}
               recordText={''}
+              userName={profile?.data?.nickname ?? ''}
+              createdAt={profile?.data?.createdAt ?? '-'}
             />
             // <View>
             //   <Text>temp</Text>

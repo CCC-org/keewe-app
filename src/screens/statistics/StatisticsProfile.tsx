@@ -9,7 +9,7 @@ interface StatisticProfileProps {
   date?: string;
 }
 
-const StatisticsProfile = ({ name }: StatisticProfileProps) => {
+const StatisticsProfile = ({ name, date }: StatisticProfileProps) => {
   const theme = useTheme();
   return (
     <View style={styles.profileInfo}>

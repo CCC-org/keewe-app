@@ -4,8 +4,11 @@ import React from 'react';
 import { LinkPreview, LinkPreviewProps } from '@flyerhq/react-native-link-preview';
 interface customProps extends LinkPreviewProps {
   width?: number | string;
+  setTitle?: React.Dispatch<React.SetStateAction<string>>;
+  setDescription?: React.Dispatch<React.SetStateAction<string>>;
 }
 const LinkCard: React.FC<customProps> = (props) => {
+  const { setTitle, setDescription } = props;
   const styles = createStyles(props);
   return (
     <LinkPreview
@@ -16,6 +19,10 @@ const LinkCard: React.FC<customProps> = (props) => {
           pre.previewData?.link?.replace(/(^\w+:|^)\/\//, '').split('/')[0] ||
           pre.previewData?.description;
         const url = pre.previewData?.image?.url;
+        if (setTitle && setDescription && title && description) {
+          setTitle(title);
+          setDescription(description);
+        }
         return (
           <View style={styles.container}>
             <View style={styles.metadataTextContainerStyle}>
