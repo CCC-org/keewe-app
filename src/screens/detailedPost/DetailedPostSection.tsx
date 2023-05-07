@@ -1,5 +1,5 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTheme } from 'react-native-paper';
 import { Octicons } from '@expo/vector-icons';
 import LinkCard from '../../components/cards/LinkCard';
@@ -19,6 +19,8 @@ interface DetailedPostSectionProps {
   authorId: number;
   isInsightLoading: boolean;
   contents: string;
+  userName: string;
+  createdAt: string;
 }
 
 const DetailedPostSection = ({
@@ -33,8 +35,25 @@ const DetailedPostSection = ({
   contents,
   isProfileLoading,
   isInsightLoading,
+  userName,
+  createdAt,
 }: DetailedPostSectionProps) => {
   const theme = useTheme();
+  const navigation = useNavigation();
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const handleNaviateToStatistics = () => {
+    navigation.navigate('Statistics', {
+      userId: authorId,
+      insightId,
+      insightTitle: title,
+      insightContent: description,
+      nickname: userName,
+      date: createdAt,
+      content: contents,
+    });
+  };
+
   return (
     <View style={{ backgroundColor: '#F1F1E9' }}>
       {currentChallenge && (
@@ -84,7 +103,7 @@ const DetailedPostSection = ({
         </Text>
       </View>
       <View style={styles.link}>
-        <LinkCard text={url} />
+        <LinkCard text={url} setTitle={setTitle} setDescription={setDescription} />
       </View>
       <View style={styles.emoticonBox}>
         <ScrollView horizontal style={{ overflow: 'visible' }}>
@@ -103,6 +122,14 @@ const DetailedPostSection = ({
         </ScrollView>
       </View>
       <View style={{ ...styles.insightView, backgroundColor: '#E1E1D0' }}>
+        {/* 지훈: 개인적인 생각으론, api가 더 나올때까진 대기하는게 맞느듯.  */}
+        {/* <Pressable
+          onPress={() => {
+            handleNaviateToStatistics();
+          }}
+        >
+          <Text>이 글의 통계</Text>
+        </Pressable> */}
         <Text
           style={{
             ...theme.fonts.text.caption1,

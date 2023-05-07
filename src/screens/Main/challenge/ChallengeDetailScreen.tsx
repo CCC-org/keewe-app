@@ -23,7 +23,7 @@ import { FeedQueryKeys } from '../../../utils/api/FeedAPI';
 
 const { width } = Dimensions.get('window');
 
-const ChallengeDetailScreen = ({ route }) => {
+const ChallengeDetailScreen = ({ navigation, route }) => {
   const userId = useGetUserId();
   const queryClient = useQueryClient();
   const { challengeId, challengeName, interest } = route.params;
@@ -31,6 +31,7 @@ const ChallengeDetailScreen = ({ route }) => {
   const [datas, setDatas] = useState<any[][]>([[], [], []]);
   const [cursors, setCursors] = useState<any[]>([undefined, undefined, 0]);
   const [pageEmpty, setPageEmpty] = useState<boolean>(false);
+
   const { data: TotalCount, isLoading: isTotalCountLoading } = useQuery(
     ChallengeQueryKeys.getChallengeInsightCount({}),
     () => ChallengeAPI.getChallengeInsightCount({}),

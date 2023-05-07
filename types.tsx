@@ -69,6 +69,15 @@ export type RootStackParamList = {
   Block: undefined;
   FolderEdit: undefined;
   Notification: undefined;
+  Statistics: {
+    userId: number;
+    nickname: string;
+    date: string;
+    content: string;
+    insightTitle: string;
+    insightContent: string;
+    insightId: number | string;
+  };
   Error: undefined;
 };
 
