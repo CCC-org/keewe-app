@@ -234,6 +234,7 @@ export const ChallengeAPI = {
   },
   getChallengeInsightCount: async (params: ChallengeInsightCountGetRequest) => {
     const token = await getAccessToken();
+    console.log(params);
     return httpClient
       .get<ChallengeInsightCountGetResponse>(
         'https://api-keewe.com/api/v1/challenge/my/insight/count',

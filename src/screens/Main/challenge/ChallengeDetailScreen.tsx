@@ -18,12 +18,12 @@ import FeedItem from '../../Feed/FeedItem';
 import ChallengeUserProfile from '../../../components/profile/ChallengeUserProfile';
 import { ChallengeAPI, ChallengeQueryKeys } from '../../../utils/api/ChallengeAPI';
 import theme from '../../../theme/light';
-import { SvgXml } from 'react-native-svg';
-import { pencil } from '../../../constants/Icons/home/pencil';
-import ChallengeInvite from './ChallengeInvite';
 import { postFeedBookMark } from '../../../utils/api/FeedBookMark';
 import Toast from 'react-native-toast-message';
 import { FeedQueryKeys } from '../../../utils/api/FeedAPI';
+import ChallengeInvite from './ChallengeInvite';
+import { SvgXml } from 'react-native-svg';
+import { pencil } from '../../../constants/Icons/home/pencil';
 
 const { width } = Dimensions.get('window');
 
@@ -35,23 +35,6 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
   const [datas, setDatas] = useState<any[][]>([[], [], []]);
   const [cursors, setCursors] = useState<any[]>([undefined, undefined, 0]);
   const [pageEmpty, setPageEmpty] = useState<boolean>(false);
-
-  const { data: TotalCount, isLoading: isTotalCountLoading } = useQuery(
-    ChallengeQueryKeys.getChallengeInsightCount({}),
-    () => ChallengeAPI.getChallengeInsightCount({}),
-  );
-  const { data: MyCount, isLoading: isMyCountLoading } = useQuery(
-    ChallengeQueryKeys.getChallengeInsightCount({ writerId: String(userId) }),
-    () => ChallengeAPI.getChallengeInsightCount({ writerId: String(userId) }),
-  );
-  const tabs = [
-    `전체기록 ${TotalCount?.insightNumber}`,
-    `내기록 ${MyCount?.insightNumber}`,
-    '친구',
-  ];
-  const spacing = 16;
-  const tabWidth = (width - (tabs.length + 1) * spacing) / tabs.length;
-  const animatedValue = useRef(new Animated.Value(0 * (tabWidth + spacing) + spacing)).current;
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -67,6 +50,27 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
       },
     });
   }, []);
+
+  const { data: TotalCount, isLoading: isTotalCountLoading } = useQuery(
+    ChallengeQueryKeys.getChallengeInsightCount({}),
+    () => ChallengeAPI.getChallengeInsightCount({}),
+    {
+      enabled: userId !== undefined,
+    },
+  );
+  const { data: MyCount, isLoading: isMyCountLoading } = useQuery(
+    ChallengeQueryKeys.getChallengeInsightCount({ writerId: String(userId) }),
+    () => ChallengeAPI.getChallengeInsightCount({ writerId: String(userId) }),
+    { enabled: userId !== undefined },
+  );
+  const tabs = [
+    `전체기록 ${TotalCount?.insightNumber}`,
+    `내기록 ${MyCount?.insightNumber}`,
+    '친구',
+  ];
+  const spacing = 16;
+  const tabWidth = (width - (tabs.length + 1) * spacing) / tabs.length;
+  const animatedValue = useRef(new Animated.Value(0 * (tabWidth + spacing) + spacing)).current;
 
   useEffect(() => {
     Animated.spring(animatedValue, {
@@ -84,13 +88,11 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
     InsightQueryKeys.getChallengeInsight({
       cursor: cursors[0],
       limit: 5,
-      writerId: undefined,
     }),
     () =>
       InsightAPI.getChallengeInsight({
         cursor: cursors[0],
         limit: 5,
-        writerId: undefined,
       }),
     {
       onSuccess: (response: ChallengeInsightGetResponse) => {
@@ -123,6 +125,7 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
           return newData;
         });
       },
+      enabled: userId !== undefined,
     },
   );
 
@@ -198,46 +201,48 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
         </View>
         <>
           <View style={{ ...styles.tabContainer, borderColor: `${theme.colors.graphic.black}10` }}>
-            {tabs.map((tab, index) => (
-              <TouchableOpacity
-                key={index}
-                disabled={index === tabIndex}
-                style={[
-                  styles.tab,
-                  {
-                    width: tabWidth,
-                    marginRight: index === tabs.length - 1 ? 0 : spacing,
-                  },
-                ]}
-                onPress={() => {
-                  queryClient.invalidateQueries(['insight', 'challenge']);
-                  if (index !== 2) {
-                    setDatas((prev) => {
-                      prev[index] = [];
-                      return prev;
-                    });
-                    setCursors((prev) => {
-                      prev[index] = undefined;
-                      return prev;
-                    });
-                  }
-                  setTabIndex(index);
-                }}
-              >
-                <Text
-                  style={{
-                    fontFamily: 'pretendardSemiBold',
-                    fontSize: 14,
-                    color:
-                      index === tabIndex
-                        ? theme.colors.graphic.black
-                        : `${theme.colors.graphic.black}50`,
+            {!isTotalCountLoading &&
+              !isMyCountLoading &&
+              tabs.map((tab, index) => (
+                <TouchableOpacity
+                  key={index}
+                  disabled={index === tabIndex}
+                  style={[
+                    styles.tab,
+                    {
+                      width: tabWidth,
+                      marginRight: index === tabs.length - 1 ? 0 : spacing,
+                    },
+                  ]}
+                  onPress={() => {
+                    queryClient.invalidateQueries(['insight', 'challenge']);
+                    if (index !== 2) {
+                      setDatas((prev) => {
+                        prev[index] = [];
+                        return prev;
+                      });
+                      setCursors((prev) => {
+                        prev[index] = undefined;
+                        return prev;
+                      });
+                    }
+                    setTabIndex(index);
                   }}
                 >
-                  {tab}
-                </Text>
-              </TouchableOpacity>
-            ))}
+                  <Text
+                    style={{
+                      fontFamily: 'pretendardSemiBold',
+                      fontSize: 14,
+                      color:
+                        index === tabIndex
+                          ? theme.colors.graphic.black
+                          : `${theme.colors.graphic.black}50`,
+                    }}
+                  >
+                    {tab}
+                  </Text>
+                </TouchableOpacity>
+              ))}
           </View>
           <Animated.View
             style={[
