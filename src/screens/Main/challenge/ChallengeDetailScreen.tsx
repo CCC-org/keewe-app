@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   Animated,
   TouchableOpacity,
   Dimensions,
+  Pressable,
 } from 'react-native';
 import ChallengeTitle from '../../../components/header/ChallengeTitle';
 import ChallengeReaction from './ChallengeReaction';
@@ -20,6 +21,9 @@ import theme from '../../../theme/light';
 import { postFeedBookMark } from '../../../utils/api/FeedBookMark';
 import Toast from 'react-native-toast-message';
 import { FeedQueryKeys } from '../../../utils/api/FeedAPI';
+import ChallengeInvite from './ChallengeInvite';
+import { SvgXml } from 'react-native-svg';
+import { pencil } from '../../../constants/Icons/home/pencil';
 
 const { width } = Dimensions.get('window');
 
@@ -31,6 +35,21 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
   const [datas, setDatas] = useState<any[][]>([[], [], []]);
   const [cursors, setCursors] = useState<any[]>([undefined, undefined, 0]);
   const [pageEmpty, setPageEmpty] = useState<boolean>(false);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <View style={{ flexDirection: 'row' }}>
+            <ChallengeInvite />
+            <Pressable style={{ marginRight: 19, paddingTop: 3 }} onPress={() => alert('!!')}>
+              <SvgXml xml={pencil} />
+            </Pressable>
+          </View>
+        );
+      },
+    });
+  }, []);
 
   const { data: TotalCount, isLoading: isTotalCountLoading } = useQuery(
     ChallengeQueryKeys.getChallengeInsightCount({}),
