@@ -6,6 +6,11 @@ import { BottomSheetBackdrop, BottomSheetModal, BottomSheetScrollView } from '@g
 import InviteOptions from './InviteOptions';
 import { useTheme } from 'react-native-paper';
 import FollowersAndFollowings from './FollowersAndFollowings';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import {
+  FollowersFollowingsApi,
+  FollowersFollowingsKeys,
+} from '../../../utils/api/followList/followersFollowings';
 
 const ChallengeInvite = () => {
   const theme = useTheme();
@@ -29,33 +34,10 @@ const ChallengeInvite = () => {
     else setIsButtonEnabled(false);
   }, [searchValue]);
 
-  const dummy = [
-    {
-      id: 1,
-      nickname: '헬로우',
-      imageURL: 'www.api-keewe.com/images/128398681',
-    },
-    {
-      id: 2,
-      nickname: '디즈니',
-      imageURL: 'www.api-keewe.com/images/128398681',
-    },
-    {
-      id: 3,
-      nickname: '쥬라기',
-      imageURL: 'www.api-keewe.com/images/128398681',
-    },
-    {
-      id: 4,
-      nickname: '월드',
-      imageURL: 'www.api-keewe.com/images/128398681',
-    },
-    {
-      id: 5,
-      nickname: '키위새',
-      imageURL: 'www.api-keewe.com/images/128398681',
-    },
-  ];
+  const { data: invitationData } = useQuery({
+    queryKey: FollowersFollowingsKeys.FollowersFollowingsKeys(),
+    queryFn: () => FollowersFollowingsApi.getFollowersFollowings(),
+  });
 
   const handleGoSearch = () => {
     modalRef.current?.snapToIndex(1);
@@ -117,7 +99,7 @@ const ChallengeInvite = () => {
                 </Text>
               </Pressable>
             )}
-            <FollowersAndFollowings users={dummy} />
+            <FollowersAndFollowings users={invitationData?.invitees} />
           </View>
         </BottomSheetScrollView>
       </BottomSheetModal>

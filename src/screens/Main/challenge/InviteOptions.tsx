@@ -36,9 +36,8 @@ const InviteOptions = () => {
   return (
     <View style={styles.container}>
       <View style={styles.optionContainer}>
-        <InviteOption xml={sharingXml} text={'공유하기'} onPress={() => alert('!')} />
+        <InviteOption xml={ShareIconXml} text={'공유하기'} onPress={() => alert('!')} />
         <InviteOption xml={kakaoXml} text={'문자 보내기'} onPress={handleSendSMS} />
-        <InviteOption xml={ShareIconXml} text={'다른 앱'} onPress={() => alert('!')} />
       </View>
     </View>
   );
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
   container: {},
   optionContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
     marginVertical: 18,
   },
   option: {
@@ -60,5 +59,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,
+    marginHorizontal: 22,
   },
 });
