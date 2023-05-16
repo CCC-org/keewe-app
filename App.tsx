@@ -22,12 +22,10 @@ import OnboardingIntroHeaderButton from './src/components/buttons/OnboardingIntr
 import { RootScreen } from './src/navigation';
 import ChallengeSubjectCreationScreen from './src/screens/challenge/ChallengeSubjectCreationScreen';
 import ServiceIntroOneScreen from './src/screens/onboarding/ServiceIntroOneScreen';
-import ServiceIntroTwoScreen from './src/screens/onboarding/ServiceIntroTwoScreen';
 import TempSheetScreen from './src/screens/upload/TempSheetScreen';
 import UploadScreen from './src/screens/upload/UploadScreen';
 import DetailedPostScreen from './src/screens/detailedPost/DetailedPostScreen';
 import light from './src/theme/light';
-import ServiceIntroThreeScreen from './src/screens/onboarding/ServiceIntroThreeScreen';
 import InsightSampleScreen from './src/screens/onboarding/InsightSampleScreen';
 import Tabs from './src/screens/Main/Tabs';
 import ChallengeParticipationScreen from './src/screens/Main/challenge/ChallengeParticipationScreen';
@@ -310,31 +308,6 @@ export default function App() {
                           headerTitle: '',
                           headerLeft: () => <View></View>,
                           headerRight: () => <OnboardingIntroHeaderButton />,
-                          headerStyle: {
-                            backgroundColor: 'transparent',
-                          },
-                        }}
-                      />
-                      <Stack.Screen
-                        name="ServiceIntroTwo"
-                        component={ServiceIntroTwoScreen}
-                        options={{
-                          headerTransparent: true,
-                          headerTitle: '',
-                          headerLeft: () => <View></View>,
-                          headerRight: () => <OnboardingIntroHeaderButton />,
-                          headerStyle: {
-                            backgroundColor: 'transparent',
-                          },
-                        }}
-                      />
-                      <Stack.Screen
-                        name="ServiceIntroThree"
-                        component={ServiceIntroThreeScreen}
-                        options={{
-                          headerTransparent: true,
-                          headerTitle: '',
-                          headerLeft: () => <View></View>,
                           headerStyle: {
                             backgroundColor: 'transparent',
                           },
