@@ -9,7 +9,7 @@ import OnboardingIntroHeaderButton from '../../components/buttons/OnboardingIntr
 const fullScreenHeight = Dimensions.get('window').height;
 const fullScreenWidth = Dimensions.get('window').width;
 
-const ServiceIntroOneScreen = ({ navigation }) => {
+const ServiceIntroScreen = ({ navigation }) => {
   const [step, setStep] = useState(0);
   const styles = createStyle();
   const carouselRef = useRef<any>(null);
@@ -121,7 +121,7 @@ const ServiceIntroOneScreen = ({ navigation }) => {
   );
 };
 
-export default ServiceIntroOneScreen;
+export default ServiceIntroScreen;
 
 export function createStyle() {
   return StyleSheet.create({

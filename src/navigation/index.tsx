@@ -192,7 +192,7 @@ export function RootScreen() {
             <Text> ChallengeParticipationScreen.tsx</Text>
           </View>
         </Pressable>
-        <Pressable onPress={() => navigation.navigate('ServiceIntroOne')}>
+        <Pressable onPress={() => navigation.navigate('ServiceIntro')}>
           <View
             style={{
               backgroundColor: 'brown',

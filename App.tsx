@@ -21,7 +21,7 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import OnboardingIntroHeaderButton from './src/components/buttons/OnboardingIntroHeaderButton';
 import { RootScreen } from './src/navigation';
 import ChallengeSubjectCreationScreen from './src/screens/challenge/ChallengeSubjectCreationScreen';
-import ServiceIntroOneScreen from './src/screens/onboarding/ServiceIntroOneScreen';
+import ServiceIntroScreen from './src/screens/onboarding/ServiceIntroScreen';
 import TempSheetScreen from './src/screens/upload/TempSheetScreen';
 import UploadScreen from './src/screens/upload/UploadScreen';
 import DetailedPostScreen from './src/screens/detailedPost/DetailedPostScreen';
@@ -301,8 +301,8 @@ export default function App() {
                         options={headerOptions}
                       />
                       <Stack.Screen
-                        name="ServiceIntroOne"
-                        component={ServiceIntroOneScreen}
+                        name="ServiceIntro"
+                        component={ServiceIntroScreen}
                         options={{
                           headerTransparent: true,
                           headerTitle: '',
