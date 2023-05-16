@@ -73,7 +73,6 @@ export function useInfiniteFeed(fetchUrl: string) {
     feedListIsLoading,
     touchBookMark,
     fetchNextPage: () => {
-      console.log('temp');
       temp();
     },
     feedListQueryClient,

@@ -192,6 +192,17 @@ export function RootScreen() {
             <Text> ChallengeParticipationScreen.tsx</Text>
           </View>
         </Pressable>
+        <Pressable onPress={() => navigation.navigate('ServiceIntro')}>
+          <View
+            style={{
+              backgroundColor: 'brown',
+              height: 100,
+              width: 150,
+            }}
+          >
+            <Text> onboarding.tsx</Text>
+          </View>
+        </Pressable>
       </ScrollView>
     </ScrollView>
   );

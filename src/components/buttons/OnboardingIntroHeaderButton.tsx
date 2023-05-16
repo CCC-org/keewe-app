@@ -1,9 +1,10 @@
 import React from 'react';
+import { navigate } from '../../utils/hooks/navigaton/navigator';
 import HeaderRightButton from '../header/HeaderRightButton';
 
 const OnboardingIntroHeaderButton = () => {
   function handlePress() {
-    alert('시작하기');
+    navigate('Feed', {});
   }
   return (
     <HeaderRightButton
