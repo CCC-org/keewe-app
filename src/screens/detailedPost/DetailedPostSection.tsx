@@ -6,6 +6,9 @@ import LinkCard from '../../components/cards/LinkCard';
 import { REACTIONS } from './constant';
 import ReactIconButton from '../../components/emoticons/ReactIconButton';
 import { useNavigation } from '@react-navigation/native';
+import { SvgXml } from 'react-native-svg';
+import barChart from '../../../assets/svgs/StatisticIcon/barChart';
+import { useGetUserId } from '../../utils/hooks/useGetUserId';
 
 interface DetailedPostSectionProps {
   isProfileLoading: boolean;
@@ -42,6 +45,7 @@ const DetailedPostSection = ({
   const navigation = useNavigation();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const userId = useGetUserId();
   const handleNaviateToStatistics = () => {
     navigation.navigate('Statistics', {
       userId: authorId,
@@ -122,14 +126,26 @@ const DetailedPostSection = ({
         </ScrollView>
       </View>
       <View style={{ ...styles.insightView, backgroundColor: '#E1E1D0' }}>
-        {/* 지훈: 개인적인 생각으론, api가 더 나올때까진 대기하는게 맞느듯.  */}
-        {/* <Pressable
-          onPress={() => {
-            handleNaviateToStatistics();
-          }}
-        >
-          <Text>이 글의 통계</Text>
-        </Pressable> */}
+        {userId === authorId ? (
+          <Pressable
+            onPress={() => {
+              handleNaviateToStatistics();
+            }}
+            style={{ flexDirection: 'row' }}
+          >
+            <SvgXml xml={barChart} style={{ marginRight: 8 }} />
+            <Text
+              style={{
+                fontFamily: 'pretendardSemiBold',
+                color: theme.colors.brand.onprimary.container,
+              }}
+            >
+              이 글의 통계
+            </Text>
+          </Pressable>
+        ) : (
+          <View />
+        )}
         <Text
           style={{
             ...theme.fonts.text.caption1,
@@ -168,7 +184,7 @@ const styles = StyleSheet.create({
   },
   insightView: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     paddingVertical: 12,
     paddingHorizontal: 16,
   },

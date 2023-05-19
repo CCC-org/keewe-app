@@ -1,48 +1,45 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import ProfileAvatar from '../../components/profile/ProfileAvatar';
-import ProfileImage from '../Main/mypage/ProfileImage';
-import personXml from '../../constants/Icons/Avatar/personXml';
-import { SvgXml } from 'react-native-svg';
 import DividerBar from '../../components/bars/DividerBar';
 import StatisticsProfile from './StatisticsProfile';
 import StatisticsLinkInfo from './StatisticsLinkInfo';
 import { useTheme } from 'react-native-paper';
 import StatisticsReactionInfo from './StatisticsReactionInfo';
+import { useQuery } from '@tanstack/react-query';
+import { StatisticsAPI, StatisticsQueryKeys } from '../../utils/api/StatisticsAPI';
 
 const StatisticsScreen = ({ route }) => {
   const {
-    userId,
-    nickname,
-    date,
     content,
     insightTitle: linkTitle,
     insightContent: linkPreviewContent,
     insightId,
-    viewCount,
-    reactionCount,
-    commentCount,
-    bookmarkCount,
   } = route.params;
-  console.log('route', route);
   const theme = useTheme();
+
+  const { data: count, isLoading: isCountLoading } = useQuery(
+    StatisticsQueryKeys.getStatistics({ insightId }),
+    () => StatisticsAPI.getStatistics({ insightId }),
+  );
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.main}>
-        <StatisticsProfile name={nickname} />
+        <StatisticsProfile insightId={insightId} />
         <View>
           <Text style={[theme.fonts.text.body2.regular]}>{content}</Text>
         </View>
         <DividerBar style={styles.divider} />
         <StatisticsLinkInfo title={linkTitle} content={linkPreviewContent} />
       </View>
-      <StatisticsReactionInfo
-        viewCount={viewCount}
-        reactionCount={reactionCount}
-        commentCount={commentCount}
-        bookmarkCount={bookmarkCount}
-      />
+      {!isCountLoading && (
+        <StatisticsReactionInfo
+          viewCount={count?.data?.viewCount ?? 0}
+          reactionCount={count?.data?.reactCount ?? 0}
+          commentCount={count?.data?.commentCount ?? 0}
+          bookmarkCount={count?.data?.bookmarkCount ?? 0}
+        />
+      )}
     </ScrollView>
   );
 };

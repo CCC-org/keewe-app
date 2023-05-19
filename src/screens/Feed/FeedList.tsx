@@ -45,7 +45,6 @@ const FeedList = ({
                   <InView
                     key={insight.id}
                     onChange={() => {
-                      console.log('onChagne');
                       fetchNextPage();
                     }}
                   >

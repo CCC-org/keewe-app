@@ -43,9 +43,6 @@ const ServiceIntroScreen = ({ navigation }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {/* <Image source={require('../../../assets/images/onboarding_01.png')} style={styles.image} /> */}
-      {/* <View style={styles.bottom}> */}
-      {/* <View style={styles.titleContainer}> */}
       <Carousel
         style={{
           display: 'flex',
