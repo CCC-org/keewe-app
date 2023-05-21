@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, ScrollView, Pressable, RefreshControl } from 'r
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import MypageProfile from '../../../components/profile/MypageProfile';
 import { useTheme } from 'react-native-paper';
-import { Feather, Ionicons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import MypageTitle from '../../../components/title/MypageTitle';
 import DividerBar from '../../../components/bars/DividerBar';
 import InterestIcon from './InterestIcon';
@@ -122,6 +122,7 @@ const ProfileScreen = ({ navigation, route }) => {
   followMutation.mutate;
 
   useEffect(() => {
+    console.log(profile);
     setSelectedCategory(profile?.data?.interests ?? []);
     setProfileImage(profile?.data?.image ?? '');
     setRepresentativeTitleList(representativeTitles?.data?.achievedTitles ?? []);

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTheme } from 'react-native-paper';
 import FeedList from '../Feed/FeedList';
@@ -73,8 +73,4 @@ const BookMarkScreen = ({ navigation }) => {
 
 export default BookMarkScreen;
 
-const styles = StyleSheet.create({
-  header: {
-    margin: 16,
-  },
-});
+const styles = StyleSheet.create({});

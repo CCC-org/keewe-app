@@ -8,7 +8,6 @@ import Toast from 'react-native-toast-message';
 
 export function useInfiniteFeed(fetchUrl: string) {
   const feedListQueryClient = useQueryClient();
-  const [cursor, setCursor] = useState(0);
   const [limit, setLimit] = useState(5);
   const [follow, setFollow] = useState(false);
 
@@ -39,8 +38,8 @@ export function useInfiniteFeed(fetchUrl: string) {
       }
     },
     getNextPageParam: (lastpage) => {
-      const lastFeedId = lastpage?.[lastpage.length - 1]?.id || 0;
-      return lastFeedId;
+      const lastFeedDate = lastpage?.[lastpage.length - 1]?.bookmarkedAt || 0;
+      return lastFeedDate;
     },
   });
   const { mutate: touchBookMark, isLoading: bookMarkIsLoading } = useMutation({

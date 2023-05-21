@@ -25,12 +25,13 @@ export const FeedAPI = {
     });
     return response.data.data;
   },
-  getBookMarkFeed: async (cursor: number, limit: number) => {
+  getBookMarkFeed: async (cursor: string, limit: number) => {
+    const currentDate = new Date().toISOString().slice(0, 23);
     try {
       const token = await getAccessToken();
       const response = await httpClient.get<FeedInsight>(
         `https://api-keewe.com/api/v1/insight/bookmark?cursor=${
-          !cursor ? '' : String(cursor)
+          !cursor ? currentDate : cursor
         }&limit=${String(limit)}`,
         {
           headers: {
