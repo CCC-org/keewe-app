@@ -38,8 +38,13 @@ export function useInfiniteFeed(fetchUrl: string) {
       }
     },
     getNextPageParam: (lastpage) => {
-      const lastFeedDate = lastpage?.[lastpage.length - 1]?.bookmarkedAt || 0;
-      return lastFeedDate;
+      if (fetchUrl.includes('bookmark')) {
+        const lastFeedDate = lastpage?.[lastpage.length - 1]?.bookmarkedAt || 0;
+        return lastFeedDate;
+      } else {
+        const lastFeedId = lastpage?.[lastpage.length - 1]?.id || 0;
+        return lastFeedId;
+      }
     },
   });
   const { mutate: touchBookMark, isLoading: bookMarkIsLoading } = useMutation({

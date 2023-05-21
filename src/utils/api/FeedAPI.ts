@@ -27,6 +27,9 @@ export const FeedAPI = {
   },
   getBookMarkFeed: async (cursor: string, limit: number) => {
     const currentDate = new Date().toISOString().slice(0, 23);
+    const currentDatetwo = new Date().toISOString();
+    console.log(currentDate);
+    console.log(currentDatetwo);
     try {
       const token = await getAccessToken();
       const response = await httpClient.get<FeedInsight>(
