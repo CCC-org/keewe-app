@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useTheme } from 'react-native-paper';
 import DividerBar from '../../components/bars/DividerBar';
 import TwoButtonModal from '../../components/modal/TwoButtonModal';
+import MultiTapButton from '../../components/buttons/MultipleTapButton';
 
 const SettingsScreen = ({ navigation }) => {
   const theme = useTheme();
@@ -32,6 +33,10 @@ const SettingsScreen = ({ navigation }) => {
     Linking.openURL(
       'https://www.notion.so/15db3e731d7d42539858ad37eee15776?v=58ca3d5f772f49a6ae15b309a0b5409e',
     );
+  };
+
+  const handleNavToRootPage = () => {
+    navigation.navigate('Root');
   };
 
   return (
@@ -66,10 +71,15 @@ const SettingsScreen = ({ navigation }) => {
           <Text style={theme.fonts.text.body1.regular}>이용약관</Text>
         </Pressable>
 
-        <View style={styles.settingOption}>
+        <MultiTapButton
+          style={styles.settingOption}
+          onMultiTap={handleNavToRootPage}
+          requiredTaps={5}
+          timeLimit={2000}
+        >
           <Text style={theme.fonts.text.body1.regular}>버전</Text>
           <Text style={[theme.fonts.text.body1.regular, { color: '#486006' }]}>1.0.0</Text>
-        </View>
+        </MultiTapButton>
         <DividerBar style={styles.divider} />
         <Pressable onPress={() => setIsLogoutModalVisible(true)} style={styles.settingOption}>
           <Text style={theme.fonts.text.body1.regular}>로그아웃</Text>
