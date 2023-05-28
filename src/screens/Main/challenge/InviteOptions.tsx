@@ -1,9 +1,8 @@
-import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Linking, Share, Pressable, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { SvgXml } from 'react-native-svg';
 import ShareIconXml from '../../../constants/Icons/DetailedPost/ShareIconXml';
 import { useTheme } from 'react-native-paper';
-import { sharingXml } from '../../../../assets/svgs/sharingXml';
 import { kakaoXml } from '../../../../assets/svgs/kakaoXml';
 
 interface InviteOptionProps {
@@ -33,10 +32,24 @@ const InviteOptions = () => {
     const SMSURL = `sms:&body=${message}`;
     Linking.openURL(SMSURL);
   };
+
+  const handleShare = () => {
+    const shareOptions = {
+      message: 'Keewe',
+    };
+
+    Share.share(shareOptions)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <View style={styles.container}>
       <View style={styles.optionContainer}>
-        <InviteOption xml={ShareIconXml} text={'공유하기'} onPress={() => alert('!')} />
+        <InviteOption xml={ShareIconXml} text={'공유하기'} onPress={handleShare} />
         <InviteOption xml={kakaoXml} text={'문자 보내기'} onPress={handleSendSMS} />
       </View>
     </View>
