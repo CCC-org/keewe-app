@@ -81,7 +81,6 @@ const UploadScreen = ({ navigation, route }) => {
   }, []);
 
   const handleSubmit = async () => {
-    alert(isClicked);
     const drawerId = folders.find((folder) => folder.name === selectedFolder)?.id || null;
     const data = {
       participation: isSwitchOn && challengeProgress?.name !== undefined,
