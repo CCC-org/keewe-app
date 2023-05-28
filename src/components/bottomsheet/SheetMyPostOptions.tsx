@@ -4,12 +4,32 @@ import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/typ
 import { useTheme } from 'react-native-paper';
 import TwoButtonModal from '../modal/TwoButtonModal';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { useNavigation } from '@react-navigation/native';
 
 interface BSMyPostOptionsProps {
   modalRef: React.RefObject<BottomSheetModalMethods>;
+  insightId: number;
+  userId: number;
+  userName: string;
+  nickname?: string;
+  title?: string;
+  image?: string;
+  contents?: string;
+  link?: string;
 }
 
-const SheetMyPostOptions = ({ modalRef }: BSMyPostOptionsProps) => {
+const SheetMyPostOptions = ({
+  modalRef,
+  userId,
+  userName,
+  insightId,
+  nickname,
+  title,
+  image,
+  contents,
+  link,
+}: BSMyPostOptionsProps) => {
+  const navigation = useNavigation();
   const { fonts } = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const handleDeleteInsight = () => {
@@ -23,9 +43,20 @@ const SheetMyPostOptions = ({ modalRef }: BSMyPostOptionsProps) => {
     modalRef.current?.close();
   };
 
+  const handleNavigateToUploadForEdit = () => {
+    navigation.navigate('Upload', {
+      link,
+      insight: contents,
+      isEdit: true,
+      insightId,
+    });
+    setIsModalVisible(false);
+    modalRef.current?.close();
+  };
+
   return (
     <ScrollView style={styles.optionContainer}>
-      <Pressable style={styles.option} onPress={() => alert('ㅅ줭')}>
+      <Pressable style={styles.option} onPress={handleNavigateToUploadForEdit}>
         <Text style={[fonts.text.body1.regular]}>수정하기</Text>
       </Pressable>
       <Pressable style={styles.option} onPress={() => setIsModalVisible(true)}>

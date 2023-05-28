@@ -53,7 +53,6 @@ const SheetOthersComment = ({
   const handleBlockUser = async (userId: number) => {
     try {
       const response = await blockApi.postBlockUser(userId);
-      console.log('🚀 ~ file: SheetOthersComment.tsx:54 ~ handleBlockUser ~ response:', response);
       if (response === true) {
         Toast.show({
           type: 'snackbar',

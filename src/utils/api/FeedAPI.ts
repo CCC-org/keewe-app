@@ -17,6 +17,7 @@ export const FeedAPI = {
         limit,
       )}&follow=${follow}`;
     }
+    console.log(URL);
     const token = await getAccessToken();
     const response = await httpClient.get<FeedInsight>(URL, {
       headers: {
@@ -27,21 +28,17 @@ export const FeedAPI = {
   },
   getBookMarkFeed: async (cursor: string, limit: number) => {
     const currentDate = new Date().toISOString().slice(0, 23);
-    const currentDatetwo = new Date().toISOString();
-    console.log(currentDate);
-    console.log(currentDatetwo);
+    const URL = `https://api-keewe.com/api/v1/insight/bookmark?cursor=${
+      !cursor ? currentDate : cursor
+    }&limit=${String(limit)}`;
+    console.log(URL);
     try {
       const token = await getAccessToken();
-      const response = await httpClient.get<FeedInsight>(
-        `https://api-keewe.com/api/v1/insight/bookmark?cursor=${
-          !cursor ? currentDate : cursor
-        }&limit=${String(limit)}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      const response = await httpClient.get<FeedInsight>(URL, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
       return response.data.data;
     } catch (err) {
       console.error('api error: ', err);
