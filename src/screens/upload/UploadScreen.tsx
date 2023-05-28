@@ -103,9 +103,7 @@ const UploadScreen = ({ navigation, route }) => {
           contents: insightText,
           insightId: insightId,
         };
-        console.log('editData', editData);
         response = await UploadApis.editInsight(editData);
-        console.log('isEditReponse', response);
       } else {
         response = await UploadApis.uploadInsight(data);
       }

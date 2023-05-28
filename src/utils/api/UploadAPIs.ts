@@ -15,13 +15,11 @@ export const UploadApis = {
         },
       )
       .then((res) => {
-        console.log('res.data', res.data);
         return res.data;
       });
   },
   uploadInsight: async (datas: UploadRequest) => {
     const token = await getAccessToken();
-    console.log(datas);
     return httpClient
       .post('https://api-keewe.com/api/v1/insight', datas, {
         headers: {
@@ -33,7 +31,6 @@ export const UploadApis = {
       });
   },
   editInsight: async (datas: InsightPatchRequest) => {
-    console.log('datas', datas);
     const token = await getAccessToken();
     return httpClient
       .patch('https://api-keewe.com/api/v1/insight', datas, {
