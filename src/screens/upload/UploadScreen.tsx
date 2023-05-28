@@ -22,17 +22,23 @@ import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
 import { useQuery } from '@tanstack/react-query';
 
 const UploadScreen = ({ navigation, route }) => {
-  const { isEdit, insight, link } = route?.params ?? {};
-  const [linkText, setLinkText] = useState<string>(link ?? '');
+  const { isEdit, insight, link, insightId } = route?.params ?? {};
+  const [linkText, setLinkText] = useState<string>(link.url ?? '');
   const [insightText, setInsightText] = useState<string>(insight ?? '');
   const [isSwitchOn, setIsSwitchOn] = useState(true);
-  const [isValidSite, setIsValidSite] = useState(false);
+  const [isValidSite, setIsValidSite] = useState(isEdit || false);
   const [folders, setFolders] = useState<IFolder[]>([]);
   const [selectedFolder, setSelectedFolder] = useState<string>('');
   const linkSheetRef = useRef<BottomSheetModal>(null);
   const folderSheetRef = useRef<BottomSheetModal>(null);
   const [isClicked, setIsClicked] = useState<boolean>(false);
-
+  console.log(route?.params ?? {});
+  console.log({
+    link,
+    linkText,
+    insightText,
+    isValidSite,
+  });
   const { data: challengeProgress, isLoading: isChallengeProgressLoading } = useQuery(
     ['challenge', 'participation'],
     ChallengeAPI.getChallengeProgress,
@@ -90,7 +96,20 @@ const UploadScreen = ({ navigation, route }) => {
     };
 
     try {
-      const response = await UploadApis.uploadInsight(data);
+      let response;
+      if (isEdit) {
+        const editData = {
+          link: linkText,
+          contents: insightText,
+          insightId: insightId,
+        };
+        console.log('editData', editData);
+        response = await UploadApis.editInsight(editData);
+        console.log('isEditReponse', response);
+      } else {
+        response = await UploadApis.uploadInsight(data);
+      }
+
       if (response.code === 200) {
         navigation.navigate('Feed');
       } else {
@@ -152,7 +171,7 @@ const UploadScreen = ({ navigation, route }) => {
         ) : (
           <InsightLinkTriggerButton
             onPress={() => handleSheetPresent(linkSheetRef)}
-            text={isValidSite ? 'VALID' : '인사이트를 입력해주세요.'}
+            text={isValidSite ? 'VALID' : '인사이트를 얻은 링크.'}
           />
         )}
         <View style={styles.textContainer}>

@@ -20,7 +20,6 @@ const FeedItem = ({ insight, localId, onBookMarkClick }: FeedItemProps) => {
   const handleOnBookMarkPress = () => {
     onBookMarkClick(id);
   };
-
   const handleProfilePress = () => {
     if (localId === null || localId === undefined) {
       alert('잠시 후 다시 시도하세요.');
@@ -51,6 +50,7 @@ const FeedItem = ({ insight, localId, onBookMarkClick }: FeedItemProps) => {
           title={writer.title}
           image={writer.image}
           contents={contents}
+          link={link}
         />
       </View>
       <View style={styles.contentCtn}>

@@ -31,13 +31,9 @@ const StaticSizeScrollTextArea = ({
           onChangeText={(inputValue) => setInputValue(inputValue)}
           multiline={true}
           numberOfLines={16}
-          // activeUnderlineColor="white"
-          // selectionColor="black"
-          // underlineColor="white"
           maxLength={limit ? limit : 400}
           scrollEnabled={true}
           textAlignVertical="top"
-          // textAlignVertical="top"
         />
         <View style={styles.letterNumberContainer}>
           <View style={styles.limitContainer}>

@@ -40,7 +40,12 @@ export type RootStackParamList = {
   InterestChoose: undefined;
   BottomSheetExperimental: undefined;
   InsightSample: undefined;
-  Upload: undefined;
+  Upload: Partial<{
+    link: string;
+    insight: string;
+    isEdit: boolean;
+    insightId: number;
+  }>;
   Tabs: undefined;
   DetailedPost: undefined;
   Share: undefined;
