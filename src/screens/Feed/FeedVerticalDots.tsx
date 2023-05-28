@@ -15,6 +15,7 @@ interface FeedVerticalDotsProps {
   title?: string;
   image?: string;
   contents?: string;
+  link?: string;
 }
 
 const FeedVerticalDots = ({
@@ -25,6 +26,7 @@ const FeedVerticalDots = ({
   title,
   image,
   contents,
+  link,
 }: FeedVerticalDotsProps) => {
   const myUserId = useGetUserId();
   const isMyPost = myUserId === userId;
@@ -49,7 +51,17 @@ const FeedVerticalDots = ({
         backdropComponent={renderBackdrop}
       >
         {isMyPost ? (
-          <SheetMyPostOptions modalRef={modalRef} />
+          <SheetMyPostOptions
+            modalRef={modalRef}
+            userName={userName}
+            userId={userId}
+            insightId={insightId}
+            nickname={nickname}
+            title={title}
+            image={image}
+            contents={contents}
+            link={link}
+          />
         ) : (
           <SheetPostOptions
             modalRef={modalRef}
