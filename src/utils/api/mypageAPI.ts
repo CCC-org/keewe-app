@@ -26,16 +26,16 @@ export const MypageQueryKeys = {
 
 export const MypageAPI = {
   getProfile: async (request: ProfileGetRequest) => {
-    const { targetId } = request;
+    const { targetId, insightId } = request;
     try {
       const token = await getAccessToken();
-
       const { data } = await httpClient.get<ProfileGetResponse>(
         `https://api-keewe.com/api/v1/user/profile/${targetId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          params: { insightId },
         },
       );
       return data;

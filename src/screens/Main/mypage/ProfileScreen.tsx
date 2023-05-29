@@ -19,7 +19,7 @@ import MainLottie from '../../../components/lotties/MainLottie';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
 const ProfileScreen = ({ navigation, route }) => {
-  const { userId } = route.params;
+  const { userId, insightId } = route.params;
   if (userId === null || userId === undefined) {
     alert('userId를 인식할 수 없었습니다.');
     return null;
@@ -41,7 +41,7 @@ const ProfileScreen = ({ navigation, route }) => {
   // Erased onSetteled: querySuccessError fn.
   const { data: profile, isLoading: isProfileLoading } = useQuery({
     queryKey: MypageQueryKeys.getProfile({ targetId: userId }),
-    queryFn: () => MypageAPI.getProfile({ targetId: userId }),
+    queryFn: () => MypageAPI.getProfile({ targetId: userId, insightId }),
     refetchInterval: 1000 * 120,
   });
 
