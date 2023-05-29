@@ -19,8 +19,8 @@ function Login({ navigation, route }) {
     onSuccess: (response) => {
       setAccessToken(response.data.accessToken);
       setUserId(response.data.userId);
-      if (response.data.alreadySignedUp) navigation.navigate('Tabs');
-      else navigation.navigate('CategorySelect');
+      if (response.data.alreadySignedUp) navigation.navigate('Feed');
+      else navigation.navigate('NicknameCreation');
     },
     onError: (e) => {
       alert('인증에 실패했습니다.');

@@ -7,7 +7,6 @@ import { timeConverter } from '../Main/challenge/constant';
 
 const ChallengeJoinApprovedScreen = ({ navigation, route }) => {
   const { challengeName, duration, insightPerWeek, myTopic, endDate } = route.params.form;
-  console.log(route.params);
   const theme = useTheme();
   useEffect(() => {
     navigation.setOptions({

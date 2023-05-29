@@ -26,5 +26,3 @@ const StatisticsReactionCountInfo = ({ xml, count }: Props) => {
 };
 
 export default StatisticsReactionCountInfo;
-
-const styles = StyleSheet.create({});

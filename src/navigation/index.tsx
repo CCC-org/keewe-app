@@ -203,6 +203,17 @@ export function RootScreen() {
             <Text> onboarding.tsx</Text>
           </View>
         </Pressable>
+        <Pressable onPress={() => navigation.navigate('NicknameCreation')}>
+          <View
+            style={{
+              backgroundColor: 'red',
+              height: 100,
+              width: 150,
+            }}
+          >
+            <Text> categorySelect.tsx</Text>
+          </View>
+        </Pressable>
       </ScrollView>
     </ScrollView>
   );

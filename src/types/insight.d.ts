@@ -85,3 +85,27 @@ interface ChallengeInsightGetResponse {
   code: number;
   data: InsightData[];
 }
+
+interface InsightFollowGetRequest {
+  insightId: number;
+}
+
+interface InsightFollowGetResponse {
+  message: string;
+  code: number;
+  data: {
+    count: number;
+  };
+}
+
+interface InsightVisitGetRequest {
+  insightId: number;
+}
+
+interface InsightVisitGetResponse {
+  message: string;
+  code: number;
+  data: {
+    count: number;
+  };
+}
