@@ -30,6 +30,8 @@ export const InsightQueryKeys = {
   ],
   getChallengeRecord: (request: ChallengeRecordRequest) => ['insight', request.insightId],
   getChallengeInsight: (request: ChallengeInsightGetRequest) => ['insight', 'challenge', request],
+  getInsightFollow: (request: InsightFollowGetRequest) => ['insight', 'follow', request.insightId],
+  getInsightVisit: (request: InsightVisitGetRequest) => ['insight', 'visit', request.insightId],
 };
 
 export const InsightAPI = {
@@ -218,6 +220,38 @@ export const InsightAPI = {
             Authorization: `Bearer ${token}`,
           },
           params,
+        },
+      );
+      return data;
+    } catch (err) {
+      console.error('api error: ', err);
+    }
+  },
+  getInsightFollow: async (request: InsightFollowGetRequest) => {
+    try {
+      const token = await getAccessToken();
+      const { data } = await httpClient.get<InsightFollowGetResponse>(
+        `https://api-keewe.com/api/v1/insight/${request.insightId}/statistics/follow`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      return data;
+    } catch (err) {
+      console.error('api error: ', err);
+    }
+  },
+  getInsightVisit: async (request: InsightVisitGetRequest) => {
+    try {
+      const token = await getAccessToken();
+      const { data } = await httpClient.get<InsightVisitGetResponse>(
+        `https://api-keewe.com/api/v1/insight/${request.insightId}/statistics/profile-visit`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
       );
       return data;

@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import DividerBar from '../../components/bars/DividerBar';
 import StatisticsProfile from './StatisticsProfile';
@@ -7,6 +7,8 @@ import { useTheme } from 'react-native-paper';
 import StatisticsReactionInfo from './StatisticsReactionInfo';
 import { useQuery } from '@tanstack/react-query';
 import { StatisticsAPI, StatisticsQueryKeys } from '../../utils/api/StatisticsAPI';
+import FollowCountCard from './FollowCountCard';
+import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
 
 const StatisticsScreen = ({ route }) => {
   const {
@@ -22,25 +24,51 @@ const StatisticsScreen = ({ route }) => {
     () => StatisticsAPI.getStatistics({ insightId }),
   );
 
+  const { data: followCount, isLoading: isFollowCountLoading } = useQuery(
+    InsightQueryKeys.getInsightFollow({ insightId }),
+    () => InsightAPI.getInsightFollow({ insightId }),
+  );
+
+  const { data: visitCount, isLoading: isVisitCountLoading } = useQuery(
+    InsightQueryKeys.getInsightVisit({ insightId }),
+    () => InsightAPI.getInsightVisit({ insightId }),
+  );
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.main}>
-        <StatisticsProfile insightId={insightId} />
-        <View>
-          <Text style={[theme.fonts.text.body2.regular]}>{content}</Text>
+    <>
+      <View style={styles.container}>
+        <View style={styles.main}>
+          <StatisticsProfile insightId={insightId} />
+          <View>
+            <Text style={[theme.fonts.text.body2.regular]}>{content}</Text>
+          </View>
+          <DividerBar style={styles.divider} />
+          <StatisticsLinkInfo title={linkTitle} content={linkPreviewContent} />
         </View>
-        <DividerBar style={styles.divider} />
-        <StatisticsLinkInfo title={linkTitle} content={linkPreviewContent} />
+        {!isCountLoading && (
+          <StatisticsReactionInfo
+            viewCount={count?.data?.viewCount ?? 0}
+            reactionCount={count?.data?.reactCount ?? 0}
+            commentCount={count?.data?.commentCount ?? 0}
+            bookmarkCount={count?.data?.bookmarkCount ?? 0}
+          />
+        )}
       </View>
-      {!isCountLoading && (
-        <StatisticsReactionInfo
-          viewCount={count?.data?.viewCount ?? 0}
-          reactionCount={count?.data?.reactCount ?? 0}
-          commentCount={count?.data?.commentCount ?? 0}
-          bookmarkCount={count?.data?.bookmarkCount ?? 0}
-        />
-      )}
-    </ScrollView>
+      <Text
+        style={{
+          fontFamily: 'pretendardSemiBold',
+          fontSize: 18,
+          marginVertical: 24,
+          marginHorizontal: 16,
+        }}
+      >
+        이 인사이트를 보고
+      </Text>
+      <View style={styles.followContainer}>
+        <FollowCountCard count={followCount?.data?.count ?? 0} title={'나를 팔로우 한 사람'} />
+        <FollowCountCard count={visitCount?.data?.count ?? 0} title={'내 프로필을 방문한 사람'} />
+      </View>
+    </>
   );
 };
 
@@ -49,6 +77,8 @@ export default StatisticsScreen;
 const styles = StyleSheet.create({
   container: {
     padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#12131410',
   },
   main: {
     flexDirection: 'column',
@@ -66,5 +96,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
+  },
+  followContainer: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    marginHorizontal: 16,
   },
 });
