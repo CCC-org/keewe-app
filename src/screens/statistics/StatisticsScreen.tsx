@@ -40,7 +40,9 @@ const StatisticsScreen = ({ route }) => {
         <View style={styles.main}>
           <StatisticsProfile insightId={insightId} />
           <View>
-            <Text style={[theme.fonts.text.body2.regular]}>{content}</Text>
+            <Text numberOfLines={2} style={[theme.fonts.text.body2.regular]}>
+              {content}
+            </Text>
           </View>
           <DividerBar style={styles.divider} />
           <StatisticsLinkInfo title={linkTitle} content={linkPreviewContent} />

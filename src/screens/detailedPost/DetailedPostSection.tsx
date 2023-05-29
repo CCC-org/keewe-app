@@ -93,9 +93,6 @@ const DetailedPostSection = ({
           </Pressable>
         </View>
       )}
-
-      {/* 여기는 글 작성자의 프로필과 대표타이틀, 팔로워, 관심사등이 올라갈 부분. 임시적으로 팔로워, 팔로잉 페이지로 이동하는 버튼 만듦 */}
-
       <View style={[styles.insightText]}>
         <Text
           style={[

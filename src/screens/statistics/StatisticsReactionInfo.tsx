@@ -1,6 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
-import { SvgXml } from 'react-native-svg';
 import reaction from '../../../assets/svgs/StatisticIcon/reaction';
 import view from '../../../assets/svgs/StatisticIcon/view';
 import comment from '../../../assets/svgs/StatisticIcon/comment';
