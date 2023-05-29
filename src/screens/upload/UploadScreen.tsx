@@ -23,7 +23,7 @@ import { useQuery } from '@tanstack/react-query';
 
 const UploadScreen = ({ navigation, route }) => {
   const { isEdit, insight, link, insightId } = route?.params ?? {};
-  const [linkText, setLinkText] = useState<string>(link.url ?? '');
+  const [linkText, setLinkText] = useState<string>(link?.url ?? '');
   const [insightText, setInsightText] = useState<string>(insight ?? '');
   const [isSwitchOn, setIsSwitchOn] = useState(true);
   const [isValidSite, setIsValidSite] = useState(isEdit || false);
@@ -32,13 +32,6 @@ const UploadScreen = ({ navigation, route }) => {
   const linkSheetRef = useRef<BottomSheetModal>(null);
   const folderSheetRef = useRef<BottomSheetModal>(null);
   const [isClicked, setIsClicked] = useState<boolean>(false);
-  console.log(route?.params ?? {});
-  console.log({
-    link,
-    linkText,
-    insightText,
-    isValidSite,
-  });
   const { data: challengeProgress, isLoading: isChallengeProgressLoading } = useQuery(
     ['challenge', 'participation'],
     ChallengeAPI.getChallengeProgress,
