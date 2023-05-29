@@ -2,7 +2,6 @@ import React, { useState, useMemo, useEffect, useLayoutEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
-//import ConditionalButton from '../../components/buttons/ConditionalButton';
 import Stepper from '../../components/stepper/Stepper';
 import ChallengeInfoSection from './ChallengeInfoSection';
 
@@ -21,10 +20,11 @@ const ChallengeInfoScreen = ({ navigation, route }) => {
     [challengeName, challengeInfo],
   );
 
-  const handleNextClick = () =>
+  const handleNextClick = () => {
     navigation.navigate('ChallengeGoalSetting', {
       form: { challengeName, challengeInfo, ...route.params.form },
     });
+  };
 
   useEffect(() => {
     if (challengeName.length > 25) {
@@ -32,6 +32,7 @@ const ChallengeInfoScreen = ({ navigation, route }) => {
     } else {
       setErrorMessage('');
     }
+    console.log(challengeInfo);
   }, [challengeName]);
 
   useLayoutEffect(() => {
@@ -45,7 +46,7 @@ const ChallengeInfoScreen = ({ navigation, route }) => {
           textColor={isActive ? theme.colors.graphic.black : theme.colors.graphic.white}
           borderLine={false}
           disabled={!isActive || hasError}
-          handlePress={() => handleNextClick()}
+          handlePress={handleNextClick}
         />
       ),
     });
@@ -67,13 +68,6 @@ const ChallengeInfoScreen = ({ navigation, route }) => {
           setChallengeInfo={setChallengeInfo}
           errorMessage={errorMessage}
         />
-        {/* <ConditionalButton
-          isActive={isActive && !hasError}
-          text={'다음'}
-          color={'black'}
-          width={150}
-          onPress={handleNextClick}
-        /> */}
       </View>
     </>
   );
