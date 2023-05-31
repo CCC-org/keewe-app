@@ -26,7 +26,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.akdlsz21.keewe",
-      "versionCode": 2
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
