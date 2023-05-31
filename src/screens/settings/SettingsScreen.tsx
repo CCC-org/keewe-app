@@ -22,7 +22,7 @@ const SettingsScreen = ({ navigation }) => {
   };
 
   const handleNoticePress = () => {
-    Linking.openURL('https://www.notion.so/a0395d1a23bf413ea60b7402ac6b4c03');
+    Linking.openURL('https://keewe2023.notion.site/a0395d1a23bf413ea60b7402ac6b4c03');
   };
 
   const handleCustomerServicePress = () => {
