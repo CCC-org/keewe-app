@@ -25,11 +25,11 @@ const InsightSampleScreen = ({ navigation, route }) => {
   );
 
   const handleSkipPress = () => {
-    navigation.navigate('ServiceIntroOne');
+    navigation.navigate('ServiceIntro');
   };
 
   const handleCompletePress = () => {
-    navigation.navigate('ServiceIntroOne');
+    navigation.navigate('ServiceIntro');
   };
 
   const handleMoreClick = () => {
