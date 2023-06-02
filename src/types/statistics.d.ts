@@ -7,9 +7,8 @@ interface StatisticsResponse {
   code: number;
   data: {
     viewCount: number;
-    reactCount: number;
+    reactionCount: number;
     commentCount: number;
     bookmarkCount: number;
-    shareCount: number;
   };
 }
