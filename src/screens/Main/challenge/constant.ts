@@ -13,5 +13,4 @@ export const STATISTIC: Record<string, any>[] = [
   { name: 'reactionCount', xml: reaction },
   { name: 'commentCount', xml: comment },
   { name: 'bookmarkCount', xml: bookmark },
-  { name: 'shareCount', xml: share },
 ];

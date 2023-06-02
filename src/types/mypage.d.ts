@@ -1,5 +1,6 @@
 interface ProfileGetRequest {
   targetId: string;
+  insightId?: number;
 }
 
 interface ProfileGetResponse {

@@ -42,8 +42,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   buttonList: {
-    marginVertical: 12,
-    marginHorizontal: 19,
+    marginTop: 16,
+    marginBottom: 12,
+    marginHorizontal: 40,
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
