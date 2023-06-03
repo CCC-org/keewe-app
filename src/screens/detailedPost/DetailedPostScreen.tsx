@@ -154,7 +154,6 @@ const DetailedPostScreen = ({ navigation, route }) => {
       },
     });
   }, [profile, insightResponse, getChallengeRecordResponse]);
-  console.log('insightResponse', insightResponse);
   const handleMoreCommentsPress = () => {
     navigation.navigate('Comments', { insightId, contentWriterId: profile?.data.authorId });
   };
