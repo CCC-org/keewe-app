@@ -4,6 +4,7 @@ import { useTheme } from 'react-native-paper';
 import DividerBar from '../../components/bars/DividerBar';
 import TwoButtonModal from '../../components/modal/TwoButtonModal';
 import MultiTapButton from '../../components/buttons/MultipleTapButton';
+import { clearStorage } from '../../utils/hooks/asyncStorage/Logout';
 
 const SettingsScreen = ({ navigation }) => {
   const theme = useTheme();
@@ -14,6 +15,8 @@ const SettingsScreen = ({ navigation }) => {
   const handleLogOut = () => {
     alert('또 보시겠다능');
     setIsLogoutModalVisible(false);
+    clearStorage();
+    navigation.navigate('Login');
   };
 
   const handleWithdrawal = () => {
