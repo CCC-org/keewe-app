@@ -22,7 +22,7 @@ const FeedScreenChallenge = () => {
           <UserSpecificChallengeSection userSpecificChallenge={userSpecificChallenge} />
         )}
       </View>
-      <DividerBar style={styles.divider} />
+      {userSpecificChallenge && <DividerBar style={styles.divider} />}
     </>
   );
 };
