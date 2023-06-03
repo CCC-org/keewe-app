@@ -11,6 +11,7 @@ import CurrentChallengeProfile from '../../components/profile/ChallengeProfileCu
 import { timeConverter } from './challenge/constant';
 import TwoButtonModal from '../../components/modal/TwoButtonModal';
 import { useFocusEffect } from '@react-navigation/native';
+import MainTabHeader from "../../components/header/MainTabHeader";
 
 const ChallengesScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -67,6 +68,7 @@ const ChallengesScreen = ({ navigation }) => {
 
   return (
     <ScrollView>
+      <MainTabHeader text="챌린지" />
       <TwoButtonModal
         dismissable={false}
         mainTitle={'새로운 챌린지를 만들까요?'}
