@@ -13,10 +13,9 @@ const SettingsScreen = ({ navigation }) => {
   const [isWithdrawalModalVisible, setIsWithdrawalModalVisible] = useState(false);
 
   const handleLogOut = () => {
-    alert('또 보시겠다능');
     setIsLogoutModalVisible(false);
     clearStorage();
-    navigation.navigate('Login');
+    navigation.navigate('SignUp', undefined);
   };
 
   const handleWithdrawal = () => {
