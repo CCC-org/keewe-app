@@ -23,7 +23,7 @@ import { useQuery } from '@tanstack/react-query';
 
 const UploadScreen = ({ navigation, route }) => {
   const { isEdit, insight, link, insightId } = route?.params ?? {};
-  const [linkText, setLinkText] = useState<string>(link?.url ?? '');
+  const [linkText, setLinkText] = useState<string>((link?.url || link) ?? '');
   const [insightText, setInsightText] = useState<string>(insight ?? '');
   const [isSwitchOn, setIsSwitchOn] = useState(true);
   const [isValidSite, setIsValidSite] = useState(isEdit || false);
@@ -36,7 +36,6 @@ const UploadScreen = ({ navigation, route }) => {
     ['challenge', 'participation'],
     ChallengeAPI.getChallengeProgress,
   );
-
   const snapPoints = useMemo(() => ['50%', '80%'], []);
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -102,7 +101,12 @@ const UploadScreen = ({ navigation, route }) => {
       }
 
       if (response.code === 200) {
-        navigation.navigate('Feed');
+        // navigation.navigate('Feed');
+        // navigate to detailedPostScreen.
+        navigation.navigate('DetailedPost', {
+          insightId: response.data.insightId,
+          isMine: true,
+        });
       } else {
         throw new Error(response.message);
       }

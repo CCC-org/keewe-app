@@ -30,13 +30,14 @@ import ShareIconXml from '../../constants/Icons/DetailedPost/ShareIconXml';
 import { FeedQueryKeys } from '../../utils/api/FeedAPI';
 import FeedVerticalDots from '../Feed/FeedVerticalDots';
 import Toast from 'react-native-toast-message';
+import MainLottie from '../../components/lotties/MainLottie';
+import removeEscapeSequences from '../../utils/helper/strings/removeEscapeSequence';
 import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 
 const DetailedPostScreen = ({ navigation, route }) => {
   const { insightId, contents } = route.params;
   const [views] = useIncreaseView(insightId);
   const [replyInfo, setReplyInfo] = useState<ReplyInfo | undefined>();
-
   const ref = useRef<TextInput>(null);
 
   const queryClient = useQueryClient();
@@ -143,6 +144,8 @@ const DetailedPostScreen = ({ navigation, route }) => {
               <SvgXml xml={ShareIconXml} />
             </Pressable>
             <FeedVerticalDots
+              contents={contents}
+              link={removeEscapeSequences(insightResponse?.data?.link.url)}
               userName={profile?.data?.nickname}
               userId={profile?.data?.authorId}
               insightId={insightId}
@@ -152,7 +155,6 @@ const DetailedPostScreen = ({ navigation, route }) => {
       },
     });
   }, [profile, insightResponse, getChallengeRecordResponse]);
-
   const handleMoreCommentsPress = () => {
     navigation.navigate('Comments', { insightId, contentWriterId: profile?.data.authorId });
   };

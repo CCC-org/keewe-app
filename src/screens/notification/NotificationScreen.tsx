@@ -7,6 +7,7 @@ import { SvgXml } from 'react-native-svg';
 import { notificationXml } from '../../constants/Icons/notifications/notification';
 import { useTheme } from 'react-native-paper';
 import MainLottie from '../../components/lotties/MainLottie';
+import { getTimeDiff } from '../../utils/helper/time/getTimeDiff';
 
 const NotificationScreen = ({ navigation }) => {
   const queryClient = useQueryClient();
@@ -95,7 +96,10 @@ const NotificationScreen = ({ navigation }) => {
         <View>
           <Text style={[fonts.text.body2.regular, { color: '#12131480' }]}>{item.title}</Text>
           <Text>{item.contents}</Text>
-          <Text style={[fonts.text.body2.regular, { color: '#12131480' }]}>time placeholder</Text>
+
+          <Text style={[fonts.text.body2.regular, { color: '#12131480' }]}>
+            {getTimeDiff(item.createdAt)}
+          </Text>
         </View>
       </Pressable>
     );

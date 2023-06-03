@@ -22,17 +22,19 @@ const SettingsScreen = ({ navigation }) => {
   };
 
   const handleNoticePress = () => {
-    Linking.openURL('https://www.notion.so/a0395d1a23bf413ea60b7402ac6b4c03');
+    Linking.openURL('https://keewe2023.notion.site/a0395d1a23bf413ea60b7402ac6b4c03');
   };
 
   const handleCustomerServicePress = () => {
     Linking.openURL('https://pf.kakao.com/_xjZxfnxj');
   };
 
+  const handlePrivacyPolicyPress = () => {
+    Linking.openURL('https://keewe2023.notion.site/Keewe-32099697963a4681a5afe70000b0217a');
+  };
+
   const handleTermsOfServicePress = () => {
-    Linking.openURL(
-      'https://www.notion.so/15db3e731d7d42539858ad37eee15776?v=58ca3d5f772f49a6ae15b309a0b5409e',
-    );
+    Linking.openURL('https://keewe2023.notion.site/Keewe-e2f9aa19867943cf979c7caefa247915');
   };
 
   const handleNavToRootPage = () => {
@@ -66,6 +68,9 @@ const SettingsScreen = ({ navigation }) => {
         </Pressable>
         <Pressable onPress={handleCustomerServicePress} style={styles.settingOption}>
           <Text style={theme.fonts.text.body1.regular}>고객센터</Text>
+        </Pressable>
+        <Pressable onPress={handlePrivacyPolicyPress} style={styles.settingOption}>
+          <Text style={theme.fonts.text.body1.regular}>개인정보처리방침</Text>
         </Pressable>
         <Pressable onPress={handleTermsOfServicePress} style={styles.settingOption}>
           <Text style={theme.fonts.text.body1.regular}>이용약관</Text>
