@@ -9,7 +9,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
 } from 'react-native';
-import React, { forwardRef, useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import DetailedPostSection from './DetailedPostSection';
 import { useIncreaseView } from '../../utils/hooks/DetailedInsight/useIncreaseView';
 import { useTheme } from 'react-native-paper';
@@ -31,12 +31,13 @@ import { FeedQueryKeys } from '../../utils/api/FeedAPI';
 import FeedVerticalDots from '../Feed/FeedVerticalDots';
 import Toast from 'react-native-toast-message';
 import MainLottie from '../../components/lotties/MainLottie';
+import removeEscapeSequences from '../../utils/helper/strings/removeEscapeSequence';
+import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 
 const DetailedPostScreen = ({ navigation, route }) => {
   const { insightId, contents } = route.params;
   const [views] = useIncreaseView(insightId);
   const [replyInfo, setReplyInfo] = useState<ReplyInfo | undefined>();
-
   const ref = useRef<TextInput>(null);
 
   const queryClient = useQueryClient();
@@ -49,7 +50,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
   );
 
   const followMutation = useMutation({
-    mutationFn: () => FollowAPI.follow(profile?.data?.authorId),
+    mutationFn: () => FollowAPI.follow(profile?.data?.authorId, String(insightId)),
     onMutate: async () => {
       const key = InsightQueryKeys.getProfile({ insightId });
       await queryClient.cancelQueries({ queryKey: key });
@@ -143,6 +144,8 @@ const DetailedPostScreen = ({ navigation, route }) => {
               <SvgXml xml={ShareIconXml} />
             </Pressable>
             <FeedVerticalDots
+              contents={contents}
+              link={removeEscapeSequences(insightResponse?.data?.link.url)}
               userName={profile?.data?.nickname}
               userId={profile?.data?.authorId}
               insightId={insightId}
@@ -152,7 +155,6 @@ const DetailedPostScreen = ({ navigation, route }) => {
       },
     });
   }, [profile, insightResponse, getChallengeRecordResponse]);
-
   const handleMoreCommentsPress = () => {
     navigation.navigate('Comments', { insightId, contentWriterId: profile?.data.authorId });
   };
@@ -222,8 +224,13 @@ const DetailedPostScreen = ({ navigation, route }) => {
 
           {isProfileLoading ? null : (
             <Pressable
-              onPress={() => {
-                navigation.navigate('Profile', { userId: profile?.data?.authorId });
+              onPress={async () => {
+                const localUserId = await getUserId();
+                if (localUserId === String(profile?.data?.authorId)) {
+                  navigation.navigate('MyPage', { userId: localUserId, enteredByTab: false });
+                } else {
+                  navigation.navigate('Profile', { userId: profile?.data?.authorId, insightId });
+                }
               }}
             >
               <Profile

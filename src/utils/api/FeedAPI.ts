@@ -1,5 +1,3 @@
-import { FeedInsight } from '../../types/Feed/Feedinsights';
-import { getAccessToken } from '../hooks/asyncStorage/Login';
 import httpClient from './BaseHttpClient';
 
 export const FeedQueryKeys = {
@@ -18,12 +16,7 @@ export const FeedAPI = {
       )}&follow=${follow}`;
     }
     console.log(URL);
-    const token = await getAccessToken();
-    const response = await httpClient.get<FeedInsight>(URL, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await httpClient.get<FeedInsight>(URL);
     return response.data.data;
   },
   getBookMarkFeed: async (cursor: string, limit: number) => {
@@ -33,12 +26,7 @@ export const FeedAPI = {
     }&limit=${String(limit)}`;
     console.log(URL);
     try {
-      const token = await getAccessToken();
-      const response = await httpClient.get<FeedInsight>(URL, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await httpClient.get<FeedInsight>(URL);
       return response.data.data;
     } catch (err) {
       console.error('api error: ', err);

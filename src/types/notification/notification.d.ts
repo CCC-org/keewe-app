@@ -18,4 +18,5 @@ interface NotificationElement {
   category: string;
   referenceId: string;
   read: boolean;
+  createdAt: string;
 }

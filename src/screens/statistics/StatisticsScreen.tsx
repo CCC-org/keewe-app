@@ -50,7 +50,7 @@ const StatisticsScreen = ({ route }) => {
         {!isCountLoading && (
           <StatisticsReactionInfo
             viewCount={count?.data?.viewCount ?? 0}
-            reactionCount={count?.data?.reactCount ?? 0}
+            reactionCount={count?.data?.reactionCount ?? 0}
             commentCount={count?.data?.commentCount ?? 0}
             bookmarkCount={count?.data?.bookmarkCount ?? 0}
           />

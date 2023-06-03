@@ -1,5 +1,4 @@
 import { AxiosError } from 'axios';
-import { getAccessToken } from '../hooks/asyncStorage/Login';
 import httpClient from './BaseHttpClient';
 
 export const MypageQueryKeys = {
@@ -26,16 +25,12 @@ export const MypageQueryKeys = {
 
 export const MypageAPI = {
   getProfile: async (request: ProfileGetRequest) => {
-    const { targetId } = request;
+    const { targetId, insightId } = request;
     try {
-      const token = await getAccessToken();
-
       const { data } = await httpClient.get<ProfileGetResponse>(
         `https://api-keewe.com/api/v1/user/profile/${targetId}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          params: { insightId },
         },
       );
       return data;
@@ -46,15 +41,8 @@ export const MypageAPI = {
   getRepresentativeTitles: async (request: RepresentativeTitlesGetRequest) => {
     const { userId } = request;
     try {
-      const token = await getAccessToken();
-
       const { data } = await httpClient.get<RepresentativeTitlesGetResponse>(
         `https://api-keewe.com/api/v1/user/profile/achieved-title/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
       );
 
       return data;
@@ -67,14 +55,8 @@ export const MypageAPI = {
     if (userId === 'undefined') return null;
     if (!userId) return null;
     try {
-      const token = await getAccessToken();
       const response = await httpClient.get<UserFolderListGetResponse>(
         `https://api-keewe.com/api/v1/drawer/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
       );
       const data = response?.data?.data;
       if (data === undefined) {
