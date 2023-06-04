@@ -14,7 +14,6 @@ function Login({ navigation, route }) {
     code: undefined,
     state: undefined,
   };
-
   const { refetch } = useQuery(LoginQueryKeys.login(params), () => LoginAPI.login(params), {
     onSuccess: (response) => {
       setAccessToken(response.data.accessToken);

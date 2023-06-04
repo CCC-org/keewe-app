@@ -155,7 +155,6 @@ export const ChallengeAPI = {
       });
   },
   getChallengeInsightCount: async (params: ChallengeInsightCountGetRequest) => {
-    console.log(params);
     return httpClient
       .get<ChallengeInsightCountGetResponse>(
         'https://api-keewe.com/api/v1/challenge/my/insight/count',

@@ -7,7 +7,7 @@ const httpClient = axios.create();
 httpClient.interceptors.request.use(
   async (config) => {
     const token = await getAccessToken();
-    if (token === undefined) {
+    if (token === undefined || token === null) {
       navigate('SignUp', undefined);
       return Promise.reject();
     }
@@ -22,7 +22,9 @@ httpClient.interceptors.request.use(
 );
 
 httpClient.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    return response;
+  },
   (error) => {
     if (error.response.data.code === 402 || error.response.data.code == 411)
       navigate('SignUp', undefined);

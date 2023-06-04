@@ -48,7 +48,7 @@ const CountingTextArea = (props: CountingTextAreaProps) => {
           value={inputValue}
           autoFocus={autoFocus}
           placeholder={placeholder}
-          onChangeText={(inputValue) => setInputValue(inputValue)}
+          onChangeText={(text) => setInputValue(text)}
           style={styles.input}
           // multiline sets texts ios to top, android to center.
           // needs textAlignVertical to top on android

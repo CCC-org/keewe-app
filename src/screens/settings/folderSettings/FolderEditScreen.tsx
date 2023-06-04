@@ -48,7 +48,7 @@ const FolderEditScreen = ({ navigation }) => {
   const queryClient = useQueryClient();
 
   const handleAddNewFolder = () => {
-    if (!folderName.length) return;
+    if (!folderName?.length) return;
     UploadApis.createNewFolder(folderName)
       .then((res) => {
         modalRefAdd.current?.dismiss();
@@ -71,7 +71,7 @@ const FolderEditScreen = ({ navigation }) => {
       });
   };
 
-  if (folderListQuery.isError) return <Text>에러가 발생했습니다.</Text>;
+  if (folderListQuery?.isError) return <Text>에러가 발생했습니다.</Text>;
   if ((!userId && userId !== 0) || isLoading) return <MainLottie />;
   if (!userFolderList) return <Text>FETCHING FOLDERS UNSUCCESSFUL</Text>;
 
@@ -83,10 +83,10 @@ const FolderEditScreen = ({ navigation }) => {
           <BottomSheetHeader
             headerRightButton={() => (
               <HeaderRightButton
-                backGroundColor={folderName.length ? '#b0e817' : '#12131433'}
-                textColor={folderName.length ? 'black' : 'white'}
+                backGroundColor={folderName?.length ? '#b0e817' : '#12131433'}
+                textColor={folderName?.length ? 'black' : 'white'}
                 borderLine={false}
-                disabled={folderName.length ? false : true}
+                disabled={folderName?.length ? false : true}
                 text="완료"
                 handlePress={handleAddNewFolder}
               />

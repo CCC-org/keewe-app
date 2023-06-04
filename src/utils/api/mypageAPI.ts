@@ -52,16 +52,24 @@ export const MypageAPI = {
   },
   getFolderList: async (request: UserFolderListGetRequest) => {
     const { userId } = request;
-    if (!userId) return;
+    if (userId === 'undefined') return null;
+    if (!userId) return null;
     try {
-      const { data } = await httpClient.get<UserFolderListGetResponse>(
+      const response = await httpClient.get<UserFolderListGetResponse>(
         `https://api-keewe.com/api/v1/drawer/${userId}`,
       );
-      return data.data;
+      const data = response?.data?.data;
+      if (data === undefined) {
+        console.error('api error: No data found');
+        return null;
+      }
+
+      return data;
     } catch (err) {
       if (err instanceof AxiosError) {
         console.error('api error2: ', err.message);
       }
+      return null;
     }
   },
   getModifiedFolderList: async (request: UserFolderListGetRequest) => {
