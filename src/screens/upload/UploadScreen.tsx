@@ -111,7 +111,7 @@ const UploadScreen = ({ navigation, route }) => {
         throw new Error(response.message);
       }
     } catch (error: unknown) {
-      alert(error);
+      console.log(error);
     }
     return;
   };
@@ -151,7 +151,7 @@ const UploadScreen = ({ navigation, route }) => {
         throw new Error('폴더 생성 실패');
       }
     } catch (error) {
-      alert(error);
+      console.log(error);
     }
   };
 

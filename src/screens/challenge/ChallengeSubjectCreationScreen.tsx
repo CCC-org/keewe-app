@@ -65,7 +65,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
       });
     },
     onError: (error) => {
-      alert(error);
+      console.log(error);
     },
   });
 
@@ -76,7 +76,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
       });
     },
     onError: (error) => {
-      alert(error);
+      console.log(error);
     },
   });
 

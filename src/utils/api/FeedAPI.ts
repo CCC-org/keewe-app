@@ -15,7 +15,6 @@ export const FeedAPI = {
         limit,
       )}&follow=${follow}`;
     }
-    console.log(URL);
     const response = await httpClient.get<FeedInsight>(URL);
     return response.data.data;
   },
@@ -24,7 +23,6 @@ export const FeedAPI = {
     const URL = `https://api-keewe.com/api/v1/insight/bookmark?cursor=${
       !cursor ? currentDate : cursor
     }&limit=${String(limit)}`;
-    console.log(URL);
     try {
       const response = await httpClient.get<FeedInsight>(URL);
       return response.data.data;
