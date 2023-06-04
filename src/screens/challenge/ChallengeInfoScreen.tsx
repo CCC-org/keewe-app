@@ -32,7 +32,6 @@ const ChallengeInfoScreen = ({ navigation, route }) => {
     } else {
       setErrorMessage('');
     }
-    console.log(challengeInfo);
   }, [challengeName]);
 
   useLayoutEffect(() => {

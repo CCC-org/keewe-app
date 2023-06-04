@@ -122,7 +122,6 @@ export const ChallengeAPI = {
     return httpClient
       .get<ChallengeMyDetailGetResponse>('https://api-keewe.com/api/v1/challenge/my/detail')
       .then((res) => {
-        console.log(res.data);
         return res.data.data;
       });
   },
