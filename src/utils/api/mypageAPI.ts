@@ -3,19 +3,22 @@ import httpClient from './BaseHttpClient';
 
 export const MypageQueryKeys = {
   getProfile: (request: ProfileGetRequest) => {
-    return ['profile', request.targetId];
+    return ['mypage', 'profile', request.targetId];
   },
   getRepresentativeTitles: (request: RepresentativeTitlesGetRequest) => [
+    'mypage',
     'representativeTitles',
     request.userId,
   ],
   getNonModifiedList: (request: UserFolderListGetRequest) => [
+    'mypage',
     'folderList',
     'nonModified',
     request.userId,
   ],
-  getFolderList: (request: UserFolderListGetRequest) => ['folderList', request.userId],
+  getFolderList: (request: UserFolderListGetRequest) => ['mypage', 'folderList', request.userId],
   getFolderInsight: (drawerId: number | string, userId: number | string) => [
+    'mypage',
     'profile',
     'insight',
     drawerId,

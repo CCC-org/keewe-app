@@ -11,7 +11,7 @@ import CurrentChallengeProfile from '../../components/profile/ChallengeProfileCu
 import { timeConverter } from './challenge/constant';
 import TwoButtonModal from '../../components/modal/TwoButtonModal';
 import { useFocusEffect } from '@react-navigation/native';
-import MainTabHeader from "../../components/header/MainTabHeader";
+import MainTabHeader from '../../components/header/MainTabHeader';
 
 const ChallengesScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
