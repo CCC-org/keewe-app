@@ -153,12 +153,6 @@ const MyPageScreen = ({ navigation, route }) => {
     return <MainLottie />;
   }
 
-  useFocusEffect(
-    React.useCallback(() => {
-      queryClient.invalidateQueries(['mypage']);
-    }, []),
-  );
-
   return (
     <>
       <IOScrollView

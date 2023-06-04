@@ -268,7 +268,7 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
       });
     } else {
       setCursors((prev) => {
-        prev[tabIndex] = datas[tabIndex][datas[tabIndex].length - 1].id;
+        prev[tabIndex] = datas[tabIndex][datas[tabIndex].length - 1]?.id;
         return prev;
       });
     }
