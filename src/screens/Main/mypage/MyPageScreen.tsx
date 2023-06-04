@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ScrollView, Pressable, RefreshControl } from 'react-native';
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import MypageProfile from '../../../components/profile/MypageProfile';
 import { useTheme } from 'react-native-paper';
 import { SvgXml } from 'react-native-svg';
@@ -152,12 +152,6 @@ const MyPageScreen = ({ navigation, route }) => {
   ) {
     return <MainLottie />;
   }
-
-  useFocusEffect(
-    React.useCallback(() => {
-      queryClient.invalidateQueries(['mypage']);
-    }, []),
-  );
 
   return (
     <>

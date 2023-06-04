@@ -40,7 +40,7 @@ const ShareScreen = ({ route }) => {
         await MediaLibrary.createAlbumAsync('Keewe', asset, false);
       }
     } catch (error) {
-      alert(error);
+      console.log(error);
     }
   };
 

@@ -31,7 +31,7 @@ export const FollowListApi = {
       console.log('follower', response.data.data);
       return response.data.data;
     } catch (error) {
-      alert(error);
+      console.log(error);
     }
   },
   getFolloweeList: async (userId: number) => {
@@ -57,7 +57,7 @@ export const FollowListApi = {
 
       return response.data.data;
     } catch (error) {
-      alert(error);
+      console.log(error);
     }
   },
 };

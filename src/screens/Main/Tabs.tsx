@@ -3,7 +3,6 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BookMarkScreen from './BookMarkScreen';
 import ChallengesScreen from './ChallengesScreen';
-import { RootScreen } from '../../navigation';
 import FeedScreen from '../Feed/FeedScreen';
 import { SvgXml } from 'react-native-svg';
 import {
@@ -18,7 +17,6 @@ import {
 } from '../../constants/Icons/Navigation/NavigationIconsXml';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
 import MyPageScreen from './mypage/MyPageScreen';
-import HeaderRightButton from '../../components/header/HeaderRightButton';
 import { alarm } from '../../constants/Icons/alarm/alarm';
 import { useNavigation } from '@react-navigation/native';
 const Tab = createBottomTabNavigator();

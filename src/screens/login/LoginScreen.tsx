@@ -4,7 +4,6 @@ import { View } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 import { LoginQueryKeys, LoginAPI } from '../../utils/api/LoginAPI';
 import { setAccessToken, setUserId } from '../../utils/hooks/asyncStorage/Login';
-
 // eslint-disable-next-line quotes
 const INJECTED_JAVASCRIPT = "window.ReactNativeWebView.postMessage('login start')";
 
@@ -16,9 +15,13 @@ function Login({ navigation, route }) {
   };
   const { refetch } = useQuery(LoginQueryKeys.login(params), () => LoginAPI.login(params), {
     onSuccess: (response) => {
-      setAccessToken(response.data.accessToken);
-      setUserId(response.data.userId);
-      if (response.data.alreadySignedUp) navigation.navigate('Feed');
+      setAccessToken(response?.data?.accessToken ?? '');
+      setUserId(response?.data?.userId ?? 0);
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Tabs' }],
+      });
+      if (response?.data.alreadySignedUp) navigation.navigate('Feed');
       else navigation.navigate('NicknameCreation');
     },
     onError: (e) => {

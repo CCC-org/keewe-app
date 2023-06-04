@@ -25,7 +25,6 @@ export const FollowersFollowingsApi = {
       }
       return response.data.data;
     } catch (error) {
-      alert(error);
       console.log(error);
     }
   },
