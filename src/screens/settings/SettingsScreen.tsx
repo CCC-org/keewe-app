@@ -5,12 +5,22 @@ import DividerBar from '../../components/bars/DividerBar';
 import TwoButtonModal from '../../components/modal/TwoButtonModal';
 import MultiTapButton from '../../components/buttons/MultipleTapButton';
 import { clearStorage } from '../../utils/hooks/asyncStorage/Logout';
+import { LoginAPI } from '../../utils/api/LoginAPI';
+import { useMutation } from '@tanstack/react-query';
 
 const SettingsScreen = ({ navigation }) => {
   const theme = useTheme();
 
   const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
   const [isWithdrawalModalVisible, setIsWithdrawalModalVisible] = useState(false);
+
+  const { mutate: withdraw } = useMutation(LoginAPI.withdraw, {
+    onSuccess: () => {
+      clearStorage();
+      setIsWithdrawalModalVisible(false);
+      navigation.navigate('SignUp', undefined);
+    },
+  });
 
   const handleLogOut = () => {
     setIsLogoutModalVisible(false);
@@ -19,8 +29,7 @@ const SettingsScreen = ({ navigation }) => {
   };
 
   const handleWithdrawal = () => {
-    alert('잘가시라능..');
-    setIsWithdrawalModalVisible(false);
+    withdraw();
   };
 
   const handleNoticePress = () => {
@@ -46,18 +55,6 @@ const SettingsScreen = ({ navigation }) => {
   return (
     <>
       <ScrollView>
-        {/* <View style={styles.settingOption}>
-          <Text style={theme.fonts.text.body1.regular}>연결된 계정</Text>
-          <Text style={[theme.fonts.text.body1.regular, { color: '#486006' }]}>
-            한밤중에 목이말라 냉장고를 열어보니
-          </Text>
-        </View> */}
-        {/* <Pressable
-          onPress={() => navigation.navigate('PushNotificationSetting')}
-          style={styles.settingOption}
-        >
-          <Text style={theme.fonts.text.body1.regular}>푸쉬알림 설정</Text>
-        </Pressable> */}
         <Pressable onPress={() => navigation.navigate('FolderEdit')} style={styles.settingOption}>
           <Text style={theme.fonts.text.body1.regular}>폴더 편집</Text>
         </Pressable>

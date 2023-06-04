@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   login: {
     flex: 38,
     width: '100%',
-    backgroundColor: '#F5F5F5',
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
   },

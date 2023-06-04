@@ -1,3 +1,4 @@
+import axios from 'axios';
 import httpClient from './BaseHttpClient';
 
 export const LoginQueryKeys = {
@@ -8,13 +9,21 @@ export const LoginAPI = {
   login: async (params: LoginRequest) => {
     const { code, state, oauth } = params;
     try {
-      const { data } = await httpClient.get<LoginResponse>(
+      const { data } = await axios.get<LoginResponse>(
         `https://api-keewe.com/api/v1/user/${oauth}`,
         { params: { code: decodeURIComponent(code || ''), state } },
       );
       return data;
     } catch {
       alert('로그인 실패');
+    }
+  },
+  withdraw: async () => {
+    try {
+      const { data } = await httpClient.put('https://api-keewe.com/api/v1/user/withdraw', null, {});
+      return data;
+    } catch (e) {
+      throw new Error('탈퇴 실패');
     }
   },
 };
