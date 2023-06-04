@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, StyleSheet, Text, View, Linking } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, Linking, NativeModules } from 'react-native';
 import React, { useState } from 'react';
 import { useTheme } from 'react-native-paper';
 import DividerBar from '../../components/bars/DividerBar';
@@ -18,14 +18,14 @@ const SettingsScreen = ({ navigation }) => {
     onSuccess: () => {
       clearStorage();
       setIsWithdrawalModalVisible(false);
-      navigation.navigate('SignUp', undefined);
+      NativeModules.DevSettings.reload();
     },
   });
 
   const handleLogOut = () => {
     setIsLogoutModalVisible(false);
     clearStorage();
-    navigation.navigate('SignUp', undefined);
+    NativeModules.DevSettings.reload();
   };
 
   const handleWithdrawal = () => {

@@ -8,6 +8,6 @@ export const postFeedBookMark = async (insightId: number) => {
     );
     return result.data;
   } catch (error) {
-    alert(error);
+    console.log(error);
   }
 };

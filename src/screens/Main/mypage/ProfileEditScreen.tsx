@@ -203,7 +203,6 @@ const ProfileEditScreen = ({ navigation, route }) => {
 
       return res.data;
     } catch (err) {
-      alert(`에러 발생 : ${err}`);
       console.log('에러:', err);
     }
   };
