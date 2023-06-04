@@ -21,7 +21,6 @@ const ChallengeInfoScreen = ({ navigation, route }) => {
   );
 
   const handleNextClick = () => {
-    console.log(challengeName + '+' + challengeInfo);
     navigation.navigate('ChallengeGoalSetting', {
       form: { challengeName, challengeInfo, ...route.params.form },
     });
