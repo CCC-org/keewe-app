@@ -14,7 +14,7 @@ import { useInfiniteFeed } from '../../../utils/hooks/feedInifiniteScroll/useInf
 import FeedList from '../../Feed/FeedList';
 import GoToUploadButton from '../../../components/buttons/GoToUploadButton';
 import { IOScrollView } from 'react-native-intersection-observer';
-import { useScrollToTop } from '@react-navigation/native';
+import { useFocusEffect, useScrollToTop } from '@react-navigation/native';
 import { settingsIcon } from '../../../../assets/svgs/settingsIcon';
 import { Feather } from '@expo/vector-icons';
 import { threeDots } from '../../../../assets/svgs/constantSvgs/threeDots';
@@ -28,6 +28,7 @@ const MyPageScreen = ({ navigation, route }) => {
     alert('userId를 인식할 수 없었습니다.');
     return null;
   }
+
   const theme = useTheme();
 
   const [selectedCategory, setSelectedCategory] = useState<Record<string, string>[]>([]);
@@ -151,6 +152,12 @@ const MyPageScreen = ({ navigation, route }) => {
   ) {
     return <MainLottie />;
   }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      queryClient.invalidateQueries(['mypage']);
+    }, []),
+  );
 
   return (
     <>
