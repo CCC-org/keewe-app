@@ -1,12 +1,6 @@
-import { FlatList, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import React, { useMemo, useState } from 'react';
-import {
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-  UseMutationResult,
-} from '@tanstack/react-query';
-import { FollowData } from '../../types/followerList/followers';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { UseMutationResult } from '@tanstack/react-query';
 import { SvgXml } from 'react-native-svg';
 import person from '../../constants/Icons/Avatar/personXml';
 import { useTheme } from 'react-native-paper';
