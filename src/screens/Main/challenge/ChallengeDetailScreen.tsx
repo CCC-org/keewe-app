@@ -267,10 +267,12 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
         return prev;
       });
     } else {
-      setCursors((prev) => {
-        prev[tabIndex] = datas[tabIndex][datas[tabIndex].length - 1]?.id;
-        return prev;
-      });
+      if (datas[tabIndex]) {
+        setCursors((prev) => {
+          prev[tabIndex] = datas[tabIndex][datas[tabIndex].length - 1]?.id;
+          return prev;
+        });
+      }
     }
   };
 
