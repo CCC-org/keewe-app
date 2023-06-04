@@ -15,6 +15,7 @@ interface ProfileGetResponse {
     followerCount: number;
     followingCount: number;
     challengeName: string | null;
+    challengeId: number | null;
     follow: boolean;
   };
 }

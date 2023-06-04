@@ -49,7 +49,7 @@ const ChallengeInfoScreen = ({ navigation, route }) => {
         />
       ),
     });
-  }, [isActive, hasError]);
+  }, [isActive, hasError, challengeName, challengeInfo]);
 
   return (
     <>

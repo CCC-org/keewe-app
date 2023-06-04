@@ -16,6 +16,7 @@ import BottomFixButton from '../../../components/buttons/BottomFixButton';
 import { IOScrollView } from 'react-native-intersection-observer';
 import { FollowAPI } from '../../../utils/api/FollowAPI';
 import MainLottie from '../../../components/lotties/MainLottie';
+import { ChallengeAPI } from '../../../utils/api/ChallengeAPI';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
 const ProfileScreen = ({ navigation, route }) => {
@@ -38,6 +39,9 @@ const ProfileScreen = ({ navigation, route }) => {
     [theme.colors.graphic.green, `${theme.colors.graphic.green}1a`],
   ]);
 
+  const [sameChallengeWithMe, setSameChallengeWithMe] = useState<boolean>(false);
+  const [challengeInterest, setChallengeInterest] = useState<string>('');
+
   // Erased onSetteled: querySuccessError fn.
   const { data: profile, isLoading: isProfileLoading } = useQuery({
     queryKey: MypageQueryKeys.getProfile({ targetId: userId }),
@@ -56,6 +60,20 @@ const ProfileScreen = ({ navigation, route }) => {
     () => MypageAPI.getModifiedFolderList({ userId: userId }),
     querySuccessError,
   );
+
+  useEffect(() => {
+    const getParticipationOrNot = async () => {
+      const data = await ChallengeAPI.getParticipationCheck();
+      if (data.participation) {
+        const myData = await ChallengeAPI.getChallengeMyDetail();
+        if (myData?.challengeName === profile?.data.challengeName) {
+          setSameChallengeWithMe(true);
+          setChallengeInterest(myData?.challengeCategory);
+        }
+      }
+    };
+    getParticipationOrNot();
+  }, [profile]);
 
   const queryClient = useQueryClient();
 
@@ -122,7 +140,6 @@ const ProfileScreen = ({ navigation, route }) => {
   followMutation.mutate;
 
   useEffect(() => {
-    console.log(profile);
     setSelectedCategory(profile?.data?.interests ?? []);
     setProfileImage(profile?.data?.image ?? '');
     setRepresentativeTitleList(representativeTitles?.data?.achievedTitles ?? []);
@@ -160,6 +177,22 @@ const ProfileScreen = ({ navigation, route }) => {
   if (isProfileLoading || isrepresentativeTitlesLoading) {
     return <MainLottie />;
   }
+
+  const handleChallengeClicked = () => {
+    if (sameChallengeWithMe) {
+      navigation.navigate('ChallengeDetail', {
+        challengeId: profile?.data?.challengeId,
+        challengeName: profile?.data?.challengeName,
+        interest: challengeInterest,
+      });
+    } else {
+      navigation.navigate('ChallengeParticipation', {
+        challengeId: profile?.data?.challengeId,
+        challengeName: profile?.data?.challengeName,
+        interest: '',
+      });
+    }
+  };
 
   return (
     <IOScrollView
@@ -227,7 +260,7 @@ const ProfileScreen = ({ navigation, route }) => {
               width={343}
               height={48}
               chevron={true}
-              onPress={() => alert(profile?.data?.challengeName)}
+              onPress={handleChallengeClicked}
               buttonStyle={styles.button}
               textStyle={styles.buttonText}
             />
