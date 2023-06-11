@@ -16,7 +16,6 @@ import * as Updates from 'expo-updates';
 const FeedScreen = ({ navigation }) => {
   const scrollViewRef = useRef<any>(null);
   const queryClient = useQueryClient();
-  const [mode, setMode] = useState(__DEV__ ? 'dev' : 'prod');
 
   useScrollToTop(scrollViewRef);
 
@@ -53,11 +52,6 @@ const FeedScreen = ({ navigation }) => {
       clearInterval(te);
     };
   }, [yPos]);
-
-  const handleReset = () => {
-    scrollViewRef.current.scrollTo({ y: 0 });
-    Updates.reloadAsync();
-  };
 
   if (feedListIsLoading) {
     return <MainLottie />;
