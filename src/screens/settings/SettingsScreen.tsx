@@ -7,6 +7,8 @@ import MultiTapButton from '../../components/buttons/MultipleTapButton';
 import { clearStorage } from '../../utils/hooks/asyncStorage/Logout';
 import { LoginAPI } from '../../utils/api/LoginAPI';
 import { useMutation } from '@tanstack/react-query';
+import * as Updates from 'expo-updates';
+import { CommonActions } from '@react-navigation/native';
 
 const SettingsScreen = ({ navigation }) => {
   const theme = useTheme();
@@ -24,8 +26,16 @@ const SettingsScreen = ({ navigation }) => {
 
   const handleLogOut = () => {
     setIsLogoutModalVisible(false);
-    clearStorage();
-    NativeModules.DevSettings.reload();
+    clearStorage().then(() => {
+      // Updates moudle is not working on dev mode.
+      Updates.reloadAsync();
+      // navigation.dispatch(
+      //   CommonActions.reset({
+      //     index: 0,
+      //     routes: [{ name: 'Login' }], // Replace 'Root' with the name of your initial route
+      //   }),
+      // );
+    });
   };
 
   const handleWithdrawal = () => {
