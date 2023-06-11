@@ -37,10 +37,10 @@ const SettingsScreen = () => {
     clearStorage().then(() => {
       if (__DEV__) {
         NativeModules.DevSettings.reload();
-        reloadAndReset(navigation, 'Login');
+        reloadAndReset(navigation, 'SignUp');
       } else {
         Updates.reloadAsync().then(() => {
-          reloadAndReset(navigation, 'Login');
+          reloadAndReset(navigation, 'SignUp');
         });
       }
     });
