@@ -37,7 +37,12 @@ const UserSpecificChallengeSection = ({
           name="arrowright"
           size={24}
           color="black"
-          onPress={() => alert('챌린지 상세 ')}
+          onPress={() =>
+            navigation.navigate('ChallengeDetail', {
+              challengeId: challenge.challengeId,
+              challengeName: challenge.challengeName,
+            })
+          }
         />
       </View>
 
