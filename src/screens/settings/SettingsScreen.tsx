@@ -8,10 +8,12 @@ import { clearStorage } from '../../utils/hooks/asyncStorage/Logout';
 import { LoginAPI } from '../../utils/api/LoginAPI';
 import { useMutation } from '@tanstack/react-query';
 import * as Updates from 'expo-updates';
+import { useNavigation } from '@react-navigation/native';
+import { reloadAndReset } from '../../utils/helper/logoutAndWithdraw/removeStackAndNavigate';
 
-const SettingsScreen = ({ navigation }) => {
+const SettingsScreen = () => {
   const theme = useTheme();
-
+  const navigation = useNavigation();
   const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
   const [isWithdrawalModalVisible, setIsWithdrawalModalVisible] = useState(false);
 
@@ -19,21 +21,28 @@ const SettingsScreen = ({ navigation }) => {
     onSuccess: () => {
       clearStorage();
       setIsWithdrawalModalVisible(false);
-      NativeModules.DevSettings.reload();
+      if (__DEV__) {
+        NativeModules.DevSettings.reload();
+        reloadAndReset(navigation, 'SignUp');
+      } else {
+        Updates.reloadAsync().then(() => {
+          reloadAndReset(navigation, 'SignUp');
+        });
+      }
     },
   });
 
   const handleLogOut = () => {
     setIsLogoutModalVisible(false);
     clearStorage().then(() => {
-      NativeModules.DevSettings.reload();
-      Updates.reloadAsync()
-        .then(() => {
-          alert('로그아웃 되었습니다.');
-        })
-        .catch((err) => {
-          alert(err.message);
+      if (__DEV__) {
+        NativeModules.DevSettings.reload();
+        reloadAndReset(navigation, 'SignUp');
+      } else {
+        Updates.reloadAsync().then(() => {
+          reloadAndReset(navigation, 'SignUp');
         });
+      }
     });
   };
 

@@ -8,6 +8,7 @@ import BottomFixButton from '../../components/buttons/BottomFixButton';
 import { formatChallengeText } from '../../utils/helper/UserSpecificChallengeDateFormatter/challengeTextFormatter';
 import { AntDesign } from '@expo/vector-icons';
 import TodayBubble from './TodayBubble';
+import { useNavigation } from '@react-navigation/native';
 
 interface UserSpecificChallengeSectionProps {
   userSpecificChallenge: UserSpecificChallenge['data'];
@@ -17,7 +18,7 @@ const UserSpecificChallengeSection = ({
   userSpecificChallenge: challenge,
 }: UserSpecificChallengeSectionProps) => {
   if (!challenge) return null;
-
+  const navigation = useNavigation();
   const theme = useTheme();
 
   const { formattedWeekWithCheck, today } = useMemo(
@@ -36,7 +37,12 @@ const UserSpecificChallengeSection = ({
           name="arrowright"
           size={24}
           color="black"
-          onPress={() => alert('챌린지 상세 ')}
+          onPress={() =>
+            navigation.navigate('ChallengeDetail', {
+              challengeId: challenge.challengeId,
+              challengeName: challenge.challengeName,
+            })
+          }
         />
       </View>
 
@@ -58,7 +64,7 @@ const UserSpecificChallengeSection = ({
         isActive={true}
         text={'챌린지에 인사이트 적기'}
         width={100}
-        onPress={() => alert('pressed')}
+        onPress={() => navigation.navigate('Upload')}
         buttonStyle={styles.button}
         textStyle={styles.buttonText}
       />
