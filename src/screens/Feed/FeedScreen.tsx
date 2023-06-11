@@ -6,15 +6,18 @@ import { useScrollToTop } from '@react-navigation/native';
 import GoToUploadButton from '../../components/buttons/GoToUploadButton';
 import { useQueryClient } from '@tanstack/react-query';
 import { FeedQueryKeys } from '../../utils/api/FeedAPI';
-import { RefreshControl, ScrollView, StyleSheet, Text } from 'react-native';
+import { Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { IOScrollView } from 'react-native-intersection-observer';
 import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChallenge';
 import MainLottie from '../../components/lotties/MainLottie';
 import MainTabHeader from '../../components/header/MainTabHeader';
+import * as Updates from 'expo-updates';
 
 const FeedScreen = ({ navigation }) => {
   const scrollViewRef = useRef<any>(null);
   const queryClient = useQueryClient();
+  const [mode, setMode] = useState(__DEV__ ? 'dev' : 'prod');
+
   useScrollToTop(scrollViewRef);
 
   const { feedList, feedListIsLoading, touchBookMark, fetchNextPage, feedListQueryClient } =
@@ -50,6 +53,11 @@ const FeedScreen = ({ navigation }) => {
       clearInterval(te);
     };
   }, [yPos]);
+
+  const handleReset = () => {
+    scrollViewRef.current.scrollTo({ y: 0 });
+    Updates.reloadAsync();
+  };
 
   if (feedListIsLoading) {
     return <MainLottie />;

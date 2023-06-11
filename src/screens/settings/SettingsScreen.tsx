@@ -27,14 +27,16 @@ const SettingsScreen = ({ navigation }) => {
   const handleLogOut = () => {
     setIsLogoutModalVisible(false);
     clearStorage().then(() => {
-      // Updates moudle is not working on dev mode.
-      Updates.reloadAsync();
-      // navigation.dispatch(
-      //   CommonActions.reset({
-      //     index: 0,
-      //     routes: [{ name: 'Login' }], // Replace 'Root' with the name of your initial route
-      //   }),
-      // );
+      NativeModules.DevSettings.reload();
+      // reloads do not work with eas update.
+      // expo-cli
+      Updates.reloadAsync()
+        .then(() => {
+          alert('로그아웃 되었습니다.');
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
     });
   };
 
