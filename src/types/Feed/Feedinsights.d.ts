@@ -14,6 +14,7 @@ interface InsightData {
   reaction: Reaction;
   bookmark: boolean;
   writer: InsightWriter;
+  bookmarkedAt?: string;
 }
 
 interface Link {
