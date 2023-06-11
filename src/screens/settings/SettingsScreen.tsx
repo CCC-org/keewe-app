@@ -8,11 +8,11 @@ import { clearStorage } from '../../utils/hooks/asyncStorage/Logout';
 import { LoginAPI } from '../../utils/api/LoginAPI';
 import { useMutation } from '@tanstack/react-query';
 import * as Updates from 'expo-updates';
-import { CommonActions } from '@react-navigation/native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 
-const SettingsScreen = ({ navigation }) => {
+const SettingsScreen = () => {
   const theme = useTheme();
-
+  const navigation = useNavigation();
   const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
   const [isWithdrawalModalVisible, setIsWithdrawalModalVisible] = useState(false);
 
@@ -24,15 +24,28 @@ const SettingsScreen = ({ navigation }) => {
     },
   });
 
+  const handleDeleteStackHistory = () => {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: 'Feed' }],
+      }),
+    );
+  };
+
   const handleLogOut = () => {
     setIsLogoutModalVisible(false);
     clearStorage().then(() => {
-      NativeModules.DevSettings.reload();
-      // reloads do not work with eas update.
-      // expo-cli
+      // Logic for reloading the app, and removing history stack.
+      // Not sure if works on iOS.
       Updates.reloadAsync()
         .then(() => {
-          alert('로그아웃 되었습니다.');
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: 'Login' }],
+            }),
+          );
         })
         .catch((err) => {
           alert(err.message);
@@ -67,6 +80,9 @@ const SettingsScreen = ({ navigation }) => {
   return (
     <>
       <ScrollView>
+        <Pressable onPress={handleDeleteStackHistory} style={styles.settingOption}>
+          <Text style={theme.fonts.text.body1.regular}>Delete Stack</Text>
+        </Pressable>
         <Pressable onPress={() => navigation.navigate('FolderEdit')} style={styles.settingOption}>
           <Text style={theme.fonts.text.body1.regular}>폴더 편집</Text>
         </Pressable>
