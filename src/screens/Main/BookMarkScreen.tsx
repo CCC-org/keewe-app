@@ -21,7 +21,6 @@ const BookMarkScreen = ({ navigation }) => {
     const unsubscribe = navigation.addListener('focus', () => {
       queryClient.invalidateQueries(FeedQueryKeys.getBookMarkFeed());
     });
-
     return unsubscribe;
   }, [navigation]);
 
