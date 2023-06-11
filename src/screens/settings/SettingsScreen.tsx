@@ -7,6 +7,7 @@ import MultiTapButton from '../../components/buttons/MultipleTapButton';
 import { clearStorage } from '../../utils/hooks/asyncStorage/Logout';
 import { LoginAPI } from '../../utils/api/LoginAPI';
 import { useMutation } from '@tanstack/react-query';
+import * as Updates from 'expo-updates';
 
 const SettingsScreen = ({ navigation }) => {
   const theme = useTheme();
@@ -24,8 +25,16 @@ const SettingsScreen = ({ navigation }) => {
 
   const handleLogOut = () => {
     setIsLogoutModalVisible(false);
-    clearStorage();
-    NativeModules.DevSettings.reload();
+    clearStorage().then(() => {
+      NativeModules.DevSettings.reload();
+      Updates.reloadAsync()
+        .then(() => {
+          alert('로그아웃 되었습니다.');
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    });
   };
 
   const handleWithdrawal = () => {

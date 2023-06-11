@@ -21,7 +21,7 @@ export const FeedAPI = {
   getBookMarkFeed: async (cursor: string, limit: number) => {
     const currentDate = new Date().toISOString().slice(0, 23);
     const URL = `https://api-keewe.com/api/v1/insight/bookmark?cursor=${
-      !cursor ? currentDate : cursor
+      !cursor ? currentDate : cursor.slice(0, 23)
     }&limit=${String(limit)}`;
     try {
       const response = await httpClient.get<FeedInsight>(URL);
