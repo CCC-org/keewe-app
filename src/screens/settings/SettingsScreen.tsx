@@ -9,6 +9,7 @@ import { LoginAPI } from '../../utils/api/LoginAPI';
 import { useMutation } from '@tanstack/react-query';
 import * as Updates from 'expo-updates';
 import { CommonActions, useNavigation } from '@react-navigation/native';
+import { reloadAndReset } from '../../utils/helper/logoutAndWithdraw/removeStackAndNavigate';
 
 const SettingsScreen = () => {
   const theme = useTheme();
@@ -20,36 +21,28 @@ const SettingsScreen = () => {
     onSuccess: () => {
       clearStorage();
       setIsWithdrawalModalVisible(false);
-      NativeModules.DevSettings.reload();
+      if (__DEV__) {
+        NativeModules.DevSettings.reload();
+        reloadAndReset(navigation, 'SignUp');
+      } else {
+        Updates.reloadAsync().then(() => {
+          reloadAndReset(navigation, 'SignUp');
+        });
+      }
     },
   });
-
-  const handleDeleteStackHistory = () => {
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: 'Feed' }],
-      }),
-    );
-  };
 
   const handleLogOut = () => {
     setIsLogoutModalVisible(false);
     clearStorage().then(() => {
-      // Logic for reloading the app, and removing history stack.
-      // Not sure if works on iOS.
-      Updates.reloadAsync()
-        .then(() => {
-          navigation.dispatch(
-            CommonActions.reset({
-              index: 0,
-              routes: [{ name: 'Login' }],
-            }),
-          );
-        })
-        .catch((err) => {
-          alert(err.message);
+      if (__DEV__) {
+        NativeModules.DevSettings.reload();
+        reloadAndReset(navigation, 'Login');
+      } else {
+        Updates.reloadAsync().then(() => {
+          reloadAndReset(navigation, 'Login');
         });
+      }
     });
   };
 
@@ -80,9 +73,6 @@ const SettingsScreen = () => {
   return (
     <>
       <ScrollView>
-        <Pressable onPress={handleDeleteStackHistory} style={styles.settingOption}>
-          <Text style={theme.fonts.text.body1.regular}>Delete Stack</Text>
-        </Pressable>
         <Pressable onPress={() => navigation.navigate('FolderEdit')} style={styles.settingOption}>
           <Text style={theme.fonts.text.body1.regular}>폴더 편집</Text>
         </Pressable>
