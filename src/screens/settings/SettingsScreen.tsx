@@ -8,7 +8,7 @@ import { clearStorage } from '../../utils/hooks/asyncStorage/Logout';
 import { LoginAPI } from '../../utils/api/LoginAPI';
 import { useMutation } from '@tanstack/react-query';
 import * as Updates from 'expo-updates';
-import { CommonActions, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { reloadAndReset } from '../../utils/helper/logoutAndWithdraw/removeStackAndNavigate';
 
 const SettingsScreen = () => {
