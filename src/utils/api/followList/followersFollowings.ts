@@ -8,22 +8,37 @@ export const FollowersFollowingsKeys = {
 };
 
 export const FollowersFollowingsApi = {
-  getFollowersFollowings: async () => {
+  getFollowersFollowings: async (searchValue: string) => {
     const token = await getAccessToken();
-
+    const URL = 'https://api-keewe.com/api/v1/invitee';
     try {
-      const response = await httpClient.get<FollowersFollowings>(
-        'https://api-keewe.com/api/v1/invitee' + '?' + `cursor=${getTime()}&limit=20`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+      if (!searchValue) {
+        const response = await httpClient.get<FollowersFollowings>(
+          URL + '?' + `cursor=${getTime()}&limit=30`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           },
-        },
-      );
-      if (response.data.code !== 200) {
-        throw new Error(response.data.message);
+        );
+        if (response.data.code !== 200) {
+          throw new Error(response.data.message);
+        }
+        return response.data.data;
+      } else {
+        const response = await httpClient.get<FollowersFollowings>(
+          `${URL}/search?searchWord=${searchValue}&limit=20`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        if (response.data.code !== 200) {
+          throw new Error(response.data.message);
+        }
+        return response.data.data;
       }
-      return response.data.data;
     } catch (error) {
       console.log(error);
     }
