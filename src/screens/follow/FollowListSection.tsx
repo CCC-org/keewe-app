@@ -13,6 +13,7 @@ import { useTheme } from 'react-native-paper';
 import FollowListFollowButton from './FollowListFollowButton';
 import { useNavigation } from '@react-navigation/native';
 import { getUserId } from '../../utils/hooks/asyncStorage/Login';
+import { useGetUserId } from '../../utils/hooks/useGetUserId';
 interface FollowListSectionProps {
   followList: InfiniteData<FollowData | undefined> | undefined;
   fetchNextPage: (
@@ -22,12 +23,12 @@ interface FollowListSectionProps {
 }
 
 const FollowListSection = ({ followList, mutation }: FollowListSectionProps) => {
+  const userId = useGetUserId();
   const flattenData = useMemo(() => {
     return followList?.pages.flatMap((page) => {
       return page?.users;
     });
   }, [followList]);
-
   const theme = useTheme();
   const navigation = useNavigation();
   const handlePressForFollow = (id: string | number) => {
@@ -76,10 +77,17 @@ const FollowListSection = ({ followList, mutation }: FollowListSectionProps) => 
                 </>
               </View>
             </Pressable>
-            <FollowListFollowButton
+
+            {/* <FollowListFollowButton
               onPress={() => handlePressForFollow(item.id)}
               isFollowing={item.follow}
-            />
+            /> */}
+            {item.id !== userId && (
+              <FollowListFollowButton
+                onPress={() => handlePressForFollow(item.id)}
+                isFollowing={item.follow}
+              />
+            )}
           </View>
         ) : null
       }
