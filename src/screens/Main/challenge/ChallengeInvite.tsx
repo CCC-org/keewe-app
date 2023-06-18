@@ -1,5 +1,5 @@
 import { View, Pressable, StyleSheet, Text, TextInput } from 'react-native';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { SvgXml } from 'react-native-svg';
 import { addFriend } from '../../../../assets/svgs/addFriend';
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
@@ -11,6 +11,7 @@ import {
   FollowersFollowingsApi,
   FollowersFollowingsKeys,
 } from '../../../utils/api/followList/followersFollowings';
+import { debounce } from 'lodash';
 
 const ChallengeInvite = () => {
   const theme = useTheme();
@@ -34,9 +35,11 @@ const ChallengeInvite = () => {
     else setIsButtonEnabled(false);
   }, [searchValue]);
 
-  const { data: invitationData } = useQuery({
+  const inputValueRef = useRef<string>('');
+
+  const { data: invitationData, refetch } = useQuery({
     queryKey: FollowersFollowingsKeys.FollowersFollowingsKeys(),
-    queryFn: () => FollowersFollowingsApi.getFollowersFollowings(),
+    queryFn: () => FollowersFollowingsApi.getFollowersFollowings(inputValueRef.current),
   });
 
   const handleGoSearch = () => {
@@ -48,9 +51,14 @@ const ChallengeInvite = () => {
     modalRef.current?.dismiss();
   };
 
-  const handleChangeText = (inputValue: string) => {
-    setSearchValue(inputValue);
-  };
+  const handleChangeText = useCallback(
+    debounce((inputValue: string) => {
+      inputValueRef.current = inputValue;
+      setSearchValue(inputValue);
+      refetch();
+    }, 1000),
+    [],
+  );
 
   return (
     <>

@@ -12,9 +12,17 @@ interface FollowersAndFollowingsProps {
 const FollowersAndFollowings = ({ users }: FollowersAndFollowingsProps) => {
   const theme = useTheme();
 
+  if (!users || users.length === 0) {
+    return (
+      <View style={styles.empty}>
+        <Text style={theme.fonts.text.body1.regular}>초대 가능 대상이 없습니다.</Text>
+      </View>
+    );
+  }
+
   return (
     <>
-      {(users ?? []).map((user) => (
+      {users.map((user) => (
         <View style={styles.container} key={user.userId}>
           <View style={styles.userContainer}>
             <View
@@ -31,7 +39,7 @@ const FollowersAndFollowings = ({ users }: FollowersAndFollowingsProps) => {
             </View>
             <Text style={theme.fonts.text.body1.bold}>{user.nickname}</Text>
           </View>
-          <Pressable onPress={() => alert('Invite ' + user.nickname)}>
+          <Pressable onPress={() => alert(user.nickname + ' 님을 초대하였습니다.')}>
             <Text
               style={{
                 ...theme.fonts.text.body1.regular,
@@ -68,5 +76,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 16,
     marginVertical: 8,
+  },
+  empty: {
+    marginTop: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
