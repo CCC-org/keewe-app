@@ -5,7 +5,6 @@ import { InView } from 'react-native-intersection-observer';
 import FeedItem from './FeedItem';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
-import { InsightData, InsightWriter } from '../../types/Feed/Feedinsights';
 
 interface FeedListProps {
   feedList: InfiniteData<InsightData[] | undefined> | undefined;
