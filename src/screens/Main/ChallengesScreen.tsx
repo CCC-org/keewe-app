@@ -137,7 +137,10 @@ const ChallengesScreen = ({ navigation }) => {
         isActive={true}
         text={'새로운 챌린지 만들기'}
         width={100}
-        onPress={() => setModalVisible(true)}
+        onPress={() => {
+          if (participationCheck?.participation) setModalVisible(true);
+          else navigation.navigate('CategorySelect');
+        }}
         buttonStyle={styles.button}
         textStyle={styles.buttonText}
       />

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTheme } from 'react-native-paper';
 import FeedList from '../Feed/FeedList';
@@ -36,14 +36,16 @@ const BookMarkScreen = ({ navigation }) => {
   const [yPos, setYPos] = useState(0);
 
   useEffect(() => {
-    const te = setInterval(() => {
-      scrollViewRef.current.scrollTo({ y: yPos });
-    }, 1000);
+    if (feedList?.pages[0]?.length) {
+      const te = setInterval(() => {
+        scrollViewRef.current.scrollTo({ y: yPos });
+      }, 1000);
 
-    return () => {
-      clearInterval(te);
-    };
-  }, [yPos]);
+      return () => {
+        clearInterval(te);
+      };
+    }
+  }, [yPos, feedList]);
 
   return (
     <>
@@ -57,14 +59,27 @@ const BookMarkScreen = ({ navigation }) => {
         }}
       >
         <MainTabHeader text="북마크" />
-        <FeedList
-          scrollViewRef={scrollViewRef}
-          feedList={feedList}
-          feedListQueryClient={feedListQueryClient}
-          fetchNextPage={fetchNextPage}
-          touchBookMark={touchBookMark}
-          feedListIsLoading={feedListIsLoading}
-        />
+        {feedList?.pages[0]?.length ? (
+          <FeedList
+            scrollViewRef={scrollViewRef}
+            feedList={feedList}
+            feedListQueryClient={feedListQueryClient}
+            fetchNextPage={fetchNextPage}
+            touchBookMark={touchBookMark}
+            feedListIsLoading={feedListIsLoading}
+          />
+        ) : (
+          <Text
+            style={{
+              fontFamily: 'pretendardSemiBold',
+              color: `${theme.colors.graphic.black}30`,
+              textAlign: 'center',
+              ...styles.placeHolder,
+            }}
+          >
+            북마크한 인사이트가 없어요
+          </Text>
+        )}
       </IOScrollView>
     </>
   );
@@ -72,4 +87,9 @@ const BookMarkScreen = ({ navigation }) => {
 
 export default BookMarkScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  placeHolder: {
+    fontSize: 16,
+    marginTop: '50%',
+  },
+});
