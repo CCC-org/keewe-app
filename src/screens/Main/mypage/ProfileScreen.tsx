@@ -46,7 +46,6 @@ const ProfileScreen = ({ navigation, route }) => {
   const { data: profile, isLoading: isProfileLoading } = useQuery({
     queryKey: MypageQueryKeys.getProfile({ targetId: userId }),
     queryFn: () => MypageAPI.getProfile({ targetId: userId, insightId }),
-    refetchInterval: 1000 * 120,
   });
 
   const { data: representativeTitles, isLoading: isrepresentativeTitlesLoading } = useQuery(
