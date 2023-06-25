@@ -45,14 +45,14 @@ const CountingTextArea = (props: CountingTextAreaProps) => {
       )}
       <View style={{ ...styles.intro, height: height ?? 140 }}>
         <TextInput
-          value={inputValue}
+          // value={inputValue}
           autoFocus={autoFocus}
           placeholder={placeholder}
           onChangeText={(text) => setInputValue(text)}
           style={styles.input}
           // multiline sets texts ios to top, android to center.
           // needs textAlignVertical to top on android
-          multiline={true}
+          multiline={false}
           selectionColor={'black'}
         />
         <Text style={{ ...styles.letterNumber, color: letterNumberColor, ...props.limitTextStyle }}>
