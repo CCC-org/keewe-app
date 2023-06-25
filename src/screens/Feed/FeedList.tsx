@@ -62,6 +62,7 @@ const FeedList = ({
                     key={insight.id}
                     insight={insight}
                     localId={String(userId)}
+                    feedListQueryClient={feedListQueryClient}
                   />
                 </Fragment>
               );

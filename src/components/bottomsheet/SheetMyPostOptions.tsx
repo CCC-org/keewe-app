@@ -1,10 +1,13 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text } from 'react-native';
 import React, { useState } from 'react';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { useTheme } from 'react-native-paper';
 import TwoButtonModal from '../modal/TwoButtonModal';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { useNavigation } from '@react-navigation/native';
+import httpClient from '../../utils/api/BaseHttpClient';
+import { QueryClient } from '@tanstack/react-query';
+import { FeedQueryKeys } from '../../utils/api/FeedAPI';
 
 interface BSMyPostOptionsProps {
   modalRef: React.RefObject<BottomSheetModalMethods>;
@@ -16,6 +19,7 @@ interface BSMyPostOptionsProps {
   image?: string;
   contents?: string;
   link?: string;
+  feedListQueryClient?: QueryClient;
 }
 
 const SheetMyPostOptions = ({
@@ -28,19 +32,26 @@ const SheetMyPostOptions = ({
   image,
   contents,
   link,
+  feedListQueryClient,
 }: BSMyPostOptionsProps) => {
   const navigation = useNavigation();
   const { fonts } = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const handleDeleteInsight = () => {
-    Toast.show({
-      type: 'snackbar',
-      text1: '인사이트를 삭제했어요.',
-      position: 'bottom',
-      text2: '아직 인사이트 삭제 api가 개발이안된듯',
-    });
-    setIsModalVisible(false);
-    modalRef.current?.close();
+  const handleDeleteInsight = async () => {
+    const URL = `https://api-keewe.com/api/v1/insight/${insightId}`;
+    try {
+      await httpClient.delete(URL);
+      Toast.show({
+        type: 'snackbar',
+        text1: '인사이트를 삭제했어요.',
+        position: 'bottom',
+      });
+      setIsModalVisible(false);
+      modalRef.current?.close();
+      feedListQueryClient?.invalidateQueries(FeedQueryKeys.getFeed());
+    } catch (err) {
+      console.log('delete err: ', err);
+    }
   };
 
   const handleNavigateToUploadForEdit = () => {

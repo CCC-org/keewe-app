@@ -6,6 +6,7 @@ import SheetMyPostOptions from '../../components/bottomsheet/SheetMyPostOptions'
 import SheetPostOptions from '../../components/bottomsheet/SheetPostOptions';
 import { SvgXml } from 'react-native-svg';
 import { threeDots } from '../../../assets/svgs/constantSvgs/threeDots';
+import { QueryClient } from '@tanstack/react-query';
 
 interface FeedVerticalDotsProps {
   userId: number;
@@ -16,6 +17,7 @@ interface FeedVerticalDotsProps {
   image?: string;
   contents?: string;
   link?: string;
+  feedListQueryClient?: QueryClient;
 }
 
 const FeedVerticalDots = ({
@@ -27,6 +29,7 @@ const FeedVerticalDots = ({
   image,
   contents,
   link,
+  feedListQueryClient,
 }: FeedVerticalDotsProps) => {
   const myUserId = useGetUserId();
   const isMyPost = myUserId === userId;
@@ -61,6 +64,7 @@ const FeedVerticalDots = ({
             image={image}
             contents={contents}
             link={link}
+            feedListQueryClient={feedListQueryClient}
           />
         ) : (
           <SheetPostOptions
