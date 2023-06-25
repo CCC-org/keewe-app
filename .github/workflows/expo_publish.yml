@@ -18,14 +18,14 @@ jobs:
       with:
         node-version: '16'
 
-    - name: Install Expo CLI
-      run: npm install -g expo-cli
+    - name: Install Eas CLI
+      run: npm install -g eas-cli
 
     - name: Install dependencies
       run: npm install
 
-    - name: Expo login
-      run: expo login -u ${{ secrets.EXPO_USERNAME }} -p ${{ secrets.EXPO_PASSWORD }}
+    - name: Eas login
+      run: eas login -u ${{ secrets.EXPO_USERNAME }} -p ${{ secrets.EXPO_PASSWORD }}
 
-    - name: Expo publish
-      run: expo publish
+    - name: Eas update
+      run: eas update
