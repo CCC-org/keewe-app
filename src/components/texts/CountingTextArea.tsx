@@ -12,6 +12,7 @@ interface CountingTextAreaProps {
   height?: any;
   autoFocus?: boolean;
   limitTextStyle?: any;
+  multiline?: boolean;
 }
 
 const CountingTextArea = (props: CountingTextAreaProps) => {
@@ -24,6 +25,7 @@ const CountingTextArea = (props: CountingTextAreaProps) => {
     limit,
     height,
     autoFocus = false,
+    multiline,
   } = props;
   const theme = useTheme();
   const [letterNumberColor, setLetterNumberColor] = useState<string>('grey');
@@ -45,6 +47,7 @@ const CountingTextArea = (props: CountingTextAreaProps) => {
       )}
       <View style={{ ...styles.intro, height: height ?? 140 }}>
         <TextInput
+          // BUG: making TextInput a controlled component causes it to make unexpected cursor jumps and duplicate characters.
           // value={inputValue}
           autoFocus={autoFocus}
           placeholder={placeholder}
@@ -52,7 +55,7 @@ const CountingTextArea = (props: CountingTextAreaProps) => {
           style={styles.input}
           // multiline sets texts ios to top, android to center.
           // needs textAlignVertical to top on android
-          multiline={false}
+          multiline={multiline ?? true}
           selectionColor={'black'}
         />
         <Text style={{ ...styles.letterNumber, color: letterNumberColor, ...props.limitTextStyle }}>

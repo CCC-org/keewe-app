@@ -48,6 +48,7 @@ const LinkSheetContent = ({
         setInputValue={setLinkText}
         autoFocus={true}
         limitTextStyle={{ color: 'white' }}
+        multiline={false}
       />
     </View>
   );
