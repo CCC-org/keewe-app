@@ -25,7 +25,7 @@ jobs:
       run: npm install
 
     - name: Eas login
-      run: eas login -u ${{ secrets.EXPO_USERNAME }} -p ${{ secrets.EXPO_PASSWORD }}
+      run: eas login ${{ secrets.EXPO_USERNAME }} ${{ secrets.EXPO_PASSWORD }}
 
     - name: Eas update
       run: eas update
