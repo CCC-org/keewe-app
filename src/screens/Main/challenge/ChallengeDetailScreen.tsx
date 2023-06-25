@@ -163,6 +163,7 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
       return (
         <View key={`${tabIndex} ${index}`} style={{ marginHorizontal: 16 }}>
           <ChallengeUserProfile
+            userId={item.userId}
             nickname={item.nickname}
             imageURL={item.imageURL}
             currentRecord={item.currentRecord}

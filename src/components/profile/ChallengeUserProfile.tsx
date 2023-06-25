@@ -5,6 +5,7 @@ import { navigate } from '../../utils/hooks/navigaton/navigator';
 import ProfileAvatar from './ProfileAvatar';
 
 interface ChallengeUserProfileProps {
+  userId: number;
   nickname: string;
   imageURL: string;
   currentRecord: number;
@@ -13,6 +14,7 @@ interface ChallengeUserProfileProps {
 }
 
 const ChallengeUserProfile = ({
+  userId,
   nickname,
   imageURL,
   currentRecord,
@@ -21,7 +23,9 @@ const ChallengeUserProfile = ({
 }: ChallengeUserProfileProps) => {
   return (
     <View style={styles.mainContainer}>
-      <ProfileAvatar size={48} image={imageURL} />
+      <Pressable onPress={() => navigate('Profile', { userId })}>
+        <ProfileAvatar size={48} image={imageURL} />
+      </Pressable>
       <View style={styles.description}>
         <View style={styles.name}>
           <Text style={{ fontFamily: 'pretendardSemiBold', fontSize: 16 }}>{nickname}</Text>
