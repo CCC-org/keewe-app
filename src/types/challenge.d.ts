@@ -156,6 +156,7 @@ interface ChallengeFriendsGetResponse {
   message: string;
   code: number;
   data: {
+    userId: number;
     nickname: string;
     imageURL: string;
     currentRecord: number;

@@ -14,10 +14,12 @@
     },
     "updates": {
       "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/662b6040-56c8-42ea-9623-ec66e4cfd04f",
+      "url": "https://u.expo.dev/05f9153d-ab7a-4208-a465-60a60c8c4ade",
       "enabled": true
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -35,6 +37,11 @@
     },
     "runtimeVersion": {
       "policy": "sdkVersion"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "05f9153d-ab7a-4208-a465-60a60c8c4ade"
+      }
     }
   }
 }
