@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, TextInput } from 'react-native';
 import React from 'react';
 
 interface BlandTextInputProps {

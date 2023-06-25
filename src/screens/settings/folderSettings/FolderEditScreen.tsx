@@ -1,8 +1,7 @@
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { MypageAPI, MypageQueryKeys } from '../../../utils/api/mypageAPI';
-import { querySuccessError } from '../../../utils/helper/queryReponse/querySuccessError';
 import { useGetUserId } from '../../../utils/hooks/useGetUserId';
 import MainLottie from '../../../components/lotties/MainLottie';
 import FolderEditSection from './FolderEditSection';
@@ -78,7 +77,7 @@ const FolderEditScreen = ({ navigation }) => {
   return (
     <>
       <FolderEditSection userFolderList={userFolderList} />
-      <BottomSheetModal ref={modalRefAdd} snapPoints={['28%']} backdropComponent={renderBackdrop}>
+      <BottomSheetModal ref={modalRefAdd} snapPoints={['52%']} backdropComponent={renderBackdrop}>
         <View>
           <BottomSheetHeader
             headerRightButton={() => (
