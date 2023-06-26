@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ScrollView, Pressable, RefreshControl } from 'react-native';
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import MypageProfile from '../../../components/profile/MypageProfile';
 import { useTheme } from 'react-native-paper';
 import { SvgXml } from 'react-native-svg';
@@ -14,11 +14,12 @@ import { useInfiniteFeed } from '../../../utils/hooks/feedInifiniteScroll/useInf
 import FeedList from '../../Feed/FeedList';
 import GoToUploadButton from '../../../components/buttons/GoToUploadButton';
 import { IOScrollView } from 'react-native-intersection-observer';
-import { useFocusEffect, useScrollToTop } from '@react-navigation/native';
+import { useScrollToTop } from '@react-navigation/native';
 import { settingsIcon } from '../../../../assets/svgs/settingsIcon';
 import { Feather } from '@expo/vector-icons';
 import { threeDots } from '../../../../assets/svgs/constantSvgs/threeDots';
 import MainLottie from '../../../components/lotties/MainLottie';
+import { notificationKeys } from '../../../utils/api/notification/notification';
 
 const MyPageScreen = ({ navigation, route }) => {
   const { userId } = route.params;
@@ -99,14 +100,8 @@ const MyPageScreen = ({ navigation, route }) => {
   const [pageRefreshing, setPageRefreshing] = useState(false);
   const onRefresh = () => {
     setPageRefreshing(true);
-    feedListQueryClient.invalidateQueries(MypageQueryKeys.getProfile({ targetId: userId }));
-    feedListQueryClient.invalidateQueries(
-      MypageQueryKeys.getRepresentativeTitles({ userId: userId }),
-    );
-    feedListQueryClient.invalidateQueries(MypageQueryKeys.getFolderList({ userId: userId }));
-    feedListQueryClient
-      .invalidateQueries(MypageQueryKeys.getFolderInsight(drawerId, userId))
-      .then(() => setPageRefreshing(false));
+    queryClient.invalidateQueries(notificationKeys.checkNotification());
+    feedListQueryClient.invalidateQueries(['mypage']).then(() => setPageRefreshing(false));
   };
 
   useEffect(() => {
@@ -121,6 +116,14 @@ const MyPageScreen = ({ navigation, route }) => {
     userFolderList,
     isUserFolderListLoading,
   ]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      feedListQueryClient.invalidateQueries(['mypage']);
+      queryClient.invalidateQueries(notificationKeys.checkNotification());
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   const handleFolderOption = async (tabId: number) => {
     const key = MypageQueryKeys.getFolderList({ userId: userId });

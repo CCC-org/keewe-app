@@ -90,8 +90,6 @@ const Tabs = () => {
           enteredByTab: true,
         }}
       />
-      {/* Root screen moved to settings. */}
-      {/* <Tab.Screen name="Root" component={RootScreen} /> */}
     </Tab.Navigator>
   );
 };

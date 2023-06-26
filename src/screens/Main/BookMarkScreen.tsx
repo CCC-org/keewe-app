@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTheme } from 'react-native-paper';
 import FeedList from '../Feed/FeedList';
@@ -8,6 +8,7 @@ import { FeedQueryKeys } from '../../utils/api/FeedAPI';
 import { IOScrollView } from 'react-native-intersection-observer';
 import { RefreshControl } from 'react-native-gesture-handler';
 import MainTabHeader from '../../components/header/MainTabHeader';
+import { notificationKeys } from '../../utils/api/notification/notification';
 
 const BookMarkScreen = ({ navigation }) => {
   const theme = useTheme();
@@ -20,6 +21,7 @@ const BookMarkScreen = ({ navigation }) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       queryClient.invalidateQueries(FeedQueryKeys.getBookMarkFeed());
+      queryClient.invalidateQueries(notificationKeys.checkNotification());
     });
     return unsubscribe;
   }, [navigation]);
@@ -28,6 +30,7 @@ const BookMarkScreen = ({ navigation }) => {
 
   const onRefresh = () => {
     setPageRefreshing(true);
+    queryClient.invalidateQueries(notificationKeys.checkNotification());
     feedListQueryClient
       .invalidateQueries(FeedQueryKeys.getBookMarkFeed())
       .then(() => setPageRefreshing(false));

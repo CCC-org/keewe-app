@@ -6,12 +6,12 @@ import { useScrollToTop } from '@react-navigation/native';
 import GoToUploadButton from '../../components/buttons/GoToUploadButton';
 import { useQueryClient } from '@tanstack/react-query';
 import { FeedQueryKeys } from '../../utils/api/FeedAPI';
-import { Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { RefreshControl } from 'react-native';
 import { IOScrollView } from 'react-native-intersection-observer';
 import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChallenge';
 import MainLottie from '../../components/lotties/MainLottie';
 import MainTabHeader from '../../components/header/MainTabHeader';
-import * as Updates from 'expo-updates';
+import { notificationKeys } from '../../utils/api/notification/notification';
 
 const FeedScreen = ({ navigation }) => {
   const scrollViewRef = useRef<any>(null);
@@ -25,8 +25,8 @@ const FeedScreen = ({ navigation }) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       queryClient.invalidateQueries(FeedQueryKeys.getFeed());
+      queryClient.invalidateQueries(notificationKeys.checkNotification());
     });
-
     return unsubscribe;
   }, [navigation]);
 
@@ -34,6 +34,7 @@ const FeedScreen = ({ navigation }) => {
 
   const onRefresh = () => {
     setPageRefreshing(true);
+    queryClient.invalidateQueries(notificationKeys.checkNotification());
     feedListQueryClient.invalidateQueries(FeedQueryKeys.getFeed());
     feedListQueryClient
       .invalidateQueries(UserSpecificChallengeQueryKeys.getUserSpecificChallenge())
@@ -83,11 +84,5 @@ const FeedScreen = ({ navigation }) => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  feedCtn: {
-    padding: 16.5,
-  },
-});
 
 export default FeedScreen;
