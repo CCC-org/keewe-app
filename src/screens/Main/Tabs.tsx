@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BookMarkScreen from './BookMarkScreen';
@@ -17,14 +17,22 @@ import {
 } from '../../constants/Icons/Navigation/NavigationIconsXml';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
 import MyPageScreen from './mypage/MyPageScreen';
-import { alarm } from '../../constants/Icons/alarm/alarm';
+import alarmEmpty from '../../constants/Icons/alarm/alarmEmpty';
+import alarmExist from '../../constants/Icons/alarm/alarmExist';
 import { useNavigation } from '@react-navigation/native';
+import { useQuery } from '@tanstack/react-query';
+import { notificationApi, notificationKeys } from '../../utils/api/notification/notification';
+
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
   const userId = useGetUserId();
 
   const navigation = useNavigation();
+
+  const { data } = useQuery(notificationKeys.checkNotification(), () =>
+    notificationApi.checkNotification(),
+  );
 
   return (
     <Tab.Navigator
@@ -34,7 +42,7 @@ const Tabs = () => {
         headerTitle: '',
         headerRight: () => (
           <Pressable onPress={() => navigation.navigate('Notification')}>
-            <SvgXml style={{ marginRight: 16 }} xml={alarm} />
+            <SvgXml style={{ marginRight: 16 }} xml={data?.exist ? alarmExist : alarmEmpty} />
           </Pressable>
         ),
       }}

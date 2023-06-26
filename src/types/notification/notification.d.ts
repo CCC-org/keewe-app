@@ -6,6 +6,12 @@ interface Notification {
   data: Data;
 }
 
+interface CheckNotification {
+  message: string;
+  code: number;
+  data: { exist: boolean };
+}
+
 interface Data {
   nextCursor: number;
   notifications: NotificationElement[];
