@@ -7,16 +7,13 @@ import FeedTextContent from './FeedTextContent';
 import { REACTIONS } from './constant';
 import ReactIconButton from '../../components/emoticons/ReactIconButton';
 import { useNavigation } from '@react-navigation/native';
-import { InsightData } from '../../types/Feed/Feedinsights';
-import { QueryClient } from '@tanstack/react-query';
 interface FeedItemProps {
   insight: InsightData;
   localId?: string;
-  feedListQueryClient?: QueryClient;
   onBookMarkClick: (id: number) => void;
 }
 
-const FeedItem = ({ insight, localId, feedListQueryClient, onBookMarkClick }: FeedItemProps) => {
+const FeedItem = ({ insight, localId, onBookMarkClick }: FeedItemProps) => {
   const { id, contents, createdAt, link, reaction, writer, bookmark } = insight;
   const navigation = useNavigation();
   const handleOnBookMarkPress = () => {
@@ -52,8 +49,7 @@ const FeedItem = ({ insight, localId, feedListQueryClient, onBookMarkClick }: Fe
           title={writer.title}
           image={writer.image}
           contents={contents}
-          link={link}
-          feedListQueryClient={feedListQueryClient}
+          link={link.url}
         />
       </View>
       <View style={styles.contentCtn}>

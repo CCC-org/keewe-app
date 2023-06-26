@@ -30,7 +30,6 @@ import ShareIconXml from '../../constants/Icons/DetailedPost/ShareIconXml';
 import { FeedQueryKeys } from '../../utils/api/FeedAPI';
 import FeedVerticalDots from '../Feed/FeedVerticalDots';
 import Toast from 'react-native-toast-message';
-import MainLottie from '../../components/lotties/MainLottie';
 import removeEscapeSequences from '../../utils/helper/strings/removeEscapeSequence';
 import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 
@@ -144,7 +143,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
               <SvgXml xml={ShareIconXml} />
             </Pressable>
             <FeedVerticalDots
-              contents={contents}
+              contents={insightResponse?.data?.contents ?? ''}
               link={removeEscapeSequences(insightResponse?.data?.link.url)}
               userName={profile?.data?.nickname}
               userId={profile?.data?.authorId}

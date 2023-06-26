@@ -17,8 +17,6 @@ const FeedTextContent = ({ contents, insightId, bookmark }: FeedTextContent) => 
     navigation.navigate('DetailedPost', {
       screen: 'DetailedPost',
       insightId,
-      bookmark,
-      contents,
     });
   };
 
