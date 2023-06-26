@@ -1,5 +1,6 @@
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import { Image, Pressable, StyleSheet, Text, View, RefreshControl } from 'react-native';
+import React, { useCallback, useRef, useState } from 'react';
+import { IOScrollView } from 'react-native-intersection-observer';
 import { ChallengeAPI, ChallengeQueryKeys } from '../../utils/api/ChallengeAPI';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import ChallengeProfile from '../../components/profile/ChallengeProfile';
@@ -12,12 +13,16 @@ import { timeConverter } from './challenge/constant';
 import TwoButtonModal from '../../components/modal/TwoButtonModal';
 import { useFocusEffect } from '@react-navigation/native';
 import MainTabHeader from '../../components/header/MainTabHeader';
+import { notificationKeys } from '../../utils/api/notification/notification';
 
 const ChallengesScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [participated, setParticipated] = useState<boolean>(false);
+  const [pageRefreshing, setPageRefreshing] = useState(false);
   const hideModal = () => setModalVisible(false);
   const queryClient = useQueryClient();
+
+  const scrollViewRef = useRef<any>(null);
 
   const { data: participationCheck } = useQuery(
     ['challenge', 'participation', 'check'],
@@ -59,15 +64,25 @@ const ChallengesScreen = ({ navigation }) => {
     () => ChallengeAPI.getChallengeHistoryCount(),
   );
 
+  const onRefresh = () => {
+    setPageRefreshing(true);
+    queryClient.invalidateQueries(notificationKeys.checkNotification());
+    queryClient.invalidateQueries(['challenge']).then(() => setPageRefreshing(false));
+  };
+
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       setParticipated(false);
       queryClient.invalidateQueries(['challenge']);
+      queryClient.invalidateQueries(notificationKeys.checkNotification());
     }, []),
   );
 
   return (
-    <ScrollView>
+    <IOScrollView
+      ref={scrollViewRef}
+      refreshControl={<RefreshControl refreshing={pageRefreshing} onRefresh={onRefresh} />}
+    >
       <MainTabHeader text="챌린지" />
       <TwoButtonModal
         dismissable={false}
@@ -215,7 +230,7 @@ const ChallengesScreen = ({ navigation }) => {
         </>
       )}
       <View style={{ backgroundColor: theme.colors.brand.surface.main, ...styles.divider }} />
-    </ScrollView>
+    </IOScrollView>
   );
 };
 

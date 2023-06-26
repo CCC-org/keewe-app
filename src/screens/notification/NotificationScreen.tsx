@@ -42,6 +42,7 @@ const NotificationScreen = ({ navigation }) => {
       }
 
       queryClient.setQueryData(notificationKeys.getNotificationList(), prev);
+      queryClient.invalidateQueries(notificationKeys.checkNotification());
     },
   });
 
