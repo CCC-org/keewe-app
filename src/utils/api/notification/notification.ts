@@ -31,7 +31,6 @@ export const notificationApi = {
       const response = await httpClient.get<CheckNotification>(
         'https://api-keewe.com/api/v1/notification/unread-existence',
       );
-      console.log(response.data);
       const data = response.data.data;
       return data;
     } catch (e) {

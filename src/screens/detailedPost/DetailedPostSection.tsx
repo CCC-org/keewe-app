@@ -94,12 +94,7 @@ const DetailedPostSection = ({
         </View>
       )}
       <View style={[styles.insightText]}>
-        <Text
-          style={[
-            theme.fonts.text.body1.regular,
-            { color: `${theme.colors.graphic.black}80`, lineHeight: 28 },
-          ]}
-        >
+        <Text style={[theme.fonts.text.body1.regular, { color: '#121314CC', lineHeight: 28 }]}>
           {isInsightLoading || isProfileLoading ? contents : insightText}
         </Text>
       </View>

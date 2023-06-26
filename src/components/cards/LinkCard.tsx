@@ -46,7 +46,6 @@ function createStyles(props: customProps) {
       borderWidth: 1,
       borderColor: '#12131420',
       borderRadius: 8,
-      height: 68,
       flexDirection: 'row',
     },
     title: {
@@ -54,10 +53,14 @@ function createStyles(props: customProps) {
       fontFamily: 'pretendard',
       fontWeight: 'bold',
       marginBottom: 2,
-      color: '#12131480',
+      color: '#121314CC',
     },
     description: { fontFamily: 'pretendard', fontWeight: '500', fontSize: 12, color: '#12131450' },
-    metadataTextContainerStyle: { paddingVertical: 12, paddingHorizontal: 18, width: '70%' },
+    metadataTextContainerStyle: {
+      paddingHorizontal: 16,
+      paddingVertical: 12,
+      width: '70%',
+    },
     imageContainer: {
       flex: 1,
       alignItems: 'center',

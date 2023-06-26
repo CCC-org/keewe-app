@@ -19,7 +19,8 @@ import LinkSheetContent from './LinkSheetContent';
 import UploadBottomContainer from './UploadBottomContainer';
 import Toast from 'react-native-toast-message';
 import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { InsightQueryKeys } from '../../utils/api/InsightAPI';
 
 const UploadScreen = ({ navigation, route }) => {
   const { isEdit, insight, link, insightId } = route?.params ?? {};
@@ -31,48 +32,36 @@ const UploadScreen = ({ navigation, route }) => {
   const [selectedFolder, setSelectedFolder] = useState<string>('');
   const linkSheetRef = useRef<BottomSheetModal>(null);
   const folderSheetRef = useRef<BottomSheetModal>(null);
-  const [isClicked, setIsClicked] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const queryClient = useQueryClient();
+
   const { data: challengeProgress, isLoading: isChallengeProgressLoading } = useQuery(
     ['challenge', 'participation'],
     ChallengeAPI.getChallengeProgress,
   );
   const snapPoints = useMemo(() => ['50%', '80%'], []);
+
+  const valid = useMemo(() => {
+    return isValidSite && !!linkText.length && !!insightText.length && !isLoading;
+  }, [isValidSite, linkText, insightText, isLoading]);
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderRightButton
-          backGroundColor={
-            isValidSite && !!linkText.length && !!insightText.length && !isClicked
-              ? '#b0e817'
-              : '#12131420'
-          }
-          textColor={
-            isValidSite && !!linkText.length && !!insightText.length && !isClicked
-              ? 'black'
-              : 'white'
-          }
+          backGroundColor={valid ? '#b0e817' : '#12131420'}
+          textColor={valid ? 'black' : 'white'}
           borderLine={false}
-          disabled={
-            isValidSite && !!linkText.length && !!insightText.length && !isClicked ? false : true
-          }
+          disabled={!valid}
           text="완료"
           handlePress={() => {
-            setIsClicked(true);
+            setIsLoading(true);
             handleSubmit();
           }}
         />
       ),
     });
-  }, [
-    linkText,
-    insightText,
-    navigation,
-    selectedFolder,
-    isSwitchOn,
-    isValidSite,
-    isClicked,
-    setIsClicked,
-  ]);
+  }, [linkText, insightText, valid, navigation, selectedFolder, isSwitchOn]);
 
   useEffect(() => {
     UploadApis.getFolderList().then(setFolders);
@@ -86,7 +75,6 @@ const UploadScreen = ({ navigation, route }) => {
       contents: insightText,
       drawerId: drawerId,
     };
-
     try {
       let response;
       if (isEdit) {
@@ -96,20 +84,22 @@ const UploadScreen = ({ navigation, route }) => {
           insightId: insightId,
         };
         response = await UploadApis.editInsight(editData);
+        queryClient.invalidateQueries(
+          InsightQueryKeys.getInsight({ insightId: response.data.insightId }),
+        );
       } else {
         response = await UploadApis.uploadInsight(data);
       }
-
       if (response.code === 200) {
-        // navigation.navigate('Feed');
-        // navigate to detailedPostScreen.
-        navigation.navigate('DetailedPost', {
-          insightId: response.data.insightId,
-          isMine: true,
-        });
+        if (isEdit) {
+          navigation.goBack();
+        } else {
+          navigation.navigate('DetailedPost', { insightId: response.data.insightId, isMine: true });
+        }
       } else {
         throw new Error(response.message);
       }
+      setIsLoading(false);
     } catch (error: unknown) {
       console.log(error);
     }
