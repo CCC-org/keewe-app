@@ -53,9 +53,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
     onMutate: async () => {
       const key = InsightQueryKeys.getProfile({ insightId });
       await queryClient.cancelQueries({ queryKey: key });
-      // Snapshot the previous value
       const prevState = queryClient.getQueryData<any>(key);
-      // Optimistically update to the new value
       queryClient.setQueryData(key, (old: any) => {
         const newProfile = {
           ...old,
@@ -67,8 +65,6 @@ const DetailedPostScreen = ({ navigation, route }) => {
 
         return newProfile;
       });
-
-      // Return a context object with the snapshotted value
       return { prevState };
     },
 
