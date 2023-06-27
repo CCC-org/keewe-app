@@ -6,6 +6,7 @@ import { blockApi, blockKeys } from '../../utils/api/block/block';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import BlockListSection from './BlockListSection';
 import { BlockedUser } from '../../types/block/block';
+import theme from '../../theme/light';
 
 const BlockedScreen = () => {
   const {
@@ -53,7 +54,19 @@ const BlockedScreen = () => {
     },
   });
 
-  if (!blockList?.length) return <Text>There is nothing to display</Text>;
+  if (!blockList?.length)
+    return (
+      <Text
+        style={{
+          fontFamily: 'pretendardSemiBold',
+          color: `${theme.colors.graphic.black}30`,
+          textAlign: 'center',
+          ...styles.placeHolder,
+        }}
+      >
+        차단한 계정이 없어요
+      </Text>
+    );
   if (isError) return <Text>Something went wrong</Text>;
   if (isLoading) return <Text>로딩중</Text>;
 
@@ -65,5 +78,9 @@ export default BlockedScreen;
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+  },
+  placeHolder: {
+    fontSize: 16,
+    marginTop: '60%',
   },
 });

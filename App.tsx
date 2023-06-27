@@ -117,6 +117,7 @@ export default function App() {
                             headerShown: true,
                             cardStyle: { backgroundColor: 'white' },
                             title: route.params.nickname ?? 'follows',
+                            ...headerOptions,
                           };
                         }}
                       />
