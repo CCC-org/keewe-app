@@ -17,7 +17,7 @@ const falseObject = {
 };
 
 const ShareScreen = ({ route }) => {
-  const { challenge, image, name, insightText } = route.params;
+  const { challenge, order, image, name, insightText } = route.params;
   const [color, setColor] = useState('#f1f1e9');
   const [buttonColorSelected, setButtonColorSelected] = useState({
     first: true,
@@ -84,7 +84,7 @@ const ShareScreen = ({ route }) => {
             }}
           >
             <ProfileAvatar style={{ marginRight: 10 }} size={36} image={image} />
-            <View>
+            <View style={{ marginLeft: 8 }}>
               <Text
                 style={[
                   theme.fonts.text.caption1,
@@ -98,7 +98,7 @@ const ShareScreen = ({ route }) => {
                   color: color === '#f1f1e9' ? '#12131450' : '#ffffff50',
                 }}
               >
-                {challenge ? `${challenge}에 대한 인사이트` : '인사이트'}
+                {challenge ? `${challenge}에 대한 ${order}번째 인사이트` : '인사이트'}
               </Text>
             </View>
           </View>

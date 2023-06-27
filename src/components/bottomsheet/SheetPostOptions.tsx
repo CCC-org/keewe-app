@@ -170,6 +170,7 @@ const SheetPostOptions = ({
             title: title ?? '',
             image: image ?? '',
             challenge: challengeData?.data?.challengeName ?? '',
+            order: challengeData?.data?.order,
             insightText: contents ?? '',
           });
           modalRef.current?.dismiss();

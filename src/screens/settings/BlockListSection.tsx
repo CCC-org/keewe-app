@@ -79,13 +79,11 @@ const BlockListSection = ({ blockList, mutation }: FollowListSectionProps) => {
                 차단 해제
               </Text>
             </Pressable>
-
             <TwoButtonModal
               dismissable={true}
               visible={isModal}
               onDismiss={() => setIsModal(false)}
-              mainTitle="title"
-              subTitle="subTitle"
+              mainTitle="차단을 해제할까요?"
               leftButtonText="취소"
               rightButtonText="해제하기"
               leftButtonPress={() => setIsModal(false)}

@@ -142,6 +142,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
               contents={insightResponse?.data?.contents ?? ''}
               link={removeEscapeSequences(insightResponse?.data?.link.url)}
               userName={profile?.data?.nickname}
+              nickname={profile?.data?.nickname}
               userId={profile?.data?.authorId}
               insightId={insightId}
             />
