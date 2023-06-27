@@ -56,6 +56,7 @@ export type RootStackParamList = {
   NicknameEditing: undefined;
   interestEditing: undefined;
   Profile: undefined;
+  MyProfile: undefined;
   Title: undefined;
   UserFollowers: undefined;
   IntroductionEditing: undefined;

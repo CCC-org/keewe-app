@@ -64,7 +64,7 @@ const Comment = ({
           onPress={() => {
             if (userId !== commentWriterId)
               navigation.navigate('Profile', { userId: commentWriterId });
-            else navigation.navigate('MyPage', { userId, enteredByTab: false });
+            else navigation.navigate('MyProfile', { userId, enteredByTab: false });
           }}
         >
           <MiniProfile

@@ -2,7 +2,6 @@ import { StyleSheet, Text, View, ScrollView, Pressable, RefreshControl } from 'r
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import MypageProfile from '../../../components/profile/MypageProfile';
 import { useTheme } from 'react-native-paper';
-import { SvgXml } from 'react-native-svg';
 import MypageTitle from '../../../components/title/MypageTitle';
 import DividerBar from '../../../components/bars/DividerBar';
 import InterestIcon from './InterestIcon';
@@ -15,9 +14,7 @@ import FeedList from '../../Feed/FeedList';
 import GoToUploadButton from '../../../components/buttons/GoToUploadButton';
 import { IOScrollView } from 'react-native-intersection-observer';
 import { useScrollToTop } from '@react-navigation/native';
-import { settingsIcon } from '../../../../assets/svgs/settingsIcon';
 import { Feather } from '@expo/vector-icons';
-import { threeDots } from '../../../../assets/svgs/constantSvgs/threeDots';
 import MainLottie from '../../../components/lotties/MainLottie';
 import { notificationKeys } from '../../../utils/api/notification/notification';
 
@@ -65,23 +62,6 @@ const MyPageScreen = ({ navigation, route }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: profile?.data?.nickname ?? '',
-      headerLeft: () => {
-        return (
-          <Pressable
-            style={{ marginHorizontal: 18 }}
-            onPress={() => navigation.navigate('Settings')}
-          >
-            <SvgXml xml={settingsIcon} />
-          </Pressable>
-        );
-      },
-      headerRight: () => {
-        return (
-          <Pressable style={{ marginHorizontal: 18 }} onPress={() => alert('more')}>
-            <SvgXml xml={threeDots} />
-          </Pressable>
-        );
-      },
     });
   }, []);
 
