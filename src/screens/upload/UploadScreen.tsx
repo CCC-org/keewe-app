@@ -94,6 +94,7 @@ const UploadScreen = ({ navigation, route }) => {
         if (isEdit) {
           navigation.goBack();
         } else {
+          navigation.pop();
           navigation.navigate('DetailedPost', { insightId: response.data.insightId, isMine: true });
         }
       } else {
