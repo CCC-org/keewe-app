@@ -56,6 +56,7 @@ import { Feather } from '@expo/vector-icons';
 import NotificationScreen from './src/screens/notification/NotificationScreen';
 import ErrorScreen from './src/screens/error/ErrorScreen';
 import StatisticsScreen from './src/screens/statistics/StatisticsScreen';
+import MyPageScreen from './src/screens/Main/mypage/MyPageScreen';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator<RootStackParamList>();
@@ -190,6 +191,22 @@ export default function App() {
                     <Stack.Screen
                       name={'Profile'}
                       component={ProfileScreen}
+                      options={{
+                        headerLeft: () => <HeaderBackButton />,
+                        headerRight: () => {
+                          return (
+                            <Pressable style={{ marginRight: 12 }} onPress={() => alert('more')}>
+                              <Feather name="more-vertical" size={24} color={'#000000'} />
+                            </Pressable>
+                          );
+                        },
+                        headerStyle: { backgroundColor: '#F1F1E9' },
+                        title: '',
+                      }}
+                    />
+                    <Stack.Screen
+                      name={'MyProfile'}
+                      component={MyPageScreen}
                       options={{
                         headerLeft: () => <HeaderBackButton />,
                         headerRight: () => {

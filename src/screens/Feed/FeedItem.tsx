@@ -25,7 +25,7 @@ const FeedItem = ({ insight, localId, onBookMarkClick }: FeedItemProps) => {
       return;
     }
     if (localId === String(writer.writerId))
-      navigation.navigate('MyPage', { userId: localId, enteredByTab: false });
+      navigation.navigate('MyProfile', { userId: localId, enteredByTab: false });
     else navigation.navigate('Profile', { userId: writer.writerId });
   };
 

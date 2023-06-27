@@ -25,7 +25,7 @@ const BlockListSection = ({ blockList, mutation }: FollowListSectionProps) => {
   const handleGoToProfileOnImagePress = async (itemUserId: number) => {
     const localUserId = await getUserId();
     if (localUserId === String(itemUserId)) {
-      navigation.navigate('MyPage', { userId: localUserId, enteredByTab: false });
+      navigation.navigate('MyProfile', { userId: localUserId, enteredByTab: false });
     } else {
       navigation.navigate('Profile', { userId: itemUserId });
     }

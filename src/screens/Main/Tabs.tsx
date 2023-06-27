@@ -22,6 +22,8 @@ import alarmExist from '../../constants/Icons/alarm/alarmExist';
 import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
 import { notificationApi, notificationKeys } from '../../utils/api/notification/notification';
+import { settingsIcon } from '../../../assets/svgs/settingsIcon';
+import { threeDots } from '../../../assets/svgs/constantSvgs/threeDots';
 
 const Tab = createBottomTabNavigator();
 
@@ -79,6 +81,23 @@ const Tabs = () => {
           tabBarIcon: ({ focused }) =>
             focused ? <SvgXml xml={mypageOn} /> : <SvgXml xml={mypageOff} />,
           title: '',
+          headerLeft: () => {
+            return (
+              <Pressable
+                style={{ marginHorizontal: 18 }}
+                onPress={() => navigation.navigate('Settings')}
+              >
+                <SvgXml xml={settingsIcon} />
+              </Pressable>
+            );
+          },
+          headerRight: () => {
+            return (
+              <Pressable style={{ marginHorizontal: 18 }} onPress={() => alert('more')}>
+                <SvgXml xml={threeDots} />
+              </Pressable>
+            );
+          },
           headerStyle: {
             backgroundColor: '#F1F1E9',
           },
