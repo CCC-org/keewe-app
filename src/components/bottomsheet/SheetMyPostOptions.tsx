@@ -6,7 +6,7 @@ import TwoButtonModal from '../modal/TwoButtonModal';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { useNavigation } from '@react-navigation/native';
 import httpClient from '../../utils/api/BaseHttpClient';
-import { QueryClient } from '@tanstack/react-query';
+import { QueryClient, useQueryClient } from '@tanstack/react-query';
 import { FeedQueryKeys } from '../../utils/api/FeedAPI';
 
 interface BSMyPostOptionsProps {
@@ -37,6 +37,7 @@ const SheetMyPostOptions = ({
   const navigation = useNavigation();
   const { fonts } = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const queryClient = useQueryClient();
   const handleDeleteInsight = async () => {
     const URL = `https://api-keewe.com/api/v1/insight/${insightId}`;
     try {
@@ -48,7 +49,8 @@ const SheetMyPostOptions = ({
       });
       setIsModalVisible(false);
       modalRef.current?.close();
-      feedListQueryClient?.invalidateQueries(FeedQueryKeys.getFeed());
+      if (navigation.canGoBack()) navigation.goBack();
+      else queryClient.invalidateQueries(FeedQueryKeys.getFeed());
     } catch (err) {
       console.log('delete err: ', err);
     }

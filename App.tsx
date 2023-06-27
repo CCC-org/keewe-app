@@ -82,8 +82,8 @@ export default function App() {
         <GestureHandlerRootView style={{ flex: 1 }}>
           <PaperProvider theme={light}>
             <NavigationContainer ref={navigationRef}>
-              <BottomSheetModalProvider>
-                <QueryClientProvider client={queryClient}>
+              <QueryClientProvider client={queryClient}>
+                <BottomSheetModalProvider>
                   <Stack.Navigator
                     screenOptions={{
                       cardStyle: { backgroundColor: 'white' },
@@ -414,8 +414,8 @@ export default function App() {
                       />
                     </Stack.Group>
                   </Stack.Navigator>
-                </QueryClientProvider>
-              </BottomSheetModalProvider>
+                </BottomSheetModalProvider>
+              </QueryClientProvider>
             </NavigationContainer>
             <StatusBar style="dark" />
           </PaperProvider>
