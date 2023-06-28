@@ -20,8 +20,8 @@ const BlockedScreen = () => {
   });
   const queryClient = useQueryClient();
 
-  const handleDeleteBlockedUser = (userId: number) => {
-    blockApi.deleteBlockedUser(userId).then((res) => {
+  const handleDeleteBlockedUser = async (userId: number) => {
+    await blockApi.deleteBlockedUser(userId).then((res) => {
       console.log('🚀 ~ file: BlockedScreen.tsx:17 ~ blockApi.deleteBlockedUser ~ res:', res);
       if (res.code === 200) {
         Toast.show({

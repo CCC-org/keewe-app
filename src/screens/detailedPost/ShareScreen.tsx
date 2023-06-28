@@ -90,7 +90,7 @@ const ShareScreen = ({ route }) => {
                   theme.fonts.text.caption1,
                   { color: color === '#f1f1e9' ? '#12131450' : '#ffffff50' },
                 ]}
-              >{`${name} 의`}</Text>
+              >{`${name}의`}</Text>
               <Text
                 style={{
                   fontFamily: 'pretendardSemiBold',

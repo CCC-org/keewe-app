@@ -4,8 +4,6 @@ import { UseMutationResult } from '@tanstack/react-query';
 import { SvgXml } from 'react-native-svg';
 import person from '../../constants/Icons/Avatar/personXml';
 import { useTheme } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
-import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 import { BlockedUser } from '../../types/block/block';
 import TwoButtonModal from '../../components/modal/TwoButtonModal';
 interface FollowListSectionProps {
@@ -15,20 +13,10 @@ interface FollowListSectionProps {
 
 const BlockListSection = ({ blockList, mutation }: FollowListSectionProps) => {
   const theme = useTheme();
-  const navigation = useNavigation();
   const [isModal, setIsModal] = useState(false);
   const handleUnblockUser = (id: string | number) => {
     mutation.mutate(Number(id));
     setIsModal(false);
-  };
-
-  const handleGoToProfileOnImagePress = async (itemUserId: number) => {
-    const localUserId = await getUserId();
-    if (localUserId === String(itemUserId)) {
-      navigation.navigate('MyProfile', { userId: localUserId, enteredByTab: false });
-    } else {
-      navigation.navigate('Profile', { userId: itemUserId });
-    }
   };
 
   return (
@@ -42,16 +30,14 @@ const BlockListSection = ({ blockList, mutation }: FollowListSectionProps) => {
           <View key={idx} style={styles.container}>
             <View style={styles.profile}>
               <>
-                <Pressable onPress={() => handleGoToProfileOnImagePress(item.id)}>
-                  {item?.imageURL ? (
-                    <Image
-                      source={{ uri: item?.imageURL }}
-                      style={{ width: 50, height: 50, borderRadius: 100 }}
-                    />
-                  ) : (
-                    <SvgXml xml={person} width={48} height={48} />
-                  )}
-                </Pressable>
+                {item?.imageURL ? (
+                  <Image
+                    source={{ uri: item?.imageURL }}
+                    style={{ width: 50, height: 50, borderRadius: 100 }}
+                  />
+                ) : (
+                  <SvgXml xml={person} width={48} height={48} />
+                )}
                 <View
                   style={{
                     marginLeft: 12,
