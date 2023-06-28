@@ -1,8 +1,8 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { useTheme } from 'react-native-paper';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import SmallTextInput from '../../components/texts/SmallTextInput';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 const CategoryCreateScreen = ({ navigation, route }) => {
   const theme = useTheme();
@@ -29,9 +29,9 @@ const CategoryCreateScreen = ({ navigation, route }) => {
       setErrorMessage('8자 이내로 입력하세요.');
     } else if (input.includes(' ')) {
       setErrorMessage('띄어쓰기는 입력할 수 없어요.');
-    } else if (!/^[a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]+$/.test(input) && input !== '')
+    } else if (!/^[a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]+$/.test(input) && input !== '') {
       setErrorMessage('한글, 영문만 입력할 수 있어요.');
-    else setErrorMessage('');
+    } else setErrorMessage('');
   }, [input]);
 
   useEffect(() => {
@@ -39,23 +39,21 @@ const CategoryCreateScreen = ({ navigation, route }) => {
     setCustomCategory(route.params?.customCategory ?? []);
   }, [route.params]);
 
+  const active = useMemo(() => {
+    return errorMessage.length === 0 && input.length > 0 && !/([^가-힣\x20])/i.test(input);
+  }, [errorMessage, input]);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderRightButton
           text="완료"
           backGroundColor={
-            errorMessage.length === 0 && input.length > 0
-              ? theme.colors.brand.primary.main
-              : `${theme.colors.graphic.black}33`
+            active ? theme.colors.brand.primary.main : `${theme.colors.graphic.black}33`
           }
-          textColor={
-            errorMessage.length === 0 && input.length > 0
-              ? theme.colors.graphic.black
-              : theme.colors.graphic.white
-          }
+          textColor={active ? theme.colors.graphic.black : theme.colors.graphic.white}
           borderLine={false}
-          disabled={errorMessage.length !== 0 || input.length === 0}
+          disabled={!active}
           handlePress={() => handleComplete()}
         />
       ),

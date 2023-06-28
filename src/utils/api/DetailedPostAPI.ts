@@ -1,6 +1,5 @@
 import httpClient from './BaseHttpClient';
 
-//import { UploadRequest } from '../../types/upload';
 export const DetailedPostApi = {
   IncreaseViewCount: async (id: string) => {
     return httpClient.post(`https://api-keewe.com/api/v1/insight/view/${id}`, null).then((res) => {
