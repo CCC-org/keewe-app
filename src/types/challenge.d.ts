@@ -202,3 +202,14 @@ interface ChallengeInsightCountGetResponse {
     insightNumber: number;
   };
 }
+
+interface ChallengeEditRequest {
+  duration: number;
+  insightPerWeek: number;
+  myTopic: string;
+}
+
+interface ChallengeEditResponse {
+  message: string;
+  code: number;
+}

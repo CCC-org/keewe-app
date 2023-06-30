@@ -71,7 +71,6 @@ function createStyles() {
       alignItems: 'center',
     },
     container: {
-      height: 48,
       justifyContent: 'center',
     },
     title: {

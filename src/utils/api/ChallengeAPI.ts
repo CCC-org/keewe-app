@@ -166,4 +166,13 @@ export const ChallengeAPI = {
         return res.data.data;
       });
   },
+  editChallenge: async (params: ChallengeEditRequest) => {
+    return httpClient
+      .patch<ChallengeEditResponse>('https://api-keewe.com/api/v1/challenge/participating', {
+        params,
+      })
+      .then((res) => {
+        return res.data;
+      });
+  },
 };

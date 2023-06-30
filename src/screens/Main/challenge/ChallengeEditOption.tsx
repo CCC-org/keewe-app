@@ -10,6 +10,7 @@ interface ChallengeEditOptionProps {
   value?: string;
   placeholder?: string;
   navigateTo?: string;
+  params?: any;
 }
 
 const ChallengeEditOption = ({
@@ -17,6 +18,7 @@ const ChallengeEditOption = ({
   value,
   placeholder,
   navigateTo,
+  params,
 }: ChallengeEditOptionProps) => {
   return (
     <>
@@ -40,7 +42,10 @@ const ChallengeEditOption = ({
             {value ? value : placeholder}
           </Text>
           {navigateTo && (
-            <Pressable onPress={() => navigate(navigateTo, {})} style={{ paddingLeft: 16 }}>
+            <Pressable
+              onPress={() => navigate(navigateTo, { ...params })}
+              style={{ paddingLeft: 16 }}
+            >
               <SvgXml xml={darkChevronRightXml} />
             </Pressable>
           )}

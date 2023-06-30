@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import HeaderRightButton from '../../../components/header/HeaderRightButton';
 import MainLottie from '../../../components/lotties/MainLottie';
@@ -9,9 +9,20 @@ import ChallengeEditOption from './ChallengeEditOption';
 import { timeConverter } from './constant';
 
 const ChallengeEditScreen = ({ navigation, route }) => {
+  const [myTopic, setMyTopic] = useState<string>();
+  const [duration, setDuration] = useState<number>();
+  const [insightPerWeek, setInsightPerWeek] = useState<number>();
+
   const { data: challengeParticipation, isLoading: isChallengeParticipationLoading } = useQuery(
     ['challenge', 'participation'],
     ChallengeAPI.getChallengeParticipation,
+    {
+      onSuccess: (response) => {
+        setMyTopic(response.myTopic);
+        setDuration(response.duration);
+        setInsightPerWeek(response.insightPerWeek);
+      },
+    },
   );
 
   if (isChallengeParticipationLoading) {
@@ -19,6 +30,7 @@ const ChallengeEditScreen = ({ navigation, route }) => {
   }
 
   const handleComplete = () => {
+    // 업데이트 api 호출
     return;
   };
 
@@ -35,7 +47,7 @@ const ChallengeEditScreen = ({ navigation, route }) => {
         />
       ),
     });
-  }, []);
+  }, [myTopic, duration, insightPerWeek]);
 
   return (
     <>
@@ -57,14 +69,21 @@ const ChallengeEditScreen = ({ navigation, route }) => {
       </View>
       <ChallengeEditOption
         option="나의 주제"
-        value={challengeParticipation?.myTopic}
-        placeholder="주제를 설정해주세요"
+        value={myTopic}
+        placeholder="나의 주제를 추가해주세요"
         navigateTo="SubjectEdit"
+        params={{ currentSubject: myTopic, setSubject: setMyTopic }}
       />
       <ChallengeEditOption
         option="나의 목표"
-        value={`매주 ${challengeParticipation?.insightPerWeek}번 기록 x ${challengeParticipation?.duration}주`}
-        navigateTo="SubjectEdit"
+        value={`매주 ${insightPerWeek}번 기록 x ${duration}주`}
+        navigateTo="GoalEdit"
+        params={{
+          currentRecord: insightPerWeek,
+          currentParticipation: duration,
+          setRecord: setInsightPerWeek,
+          setParticipation: setDuration,
+        }}
       />
       <ChallengeEditOption
         option="챌린지 시작일"
