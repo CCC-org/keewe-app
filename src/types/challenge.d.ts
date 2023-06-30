@@ -53,8 +53,12 @@ interface ChallengeGetResponse {
   data: {
     challengeId: number;
     name: string;
+    myTopic: string;
     interest: string;
+    duration: number;
+    insightPerWeek: number;
     startDate: string;
+    endDate: string;
   };
 }
 

@@ -57,6 +57,7 @@ import NotificationScreen from './src/screens/notification/NotificationScreen';
 import ErrorScreen from './src/screens/error/ErrorScreen';
 import StatisticsScreen from './src/screens/statistics/StatisticsScreen';
 import MyPageScreen from './src/screens/Main/mypage/MyPageScreen';
+import ChallengeEditScreen from './src/screens/Main/challenge/ChallengeEditScreen';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator<RootStackParamList>();
@@ -306,6 +307,11 @@ export default function App() {
                         name="ChallengeParticipation"
                         component={ChallengeParticipationScreen}
                         options={{ ...headerOptions, title: '챌린지 참여하기' }}
+                      />
+                      <Stack.Screen
+                        name="ChallengeEdit"
+                        component={ChallengeEditScreen}
+                        options={{ ...headerOptions, title: '내 목표 수정' }}
                       />
                     </Stack.Group>
                     <Stack.Group
