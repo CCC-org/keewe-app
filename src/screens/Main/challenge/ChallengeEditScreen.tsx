@@ -5,6 +5,8 @@ import HeaderRightButton from '../../../components/header/HeaderRightButton';
 import MainLottie from '../../../components/lotties/MainLottie';
 import theme from '../../../theme/light';
 import { ChallengeAPI } from '../../../utils/api/ChallengeAPI';
+import ChallengeEditOption from './ChallengeEditOption';
+import { timeConverter } from './constant';
 
 const ChallengeEditScreen = ({ navigation, route }) => {
   const { data: challengeParticipation, isLoading: isChallengeParticipationLoading } = useQuery(
@@ -53,6 +55,25 @@ const ChallengeEditScreen = ({ navigation, route }) => {
           {challengeParticipation?.interest}
         </Text>
       </View>
+      <ChallengeEditOption
+        option="나의 주제"
+        value={challengeParticipation?.myTopic}
+        placeholder="주제를 설정해주세요"
+        navigateTo="SubjectEdit"
+      />
+      <ChallengeEditOption
+        option="나의 목표"
+        value={`매주 ${challengeParticipation?.insightPerWeek}번 기록 x ${challengeParticipation?.duration}주`}
+        navigateTo="SubjectEdit"
+      />
+      <ChallengeEditOption
+        option="챌린지 시작일"
+        value={timeConverter(challengeParticipation?.startDate ?? '')}
+      />
+      <ChallengeEditOption
+        option="챌린지 종료일"
+        value={`${timeConverter(challengeParticipation?.endDate ?? '')} 까지`}
+      />
     </>
   );
 };
