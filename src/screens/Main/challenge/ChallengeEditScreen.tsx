@@ -1,6 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import React, { useState, useLayoutEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import HeaderRightButton from '../../../components/header/HeaderRightButton';
 import MainLottie from '../../../components/lotties/MainLottie';
 import theme from '../../../theme/light';
@@ -8,10 +9,11 @@ import { ChallengeAPI } from '../../../utils/api/ChallengeAPI';
 import ChallengeEditOption from './ChallengeEditOption';
 import { timeConverter } from './constant';
 
-const ChallengeEditScreen = ({ navigation, route }) => {
-  const [myTopic, setMyTopic] = useState<string>();
-  const [duration, setDuration] = useState<number>();
-  const [insightPerWeek, setInsightPerWeek] = useState<number>();
+const ChallengeEditScreen = ({ navigation }) => {
+  const [myTopic, setMyTopic] = useState<string>('');
+  const [duration, setDuration] = useState<number>(0);
+  const [insightPerWeek, setInsightPerWeek] = useState<number>(0);
+  const queryClient = useQueryClient();
 
   const { data: challengeParticipation, isLoading: isChallengeParticipationLoading } = useQuery(
     ['challenge', 'participation'],
@@ -25,12 +27,20 @@ const ChallengeEditScreen = ({ navigation, route }) => {
     },
   );
 
+  const { mutate: EditChallenge } = useMutation(ChallengeAPI.editChallenge, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['challenge']);
+      Toast.show({ type: 'snackbar', text1: '목표를 수정했어요', position: 'bottom' });
+    },
+  });
+
   if (isChallengeParticipationLoading) {
     return <MainLottie />;
   }
 
   const handleComplete = () => {
-    // 업데이트 api 호출
+    EditChallenge({ myTopic, duration, insightPerWeek });
+    navigation.goBack();
     return;
   };
 

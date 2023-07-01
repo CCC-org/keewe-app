@@ -18,7 +18,6 @@ export const UploadApis = {
       return res.data;
     });
   },
-
   getFolderList: async () => {
     return httpClient.get('https://api-keewe.com/api/v1/drawer').then((res) => {
       return res.data.data;

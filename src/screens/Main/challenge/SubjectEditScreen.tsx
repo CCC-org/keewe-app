@@ -26,7 +26,7 @@ const SubjectEditScreen = ({ navigation, route }) => {
         />
       ),
     });
-  }, [input, currentSubject, setSubject]);
+  }, [input, currentSubject, setSubject, handleComplete]);
 
   return (
     <View style={styles.container}>

@@ -169,7 +169,7 @@ export const ChallengeAPI = {
   editChallenge: async (params: ChallengeEditRequest) => {
     return httpClient
       .patch<ChallengeEditResponse>('https://api-keewe.com/api/v1/challenge/participating', {
-        params,
+        ...params,
       })
       .then((res) => {
         return res.data;

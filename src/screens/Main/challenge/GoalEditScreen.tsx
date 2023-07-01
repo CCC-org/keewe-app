@@ -18,6 +18,17 @@ const GoalEditScreen = ({ navigation, route }) => {
     return step !== 2;
   }, [step]);
 
+  const handleComplete = () => {
+    setIsExpanded(!isExpanded);
+    if (isNext) {
+      setStep(step + 1);
+      return;
+    }
+    setRecord(recordPerWeek[0]);
+    setParticipation(participationPerWeek[0]);
+    navigation.goBack();
+  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -31,18 +42,7 @@ const GoalEditScreen = ({ navigation, route }) => {
         />
       ),
     });
-  }, [step, participationPerWeek, recordPerWeek]);
-
-  const handleComplete = () => {
-    setIsExpanded(!isExpanded);
-    if (isNext) {
-      setStep(step + 1);
-      return;
-    }
-    setRecord(recordPerWeek[0]);
-    setParticipation(participationPerWeek[0]);
-    navigation.goBack();
-  };
+  }, [step, participationPerWeek, recordPerWeek, navigation, handleComplete]);
 
   return (
     <>
