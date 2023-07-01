@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 2,
     paddingBottom: 4,
+    fontFamily: 'pretendard',
   },
   errorMessage: {
     color: 'red',

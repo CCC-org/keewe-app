@@ -53,8 +53,12 @@ interface ChallengeGetResponse {
   data: {
     challengeId: number;
     name: string;
+    myTopic: string;
     interest: string;
+    duration: number;
+    insightPerWeek: number;
     startDate: string;
+    endDate: string;
   };
 }
 
@@ -197,4 +201,15 @@ interface ChallengeInsightCountGetResponse {
   data: {
     insightNumber: number;
   };
+}
+
+interface ChallengeEditRequest {
+  duration: number;
+  insightPerWeek: number;
+  myTopic: string;
+}
+
+interface ChallengeEditResponse {
+  message: string;
+  code: number;
 }

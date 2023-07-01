@@ -28,7 +28,13 @@ export const InsightQueryKeys = {
     request.limit,
   ],
   getChallengeRecord: (request: ChallengeRecordRequest) => ['insight', request.insightId],
-  getChallengeInsight: (request: ChallengeInsightGetRequest) => ['insight', 'challenge', request],
+  getChallengeInsight: (request: ChallengeInsightGetRequest) => [
+    'insight',
+    'challenge',
+    request.cursor,
+    request.limit,
+    request.writerId,
+  ],
   getInsightFollow: (request: InsightFollowGetRequest) => ['insight', 'follow', request.insightId],
   getInsightVisit: (request: InsightVisitGetRequest) => ['insight', 'visit', request.insightId],
 };

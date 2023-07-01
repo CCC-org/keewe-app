@@ -24,6 +24,7 @@ import { FeedQueryKeys } from '../../../utils/api/FeedAPI';
 import ChallengeInvite from './ChallengeInvite';
 import { SvgXml } from 'react-native-svg';
 import { pencil } from '../../../constants/Icons/home/pencil';
+import MainLottie from '../../../components/lotties/MainLottie';
 
 const { width } = Dimensions.get('window');
 
@@ -33,8 +34,10 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
   const { challengeId, challengeName, interest } = route.params;
   const [tabIndex, setTabIndex] = useState<number>(0);
   const [datas, setDatas] = useState<any[][]>([[], [], []]);
-  const [cursors, setCursors] = useState<any[]>([undefined, undefined, 0]);
   const [pageEmpty, setPageEmpty] = useState<boolean>(false);
+  const [totalCursor, setTotalCursor] = useState();
+  const [myCursor, setMyCursor] = useState();
+  const [friendsCursor, setFriendsCursor] = useState<number>(0);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -42,7 +45,10 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
         return (
           <View style={{ flexDirection: 'row' }}>
             <ChallengeInvite />
-            <Pressable style={{ marginRight: 19, paddingTop: 3 }} onPress={() => alert('!!')}>
+            <Pressable
+              style={{ paddingRight: 19, paddingTop: 3 }}
+              onPress={() => navigation.navigate('ChallengeEdit')}
+            >
               <SvgXml xml={pencil} />
             </Pressable>
           </View>
@@ -84,14 +90,14 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
     () => ChallengeAPI.getChallengeMyDetail(),
   );
 
-  const { isLoading: isTotalListLoading } = useQuery(
+  const { isLoading: isTotalListLoading, isFetching } = useQuery(
     InsightQueryKeys.getChallengeInsight({
-      cursor: cursors[0],
+      cursor: totalCursor,
       limit: 5,
     }),
     () =>
       InsightAPI.getChallengeInsight({
-        cursor: cursors[0],
+        cursor: totalCursor,
         limit: 5,
       }),
     {
@@ -107,13 +113,13 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
 
   const { isLoading: isMyListLoading } = useQuery(
     InsightQueryKeys.getChallengeInsight({
-      cursor: cursors[1],
+      cursor: myCursor,
       limit: 5,
       writerId: String(userId),
     }),
     () =>
       InsightAPI.getChallengeInsight({
-        cursor: cursors[1],
+        cursor: myCursor,
         limit: 5,
         writerId: String(userId),
       }),
@@ -130,8 +136,8 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
   );
 
   const { isLoading: isFriendListLoading } = useQuery(
-    ChallengeQueryKeys.getChallengeFriends({ size: 6, page: cursors[2], challengeId }),
-    () => ChallengeAPI.getChallengeFriends({ size: 6, page: cursors[2], challengeId }),
+    ChallengeQueryKeys.getChallengeFriends({ size: 6, page: friendsCursor, challengeId }),
+    () => ChallengeAPI.getChallengeFriends({ size: 6, page: friendsCursor, challengeId }),
     {
       onSuccess: (response: ChallengeInsightGetResponse) => {
         setDatas((prev) => {
@@ -222,10 +228,11 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
                         prev[index] = [];
                         return prev;
                       });
-                      setCursors((prev) => {
-                        prev[index] = undefined;
-                        return prev;
-                      });
+                      if (index == 0) {
+                        setTotalCursor(undefined);
+                      } else {
+                        setMyCursor(undefined);
+                      }
                     }
                     setTabIndex(index);
                   }}
@@ -263,16 +270,22 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
   const onEndReached = () => {
     if (tabIndex == 2) {
       if (pageEmpty) return;
-      setCursors((prev) => {
-        prev[tabIndex] += 1;
-        return prev;
+      setFriendsCursor((prev) => {
+        return prev + 1;
       });
     } else {
       if (datas[tabIndex]) {
-        setCursors((prev) => {
-          prev[tabIndex] = datas[tabIndex][datas[tabIndex].length - 1]?.id;
-          return prev;
-        });
+        if (tabIndex == 0) {
+          setTotalCursor((prev) => {
+            prev = datas[tabIndex][datas[tabIndex].length - 1]?.id;
+            return prev;
+          });
+        } else {
+          setMyCursor((prev) => {
+            prev = datas[tabIndex][datas[tabIndex].length - 1]?.id;
+            return prev;
+          });
+        }
       }
     }
   };
@@ -282,6 +295,7 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
       data={datas[tabIndex]}
       renderItem={renderItem}
       ListHeaderComponent={<Header />}
+      ListEmptyComponent={isFetching ? <MainLottie /> : null}
       onEndReached={onEndReached}
     />
   );

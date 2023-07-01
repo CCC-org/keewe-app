@@ -54,8 +54,7 @@ const ReactIconButton = ({ xml, color, taps, name, insightId }: ReactIconButtonP
               outputRange: [theme.colors.graphic.white, color],
             }),
             padding: 8,
-            borderColor: `${theme.colors.graphic.black}20`,
-            borderWidth: 1,
+            marginTop: 12,
             ...styles.Button,
           }}
         >

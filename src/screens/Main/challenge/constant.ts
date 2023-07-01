@@ -5,7 +5,7 @@ import comment from '../../../../assets/svgs/StatisticIcon/comment';
 import view from '../../../../assets/svgs/StatisticIcon/view';
 
 export const timeConverter = (time: string) => {
-  return time.replace(/-/g, '.');
+  return time.replace(/-/g, '. ');
 };
 
 export const STATISTIC: Record<string, any>[] = [
