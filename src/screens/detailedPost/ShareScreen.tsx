@@ -44,6 +44,8 @@ const ShareScreen = ({ route }) => {
     }
   };
 
+  console.log('recordText', recordText);
+
   const shareImage = async () => {
     const uri = await captureRef(viewRef, {
       format: 'png',
@@ -100,7 +102,9 @@ const ShareScreen = ({ route }) => {
                   color: color === '#f1f1e9' ? '#12131450' : '#ffffff50',
                 }}
               >
-                {challenge ? `${challenge}에 대한 ${order}번째 인사이트` : '인사이트'}
+                {recordText?.length
+                  ? `${challenge}에 대한 ${recordText}번째 인사이트`
+                  : `${challenge}에 대한 인사이트`}
               </Text>
             </View>
           </View>
