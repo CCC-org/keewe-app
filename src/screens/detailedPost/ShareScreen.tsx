@@ -17,7 +17,7 @@ const falseObject = {
 };
 
 const ShareScreen = ({ route }) => {
-  const { challenge, order, image, name, insightText } = route.params;
+  const { challenge, order, image, name, insightText, recordText } = route.params;
   const [color, setColor] = useState('#f1f1e9');
   const [buttonColorSelected, setButtonColorSelected] = useState({
     first: true,
@@ -26,7 +26,7 @@ const ShareScreen = ({ route }) => {
   });
   const viewRef = useRef(null);
   const theme = useTheme();
-
+  console.log(recordText);
   const handleDownload = async () => {
     try {
       const uri = await captureRef(viewRef, {
@@ -61,6 +61,8 @@ const ShareScreen = ({ route }) => {
       return { ...falseObject, [position]: true };
     });
   };
+
+  console.log(recordText);
 
   return (
     <>

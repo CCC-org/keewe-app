@@ -116,6 +116,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
 
   const recordOrder = getChallengeRecordResponse?.data?.order;
   const recordTotal = getChallengeRecordResponse?.data?.total;
+  const recordText = recordOrder && recordTotal ? `${recordOrder}/${recordTotal}` : '';
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -133,6 +134,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
                   image: profile ? profile?.data?.image : 'null ',
                   challenge: getChallengeRecordResponse?.data?.challengeName ?? '',
                   insightText: insightResponse?.data?.contents ?? '',
+                  recordText,
                 })
               }
             >
@@ -194,9 +196,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
               contents={insightResponse?.data?.contents}
               reaction={insightResponse.data.reaction}
               authorId={profile?.data?.authorId ?? -1}
-              recordText={
-                recordOrder && recordTotal ? `${recordOrder}/${recordTotal}번째 기록중` : ''
-              }
+              recordText={recordText}
               userName={profile?.data?.nickname ?? ''}
               createdAt={profile?.data?.createdAt ?? '-'}
             />

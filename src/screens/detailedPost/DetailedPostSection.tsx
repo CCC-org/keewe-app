@@ -46,6 +46,7 @@ const DetailedPostSection = ({
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const userId = useGetUserId();
+
   const handleNaviateToStatistics = () => {
     navigation.navigate('Statistics', {
       userId: authorId,
@@ -56,6 +57,10 @@ const DetailedPostSection = ({
       date: createdAt,
       content: contents,
     });
+  };
+
+  const handleGoToDetailedChallenge = () => {
+    // needs to go to detailed challenge screen
   };
 
   return (
@@ -79,7 +84,7 @@ const DetailedPostSection = ({
           >
             {isInsightLoading || isProfileLoading ? '-' : currentChallenge}
           </Text>
-          <Pressable style={{ flexDirection: 'row' }}>
+          <Pressable onPress={handleGoToDetailedChallenge} style={{ flexDirection: 'row' }}>
             <Text
               style={{
                 ...theme.fonts.text.caption1,
@@ -87,7 +92,11 @@ const DetailedPostSection = ({
                 color: `${theme.colors.graphic.black}80`,
               }}
             >
-              {isInsightLoading || isProfileLoading ? '--' : recordText}
+              {isInsightLoading || isProfileLoading
+                ? '--'
+                : recordText?.length
+                ? `${recordText}번째 기록중`
+                : ''}
             </Text>
             <Octicons name="chevron-right" size={17} color={`${theme.colors.graphic.black}cc`} />
           </Pressable>
