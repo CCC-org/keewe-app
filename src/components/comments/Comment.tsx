@@ -65,7 +65,7 @@ const Comment = ({
             color: '#12131450',
           }}
         >
-          댓글 작성자가 존재하지 않아요.
+          {content}
         </Text>
       </View>
     );
