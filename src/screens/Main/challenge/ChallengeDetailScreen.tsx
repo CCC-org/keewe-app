@@ -69,10 +69,16 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
     () => ChallengeAPI.getChallengeInsightCount({ writerId: String(userId) }),
     { enabled: userId !== undefined },
   );
+
+  const { data: count } = useQuery(
+    ChallengeQueryKeys.getChallengeFriendsCount({ challengeId }),
+    () => ChallengeAPI.getChallengeFriendsCount({ challengeId }),
+  );
+
   const tabs = [
     `전체기록 ${TotalCount?.insightNumber}`,
     `내기록 ${MyCount?.insightNumber}`,
-    '친구',
+    `친구 ${count?.challengerCount || ''}`,
   ];
   const spacing = 16;
   const tabWidth = (width - (tabs.length + 1) * spacing) / tabs.length;
@@ -327,3 +333,40 @@ const styles = StyleSheet.create({
 });
 
 export default ChallengeDetailScreen;
+[
+  {
+    currentRecord: 0,
+    following: false,
+    goalRecord: 8,
+    imageURL:
+      'https://keewe-image-bucket.s3.ap-northeast-2.amazonaws.com/f89657b1-b15b-4e52-ab16-7c9933cefb9e-image.jpg',
+    nickname: '털수',
+    userId: 8,
+  },
+  {
+    currentRecord: 3,
+    following: false,
+    goalRecord: 15,
+    imageURL:
+      'https://keewe-image-bucket.s3.ap-northeast-2.amazonaws.com/f61b4593-8a68-4549-8388-9469527d0455-image.jpg',
+    nickname: '민정',
+    userId: 12,
+  },
+  {
+    currentRecord: 0,
+    following: false,
+    goalRecord: 4,
+    imageURL:
+      'https://keewe-image-bucket.s3.ap-northeast-2.amazonaws.com/8a932646-e02e-4dd5-97fc-81f00f8d2f63-image.jpg',
+    nickname: 'Winter You',
+    userId: 7,
+  },
+  {
+    currentRecord: 0,
+    following: false,
+    goalRecord: 4,
+    imageURL: '',
+    nickname: 'greentea',
+    userId: 11,
+  },
+];
