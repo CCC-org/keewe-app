@@ -91,7 +91,7 @@ const SheetOthersComment = ({
         }, 100);
         Toast.show({
           type: 'snackbar',
-          text1: '인사이트를 신고했어요.',
+          text1: '이 댓글을 신고했어요.',
           position: 'bottom',
         });
       }
