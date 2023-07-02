@@ -97,6 +97,7 @@ export default function App() {
                       },
                       headerShadowVisible: false,
                       animationEnabled: false,
+                      unmountOnBlur: true,
                     }}
                   >
                     {/* Tabs  */}

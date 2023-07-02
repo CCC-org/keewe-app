@@ -28,11 +28,10 @@ httpClient.interceptors.response.use(
   (error) => {
     if (error.response.data.code === 402 || error.response.data.code == 411) {
       navigate('SignUp', undefined);
-      return Promise.reject(error);
-    } else {
+    } else if (error.response.data.code !== 434) {
       navigate('Error', { error });
-      return Promise.reject(error);
     }
+    return Promise.reject(error);
   },
 );
 
