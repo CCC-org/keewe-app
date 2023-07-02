@@ -91,7 +91,7 @@ const SheetOthersComment = ({
         }, 100);
         Toast.show({
           type: 'snackbar',
-          text1: '인사이트를 신고했어요.',
+          text1: '이 댓글을 신고했어요.',
           position: 'bottom',
         });
       }
@@ -158,7 +158,7 @@ const SheetOthersComment = ({
           <ConditionalButton
             isActive={selectedReport !== null}
             // eslint-disable-next-line @typescript-eslint/no-empty-function
-            onPress={() => {}}
+            onPress={handleReportSubmit}
             width={screenWidth - 32}
             text="신고하기"
           />

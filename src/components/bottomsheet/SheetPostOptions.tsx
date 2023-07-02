@@ -152,7 +152,7 @@ const SheetPostOptions = ({
             isActive={selectedReport !== null}
             width={screenWidth - 32}
             text="신고하기"
-            onPress={() => alert('report')}
+            onPress={handleReportSubmit}
           />
         </Pressable>
       </ScrollView>
