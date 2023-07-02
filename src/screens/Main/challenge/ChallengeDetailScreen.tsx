@@ -64,15 +64,22 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
       enabled: userId !== undefined,
     },
   );
+
   const { data: MyCount, isLoading: isMyCountLoading } = useQuery(
     ChallengeQueryKeys.getChallengeInsightCount({ writerId: String(userId) }),
     () => ChallengeAPI.getChallengeInsightCount({ writerId: String(userId) }),
     { enabled: userId !== undefined },
   );
+
+  const { data: count, isLoading: isCountLoading } = useQuery(
+    ChallengeQueryKeys.getChallengeFriendsCount({ challengeId }),
+    () => ChallengeAPI.getChallengeFriendsCount({ challengeId }),
+  );
+
   const tabs = [
     `전체기록 ${TotalCount?.insightNumber}`,
     `내기록 ${MyCount?.insightNumber}`,
-    '친구',
+    `친구 ${(count?.challengerCount ?? 0) - 1}`,
   ];
   const spacing = 16;
   const tabWidth = (width - (tabs.length + 1) * spacing) / tabs.length;

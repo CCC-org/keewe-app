@@ -1,13 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, useEffect, useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import HeaderRightButton from '../../../components/header/HeaderRightButton';
 import MainLottie from '../../../components/lotties/MainLottie';
 import theme from '../../../theme/light';
-import { ChallengeAPI } from '../../../utils/api/ChallengeAPI';
+import { ChallengeAPI, ChallengeQueryKeys } from '../../../utils/api/ChallengeAPI';
 import ChallengeEditOption from './ChallengeEditOption';
-import { timeConverter } from './constant';
+import { dateAdd, timeConverter } from './constant';
 
 const ChallengeEditScreen = ({ navigation }) => {
   const [myTopic, setMyTopic] = useState<string>('');
@@ -16,7 +16,7 @@ const ChallengeEditScreen = ({ navigation }) => {
   const queryClient = useQueryClient();
 
   const { data: challengeParticipation, isLoading: isChallengeParticipationLoading } = useQuery(
-    ['challenge', 'participation'],
+    ChallengeQueryKeys.getChallengeParticipation(),
     ChallengeAPI.getChallengeParticipation,
     {
       onSuccess: (response) => {
@@ -31,6 +31,13 @@ const ChallengeEditScreen = ({ navigation }) => {
     onSuccess: () => {
       queryClient.invalidateQueries(['challenge']);
       Toast.show({ type: 'snackbar', text1: '목표를 수정했어요', position: 'bottom' });
+    },
+    onError: () => {
+      Toast.show({
+        type: 'snackbar',
+        text1: '달성 가능한 목표를 설정해주세요.',
+        position: 'bottom',
+      });
     },
   });
 
@@ -58,6 +65,11 @@ const ChallengeEditScreen = ({ navigation }) => {
       ),
     });
   }, [myTopic, duration, insightPerWeek]);
+
+  const end = useMemo(
+    () => dateAdd(challengeParticipation?.startDate ?? '', duration),
+    [challengeParticipation?.startDate, duration, setDuration],
+  );
 
   return (
     <>
@@ -99,10 +111,7 @@ const ChallengeEditScreen = ({ navigation }) => {
         option="챌린지 시작일"
         value={timeConverter(challengeParticipation?.startDate ?? '')}
       />
-      <ChallengeEditOption
-        option="챌린지 종료일"
-        value={`${timeConverter(challengeParticipation?.endDate ?? '')} 까지`}
-      />
+      <ChallengeEditOption option="챌린지 종료일" value={`${timeConverter(end)} 까지`} />
     </>
   );
 };

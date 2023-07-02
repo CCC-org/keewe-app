@@ -191,7 +191,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
               views={views}
               url={insightResponse?.data?.link?.url ?? ''}
               currentChallenge={getChallengeRecordResponse?.data?.challengeName}
-              contents={contents}
+              contents={insightResponse?.data?.contents}
               reaction={insightResponse.data.reaction}
               authorId={profile?.data?.authorId ?? -1}
               recordText={
