@@ -73,3 +73,7 @@ interface CommentWriter {
   title: string;
   image: string;
 }
+
+interface CommentDeleteRequest {
+  commentId: number;
+}

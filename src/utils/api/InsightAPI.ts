@@ -186,4 +186,14 @@ export const InsightAPI = {
       console.error('api error: ', err);
     }
   },
+  deleteComment: async (request: CommentDeleteRequest) => {
+    try {
+      const { data } = await httpClient.delete(
+        `https://api-keewe.com/api/v1/comments/${request.commentId}`,
+      );
+      return data;
+    } catch (err) {
+      console.error('api error: ', err);
+    }
+  },
 };

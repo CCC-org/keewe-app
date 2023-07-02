@@ -42,7 +42,7 @@ const CommentVerticalDots = ({ userId, userName, commentId }: FeedVerticalDotsPr
         backdropComponent={renderBackdrop}
       >
         {isMyComment ? (
-          <SheetMyComment modalRef={modalRef} />
+          <SheetMyComment modalRef={modalRef} commentId={commentId} />
         ) : (
           <SheetOthersComment
             modalRef={modalRef}
