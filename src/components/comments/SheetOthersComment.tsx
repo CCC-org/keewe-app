@@ -158,7 +158,7 @@ const SheetOthersComment = ({
           <ConditionalButton
             isActive={selectedReport !== null}
             // eslint-disable-next-line @typescript-eslint/no-empty-function
-            onPress={() => {}}
+            onPress={handleReportSubmit}
             width={screenWidth - 32}
             text="신고하기"
           />
