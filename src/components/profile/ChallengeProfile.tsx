@@ -52,8 +52,7 @@ const ChallengeProfile = ({
               style={{
                 fontFamily: 'pretendardSemiBold',
                 fontSize: 16,
-                marginRight: 16,
-                marginBottom: 4,
+                marginRight: 8,
               }}
             >
               {name}
@@ -61,7 +60,14 @@ const ChallengeProfile = ({
             {participatingUserNumber !== undefined && (
               <>
                 <SvgXml xml={SmallPersonXml} />
-                <Text style={{ fontFamily: 'pretendard', fontSize: 14 }}>
+                <Text
+                  style={{
+                    fontFamily: 'pretendard',
+                    fontSize: 14,
+                    color: `${theme.colors.graphic.black}70`,
+                    marginLeft: 2,
+                  }}
+                >
                   {participatingUserNumber}
                 </Text>
               </>
@@ -117,6 +123,8 @@ const styles = StyleSheet.create({
   },
   title: {
     flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
   },
 });
 

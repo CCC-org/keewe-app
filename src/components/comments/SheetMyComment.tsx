@@ -4,15 +4,30 @@ import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/typ
 import { useTheme } from 'react-native-paper';
 import TwoButtonModal from '../modal/TwoButtonModal';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { InsightAPI } from '../../utils/api/InsightAPI';
+import { goBack, navigate, stackName, stackOptions } from '../../utils/hooks/navigaton/navigator';
 
 interface BSMyPostOptionsProps {
   modalRef: React.RefObject<BottomSheetModalMethods>;
+  commentId: number;
 }
 
-const SheetMyComment = ({ modalRef }: BSMyPostOptionsProps) => {
+const SheetMyComment = ({ modalRef, commentId }: BSMyPostOptionsProps) => {
   const { fonts } = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const queryClient = useQueryClient();
+
+  const { mutate: deleteComment } = useMutation(InsightAPI.deleteComment, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['comment']);
+    },
+  });
+
   const handleDeleteInsight = () => {
+    deleteComment({ commentId });
+    goBack();
+    navigate(stackName(), stackOptions());
     Toast.show({
       type: 'snackbar',
       text1: '댓글을 삭제했어요.',

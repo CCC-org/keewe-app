@@ -16,7 +16,7 @@ interface CommentsProps {
   isInsightWriter?: boolean;
   isReply?: boolean;
   onReply?: () => void;
-  commentWriterId: number | string;
+  commentWriterId?: number | string;
   highlight?: boolean;
   commentId: number;
 }
@@ -45,6 +45,32 @@ const Comment = ({
 
   const userId = useGetUserId();
   const theme = useTheme();
+
+  if (!commentWriterId) {
+    return (
+      <View
+        style={{
+          backgroundColor: theme.colors.brand.surface.container1,
+          marginLeft: isReply ? 60 : 0,
+          marginRight: isReply ? 16 : 0,
+          marginTop: 16,
+        }}
+      >
+        <Text
+          style={{
+            fontFamily: 'pretendard',
+            fontSize: 14,
+            margin: 16,
+            lineHeight: 20,
+            color: '#12131450',
+          }}
+        >
+          댓글 작성자가 존재하지 않아요.
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <Animated.View
       style={{
