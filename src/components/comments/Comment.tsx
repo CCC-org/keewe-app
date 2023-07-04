@@ -8,8 +8,8 @@ import CommentVerticalDots from './CommentVerticalDots';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
 
 interface CommentsProps {
-  nickname: string;
-  title: string;
+  nickname?: string;
+  title?: string;
   content: string;
   createdAt: string;
   image?: string;
@@ -45,7 +45,7 @@ const Comment = ({
 
   const userId = useGetUserId();
   const theme = useTheme();
-
+  console.log(commentWriterId);
   if (!commentWriterId) {
     return (
       <View
