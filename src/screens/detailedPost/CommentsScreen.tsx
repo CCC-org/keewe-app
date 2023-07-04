@@ -75,14 +75,14 @@ const CommentsScreen = ({ navigation, route }) => {
       <Comment
         key={`${item.id} ${index}`}
         content={item.content}
-        nickname={item.writer.name}
-        title={item.writer.title}
+        nickname={item.writer?.name}
+        title={item.writer?.title}
         createdAt={item.createdAt}
-        isInsightWriter={item.writer.id === contentWriterId}
-        commentWriterId={item.writer.id}
-        image={item.writer.image}
+        isInsightWriter={item.writer?.id === contentWriterId}
+        commentWriterId={item.writer?.id}
+        image={item.writer?.image}
         isReply={false}
-        onReply={() => handleReplyClick({ id: item.id, nickname: item.writer.name })}
+        onReply={() => handleReplyClick({ id: item.id, nickname: item.writer?.name })}
         highlight={refreshIndex !== undefined && refreshIndex < item.id}
         commentId={item.id}
       />,
@@ -92,12 +92,12 @@ const CommentsScreen = ({ navigation, route }) => {
         commentId={reply.id}
         key={`${item.id} reply ${reply.id} ${index}`}
         content={reply.content}
-        commentWriterId={reply.writer.id}
-        image={reply.writer.image}
-        isInsightWriter={reply.writer.id === contentWriterId}
-        nickname={reply.writer.name}
+        commentWriterId={reply.writer?.id}
+        image={reply.writer?.image}
+        isInsightWriter={reply.writer?.id === contentWriterId}
+        nickname={reply.writer?.name}
         createdAt={reply.createdAt}
-        title={reply.writer.title}
+        title={reply.writer?.title}
         isReply={true}
       />
     ));
