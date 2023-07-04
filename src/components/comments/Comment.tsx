@@ -45,7 +45,6 @@ const Comment = ({
 
   const userId = useGetUserId();
   const theme = useTheme();
-  console.log(commentWriterId);
   if (!commentWriterId) {
     return (
       <View
