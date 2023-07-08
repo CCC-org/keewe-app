@@ -55,7 +55,7 @@ const CountingTextArea = (props: CountingTextAreaProps) => {
       >
         <TextInput
           // BUG: making TextInput a controlled component causes it to make unexpected cursor jumps and duplicate characters.
-          // value={inputValue}
+          value={inputValue}
           autoFocus={autoFocus}
           placeholder={placeholder}
           onChangeText={(text) => setInputValue(text)}
