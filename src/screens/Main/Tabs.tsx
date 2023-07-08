@@ -23,7 +23,6 @@ import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
 import { notificationApi, notificationKeys } from '../../utils/api/notification/notification';
 import { settingsIcon } from '../../../assets/svgs/settingsIcon';
-import { threeDots } from '../../../assets/svgs/constantSvgs/threeDots';
 
 const Tab = createBottomTabNavigator();
 

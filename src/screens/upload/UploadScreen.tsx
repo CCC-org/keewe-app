@@ -157,7 +157,7 @@ const UploadScreen = ({ navigation, route }) => {
         ) : (
           <InsightLinkTriggerButton
             onPress={() => handleSheetPresent(linkSheetRef)}
-            text={isValidSite ? 'VALID' : '인사이트를 얻은 링크.'}
+            text={isValidSite ? 'VALID' : '인사이트를 얻은 링크'}
           />
         )}
         <View style={styles.textContainer}>
