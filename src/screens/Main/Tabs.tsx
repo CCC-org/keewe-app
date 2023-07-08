@@ -81,20 +81,13 @@ const Tabs = () => {
           tabBarIcon: ({ focused }) =>
             focused ? <SvgXml xml={mypageOn} /> : <SvgXml xml={mypageOff} />,
           title: '',
-          headerLeft: () => {
+          headerRight: () => {
             return (
               <Pressable
                 style={{ marginHorizontal: 18 }}
                 onPress={() => navigation.navigate('Settings')}
               >
                 <SvgXml xml={settingsIcon} />
-              </Pressable>
-            );
-          },
-          headerRight: () => {
-            return (
-              <Pressable style={{ marginHorizontal: 18 }} onPress={() => alert('more')}>
-                <SvgXml xml={threeDots} />
               </Pressable>
             );
           },
