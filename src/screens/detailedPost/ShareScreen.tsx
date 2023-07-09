@@ -64,8 +64,6 @@ const ShareScreen = ({ route }) => {
     });
   };
 
-  console.log(recordText);
-
   return (
     <>
       <View ref={viewRef} style={[styles.container, { backgroundColor: color }]}>
