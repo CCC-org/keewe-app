@@ -40,6 +40,8 @@ interface Insight {
   link: Link;
   reaction: Reaction;
   bookmark: boolean;
+  drawerId?: number;
+  drawerName?: string;
 }
 
 interface Link {

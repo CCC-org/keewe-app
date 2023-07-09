@@ -158,7 +158,7 @@ const CommentsScreen = ({ navigation, route }) => {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
-          style={{ paddingBottom: '100%', marginBottom: 80 }}
+          style={{ height: '100%' }}
         />
         <CommentInput
           ref={ref}

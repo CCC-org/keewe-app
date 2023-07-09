@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     width: '100%',
     bottom: 0,
     borderTopWidth: 1,
+    marginBottom: 8,
     borderColor: `${theme.colors.graphic.black}10`,
     backgroundColor: `${theme.colors.graphic.white}`,
   },

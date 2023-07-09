@@ -29,7 +29,7 @@ const UploadScreen = ({ navigation, route }) => {
   const [isSwitchOn, setIsSwitchOn] = useState(true);
   const [isValidSite, setIsValidSite] = useState(isEdit || false);
   const [folders, setFolders] = useState<IFolder[]>([]);
-  const [selectedFolder, setSelectedFolder] = useState<string>('');
+  const [selectedFolder, setSelectedFolder] = useState<string>('선택안함');
   const linkSheetRef = useRef<BottomSheetModal>(null);
   const folderSheetRef = useRef<BottomSheetModal>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -82,6 +82,7 @@ const UploadScreen = ({ navigation, route }) => {
           link: linkText,
           contents: insightText,
           insightId: insightId,
+          drawerId: drawerId,
         };
         response = await UploadApis.editInsight(editData);
         queryClient.invalidateQueries(
