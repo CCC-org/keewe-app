@@ -26,7 +26,7 @@ const ShareScreen = ({ route }) => {
   });
   const viewRef = useRef(null);
   const theme = useTheme();
-  console.log(recordText);
+
   const handleDownload = async () => {
     try {
       const uri = await captureRef(viewRef, {
@@ -43,8 +43,6 @@ const ShareScreen = ({ route }) => {
       console.log(error);
     }
   };
-
-  console.log('recordText', recordText);
 
   const shareImage = async () => {
     const uri = await captureRef(viewRef, {
