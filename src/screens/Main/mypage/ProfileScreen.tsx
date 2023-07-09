@@ -17,6 +17,7 @@ import { IOScrollView } from 'react-native-intersection-observer';
 import { FollowAPI } from '../../../utils/api/FollowAPI';
 import MainLottie from '../../../components/lotties/MainLottie';
 import { ChallengeAPI } from '../../../utils/api/ChallengeAPI';
+import ProfilePageFolderSection from './ProfilePageFolderSection';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
 const ProfileScreen = ({ navigation, route }) => {
@@ -305,60 +306,17 @@ const ProfileScreen = ({ navigation, route }) => {
         </Pressable>
       ) : null}
       <DividerBar style={styles.divider} />
-      {userFolderList && (
-        <>
-          <ScrollView
-            horizontal={true}
-            contentContainerStyle={styles.group}
-            showsHorizontalScrollIndicator={false}
-          >
-            {userFolderList.tabs.map((cur, idx) => {
-              return (
-                <FolderOption
-                  key={idx}
-                  title={cur.name}
-                  selected={cur.isClicked}
-                  onPress={() => handleFolderOption(cur.id)}
-                />
-              );
-            })}
-          </ScrollView>
-          {feedList?.pages[0]?.length !== 0 ? (
-            <>
-              <View style={styles.insight}>
-                <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>
-                  인사이트
-                </Text>
-              </View>
-
-              <FeedList
-                writer={{
-                  writerId: Number(userId),
-                  nickname: profile?.data?.nickname ?? '',
-                  title: profile?.data?.title ?? '',
-                  image: profileImage,
-                }}
-                feedList={feedList}
-                feedListQueryClient={feedListQueryClient}
-                fetchNextPage={fetchNextPage}
-                touchBookMark={touchBookMark}
-                feedListIsLoading={feedListIsLoading}
-              />
-            </>
-          ) : (
-            <View style={styles.noInsight}>
-              <Text
-                style={{
-                  ...theme.fonts.text.body1.regular,
-                  color: `${theme.colors.graphic.black}80`,
-                }}
-              >
-                아직 인사이트가 없어요.
-              </Text>
-            </View>
-          )}
-        </>
-      )}
+      <ProfilePageFolderSection
+        feedList={feedList}
+        userFolderList={userFolderList}
+        feedListQueryClient={feedListQueryClient}
+        fetchNextPage={fetchNextPage}
+        profile={profile}
+        touchBookMark={touchBookMark}
+        userId={userId}
+        handleFolderOption={handleFolderOption}
+        feedListIsLoading={feedListIsLoading}
+      />
     </IOScrollView>
   );
 };

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import React, { Fragment } from 'react';
 import { InfiniteData, QueryClient, UseMutateFunction } from '@tanstack/react-query';
 import { InView } from 'react-native-intersection-observer';
@@ -11,10 +11,11 @@ interface FeedListProps {
   fetchNextPage: () => void;
   touchBookMark: UseMutateFunction<void, unknown, number, unknown>;
   upperComponent?: React.ReactNode;
-  feedListQueryClient: QueryClient;
+  feedListQueryClient?: QueryClient;
   feedListIsLoading: boolean;
   writer?: InsightWriter;
   scrollViewRef?: React.RefObject<any>;
+  scrollStyle?: StyleProp<ViewStyle>;
 }
 
 const FeedList = ({
@@ -22,14 +23,14 @@ const FeedList = ({
   feedList,
   fetchNextPage,
   touchBookMark,
-  feedListQueryClient,
   scrollViewRef,
   writer,
+  scrollStyle,
 }: FeedListProps) => {
   const userId = useGetUserId();
 
   return (
-    <ScrollView contentContainerStyle={styles.feedCtn} ref={scrollViewRef}>
+    <ScrollView contentContainerStyle={[styles.feedCtn, scrollStyle]} ref={scrollViewRef}>
       {UpperComponent}
       {feedList?.pages.map((group, i) => {
         return (
@@ -62,7 +63,6 @@ const FeedList = ({
                     key={insight.id}
                     insight={insight}
                     localId={String(userId)}
-                    feedListQueryClient={feedListQueryClient}
                   />
                 </Fragment>
               );

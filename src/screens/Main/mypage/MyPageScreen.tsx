@@ -106,7 +106,7 @@ const MyPageScreen = ({ navigation, route }) => {
     return unsubscribe;
   }, [navigation]);
 
-  const handleFolderOption = async (tabId: number) => {
+  const handleFolderOption = (tabId: number) => {
     const key = MypageQueryKeys.getFolderList({ userId: userId });
     const data = queryClient.getQueryState(key)!.data as TabInfo;
 

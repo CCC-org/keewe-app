@@ -5,10 +5,11 @@ import FolderOption from './FolderOption';
 import FeedList from '../../Feed/FeedList';
 import { useTheme } from 'react-native-paper';
 import { InfiniteData, QueryClient, UseMutateFunction } from '@tanstack/react-query';
+import MainLottie from '../../../components/lotties/MainLottie';
 
 interface ProfilePageFolderSectionProps {
   userFolderList: any;
-  handleFolderOption: (tabId: number) => Promise<void>;
+  handleFolderOption: (tabId: number) => void;
   feedList: InfiniteData<InsightData[] | undefined> | undefined;
   feedListQueryClient: QueryClient;
   fetchNextPage: () => void;
@@ -30,6 +31,9 @@ const ProfilePageFolderSection = ({
   profile,
 }: ProfilePageFolderSectionProps) => {
   const theme = useTheme();
+
+  const hasInsights = feedList?.pages[0]?.length !== 0;
+
   return (
     <>
       <ScrollView
@@ -48,7 +52,17 @@ const ProfilePageFolderSection = ({
           );
         })}
       </ScrollView>
-      {feedList?.pages[0]?.length !== 0 ? (
+      {feedListIsLoading && (
+        <View
+          style={{
+            width: '100%',
+            height: 400,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        ></View>
+      )}
+      {hasInsights && !feedListIsLoading ? (
         <View>
           <View style={[styles.insight]}>
             <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>
@@ -67,6 +81,7 @@ const ProfilePageFolderSection = ({
             fetchNextPage={fetchNextPage}
             touchBookMark={touchBookMark}
             feedListIsLoading={feedListIsLoading}
+            scrollStyle={{ marginBottom: 400 }}
           />
         </View>
       ) : (
@@ -102,7 +117,7 @@ const styles = StyleSheet.create({
   },
   noInsight: {
     marginTop: 74,
-    marginBottom: 100,
+    marginBottom: 600,
     justifyContent: 'center',
     alignItems: 'center',
   },
