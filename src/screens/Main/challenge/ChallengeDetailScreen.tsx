@@ -64,6 +64,7 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
       enabled: userId !== undefined,
     },
   );
+
   const { data: MyCount, isLoading: isMyCountLoading } = useQuery(
     ChallengeQueryKeys.getChallengeInsightCount({ writerId: String(userId) }),
     () => ChallengeAPI.getChallengeInsightCount({ writerId: String(userId) }),

@@ -191,7 +191,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
               views={views}
               url={insightResponse?.data?.link?.url ?? ''}
               currentChallenge={getChallengeRecordResponse?.data?.challengeName}
-              contents={contents}
+              contents={insightResponse?.data?.contents}
               reaction={insightResponse.data.reaction}
               authorId={profile?.data?.authorId ?? -1}
               recordText={
@@ -275,17 +275,17 @@ const DetailedPostScreen = ({ navigation, route }) => {
                       <Comment
                         key={cur.id}
                         content={cur.content}
-                        nickname={cur.writer.name}
-                        isInsightWriter={profile?.data?.authorId === cur.writer.id}
+                        nickname={cur.writer?.name}
+                        isInsightWriter={profile?.data?.authorId === cur.writer?.id}
                         commentId={cur.id}
-                        commentWriterId={cur.writer.id}
-                        title={cur.writer.title}
-                        image={cur.writer.image}
+                        commentWriterId={cur.writer?.id}
+                        title={cur.writer?.title}
+                        image={cur.writer?.image}
                         createdAt={cur.createdAt}
                         isReply={false}
                         onReply={() => {
                           ref?.current?.focus();
-                          handleReplyClick({ id: cur.id, nickname: cur.writer.name });
+                          handleReplyClick({ id: cur.id, nickname: cur.writer?.name ?? '' });
                         }}
                       />
                     ))}

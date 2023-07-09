@@ -24,9 +24,9 @@ const FeedItem = ({ insight, localId, onBookMarkClick }: FeedItemProps) => {
       alert('잠시 후 다시 시도하세요.');
       return;
     }
-    if (localId === String(writer.writerId))
+    if (localId === String(writer?.writerId))
       navigation.navigate('MyProfile', { userId: localId, enteredByTab: false });
-    else navigation.navigate('Profile', { userId: writer.writerId });
+    else navigation.navigate('Profile', { userId: writer?.writerId ?? 0 });
   };
 
   return (
@@ -35,19 +35,19 @@ const FeedItem = ({ insight, localId, onBookMarkClick }: FeedItemProps) => {
         <Pressable onPress={handleProfilePress}>
           <MiniProfile
             style={styles.MiniProfile}
-            nickname={writer.nickname}
-            title={writer.title}
-            image={writer.image}
+            nickname={writer?.nickname}
+            title={writer?.title}
+            image={writer?.image}
             createdAt={createdAt}
           />
         </Pressable>
         <FeedVerticalDots
-          userName={writer.nickname}
-          userId={writer.writerId}
+          userName={writer?.nickname}
+          userId={writer?.writerId}
           insightId={id}
-          nickname={writer.nickname}
-          title={writer.title}
-          image={writer.image}
+          nickname={writer?.nickname}
+          title={writer?.title}
+          image={writer?.image}
           contents={contents}
           link={link.url}
         />

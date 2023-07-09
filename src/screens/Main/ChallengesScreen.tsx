@@ -25,13 +25,13 @@ const ChallengesScreen = ({ navigation }) => {
   const scrollViewRef = useRef<any>(null);
 
   const { data: participationCheck } = useQuery(
-    ['challenge', 'participation', 'check'],
+    ChallengeQueryKeys.getParticipationCheck(),
     () => ChallengeAPI.getParticipationCheck(),
     { onSuccess: () => setParticipated(true) },
   );
 
   const { data: challengeParticipation, isLoading: isChallengeParticipationLoading } = useQuery(
-    ['challenge', 'participation'],
+    ChallengeQueryKeys.getChallengeParticipation(),
     ChallengeAPI.getChallengeParticipation,
     { enabled: participated },
   );
@@ -50,17 +50,17 @@ const ChallengesScreen = ({ navigation }) => {
   );
 
   const { data: challengeCurrent, isLoading: isChallengeCurrentLoading } = useQuery(
-    ['challenge', 'current', { limit: 5 }],
+    ChallengeQueryKeys.getChallengeCurrent({ limit: 5 }),
     () => ChallengeAPI.getChallengeCurrent({ limit: 5 }),
   );
 
   const { data: challengeHistory, isLoading: isChallengeHIstoryLoading } = useQuery(
-    ['challenge', 'history', { limit: 3 }],
+    ChallengeQueryKeys.getChallengeHistory({ limit: 5 }),
     () => ChallengeAPI.getChallengeHistory({ limit: 3 }),
   );
 
   const { data: challengeHistoryCount, isLoading: isChallengeHIstoryCountLoading } = useQuery(
-    ['challenge', 'count'],
+    ChallengeQueryKeys.getChallengeHistoryCount(),
     () => ChallengeAPI.getChallengeHistoryCount(),
   );
 

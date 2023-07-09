@@ -23,6 +23,22 @@ export const ChallengeQueryKeys = {
     'count',
     request,
   ],
+  getChallengeProgress: () => ['challenge', 'participation', 'progress'],
+  getParticipationCheck: () => ['challenge', 'participation', 'check'],
+  getChallengeParticipation: () => ['challenge', 'participation'],
+  getChallengeCurrent: (request: ChallengeCurrentGetRequest) => [
+    'challenge',
+    'current',
+    request.cursor,
+    request.limit,
+  ],
+  getChallengeHistory: (request: ChallengeHistoryGetRequest) => [
+    'challenge',
+    'history',
+    request.cursor,
+    request.limit,
+  ],
+  getChallengeHistoryCount: () => ['challenge', 'count'],
 };
 
 export const ChallengeAPI = {

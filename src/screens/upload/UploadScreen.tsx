@@ -18,7 +18,7 @@ import FolderSheetContent from './FolderSheetContent';
 import LinkSheetContent from './LinkSheetContent';
 import UploadBottomContainer from './UploadBottomContainer';
 import Toast from 'react-native-toast-message';
-import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
+import { ChallengeAPI, ChallengeQueryKeys } from '../../utils/api/ChallengeAPI';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { InsightQueryKeys } from '../../utils/api/InsightAPI';
 
@@ -36,7 +36,7 @@ const UploadScreen = ({ navigation, route }) => {
   const queryClient = useQueryClient();
 
   const { data: challengeProgress, isLoading: isChallengeProgressLoading } = useQuery(
-    ['challenge', 'participation'],
+    ChallengeQueryKeys.getChallengeProgress(),
     ChallengeAPI.getChallengeProgress,
   );
   const snapPoints = useMemo(() => ['50%', '80%'], []);

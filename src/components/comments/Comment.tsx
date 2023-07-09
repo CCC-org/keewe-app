@@ -8,15 +8,15 @@ import CommentVerticalDots from './CommentVerticalDots';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
 
 interface CommentsProps {
-  nickname: string;
-  title: string;
+  nickname?: string;
+  title?: string;
   content: string;
   createdAt: string;
   image?: string;
   isInsightWriter?: boolean;
   isReply?: boolean;
   onReply?: () => void;
-  commentWriterId: number | string;
+  commentWriterId?: number | string;
   highlight?: boolean;
   commentId: number;
 }
@@ -45,6 +45,31 @@ const Comment = ({
 
   const userId = useGetUserId();
   const theme = useTheme();
+  if (!commentWriterId) {
+    return (
+      <View
+        style={{
+          backgroundColor: theme.colors.brand.surface.container1,
+          marginLeft: isReply ? 60 : 0,
+          marginRight: isReply ? 16 : 0,
+          marginTop: 16,
+        }}
+      >
+        <Text
+          style={{
+            fontFamily: 'pretendard',
+            fontSize: 14,
+            margin: 16,
+            lineHeight: 20,
+            color: '#12131450',
+          }}
+        >
+          {content}
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <Animated.View
       style={{
