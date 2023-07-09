@@ -59,9 +59,14 @@ const UploadBottomContainer = ({
         >
           <Text style={{ ...theme.fonts.text.body1.bold, fontSize: 16 }}>폴더</Text>
           <Text
-            style={{ fontFamily: 'pretendard', paddingRight: 12, color: '#486006', fontSize: 16 }}
+            style={{
+              fontFamily: 'pretendard',
+              paddingRight: 12,
+              color: selectedFolder !== '선택안함' ? '#486006' : '#12131480',
+              fontSize: 16,
+            }}
           >
-            {selectedFolder}
+            {selectedFolder ?? '선택안함'}
           </Text>
         </View>
         <View>
