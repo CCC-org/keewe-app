@@ -20,7 +20,7 @@ import UploadBottomContainer from './UploadBottomContainer';
 import Toast from 'react-native-toast-message';
 import { ChallengeAPI, ChallengeQueryKeys } from '../../utils/api/ChallengeAPI';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { InsightQueryKeys } from '../../utils/api/InsightAPI';
+import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
 
 const UploadScreen = ({ navigation, route }) => {
   const { isEdit, insight, link, insightId } = route?.params ?? {};
@@ -35,10 +35,16 @@ const UploadScreen = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const queryClient = useQueryClient();
 
+  useQuery(InsightQueryKeys.getInsight({ insightId }), () => InsightAPI.getInsight({ insightId }), {
+    onSuccess: (response) => setSelectedFolder(response?.data?.drawerName ?? ''),
+    enabled: insightId !== undefined,
+  });
+
   const { data: challengeProgress, isLoading: isChallengeProgressLoading } = useQuery(
     ChallengeQueryKeys.getChallengeProgress(),
     ChallengeAPI.getChallengeProgress,
   );
+
   const snapPoints = useMemo(() => ['50%', '80%'], []);
 
   const valid = useMemo(() => {
