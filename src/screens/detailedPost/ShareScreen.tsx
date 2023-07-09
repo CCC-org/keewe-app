@@ -17,7 +17,7 @@ const falseObject = {
 };
 
 const ShareScreen = ({ route }) => {
-  const { challenge, order, image, name, insightText } = route.params;
+  const { challenge, order, image, name, insightText, recordText } = route.params;
   const [color, setColor] = useState('#f1f1e9');
   const [buttonColorSelected, setButtonColorSelected] = useState({
     first: true,
@@ -98,7 +98,9 @@ const ShareScreen = ({ route }) => {
                   color: color === '#f1f1e9' ? '#12131450' : '#ffffff50',
                 }}
               >
-                {challenge ? `${challenge}에 대한 ${order}번째 인사이트` : '인사이트'}
+                {recordText?.length
+                  ? `${challenge}에 대한 ${recordText}번째 인사이트`
+                  : `${challenge}에 대한 인사이트`}
               </Text>
             </View>
           </View>
