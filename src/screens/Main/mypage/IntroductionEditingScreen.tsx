@@ -6,7 +6,7 @@ import CountingTextArea from '../../../components/texts/CountingTextArea';
 
 const IntroductionEditingScreen = ({ navigation, route }) => {
   const theme = useTheme();
-  const [input, setInput] = useState<string>('');
+  const [input, setInput] = useState<string>(route?.params?.introduction);
   const [nickname] = useState(route?.params?.nickname);
   const [image] = useState(route?.params?.image);
   const [title] = useState(route?.params?.title);
@@ -53,8 +53,8 @@ const IntroductionEditingScreen = ({ navigation, route }) => {
   }, [input]);
 
   useEffect(() => {
-    setInput(route.params?.introduction ?? '');
-  }, [route.params]);
+    setInput(route?.params?.introduction ?? '');
+  }, [route]);
 
   return (
     <View style={styles.container}>
