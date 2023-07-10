@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Platform } from 'react-native';
 import React, { useCallback, useRef } from 'react';
 import SocialLoginButton from '../../components/buttons/SocialLoginButton';
 import { useTheme } from 'react-native-paper';
@@ -8,6 +8,8 @@ import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import apple from '../../constants/Icons/Signin/apple';
 import google from '../../constants/Icons/Signin/google';
 import naver from '../../constants/Icons/Signin/naver';
+
+const isIOS = Platform.OS === 'ios';
 
 const SignUpScreen = ({ navigation }) => {
   const modalRef = useRef<BottomSheetModal>(null);
@@ -55,7 +57,11 @@ const SignUpScreen = ({ navigation }) => {
           />
         </View>
       </View>
-      <BottomSheetModal ref={modalRef} snapPoints={['40%']} backdropComponent={renderBackdrop}>
+      <BottomSheetModal
+        ref={modalRef}
+        snapPoints={isIOS ? ['40%'] : ['30%']}
+        backdropComponent={renderBackdrop}
+      >
         <Text
           style={{
             fontFamily: 'pretendardSemiBold',
@@ -73,15 +79,17 @@ const SignUpScreen = ({ navigation }) => {
             justifyContent: 'center',
           }}
         >
-          <View style={styles.kakao}>
-            <SocialLoginButton
-              text="Apple로 로그인"
-              textColor={theme.colors.graphic.white}
-              xml={apple}
-              color={theme.colors.graphic.black}
-              onPress={() => handleLoginPress('apple')}
-            />
-          </View>
+          {isIOS && (
+            <View style={styles.kakao}>
+              <SocialLoginButton
+                text="Apple로 로그인"
+                textColor={theme.colors.graphic.white}
+                xml={apple}
+                color={theme.colors.graphic.black}
+                onPress={() => handleLoginPress('apple')}
+              />
+            </View>
+          )}
           <View style={styles.other}>
             <SocialLoginButton
               text="Google 계정으로 시작하기"
