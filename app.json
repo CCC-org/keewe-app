@@ -2,7 +2,7 @@
   "expo": {
     "name": "keewe",
     "slug": "keewe",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -17,9 +17,7 @@
       "url": "https://u.expo.dev/05f9153d-ab7a-4208-a465-60a60c8c4ade",
       "enabled": true
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -30,7 +28,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.akdlsz21.keewe",
-      "versionCode": 7
+      "versionCode": 8
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
