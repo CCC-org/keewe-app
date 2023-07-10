@@ -31,8 +31,12 @@ const Tabs = () => {
 
   const navigation = useNavigation();
 
-  const { data } = useQuery(notificationKeys.checkNotification(), () =>
-    notificationApi.checkNotification(),
+  const { data } = useQuery(
+    notificationKeys.checkNotification(),
+    () => notificationApi.checkNotification(),
+    {
+      enabled: userId !== undefined && userId !== 0,
+    },
   );
 
   return (
