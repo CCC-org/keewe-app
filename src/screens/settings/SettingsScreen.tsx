@@ -1,4 +1,12 @@
-import { Pressable, ScrollView, StyleSheet, Text, Linking, NativeModules } from 'react-native';
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  Linking,
+  NativeModules,
+  Platform,
+} from 'react-native';
 import React, { useState } from 'react';
 import { useTheme } from 'react-native-paper';
 import DividerBar from '../../components/bars/DividerBar';
@@ -11,6 +19,8 @@ import * as Updates from 'expo-updates';
 import { useNavigation } from '@react-navigation/native';
 import { reloadAndReset } from '../../utils/helper/logoutAndWithdraw/removeStackAndNavigate';
 
+const isIOS = Platform.OS === 'ios';
+
 const SettingsScreen = () => {
   const theme = useTheme();
   const navigation = useNavigation();
@@ -21,6 +31,10 @@ const SettingsScreen = () => {
     onSuccess: () => {
       clearStorage();
       setIsWithdrawalModalVisible(false);
+      if (isIOS) {
+        NativeModules.DevSettings.reload();
+        return;
+      }
       if (__DEV__) {
         NativeModules.DevSettings.reload();
         reloadAndReset(navigation, 'SignUp');
@@ -35,6 +49,10 @@ const SettingsScreen = () => {
   const handleLogOut = () => {
     setIsLogoutModalVisible(false);
     clearStorage().then(() => {
+      if (isIOS) {
+        NativeModules.DevSettings.reload();
+        return;
+      }
       if (__DEV__) {
         NativeModules.DevSettings.reload();
         reloadAndReset(navigation, 'SignUp');
