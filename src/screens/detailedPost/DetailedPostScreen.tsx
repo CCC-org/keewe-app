@@ -93,25 +93,38 @@ const DetailedPostScreen = ({ navigation, route }) => {
       });
   };
 
-  const { data: insightResponse, isLoading: isInsightLoading } = useQuery(
+  const {
+    data: insightResponse,
+    isLoading: isInsightLoading,
+    isError: isInsightError,
+  } = useQuery(
     InsightQueryKeys.getInsight({ insightId }),
     () => InsightAPI.getInsight({ insightId }),
     querySuccessError,
   );
 
-  const { data: getCommentResponse, isLoading: isCommentLoading } = useQuery(
-    InsightQueryKeys.getCommentPreviewList({ insightId }),
-    () => InsightAPI.getCommentPreviewList({ insightId }),
+  const {
+    data: getCommentResponse,
+    isLoading: isCommentLoading,
+    isError: isCommentError,
+  } = useQuery(InsightQueryKeys.getCommentPreviewList({ insightId }), () =>
+    InsightAPI.getCommentPreviewList({ insightId }),
   );
 
-  const { data: getCountResponse, isLoading: isCountLoading } = useQuery(
-    InsightQueryKeys.getCommentPreviewCount({ insightId }),
-    () => InsightAPI.getCommentPreviewCount({ insightId }),
+  const {
+    data: getCountResponse,
+    isLoading: isCountLoading,
+    isError: isCountError,
+  } = useQuery(InsightQueryKeys.getCommentPreviewCount({ insightId }), () =>
+    InsightAPI.getCommentPreviewCount({ insightId }),
   );
 
-  const { data: getChallengeRecordResponse, isLoading: isChallengeRecordLoading } = useQuery(
-    InsightQueryKeys.getChallengeRecord({ insightId }),
-    () => InsightAPI.getChallengeRecord({ insightId }),
+  const {
+    data: getChallengeRecordResponse,
+    isLoading: isChallengeRecordLoading,
+    isError: isChallengeRecordError,
+  } = useQuery(InsightQueryKeys.getChallengeRecord({ insightId }), () =>
+    InsightAPI.getChallengeRecord({ insightId }),
   );
 
   const recordOrder = getChallengeRecordResponse?.data?.order;
@@ -172,6 +185,10 @@ const DetailedPostScreen = ({ navigation, route }) => {
     sad: 78,
     surprise: 45,
   };
+
+  if (isInsightError || isCommentError || isCountError || isChallengeRecordError) {
+    return null;
+  }
 
   return (
     <>
