@@ -130,7 +130,7 @@ const FolderEditSection = ({ userFolderList }: FolderEditSectionProps) => {
             </Pressable>
             <BottomSheetModal
               ref={modalRefEdit}
-              snapPoints={['28%']}
+              snapPoints={['52%', '60%']}
               backdropComponent={renderBackdrop}
             >
               <View>

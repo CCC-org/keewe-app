@@ -77,7 +77,11 @@ const FolderEditScreen = ({ navigation }) => {
   return (
     <>
       <FolderEditSection userFolderList={userFolderList} />
-      <BottomSheetModal ref={modalRefAdd} snapPoints={['52%']} backdropComponent={renderBackdrop}>
+      <BottomSheetModal
+        ref={modalRefAdd}
+        snapPoints={['52%', '60%']}
+        backdropComponent={renderBackdrop}
+      >
         <View>
           <BottomSheetHeader
             headerRightButton={() => (
