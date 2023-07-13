@@ -9,6 +9,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as MediaLibrary from 'expo-media-library';
 import ProfileAvatar from '../../components/profile/ProfileAvatar';
 import { useTheme } from 'react-native-paper';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 const falseObject = {
   first: false,
@@ -39,6 +40,12 @@ const ShareScreen = ({ route }) => {
         const asset = await MediaLibrary.createAssetAsync(uri);
         await MediaLibrary.createAlbumAsync('Keewe', asset, false);
       }
+
+      Toast.show({
+        type: 'snackbar',
+        text1: '이미지를 저장했어요.',
+        position: 'bottom',
+      });
     } catch (error) {
       console.log(error);
     }
