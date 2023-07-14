@@ -56,3 +56,16 @@ interface FolderData {
   id: number;
   name: string;
 }
+
+interface TabInfo {
+  tabs: {
+    isClicked: boolean;
+    id: number;
+    name: string;
+  }[];
+  selectedTab: {
+    isClicked: boolean;
+    id: number;
+    name: string;
+  };
+}

@@ -96,7 +96,6 @@ const DetailedPostScreen = ({ navigation, route }) => {
   const { data: insightResponse, isLoading: isInsightLoading } = useQuery(
     InsightQueryKeys.getInsight({ insightId }),
     () => InsightAPI.getInsight({ insightId }),
-    querySuccessError,
   );
 
   const { data: getCommentResponse, isLoading: isCommentLoading } = useQuery(
@@ -142,7 +141,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
             </Pressable>
             <FeedVerticalDots
               contents={insightResponse?.data?.contents ?? ''}
-              link={removeEscapeSequences(insightResponse?.data?.link.url)}
+              link={removeEscapeSequences(insightResponse?.data?.link.url ?? '')}
               userName={profile?.data?.nickname}
               nickname={profile?.data?.nickname}
               userId={profile?.data?.authorId}
@@ -184,7 +183,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
           alwaysBounceVertical={false}
           style={{ paddingBottom: '100%', marginBottom: 70 }}
         >
-          {!isInsightLoading ? (
+          {!isInsightLoading && insightResponse ? (
             <DetailedPostSection
               isProfileLoading={isProfileLoading}
               isInsightLoading={isInsightLoading}
@@ -194,7 +193,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
               url={insightResponse?.data?.link?.url ?? ''}
               currentChallenge={getChallengeRecordResponse?.data?.challengeName}
               contents={insightResponse?.data?.contents}
-              reaction={insightResponse.data.reaction}
+              reaction={insightResponse?.data?.reaction}
               authorId={profile?.data?.authorId ?? -1}
               recordText={recordText}
               userName={profile?.data?.nickname ?? ''}

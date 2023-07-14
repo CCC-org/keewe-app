@@ -5,10 +5,9 @@ import FolderOption from './FolderOption';
 import FeedList from '../../Feed/FeedList';
 import { useTheme } from 'react-native-paper';
 import { InfiniteData, QueryClient, UseMutateFunction } from '@tanstack/react-query';
-import MainLottie from '../../../components/lotties/MainLottie';
 
 interface ProfilePageFolderSectionProps {
-  userFolderList: any;
+  userFolderList?: TabInfo;
   handleFolderOption: (tabId: number) => void;
   feedList: InfiniteData<InsightData[] | undefined> | undefined;
   feedListQueryClient: QueryClient;
@@ -41,7 +40,7 @@ const ProfilePageFolderSection = ({
         contentContainerStyle={styles.group}
         showsHorizontalScrollIndicator={false}
       >
-        {userFolderList.tabs.map((cur, idx) => {
+        {userFolderList?.tabs.map((cur, idx) => {
           return (
             <FolderOption
               key={idx}
