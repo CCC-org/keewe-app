@@ -79,7 +79,7 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
   const tabs = [
     `전체기록 ${TotalCount?.insightNumber}`,
     `내기록 ${MyCount?.insightNumber}`,
-    `친구 ${count?.challengerCount || ''}`,
+    `친구 ${(count?.challengerCount ?? 0) - 1}`,
   ];
   const spacing = 16;
   const tabWidth = (width - (tabs.length + 1) * spacing) / tabs.length;
