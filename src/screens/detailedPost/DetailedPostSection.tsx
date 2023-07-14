@@ -16,6 +16,7 @@ interface DetailedPostSectionProps {
   insightId: number;
   views: number | string;
   currentChallenge?: string;
+  challengeId?: number;
   recordText?: string;
   url: string;
   reaction: Reaction;
@@ -31,6 +32,7 @@ const DetailedPostSection = ({
   insightId,
   views,
   currentChallenge,
+  challengeId,
   recordText,
   url,
   reaction,
@@ -61,7 +63,10 @@ const DetailedPostSection = ({
   };
 
   const handleGoToDetailedChallenge = () => {
-    // needs to go to detailed challenge screen
+    navigation.navigate('ChallengeDetail', {
+      challengeId,
+      challengeName: currentChallenge,
+    });
   };
 
   return (

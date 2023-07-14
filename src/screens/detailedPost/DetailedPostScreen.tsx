@@ -8,6 +8,7 @@ import {
   Platform,
   KeyboardAvoidingView,
   TextInput,
+  RefreshControl,
 } from 'react-native';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import DetailedPostSection from './DetailedPostSection';
@@ -32,12 +33,17 @@ import FeedVerticalDots from '../Feed/FeedVerticalDots';
 import Toast from 'react-native-toast-message';
 import removeEscapeSequences from '../../utils/helper/strings/removeEscapeSequence';
 import { getUserId } from '../../utils/hooks/asyncStorage/Login';
+import { IOScrollView } from 'react-native-intersection-observer';
 
 const DetailedPostScreen = ({ navigation, route }) => {
   const { insightId, contents } = route.params;
   const [views] = useIncreaseView(insightId);
   const [replyInfo, setReplyInfo] = useState<ReplyInfo | undefined>();
+  const [yPos, setYPos] = useState(0);
+  const [pageRefreshing, setPageRefreshing] = useState(false);
+
   const ref = useRef<TextInput>(null);
+  const scrollViewRef = useRef<any>(null);
 
   const queryClient = useQueryClient();
   const theme = useTheme();
@@ -172,183 +178,193 @@ const DetailedPostScreen = ({ navigation, route }) => {
     surprise: 45,
   };
 
-  return (
-    <>
-      <KeyboardAvoidingView
-        behavior={Platform.select({ ios: 'position' })} // position || padding
-        keyboardVerticalOffset={Platform.select({ ios: 90 })}
-      >
-        <ScrollView
-          bounces={false}
-          alwaysBounceVertical={false}
-          style={{ paddingBottom: '100%', marginBottom: 70 }}
-        >
-          {!isInsightLoading && insightResponse ? (
-            <DetailedPostSection
-              isProfileLoading={isProfileLoading}
-              isInsightLoading={isInsightLoading}
-              insightId={insightId}
-              insightText={insightResponse?.data?.contents ?? ''}
-              views={views}
-              url={insightResponse?.data?.link?.url ?? ''}
-              currentChallenge={getChallengeRecordResponse?.data?.challengeName}
-              contents={insightResponse?.data?.contents}
-              reaction={insightResponse?.data?.reaction}
-              authorId={profile?.data?.authorId ?? -1}
-              recordText={recordText}
-              userName={profile?.data?.nickname ?? ''}
-              createdAt={profile?.data?.createdAt ?? '-'}
-            />
-          ) : (
-            <DetailedPostSection
-              isProfileLoading={isProfileLoading}
-              isInsightLoading={isInsightLoading}
-              insightId={insightId}
-              insightText={''}
-              contents={contents}
-              views={views}
-              url={''}
-              currentChallenge={''}
-              reaction={tempReaction}
-              authorId={profile?.data?.authorId ?? -1}
-              recordText={''}
-              userName={profile?.data?.nickname ?? ''}
-              createdAt={profile?.data?.createdAt ?? '-'}
-            />
-          )}
+  const onRefresh = () => {
+    setPageRefreshing(true);
+    queryClient.invalidateQueries(['insight']);
+    queryClient.invalidateQueries(['comment']).then(() => setPageRefreshing(false));
+  };
 
-          {isProfileLoading ? null : (
-            <Pressable
-              onPress={async () => {
-                const localUserId = await getUserId();
-                if (localUserId === String(profile?.data?.authorId)) {
-                  navigation.navigate('MyProfile', { userId: localUserId, enteredByTab: false });
-                } else {
-                  navigation.navigate('Profile', { userId: profile?.data?.authorId, insightId });
-                }
-              }}
-            >
-              <Profile
-                nickname={profile?.data?.nickname ?? '-'}
-                title={profile?.data?.title ?? '-'}
-                self={profile?.data?.author ?? '-'}
-                follow={profile?.data?.following}
-                interests={profile?.data?.interests ?? []}
-                createdAt={profile?.data?.createdAt ?? '-'}
-                image={profile?.data?.image ?? ''}
-                followMutation={followMutation}
-                style={{
-                  backgroundColor: theme.colors.graphic.white,
-                  padding: 16,
-                }}
-              />
-            </Pressable>
-          )}
-          <View
-            style={{ ...styles.commentDivider, backgroundColor: theme.colors.brand.surface.main }}
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.select({ ios: 'position' })} // position || padding
+      keyboardVerticalOffset={Platform.select({ ios: 90 })}
+      style={{ height: '100%' }}
+    >
+      <IOScrollView
+        ref={scrollViewRef}
+        refreshControl={<RefreshControl refreshing={pageRefreshing} onRefresh={onRefresh} />}
+        onScroll={(e) => {
+          const { y } = e.nativeEvent.contentOffset;
+          if (y === 0) return;
+          setYPos(y);
+        }}
+        style={{ height: '100%', marginBottom: 80 }}
+      >
+        {!isInsightLoading && insightResponse ? (
+          <DetailedPostSection
+            isProfileLoading={isProfileLoading}
+            isInsightLoading={isInsightLoading}
+            insightId={insightId}
+            insightText={insightResponse?.data?.contents ?? ''}
+            views={views}
+            url={insightResponse?.data?.link?.url ?? ''}
+            currentChallenge={getChallengeRecordResponse?.data?.challengeName}
+            challengeId={getChallengeRecordResponse?.data?.challengeId}
+            contents={insightResponse?.data?.contents}
+            reaction={insightResponse?.data?.reaction}
+            authorId={profile?.data?.authorId ?? -1}
+            recordText={recordText}
+            userName={profile?.data?.nickname ?? ''}
+            createdAt={profile?.data?.createdAt ?? '-'}
           />
-          {!isCommentLoading && !isCountLoading && (
-            <>
-              <View style={styles.commentsHeader}>
-                <Text
-                  style={{ fontWeight: '600', fontSize: 18, color: theme.colors.graphic.black }}
-                >
-                  댓글{' '}
-                </Text>
+        ) : (
+          <DetailedPostSection
+            isProfileLoading={isProfileLoading}
+            isInsightLoading={isInsightLoading}
+            insightId={insightId}
+            insightText={''}
+            contents={contents}
+            views={views}
+            url={''}
+            currentChallenge={''}
+            reaction={tempReaction}
+            authorId={profile?.data?.authorId ?? -1}
+            recordText={''}
+            userName={profile?.data?.nickname ?? ''}
+            createdAt={profile?.data?.createdAt ?? '-'}
+          />
+        )}
+
+        {isProfileLoading ? null : (
+          <Pressable
+            onPress={async () => {
+              const localUserId = await getUserId();
+              if (localUserId === String(profile?.data?.authorId)) {
+                navigation.navigate('MyProfile', { userId: localUserId, enteredByTab: false });
+              } else {
+                navigation.navigate('Profile', { userId: profile?.data?.authorId, insightId });
+              }
+            }}
+          >
+            <Profile
+              nickname={profile?.data?.nickname ?? '-'}
+              title={profile?.data?.title ?? '-'}
+              self={profile?.data?.author ?? '-'}
+              follow={profile?.data?.following}
+              interests={profile?.data?.interests ?? []}
+              createdAt={profile?.data?.createdAt ?? '-'}
+              image={profile?.data?.image ?? ''}
+              followMutation={followMutation}
+              style={{
+                backgroundColor: theme.colors.graphic.white,
+                padding: 16,
+              }}
+            />
+          </Pressable>
+        )}
+        <View
+          style={{ ...styles.commentDivider, backgroundColor: theme.colors.brand.surface.main }}
+        />
+        {!isCommentLoading && !isCountLoading && (
+          <>
+            <View style={styles.commentsHeader}>
+              <Text style={{ fontWeight: '600', fontSize: 18, color: theme.colors.graphic.black }}>
+                댓글{' '}
+              </Text>
+              <Text
+                style={{
+                  fontWeight: '600',
+                  fontSize: 18,
+                  color: `${theme.colors.graphic.black}4d`,
+                }}
+              >
+                {getCountResponse?.data.commentCount !== 0
+                  ? getCountResponse?.data?.commentCount
+                  : ''}
+              </Text>
+            </View>
+            {getCountResponse?.data.commentCount !== 0 ? (
+              <View style={{ backgroundColor: 'white', paddingBottom: 16 }}>
+                <>
+                  {getCommentResponse?.data.map((cur) => (
+                    <Comment
+                      key={cur.id}
+                      content={cur.content}
+                      nickname={cur.writer?.name}
+                      isInsightWriter={profile?.data?.authorId === cur.writer?.id}
+                      commentId={cur.id}
+                      commentWriterId={cur.writer?.id}
+                      title={cur.writer?.title}
+                      image={cur.writer?.image}
+                      createdAt={cur.createdAt}
+                      isReply={false}
+                      onReply={() => {
+                        ref?.current?.focus();
+                        handleReplyClick({ id: cur.id, nickname: cur.writer?.name ?? '' });
+                      }}
+                    />
+                  ))}
+                  {getCommentResponse &&
+                    getCountResponse &&
+                    getCountResponse.data.commentCount - getCommentResponse.data.length > 0 && (
+                      <View
+                        style={{
+                          marginTop: 16,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <MoreCommentsButton
+                          onPress={handleMoreCommentsPress}
+                          number={
+                            getCountResponse.data.commentCount - getCommentResponse.data.length
+                          }
+                          textColor={'white'}
+                          backgroundColor={`${theme.colors.graphic.black}cc`}
+                        />
+                      </View>
+                    )}
+                </>
+              </View>
+            ) : (
+              <View
+                style={{
+                  backgroundColor: 'white',
+                  width: '100%',
+                  alignItems: 'center',
+                  height: 200,
+                }}
+              >
                 <Text
                   style={{
-                    fontWeight: '600',
-                    fontSize: 18,
-                    color: `${theme.colors.graphic.black}4d`,
+                    fontFamily: 'pretendard',
+                    fontSize: 16,
+                    color: `${theme.colors.graphic.black}50`,
+                    marginTop: 32,
                   }}
                 >
-                  {getCountResponse?.data.commentCount !== 0
-                    ? getCountResponse?.data?.commentCount
-                    : ''}
+                  아직 댓글이 없어요.
                 </Text>
               </View>
-              {getCountResponse?.data.commentCount !== 0 ? (
-                <View style={{ backgroundColor: 'white', paddingBottom: 16 }}>
-                  <>
-                    {getCommentResponse?.data.map((cur) => (
-                      <Comment
-                        key={cur.id}
-                        content={cur.content}
-                        nickname={cur.writer?.name}
-                        isInsightWriter={profile?.data?.authorId === cur.writer?.id}
-                        commentId={cur.id}
-                        commentWriterId={cur.writer?.id}
-                        title={cur.writer?.title}
-                        image={cur.writer?.image}
-                        createdAt={cur.createdAt}
-                        isReply={false}
-                        onReply={() => {
-                          ref?.current?.focus();
-                          handleReplyClick({ id: cur.id, nickname: cur.writer?.name ?? '' });
-                        }}
-                      />
-                    ))}
-                    {getCommentResponse &&
-                      getCountResponse &&
-                      getCountResponse.data.commentCount - getCommentResponse.data.length > 0 && (
-                        <View
-                          style={{
-                            marginTop: 16,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                          }}
-                        >
-                          <MoreCommentsButton
-                            onPress={handleMoreCommentsPress}
-                            number={
-                              getCountResponse.data.commentCount - getCommentResponse.data.length
-                            }
-                            textColor={'white'}
-                            backgroundColor={`${theme.colors.graphic.black}cc`}
-                          />
-                        </View>
-                      )}
-                  </>
-                </View>
-              ) : (
-                <View
-                  style={{
-                    backgroundColor: 'white',
-                    width: '100%',
-                    alignItems: 'center',
-                    height: 200,
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontFamily: 'pretendard',
-                      fontSize: 16,
-                      color: `${theme.colors.graphic.black}50`,
-                      marginTop: 32,
-                    }}
-                  >
-                    아직 댓글이 없어요.
-                  </Text>
-                </View>
-              )}
-            </>
-          )}
-        </ScrollView>
-        <CommentInput
-          ref={ref}
-          insightId={insightId}
-          replyInfo={replyInfo}
-          onCancelReply={() => {
-            setReplyInfo(undefined);
-            ref.current?.blur();
-          }}
-          onCreate={() => {
-            setReplyInfo(undefined);
-            ref.current?.blur();
-          }}
-        />
-      </KeyboardAvoidingView>
-    </>
+            )}
+          </>
+        )}
+        <View style={{ height: 80 }} />
+      </IOScrollView>
+      <CommentInput
+        ref={ref}
+        insightId={insightId}
+        replyInfo={replyInfo}
+        onCancelReply={() => {
+          setReplyInfo(undefined);
+          ref.current?.blur();
+        }}
+        onCreate={() => {
+          setReplyInfo(undefined);
+          ref.current?.blur();
+        }}
+      />
+    </KeyboardAvoidingView>
   );
 };
 

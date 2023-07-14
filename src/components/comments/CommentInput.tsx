@@ -84,6 +84,7 @@ const CommentInput = forwardRef(
           </View>
           <Pressable
             onPress={() => {
+              if (input == '') return;
               createComment({
                 insightId,
                 content: input,
@@ -110,9 +111,9 @@ const styles = StyleSheet.create({
   Container: {
     position: 'absolute',
     width: '100%',
-    bottom: 0,
+    bottom: 80,
     borderTopWidth: 1,
-    marginBottom: 8,
+    paddingBottom: 8,
     borderColor: `${theme.colors.graphic.black}10`,
     backgroundColor: `${theme.colors.graphic.white}`,
   },
