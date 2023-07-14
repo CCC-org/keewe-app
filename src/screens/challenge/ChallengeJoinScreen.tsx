@@ -6,7 +6,7 @@ import ConditionalButton from '../../components/buttons/ConditionalButton';
 import { useTheme } from 'react-native-paper';
 import TwoButtonModal from '../../components/modal/TwoButtonModal';
 import { useQuery } from '@tanstack/react-query';
-import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
+import { ChallengeAPI, ChallengeQueryKeys } from '../../utils/api/ChallengeAPI';
 
 const UNSELECTED = 1;
 
@@ -18,9 +18,21 @@ const ChallengeJoinScreen = ({ navigation, route }) => {
   const [participationPerWeek, setParticipationPerWeek] = useState<number | number[]>([2]);
   const [step, setStep] = useState<number>(UNSELECTED);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [participated, setParticipated] = useState<boolean>(false);
   const isNext = useMemo(() => {
     return step !== 2;
   }, [step]);
+
+  useQuery(ChallengeQueryKeys.getParticipationCheck(), () => ChallengeAPI.getParticipationCheck(), {
+    onSuccess: () => setParticipated(true),
+  });
+
+  const { data: challengeParticipation, isLoading: isChallengeParticipationLoading } = useQuery(
+    ChallengeQueryKeys.getChallengeParticipation(),
+    ChallengeAPI.getChallengeParticipation,
+    { enabled: participated },
+  );
+
   const handleNextClick = () => {
     setIsExpanded(!isExpanded);
     if (isNext) {
@@ -77,7 +89,7 @@ const ChallengeJoinScreen = ({ navigation, route }) => {
         <TwoButtonModal
           dismissable={false}
           mainTitle={'챌린지는 1개만 참여할 수 있어요.'}
-          subTitle={'에서 탈퇴하고 새로운 챌린지에 참여할까요?'}
+          subTitle={`${challengeParticipation?.name}에서 탈퇴하고 새로운 챌린지에 참여할까요?`}
           visible={modalVisible}
           onDismiss={hideModal}
           leftButtonText={'취소'}

@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
 import HeaderText from '../../components/texts/HeaderText';
 import TextInputDetail from '../../components/texts/TextInputDetail';
@@ -13,6 +13,8 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
   const theme = useTheme();
   const [subject, setSubject] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
+
+  const queryClient = useQueryClient();
 
   const createRequestParams = {
     participate: {
@@ -60,6 +62,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
 
   const { mutate: createChallenge } = useMutation(ChallengeAPI.create, {
     onSuccess: (response) => {
+      queryClient.invalidateQueries(['challenge']);
       navigation.navigate('ChallengeCreationApproved', {
         form: response,
       });
@@ -71,6 +74,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
 
   const { mutate: joinChallenge } = useMutation(ChallengeAPI.join, {
     onSuccess: (response) => {
+      queryClient.invalidateQueries(['challenge']);
       navigation.navigate('ChallengeJoinApproved', {
         form: { challengeName: route.params.form.challengeName, ...response },
       });
