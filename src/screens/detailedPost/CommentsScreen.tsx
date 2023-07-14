@@ -1,4 +1,13 @@
-import { Pressable, FlatList, Text, Platform, KeyboardAvoidingView, TextInput } from 'react-native';
+import {
+  Pressable,
+  FlatList,
+  Text,
+  Platform,
+  KeyboardAvoidingView,
+  TextInput,
+  Dimensions,
+  View,
+} from 'react-native';
 import React, { useRef, useState } from 'react';
 import Comment from '../../components/comments/Comment';
 import { useQuery } from '@tanstack/react-query';
@@ -7,6 +16,8 @@ import { ReplyInfo } from '../../components/comments/CommentInput';
 import CommentInput from '../../components/comments/CommentInput';
 import CommentXml from '../../constants/Icons/Comment/CommentXml';
 import { SvgXml } from 'react-native-svg';
+
+const { height } = Dimensions.get('window');
 
 const COMMENT_LIMIT = 10;
 
@@ -22,7 +33,6 @@ const CommentsScreen = ({ navigation, route }) => {
   const [commentCursor, setCommentCursor] = useState<number | undefined>(undefined);
   const [replyCursor, setReplyCursor] = useState<ReplyCursor | undefined>(undefined);
   const [replyInfo, setReplyInfo] = useState<ReplyInfo | undefined>(undefined);
-
   const ref = useRef<TextInput>(null);
 
   const handleReplyClick = (info: ReplyInfo) => {
@@ -145,40 +155,39 @@ const CommentsScreen = ({ navigation, route }) => {
   const viewabilityConfigCallbackPairs = useRef([{ onViewableItemsChanged }]);
 
   return (
-    <>
-      <KeyboardAvoidingView
-        behavior={Platform.select({ ios: 'position' })} // position || padding
-        keyboardVerticalOffset={Platform.select({ ios: 90 })}
-        style={{ flex: 1 }}
-      >
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          onEndReached={onEndReached}
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
-          style={{ height: '100%' }}
-        />
-        <CommentInput
-          ref={ref}
-          insightId={insightId}
-          replyInfo={replyInfo}
-          onCancelReply={() => {
-            setReplyInfo(undefined);
-            ref.current?.blur();
-          }}
-          onCreate={() => {
-            setRefreshIndex(data[0].id);
-            setData([]);
-            setCommentCursor(undefined);
-            setReplyCursor(undefined);
-            setReplyInfo(undefined);
-            ref.current?.blur();
-          }}
-        />
-      </KeyboardAvoidingView>
-    </>
+    <KeyboardAvoidingView
+      behavior={Platform.select({ ios: 'position' })} // position || padding
+      keyboardVerticalOffset={Platform.select({ ios: 90 })}
+      style={{ height: '100%' }}
+    >
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        onEndReached={onEndReached}
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
+        style={{ height: '100%', marginBottom: 80 }}
+        ListFooterComponent={() => <View style={{ height: 80 }} />}
+      />
+      <CommentInput
+        ref={ref}
+        insightId={insightId}
+        replyInfo={replyInfo}
+        onCancelReply={() => {
+          setReplyInfo(undefined);
+          ref.current?.blur();
+        }}
+        onCreate={() => {
+          setRefreshIndex(data[0].id);
+          setData([]);
+          setCommentCursor(undefined);
+          setReplyCursor(undefined);
+          setReplyInfo(undefined);
+          ref.current?.blur();
+        }}
+      />
+    </KeyboardAvoidingView>
   );
 };
 

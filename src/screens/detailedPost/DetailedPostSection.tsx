@@ -16,6 +16,7 @@ interface DetailedPostSectionProps {
   insightId: number;
   views: number | string;
   currentChallenge?: string;
+  challengeId?: number;
   recordText?: string;
   url: string;
   reaction: Reaction;
@@ -31,6 +32,7 @@ const DetailedPostSection = ({
   insightId,
   views,
   currentChallenge,
+  challengeId,
   recordText,
   url,
   reaction,
@@ -48,19 +50,23 @@ const DetailedPostSection = ({
   const userId = useGetUserId();
 
   const handleNaviateToStatistics = () => {
-    navigation.navigate('Statistics', {
-      userId: authorId,
-      insightId,
-      insightTitle: title,
-      insightContent: description,
-      nickname: userName,
-      date: createdAt,
-      content: contents,
-    });
+    if (userId === authorId)
+      navigation.navigate('Statistics', {
+        userId: authorId,
+        insightId,
+        insightTitle: title,
+        insightContent: description,
+        nickname: userName,
+        date: createdAt,
+        content: contents,
+      });
   };
 
   const handleGoToDetailedChallenge = () => {
-    // needs to go to detailed challenge screen
+    navigation.navigate('ChallengeDetail', {
+      challengeId,
+      challengeName: currentChallenge,
+    });
   };
 
   return (
@@ -126,14 +132,14 @@ const DetailedPostSection = ({
           </View>
         </ScrollView>
       </View>
-      <View style={{ ...styles.insightView, backgroundColor: '#E1E1D0' }}>
+      <Pressable
+        onPress={() => {
+          handleNaviateToStatistics();
+        }}
+        style={{ ...styles.insightView, backgroundColor: '#E1E1D0' }}
+      >
         {userId === authorId ? (
-          <Pressable
-            onPress={() => {
-              handleNaviateToStatistics();
-            }}
-            style={{ flexDirection: 'row' }}
-          >
+          <View style={{ flexDirection: 'row' }}>
             <SvgXml xml={barChart} style={{ marginRight: 8 }} />
             <Text
               style={{
@@ -143,7 +149,7 @@ const DetailedPostSection = ({
             >
               이 글의 통계
             </Text>
-          </Pressable>
+          </View>
         ) : (
           <View />
         )}
@@ -155,7 +161,7 @@ const DetailedPostSection = ({
         >
           {views}명이 본 인사이트
         </Text>
-      </View>
+      </Pressable>
     </View>
   );
 };

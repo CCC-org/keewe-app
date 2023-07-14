@@ -7,7 +7,7 @@ import MypageTitle from '../../../components/title/MypageTitle';
 import DividerBar from '../../../components/bars/DividerBar';
 import InterestIcon from './InterestIcon';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { MypageAPI, MypageQueryKeys, TabInfo } from '../../../utils/api/mypageAPI';
+import { MypageAPI, MypageQueryKeys } from '../../../utils/api/mypageAPI';
 import { querySuccessError } from '../../../utils/helper/queryReponse/querySuccessError';
 import FolderOption from './FolderOption';
 import { useInfiniteFeed } from '../../../utils/hooks/feedInifiniteScroll/useInfiniteFeed';
@@ -44,21 +44,19 @@ const ProfileScreen = ({ navigation, route }) => {
   const [challengeInterest, setChallengeInterest] = useState<string>('');
 
   // Erased onSetteled: querySuccessError fn.
-  const { data: profile, isLoading: isProfileLoading } = useQuery({
-    queryKey: MypageQueryKeys.getProfile({ targetId: userId }),
-    queryFn: () => MypageAPI.getProfile({ targetId: userId, insightId }),
-  });
+  const { data: profile, isLoading: isProfileLoading } = useQuery(
+    MypageQueryKeys.getProfile({ targetId: userId }),
+    () => MypageAPI.getProfile({ targetId: userId, insightId }),
+  );
 
   const { data: representativeTitles, isLoading: isrepresentativeTitlesLoading } = useQuery(
     MypageQueryKeys.getRepresentativeTitles({ userId: userId }),
     () => MypageAPI.getRepresentativeTitles({ userId: userId }),
-    querySuccessError,
   );
 
   const { data: userFolderList, isLoading: isUserFolderListLoading } = useQuery(
     MypageQueryKeys.getFolderList({ userId: userId }),
     () => MypageAPI.getModifiedFolderList({ userId: userId }),
-    querySuccessError,
   );
 
   useEffect(() => {
@@ -84,9 +82,9 @@ const ProfileScreen = ({ navigation, route }) => {
   }, []);
 
   const drawerId =
-    isUserFolderListLoading === true || userFolderList.selectedTab.id === 0
+    isUserFolderListLoading === true || userFolderList?.selectedTab.id === 0
       ? ''
-      : String(userFolderList.selectedTab.id);
+      : String(userFolderList?.selectedTab.id);
   const { feedList, feedListIsLoading, touchBookMark, fetchNextPage, feedListQueryClient } =
     useInfiniteFeed(
       'https://api-keewe.com/api/v1/insight/my-page/' + userId + '?drawerId=' + drawerId,

@@ -39,6 +39,7 @@ export const MypageAPI = {
       return data;
     } catch (err) {
       console.error('api error2: ', err);
+      throw err;
     }
   },
   getRepresentativeTitles: async (request: RepresentativeTitlesGetRequest) => {
@@ -47,10 +48,10 @@ export const MypageAPI = {
       const { data } = await httpClient.get<RepresentativeTitlesGetResponse>(
         `https://api-keewe.com/api/v1/user/profile/achieved-title/${userId}`,
       );
-
       return data;
     } catch (err) {
       console.error('api error2: ', err);
+      throw err;
     }
   },
   getFolderList: async (request: UserFolderListGetRequest) => {
@@ -79,27 +80,13 @@ export const MypageAPI = {
     return MypageAPI.getFolderList(request)
       .then(modifyData)
       .catch((err) => {
-        console.error('getModifiedFolderList: ', err);
+        throw err; // 에러를 다시 던집니다.
       });
   },
 };
 
-export interface TabInfo {
-  tabs: {
-    isClicked: boolean;
-    id: number;
-    name: string;
-  }[];
-  selectedTab: {
-    isClicked: boolean;
-    id: number;
-    name: string;
-  };
-}
-
-export function modifyData(data: UserFolderListGetResponse['data'] | undefined): TabInfo {
-  // base case 1: data가 없을 때 or data가 undefined일때
-  if (!data?.length || data === undefined)
+function modifyData(data: UserFolderListGetResponse['data'] | null): TabInfo {
+  if (!data?.length || data === null)
     return { tabs: [], selectedTab: { isClicked: false, id: 0, name: '' } };
 
   const mappedData = data.map((data) => {

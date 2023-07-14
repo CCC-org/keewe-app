@@ -1,5 +1,7 @@
 export const querySuccessError = {
-  onSuccess: (response) => {},
+  onSuccess: (response) => {
+    return;
+  },
   onError: (e) => {
     console.log('error', e);
   },
