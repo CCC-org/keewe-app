@@ -134,7 +134,7 @@ const CommentsScreen = ({ navigation, route }) => {
   };
 
   const onEndReached = () => {
-    setCommentCursor(data[data.length - 1].id);
+    if (data[data.length - 1]?.id !== undefined) setCommentCursor(data[data.length - 1].id);
   };
 
   const onViewableItemsChanged = ({ viewableItems }) => {
