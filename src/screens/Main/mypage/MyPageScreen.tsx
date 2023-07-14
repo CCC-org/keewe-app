@@ -6,7 +6,7 @@ import MypageTitle from '../../../components/title/MypageTitle';
 import DividerBar from '../../../components/bars/DividerBar';
 import InterestIcon from './InterestIcon';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { MypageAPI, MypageQueryKeys, TabInfo } from '../../../utils/api/mypageAPI';
+import { MypageAPI, MypageQueryKeys } from '../../../utils/api/mypageAPI';
 import { querySuccessError } from '../../../utils/helper/queryReponse/querySuccessError';
 import FolderOption from './FolderOption';
 import { useInfiniteFeed } from '../../../utils/hooks/feedInifiniteScroll/useInfiniteFeed';
@@ -45,19 +45,16 @@ const MyPageScreen = ({ navigation, route }) => {
   const { data: profile, isLoading: isProfileLoading } = useQuery({
     queryKey: MypageQueryKeys.getProfile({ targetId: userId }),
     queryFn: () => MypageAPI.getProfile({ targetId: userId }),
-    refetchInterval: 1000 * 120,
   });
 
   const { data: representativeTitles, isLoading: isrepresentativeTitlesLoading } = useQuery(
     MypageQueryKeys.getRepresentativeTitles({ userId: userId }),
     () => MypageAPI.getRepresentativeTitles({ userId: userId }),
-    querySuccessError,
   );
 
   const { data: userFolderList, isLoading: isUserFolderListLoading } = useQuery(
     MypageQueryKeys.getFolderList({ userId: userId }),
     () => MypageAPI.getModifiedFolderList({ userId: userId }),
-    querySuccessError,
   );
 
   useLayoutEffect(() => {
@@ -132,7 +129,7 @@ const MyPageScreen = ({ navigation, route }) => {
     isProfileLoading ||
     isrepresentativeTitlesLoading ||
     isUserFolderListLoading ||
-    !userFolderList.tabs
+    !userFolderList?.tabs
   ) {
     return <MainLottie />;
   }
