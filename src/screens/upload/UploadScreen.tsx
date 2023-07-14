@@ -21,11 +21,12 @@ import Toast from 'react-native-toast-message';
 import { ChallengeAPI, ChallengeQueryKeys } from '../../utils/api/ChallengeAPI';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
+import MainLottie from '../../components/lotties/MainLottie';
 
 const UploadScreen = ({ navigation, route }) => {
-  const { isEdit, insight, link, insightId } = route?.params ?? {};
+  const { isEdit, link, insightId } = route?.params ?? {};
   const [linkText, setLinkText] = useState<string>((link?.url || link) ?? '');
-  const [insightText, setInsightText] = useState<string>(insight ?? '');
+  const [insightText, setInsightText] = useState<string>('');
   const [isSwitchOn, setIsSwitchOn] = useState(true);
   const [isValidSite, setIsValidSite] = useState(isEdit || false);
   const [folders, setFolders] = useState<IFolder[]>([]);
@@ -35,10 +36,17 @@ const UploadScreen = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const queryClient = useQueryClient();
 
-  useQuery(InsightQueryKeys.getInsight({ insightId }), () => InsightAPI.getInsight({ insightId }), {
-    onSuccess: (response) => setSelectedFolder(response?.data?.drawerName ?? ''),
-    enabled: insightId !== undefined,
-  });
+  const { isLoading: isEditLoading } = useQuery(
+    InsightQueryKeys.getInsight({ insightId }),
+    () => InsightAPI.getInsight({ insightId }),
+    {
+      onSuccess: (response) => {
+        setSelectedFolder(response?.data?.drawerName ?? '');
+        setInsightText(response?.data?.contents ?? '');
+      },
+      enabled: insightId !== undefined,
+    },
+  );
 
   const { data: challengeProgress, isLoading: isChallengeProgressLoading } = useQuery(
     ChallengeQueryKeys.getChallengeProgress(),
@@ -152,7 +160,9 @@ const UploadScreen = ({ navigation, route }) => {
       console.log(error);
     }
   };
-
+  if (isEditLoading && insightId !== undefined) {
+    return <MainLottie />;
+  }
   return (
     <>
       <ScrollView scrollToOverflowEnabled={true} contentContainerStyle={styles.container}>

@@ -59,7 +59,6 @@ const SheetMyPostOptions = ({
   const handleNavigateToUploadForEdit = () => {
     navigation.navigate('Upload', {
       link,
-      insight: contents,
       isEdit: true,
       insightId,
     });
