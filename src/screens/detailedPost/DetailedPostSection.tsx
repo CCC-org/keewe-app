@@ -91,7 +91,6 @@ const DetailedPostSection = ({
           >
             {isInsightLoading || isProfileLoading ? '-' : currentChallenge}
           </Text>
-          {/* <Pressable onPress={handleGoToDetailedChallenge} style={{ flexDirection: 'row' }}> */}
           <Text
             style={{
               ...theme.fonts.text.caption1,
@@ -106,7 +105,6 @@ const DetailedPostSection = ({
               : ''}
           </Text>
           <Octicons name="chevron-right" size={17} color={`${theme.colors.graphic.black}cc`} />
-          {/* </Pressable> */}
         </Pressable>
       )}
       <View style={[styles.insightText]}>
