@@ -191,4 +191,11 @@ export const ChallengeAPI = {
         return res.data;
       });
   },
+  invite: async (params: ChallengeInviteRequest) => {
+    return httpClient
+      .post<ChallengeInviteResponse>('https://api-keewe.com/api/v1/challenge/invite', params)
+      .then((res) => {
+        return res.data;
+      });
+  },
 };

@@ -213,3 +213,13 @@ interface ChallengeEditResponse {
   message: string;
   code: number;
 }
+
+interface ChallengeInviteRequest {
+  targetUserId: number;
+  challengeId: number;
+}
+
+interface ChallengeInviteResponse {
+  message: string;
+  code: number;
+}
