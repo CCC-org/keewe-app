@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, ScrollView, Pressable, RefreshControl } from 'react-native';
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Pressable, RefreshControl, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
 import MypageProfile from '../../../components/profile/MypageProfile';
 import { useTheme } from 'react-native-paper';
 import MypageTitle from '../../../components/title/MypageTitle';
@@ -7,10 +7,7 @@ import DividerBar from '../../../components/bars/DividerBar';
 import InterestIcon from './InterestIcon';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { MypageAPI, MypageQueryKeys } from '../../../utils/api/mypageAPI';
-import { querySuccessError } from '../../../utils/helper/queryReponse/querySuccessError';
-import FolderOption from './FolderOption';
 import { useInfiniteFeed } from '../../../utils/hooks/feedInifiniteScroll/useInfiniteFeed';
-import FeedList from '../../Feed/FeedList';
 import GoToUploadButton from '../../../components/buttons/GoToUploadButton';
 import { IOScrollView } from 'react-native-intersection-observer';
 import { useScrollToTop } from '@react-navigation/native';
@@ -56,12 +53,6 @@ const MyPageScreen = ({ navigation, route }) => {
     MypageQueryKeys.getFolderList({ userId: userId }),
     () => MypageAPI.getModifiedFolderList({ userId: userId }),
   );
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: profile?.data?.nickname ?? '',
-    });
-  }, []);
 
   const drawerId =
     isUserFolderListLoading === true || userFolderList?.selectedTab?.id === 0

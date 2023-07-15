@@ -54,9 +54,10 @@ const MypageProfile = ({
         <View style={{ flexDirection: 'row', marginTop: 8 }}>
           <Pressable
             onPress={() =>
-              navigation.navigate('FollowTopTabs', {
+              navigation.push('FollowTopTabs', {
                 screen: 'Followers',
                 userId: profileUserId,
+                nickname: nickname,
                 follower,
                 following,
               })
@@ -78,9 +79,10 @@ const MypageProfile = ({
           </Pressable>
           <Pressable
             onPress={() =>
-              navigation.navigate('FollowTopTabs', {
+              navigation.push('FollowTopTabs', {
                 screen: 'Following',
                 userId: profileUserId,
+                nickname: nickname,
                 follower,
                 following,
               })

@@ -75,12 +75,6 @@ const ProfileScreen = ({ navigation, route }) => {
 
   const queryClient = useQueryClient();
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: profile?.data?.nickname ?? '',
-    });
-  }, []);
-
   const drawerId =
     isUserFolderListLoading === true || userFolderList?.selectedTab.id === 0
       ? ''
