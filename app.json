@@ -19,7 +19,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "buildNumber": 1.1,
+      "buildNumber": "1.1",
       "supportsTablet": true,
       "bundleIdentifier": "com.CCCorg.keewe"
     },
