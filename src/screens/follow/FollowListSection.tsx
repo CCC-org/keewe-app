@@ -38,9 +38,9 @@ const FollowListSection = ({ followList, mutation }: FollowListSectionProps) => 
   const handleGoToProfileOnImagePress = async (itemUserId: number) => {
     const localUserId = await getUserId();
     if (localUserId === String(itemUserId)) {
-      navigation.navigate('MyProfile', { userId: localUserId, enteredByTab: false });
+      navigation.push('MyProfile', { userId: localUserId, enteredByTab: false });
     } else {
-      navigation.navigate('Profile', { userId: itemUserId });
+      navigation.push('Profile', { userId: itemUserId });
     }
   };
 
@@ -77,11 +77,6 @@ const FollowListSection = ({ followList, mutation }: FollowListSectionProps) => 
                 </>
               </View>
             </Pressable>
-
-            {/* <FollowListFollowButton
-              onPress={() => handlePressForFollow(item.id)}
-              isFollowing={item.follow}
-            /> */}
             {item.id !== userId && (
               <FollowListFollowButton
                 onPress={() => handlePressForFollow(item.id)}
