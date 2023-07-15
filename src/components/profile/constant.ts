@@ -1,57 +1,57 @@
-import 가상자산 from '../../../assets/svgs/InterestsIcon/가상자산';
-import 개발 from '../../../assets/svgs/InterestsIcon/개발';
-import 공연 from '../../../assets/svgs/InterestsIcon/공연';
-import 글쓰기 from '../../../assets/svgs/InterestsIcon/글쓰기';
-import 기획 from '../../../assets/svgs/InterestsIcon/기획';
-import 독서 from '../../../assets/svgs/InterestsIcon/독서';
-import 디자인 from '../../../assets/svgs/InterestsIcon/디자인';
-import 마케팅 from '../../../assets/svgs/InterestsIcon/마케팅';
-import 맛집 from '../../../assets/svgs/InterestsIcon/맛집';
-import 미술 from '../../../assets/svgs/InterestsIcon/미술';
-import 반려동물 from '../../../assets/svgs/InterestsIcon/반려동물';
-import 뷰티 from '../../../assets/svgs/InterestsIcon/뷰티';
-import 사진 from '../../../assets/svgs/InterestsIcon/사진';
-import 언어외국어 from '../../../assets/svgs/InterestsIcon/언어외국어';
-import 여행 from '../../../assets/svgs/InterestsIcon/여행';
-import 영화 from '../../../assets/svgs/InterestsIcon/영화';
-import 요리 from '../../../assets/svgs/InterestsIcon/요리';
-import 육아 from '../../../assets/svgs/InterestsIcon/육아';
-import 음악 from '../../../assets/svgs/InterestsIcon/음악';
-import 인테리어 from '../../../assets/svgs/InterestsIcon/인테리어';
-import 일상 from '../../../assets/svgs/InterestsIcon/일상';
-import 전시 from '../../../assets/svgs/InterestsIcon/전시';
-import 주식 from '../../../assets/svgs/InterestsIcon/주식';
-import 창업 from '../../../assets/svgs/InterestsIcon/창업';
-import 취미덕질 from '../../../assets/svgs/InterestsIcon/취미덕질';
-import 패션 from '../../../assets/svgs/InterestsIcon/패션';
-import 기본 from '../../../assets/svgs/InterestsIcon/기본';
+import cryptoCurrency from '../../../assets/svgs/InterestsIcon/cryptoCurrency';
+import development from '../../../assets/svgs/InterestsIcon/development';
+import show from '../../../assets/svgs/InterestsIcon/show';
+import writing from '../../../assets/svgs/InterestsIcon/writing';
+import planning from '../../../assets/svgs/InterestsIcon/planning';
+import read from '../../../assets/svgs/InterestsIcon/read';
+import design from '../../../assets/svgs/InterestsIcon/design';
+import marketing from '../../../assets/svgs/InterestsIcon/marketing';
+import food from '../../../assets/svgs/InterestsIcon/food';
+import art from '../../../assets/svgs/InterestsIcon/art';
+import pets from '../../../assets/svgs/InterestsIcon/pets';
+import beauty from '../../../assets/svgs/InterestsIcon/beauty';
+import photo from '../../../assets/svgs/InterestsIcon/photo';
+import language from '../../../assets/svgs/InterestsIcon/language';
+import travel from '../../../assets/svgs/InterestsIcon/travel';
+import movie from '../../../assets/svgs/InterestsIcon/movie';
+import cook from '../../../assets/svgs/InterestsIcon/cook';
+import baby from '../../../assets/svgs/InterestsIcon/baby';
+import music from '../../../assets/svgs/InterestsIcon/music';
+import interior from '../../../assets/svgs/InterestsIcon/interior';
+import day from '../../../assets/svgs/InterestsIcon/day';
+import view from '../../../assets/svgs/InterestsIcon/view';
+import stock from '../../../assets/svgs/InterestsIcon/stock';
+import shop from '../../../assets/svgs/InterestsIcon/shop';
+import otaku from '../../../assets/svgs/InterestsIcon/otaku';
+import passion from '../../../assets/svgs/InterestsIcon/passion';
+import def from '../../../assets/svgs/InterestsIcon/default';
 
 export const INTEREST_ICONS = {
-  가상자산: 가상자산,
-  개발: 개발,
-  공연: 공연,
-  글쓰기: 글쓰기,
-  기획: 기획,
-  독서: 독서,
-  디자인: 디자인,
-  마케팅: 마케팅,
-  맛집: 맛집,
-  미술: 미술,
-  반려동물: 반려동물,
-  뷰티: 뷰티,
-  사진: 사진,
-  언어외국어: 언어외국어,
-  여행: 여행,
-  영화: 영화,
-  요리: 요리,
-  육아: 육아,
-  음악: 음악,
-  인테리어: 인테리어,
-  일상: 일상,
-  전시: 전시,
-  주식: 주식,
-  창업: 창업,
-  취미덕질: 취미덕질,
-  패션: 패션,
-  기본: 기본,
+  가상자산: cryptoCurrency,
+  개발: development,
+  공연: show,
+  글쓰기: writing,
+  기획: planning,
+  독서: read,
+  디자인: design,
+  마케팅: marketing,
+  맛집: food,
+  미술: art,
+  반려동물: pets,
+  뷰티: beauty,
+  사진: photo,
+  언어외국어: language,
+  여행: travel,
+  영화: movie,
+  요리: cook,
+  육아: baby,
+  음악: music,
+  인테리어: interior,
+  일상: day,
+  전시: view,
+  주식: stock,
+  창업: shop,
+  취미덕질: otaku,
+  패션: passion,
+  기본: def,
 };
