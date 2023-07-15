@@ -4,7 +4,8 @@
     "jsx": "react",
     "jsx": "react",
     "strict": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "esModuleInterop": true
   },
   "paths": {
     "@assets/*": ["./assets/*"],

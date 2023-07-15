@@ -1,7 +1,6 @@
 /* eslint-disable indent */
 import {
   Pressable,
-  ScrollView,
   StyleSheet,
   View,
   Text,
@@ -10,14 +9,14 @@ import {
   TextInput,
   RefreshControl,
 } from 'react-native';
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import DetailedPostSection from './DetailedPostSection';
 import { useIncreaseView } from '../../utils/hooks/DetailedInsight/useIncreaseView';
 import { useTheme } from 'react-native-paper';
 import MoreCommentsButton from '../../components/buttons/MoreCommentsButton';
 import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
 import Profile from '../../components/profile/Profile';
-import { querySuccessError } from '../../utils/helper/queryReponse/querySuccessError';
 import CommentInput from '../../components/comments/CommentInput';
 import { ReplyInfo } from '../../components/comments/CommentInput';
 import Comment from '../../components/comments/Comment';
@@ -51,11 +50,10 @@ const DetailedPostScreen = ({ navigation, route }) => {
   const { data: profile, isLoading: isProfileLoading } = useQuery(
     InsightQueryKeys.getProfile({ insightId }),
     () => InsightAPI.getProfile({ insightId }),
-    querySuccessError,
   );
 
   const followMutation = useMutation({
-    mutationFn: () => FollowAPI.follow(profile?.data?.authorId, String(insightId)),
+    mutationFn: () => FollowAPI.follow(String(profile?.data?.authorId), String(insightId)),
     onMutate: async () => {
       const key = InsightQueryKeys.getProfile({ insightId });
       await queryClient.cancelQueries({ queryKey: key });
@@ -103,9 +101,8 @@ const DetailedPostScreen = ({ navigation, route }) => {
     data: insightResponse,
     isLoading: isInsightLoading,
     isError: isInsightError,
-  } = useQuery(
-    InsightQueryKeys.getInsight({ insightId }),
-    () => InsightAPI.getInsight({ insightId }),
+  } = useQuery(InsightQueryKeys.getInsight({ insightId }), () =>
+    InsightAPI.getInsight({ insightId }),
   );
 
   const {
@@ -161,9 +158,9 @@ const DetailedPostScreen = ({ navigation, route }) => {
             <FeedVerticalDots
               contents={insightResponse?.data?.contents ?? ''}
               link={removeEscapeSequences(insightResponse?.data?.link.url ?? '')}
-              userName={profile?.data?.nickname}
+              userName={profile?.data?.nickname ?? ''}
               nickname={profile?.data?.nickname}
-              userId={profile?.data?.authorId}
+              userId={profile?.data?.authorId ?? 0}
               insightId={insightId}
             />
           </View>
@@ -194,7 +191,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
   if (isInsightError || isCommentError || isCountError || isChallengeRecordError) {
     return null;
   }
-        
+
   const onRefresh = () => {
     setPageRefreshing(true);
     queryClient.invalidateQueries(['insight']);
@@ -266,7 +263,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
             <Profile
               nickname={profile?.data?.nickname ?? '-'}
               title={profile?.data?.title ?? '-'}
-              self={profile?.data?.author ?? '-'}
+              self={profile?.data?.author ?? false}
               follow={profile?.data?.following}
               interests={profile?.data?.interests ?? []}
               createdAt={profile?.data?.createdAt ?? '-'}
