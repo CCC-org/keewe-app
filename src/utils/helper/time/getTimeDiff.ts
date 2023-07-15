@@ -5,6 +5,9 @@ export function getTimeDiff(dateStr: FormattedDate): string {
   const now = new Date();
   const diffTime = Math.abs(now.getTime() - date.getTime());
 
+  // Get diff in minutes
+  const diffMinutes = Math.floor(diffTime / 1000 / 60);
+
   // Get diff in hours
   const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
 
@@ -17,13 +20,16 @@ export function getTimeDiff(dateStr: FormattedDate): string {
   // Get diff in months
   const diffMonths = Math.floor(diffDays / 30);
 
-  if (diffHours < 24) {
+  if (diffMinutes < 60) {
+    return `${diffMinutes}분 전`;
+  } else if (diffHours < 24) {
     return `${diffHours}시간 전`;
   } else if (diffDays <= 6) {
     return `${diffDays}일 전`;
   } else if (diffWeeks <= 4) {
     return `${diffWeeks}주 전`;
-  } else {
+  } else if (diffMonths < 12) {
     return `${diffMonths}달 전`;
   }
+  return '오래된';
 }
