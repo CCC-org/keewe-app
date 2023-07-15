@@ -78,7 +78,7 @@ const DetailedPostSection = ({
   };
 
   const handleGoToDetailedChallenge = () => {
-    if (challengeParticipation?.name === currentChallenge) {
+    if (challengeParticipation?.name !== currentChallenge) {
       return navigation.navigate('ChallengeParticipation', {
         challengeId,
         challengeName: currentChallenge,
