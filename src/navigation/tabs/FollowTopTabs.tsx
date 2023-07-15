@@ -1,13 +1,19 @@
 import { StyleSheet } from 'react-native';
-import React from 'react';
+import React, {useLayoutEffect} from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import UserFollowersScreen from '../../screens/follow/UserFollowersScreen';
 import UserFolloweeScreen from '../../screens/follow/UserFollowingScreen';
 
 const Tab = createMaterialTopTabNavigator();
 
-const FollowTopTabs = ({ route }) => {
-  const { userId, follower, following } = route.params;
+const FollowTopTabs = ({ route, navigation }) => {
+  const { userId, follower, following, nickname } = route.params;
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: nickname,
+    });
+  }, []);
 
   return (
     <Tab.Navigator
