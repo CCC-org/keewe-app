@@ -66,6 +66,13 @@ const NotificationScreen = ({ navigation }) => {
           userId: refInfo.referenceId,
         });
         break;
+      case 'CHALLENGE_INVITE':
+        navigation.navigate('ChallengeParticipation', {
+          challengeId: refInfo.referenceId,
+        });
+        break;
+      default:
+        break;
     }
   };
 
