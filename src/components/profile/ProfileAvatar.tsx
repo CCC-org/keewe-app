@@ -32,7 +32,7 @@ const ProfileAvatar = (props: ProfileAvatarProps) => {
             width: size,
             height: size,
             borderRadius: 100,
-            backgroundColor: theme.colors.brand.surface.container,
+            backgroundColor: theme.colors.brand.surface.container2,
             justifyContent: 'center',
             alignItems: 'center',
           }}

@@ -1,19 +1,19 @@
-import { FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import React, { useMemo } from 'react';
+import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
+import React, {useMemo} from 'react';
 import {
   FetchNextPageOptions,
   InfiniteData,
   InfiniteQueryObserverResult,
   UseMutationResult,
 } from '@tanstack/react-query';
-import { FollowData } from '../../types/followerList/followers';
-import { SvgXml } from 'react-native-svg';
-import person from '../../constants/Icons/Avatar/personXml';
-import { useTheme } from 'react-native-paper';
+import {FollowData} from '../../types/followerList/followers';
+import {useTheme} from 'react-native-paper';
 import FollowListFollowButton from './FollowListFollowButton';
-import { useNavigation } from '@react-navigation/native';
-import { getUserId } from '../../utils/hooks/asyncStorage/Login';
-import { useGetUserId } from '../../utils/hooks/useGetUserId';
+import {useNavigation} from '@react-navigation/native';
+import {getUserId} from '../../utils/hooks/asyncStorage/Login';
+import {useGetUserId} from '../../utils/hooks/useGetUserId';
+import ProfileAvatar from "../../components/profile/ProfileAvatar";
+
 interface FollowListSectionProps {
   followList: InfiniteData<FollowData | undefined> | undefined;
   fetchNextPage: (
@@ -53,14 +53,7 @@ const FollowListSection = ({ followList, mutation }: FollowListSectionProps) => 
             <Pressable onPress={() => handleGoToProfileOnImagePress(item.id)}>
               <View style={styles.profile}>
                 <>
-                  {item?.imageURL ? (
-                    <Image
-                      source={{ uri: item?.imageURL }}
-                      style={{ width: 50, height: 50, borderRadius: 100 }}
-                    />
-                  ) : (
-                    <SvgXml xml={person} width={48} height={48} />
-                  )}
+                  <ProfileAvatar image={item?.imageURL} size={48} />
                   <View
                     style={{
                       marginLeft: 12,
