@@ -44,7 +44,7 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
       headerRight: () => {
         return (
           <View style={{ flexDirection: 'row' }}>
-            <ChallengeInvite />
+            <ChallengeInvite challengeId={challengeId} />
             <Pressable
               style={{ paddingRight: 19, paddingTop: 3 }}
               onPress={() => navigation.navigate('ChallengeEdit')}

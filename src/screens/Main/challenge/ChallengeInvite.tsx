@@ -1,4 +1,4 @@
-import { View, Pressable, StyleSheet, Text, TextInput } from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { SvgXml } from 'react-native-svg';
 import { addFriend } from '../../../../assets/svgs/addFriend';
@@ -6,14 +6,18 @@ import { BottomSheetBackdrop, BottomSheetModal, BottomSheetScrollView } from '@g
 import InviteOptions from './InviteOptions';
 import { useTheme } from 'react-native-paper';
 import FollowersAndFollowings from './FollowersAndFollowings';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import {
   FollowersFollowingsApi,
   FollowersFollowingsKeys,
 } from '../../../utils/api/followList/followersFollowings';
 import { debounce } from 'lodash';
 
-const ChallengeInvite = () => {
+interface ChallengeInviteProps {
+  challengeId: number;
+}
+
+const ChallengeInvite = ({ challengeId }: ChallengeInviteProps) => {
   const theme = useTheme();
   const modalRef = useRef<BottomSheetModal>(null);
   const [onSearch, setOnSearch] = useState<boolean>(false);
@@ -107,7 +111,7 @@ const ChallengeInvite = () => {
                 </Text>
               </Pressable>
             )}
-            <FollowersAndFollowings users={invitationData?.invitees} />
+            <FollowersAndFollowings users={invitationData?.invitees} challengeId={challengeId} />
           </View>
         </BottomSheetScrollView>
       </BottomSheetModal>

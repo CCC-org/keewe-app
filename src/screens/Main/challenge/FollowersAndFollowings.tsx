@@ -4,13 +4,30 @@ import { SvgXml } from 'react-native-svg';
 import person from '../../../constants/Icons/Avatar/personXml';
 import { useTheme } from 'react-native-paper';
 import { User } from '../../../types/followerList/followersfollowings';
+import { useMutation } from '@tanstack/react-query';
+import { ChallengeAPI } from '../../../utils/api/ChallengeAPI';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 interface FollowersAndFollowingsProps {
   users: User[] | undefined;
+  challengeId: number;
 }
 
-const FollowersAndFollowings = ({ users }: FollowersAndFollowingsProps) => {
+const FollowersAndFollowings = ({ users, challengeId }: FollowersAndFollowingsProps) => {
   const theme = useTheme();
+
+  const { mutate: challengeInvite } = useMutation(ChallengeAPI.invite, {
+    onSuccess: () => {
+      Toast.show({ type: 'snackbar', text1: '초대 알림을 보냈어요.', position: 'bottom' });
+    },
+  });
+
+  const handleInviteButtonPress = (user: User) => {
+    challengeInvite({
+      challengeId: challengeId,
+      targetUserId: user.userId,
+    });
+  };
 
   if (!users || users.length === 0) {
     return (
@@ -39,7 +56,7 @@ const FollowersAndFollowings = ({ users }: FollowersAndFollowingsProps) => {
             </View>
             <Text style={theme.fonts.text.body1.bold}>{user.nickname}</Text>
           </View>
-          <Pressable onPress={() => alert(user.nickname + ' 님을 초대하였습니다.')}>
+          <Pressable onPress={() => handleInviteButtonPress(user)}>
             <Text
               style={{
                 ...theme.fonts.text.body1.regular,
