@@ -103,9 +103,8 @@ const DetailedPostScreen = ({ navigation, route }) => {
     data: insightResponse,
     isLoading: isInsightLoading,
     isError: isInsightError,
-  } = useQuery(
-    InsightQueryKeys.getInsight({ insightId }),
-    () => InsightAPI.getInsight({ insightId }),
+  } = useQuery(InsightQueryKeys.getInsight({ insightId }), () =>
+    InsightAPI.getInsight({ insightId }),
   );
 
   const {
@@ -194,7 +193,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
   if (isInsightError || isCommentError || isCountError || isChallengeRecordError) {
     return null;
   }
-        
+
   const onRefresh = () => {
     setPageRefreshing(true);
     queryClient.invalidateQueries(['insight']);
