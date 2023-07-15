@@ -160,7 +160,8 @@ const UploadScreen = ({ navigation, route }) => {
       console.log(error);
     }
   };
-  if (isEditLoading && insightId !== undefined) {
+
+  if (isChallengeProgressLoading && isEditLoading && insightId !== undefined) {
     return <MainLottie />;
   }
   return (

@@ -6,7 +6,7 @@ interface AutoGrowScrollTextAreaProps {
   inputValue: string;
   placeholder: string;
   setInputValue: (input: string) => void;
-  limit?: number;
+  limit: number;
   style?: any;
   height?: number;
   autoFocus?: boolean;
@@ -28,10 +28,12 @@ const StaticSizeScrollTextArea = ({
           style={{ ...styles.input, ...theme.fonts.text.body1.regular }}
           value={inputValue}
           placeholder={placeholder}
-          onChangeText={(inputValue) => setInputValue(inputValue)}
+          onChange={(event) => {
+            if (event.nativeEvent.text.length > limit) return;
+            setInputValue(event.nativeEvent.text);
+          }}
           multiline={true}
           numberOfLines={16}
-          maxLength={limit ? limit : 400}
           scrollEnabled={true}
           textAlignVertical="top"
         />

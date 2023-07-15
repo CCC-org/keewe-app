@@ -14,6 +14,7 @@ interface CountingTextAreaProps {
   autoFocus?: boolean;
   limitTextStyle?: any;
   multiline?: boolean;
+  autoCapitalize: any;
 }
 
 const CountingTextArea = (props: CountingTextAreaProps) => {
@@ -28,6 +29,7 @@ const CountingTextArea = (props: CountingTextAreaProps) => {
     textInputMarginBottom,
     autoFocus = false,
     multiline,
+    autoCapitalize,
   } = props;
   const theme = useTheme();
   const [letterNumberColor, setLetterNumberColor] = useState<string>('grey');
@@ -67,6 +69,7 @@ const CountingTextArea = (props: CountingTextAreaProps) => {
           // needs textAlignVertical to top on android
           multiline={multiline ?? true}
           selectionColor={'black'}
+          autoCapitalize={autoCapitalize}
         />
         <Text style={{ ...styles.letterNumber, color: letterNumberColor, ...props.limitTextStyle }}>
           {(limit ? limit : 150) - inputValue.length}
