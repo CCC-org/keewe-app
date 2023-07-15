@@ -28,13 +28,12 @@ const StaticSizeScrollTextArea = ({
           style={{ ...styles.input, ...theme.fonts.text.body1.regular }}
           value={inputValue}
           placeholder={placeholder}
-          onChangeText={(text) => {
-            // if (text.length > limit) return;
-            setInputValue(text);
+          onChange={(event) => {
+            if (event.nativeEvent.text.length > limit) return;
+            setInputValue(event.nativeEvent.text);
           }}
           multiline={true}
           numberOfLines={16}
-          maxLength={400}
           scrollEnabled={true}
           textAlignVertical="top"
         />

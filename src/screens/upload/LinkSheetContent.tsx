@@ -41,7 +41,6 @@ const LinkSheetContent = ({
           />
         )}
       />
-
       <CountingTextArea
         inputValue={linkText}
         placeholder="인사이트를 얻은 링크"
@@ -50,6 +49,7 @@ const LinkSheetContent = ({
         limitTextStyle={{ color: 'white' }}
         multiline={false}
         textInputMarginBottom={80}
+        autoCapitalize={'none'}
       />
     </View>
   );
