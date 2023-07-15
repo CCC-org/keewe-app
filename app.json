@@ -4,7 +4,7 @@
     "slug": "keewe",
     "version": "1.0.8",
     "orientation": "portrait",
-    "icon": "./assets/images/Keewe_AppIcon.png",
+    "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -19,7 +19,8 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.CCCorg.keewe"
     },
     "android": {
       "jsEngine": "hermes",

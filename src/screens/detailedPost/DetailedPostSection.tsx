@@ -9,6 +9,8 @@ import { useNavigation } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 import barChart from '../../../assets/svgs/StatisticIcon/barChart';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
+import { ChallengeAPI, ChallengeQueryKeys } from '../../utils/api/ChallengeAPI';
+import { useQuery } from '@tanstack/react-query';
 
 interface DetailedPostSectionProps {
   isProfileLoading: boolean;
@@ -47,7 +49,20 @@ const DetailedPostSection = ({
   const navigation = useNavigation();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [participated, setParticipated] = useState<boolean>(false);
   const userId = useGetUserId();
+
+  const { data: participationCheck } = useQuery(
+    ChallengeQueryKeys.getParticipationCheck(),
+    () => ChallengeAPI.getParticipationCheck(),
+    { onSuccess: () => setParticipated(true) },
+  );
+
+  const { data: challengeParticipation, isLoading: isChallengeParticipationLoading } = useQuery(
+    ChallengeQueryKeys.getChallengeParticipation(),
+    ChallengeAPI.getChallengeParticipation,
+    { enabled: participated },
+  );
 
   const handleNaviateToStatistics = () => {
     if (userId === authorId)
@@ -63,6 +78,12 @@ const DetailedPostSection = ({
   };
 
   const handleGoToDetailedChallenge = () => {
+    if (challengeParticipation?.name !== currentChallenge) {
+      return navigation.navigate('ChallengeParticipation', {
+        challengeId,
+        challengeName: currentChallenge,
+      });
+    }
     navigation.navigate('ChallengeDetail', {
       challengeId,
       challengeName: currentChallenge,
