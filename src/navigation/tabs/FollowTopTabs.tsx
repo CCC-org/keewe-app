@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import React, {useLayoutEffect} from 'react';
+import React, { useLayoutEffect } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import UserFollowersScreen from '../../screens/follow/UserFollowersScreen';
 import UserFolloweeScreen from '../../screens/follow/UserFollowingScreen';

@@ -1,18 +1,18 @@
-import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
-import React, {useMemo} from 'react';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import React, { useMemo } from 'react';
 import {
   FetchNextPageOptions,
   InfiniteData,
   InfiniteQueryObserverResult,
   UseMutationResult,
 } from '@tanstack/react-query';
-import {FollowData} from '../../types/followerList/followers';
-import {useTheme} from 'react-native-paper';
+import { FollowData } from '../../types/followerList/followers';
+import { useTheme } from 'react-native-paper';
 import FollowListFollowButton from './FollowListFollowButton';
-import {useNavigation} from '@react-navigation/native';
-import {getUserId} from '../../utils/hooks/asyncStorage/Login';
-import {useGetUserId} from '../../utils/hooks/useGetUserId';
-import ProfileAvatar from "../../components/profile/ProfileAvatar";
+import { useNavigation } from '@react-navigation/native';
+import { getUserId } from '../../utils/hooks/asyncStorage/Login';
+import { useGetUserId } from '../../utils/hooks/useGetUserId';
+import ProfileAvatar from '../../components/profile/ProfileAvatar';
 
 interface FollowListSectionProps {
   followList: InfiniteData<FollowData | undefined> | undefined;

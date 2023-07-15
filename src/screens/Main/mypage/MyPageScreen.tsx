@@ -1,19 +1,19 @@
-import {Pressable, RefreshControl, StyleSheet, Text, View} from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
+import { Pressable, RefreshControl, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
 import MypageProfile from '../../../components/profile/MypageProfile';
-import {useTheme} from 'react-native-paper';
+import { useTheme } from 'react-native-paper';
 import MypageTitle from '../../../components/title/MypageTitle';
 import DividerBar from '../../../components/bars/DividerBar';
 import InterestIcon from './InterestIcon';
-import {useQuery, useQueryClient} from '@tanstack/react-query';
-import {MypageAPI, MypageQueryKeys} from '../../../utils/api/mypageAPI';
-import {useInfiniteFeed} from '../../../utils/hooks/feedInifiniteScroll/useInfiniteFeed';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { MypageAPI, MypageQueryKeys } from '../../../utils/api/mypageAPI';
+import { useInfiniteFeed } from '../../../utils/hooks/feedInifiniteScroll/useInfiniteFeed';
 import GoToUploadButton from '../../../components/buttons/GoToUploadButton';
-import {IOScrollView} from 'react-native-intersection-observer';
-import {useScrollToTop} from '@react-navigation/native';
-import {Feather} from '@expo/vector-icons';
+import { IOScrollView } from 'react-native-intersection-observer';
+import { useScrollToTop } from '@react-navigation/native';
+import { Feather } from '@expo/vector-icons';
 import MainLottie from '../../../components/lotties/MainLottie';
-import {notificationKeys} from '../../../utils/api/notification/notification';
+import { notificationKeys } from '../../../utils/api/notification/notification';
 import ProfilePageFolderSection from './ProfilePageFolderSection';
 
 const MyPageScreen = ({ navigation, route }) => {
