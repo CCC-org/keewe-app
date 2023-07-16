@@ -2,7 +2,7 @@
   "expo": {
     "name": "keewe",
     "slug": "keewe",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -19,6 +19,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "buildNumber": "1.1",
       "supportsTablet": true,
       "bundleIdentifier": "com.CCCorg.keewe"
     },
@@ -39,7 +40,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "662b6040-56c8-42ea-9623-ec66e4cfd04f"
+        "projectId": "05f9153d-ab7a-4208-a465-60a60c8c4ade"
       }
     }
   }
