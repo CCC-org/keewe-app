@@ -1,12 +1,4 @@
-import {
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  Linking,
-  NativeModules,
-  Platform,
-} from 'react-native';
+import { Linking, Pressable, ScrollView, StyleSheet, Text } from 'react-native';
 import React, { useState } from 'react';
 import { useTheme } from 'react-native-paper';
 import DividerBar from '../../components/bars/DividerBar';
@@ -15,11 +7,7 @@ import MultiTapButton from '../../components/buttons/MultipleTapButton';
 import { clearStorage } from '../../utils/hooks/asyncStorage/Logout';
 import { LoginAPI } from '../../utils/api/LoginAPI';
 import { useMutation } from '@tanstack/react-query';
-import * as Updates from 'expo-updates';
 import { useNavigation } from '@react-navigation/native';
-import { reloadAndReset } from '../../utils/helper/logoutAndWithdraw/removeStackAndNavigate';
-
-const isIOS = Platform.OS === 'ios';
 
 const SettingsScreen = () => {
   const theme = useTheme();
@@ -29,38 +17,22 @@ const SettingsScreen = () => {
 
   const { mutate: withdraw } = useMutation(LoginAPI.withdraw, {
     onSuccess: () => {
-      clearStorage();
-      setIsWithdrawalModalVisible(false);
-      if (isIOS) {
-        NativeModules.DevSettings.reload();
-        return;
-      }
-      if (__DEV__) {
-        NativeModules.DevSettings.reload();
-        reloadAndReset(navigation, 'SignUp');
-      } else {
-        Updates.reloadAsync().then(() => {
-          reloadAndReset(navigation, 'SignUp');
+      clearStorage().then(() => {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'SignUp' }],
         });
-      }
+      });
     },
   });
 
   const handleLogOut = () => {
     setIsLogoutModalVisible(false);
     clearStorage().then(() => {
-      if (isIOS) {
-        NativeModules.DevSettings.reload();
-        return;
-      }
-      if (__DEV__) {
-        NativeModules.DevSettings.reload();
-        reloadAndReset(navigation, 'SignUp');
-      } else {
-        Updates.reloadAsync().then(() => {
-          reloadAndReset(navigation, 'SignUp');
-        });
-      }
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'SignUp' }],
+      });
     });
   };
 
