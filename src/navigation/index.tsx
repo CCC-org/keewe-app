@@ -2,16 +2,20 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Pressable, ScrollView, View, Text } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import { getAccessToken, getUserId } from '../utils/hooks/asyncStorage/Login';
+import { getAccessToken, getPushToken, getUserId } from '../utils/hooks/asyncStorage/Login';
 
 export function RootScreen() {
   const navigation = useNavigation();
   const [accessToken, setAccessToken] = useState<any>('');
+  const [pushToken, setPushToken] = useState<string>();
   const theme = useTheme();
 
   useEffect(() => {
     getAccessToken().then((token) => {
       setAccessToken(token);
+    });
+    getPushToken().then((token) => {
+      setPushToken(token ?? '');
     });
   }, []);
 
@@ -23,7 +27,7 @@ export function RootScreen() {
         style={{ borderWidth: 1, backgroundColor: 'grey', width: 300, height: 50 }}
         onPress={() => getAccessToken().then((res) => console.log(res))}
       >
-        <Text style={theme.fonts.text.display}>Get Token</Text>
+        <Text style={theme.fonts.text.display}>Get Access Token</Text>
       </Pressable>
       <Pressable
         style={{ borderWidth: 1, backgroundColor: 'grey', width: 300, height: 50 }}
@@ -33,6 +37,7 @@ export function RootScreen() {
       </Pressable>
 
       <Text style={theme.fonts.text.body1.regular}>{accessToken}</Text>
+      <Text style={theme.fonts.text.body1.regular}>{pushToken}</Text>
       <ScrollView>
         <Pressable onPress={() => navigation.navigate('DetailedPost')}>
           <View

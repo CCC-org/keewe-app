@@ -21,16 +21,21 @@
     "ios": {
       "buildNumber": "1.1",
       "supportsTablet": true,
-      "bundleIdentifier": "com.CCCorg.keewe"
+      "bundleIdentifier": "com.CCCorg.keewe",
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "infoPlist": {
+        "UIBackgroundModes": ["fetch", "remote-notification"]
+      }
     },
     "android": {
+      "versionCode": 8,
       "jsEngine": "hermes",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.akdlsz21.keewe",
-      "versionCode": 8
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
@@ -42,6 +47,7 @@
       "eas": {
         "projectId": "05f9153d-ab7a-4208-a465-60a60c8c4ade"
       }
-    }
+    },
+    "plugins": ["@react-native-firebase/app"]
   }
 }

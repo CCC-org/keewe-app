@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "280353084951",
+    "project_id": "keewe-push",
+    "storage_bucket": "keewe-push.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280353084951:android:623b4fb01bc39158282e52",
+        "android_client_info": {
+          "package_name": "com.akdlsz21.keewe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "280353084951-vm35dalqcabfb30foh54n9ja788bkagl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6w737Ru9Fqt96K49V2ps_wR7OKDEdj80"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "280353084951-vm35dalqcabfb30foh54n9ja788bkagl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -60,6 +60,31 @@ import MyPageScreen from './src/screens/Main/mypage/MyPageScreen';
 import ChallengeEditScreen from './src/screens/Main/challenge/ChallengeEditScreen';
 import SubjectEditScreen from './src/screens/Main/challenge/SubjectEditScreen';
 import GoalEditScreen from './src/screens/Main/challenge/GoalEditScreen';
+import messaging from '@react-native-firebase/messaging';
+import { setPushToken } from './src/utils/hooks/asyncStorage/Login';
+// import firebase from '@react-native-firebase/app';
+
+const requestUserPermission = async () => {
+  const token = await messaging().getToken();
+  setPushToken(token);
+  const authStatus = await messaging().requestPermission();
+  const enabled =
+    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+  if (enabled) {
+    console.log('Authorization status:', authStatus);
+  }
+};
+// const _updateTokenToServer = async (): Promise<void> => {
+//   try {
+//     const fcmToken = await firebase.messaging().getToken();
+//     console.log(fcmToken);
+//   } catch (error) {
+//     console.log('ERROR: _updateTokenToServer');
+//     console.log(error);
+//   }
+// };
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -77,6 +102,8 @@ const queryClient = new QueryClient({
 });
 
 export default function App() {
+  requestUserPermission();
+  // _updateTokenToServer();
   const isLoadingComplete = useCachedResources();
   if (!isLoadingComplete) {
     return null;
