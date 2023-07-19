@@ -8,9 +8,9 @@ import BottomSheetHeader from '../header/BottomSheetHeader';
 import HeaderRightButton from '../header/HeaderRightButton';
 import CountingTextArea from '../texts/CountingTextArea';
 import TwoButtonModal from '../modal/TwoButtonModal';
-import { reportInsight, reportType } from '../../utils/api/report/insight/insightReport';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { blockApi } from '../../utils/api/block/block';
+import { reportComment, reportType } from '../../utils/api/report/comment/commentReport';
 
 interface BSPostOptionsProps {
   modalRef: React.RefObject<BottomSheetModalMethods>;
@@ -19,12 +19,7 @@ interface BSPostOptionsProps {
   userName: string;
 }
 
-const SheetOthersComment = ({
-  modalRef,
-  userId,
-  userName,
-  commentId: insightId,
-}: BSPostOptionsProps) => {
+const SheetOthersComment = ({ modalRef, userId, userName, commentId }: BSPostOptionsProps) => {
   const { fonts } = useTheme();
   const styles = createStyles(fonts);
   const [isReport, setIsReport] = useState(false);
@@ -80,7 +75,7 @@ const SheetOthersComment = ({
       reportOptions.find((option) => option.id === selectedReport)?.reportType ||
       ('OTHERS' as const);
 
-    reportInsight({ insightId, reason: reportText, reportType }).then((res) => {
+    reportComment({ commentId, reason: reportText, reportType }).then((res) => {
       if (res?.code === 200) {
         setSelectedReport(null);
         setIsReport(false);

@@ -14,7 +14,7 @@ interface CountingTextAreaProps {
   autoFocus?: boolean;
   limitTextStyle?: any;
   multiline?: boolean;
-  autoCapitalize: any;
+  autoCapitalize?: any;
 }
 
 const CountingTextArea = (props: CountingTextAreaProps) => {
