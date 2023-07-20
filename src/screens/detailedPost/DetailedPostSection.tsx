@@ -93,7 +93,8 @@ const DetailedPostSection = ({
   return (
     <View style={{ backgroundColor: '#F1F1E9' }}>
       {currentChallenge && (
-        <View
+        <Pressable
+          onPress={handleGoToDetailedChallenge}
           style={{
             ...styles.top,
             borderColor: `${theme.colors.graphic.black}1a`,
@@ -111,23 +112,21 @@ const DetailedPostSection = ({
           >
             {isInsightLoading || isProfileLoading ? '-' : currentChallenge}
           </Text>
-          <Pressable onPress={handleGoToDetailedChallenge} style={{ flexDirection: 'row' }}>
-            <Text
-              style={{
-                ...theme.fonts.text.caption1,
-                paddingRight: 10,
-                color: `${theme.colors.graphic.black}80`,
-              }}
-            >
-              {isInsightLoading || isProfileLoading
-                ? '--'
-                : recordText?.length
-                ? `${recordText}번째 기록중`
-                : ''}
-            </Text>
-            <Octicons name="chevron-right" size={17} color={`${theme.colors.graphic.black}cc`} />
-          </Pressable>
-        </View>
+          <Text
+            style={{
+              ...theme.fonts.text.caption1,
+              paddingRight: 10,
+              color: `${theme.colors.graphic.black}80`,
+            }}
+          >
+            {isInsightLoading || isProfileLoading
+              ? '--'
+              : recordText?.length
+              ? `${recordText}번째 기록중`
+              : ''}
+          </Text>
+          <Octicons name="chevron-right" size={17} color={`${theme.colors.graphic.black}cc`} />
+        </Pressable>
       )}
       <View style={[styles.insightText]}>
         <Text style={[theme.fonts.text.body1.regular, { color: '#121314CC', lineHeight: 28 }]}>
