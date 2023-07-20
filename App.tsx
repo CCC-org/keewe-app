@@ -107,11 +107,6 @@ export default function App() {
                     headerShadowVisible: false,
                   }}
                 >
-                  <Stack.Screen
-                    name={'Link'}
-                    component={LinkScreen}
-                    options={{ ...headerOptions, title: '' }}
-                  />
                   <Stack.Group
                     screenOptions={{
                       headerShown: false,
@@ -455,6 +450,11 @@ export default function App() {
                         headerLeft: () => <View></View>,
                         cardStyle: { backgroundColor: 'white' },
                       }}
+                    />
+                    <Stack.Screen
+                      name={'Link'}
+                      component={LinkScreen}
+                      options={{ ...headerOptions, title: '' }}
                     />
                   </Stack.Group>
                 </Stack.Navigator>
