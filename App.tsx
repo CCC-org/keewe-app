@@ -60,6 +60,7 @@ import MyPageScreen from './src/screens/Main/mypage/MyPageScreen';
 import ChallengeEditScreen from './src/screens/Main/challenge/ChallengeEditScreen';
 import SubjectEditScreen from './src/screens/Main/challenge/SubjectEditScreen';
 import GoalEditScreen from './src/screens/Main/challenge/GoalEditScreen';
+import LinkScreen from './src/screens/link/LinkScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -76,13 +77,20 @@ const queryClient = new QueryClient({
   },
 });
 
+const linking = {
+  prefixes: ['https://d1m48degai0zet.cloudfront.net'],
+  config: {
+    screens: { Link: 'link/:type/:param' },
+  },
+};
+
 export default function App() {
   const isLoadingComplete = useCachedResources();
   if (!isLoadingComplete) {
     return null;
   } else {
     return (
-      <NavigationContainer ref={navigationRef}>
+      <NavigationContainer ref={navigationRef} linking={linking}>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <PaperProvider theme={light}>
             <QueryClientProvider client={queryClient}>
@@ -99,7 +107,11 @@ export default function App() {
                     headerShadowVisible: false,
                   }}
                 >
-                  {/* Tabs  */}
+                  <Stack.Screen
+                    name={'Link'}
+                    component={LinkScreen}
+                    options={{ ...headerOptions, title: '' }}
+                  />
                   <Stack.Group
                     screenOptions={{
                       headerShown: false,
