@@ -1,5 +1,5 @@
 import React, { forwardRef, useState } from 'react';
-import { Text, View, TextInput, StyleSheet, Pressable } from 'react-native';
+import { Text, View, TextInput, StyleSheet, Pressable, Platform } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import theme from '../../theme/light';
 import main from '../../constants/Icons/Upload/UploadMainXml';
@@ -20,6 +20,7 @@ export type ReplyInfo = {
   id: number;
   nickname: string;
 };
+const bottom = Platform.OS === 'ios' ? 80 : 0;
 
 const CommentInput = forwardRef(
   (
@@ -38,9 +39,8 @@ const CommentInput = forwardRef(
     const handleCancelReply = () => {
       onCancelReply();
     };
-
     return (
-      <View style={styles.Container}>
+      <View style={[styles.Container, { bottom }]}>
         {replyInfo && (
           <AnimatedHeightView startHeight={0} endHeight={44} duration={200}>
             <View style={styles.reply}>
@@ -111,7 +111,6 @@ const styles = StyleSheet.create({
   Container: {
     position: 'absolute',
     width: '100%',
-    bottom: 80,
     borderTopWidth: 1,
     paddingBottom: 8,
     borderColor: `${theme.colors.graphic.black}10`,
