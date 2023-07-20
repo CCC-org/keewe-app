@@ -85,6 +85,7 @@ export type RootStackParamList = {
     insightContent: string;
     insightId: number | string;
   };
+  Link: undefined;
   Error: undefined;
 };
 
