@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useTheme } from 'react-native-paper';
 
 interface CountingTextAreaProps {
+  isControlledInput?: boolean;
   infoText?: string;
   inputValue: string;
   placeholder: string;
@@ -30,6 +31,7 @@ const CountingTextArea = (props: CountingTextAreaProps) => {
     autoFocus = false,
     multiline,
     autoCapitalize,
+    isControlledInput,
   } = props;
   const theme = useTheme();
   const [letterNumberColor, setLetterNumberColor] = useState<string>('grey');
@@ -57,7 +59,7 @@ const CountingTextArea = (props: CountingTextAreaProps) => {
       >
         <TextInput
           // BUG: making TextInput a controlled component causes it to make unexpected cursor jumps and duplicate characters.
-          value={inputValue}
+          value={isControlledInput ? inputValue : undefined}
           autoFocus={autoFocus}
           placeholder={placeholder}
           onChangeText={(text) => setInputValue(text)}
