@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import React, { useMemo } from 'react';
 import { UserSpecificChallenge } from '../../types/Feed/UserSpecificChallenge';
 import { useTheme } from 'react-native-paper';
@@ -6,9 +6,10 @@ import { getFormattedDateArray } from '../../utils/helper/UserSpecificChallengeD
 import CircularCheckbox from '../../components/checkbox/CircularCheckbox';
 import BottomFixButton from '../../components/buttons/BottomFixButton';
 import { formatChallengeText } from '../../utils/helper/UserSpecificChallengeDateFormatter/challengeTextFormatter';
-import { AntDesign } from '@expo/vector-icons';
 import TodayBubble from './TodayBubble';
 import { useNavigation } from '@react-navigation/native';
+import { SvgXml } from 'react-native-svg';
+import { arrowRightXml } from '../../../assets/svgs/arrowRightXml';
 
 interface UserSpecificChallengeSectionProps {
   userSpecificChallenge: UserSpecificChallenge['data'];
@@ -33,17 +34,20 @@ const UserSpecificChallengeSection = ({
     <View style={{ paddingBottom: 8 }}>
       <View style={styles.headerCtn}>
         <Text style={styles.headerText}>{challengeHeaderText}</Text>
-        <AntDesign
-          name="arrowright"
-          size={24}
-          color="black"
+        <Pressable
           onPress={() =>
             navigation.navigate('ChallengeDetail', {
               challengeId: challenge.challengeId,
               challengeName: challenge.challengeName,
             })
           }
-        />
+          hitSlop={{
+            left: 50,
+            right: 20,
+          }}
+        >
+          <SvgXml xml={arrowRightXml} />
+        </Pressable>
       </View>
 
       <Text style={[theme.fonts.text.body2.regular, styles.challengeText]}>
