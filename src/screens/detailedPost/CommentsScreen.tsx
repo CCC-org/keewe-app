@@ -179,7 +179,7 @@ const CommentsScreen = ({ navigation, route }) => {
           ref.current?.blur();
         }}
         onCreate={() => {
-          setRefreshIndex(data[0].id);
+          setRefreshIndex(data[data.length - 1].id);
           setData([]);
           setCommentCursor(undefined);
           setReplyCursor(undefined);

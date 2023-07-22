@@ -59,7 +59,7 @@ const Comment = ({
           style={{
             fontFamily: 'pretendard',
             fontSize: 14,
-            margin: 16,
+            padding: 20,
             lineHeight: 20,
             color: '#12131450',
           }}
