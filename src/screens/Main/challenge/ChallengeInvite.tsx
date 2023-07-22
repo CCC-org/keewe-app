@@ -66,7 +66,7 @@ const ChallengeInvite = ({ challengeId }: ChallengeInviteProps) => {
 
   return (
     <>
-      <Pressable style={{ marginRight: 19 }} onPress={handlePress}>
+      <Pressable style={{ marginRight: 17, marginTop: 4 }} onPress={handlePress}>
         <SvgXml xml={addFriend} />
       </Pressable>
       <BottomSheetModal

@@ -23,8 +23,8 @@ import Toast from 'react-native-toast-message';
 import { FeedQueryKeys } from '../../../utils/api/FeedAPI';
 import ChallengeInvite from './ChallengeInvite';
 import { SvgXml } from 'react-native-svg';
-import { pencil } from '../../../constants/Icons/home/pencil';
 import MainLottie from '../../../components/lotties/MainLottie';
+import { settingsIcon } from '../../../../assets/svgs/settingsIcon';
 
 const { width } = Dimensions.get('window');
 
@@ -46,10 +46,10 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
           <View style={{ flexDirection: 'row' }}>
             <ChallengeInvite challengeId={challengeId} />
             <Pressable
-              style={{ paddingRight: 19, paddingTop: 3 }}
+              style={{ paddingRight: 19, paddingTop: 4 }}
               onPress={() => navigation.navigate('ChallengeEdit')}
             >
-              <SvgXml xml={pencil} />
+              <SvgXml xml={settingsIcon} />
             </Pressable>
           </View>
         );
