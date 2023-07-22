@@ -316,7 +316,7 @@ export default function App() {
                     <Stack.Screen
                       name="ChallengeEdit"
                       component={ChallengeEditScreen}
-                      options={{ ...headerOptions, title: '내 목표 수정' }}
+                      options={{ ...headerOptions, title: '내 목표' }}
                     />
                     <Stack.Screen
                       name="SubjectEdit"
