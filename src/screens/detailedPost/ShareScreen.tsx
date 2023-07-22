@@ -4,12 +4,13 @@ import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
 import ColorSelectRadioButton from '../../components/buttons/ColorSelectRadioButton';
 import ShareButton from '../../components/buttons/ShareButton';
-import { Feather } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as MediaLibrary from 'expo-media-library';
 import ProfileAvatar from '../../components/profile/ProfileAvatar';
 import { useTheme } from 'react-native-paper';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { SvgXml } from 'react-native-svg';
+import { saveIcon } from '../../../assets/svgs/saveIcon.';
+import ShareIconXml from '../../constants/Icons/DetailedPost/ShareIconXml';
 
 const falseObject = {
   first: false,
@@ -75,8 +76,8 @@ const ShareScreen = ({ route }) => {
         <View style={styles.profileContainer}>
           <Text
             style={{
-              fontFamily: 'pretendardMedium',
-              fontSize: 14,
+              fontFamily: 'podkova',
+              fontSize: 15,
               color: color === '#f1f1e9' ? '#486006' : '#e0f6a2',
             }}
           >
@@ -90,24 +91,27 @@ const ShareScreen = ({ route }) => {
               paddingTop: 10,
             }}
           >
-            <ProfileAvatar style={{ marginRight: 10 }} size={36} image={image} />
+            <ProfileAvatar style={{ marginRight: 8 }} size={36} image={image} />
             <View style={{ marginLeft: 8 }}>
               <Text
                 style={[
                   theme.fonts.text.caption1,
-                  { color: color === '#f1f1e9' ? '#12131450' : '#ffffff50' },
+                  { color: color === '#f1f1e9' ? '#12131480' : '#ffffff80' },
                 ]}
-              >{`${name}의`}</Text>
-              <Text
-                style={{
-                  fontFamily: 'pretendardSemiBold',
-                  fontSize: 12,
-                  color: color === '#f1f1e9' ? '#12131450' : '#ffffff50',
-                }}
               >
-                {recordText?.length
-                  ? `${challenge}에 대한 ${recordText}번째 인사이트`
-                  : `${challenge}에 대한 인사이트`}
+                {challenge ? `${name} 의` : `${name} 의 인사이트`}
+              </Text>
+              <Text
+                style={[
+                  theme.fonts.text.caption1,
+                  { color: color === '#f1f1e9' ? '#12131480' : '#ffffff80' },
+                ]}
+              >
+                {challenge
+                  ? recordText?.length
+                    ? `${challenge}에 대한 ${recordText}번째 인사이트`
+                    : `${challenge}에 대한 인사이트`
+                  : ''}
               </Text>
             </View>
           </View>
@@ -144,18 +148,10 @@ const ShareScreen = ({ route }) => {
 
         <View style={styles.shareButtonContainer}>
           <Pressable onPress={shareImage}>
-            <ShareButton
-              text={'공유하기'}
-              icon={<Feather name="share" size={24} color="black" />}
-            />
+            <ShareButton text={'공유하기'} icon={<SvgXml xml={ShareIconXml} />} />
           </Pressable>
           <Pressable onPress={handleDownload}>
-            <ShareButton
-              text={'이미지 저장'}
-              icon={
-                <MaterialCommunityIcons name="download-circle-outline" size={24} color="black" />
-              }
-            />
+            <ShareButton text={'이미지 저장'} icon={<SvgXml xml={saveIcon} />} />
           </Pressable>
         </View>
       </View>
