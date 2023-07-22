@@ -93,7 +93,7 @@ const CommentsScreen = ({ navigation, route }) => {
         image={item.writer?.image}
         isReply={false}
         onReply={() => handleReplyClick({ id: item.id, nickname: item.writer?.name })}
-        highlight={refreshIndex !== undefined && refreshIndex < item.id}
+        highlight={refreshIndex !== undefined && refreshIndex === item.id}
         commentId={item.id}
       />,
     ];
@@ -178,8 +178,9 @@ const CommentsScreen = ({ navigation, route }) => {
           setReplyInfo(undefined);
           ref.current?.blur();
         }}
-        onCreate={() => {
-          setRefreshIndex(data[data.length - 1].id);
+        onCreate={(response: CommentCreateResponse) => {
+          onEndReached();
+          setRefreshIndex(response.data.commentId);
           setReplyInfo(undefined);
         }}
       />
