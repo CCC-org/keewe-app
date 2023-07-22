@@ -180,11 +180,7 @@ const CommentsScreen = ({ navigation, route }) => {
         }}
         onCreate={() => {
           setRefreshIndex(data[data.length - 1].id);
-          setData([]);
-          setCommentCursor(undefined);
-          setReplyCursor(undefined);
           setReplyInfo(undefined);
-          ref.current?.blur();
         }}
       />
     </KeyboardAvoidingView>
