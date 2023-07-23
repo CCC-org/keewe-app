@@ -1,5 +1,7 @@
+import { queryClient } from '../../../App';
 import { InsightPatchRequest, UploadRequest } from '../../types/upload';
 import httpClient from './BaseHttpClient';
+import { UserSpecificChallengeQueryKeys } from './UserSpecificChallenge';
 export const UploadApis = {
   createNewFolder: async (folderName: string) => {
     return httpClient
@@ -10,6 +12,7 @@ export const UploadApis = {
   },
   uploadInsight: async (datas: UploadRequest) => {
     return httpClient.post('https://api-keewe.com/api/v1/insight', datas).then((res) => {
+      queryClient.invalidateQueries(UserSpecificChallengeQueryKeys.getUserSpecificChallenge());
       return res.data;
     });
   },

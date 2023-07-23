@@ -2,7 +2,7 @@ import { UserSpecificChallenge } from '../../types/Feed/UserSpecificChallenge';
 import httpClient from './BaseHttpClient';
 
 export const UserSpecificChallengeQueryKeys = {
-  getUserSpecificChallenge: () => ['userSpecificChallenge'],
+  getUserSpecificChallenge: () => ['challenge', 'userSpecificChallenge'],
 };
 
 export const UserSpecificChallengeAPI = {
