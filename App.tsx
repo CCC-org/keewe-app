@@ -12,6 +12,7 @@ import InterestChooseScreen from './src/screens/onboarding/InterestChooseScreen'
 import NicknameCreationScreen from './src/screens/onboarding/NicknameCreationScreen';
 import SignUpScreen from './src/screens/onboarding/SignUpScreen';
 import useCachedResources from './src/utils/hooks/useCachedResources';
+import * as Notifications from 'expo-notifications';
 
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -61,6 +62,7 @@ import ChallengeEditScreen from './src/screens/Main/challenge/ChallengeEditScree
 import SubjectEditScreen from './src/screens/Main/challenge/SubjectEditScreen';
 import GoalEditScreen from './src/screens/Main/challenge/GoalEditScreen';
 import LinkScreen from './src/screens/link/LinkScreen';
+import { setNotificationToken } from './src/utils/hooks/asyncStorage/Login';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -84,8 +86,14 @@ const linking = {
   },
 };
 
+const getDeviceToken = async () => {
+  const token = (await Notifications.getDevicePushTokenAsync()).data;
+  setNotificationToken(token);
+};
+
 export default function App() {
   const isLoadingComplete = useCachedResources();
+  getDeviceToken();
   if (!isLoadingComplete) {
     return null;
   } else {

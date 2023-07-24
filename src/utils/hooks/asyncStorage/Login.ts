@@ -8,9 +8,25 @@ export const getAccessToken = async () => {
   }
 };
 
+export const getNotificationToken = async () => {
+  try {
+    return await AsyncStorage.getItem('notificationToken');
+  } catch (e) {
+    alert('토큰 불러오기 실패');
+  }
+};
+
 export const setAccessToken = async (value: string) => {
   try {
     await AsyncStorage.setItem('accessToken', value);
+  } catch (e) {
+    alert('토큰 저장 실패');
+  }
+};
+
+export const setNotificationToken = async (value: string) => {
+  try {
+    await AsyncStorage.setItem('notificationToken', value);
   } catch (e) {
     alert('토큰 저장 실패');
   }

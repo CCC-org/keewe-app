@@ -2,16 +2,20 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Pressable, ScrollView, View, Text } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import { getAccessToken, getUserId } from '../utils/hooks/asyncStorage/Login';
+import { getAccessToken, getNotificationToken, getUserId } from '../utils/hooks/asyncStorage/Login';
 
 export function RootScreen() {
   const navigation = useNavigation();
   const [accessToken, setAccessToken] = useState<any>('');
+  const [notificationToken, setNotificationToken] = useState<any>('');
   const theme = useTheme();
 
   useEffect(() => {
     getAccessToken().then((token) => {
       setAccessToken(token);
+    });
+    getNotificationToken().then((token) => {
+      setNotificationToken(token);
     });
   }, []);
 
@@ -33,6 +37,14 @@ export function RootScreen() {
       </Pressable>
 
       <Text style={theme.fonts.text.body1.regular}>{accessToken}</Text>
+      <Pressable
+        style={{ borderWidth: 1, backgroundColor: 'grey', width: 300, height: 50 }}
+        onPress={() => getUserId().then(console.log)}
+      >
+        <Text style={theme.fonts.text.display}>Get Notification Token</Text>
+      </Pressable>
+
+      <Text style={theme.fonts.text.body1.regular}>{notificationToken}</Text>
       <ScrollView>
         <Pressable onPress={() => navigation.navigate('DetailedPost')}>
           <View
