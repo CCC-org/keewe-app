@@ -87,11 +87,6 @@ const linking = {
   },
 };
 
-const getDeviceToken = async () => {
-  const token = (await Notifications.getDevicePushTokenAsync()).data;
-  setNotificationToken(token);
-};
-
 const getExpoToken = async () => {
   const token = (await Notifications.getExpoPushTokenAsync()).data;
   setExpoToken(token);
@@ -113,22 +108,28 @@ const registerForPushNotificationsAsync = async () => {
     if (existingStatus !== 'granted') {
       const { status } = await Notifications.requestPermissionsAsync();
       finalStatus = status;
-    }
-    if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!');
-      return;
+      if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
+        return;
+      }
     }
     getExpoToken();
-  } else {
-    alert('Must use physical device for Push Notifications');
+    Notifications.setNotificationHandler({
+      handleNotification: async () => {
+        alert('alarm');
+        return {
+          shouldShowAlert: false,
+          shouldPlaySound: false,
+          shouldSetBadge: false,
+        };
+      },
+    });
   }
-
   return;
 };
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
-  getDeviceToken();
   registerForPushNotificationsAsync();
   if (!isLoadingComplete) {
     return null;
