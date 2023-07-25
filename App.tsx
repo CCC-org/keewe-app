@@ -62,7 +62,7 @@ import ChallengeEditScreen from './src/screens/Main/challenge/ChallengeEditScree
 import SubjectEditScreen from './src/screens/Main/challenge/SubjectEditScreen';
 import GoalEditScreen from './src/screens/Main/challenge/GoalEditScreen';
 import LinkScreen from './src/screens/link/LinkScreen';
-import { setNotificationToken } from './src/utils/hooks/asyncStorage/Login';
+import { setExpoToken, setNotificationToken } from './src/utils/hooks/asyncStorage/Login';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -91,9 +91,15 @@ const getDeviceToken = async () => {
   setNotificationToken(token);
 };
 
+const getExpoToken = async () => {
+  const token = (await Notifications.getExpoPushTokenAsync()).data;
+  setExpoToken(token);
+};
+
 export default function App() {
   const isLoadingComplete = useCachedResources();
   getDeviceToken();
+  getExpoToken();
   if (!isLoadingComplete) {
     return null;
   } else {
