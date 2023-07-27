@@ -4,6 +4,10 @@ interface LoginRequest {
   state?: string;
 }
 
+interface TokenPushRequest {
+  pushToken: string;
+}
+
 interface LoginResponse {
   message: string;
   code: number;
