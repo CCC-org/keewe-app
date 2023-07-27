@@ -63,7 +63,7 @@ import ChallengeEditScreen from './src/screens/Main/challenge/ChallengeEditScree
 import SubjectEditScreen from './src/screens/Main/challenge/SubjectEditScreen';
 import GoalEditScreen from './src/screens/Main/challenge/GoalEditScreen';
 import LinkScreen from './src/screens/link/LinkScreen';
-import { setExpoToken, setNotificationToken } from './src/utils/hooks/asyncStorage/Login';
+import { getExpoToken, setExpoToken } from './src/utils/hooks/asyncStorage/Login';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -87,7 +87,7 @@ const linking = {
   },
 };
 
-const getExpoToken = async () => {
+const getToken = async () => {
   const token = (await Notifications.getExpoPushTokenAsync()).data;
   setExpoToken(token);
 };
@@ -103,22 +103,15 @@ const registerForPushNotificationsAsync = async () => {
   }
 
   if (Device.isDevice) {
-    const { status: existingStatus } = await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-      if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
-        return;
-      }
+    const token = await getExpoToken();
+    if (token === null) {
+      await Notifications.requestPermissionsAsync();
+      getToken();
     }
-    getExpoToken();
     Notifications.setNotificationHandler({
       handleNotification: async () => {
-        alert('alarm');
         return {
-          shouldShowAlert: false,
+          shouldShowAlert: true,
           shouldPlaySound: false,
           shouldSetBadge: false,
         };
