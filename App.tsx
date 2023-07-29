@@ -81,12 +81,11 @@ const queryClient = new QueryClient({
 });
 
 const linking = {
-  prefixes: ['https://d1m48degai0zet.cloudfront.net'],
+  prefixes: ['https://keewe.kr'],
   config: {
     screens: { Link: 'link/:type/:param' },
   },
 };
-
 const getToken = async () => {
   const token = (await Notifications.getExpoPushTokenAsync()).data;
   setExpoToken(token);
@@ -101,7 +100,6 @@ const registerForPushNotificationsAsync = async () => {
       lightColor: '#FF231F7C',
     });
   }
-
   const token = await getExpoToken();
   if (token === null) {
     await Notifications.requestPermissionsAsync();
