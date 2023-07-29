@@ -3,6 +3,7 @@ import { WebView } from 'react-native-webview';
 import { View } from 'react-native';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { LoginQueryKeys, LoginAPI } from '../../utils/api/LoginAPI';
+import * as Notifications from 'expo-notifications';
 import { getExpoToken, setAccessToken, setUserId } from '../../utils/hooks/asyncStorage/Login';
 // eslint-disable-next-line quotes
 const INJECTED_JAVASCRIPT = "window.ReactNativeWebView.postMessage('login start')";
@@ -18,7 +19,10 @@ function Login({ navigation, route }) {
     onSuccess: async (response) => {
       setAccessToken(response?.data?.accessToken ?? '');
       setUserId(response?.data?.userId ?? 0);
-      const token = await getExpoToken();
+      let token = await getExpoToken();
+      if (token === null) {
+        token = (await Notifications.getExpoPushTokenAsync()).data;
+      }
       tokenPush({ pushToken: token ?? '' });
       navigation.reset({
         index: 0,
