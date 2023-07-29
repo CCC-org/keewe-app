@@ -102,7 +102,6 @@ const registerForPushNotificationsAsync = async () => {
     });
   }
 
-  // if (Device.isDevice) {
   const token = await getExpoToken();
   if (token === null) {
     await Notifications.requestPermissionsAsync();
@@ -117,7 +116,7 @@ const registerForPushNotificationsAsync = async () => {
       };
     },
   });
-  // }
+
   return;
 };
 
