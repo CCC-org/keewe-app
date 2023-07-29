@@ -21,8 +21,8 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.CCCorg.keewe",
-      "buildNumber": "2.1",
-      "associatedDomains": ["applinks:d1m48degai0zet.cloudfront.net"]
+      "buildNumber": "2.2",
+      "associatedDomains": ["applinks:keewe.kr"]
     },
     "android": {
       "jsEngine": "hermes",
@@ -39,7 +39,7 @@
           "data": [
             {
               "scheme": "https",
-              "host": "*.d1m48degai0zet.cloudfront.net",
+              "host": "*.keewe.kr",
               "pathPrefix": "/link"
             }
           ],
