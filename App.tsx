@@ -102,22 +102,22 @@ const registerForPushNotificationsAsync = async () => {
     });
   }
 
-  if (Device.isDevice) {
-    const token = await getExpoToken();
-    if (token === null) {
-      await Notifications.requestPermissionsAsync();
-      getToken();
-    }
-    Notifications.setNotificationHandler({
-      handleNotification: async () => {
-        return {
-          shouldShowAlert: true,
-          shouldPlaySound: false,
-          shouldSetBadge: false,
-        };
-      },
-    });
+  // if (Device.isDevice) {
+  const token = await getExpoToken();
+  if (token === null) {
+    await Notifications.requestPermissionsAsync();
+    getToken();
   }
+  Notifications.setNotificationHandler({
+    handleNotification: async () => {
+      return {
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+      };
+    },
+  });
+  // }
   return;
 };
 
