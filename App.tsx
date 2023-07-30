@@ -71,7 +71,7 @@ const headerOptions = {
   headerBackVisible: false,
   headerLeft: () => <HeaderBackButton />,
 };
-// Text style. font-family : pretendard
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -84,7 +84,11 @@ const linking = {
   prefixes: ['https://keewe.kr'],
   config: {
     screens: {
-      Feed: { screens: { Link: 'link/:type/:id' } },
+      Tabs: {
+        screens: {
+          Link: 'link/:type/:id',
+        },
+      },
     },
   },
 };
