@@ -83,7 +83,9 @@ const queryClient = new QueryClient({
 const linking = {
   prefixes: ['https://keewe.kr'],
   config: {
-    screens: { Link: 'link/:type/:param' },
+    screens: {
+      Feed: { screens: { Link: 'link/:type/:id' } },
+    },
   },
 };
 const getToken = async () => {
