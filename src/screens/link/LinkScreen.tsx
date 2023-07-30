@@ -19,24 +19,32 @@ const LinkScreen = ({ navigation, route }) => {
   );
 
   useEffect(() => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Tabs' }],
-    });
-    if (type === 'challenge') {
-      navigation.navigate('DetailedPost', {
+    if (type === 'insight') {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Tabs' }],
+      });
+      navigation.push('DetailedPost', {
         screen: 'DetailedPost',
         insightId: id,
       });
     }
     if (type === 'profile') {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Tabs' }],
+      });
       if (userId === id) {
-        navigation.navigate('MyPage', {
+        navigation.push('MyPage', {
           screen: 'MyPage',
           userId: id,
         });
       } else {
-        navigation.navigate('Profile', {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Tabs' }],
+        });
+        navigation.push('Profile', {
           screen: 'Profile',
           userId: id,
         });
@@ -44,22 +52,26 @@ const LinkScreen = ({ navigation, route }) => {
     }
     if (type === 'challenge') {
       if (!isChallengeParticipationLoading) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Tabs' }],
+        });
         if (participated && challengeParticipation?.challengeId === id) {
-          navigation.navigate('ChallengeDetail', {
+          navigation.push('ChallengeDetail', {
             screen: 'ChallengeDetail',
             challengeId: challengeParticipation?.challengeId,
             challengeName: challengeParticipation?.name,
             interest: challengeParticipation?.interest,
           });
         } else {
-          navigation.navigate('ChallengeParticipation', {
+          navigation.push('ChallengeParticipation', {
             screen: 'ChallengeParticipation',
             challengeId: id,
           });
         }
       }
     }
-  }, [type, id, isChallengeParticipationLoading]);
+  }, [isChallengeParticipationLoading]);
 
   return (
     <>
