@@ -84,11 +84,7 @@ const linking = {
   prefixes: ['https://keewe.kr'],
   config: {
     screens: {
-      Tabs: {
-        screens: {
-          Link: 'link/:type/:id',
-        },
-      },
+      Link: 'link/:type/:id',
     },
   },
 };
