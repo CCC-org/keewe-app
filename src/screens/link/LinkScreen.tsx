@@ -19,85 +19,48 @@ const LinkScreen = ({ navigation, route }) => {
   );
 
   useEffect(() => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Tabs' }],
+    });
     if (type === 'challenge') {
-      navigation.reset(
-        {
-          index: 0,
-          routes: [{ name: 'Tabs' }],
-        },
-        {
-          index: 1,
-          routes: [{ name: 'DetailedPost', params: { insightId: id } }],
-        },
-      );
+      navigation.navigate('DetailedPost', {
+        screen: 'DetailedPost',
+        insightId: id,
+      });
     }
     if (type === 'profile') {
       if (userId === id) {
-        navigation.reset(
-          {
-            index: 0,
-            routes: [{ name: 'Tabs' }],
-          },
-          {
-            index: 1,
-            routes: [{ name: 'MyPage', params: { userId: id } }],
-          },
-        );
+        navigation.navigate('MyPage', {
+          screen: 'MyPage',
+          userId: id,
+        });
       } else {
-        navigation.reset(
-          {
-            index: 0,
-            routes: [{ name: 'Tabs' }],
-          },
-          {
-            index: 1,
-            routes: [{ name: 'Profile', params: { userId: id } }],
-          },
-        );
+        navigation.navigate('Profile', {
+          screen: 'Profile',
+          userId: id,
+        });
       }
     }
     if (type === 'challenge') {
       if (!isChallengeParticipationLoading) {
         if (participated && challengeParticipation?.challengeId === id) {
-          navigation.reset(
-            {
-              index: 0,
-              routes: [{ name: 'Tabs' }],
-            },
-            {
-              index: 1,
-              routes: [
-                {
-                  name: 'ChallengeDetail',
-                  params: {
-                    challengeId: challengeParticipation?.challengeId,
-                    challengeName: challengeParticipation?.name,
-                    interest: challengeParticipation?.interest,
-                  },
-                },
-              ],
-            },
-          );
+          navigation.navigate('ChallengeDetail', {
+            screen: 'ChallengeDetail',
+            challengeId: challengeParticipation?.challengeId,
+            challengeName: challengeParticipation?.name,
+            interest: challengeParticipation?.interest,
+          });
         } else {
-          navigation.reset(
-            {
-              index: 0,
-              routes: [{ name: 'Tabs' }],
-            },
-            {
-              index: 1,
-              routes: [
-                {
-                  name: 'ChallengeDetail',
-                  params: { challengeId: id },
-                },
-              ],
-            },
-          );
+          navigation.navigate('ChallengeParticipation', {
+            screen: 'ChallengeParticipation',
+            challengeId: id,
+          });
         }
       }
     }
   }, [type, id, isChallengeParticipationLoading]);
+
   return (
     <>
       <MainLottie />
