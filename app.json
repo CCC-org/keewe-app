@@ -21,7 +21,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.CCCorg.keewe",
-      "buildNumber": "2.5",
+      "buildNumber": "2.6",
       "associatedDomains": ["applinks:keewe.kr"]
     },
     "android": {

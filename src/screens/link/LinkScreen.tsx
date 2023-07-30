@@ -20,7 +20,7 @@ const LinkScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     if (type === 'challenge') {
-      navigation.pop();
+      // navigation.pop();
       navigation.navigate('DetailedPost', {
         screen: 'DetailedPost',
         insightId: id,
@@ -28,13 +28,13 @@ const LinkScreen = ({ navigation, route }) => {
     }
     if (type === 'profile') {
       if (userId === id) {
-        navigation.pop();
+        // navigation.pop();
         navigation.navigate('MyPage', {
           screen: 'MyPage',
           userId: id,
         });
       } else {
-        navigation.pop();
+        // navigation.pop();
         navigation.navigate('Profile', {
           screen: 'Profile',
           userId: id,
@@ -44,7 +44,7 @@ const LinkScreen = ({ navigation, route }) => {
     if (type === 'challenge') {
       if (!isChallengeParticipationLoading) {
         if (participated && challengeParticipation?.challengeId === id) {
-          navigation.pop();
+          // navigation.pop();
           navigation.navigate('ChallengeDetail', {
             screen: 'ChallengeDetail',
             challengeId: challengeParticipation?.challengeId,
@@ -52,7 +52,7 @@ const LinkScreen = ({ navigation, route }) => {
             interest: challengeParticipation?.interest,
           });
         } else {
-          navigation.pop();
+          // navigation.pop();
           navigation.navigate('ChallengeParticipation', {
             screen: 'ChallengeParticipation',
             challengeId: id,
