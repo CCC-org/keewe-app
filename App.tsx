@@ -71,8 +71,8 @@ const headerOptions = {
   headerBackVisible: false,
   headerLeft: () => <HeaderBackButton />,
 };
-// Text style. font-family : pretendard
-export const queryClient = new QueryClient({
+
+const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: false,

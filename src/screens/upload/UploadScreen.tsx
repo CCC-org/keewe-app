@@ -22,6 +22,7 @@ import { ChallengeAPI, ChallengeQueryKeys } from '../../utils/api/ChallengeAPI';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
 import MainLottie from '../../components/lotties/MainLottie';
+import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChallenge';
 
 const UploadScreen = ({ navigation, route }) => {
   const { isEdit, link, insightId } = route?.params ?? {};
@@ -104,6 +105,7 @@ const UploadScreen = ({ navigation, route }) => {
         );
       } else {
         response = await UploadApis.uploadInsight(data);
+        queryClient.invalidateQueries(UserSpecificChallengeQueryKeys.getUserSpecificChallenge());
       }
       if (response.code === 200) {
         if (isEdit) {

@@ -1,6 +1,4 @@
-import { queryClient } from '../../../App';
 import httpClient from './BaseHttpClient';
-import { UserSpecificChallengeQueryKeys } from './UserSpecificChallenge';
 
 export const ChallengeQueryKeys = {
   create: (request: ChallengeCreateRequest) => ['challenge', request],
@@ -48,7 +46,6 @@ export const ChallengeAPI = {
     return httpClient
       .post<ChallengeCreateResponse>('https://api-keewe.com/api/v1/challenge', params, {})
       .then((res) => {
-        queryClient.invalidateQueries(UserSpecificChallengeQueryKeys.getUserSpecificChallenge());
         return res.data;
       })
       .catch((err) => {
@@ -59,7 +56,6 @@ export const ChallengeAPI = {
     return httpClient
       .post<ChallengeJoinResponse>('https://api-keewe.com/api/v1/challenge/participation', params)
       .then((res) => {
-        queryClient.invalidateQueries(UserSpecificChallengeQueryKeys.getUserSpecificChallenge());
         return res.data.data;
       })
       .catch((err) => {
@@ -77,8 +73,6 @@ export const ChallengeAPI = {
     return httpClient
       .post<ChallengeCreateResponse>('https://api-keewe.com/api/v1/challenge', params)
       .then((res) => {
-        queryClient.invalidateQueries(UserSpecificChallengeQueryKeys.getUserSpecificChallenge());
-
         return res.data;
       })
       .catch((err) => {
@@ -200,7 +194,6 @@ export const ChallengeAPI = {
         ...params,
       })
       .then((res) => {
-        queryClient.invalidateQueries(UserSpecificChallengeQueryKeys.getUserSpecificChallenge());
         return res.data;
       });
   },
