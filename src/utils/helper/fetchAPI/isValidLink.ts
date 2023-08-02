@@ -21,6 +21,9 @@ const handleSheetLinkComplete = async (
         ? linkText
         : `http://${linkText}`;
     const response = await axios.get(URL);
+
+    console.log('response.statusCode', response.status);
+
     const finalUrl = response.request.responseURL || null;
     if (finalUrl) {
       setLinkText(finalUrl);
@@ -45,3 +48,4 @@ function validateURL(textval: string) {
   return urlregex.test(textval);
 }
 export default handleSheetLinkComplete;
+// api-keewe.com/api/v1/oauth/naver
