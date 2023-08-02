@@ -128,7 +128,7 @@ const UploadScreen = ({ navigation, route }) => {
   );
 
   const checkIsValidSite = async () => {
-    handleSheetLinkComplete(linkText, linkSheetRef, setIsValidSite, () =>
+    handleSheetLinkComplete(linkText, setLinkText, linkSheetRef, setIsValidSite, () =>
       Toast.show({
         type: 'snackbar',
         text1: '올바른 링크인지 확인해주세요.',
