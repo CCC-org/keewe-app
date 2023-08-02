@@ -12,10 +12,12 @@ import InterestChooseScreen from './src/screens/onboarding/InterestChooseScreen'
 import NicknameCreationScreen from './src/screens/onboarding/NicknameCreationScreen';
 import SignUpScreen from './src/screens/onboarding/SignUpScreen';
 import useCachedResources from './src/utils/hooks/useCachedResources';
+import * as Notifications from 'expo-notifications';
 
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Pressable, View } from 'react-native';
+import { Platform, Pressable, View } from 'react-native';
+import * as Device from 'expo-device';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider as PaperProvider } from 'react-native-paper';
 import OnboardingIntroHeaderButton from './src/components/buttons/OnboardingIntroHeaderButton';
@@ -60,6 +62,8 @@ import MyPageScreen from './src/screens/Main/mypage/MyPageScreen';
 import ChallengeEditScreen from './src/screens/Main/challenge/ChallengeEditScreen';
 import SubjectEditScreen from './src/screens/Main/challenge/SubjectEditScreen';
 import GoalEditScreen from './src/screens/Main/challenge/GoalEditScreen';
+import LinkScreen from './src/screens/link/LinkScreen';
+import { getExpoToken, setExpoToken } from './src/utils/hooks/asyncStorage/Login';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -76,13 +80,54 @@ export const queryClient = new QueryClient({
   },
 });
 
+const linking = {
+  prefixes: ['https://keewe.kr'],
+  config: {
+    screens: {
+      Link: 'link/:type/:id',
+    },
+  },
+};
+const getToken = async () => {
+  const token = (await Notifications.getExpoPushTokenAsync()).data;
+  setExpoToken(token);
+};
+
+const registerForPushNotificationsAsync = async () => {
+  if (Platform.OS === 'android') {
+    await Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
+  const token = await getExpoToken();
+  if (token === null) {
+    await Notifications.requestPermissionsAsync();
+    getToken();
+  }
+  Notifications.setNotificationHandler({
+    handleNotification: async () => {
+      return {
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+      };
+    },
+  });
+
+  return;
+};
+
 export default function App() {
   const isLoadingComplete = useCachedResources();
+  registerForPushNotificationsAsync();
   if (!isLoadingComplete) {
     return null;
   } else {
     return (
-      <NavigationContainer ref={navigationRef}>
+      <NavigationContainer ref={navigationRef} linking={linking}>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <PaperProvider theme={light}>
             <QueryClientProvider client={queryClient}>
@@ -99,7 +144,6 @@ export default function App() {
                     headerShadowVisible: false,
                   }}
                 >
-                  {/* Tabs  */}
                   <Stack.Group
                     screenOptions={{
                       headerShown: false,
@@ -309,7 +353,7 @@ export default function App() {
                     <Stack.Screen
                       name="ChallengeEdit"
                       component={ChallengeEditScreen}
-                      options={{ ...headerOptions, title: '내 목표 수정' }}
+                      options={{ ...headerOptions, title: '내 목표' }}
                     />
                     <Stack.Screen
                       name="SubjectEdit"
@@ -443,6 +487,11 @@ export default function App() {
                         headerLeft: () => <View></View>,
                         cardStyle: { backgroundColor: 'white' },
                       }}
+                    />
+                    <Stack.Screen
+                      name={'Link'}
+                      component={LinkScreen}
+                      options={{ ...headerOptions, title: '' }}
                     />
                   </Stack.Group>
                 </Stack.Navigator>

@@ -26,7 +26,7 @@ const MiniProfile = ({
     <View style={[styles.Profile, props.style]}>
       <ProfileAvatar image={image} />
       <View style={styles.Description}>
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'row', alignContent: 'center' }}>
           <Text style={{ fontWeight: '600', fontSize: 14, marginRight: 4 }}>{nickname}</Text>
           {insightWriter ? (
             <Text

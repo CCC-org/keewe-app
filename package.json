@@ -70,7 +70,8 @@
     "react-native-web": "~0.18.11",
     "react-native-webview": "11.26.0",
     "rn-faded-scrollview": "^1.0.13",
-    "unimodel-core": "^2.0.0"
+    "unimodel-core": "^2.0.0",
+    "expo-device": "~5.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

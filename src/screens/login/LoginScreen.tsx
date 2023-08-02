@@ -1,9 +1,10 @@
 import React from 'react';
 import { WebView } from 'react-native-webview';
 import { View } from 'react-native';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { LoginQueryKeys, LoginAPI } from '../../utils/api/LoginAPI';
-import { setAccessToken, setUserId } from '../../utils/hooks/asyncStorage/Login';
+import * as Notifications from 'expo-notifications';
+import { getExpoToken, setAccessToken, setUserId } from '../../utils/hooks/asyncStorage/Login';
 // eslint-disable-next-line quotes
 const INJECTED_JAVASCRIPT = "window.ReactNativeWebView.postMessage('login start')";
 
@@ -13,10 +14,16 @@ function Login({ navigation, route }) {
     code: undefined,
     state: undefined,
   };
+  const { mutate: tokenPush } = useMutation(LoginAPI.tokenPush);
   const { refetch } = useQuery(LoginQueryKeys.login(params), () => LoginAPI.login(params), {
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       setAccessToken(response?.data?.accessToken ?? '');
       setUserId(response?.data?.userId ?? 0);
+      let token = await getExpoToken();
+      if (token === null) {
+        token = (await Notifications.getExpoPushTokenAsync()).data;
+      }
+      tokenPush({ pushToken: token ?? '' });
       navigation.reset({
         index: 0,
         routes: [{ name: 'Tabs' }],

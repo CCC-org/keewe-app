@@ -13,7 +13,7 @@ interface CommentInputProps {
   insightId: number;
   replyInfo?: ReplyInfo;
   onCancelReply: () => void;
-  onCreate: () => void;
+  onCreate: (response: CommentCreateResponse) => void;
 }
 
 export type ReplyInfo = {
@@ -30,9 +30,9 @@ const CommentInput = forwardRef(
     const [input, setInput] = useState<string>('');
     const queryClient = useQueryClient();
     const { mutate: createComment } = useMutation(InsightAPI.createComment, {
-      onSuccess: () => {
+      onSuccess: (response) => {
         queryClient.invalidateQueries(['comment']);
-        onCreate();
+        onCreate(response);
       },
     });
 

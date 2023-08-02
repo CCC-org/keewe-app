@@ -2,10 +2,10 @@
   "expo": {
     "name": "keewe",
     "slug": "keewe",
-    "version": "1.0.8",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "keewe",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -20,7 +20,9 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.CCCorg.keewe"
+      "bundleIdentifier": "com.CCCorg.keewe",
+      "buildNumber": "3.0",
+      "associatedDomains": ["applinks:keewe.kr"]
     },
     "android": {
       "jsEngine": "hermes",
@@ -29,7 +31,21 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.akdlsz21.keewe",
-      "versionCode": 8
+      "versionCode": 8,
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "*.keewe.kr",
+              "pathPrefix": "/link"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
@@ -39,7 +55,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "662b6040-56c8-42ea-9623-ec66e4cfd04f"
+        "projectId": "05f9153d-ab7a-4208-a465-60a60c8c4ade"
       }
     }
   }
