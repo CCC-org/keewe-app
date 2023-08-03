@@ -62,7 +62,6 @@ import MyPageScreen from './src/screens/Main/mypage/MyPageScreen';
 import ChallengeEditScreen from './src/screens/Main/challenge/ChallengeEditScreen';
 import SubjectEditScreen from './src/screens/Main/challenge/SubjectEditScreen';
 import GoalEditScreen from './src/screens/Main/challenge/GoalEditScreen';
-import LinkScreen from './src/screens/link/LinkScreen';
 import { getExpoToken, setExpoToken } from './src/utils/hooks/asyncStorage/Login';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -84,7 +83,7 @@ const linking = {
   prefixes: ['https://keewe.kr'],
   config: {
     screens: {
-      Link: 'link/:type/:id',
+      Tabs: 'link/:type/:id',
     },
   },
 };
@@ -487,11 +486,6 @@ export default function App() {
                         headerLeft: () => <View></View>,
                         cardStyle: { backgroundColor: 'white' },
                       }}
-                    />
-                    <Stack.Screen
-                      name={'Link'}
-                      component={LinkScreen}
-                      options={{ ...headerOptions, title: '' }}
                     />
                   </Stack.Group>
                 </Stack.Navigator>
