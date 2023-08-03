@@ -54,11 +54,13 @@ const FeedItem = ({ insight, localId, onBookMarkClick }: FeedItemProps) => {
       </View>
       <View style={styles.contentCtn}>
         <FeedTextContent contents={contents} insightId={id} bookmark={bookmark} />
-        <FeedLinkWithBookMark
-          text={insight.link.url}
-          onBookmarkPress={handleOnBookMarkPress}
-          isBookMarked={bookmark}
-        />
+        <View style={{ marginTop: 10, marginBottom: 4 }}>
+          <FeedLinkWithBookMark
+            text={insight.link.url}
+            onBookmarkPress={handleOnBookMarkPress}
+            isBookMarked={bookmark}
+          />
+        </View>
         <View style={{ ...styles.ReactionBar }}>
           {REACTIONS.map((react) => (
             <ReactIconButton

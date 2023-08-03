@@ -40,7 +40,7 @@ const InsightSampleScreen = ({ navigation, route }) => {
 
   return (
     <>
-      <ScrollView style={{ backgroundColor: '#F8F8F4' }}>
+      <ScrollView style={{ backgroundColor: theme.colors.brand.surface.main }}>
         <View style={styles.container}>
           <View
             style={{
@@ -240,13 +240,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'pretendardSemiBold',
     marginBottom: 2,
-    color: '#12131450',
+    color: '#12131480',
   },
   description: {
     fontFamily: 'pretendardSemiBold',
     fontWeight: '500',
     fontSize: 12,
-    color: '#12131450',
+    color: '#12131480',
   },
 });
 

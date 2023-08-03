@@ -52,7 +52,7 @@ const SignUpScreen = ({ navigation }) => {
           <SocialLoginButton
             text="다른 방법으로 시작하기"
             textColor={theme.colors.graphic.black}
-            color="#E1E1D0"
+            color={theme.colors.brand.surface.container2}
             onPress={handleOtherPress}
           />
         </View>
@@ -64,8 +64,7 @@ const SignUpScreen = ({ navigation }) => {
       >
         <Text
           style={{
-            fontFamily: 'pretendardSemiBold',
-            fontSize: 22,
+            ...theme.fonts.text.headline1,
             marginHorizontal: 16,
             marginVertical: 24,
           }}

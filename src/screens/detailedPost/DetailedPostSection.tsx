@@ -129,7 +129,12 @@ const DetailedPostSection = ({
         </Pressable>
       )}
       <View style={[styles.insightText]}>
-        <Text style={[theme.fonts.text.body1.regular, { color: '#121314CC', lineHeight: 28 }]}>
+        <Text
+          style={[
+            theme.fonts.text.body1.regular,
+            { color: `${theme.colors.graphic.black}cc`, lineHeight: 28 },
+          ]}
+        >
           {isInsightLoading || isProfileLoading ? contents : insightText}
         </Text>
       </View>
@@ -156,7 +161,7 @@ const DetailedPostSection = ({
         onPress={() => {
           handleNaviateToStatistics();
         }}
-        style={{ ...styles.insightView, backgroundColor: '#E1E1D0' }}
+        style={{ ...styles.insightView, backgroundColor: theme.colors.brand.surface.container2 }}
       >
         {userId === authorId ? (
           <View style={{ flexDirection: 'row' }}>

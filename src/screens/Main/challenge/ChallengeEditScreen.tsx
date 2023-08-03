@@ -36,15 +36,12 @@ const ChallengeEditScreen = ({ navigation }) => {
   return (
     <>
       <View style={styles.Header}>
-        <Text style={{ fontFamily: 'pretendardSemiBold', fontSize: 18 }}>
-          {challengeParticipation?.name}
-        </Text>
+        <Text style={theme.fonts.text.headline2}>{challengeParticipation?.name}</Text>
       </View>
       <View style={styles.SubHeader}>
         <Text
           style={{
-            fontFamily: 'pretendardSemiBold',
-            fontSize: 14,
+            ...theme.fonts.text.body2.bold,
             color: theme.colors.brand.onprimary.container,
           }}
         >

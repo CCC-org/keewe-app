@@ -5,6 +5,7 @@ import SmallPersonXml from '../../constants/Icons/Avatar/smallPersonXml';
 import theme from '../../theme/light';
 import { navigate } from '../../utils/hooks/navigaton/navigator';
 import { INTEREST_ICONS } from './constant';
+import { useTheme } from 'react-native-paper';
 
 interface ChallengeProfileProps {
   name: string;
@@ -25,6 +26,7 @@ const ChallengeProfile = ({
   challengeId,
   participate,
 }: ChallengeProfileProps) => {
+  const theme = useTheme();
   return (
     <Pressable
       onPress={() =>
@@ -50,8 +52,7 @@ const ChallengeProfile = ({
           <View style={styles.title}>
             <Text
               style={{
-                fontFamily: 'pretendardSemiBold',
-                fontSize: 16,
+                ...theme.fonts.text.body1.bold,
                 marginRight: 8,
               }}
             >
@@ -62,9 +63,8 @@ const ChallengeProfile = ({
                 <SvgXml xml={SmallPersonXml} />
                 <Text
                   style={{
-                    fontFamily: 'pretendard',
-                    fontSize: 14,
-                    color: `${theme.colors.graphic.black}70`,
+                    ...theme.fonts.text.body2.regular,
+                    color: `${theme.colors.graphic.black}b3`,
                     marginLeft: 2,
                   }}
                 >
@@ -76,8 +76,7 @@ const ChallengeProfile = ({
           <View style={{ flexDirection: 'row' }}>
             <Text
               style={{
-                fontFamily: 'pretendardSemiBold',
-                fontSize: 14,
+                ...theme.fonts.text.body2.bold,
                 color: theme.colors.brand.onprimary.container,
               }}
             >
@@ -85,8 +84,7 @@ const ChallengeProfile = ({
             </Text>
             <Text
               style={{
-                fontFamily: 'pretendard',
-                fontSize: 14,
+                ...theme.fonts.text.body2.regular,
                 color: theme.colors.brand.onprimary.container,
               }}
             >

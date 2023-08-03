@@ -16,7 +16,7 @@ interface BSPostOptionsProps {
   modalRef: React.RefObject<BottomSheetModalMethods>;
   commentId: number;
   userId: number | string;
-  userName: string;
+  userName?: string;
 }
 
 const SheetOthersComment = ({ modalRef, userId, userName, commentId }: BSPostOptionsProps) => {

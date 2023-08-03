@@ -22,7 +22,7 @@ const ChallengeReaction = ({ challengeId }: ChallengeReactionProps) => {
         <View
           style={{ backgroundColor: theme.colors.brand.surface.container1, ...styles.container }}
         >
-          <Text style={{ fontFamily: 'pretendard', fontSize: 14 }}>내 챌린지 통계</Text>
+          <Text style={theme.fonts.text.body2.regular}>내 챌린지 통계</Text>
           <View style={styles.buttonList}>
             {STATISTIC.map((item, index) => (
               <StatisticIcon key={index} xml={item.xml} count={statisticResponse[item.name]} />

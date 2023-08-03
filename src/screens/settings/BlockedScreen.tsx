@@ -59,7 +59,7 @@ const BlockedScreen = () => {
       <Text
         style={{
           fontFamily: 'pretendardSemiBold',
-          color: `${theme.colors.graphic.black}30`,
+          color: `${theme.colors.graphic.black}4d`,
           textAlign: 'center',
           ...styles.placeHolder,
         }}

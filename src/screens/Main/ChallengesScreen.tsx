@@ -104,8 +104,7 @@ const ChallengesScreen = ({ navigation }) => {
         <View style={{ marginBottom: 8 }}>
           <Text
             style={{
-              fontFamily: 'pretendardSemiBold',
-              fontSize: 18,
+              ...theme.fonts.text.headline2,
               marginHorizontal: 16,
               marginTop: 24,
               marginBottom: 10,
@@ -138,9 +137,8 @@ const ChallengesScreen = ({ navigation }) => {
           />
           <Text
             style={{
+              ...theme.fonts.text.body1.regular,
               marginTop: 20,
-              fontFamily: 'pretendard',
-              fontSize: 16,
               color: `${theme.colors.graphic.black}80`,
             }}
           >
@@ -163,14 +161,11 @@ const ChallengesScreen = ({ navigation }) => {
         <>
           <View style={{ backgroundColor: theme.colors.brand.surface.main, ...styles.divider }} />
           <View style={styles.title}>
-            <Text style={{ fontFamily: 'pretendardSemiBold', fontSize: 16, marginBottom: 14 }}>
-              종료된 챌린지
-            </Text>
+            <Text style={{ ...theme.fonts.text.body1.bold, marginBottom: 14 }}>종료된 챌린지</Text>
             <Text
               style={{
-                fontFamily: 'pretendardSemiBold',
-                fontSize: 16,
-                color: `${theme.colors.graphic.black}30`,
+                ...theme.fonts.text.body1.bold,
+                color: `${theme.colors.graphic.black}4d`,
                 marginLeft: 6,
               }}
             >
@@ -196,7 +191,7 @@ const ChallengesScreen = ({ navigation }) => {
             }
             style={{ ...styles.borderContainer }}
           >
-            <Text style={{ fontFamily: 'pretendard', fontSize: 16, marginRight: 4 }}>전체보기</Text>
+            <Text style={{ ...theme.fonts.text.body1.regular, marginRight: 4 }}>전체보기</Text>
             <SvgXml xml={darkChevronRightSmallXml} />
           </Pressable>
         </>
@@ -205,9 +200,7 @@ const ChallengesScreen = ({ navigation }) => {
         <>
           <View style={{ backgroundColor: theme.colors.brand.surface.main, ...styles.divider }} />
           <View style={styles.title}>
-            <Text style={{ fontFamily: 'pretendardSemiBold', fontSize: 16, marginBottom: 14 }}>
-              모든 챌린지
-            </Text>
+            <Text style={{ ...theme.fonts.text.body1.bold, marginBottom: 14 }}>모든 챌린지</Text>
           </View>
           {challengeCurrent?.map((current, index) => (
             <CurrentChallengeProfile
@@ -228,7 +221,7 @@ const ChallengesScreen = ({ navigation }) => {
             }
             style={{ ...styles.borderContainer }}
           >
-            <Text style={{ fontFamily: 'pretendard', fontSize: 16, marginRight: 4 }}>전체보기</Text>
+            <Text style={{ ...theme.fonts.text.body1.regular, marginRight: 4 }}>전체보기</Text>
             <SvgXml xml={darkChevronRightSmallXml} />
           </Pressable>
         </>

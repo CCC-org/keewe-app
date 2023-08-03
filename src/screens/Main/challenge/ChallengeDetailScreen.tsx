@@ -246,12 +246,11 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
                 >
                   <Text
                     style={{
-                      fontFamily: 'pretendardSemiBold',
-                      fontSize: 14,
+                      ...theme.fonts.text.body2.bold,
                       color:
                         index === tabIndex
                           ? theme.colors.graphic.black
-                          : `${theme.colors.graphic.black}50`,
+                          : `${theme.colors.graphic.black}80`,
                     }}
                   >
                     {tab}

@@ -39,7 +39,9 @@ const StaticSizeScrollTextArea = ({
         />
         <View style={styles.letterNumberContainer}>
           <View style={styles.limitContainer}>
-            <Text style={styles.limit}>{(limit ? limit : 400) - inputValue.length}</Text>
+            <Text style={theme.fonts.text.body2.regular}>
+              {(limit ? limit : 400) - inputValue.length}
+            </Text>
           </View>
         </View>
       </View>
@@ -63,10 +65,6 @@ const styles = StyleSheet.create({
   letterNumberContainer: {
     width: '100%',
     alignItems: 'flex-end',
-  },
-  limit: {
-    fontSize: 14,
-    fontFamily: 'pretendard',
   },
   limitContainer: {
     backgroundColor: '#F8F8F4',
