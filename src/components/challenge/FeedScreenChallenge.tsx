@@ -10,10 +10,10 @@ import UserSpecificChallengeSection from '../../screens/Feed/UserSpecificChallen
 import DividerBar from '../bars/DividerBar';
 
 const FeedScreenChallenge = () => {
-  const { data: userSpecificChallenge } = useQuery<UserSpecificChallenge['data'] | undefined>(
-    UserSpecificChallengeQueryKeys.getUserSpecificChallenge(),
-    () => UserSpecificChallengeAPI.getUserSpecificChallenge(),
-  );
+  const { data: userSpecificChallenge } = useQuery<UserSpecificChallenge['data'] | undefined>({
+    queryKey: UserSpecificChallengeQueryKeys.getUserSpecificChallenge(),
+    queryFn: () => UserSpecificChallengeAPI.getUserSpecificChallenge(),
+  });
 
   return (
     <>

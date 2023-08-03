@@ -163,7 +163,9 @@ const ChallengesScreen = ({ navigation }) => {
         <>
           <View style={{ backgroundColor: theme.colors.brand.surface.main, ...styles.divider }} />
           <View style={styles.title}>
-            <Text style={{ fontFamily: 'pretendardSemiBold', fontSize: 16 }}>종료된 챌린지</Text>
+            <Text style={{ fontFamily: 'pretendardSemiBold', fontSize: 16, marginBottom: 14 }}>
+              종료된 챌린지
+            </Text>
             <Text
               style={{
                 fontFamily: 'pretendardSemiBold',
@@ -203,7 +205,9 @@ const ChallengesScreen = ({ navigation }) => {
         <>
           <View style={{ backgroundColor: theme.colors.brand.surface.main, ...styles.divider }} />
           <View style={styles.title}>
-            <Text style={{ fontFamily: 'pretendardSemiBold', fontSize: 16 }}>모든 챌린지</Text>
+            <Text style={{ fontFamily: 'pretendardSemiBold', fontSize: 16, marginBottom: 14 }}>
+              모든 챌린지
+            </Text>
           </View>
           {challengeCurrent?.map((current, index) => (
             <CurrentChallengeProfile

@@ -32,7 +32,6 @@ const CurrentChallengeProfile = ({
       }
       style={{
         ...styles.container,
-        borderBottomWidth: 1,
         borderColor: `${theme.colors.graphic.black}10`,
       }}
     >
@@ -54,7 +53,11 @@ const CurrentChallengeProfile = ({
           </View>
           <Text
             numberOfLines={2}
-            style={{ fontFamily: 'pretendard', height: 32, fontSize: 12, marginVertical: 4 }}
+            style={{
+              fontFamily: 'pretendard',
+              fontSize: 14,
+              marginVertical: 4,
+            }}
           >
             {challengeDescription}
           </Text>
@@ -62,7 +65,7 @@ const CurrentChallengeProfile = ({
             <Text
               style={{
                 fontFamily: 'pretendardSemiBold',
-                fontSize: 12,
+                fontSize: 14,
                 color: theme.colors.brand.onprimary.container,
               }}
             >
@@ -71,8 +74,8 @@ const CurrentChallengeProfile = ({
             <Text
               style={{
                 fontFamily: 'pretendardMedium',
-                fontSize: 12,
-                color: `${theme.colors.graphic.black}50`,
+                fontSize: 14,
+                color: `${theme.colors.graphic.black}80`,
               }}
             >
               {' '}

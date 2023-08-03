@@ -10,6 +10,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import ConditionalButton from '../../../components/buttons/ConditionalButton';
 import { navigate } from '../../../utils/hooks/navigaton/navigator';
 import TwoButtonModal from '../../../components/modal/TwoButtonModal';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const ChallengeParticipationScreen = ({ route }) => {
   const { challengeId } = route.params;
@@ -24,7 +25,6 @@ const ChallengeParticipationScreen = ({ route }) => {
     ChallengeQueryKeys.getChallengeFriends({ size: 6, challengeId }),
     () => ChallengeAPI.getChallengeFriends({ size: 6, challengeId }),
   );
-
   const { data: count, isLoading: isCountLoading } = useQuery(
     ChallengeQueryKeys.getChallengeFriendsCount({ challengeId }),
     () => ChallengeAPI.getChallengeFriendsCount({ challengeId }),
@@ -32,7 +32,7 @@ const ChallengeParticipationScreen = ({ route }) => {
 
   return (
     <>
-      <View style={styles.mainContainer}>
+      <ScrollView style={styles.mainContainer}>
         {!isChallengeDetailLoading && (
           <>
             <HeaderText
@@ -112,30 +112,32 @@ const ChallengeParticipationScreen = ({ route }) => {
                   />
                 );
               })}
-              <LinearGradient
-                colors={['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 1)']}
-                start={{ x: 0, y: 0.7 }}
-                end={{ x: 0, y: 0.95 }}
-                style={styles.gradient}
-              />
             </View>
           </View>
         )}
-      </View>
+      </ScrollView>
 
-      <View style={styles.btn}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          gap: 4,
+          bottom: 0,
+          backgroundColor: theme.colors.graphic.white,
+          paddingVertical: 10,
+        }}
+      >
         <ConditionalButton
           text={'챌린지 참여하기'}
           color={theme.colors.brand.primary.container}
-          width={343}
+          width={180}
           textColor={theme.colors.brand.onprimary.container}
           onPress={() => setModalVisible(true)}
-          style={{ marginBottom: 8 }}
         />
         <ConditionalButton
           text={'다른 챌린지 둘러보기'}
           color={theme.colors.graphic.black}
-          width={343}
+          width={180}
           textColor={theme.colors.graphic.white}
           onPress={() => navigate('Challenges', {})}
         />

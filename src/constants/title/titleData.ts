@@ -163,26 +163,35 @@ export const titleMetaArr = [
     category: 'CHALLENGE',
     category_kor: '챌린지',
     url: require('../../../assets/images/titles/5001.png'),
-
-    name: '실패는 성공의 어머니',
-    introduction: '첫 챌린지 실패',
+    name: '중요한 건 꺽이지 않는 마음',
+    introduction: '재도전 챌린지 완료',
   },
   {
     id: 5002,
     category: 'CHALLENGE',
     category_kor: '챌린지',
     url: require('../../../assets/images/titles/5002.png'),
-    name: '첫번째 완주',
-    introduction: '첫 챌린지 성공',
+
+    name: '실패는 성공의 어머니',
+    introduction: '첫 챌린지 실패',
   },
   {
     id: 5003,
     category: 'CHALLENGE',
     category_kor: '챌린지',
     url: require('../../../assets/images/titles/5003.png'),
+    name: '첫번째 완주',
+    introduction: '첫 챌린지 성공',
+  },
+  {
+    id: 5004,
+    category: 'CHALLENGE',
+    category_kor: '챌린지',
+    url: require('../../../assets/images/titles/5004.png'),
     name: '쉬지않고 도전하는',
     introduction: '두번째 챌린지',
   },
+
   {
     id: 6000,
     category: 'SHARE',

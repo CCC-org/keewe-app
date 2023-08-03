@@ -45,7 +45,9 @@ export const ChallengeAPI = {
   create: async (params: ChallengeCreateRequest) => {
     return httpClient
       .post<ChallengeCreateResponse>('https://api-keewe.com/api/v1/challenge', params, {})
-      .then((res) => res.data)
+      .then((res) => {
+        return res.data;
+      })
       .catch((err) => {
         throw new Error(err);
       });
@@ -53,7 +55,9 @@ export const ChallengeAPI = {
   join: async (params: ChallengeJoinRequest) => {
     return httpClient
       .post<ChallengeJoinResponse>('https://api-keewe.com/api/v1/challenge/participation', params)
-      .then((res) => res.data.data)
+      .then((res) => {
+        return res.data.data;
+      })
       .catch((err) => {
         throw new Error(err);
       });
@@ -68,7 +72,9 @@ export const ChallengeAPI = {
   challengeJoin: async (params: ChallengeCreateRequest) => {
     return httpClient
       .post<ChallengeCreateResponse>('https://api-keewe.com/api/v1/challenge', params)
-      .then((res) => res.data)
+      .then((res) => {
+        return res.data;
+      })
       .catch((err) => {
         throw new Error(err);
       });

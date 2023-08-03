@@ -1,6 +1,6 @@
 import { useBottomSheet } from '@gorhom/bottom-sheet';
 import React, { useEffect } from 'react';
-import { BackHandler, Pressable, StyleSheet, View } from 'react-native';
+import { BackHandler, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import BottomSheetHeader from '../../components/header/BottomSheetHeader';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
@@ -43,6 +43,7 @@ const LinkSheetContent = ({
       />
       <CountingTextArea
         inputValue={linkText}
+        isControlledInput={false}
         placeholder="인사이트를 얻은 링크"
         setInputValue={setLinkText}
         autoFocus={true}

@@ -27,7 +27,6 @@ const TitleScreen = ({ route, navigation }) => {
     customCategory,
     toScreen: 'ProfileEdit',
   };
-
   return (
     <ScrollView style={styles.mainContainer} contentContainerStyle={{ paddingBottom: 100 }}>
       {Object.values(titleMap).map((titleContainer) => {

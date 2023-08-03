@@ -8,6 +8,7 @@ import ConditionalButton from '../../components/buttons/ConditionalButton';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import { useTheme } from 'react-native-paper';
 import Stepper from '../../components/stepper/Stepper';
+import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChallenge';
 
 const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
   const theme = useTheme();
@@ -62,7 +63,10 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
 
   const { mutate: createChallenge } = useMutation(ChallengeAPI.create, {
     onSuccess: (response) => {
-      queryClient.invalidateQueries(['challenge']);
+      queryClient.invalidateQueries([
+        ['challenge'],
+        UserSpecificChallengeQueryKeys.getUserSpecificChallenge(),
+      ]);
       navigation.navigate('ChallengeCreationApproved', {
         form: response,
       });
@@ -74,7 +78,11 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
 
   const { mutate: joinChallenge } = useMutation(ChallengeAPI.join, {
     onSuccess: (response) => {
-      queryClient.invalidateQueries(['challenge']);
+      queryClient.invalidateQueries([
+        ['challenge'],
+        UserSpecificChallengeQueryKeys.getUserSpecificChallenge(),
+      ]);
+
       navigation.navigate('ChallengeJoinApproved', {
         form: { challengeName: route.params.form.challengeName, ...response },
       });
