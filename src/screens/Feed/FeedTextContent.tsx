@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
 import React from 'react';
 import { useTheme } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
@@ -6,10 +6,10 @@ import { useNavigation } from '@react-navigation/native';
 interface FeedTextContent {
   contents: string;
   insightId: number;
-  bookmark: boolean;
+  bookmark?: boolean;
 }
 
-const FeedTextContent = ({ contents, insightId, bookmark }: FeedTextContent) => {
+const FeedTextContent = ({ contents, insightId }: FeedTextContent) => {
   const theme = useTheme();
   const modifiedContents = contents.length > 200 ? contents.slice(0, 200) + '...' : contents;
   const navigation = useNavigation();
@@ -26,7 +26,7 @@ const FeedTextContent = ({ contents, insightId, bookmark }: FeedTextContent) => 
         style={[
           theme.fonts.text.body1.regular,
           {
-            paddingBottom: modifiedContents.length < 100 ? 20 : 4,
+            paddingBottom: modifiedContents.length < 100 ? 20 : 16,
             color: `${theme.colors.graphic.black}cc`,
           },
         ]}
