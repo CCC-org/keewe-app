@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect } from 'react';
 import HeaderBackButton from './src/components/header/HeaderBackButton';
 import CategoryCreateScreen from './src/screens/challenge/CategoryCreateScreen';
 import CategorySelectScreen from './src/screens/challenge/CategorySelectScreen';
@@ -122,11 +122,16 @@ const registerForPushNotificationsAsync = async () => {
 export default function App() {
   const isLoadingComplete = useCachedResources();
   registerForPushNotificationsAsync();
+
   if (!isLoadingComplete) {
     return null;
   } else {
     return (
-      <NavigationContainer ref={navigationRef} linking={linking}>
+      <NavigationContainer
+        ref={navigationRef}
+        linking={linking}
+        onStateChange={(state) => console.log('New state is', state)}
+      >
         <GestureHandlerRootView style={{ flex: 1 }}>
           <PaperProvider theme={light}>
             <QueryClientProvider client={queryClient}>

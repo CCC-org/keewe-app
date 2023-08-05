@@ -87,9 +87,8 @@ const Comment = ({
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
         <Pressable
           onPress={() => {
-            if (userId !== commentWriterId)
-              navigation.navigate('Profile', { userId: commentWriterId });
-            else navigation.navigate('MyProfile', { userId, enteredByTab: false });
+            if (userId !== commentWriterId) navigation.push('Profile', { userId: commentWriterId });
+            else navigation.push('MyProfile', { userId, enteredByTab: false });
           }}
         >
           <MiniProfile
