@@ -178,6 +178,11 @@ const ProfileScreen = ({ navigation, route }) => {
     });
   }, []);
 
+  const renderBackdrop = useCallback(
+    (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
+    [],
+  );
+
   if (isProfileLoading || isrepresentativeTitlesLoading) {
     return <MainLottie />;
   }
@@ -197,11 +202,6 @@ const ProfileScreen = ({ navigation, route }) => {
       });
     }
   };
-
-  const renderBackdrop = useCallback(
-    (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
-    [],
-  );
 
   return (
     <IOScrollView

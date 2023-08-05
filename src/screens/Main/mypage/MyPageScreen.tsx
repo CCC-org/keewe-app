@@ -23,11 +23,6 @@ const MyPageScreen = ({ navigation, route }) => {
   const queryClient = useQueryClient();
   const modalRef = useRef<BottomSheetModal>(null);
 
-  if (userId === null || userId === undefined) {
-    alert('userId를 인식할 수 없었습니다.');
-    return null;
-  }
-
   const theme = useTheme();
 
   const [selectedCategory, setSelectedCategory] = useState<Record<string, string>[]>([]);
@@ -131,6 +126,11 @@ const MyPageScreen = ({ navigation, route }) => {
     });
   }, []);
 
+  const renderBackdrop = useCallback(
+    (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
+    [],
+  );
+
   if (
     isProfileLoading ||
     isrepresentativeTitlesLoading ||
@@ -139,11 +139,6 @@ const MyPageScreen = ({ navigation, route }) => {
   ) {
     return <MainLottie />;
   }
-
-  const renderBackdrop = useCallback(
-    (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
-    [],
-  );
 
   return (
     <>
