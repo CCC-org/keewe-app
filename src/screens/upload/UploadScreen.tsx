@@ -56,18 +56,26 @@ const UploadScreen = ({ navigation, route }) => {
 
   const snapPoints = useMemo(() => ['50%', '80%'], []);
 
-  const valid = useMemo(() => {
-    return isValidSite && !!linkText.length && !!insightText.length && !isLoading;
+  const insightTextLimit = 400;
+
+  const isValidToSubmit = useMemo(() => {
+    return (
+      isValidSite &&
+      !!linkText.length &&
+      !!insightText.length &&
+      !isLoading &&
+      insightText.length <= insightTextLimit
+    );
   }, [isValidSite, linkText, insightText, isLoading]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderRightButton
-          backGroundColor={valid ? '#b0e817' : '#12131420'}
-          textColor={valid ? 'black' : 'white'}
+          backGroundColor={isValidToSubmit ? '#b0e817' : '#12131420'}
+          textColor={isValidToSubmit ? 'black' : 'white'}
           borderLine={false}
-          disabled={!valid}
+          disabled={!isValidToSubmit}
           text="완료"
           handlePress={() => {
             setIsLoading(true);
@@ -76,7 +84,7 @@ const UploadScreen = ({ navigation, route }) => {
         />
       ),
     });
-  }, [linkText, insightText, valid, navigation, selectedFolder, isSwitchOn]);
+  }, [linkText, insightText, isValidToSubmit, navigation, selectedFolder, isSwitchOn]);
 
   useEffect(() => {
     UploadApis.getFolderList().then(setFolders);
@@ -185,7 +193,7 @@ const UploadScreen = ({ navigation, route }) => {
             inputValue={insightText}
             setInputValue={setInsightText}
             placeholder="인사이트를 입력해주세요."
-            limit={400}
+            limit={insightTextLimit}
             height={280}
             autoFocus={false}
           />

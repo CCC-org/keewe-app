@@ -1,4 +1,10 @@
-import { StyleSheet, View, TextInput } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  NativeSyntheticEvent,
+  TextInputChangeEventData,
+} from 'react-native';
 import React from 'react';
 import { Text, useTheme } from 'react-native-paper';
 
@@ -21,6 +27,10 @@ const StaticSizeScrollTextArea = ({
 }: AutoGrowScrollTextAreaProps) => {
   const theme = useTheme();
 
+  const handleTextChange = (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
+    const { text } = event.nativeEvent;
+    setInputValue(text);
+  };
   return (
     <>
       <View style={styles.container}>
@@ -28,10 +38,7 @@ const StaticSizeScrollTextArea = ({
           style={{ ...styles.input, ...theme.fonts.text.body1.regular }}
           value={inputValue}
           placeholder={placeholder}
-          onChange={(event) => {
-            if (event.nativeEvent.text.length > limit) return;
-            setInputValue(event.nativeEvent.text);
-          }}
+          onChange={handleTextChange}
           multiline={true}
           numberOfLines={16}
           scrollEnabled={true}
@@ -39,7 +46,16 @@ const StaticSizeScrollTextArea = ({
         />
         <View style={styles.letterNumberContainer}>
           <View style={styles.limitContainer}>
-            <Text style={styles.limit}>{(limit ? limit : 400) - inputValue.length}</Text>
+            <Text
+              style={[
+                styles.limit,
+                {
+                  color: inputValue.length > limit ? '#FF0000' : '#000000',
+                },
+              ]}
+            >
+              {(limit ? limit : 400) - inputValue.length}
+            </Text>
           </View>
         </View>
       </View>

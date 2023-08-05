@@ -23,11 +23,6 @@ const MyPageScreen = ({ navigation, route }) => {
   const queryClient = useQueryClient();
   const modalRef = useRef<BottomSheetModal>(null);
 
-  if (userId === null || userId === undefined) {
-    alert('userId를 인식할 수 없었습니다.');
-    return null;
-  }
-
   const theme = useTheme();
 
   const [selectedCategory, setSelectedCategory] = useState<Record<string, string>[]>([]);
@@ -119,20 +114,6 @@ const MyPageScreen = ({ navigation, route }) => {
     });
   };
 
-  if (
-    isProfileLoading ||
-    isrepresentativeTitlesLoading ||
-    isUserFolderListLoading ||
-    !userFolderList?.tabs
-  ) {
-    return <MainLottie />;
-  }
-
-  const renderBackdrop = useCallback(
-    (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
-    [],
-  );
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => {
@@ -144,6 +125,20 @@ const MyPageScreen = ({ navigation, route }) => {
       },
     });
   }, []);
+
+  const renderBackdrop = useCallback(
+    (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
+    [],
+  );
+
+  if (
+    isProfileLoading ||
+    isrepresentativeTitlesLoading ||
+    isUserFolderListLoading ||
+    !userFolderList?.tabs
+  ) {
+    return <MainLottie />;
+  }
 
   return (
     <>

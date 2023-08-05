@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect } from 'react';
 import HeaderBackButton from './src/components/header/HeaderBackButton';
 import CategoryCreateScreen from './src/screens/challenge/CategoryCreateScreen';
 import CategorySelectScreen from './src/screens/challenge/CategorySelectScreen';
@@ -121,11 +121,25 @@ const registerForPushNotificationsAsync = async () => {
 export default function App() {
   const isLoadingComplete = useCachedResources();
   registerForPushNotificationsAsync();
+  const printNavigationState = (state) => {
+    if (state) {
+      const routes = state.routes.map((route) => route.name);
+      console.log('Current stack:', routes);
+      // if you want to print params as well, you could do:
+      // const routesWithParams = state.routes.map(route => ({name: route.name, params: route.params}));
+      // console.log('Current stack:', routesWithParams);
+    }
+  };
+
   if (!isLoadingComplete) {
     return null;
   } else {
     return (
-      <NavigationContainer ref={navigationRef} linking={linking}>
+      <NavigationContainer
+        ref={navigationRef}
+        linking={linking}
+        onStateChange={printNavigationState}
+      >
         <GestureHandlerRootView style={{ flex: 1 }}>
           <PaperProvider theme={light}>
             <QueryClientProvider client={queryClient}>
