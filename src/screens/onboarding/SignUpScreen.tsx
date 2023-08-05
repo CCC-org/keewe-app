@@ -39,16 +39,28 @@ const SignUpScreen = ({ navigation }) => {
         <Text style={styles.agree}>
           <Text style={styles.greeny}>Keewe 약관</Text>에 모두 동의합니다.
         </Text>
-        <View style={styles.kakao}>
-          <SocialLoginButton
-            text="카카오로 시작하기"
-            textColor={theme.colors.graphic.black}
-            xml={kakao}
-            color={theme.colors.graphic.yellow}
-            onPress={() => handleLoginPress('kakao')}
-          />
-        </View>
-        <View style={styles.other}>
+        {isIOS ? (
+          <View style={styles.item}>
+            <SocialLoginButton
+              text="Apple로 로그인"
+              textColor={theme.colors.graphic.white}
+              xml={apple}
+              color={theme.colors.graphic.black}
+              onPress={() => handleLoginPress('apple')}
+            />
+          </View>
+        ) : (
+          <View style={styles.item}>
+            <SocialLoginButton
+              text="Google 계정으로 시작하기"
+              textColor={`${theme.colors.graphic.black}8A`}
+              xml={google}
+              color="#EEEEEE"
+              onPress={() => handleLoginPress('google')}
+            />
+          </View>
+        )}
+        <View style={styles.item}>
           <SocialLoginButton
             text="다른 방법으로 시작하기"
             textColor={theme.colors.graphic.black}
@@ -79,18 +91,16 @@ const SignUpScreen = ({ navigation }) => {
             justifyContent: 'center',
           }}
         >
-          {isIOS && (
-            <View style={styles.kakao}>
-              <SocialLoginButton
-                text="Apple로 로그인"
-                textColor={theme.colors.graphic.white}
-                xml={apple}
-                color={theme.colors.graphic.black}
-                onPress={() => handleLoginPress('apple')}
-              />
-            </View>
-          )}
-          <View style={styles.other}>
+          <View style={styles.item}>
+            <SocialLoginButton
+              text="카카오로 시작하기"
+              textColor={theme.colors.graphic.black}
+              xml={kakao}
+              color={theme.colors.graphic.yellow}
+              onPress={() => handleLoginPress('kakao')}
+            />
+          </View>
+          <View style={styles.item}>
             <SocialLoginButton
               text="Google 계정으로 시작하기"
               textColor={`${theme.colors.graphic.black}8A`}
@@ -99,7 +109,7 @@ const SignUpScreen = ({ navigation }) => {
               onPress={() => handleLoginPress('google')}
             />
           </View>
-          <View style={styles.other}>
+          <View style={styles.item}>
             <SocialLoginButton
               text="네이버로 시작하기"
               textColor={theme.colors.graphic.white}
@@ -134,10 +144,7 @@ const styles = StyleSheet.create({
   agree: {
     margin: 18,
   },
-  kakao: {
-    margin: 6,
-  },
-  other: {
+  item: {
     margin: 6,
   },
   greeny: {

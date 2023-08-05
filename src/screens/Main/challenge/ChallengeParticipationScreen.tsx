@@ -6,13 +6,14 @@ import HeaderText from '../../../components/texts/HeaderText';
 import theme from '../../../theme/light';
 import { ChallengeAPI, ChallengeQueryKeys } from '../../../utils/api/ChallengeAPI';
 import { timeConverter } from './constant';
-import { LinearGradient } from 'expo-linear-gradient';
 import ConditionalButton from '../../../components/buttons/ConditionalButton';
 import { navigate } from '../../../utils/hooks/navigaton/navigator';
 import TwoButtonModal from '../../../components/modal/TwoButtonModal';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useGetUserId } from '../../../utils/hooks/useGetUserId';
 
 const ChallengeParticipationScreen = ({ route }) => {
+  const userId = useGetUserId();
   const { challengeId } = route.params;
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
@@ -104,6 +105,7 @@ const ChallengeParticipationScreen = ({ route }) => {
                 return (
                   <ChallengeUserProfile
                     key={idx}
+                    userId={userId ?? 0}
                     nickname={item.nickname}
                     imageURL={item.imageURL}
                     currentRecord={item.currentRecord}
