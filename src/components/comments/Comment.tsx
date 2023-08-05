@@ -92,8 +92,8 @@ const Comment = ({
           }}
         >
           <MiniProfile
-            nickname={nickname}
-            title={title}
+            nickname={nickname ?? ''}
+            title={title ?? ''}
             image={image}
             insightWriter={insightWriter}
             createdAt={createdAt}

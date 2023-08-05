@@ -17,7 +17,6 @@ import * as Notifications from 'expo-notifications';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Platform, Pressable, View } from 'react-native';
-import * as Device from 'expo-device';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider as PaperProvider } from 'react-native-paper';
 import OnboardingIntroHeaderButton from './src/components/buttons/OnboardingIntroHeaderButton';
@@ -254,13 +253,6 @@ export default function App() {
                     component={ProfileScreen}
                     options={{
                       headerLeft: () => <HeaderBackButton />,
-                      headerRight: () => {
-                        return (
-                          <Pressable style={{ marginRight: 12 }} onPress={() => alert('more')}>
-                            <Feather name="more-vertical" size={24} color={'#000000'} />
-                          </Pressable>
-                        );
-                      },
                       headerStyle: { backgroundColor: '#F1F1E9' },
                       title: '',
                     }}
