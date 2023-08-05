@@ -67,6 +67,12 @@ const UploadScreen = ({ navigation, route }) => {
     return isValidSite && !!linkText.length && !!insightText.length && !isLoading;
   }, [isValidSite, linkText, insightText, isLoading]);
 
+  const UploadHeaderBackButton = () => (
+    <Pressable style={{ marginLeft: 18 }} onPress={() => setIsModalVisible(true)}>
+      <SvgXml xml={arrowLeft} />
+    </Pressable>
+  );
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -82,11 +88,7 @@ const UploadScreen = ({ navigation, route }) => {
           }}
         />
       ),
-      headerLeft: () => (
-        <Pressable style={{ marginLeft: 18 }} onPress={() => setIsModalVisible(true)}>
-          <SvgXml xml={arrowLeft} />
-        </Pressable>
-      ),
+      headerLeft: () => <UploadHeaderBackButton />,
     });
   }, [linkText, insightText, valid, navigation, selectedFolder, isSwitchOn]);
 
