@@ -30,14 +30,6 @@ const StaticSizeScrollTextArea = ({
   const handleTextChange = (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
     const { text } = event.nativeEvent;
     setInputValue(text);
-    //     if (event.nativeEvent.text.length > limit) {
-    //       alert(`최대 ${limit}자까지 입력 가능합니다.
-    // 현재 ${event.nativeEvent.text.length}자입니다.
-    //       `);
-
-    //       return;
-    //     }
-    // setInputValue(event.nativeEvent.text);
   };
   return (
     <>
