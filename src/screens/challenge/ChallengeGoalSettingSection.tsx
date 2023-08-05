@@ -68,7 +68,7 @@ const ChallengeGoalSettingSection = ({
           subTitle={step === 2 ? `${participationPerWeek}주 동안` : ''}
         >
           <ChallengeGoalSettingBar
-            minValue={1}
+            minValue={2}
             maxValue={8}
             onChange={handleChangeParticipationPerWeek}
             unit={'주'}
