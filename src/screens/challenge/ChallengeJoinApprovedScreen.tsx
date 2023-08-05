@@ -1,13 +1,36 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useTheme } from 'react-native-paper';
 import HeaderText from '../../components/texts/HeaderText';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import { timeConverter } from '../Main/challenge/constant';
+import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
+import ChallengeInviteOption from '../../components/bottomsheet/ChallengeInviteOption';
 
 const ChallengeJoinApprovedScreen = ({ navigation, route }) => {
-  const { challengeName, duration, insightPerWeek, myTopic, endDate } = route.params.form;
+  const { challengeId, challengeName, duration, insightPerWeek, myTopic, endDate } =
+    route.params.form;
+
   const theme = useTheme();
+  const modalRef = useRef<BottomSheetModal>(null);
+
+  const renderBackdrop = useCallback(
+    (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
+    [],
+  );
+
+  const handlePress = () => {
+    modalRef.current?.present();
+  };
+
+  const onSearch = () => {
+    modalRef.current?.snapToIndex(1);
+  };
+
+  const onCancel = () => {
+    modalRef.current?.dismiss();
+  };
+
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -68,7 +91,7 @@ const ChallengeJoinApprovedScreen = ({ navigation, route }) => {
             color={theme.colors.brand.primary.container}
             width={168}
             textColor={theme.colors.brand.onprimary.container}
-            onPress={() => alert('pressed')}
+            onPress={() => handlePress()}
           />
         </View>
         <View style={{ marginLeft: 4 }}>
@@ -80,6 +103,19 @@ const ChallengeJoinApprovedScreen = ({ navigation, route }) => {
           />
         </View>
       </View>
+
+      <BottomSheetModal
+        ref={modalRef}
+        snapPoints={['50%', '85%']}
+        backdropComponent={renderBackdrop}
+      >
+        <ChallengeInviteOption
+          challengeId={challengeId}
+          challengeName={challengeName}
+          onSearch={onSearch}
+          onCancel={onCancel}
+        />
+      </BottomSheetModal>
     </View>
   );
 };

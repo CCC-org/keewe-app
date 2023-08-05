@@ -1,11 +1,11 @@
 import { Pressable, StyleSheet, Text, View, Image } from 'react-native';
 import React from 'react';
 import { SvgXml } from 'react-native-svg';
-import person from '../../../constants/Icons/Avatar/personXml';
+import person from '../../constants/Icons/Avatar/personXml';
 import { useTheme } from 'react-native-paper';
-import { User } from '../../../types/followerList/followersfollowings';
+import { User } from '../../types/followerList/followersfollowings';
 import { useMutation } from '@tanstack/react-query';
-import { ChallengeAPI } from '../../../utils/api/ChallengeAPI';
+import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 interface FollowersAndFollowingsProps {

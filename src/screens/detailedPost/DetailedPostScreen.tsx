@@ -144,6 +144,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
             <Pressable
               onPress={() =>
                 navigation.navigate('Share', {
+                  insightId: insightId,
                   name: profile ? profile?.data?.nickname : 'null ',
                   title: profile ? profile?.data?.title : 'null ',
                   image: profile ? profile?.data?.image : 'null ',

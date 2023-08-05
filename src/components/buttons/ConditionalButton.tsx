@@ -42,32 +42,27 @@ const ConditionalButton = ({
       keyboardVerticalOffset={Platform.select({ ios: keyboardResponsive ? 120 : 0 })}
       style={styles.container}
     >
-      <View
-        style={[
-          {
-            ...styles.btn,
-            width: width,
-            borderRadius: borderRadius ?? 50,
-            backgroundColor: color || theme.colors.graphic.black,
-            opacity: isActive ? 1 : 0.2,
-          },
-          styleProp,
-        ]}
+      <Pressable
+        onPress={() => {
+          if (!isActive) return;
+          onPress();
+        }}
       >
-        <Pressable
-          hitSlop={
-            typeof width === 'number'
-              ? { bottom: 25, left: width / 2, right: width / 2, top: 25 }
-              : 0
-          }
-          onPress={() => {
-            if (!isActive) return;
-            onPress();
-          }}
+        <View
+          style={[
+            {
+              ...styles.btn,
+              width: width,
+              borderRadius: borderRadius ?? 50,
+              backgroundColor: color || theme.colors.graphic.black,
+              opacity: isActive ? 1 : 0.2,
+            },
+            styleProp,
+          ]}
         >
           <Text style={{ ...styles.text, color: textColor ? textColor : 'white' }}>{text}</Text>
-        </Pressable>
-      </View>
+        </View>
+      </Pressable>
     </KeyboardAvoidingView>
   );
 };

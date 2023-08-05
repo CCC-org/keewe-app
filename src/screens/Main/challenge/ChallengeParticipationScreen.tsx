@@ -6,13 +6,14 @@ import HeaderText from '../../../components/texts/HeaderText';
 import theme from '../../../theme/light';
 import { ChallengeAPI, ChallengeQueryKeys } from '../../../utils/api/ChallengeAPI';
 import { timeConverter } from './constant';
-import { LinearGradient } from 'expo-linear-gradient';
 import ConditionalButton from '../../../components/buttons/ConditionalButton';
 import { navigate } from '../../../utils/hooks/navigaton/navigator';
 import TwoButtonModal from '../../../components/modal/TwoButtonModal';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useGetUserId } from '../../../utils/hooks/useGetUserId';
 
 const ChallengeParticipationScreen = ({ route }) => {
+  const userId = useGetUserId();
   const { challengeId } = route.params;
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
@@ -99,6 +100,7 @@ const ChallengeParticipationScreen = ({ route }) => {
                 return (
                   <ChallengeUserProfile
                     key={idx}
+                    userId={userId ?? 0}
                     nickname={item.nickname}
                     imageURL={item.imageURL}
                     currentRecord={item.currentRecord}
@@ -116,21 +118,20 @@ const ChallengeParticipationScreen = ({ route }) => {
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
-          gap: 4,
           bottom: 0,
           backgroundColor: theme.colors.graphic.white,
           paddingVertical: 10,
         }}
       >
         <ConditionalButton
-          text={'챌린지 참여하기'}
+          text={'참여하기'}
           color={theme.colors.brand.primary.container}
           width={180}
           textColor={theme.colors.brand.onprimary.container}
           onPress={() => setModalVisible(true)}
         />
         <ConditionalButton
-          text={'다른 챌린지 둘러보기'}
+          text={'둘러보기'}
           color={theme.colors.graphic.black}
           width={180}
           textColor={theme.colors.graphic.white}

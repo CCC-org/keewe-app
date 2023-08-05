@@ -84,7 +84,11 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
       ]);
 
       navigation.navigate('ChallengeJoinApproved', {
-        form: { challengeName: route.params.form.challengeName, ...response },
+        form: {
+          challengeId: route.params.form.challengeId,
+          challengeName: route.params.form.challengeName,
+          ...response,
+        },
       });
     },
     onError: (error) => {
