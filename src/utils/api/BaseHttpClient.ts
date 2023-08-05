@@ -28,6 +28,8 @@ httpClient.interceptors.response.use(
   (error) => {
     if (error.response.data.code === 402 || error.response.data.code == 411) {
       navigate('SignUp', undefined);
+    } else if (error.response.data.code === 406) {
+      navigate('NicknameCreation', undefined);
     } else if (error.response.data.code !== 434) {
       navigate('Error', { error });
     }

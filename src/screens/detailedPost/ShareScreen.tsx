@@ -1,5 +1,5 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
 import ColorSelectRadioButton from '../../components/buttons/ColorSelectRadioButton';
@@ -11,6 +11,8 @@ import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { SvgXml } from 'react-native-svg';
 import { saveIcon } from '../../../assets/svgs/saveIcon.';
 import ShareIconXml from '../../constants/Icons/DetailedPost/ShareIconXml';
+import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
+import ShareOptions from '../../components/bottomsheet/ShareOptions';
 
 const falseObject = {
   first: false,
@@ -19,7 +21,8 @@ const falseObject = {
 };
 
 const ShareScreen = ({ route }) => {
-  const { challenge, order, image, name, insightText, recordText } = route.params;
+  const { insightId, challenge, order, image, name, insightText, recordText } = route.params;
+  const modalRef = useRef<BottomSheetModal>(null);
   const [color, setColor] = useState('#f1f1e9');
   const [buttonColorSelected, setButtonColorSelected] = useState({
     first: true,
@@ -53,14 +56,7 @@ const ShareScreen = ({ route }) => {
   };
 
   const shareImage = async () => {
-    const uri = await captureRef(viewRef, {
-      format: 'png',
-      quality: 1,
-    });
-    await Sharing.shareAsync('file://' + uri, {
-      mimeType: 'image/jpg',
-      UTI: 'image/jpeg',
-    });
+    modalRef.current?.present();
   };
 
   const handleSelectColor = (position: string, color: string) => {
@@ -69,6 +65,11 @@ const ShareScreen = ({ route }) => {
       return { ...falseObject, [position]: true };
     });
   };
+
+  const renderBackdrop = useCallback(
+    (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
+    [],
+  );
 
   return (
     <>
@@ -155,6 +156,13 @@ const ShareScreen = ({ route }) => {
           </Pressable>
         </View>
       </View>
+      <BottomSheetModal ref={modalRef} snapPoints={['20%']} backdropComponent={renderBackdrop}>
+        <ShareOptions
+          type={'insight'}
+          id={insightId}
+          message={`키위에서 '${name}' 님의 ${challenge}에 대한 ${recordText} 번째 인사이트 보기 '${insightText}'`}
+        />
+      </BottomSheetModal>
     </>
   );
 };

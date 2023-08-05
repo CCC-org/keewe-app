@@ -14,7 +14,7 @@ const FeedTextContent = ({ contents, insightId }: FeedTextContent) => {
   const modifiedContents = contents.length > 200 ? contents.slice(0, 200) + '...' : contents;
   const navigation = useNavigation();
   const handleNavigateToInsight = () => {
-    navigation.navigate('DetailedPost', {
+    navigation.push('DetailedPost', {
       screen: 'DetailedPost',
       insightId,
     });

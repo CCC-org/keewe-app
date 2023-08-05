@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet } from 'react-native';
+import { Pressable } from 'react-native';
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BookMarkScreen from './BookMarkScreen';
@@ -53,7 +53,6 @@ const Tabs = ({ navigation, route }) => {
     if (type === 'challenge') {
       ChallengeAPI.getChallengeParticipation().then((response) => {
         if (response?.challengeId === id) {
-          console.log('hi');
           navigation.navigate('ChallengeDetail', {
             screen: 'ChallengeDetail',
             challengeId: response?.challengeId,
@@ -68,6 +67,10 @@ const Tabs = ({ navigation, route }) => {
         }
       });
     }
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Tabs' }],
+    });
   }
 
   const { data } = useQuery(
@@ -149,5 +152,3 @@ const Tabs = ({ navigation, route }) => {
 };
 
 export default Tabs;
-
-const styles = StyleSheet.create({});

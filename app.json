@@ -2,7 +2,7 @@
   "expo": {
     "name": "keewe",
     "slug": "keewe",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "keewe",
@@ -21,7 +21,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.CCCorg.keewe",
-      "buildNumber": "3.0",
+      "buildNumber": "4.4",
       "associatedDomains": ["applinks:keewe.kr"]
     },
     "android": {
@@ -31,7 +31,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.akdlsz21.keewe",
-      "versionCode": 8,
+      "versionCode": 9,
       "intentFilters": [
         {
           "action": "VIEW",

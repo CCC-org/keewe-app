@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, ScrollView, Pressable, RefreshControl } from 'react-native';
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { StyleSheet, Text, View, Pressable, RefreshControl } from 'react-native';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import MypageProfile from '../../../components/profile/MypageProfile';
 import { useTheme } from 'react-native-paper';
 import { Feather } from '@expo/vector-icons';
@@ -8,16 +8,15 @@ import DividerBar from '../../../components/bars/DividerBar';
 import InterestIcon from './InterestIcon';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { MypageAPI, MypageQueryKeys } from '../../../utils/api/mypageAPI';
-import { querySuccessError } from '../../../utils/helper/queryReponse/querySuccessError';
-import FolderOption from './FolderOption';
 import { useInfiniteFeed } from '../../../utils/hooks/feedInifiniteScroll/useInfiniteFeed';
-import FeedList from '../../Feed/FeedList';
 import BottomFixButton from '../../../components/buttons/BottomFixButton';
 import { IOScrollView } from 'react-native-intersection-observer';
 import { FollowAPI } from '../../../utils/api/FollowAPI';
 import MainLottie from '../../../components/lotties/MainLottie';
 import { ChallengeAPI } from '../../../utils/api/ChallengeAPI';
 import ProfilePageFolderSection from './ProfilePageFolderSection';
+import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
+import ProfileOptions from '../../../components/bottomsheet/ProfileOptions';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
 const ProfileScreen = ({ navigation, route }) => {
@@ -27,6 +26,7 @@ const ProfileScreen = ({ navigation, route }) => {
     return null;
   }
   const theme = useTheme();
+  const modalRef = useRef<BottomSheetModal>(null);
 
   const [profileImage, setProfileImage] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<Record<string, string>[]>([]);
@@ -165,6 +165,23 @@ const ProfileScreen = ({ navigation, route }) => {
       selectedTab: newSelectedTab,
     });
   };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <Pressable style={{ marginRight: 12 }} onPress={() => modalRef.current?.present()}>
+            <Feather name="more-vertical" size={24} color={'#000000'} />
+          </Pressable>
+        );
+      },
+    });
+  }, []);
+
+  const renderBackdrop = useCallback(
+    (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
+    [],
+  );
 
   if (isProfileLoading || isrepresentativeTitlesLoading) {
     return <MainLottie />;
@@ -309,6 +326,18 @@ const ProfileScreen = ({ navigation, route }) => {
         handleFolderOption={handleFolderOption}
         feedListIsLoading={feedListIsLoading}
       />
+      <BottomSheetModal
+        ref={modalRef}
+        snapPoints={['25%', '25%']}
+        backdropComponent={renderBackdrop}
+      >
+        <ProfileOptions
+          modalRef={modalRef}
+          userId={userId}
+          userName={profile?.data?.nickname ?? ''}
+          isSelf={false}
+        />
+      </BottomSheetModal>
     </IOScrollView>
   );
 };

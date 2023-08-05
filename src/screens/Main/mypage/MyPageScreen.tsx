@@ -1,5 +1,5 @@
 import { Pressable, RefreshControl, StyleSheet, Text, View } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import MypageProfile from '../../../components/profile/MypageProfile';
 import { useTheme } from 'react-native-paper';
 import MypageTitle from '../../../components/title/MypageTitle';
@@ -15,15 +15,13 @@ import { Feather } from '@expo/vector-icons';
 import MainLottie from '../../../components/lotties/MainLottie';
 import { notificationKeys } from '../../../utils/api/notification/notification';
 import ProfilePageFolderSection from './ProfilePageFolderSection';
+import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
+import ProfileOptions from '../../../components/bottomsheet/ProfileOptions';
 
 const MyPageScreen = ({ navigation, route }) => {
   const { userId } = route.params;
   const queryClient = useQueryClient();
-
-  if (userId === null || userId === undefined) {
-    alert('userId를 인식할 수 없었습니다.');
-    return null;
-  }
+  const modalRef = useRef<BottomSheetModal>(null);
 
   const theme = useTheme();
 
@@ -115,6 +113,23 @@ const MyPageScreen = ({ navigation, route }) => {
       selectedTab: newSelectedTab,
     });
   };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <Pressable style={{ marginRight: 12 }} onPress={() => modalRef.current?.present()}>
+            <Feather name="more-vertical" size={24} color={'#000000'} />
+          </Pressable>
+        );
+      },
+    });
+  }, []);
+
+  const renderBackdrop = useCallback(
+    (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
+    [],
+  );
 
   if (
     isProfileLoading ||
@@ -247,6 +262,18 @@ const MyPageScreen = ({ navigation, route }) => {
           handleFolderOption={handleFolderOption}
           feedListIsLoading={feedListIsLoading}
         />
+        <BottomSheetModal
+          ref={modalRef}
+          snapPoints={['20%', '25%']}
+          backdropComponent={renderBackdrop}
+        >
+          <ProfileOptions
+            modalRef={modalRef}
+            userId={userId}
+            userName={profile?.data?.nickname ?? ''}
+            isSelf={true}
+          />
+        </BottomSheetModal>
       </IOScrollView>
       <GoToUploadButton />
     </>

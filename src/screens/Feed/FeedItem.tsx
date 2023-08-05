@@ -7,6 +7,7 @@ import FeedTextContent from './FeedTextContent';
 import { REACTIONS } from './constant';
 import ReactIconButton from '../../components/emoticons/ReactIconButton';
 import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 interface FeedItemProps {
   insight: InsightData;
   localId?: string;
@@ -15,7 +16,7 @@ interface FeedItemProps {
 
 const FeedItem = ({ insight, localId, onBookMarkClick }: FeedItemProps) => {
   const { id, contents, createdAt, link, reaction, writer, bookmark } = insight;
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<any>>();
   const handleOnBookMarkPress = () => {
     onBookMarkClick(id);
   };
@@ -25,8 +26,8 @@ const FeedItem = ({ insight, localId, onBookMarkClick }: FeedItemProps) => {
       return;
     }
     if (localId === String(writer?.writerId))
-      navigation.navigate('MyProfile', { userId: localId, enteredByTab: false });
-    else navigation.navigate('Profile', { userId: writer?.writerId ?? 0 });
+      navigation.push('MyProfile', { userId: localId, enteredByTab: false });
+    else navigation.push('Profile', { userId: writer?.writerId ?? 0 });
   };
 
   return (
