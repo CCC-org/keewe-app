@@ -439,7 +439,6 @@ export default function App() {
                       name={'Upload'}
                       component={UploadScreen}
                       options={{
-                        ...headerOptions,
                         title: '',
                         cardStyle: { backgroundColor: 'white' },
                       }}
