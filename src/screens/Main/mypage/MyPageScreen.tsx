@@ -119,6 +119,18 @@ const MyPageScreen = ({ navigation, route }) => {
     });
   };
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <Pressable style={{ marginRight: 12 }} onPress={() => modalRef.current?.present()}>
+            <Feather name="more-vertical" size={24} color={'#000000'} />
+          </Pressable>
+        );
+      },
+    });
+  }, []);
+
   if (
     isProfileLoading ||
     isrepresentativeTitlesLoading ||
@@ -132,18 +144,6 @@ const MyPageScreen = ({ navigation, route }) => {
     (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
     [],
   );
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => {
-        return (
-          <Pressable style={{ marginRight: 12 }} onPress={() => modalRef.current?.present()}>
-            <Feather name="more-vertical" size={24} color={'#000000'} />
-          </Pressable>
-        );
-      },
-    });
-  }, []);
 
   return (
     <>
