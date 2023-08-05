@@ -31,7 +31,6 @@ const Tabs = ({ navigation, route }) => {
 
   if (route?.params) {
     const { type, id } = route.params;
-    navigation.setParams({ type: '', id: '' });
     if (type === 'insight') {
       navigation.push('DetailedPost', {
         screen: 'DetailedPost',
@@ -68,6 +67,10 @@ const Tabs = ({ navigation, route }) => {
         }
       });
     }
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Tabs' }],
+    });
   }
 
   const { data } = useQuery(
