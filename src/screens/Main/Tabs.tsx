@@ -36,6 +36,7 @@ const Tabs = ({ navigation, route }) => {
         screen: 'DetailedPost',
         insightId: id,
       });
+      navigation.setParams({});
     }
     if (type === 'profile') {
       if (userId === id) {
@@ -43,11 +44,13 @@ const Tabs = ({ navigation, route }) => {
           screen: 'MyPage',
           userId: id,
         });
+        navigation.setParams({});
       } else {
         navigation.push('Profile', {
           screen: 'Profile',
           userId: id,
         });
+        navigation.setParams({});
       }
     }
     if (type === 'challenge') {
@@ -59,11 +62,13 @@ const Tabs = ({ navigation, route }) => {
             challengeName: response?.name,
             interest: response?.interest,
           });
+          navigation.setParams({});
         } else {
           navigation.navigate('ChallengeParticipation', {
             screen: 'ChallengeParticipation',
             challengeId: id,
           });
+          navigation.setParams({});
         }
       });
     }
