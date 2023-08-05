@@ -123,21 +123,20 @@ const ChallengeParticipationScreen = ({ route }) => {
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
-          gap: 4,
           bottom: 0,
           backgroundColor: theme.colors.graphic.white,
           paddingVertical: 10,
         }}
       >
         <ConditionalButton
-          text={'챌린지 참여하기'}
+          text={'참여하기'}
           color={theme.colors.brand.primary.container}
           width={180}
           textColor={theme.colors.brand.onprimary.container}
           onPress={() => setModalVisible(true)}
         />
         <ConditionalButton
-          text={'다른 챌린지 둘러보기'}
+          text={'둘러보기'}
           color={theme.colors.graphic.black}
           width={180}
           textColor={theme.colors.graphic.white}
