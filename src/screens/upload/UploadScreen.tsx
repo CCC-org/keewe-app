@@ -5,7 +5,7 @@ import DividerBar from '../../components/bars/DividerBar';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
 import UploadLinkCard from '../../components/cards/LinkCardForUpload';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
-import UploadHeaderBackButton from './UploadHeaderBackButton';
+import UploadBackButton from './UploadBackButton';
 import StaticSizeScrollTextArea from '../../components/texts/StaticSizeScrollTextArea';
 import { IFolder } from '../../types/upload';
 import { UploadApis } from '../../utils/api/UploadAPIs';
@@ -76,7 +76,7 @@ const UploadScreen = ({ navigation, route }) => {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerLeft: () => <UploadHeaderBackButton onPress={() => setIsModalVisible(true)} />,
+      headerLeft: () => <UploadBackButton onPress={() => setIsModalVisible(true)} />,
       headerRight: () => (
         <HeaderRightButton
           backGroundColor={isValidToSubmit ? '#b0e817' : '#12131420'}

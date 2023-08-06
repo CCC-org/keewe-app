@@ -3,11 +3,11 @@ import React from 'react';
 import { arrowLeft } from '../../constants/Icons/Navigation/ArrowLeftXml';
 import { SvgXml } from 'react-native-svg';
 
-interface UploadHeaderBackButtonProps {
+interface UploadBackButtonProps {
   onPress: () => void;
 }
 
-const UploadHeaderBackButton = ({ onPress }: UploadHeaderBackButtonProps) => {
+const UploadBackButton = ({ onPress }: UploadBackButtonProps) => {
   return (
     <Pressable style={{ marginLeft: 18 }} onPress={onPress}>
       <SvgXml xml={arrowLeft} />
@@ -15,4 +15,4 @@ const UploadHeaderBackButton = ({ onPress }: UploadHeaderBackButtonProps) => {
   );
 };
 
-export default UploadHeaderBackButton;
+export default UploadBackButton;
