@@ -16,15 +16,17 @@ const InterestChooseScreen = ({ navigation, route }) => {
   const [customCategory, setCustomCategory] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [conditionalText, setConditionalText] = useState<string>('관심사를 선택하세요');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [nicknameState, _] = useState<string>(route.params.nickname);
 
   const { mutate: makeProfile } = useMutation(
     OnboardQueryKeys.makeProfile({
-      nickname: route.params.nickname,
+      nickname: nicknameState,
       interests: selectedCategory,
     }),
     () =>
       OnboardAPI.makeProfile({
-        nickname: route.params.nickname,
+        nickname: nicknameState,
         interests: selectedCategory,
       }),
   );
