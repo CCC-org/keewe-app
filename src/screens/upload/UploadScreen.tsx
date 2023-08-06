@@ -5,6 +5,7 @@ import DividerBar from '../../components/bars/DividerBar';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
 import UploadLinkCard from '../../components/cards/LinkCardForUpload';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
+import UploadHeaderBackButton from './UploadHeaderBackButton';
 import StaticSizeScrollTextArea from '../../components/texts/StaticSizeScrollTextArea';
 import { IFolder } from '../../types/upload';
 import { UploadApis } from '../../utils/api/UploadAPIs';
@@ -25,7 +26,6 @@ import MainLottie from '../../components/lotties/MainLottie';
 import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChallenge';
 import { useTheme } from 'react-native-paper';
 import TwoButtonModal from '../../components/modal/TwoButtonModal';
-import UploadHeaderBackButton from './UploadHeaderBackButton';
 
 const UploadScreen = ({ navigation, route }) => {
   const { isEdit, link, insightId } = route?.params ?? {};
@@ -76,6 +76,7 @@ const UploadScreen = ({ navigation, route }) => {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
+      headerLeft: () => <UploadHeaderBackButton onPress={() => setIsModalVisible(true)} />,
       headerRight: () => (
         <HeaderRightButton
           backGroundColor={isValidToSubmit ? '#b0e817' : '#12131420'}
@@ -89,7 +90,6 @@ const UploadScreen = ({ navigation, route }) => {
           }}
         />
       ),
-      headerLeft: () => <UploadHeaderBackButton onPress={() => setIsModalVisible(true)} />,
     });
   }, [linkText, insightText, isValidToSubmit, navigation, selectedFolder, isSwitchOn]);
 
