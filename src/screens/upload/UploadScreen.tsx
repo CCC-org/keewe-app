@@ -1,6 +1,6 @@
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ScrollView, StyleSheet, View, Pressable } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import DividerBar from '../../components/bars/DividerBar';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
 import UploadLinkCard from '../../components/cards/LinkCardForUpload';
@@ -23,10 +23,9 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
 import MainLottie from '../../components/lotties/MainLottie';
 import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChallenge';
-import { SvgXml } from 'react-native-svg';
-import { arrowLeft } from '../../constants/Icons/Navigation/ArrowLeftXml';
 import { useTheme } from 'react-native-paper';
 import TwoButtonModal from '../../components/modal/TwoButtonModal';
+import UploadHeaderBackButton from './UploadHeaderBackButton';
 
 const UploadScreen = ({ navigation, route }) => {
   const { isEdit, link, insightId } = route?.params ?? {};
@@ -75,12 +74,6 @@ const UploadScreen = ({ navigation, route }) => {
     );
   }, [isValidSite, linkText, insightText, isLoading]);
 
-  const UploadHeaderBackButton = () => (
-    <Pressable style={{ marginLeft: 18 }} onPress={() => setIsModalVisible(true)}>
-      <SvgXml xml={arrowLeft} />
-    </Pressable>
-  );
-
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -96,7 +89,7 @@ const UploadScreen = ({ navigation, route }) => {
           }}
         />
       ),
-      headerLeft: () => <UploadHeaderBackButton />,
+      headerLeft: () => <UploadHeaderBackButton onPress={() => setIsModalVisible(true)} />,
     });
   }, [linkText, insightText, isValidToSubmit, navigation, selectedFolder, isSwitchOn]);
 
