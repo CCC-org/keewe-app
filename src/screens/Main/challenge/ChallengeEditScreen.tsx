@@ -24,15 +24,14 @@ const ChallengeEditScreen = ({ navigation }) => {
     },
   );
 
-  if (isChallengeParticipationLoading) {
-    return <MainLottie />;
-  }
-
   const end = useMemo(
     () => dateAdd(challengeParticipation?.startDate ?? '', duration),
     [challengeParticipation?.startDate, duration, setDuration],
   );
 
+  if (isChallengeParticipationLoading) {
+    return <MainLottie />;
+  }
   return (
     <>
       <View style={styles.Header}>
