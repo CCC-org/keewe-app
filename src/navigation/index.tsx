@@ -214,6 +214,17 @@ export function RootScreen() {
             <Text> categorySelect.tsx</Text>
           </View>
         </Pressable>
+        <Pressable onPress={() => navigation.navigate('Tabs', { type: 'challenge', id: '19' })}>
+          <View
+            style={{
+              backgroundColor: 'red',
+              height: 100,
+              width: 150,
+            }}
+          >
+            <Text> Tabs.tsx</Text>
+          </View>
+        </Pressable>
       </ScrollView>
     </ScrollView>
   );

@@ -17,6 +17,9 @@ import { notificationKeys } from '../../../utils/api/notification/notification';
 import ProfilePageFolderSection from './ProfilePageFolderSection';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import ProfileOptions from '../../../components/bottomsheet/ProfileOptions';
+import { SvgXml } from 'react-native-svg';
+import { settingsIcon } from '../../../../assets/svgs/settingsIcon';
+import ShareIconXml from '../../../constants/Icons/DetailedPost/ShareIconXml';
 
 const MyPageScreen = ({ navigation, route }) => {
   const { userId } = route.params;
@@ -118,9 +121,17 @@ const MyPageScreen = ({ navigation, route }) => {
     navigation.setOptions({
       headerRight: () => {
         return (
-          <Pressable style={{ marginRight: 12 }} onPress={() => modalRef.current?.present()}>
-            <Feather name="more-vertical" size={24} color={'#000000'} />
-          </Pressable>
+          <View style={styles.headerRight}>
+            <Pressable style={{ marginRight: 12 }} onPress={() => modalRef.current?.present()}>
+              <SvgXml xml={ShareIconXml} />
+            </Pressable>
+            <Pressable
+              style={{ marginHorizontal: 18 }}
+              onPress={() => navigation.navigate('Settings')}
+            >
+              <SvgXml xml={settingsIcon} />
+            </Pressable>
+          </View>
         );
       },
     });
@@ -283,6 +294,12 @@ const MyPageScreen = ({ navigation, route }) => {
 export default MyPageScreen;
 
 const styles = StyleSheet.create({
+  headerRight: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: 100,
+  },
   top: {
     backgroundColor: '#F1F1E9',
     paddingTop: 14,
