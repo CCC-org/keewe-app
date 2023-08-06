@@ -352,9 +352,8 @@ const DetailedPostScreen = ({ navigation, route }) => {
               >
                 <Text
                   style={{
-                    fontFamily: 'pretendard',
-                    fontSize: 16,
-                    color: `${theme.colors.graphic.black}50`,
+                    ...theme.fonts.text.body1.regular,
+                    color: `${theme.colors.graphic.black}80`,
                     marginTop: 32,
                   }}
                 >
@@ -418,5 +417,4 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     top: 16,
   },
-  buttonText: { fontFamily: 'pretendardSemiBold', fontSize: 18 },
 });

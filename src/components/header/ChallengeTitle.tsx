@@ -3,6 +3,7 @@ import { View, StyleSheet, Text } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import theme from '../../theme/light';
 import { INTEREST_ICONS } from '../profile/constant';
+import { useTheme } from 'react-native-paper';
 
 interface ChallengeTitle {
   title: string;
@@ -12,6 +13,7 @@ interface ChallengeTitle {
 }
 
 const ChallengeTitle = ({ title, category, startDate, challengeIntroduction }: ChallengeTitle) => {
+  const theme = useTheme();
   return (
     <View>
       <View style={styles.container}>
@@ -24,20 +26,19 @@ const ChallengeTitle = ({ title, category, startDate, challengeIntroduction }: C
         >
           <SvgXml xml={INTEREST_ICONS[category] ?? INTEREST_ICONS['기본']} />
         </View>
-        <Text style={{ fontFamily: 'pretendardSemiBold', fontSize: 22 }}>{title}</Text>
+        <Text style={theme.fonts.text.headline1}>{title}</Text>
       </View>
-      <Text style={{ fontFamily: 'pretendardSemiBold', fontSize: 14 }}>{category}</Text>
+      <Text style={theme.fonts.text.body2.bold}>{category}</Text>
       <Text
         style={{
-          fontFamily: 'pretendardSemiBold',
-          fontSize: 14,
+          ...theme.fonts.text.body2.bold,
           color: theme.colors.brand.onprimary.container,
         }}
       >
         {startDate} 생성됨
       </Text>
 
-      <Text style={{ fontFamily: 'pretendard', fontSize: 14, marginTop: 12 }}>
+      <Text style={{ ...theme.fonts.text.body2.regular, marginTop: 12 }}>
         {challengeIntroduction}
       </Text>
     </View>

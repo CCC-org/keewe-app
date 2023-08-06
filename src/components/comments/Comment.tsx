@@ -57,11 +57,9 @@ const Comment = ({
       >
         <Text
           style={{
-            fontFamily: 'pretendard',
-            fontSize: 14,
+            ...theme.fonts.text.body2.regular,
             padding: 20,
-            lineHeight: 20,
-            color: '#12131450',
+            color: `${theme.colors.graphic.black}cc`,
           }}
         >
           {content}
@@ -102,7 +100,9 @@ const Comment = ({
         <CommentVerticalDots commentId={commentId} userId={commentWriterId} userName={nickname} />
       </View>
       <View style={styles.content}>
-        <Text style={{ fontWeight: '400', fontSize: 14, color: `${theme.colors.graphic.black}cc` }}>
+        <Text
+          style={{ ...theme.fonts.text.body2.regular, color: `${theme.colors.graphic.black}cc` }}
+        >
           {content}
         </Text>
 

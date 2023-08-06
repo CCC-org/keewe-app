@@ -42,8 +42,7 @@ const ChallengeParticipationScreen = ({ route }) => {
             />
             <Text
               style={{
-                fontFamily: 'pretendard',
-                fontSize: 16,
+                ...theme.fonts.text.body1.regular,
                 color: `${theme.colors.graphic.black}80`,
                 marginTop: 16,
               }}
@@ -53,8 +52,7 @@ const ChallengeParticipationScreen = ({ route }) => {
             <View style={{ flexDirection: 'row', marginTop: 8 }}>
               <Text
                 style={{
-                  fontFamily: 'pretendard',
-                  fontSize: 16,
+                  ...theme.fonts.text.body1.regular,
                   color: `${theme.colors.graphic.black}80`,
                   marginRight: 4,
                 }}
@@ -63,8 +61,7 @@ const ChallengeParticipationScreen = ({ route }) => {
               </Text>
               <Text
                 style={{
-                  fontFamily: 'pretendardSemiBold',
-                  fontSize: 16,
+                  ...theme.fonts.text.body1.bold,
                   color: `${theme.colors.brand.onprimary.container}`,
                 }}
               >
@@ -78,8 +75,7 @@ const ChallengeParticipationScreen = ({ route }) => {
             <View style={styles.listHeader}>
               <Text
                 style={{
-                  fontFamily: 'pretendardSemiBold',
-                  fontSize: 18,
+                  ...theme.fonts.text.headline2,
                   color: theme.colors.graphic.black,
                   marginTop: 24,
                   marginBottom: 10,
@@ -89,9 +85,8 @@ const ChallengeParticipationScreen = ({ route }) => {
               </Text>
               <Text
                 style={{
-                  fontFamily: 'pretendardSemiBold',
-                  fontSize: 18,
-                  color: `${theme.colors.graphic.black}30`,
+                  ...theme.fonts.text.headline2,
+                  color: `${theme.colors.graphic.black}4d`,
                   marginTop: 24,
                   marginBottom: 10,
                   marginLeft: 6,

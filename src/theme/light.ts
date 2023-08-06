@@ -171,30 +171,30 @@ const TEXT = {
   },
   caption1: {
     fontFamily: 'pretendardMedium',
-    fontSize: 12,
+    fontSize: 13,
     lineHeight: 16,
   },
   body1: {
     regular: {
       fontFamily: 'pretendard',
-      fontSize: 16,
+      fontSize: 17,
       lineHeight: 24,
     },
     bold: {
       fontFamily: 'pretendardSemiBold',
-      fontSize: 16,
+      fontSize: 17,
       lineHeight: 24,
     },
   },
   body2: {
     regular: {
       fontFamily: 'pretendard',
-      fontSize: 14,
+      fontSize: 15,
       lineHeight: 20,
     },
     bold: {
       fontFamily: 'pretendardSemiBold',
-      fontSize: 14,
+      fontSize: 15,
       lineHeight: 20,
     },
   },

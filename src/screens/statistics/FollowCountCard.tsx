@@ -22,8 +22,7 @@ const FollowCountCard = ({ count, title }: FollowCountCardProps) => {
       </Text>
       <Text
         style={{
-          fontFamily: 'pretendardSemiBold',
-          fontSize: 14,
+          ...theme.fonts.text.body2.bold,
           marginTop: 8,
         }}
       >

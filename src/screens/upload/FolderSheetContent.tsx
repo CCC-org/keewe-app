@@ -7,6 +7,7 @@ import BlandTextInput from '../../components/texts/BlandTextInput';
 import { BottomSheetScrollView, useBottomSheet } from '@gorhom/bottom-sheet';
 import { backButtonModalClose } from '../../utils/helper/bottomSheetUtils/bottomSheetUtils';
 import { IFolder } from '../../types/upload';
+import { useTheme } from 'react-native-paper';
 
 interface FolderSheetContentProps {
   onHeaderLeftPress: () => void;
@@ -25,6 +26,7 @@ const FolderSheetContent = ({
   folders,
   selectedFolder,
 }: FolderSheetContentProps) => {
+  const theme = useTheme();
   const [createFolder, setCreateFolder] = useState(false);
   const { close } = useBottomSheet();
   backButtonModalClose(close);
@@ -86,7 +88,14 @@ const FolderSheetContent = ({
 
       {!createFolder && (
         <Pressable onPress={handleNewFolder} style={{ ...styles.folderContainer }}>
-          <Text style={styles.text}>새 폴더 만들기</Text>
+          <Text
+            style={{
+              ...theme.fonts.text.body1.regular,
+              color: theme.colors.brand.onprimary.container,
+            }}
+          >
+            새 폴더 만들기
+          </Text>
         </Pressable>
       )}
     </BottomSheetScrollView>
@@ -130,10 +139,5 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingLeft: 18,
-  },
-  text: {
-    fontSize: 16,
-    color: '#486006',
-    fontFamily: 'pretendard',
   },
 });

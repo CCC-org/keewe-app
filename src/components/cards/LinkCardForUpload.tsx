@@ -49,8 +49,6 @@ function createStyles(props: customProps) {
   const styles = StyleSheet.create({
     container: {
       width: props.width,
-      // borderWidth: 1,
-      // borderColor: '#12131420',
       borderRightWidth: 0,
       borderRadius: 8,
       height: 68,
@@ -68,7 +66,7 @@ function createStyles(props: customProps) {
       fontFamily: 'pretendard',
       fontWeight: '500',
       fontSize: 12,
-      color: '#12131450',
+      color: '#12131480',
     },
 
     metadataTextContainerStyle: {

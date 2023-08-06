@@ -1,9 +1,8 @@
 /* eslint-disable quotes */
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { Pressable, Text, View, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import HeaderText from '../../components/texts/HeaderText';
-import HeaderRightButton from '../../components/header/HeaderRightButton';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import BezierAnimatedPopupView from '../../components/views/BezierAnimatedPopupView';
 import { INSIGHT_SAMPLE, REACTIONS } from './constant';
@@ -24,10 +23,6 @@ const InsightSampleScreen = ({ navigation, route }) => {
       ],
   );
 
-  const handleSkipPress = () => {
-    navigation.navigate('ServiceIntro');
-  };
-
   const handleCompletePress = () => {
     navigation.navigate('ServiceIntro');
   };
@@ -37,27 +32,6 @@ const InsightSampleScreen = ({ navigation, route }) => {
     return;
   };
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerShown: true,
-      headerTitle: '',
-      headerShadowVisible: false,
-      headerRight: () => (
-        <HeaderRightButton
-          text="건너뛰기"
-          backGroundColor="#F8F8F4"
-          textColor={`${theme.colors.graphic.black}80`}
-          borderColor={`${theme.colors.graphic.black}1A`}
-          borderLine={true}
-          disabled={false}
-          handlePress={handleSkipPress}
-          width={73}
-          height={36}
-        />
-      ),
-    });
-  }, []);
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => null,
@@ -66,7 +40,7 @@ const InsightSampleScreen = ({ navigation, route }) => {
 
   return (
     <>
-      <ScrollView style={{ backgroundColor: '#F8F8F4' }}>
+      <ScrollView style={{ backgroundColor: theme.colors.brand.surface.main }}>
         <View style={styles.container}>
           <View
             style={{
@@ -266,13 +240,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'pretendardSemiBold',
     marginBottom: 2,
-    color: '#12131450',
+    color: '#12131480',
   },
   description: {
     fontFamily: 'pretendardSemiBold',
     fontWeight: '500',
     fontSize: 12,
-    color: '#12131450',
+    color: '#12131480',
   },
 });
 

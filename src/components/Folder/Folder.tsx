@@ -1,6 +1,7 @@
 import { Feather } from '@expo/vector-icons';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View, ViewProps } from 'react-native';
+import { useTheme } from 'react-native-paper';
 interface FolderProps extends ViewProps {
   text: string;
   selectedFolder: string;
@@ -10,10 +11,11 @@ interface FolderProps extends ViewProps {
 
 const Folder = (props: FolderProps) => {
   const { text, setSelectedFolder, selectedFolder } = props;
+  const theme = useTheme();
   return (
     <View style={styles.container}>
       <Pressable onPress={() => setSelectedFolder(text)} style={props.style}>
-        <Text style={{ ...styles.text, ...props.textStyle }}>{text}</Text>
+        <Text style={{ ...theme.fonts.text.body1.regular, ...props.textStyle }}>{text}</Text>
       </Pressable>
       {selectedFolder === text && <Feather name="check" size={24} color="#486006" />}
     </View>
@@ -28,11 +30,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingRight: 32,
-  },
-
-  text: {
-    fontSize: 16,
-    color: '#121314',
-    fontFamily: 'pretendard',
   },
 });

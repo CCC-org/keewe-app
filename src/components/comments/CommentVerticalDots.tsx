@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import React, { useCallback, useRef } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
@@ -8,7 +8,7 @@ import SheetOthersComment from './SheetOthersComment';
 
 interface FeedVerticalDotsProps {
   userId: number | string;
-  userName: string;
+  userName?: string;
   commentId: number;
 }
 

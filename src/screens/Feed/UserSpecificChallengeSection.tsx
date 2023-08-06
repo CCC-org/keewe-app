@@ -33,7 +33,7 @@ const UserSpecificChallengeSection = ({
   return (
     <View style={{ paddingBottom: 8 }}>
       <View style={styles.headerCtn}>
-        <Text style={styles.headerText}>{challengeHeaderText}</Text>
+        <Text style={theme.fonts.text.headline2}>{challengeHeaderText}</Text>
         <Pressable
           onPress={() =>
             navigation.navigate('ChallengeDetail', {
@@ -83,10 +83,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  headerText: {
-    fontSize: 18,
-    fontFamily: 'pretendardSemiBold',
   },
   challengeText: {
     color: '#12131480',

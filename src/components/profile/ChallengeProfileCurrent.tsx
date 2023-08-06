@@ -47,16 +47,14 @@ const CurrentChallengeProfile = ({
       <View style={styles.description}>
         <View style={styles.texts}>
           <View style={styles.title}>
-            <Text style={{ fontFamily: 'pretendardSemiBold', fontSize: 16, marginRight: 16 }}>
-              {name}
-            </Text>
+            <Text style={{ ...theme.fonts.text.body1.bold, marginRight: 16 }}>{name}</Text>
           </View>
           <Text
             numberOfLines={2}
             style={{
-              fontFamily: 'pretendard',
-              fontSize: 14,
-              marginVertical: 4,
+              ...theme.fonts.text.body2.regular,
+              marginTop: 2,
+              marginBottom: 3,
             }}
           >
             {challengeDescription}
@@ -64,8 +62,7 @@ const CurrentChallengeProfile = ({
           <View style={{ flexDirection: 'row' }}>
             <Text
               style={{
-                fontFamily: 'pretendardSemiBold',
-                fontSize: 14,
+                ...theme.fonts.text.body2.bold,
                 color: theme.colors.brand.onprimary.container,
               }}
             >
@@ -73,8 +70,7 @@ const CurrentChallengeProfile = ({
             </Text>
             <Text
               style={{
-                fontFamily: 'pretendardMedium',
-                fontSize: 14,
+                ...theme.fonts.text.body2.regular,
                 color: `${theme.colors.graphic.black}80`,
               }}
             >
