@@ -5,8 +5,8 @@ import { useTheme } from 'react-native-paper';
 import { getTimeInterval } from '../../utils/string/timeInterval';
 
 interface MiniProfileProps {
-  nickname: string;
-  title: string;
+  nickname?: string;
+  title?: string;
   insightWriter?: boolean;
   createdAt: string;
   image?: string;
@@ -27,13 +27,13 @@ const MiniProfile = ({
       <ProfileAvatar image={image} />
       <View style={styles.Description}>
         <View style={{ flexDirection: 'row', alignContent: 'center' }}>
-          <Text style={{ fontWeight: '600', fontSize: 14, marginRight: 4 }}>{nickname}</Text>
+          <Text style={{ ...theme.fonts.text.body2.bold, marginRight: 4 }}>{nickname}</Text>
           {insightWriter ? (
             <Text
               style={{
-                fontWeight: '500',
-                fontSize: 12,
+                ...theme.fonts.text.caption1,
                 color: theme.colors.brand.onprimary.container,
+                marginTop: 2,
               }}
             >
               글쓴이
@@ -42,10 +42,9 @@ const MiniProfile = ({
         </View>
         <Text
           style={{
-            fontWeight: '500',
-            fontSize: 12,
+            ...theme.fonts.text.caption1,
             color: `${theme.colors.graphic.black}80`,
-            paddingTop: 5,
+            paddingTop: 2,
           }}
         >
           {title} ∙ {getTimeInterval(new Date().getTime() - new Date(createdAt).getTime())}

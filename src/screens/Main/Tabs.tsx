@@ -21,7 +21,6 @@ import alarmEmpty from '../../constants/Icons/alarm/alarmEmpty';
 import alarmExist from '../../constants/Icons/alarm/alarmExist';
 import { useQuery } from '@tanstack/react-query';
 import { notificationApi, notificationKeys } from '../../utils/api/notification/notification';
-import { settingsIcon } from '../../../assets/svgs/settingsIcon';
 import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
 
 const Tab = createBottomTabNavigator();
@@ -29,23 +28,23 @@ const Tab = createBottomTabNavigator();
 const Tabs = ({ navigation, route }) => {
   const userId = useGetUserId();
 
-  if (route?.params) {
+  console.log(route);
+  if (route?.params?.type) {
     const { type, id } = route.params;
-    navigation.setParams({ type: '', id: '' });
     if (type === 'insight') {
-      navigation.push('DetailedPost', {
+      navigation.navigate('DetailedPost', {
         screen: 'DetailedPost',
         insightId: id,
       });
     }
     if (type === 'profile') {
       if (userId === id) {
-        navigation.push('MyPage', {
+        navigation.navigate('MyPage', {
           screen: 'MyPage',
           userId: id,
         });
       } else {
-        navigation.push('Profile', {
+        navigation.navigate('Profile', {
           screen: 'Profile',
           userId: id,
         });
@@ -53,7 +52,7 @@ const Tabs = ({ navigation, route }) => {
     }
     if (type === 'challenge') {
       ChallengeAPI.getChallengeParticipation().then((response) => {
-        if (response?.challengeId === id) {
+        if (response?.challengeId === Number(id)) {
           navigation.navigate('ChallengeDetail', {
             screen: 'ChallengeDetail',
             challengeId: response?.challengeId,
@@ -68,6 +67,7 @@ const Tabs = ({ navigation, route }) => {
         }
       });
     }
+    navigation.setParams({ type: null, id: null });
   }
 
   const { data } = useQuery(
@@ -123,16 +123,6 @@ const Tabs = ({ navigation, route }) => {
           tabBarIcon: ({ focused }) =>
             focused ? <SvgXml xml={mypageOn} /> : <SvgXml xml={mypageOff} />,
           title: '',
-          headerRight: () => {
-            return (
-              <Pressable
-                style={{ marginHorizontal: 18 }}
-                onPress={() => navigation.navigate('Settings')}
-              >
-                <SvgXml xml={settingsIcon} />
-              </Pressable>
-            );
-          },
           headerStyle: {
             backgroundColor: '#F1F1E9',
           },

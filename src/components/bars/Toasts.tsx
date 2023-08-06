@@ -19,7 +19,13 @@ const toastConfig = {
         justifyContent: 'center',
       }}
     >
-      <Text style={{ marginLeft: 15, fontFamily: 'pretendard', fontSize: 14, color: '#FFFFFF' }}>
+      <Text
+        style={{
+          ...theme.fonts.text.body2.regular,
+          marginLeft: 15,
+          color: theme.colors.graphic.white,
+        }}
+      >
         {props.text1}
       </Text>
     </View>

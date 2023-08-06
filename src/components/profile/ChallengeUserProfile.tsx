@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Pressable } from 'react-native';
 import theme from '../../theme/light';
 import { navigate } from '../../utils/hooks/navigaton/navigator';
 import ProfileAvatar from './ProfileAvatar';
+import { useTheme } from 'react-native-paper';
 
 interface ChallengeUserProfileProps {
   userId: number;
@@ -21,6 +22,7 @@ const ChallengeUserProfile = ({
   goalRecord,
   following,
 }: ChallengeUserProfileProps) => {
+  const theme = useTheme();
   return (
     <View style={styles.mainContainer}>
       <Pressable onPress={() => navigate('Profile', { userId })}>
@@ -28,7 +30,7 @@ const ChallengeUserProfile = ({
       </Pressable>
       <View style={styles.description}>
         <View style={styles.name}>
-          <Text style={{ fontFamily: 'pretendardSemiBold', fontSize: 16 }}>{nickname}</Text>
+          <Text style={theme.fonts.text.body1.bold}>{nickname}</Text>
           {following && (
             <View
               style={{
@@ -38,10 +40,9 @@ const ChallengeUserProfile = ({
             >
               <Text
                 style={{
+                  ...theme.fonts.text.caption1,
                   marginVertical: 4,
                   marginHorizontal: 8,
-                  fontFamily: 'pretendardMedium',
-                  fontSize: 12,
                   color: theme.colors.brand.onprimary.container,
                 }}
               >
@@ -52,8 +53,7 @@ const ChallengeUserProfile = ({
         </View>
         <Text
           style={{
-            fontFamily: 'pretendardSemiBold',
-            fontSize: 14,
+            ...theme.fonts.text.body2.bold,
             color: theme.colors.brand.onprimary.container,
             marginTop: 2,
           }}

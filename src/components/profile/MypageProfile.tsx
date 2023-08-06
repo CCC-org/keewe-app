@@ -44,7 +44,7 @@ const MypageProfile = ({
         </Text>
         <Text
           style={{
-            ...theme.fonts.text.body2.bold,
+            ...theme.fonts.text.body1.bold,
             color: `${theme.colors.graphic.black}80`,
             marginTop: 4,
           }}
@@ -62,7 +62,7 @@ const MypageProfile = ({
                 following,
               })
             }
-            style={{ flexDirection: 'row', marginTop: 8 }}
+            style={{ flexDirection: 'row' }}
           >
             <Text
               style={{
@@ -87,7 +87,7 @@ const MypageProfile = ({
                 following,
               })
             }
-            style={{ flexDirection: 'row', marginTop: 8 }}
+            style={{ flexDirection: 'row' }}
           >
             <Text
               style={{

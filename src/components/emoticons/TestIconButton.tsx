@@ -1,9 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { Animated } from 'react-native';
 import { SvgXml } from 'react-native-svg';
-import { Pressable, Text, View, StyleSheet } from 'react-native';
+import { Pressable, View, StyleSheet } from 'react-native';
 import FlyingEmoticons from './FlyingEmoticons';
-import theme from '../../theme/light';
 
 interface TestIconButtonProps {
   xml: string;

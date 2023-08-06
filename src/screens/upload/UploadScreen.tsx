@@ -5,6 +5,7 @@ import DividerBar from '../../components/bars/DividerBar';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
 import UploadLinkCard from '../../components/cards/LinkCardForUpload';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
+import UploadBackButton from './UploadBackButton';
 import StaticSizeScrollTextArea from '../../components/texts/StaticSizeScrollTextArea';
 import { IFolder } from '../../types/upload';
 import { UploadApis } from '../../utils/api/UploadAPIs';
@@ -23,6 +24,8 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
 import MainLottie from '../../components/lotties/MainLottie';
 import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChallenge';
+import { useTheme } from 'react-native-paper';
+import TwoButtonModal from '../../components/modal/TwoButtonModal';
 
 const UploadScreen = ({ navigation, route }) => {
   const { isEdit, link, insightId } = route?.params ?? {};
@@ -35,7 +38,10 @@ const UploadScreen = ({ navigation, route }) => {
   const linkSheetRef = useRef<BottomSheetModal>(null);
   const folderSheetRef = useRef<BottomSheetModal>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
   const queryClient = useQueryClient();
+  const theme = useTheme();
 
   const { isLoading: isEditLoading } = useQuery(
     InsightQueryKeys.getInsight({ insightId }),
@@ -70,6 +76,7 @@ const UploadScreen = ({ navigation, route }) => {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
+      headerLeft: () => <UploadBackButton onPress={() => setIsModalVisible(true)} />,
       headerRight: () => (
         <HeaderRightButton
           backGroundColor={isValidToSubmit ? '#b0e817' : '#12131420'}
@@ -236,6 +243,21 @@ const UploadScreen = ({ navigation, route }) => {
             setSelectedFolder={setSelectedFolder}
           />
         </BottomSheetModal>
+        <TwoButtonModal
+          dismissable={false}
+          mainTitle={'인사이트 작성을 그만할까요?'}
+          subTitle={'작성한 인사이트가 사라져요.'}
+          visible={isModalVisible}
+          onDismiss={() => setIsModalVisible(false)}
+          leftButtonText="뒤로가기"
+          rightButtonText="계속 작성하기"
+          leftButtonPress={() => {
+            setIsModalVisible(false);
+            navigation.goBack();
+          }}
+          rightButtonPress={() => setIsModalVisible(false)}
+          rightButtonColor={theme.colors.graphic.black}
+        />
       </ScrollView>
     </>
   );

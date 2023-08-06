@@ -233,7 +233,7 @@ const ProfileScreen = ({ navigation, route }) => {
         </View>
         <View style={{ marginHorizontal: 16 }}>
           <Text
-            style={{ ...theme.fonts.text.body2.regular, color: `${theme.colors.graphic.black}cc` }}
+            style={{ ...theme.fonts.text.body1.regular, color: `${theme.colors.graphic.black}cc` }}
           >
             {profile?.data?.introduction ?? ''}
           </Text>

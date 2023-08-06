@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated, Dimensions } from 'react-native';
-import theme from '../../theme/light';
+import { useTheme } from 'react-native-paper';
 
 const { width } = Dimensions.get('window');
 
@@ -14,6 +14,7 @@ interface TabProps {
 }
 
 const Tab = ({ tabs, prevTab, selectedTab, spacing, setSelectedTab, setPrevTab }: TabProps) => {
+  const theme = useTheme();
   const tabWidth = (width - (tabs.length + 1) * spacing) / tabs.length;
   const animatedValue = useRef(
     new Animated.Value(prevTab * (tabWidth + spacing) + spacing),
@@ -28,7 +29,7 @@ const Tab = ({ tabs, prevTab, selectedTab, spacing, setSelectedTab, setPrevTab }
 
   return (
     <>
-      <View style={{ ...styles.container, borderColor: `${theme.colors.graphic.black}10` }}>
+      <View style={{ ...styles.container, borderColor: `${theme.colors.graphic.black}1a` }}>
         {tabs.map((tab, index) => (
           <TouchableOpacity
             key={index}
@@ -44,12 +45,11 @@ const Tab = ({ tabs, prevTab, selectedTab, spacing, setSelectedTab, setPrevTab }
           >
             <Text
               style={{
-                fontFamily: 'pretendardSemiBold',
-                fontSize: 14,
+                ...theme.fonts.text.body2.bold,
                 color:
                   index === selectedTab
                     ? theme.colors.graphic.black
-                    : `${theme.colors.graphic.black}50`,
+                    : `${theme.colors.graphic.black}80`,
               }}
             >
               {tab}

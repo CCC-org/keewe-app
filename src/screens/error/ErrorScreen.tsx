@@ -1,4 +1,3 @@
-import { QueryCache } from '@tanstack/react-query';
 import React from 'react';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
 import theme from '../../theme/light';

@@ -58,8 +58,7 @@ const StatisticsScreen = ({ route }) => {
       </View>
       <Text
         style={{
-          fontFamily: 'pretendardSemiBold',
-          fontSize: 18,
+          ...theme.fonts.text.headline2,
           marginVertical: 24,
           marginHorizontal: 16,
         }}

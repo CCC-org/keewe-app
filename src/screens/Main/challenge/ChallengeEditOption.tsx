@@ -23,7 +23,7 @@ const ChallengeEditOption = ({
   return (
     <>
       <View style={styles.container}>
-        <Text style={{ fontFamily: 'pretendard', fontSize: 16 }}>{option}</Text>
+        <Text style={theme.fonts.text.body1.regular}>{option}</Text>
         <View
           style={{
             alignItems: 'center',
@@ -32,11 +32,10 @@ const ChallengeEditOption = ({
         >
           <Text
             style={{
-              fontFamily: 'pretendard',
-              fontSize: 16,
+              ...theme.fonts.text.body1.regular,
               color: value
                 ? theme.colors.brand.onprimary.container
-                : `${theme.colors.graphic.black}30`,
+                : `${theme.colors.graphic.black}4d`,
             }}
           >
             {value ? value : placeholder}

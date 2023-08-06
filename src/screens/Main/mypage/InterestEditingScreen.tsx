@@ -1,13 +1,15 @@
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import InterestChooseSection from '../../onboarding/InterestChooseSection';
 import { TOTAL_TAG } from '../../../constants/Interests';
 import HeaderText from '../../../components/texts/HeaderText';
 import NumberProgressBar from '../../../components/bars/NumberProgressBar';
 import ConditionalButton from '../../../components/buttons/ConditionalButton';
+import { useTheme } from 'react-native-paper';
 
 const InterestEditingScreen = ({ navigation, route }) => {
   const totalCategory = TOTAL_TAG;
+  const theme = useTheme();
   const [customCategory, setCustomCategory] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [conditionalText, setConditionalText] = useState<string>('관심사를 선택하세요');
@@ -76,6 +78,16 @@ const InterestEditingScreen = ({ navigation, route }) => {
         }}
       >
         <HeaderText header={'관심사를 설정하세요'} />
+        <Text
+          style={{
+            ...theme.fonts.text.footnote,
+            color: `${theme.colors.graphic.black}99`,
+            marginTop: 8,
+            marginLeft: 1,
+          }}
+        >
+          최대 5개까지 추가할 수 있어요
+        </Text>
       </View>
       <InterestChooseSection
         totalCategory={totalCategory}
