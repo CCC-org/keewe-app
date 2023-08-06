@@ -50,7 +50,7 @@ const ChallengeGoalSettingSection = ({
         subTitle={step === 2 ? `매주 ${recordPerWeek}번` : ''}
       >
         <ChallengeGoalSettingBar
-          minValue={2}
+          minValue={1}
           maxValue={7}
           onChange={handleChangeRecordPerWeek}
           unit={'번'}
