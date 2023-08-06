@@ -13,7 +13,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { useGetUserId } from '../../../utils/hooks/useGetUserId';
 
 const ChallengeParticipationScreen = ({ route }) => {
-  const userId = useGetUserId();
   const { challengeId } = route.params;
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
@@ -100,7 +99,7 @@ const ChallengeParticipationScreen = ({ route }) => {
                 return (
                   <ChallengeUserProfile
                     key={idx}
-                    userId={userId ?? 0}
+                    userId={item.userId}
                     nickname={item.nickname}
                     imageURL={item.imageURL}
                     currentRecord={item.currentRecord}
