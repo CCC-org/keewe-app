@@ -22,10 +22,12 @@ import { useQueryClient } from '@tanstack/react-query';
 const ProfileEditScreen = ({ navigation, route }) => {
   const theme = useTheme();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const [permissionModal, setPermissionModal] = useState<boolean>(false);
+  const [cameraPermissionModal, setCameraPermissionModal] = useState<boolean>(false);
+  const [libraryPermissionModal, setLibraryPermissionModal] = useState<boolean>(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const hideModal = () => setModalVisible(false);
-  const hidePermissionModal = () => setPermissionModal(false);
+  const hideCameraPermissionModal = () => setCameraPermissionModal(false);
+  const hideLibraryPermissionModal = () => setLibraryPermissionModal(false);
   const hideDeleteModal = () => setDeleteModal(false);
   const [btnAbled, setBtnAbled] = useState<boolean>(true);
   const [nickname, setNickname] = useState<string>('');
@@ -37,7 +39,8 @@ const ProfileEditScreen = ({ navigation, route }) => {
   const [userId, setUserId] = useState<string>('');
 
   const handleComplete = () => setModalVisible(true);
-  const changePermission = () => setPermissionModal(true);
+  const changeLibraryPermission = () => setLibraryPermissionModal(true);
+  const changeCameraPermission = () => setCameraPermissionModal(true);
   const editObject = {
     nickname,
     image,
@@ -122,9 +125,10 @@ const ProfileEditScreen = ({ navigation, route }) => {
 
   const pickImage = async () => {
     // BUG: Android에 권한 부여 원할하지 않음
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const permissionResult = await ImagePicker.getMediaLibraryPermissionsAsync();
+    console.log(permissionResult);
     if (permissionResult.granted === false) {
-      changePermission();
+      changeLibraryPermission();
       return;
     }
 
@@ -146,9 +150,9 @@ const ProfileEditScreen = ({ navigation, route }) => {
 
   const openCamera = async () => {
     // BUG: Android에 권한 부여 원할하지 않음
-    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+    const permissionResult = await ImagePicker.getCameraPermissionsAsync();
     if (permissionResult.granted === false) {
-      changePermission();
+      changeCameraPermission();
       return;
     }
 
@@ -209,83 +213,95 @@ const ProfileEditScreen = ({ navigation, route }) => {
 
   return (
     <>
-      <BottomSheetModalProvider>
-        <TwoButtonModal
-          dismissable={false}
-          mainTitle={'수정한 내용을 저장할까요?'}
-          visible={modalVisible}
-          onDismiss={hideModal}
-          leftButtonText={'취소'}
-          rightButtonText={'저장'}
-          leftButtonPress={() => setModalVisible(false)}
-          rightButtonPress={() => {
-            handleSaveProfileInfo();
-            setModalVisible(false);
-            navigation.navigate('MyPage');
-          }}
-        />
-        <TwoButtonModal
-          dismissable={false}
-          mainTitle={'카메라 접근 권한을 허용해주세요.'}
-          subTitle={'설정 > Keewe > 카메라 접근 권한 허용'}
-          visible={permissionModal}
-          onDismiss={hidePermissionModal}
-          leftButtonText={'취소'}
-          rightButtonText={'허용하기'}
-          leftButtonPress={() => setPermissionModal(false)}
-          rightButtonPress={() => {
-            Linking.openSettings();
-            setPermissionModal(false);
-          }}
-        />
-        <TwoButtonModal
-          dismissable={false}
-          mainTitle={'현재 사진을 삭제할까요?'}
-          visible={deleteModal}
-          onDismiss={hideDeleteModal}
-          leftButtonText={'취소'}
-          rightButtonText={'삭제하기'}
-          leftButtonPress={() => setDeleteModal(false)}
-          rightButtonPress={() => {
-            setImage('');
-            setDeleteModal(false);
-          }}
-          rightButtonColor={theme.colors.graphic.red}
-        />
-        <ProfileImage image={image} onPress={() => handlePresentModalPress()} />
-        <BottomSheetModal
-          ref={bottomSheetModalRef}
-          index={1}
-          snapPoints={snapPoints}
-          onChange={() => null}
-          backgroundStyle={{ backgroundColor: theme.colors.graphic.white }}
-          backdropComponent={renderBackdrop}
-        >
-          <View style={styles.sheet}>
-            <BottomSheetOption title="라이브러리에서 선택" onPress={handleLibraryPress} />
-            <BottomSheetOption title="사진 찍기" onPress={handleShotPress} />
-            {image !== '' ? (
-              <BottomSheetOption title="현재 사진 삭제" onPress={handleDeletePress} />
-            ) : null}
-          </View>
-        </BottomSheetModal>
-        <View>
-          <ProfileList title="이름" content={nickname} handlePress={handleNickname} />
-          <ProfileList title="대표 타이틀" content={title} handlePress={handleTitle} />
-          <ProfileList
-            title="소개"
-            content={introduction === '' ? '자신을 자유롭게 표현해보세요' : introduction}
-            contentColor={introduction === '' ? `${theme.colors.graphic.black}4d` : undefined}
-            handlePress={handleIntroduction}
-            height={60}
-          />
-          <ProfileList
-            title="관심사"
-            content={selectedCategory.map((cur) => '#' + cur).join(' ')}
-            handlePress={handleInterests}
-          />
+      <TwoButtonModal
+        dismissable={false}
+        mainTitle={'수정한 내용을 저장할까요?'}
+        visible={modalVisible}
+        onDismiss={hideModal}
+        leftButtonText={'취소'}
+        rightButtonText={'저장'}
+        leftButtonPress={() => setModalVisible(false)}
+        rightButtonPress={() => {
+          handleSaveProfileInfo();
+          setModalVisible(false);
+          navigation.navigate('MyPage');
+        }}
+      />
+      <TwoButtonModal
+        dismissable={false}
+        mainTitle={'카메라 접근 권한을 허용해주세요.'}
+        subTitle={'설정 > Keewe > 카메라 접근 권한 허용'}
+        visible={cameraPermissionModal}
+        onDismiss={hideCameraPermissionModal}
+        leftButtonText={'취소'}
+        rightButtonText={'허용하기'}
+        leftButtonPress={() => setCameraPermissionModal(false)}
+        rightButtonPress={() => {
+          Linking.openSettings();
+          setCameraPermissionModal(false);
+        }}
+      />
+      <TwoButtonModal
+        dismissable={false}
+        mainTitle={'라이브러리 접근 권한을 허용해주세요.'}
+        subTitle={'설정 > Keewe > 라이브러리 권한 허용'}
+        visible={libraryPermissionModal}
+        onDismiss={hideLibraryPermissionModal}
+        leftButtonText={'취소'}
+        rightButtonText={'허용하기'}
+        leftButtonPress={() => setLibraryPermissionModal(false)}
+        rightButtonPress={() => {
+          Linking.openSettings();
+          setLibraryPermissionModal(false);
+        }}
+      />
+      <TwoButtonModal
+        dismissable={false}
+        mainTitle={'현재 사진을 삭제할까요?'}
+        visible={deleteModal}
+        onDismiss={hideDeleteModal}
+        leftButtonText={'취소'}
+        rightButtonText={'삭제하기'}
+        leftButtonPress={() => setDeleteModal(false)}
+        rightButtonPress={() => {
+          setImage('');
+          setDeleteModal(false);
+        }}
+        rightButtonColor={theme.colors.graphic.red}
+      />
+      <ProfileImage image={image} onPress={() => handlePresentModalPress()} />
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        index={1}
+        snapPoints={snapPoints}
+        onChange={() => null}
+        backgroundStyle={{ backgroundColor: theme.colors.graphic.white }}
+        backdropComponent={renderBackdrop}
+      >
+        <View style={styles.sheet}>
+          <BottomSheetOption title="라이브러리에서 선택" onPress={handleLibraryPress} />
+          <BottomSheetOption title="사진 찍기" onPress={handleShotPress} />
+          {image !== '' ? (
+            <BottomSheetOption title="현재 사진 삭제" onPress={handleDeletePress} />
+          ) : null}
         </View>
-      </BottomSheetModalProvider>
+      </BottomSheetModal>
+      <View>
+        <ProfileList title="이름" content={nickname} handlePress={handleNickname} />
+        <ProfileList title="대표 타이틀" content={title} handlePress={handleTitle} />
+        <ProfileList
+          title="소개"
+          content={introduction === '' ? '자신을 자유롭게 표현해보세요' : introduction}
+          contentColor={introduction === '' ? `${theme.colors.graphic.black}4d` : undefined}
+          handlePress={handleIntroduction}
+          height={60}
+        />
+        <ProfileList
+          title="관심사"
+          content={selectedCategory.map((cur) => '#' + cur).join(' ')}
+          handlePress={handleInterests}
+        />
+      </View>
     </>
   );
 };

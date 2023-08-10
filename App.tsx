@@ -14,6 +14,7 @@ import NicknameCreationScreen from './src/screens/onboarding/NicknameCreationScr
 import SignUpScreen from './src/screens/onboarding/SignUpScreen';
 import useCachedResources from './src/utils/hooks/useCachedResources';
 import * as Notifications from 'expo-notifications';
+import * as ImagePicker from 'expo-image-picker';
 
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -115,13 +116,24 @@ const registerForPushNotificationsAsync = async () => {
       };
     },
   });
+  return;
+};
 
+const requestMediaLibraryPermissionsAsync = async () => {
+  await ImagePicker.requestMediaLibraryPermissionsAsync();
+  return;
+};
+
+const requestCameraPermissionsAsync = async () => {
+  await ImagePicker.requestCameraPermissionsAsync();
   return;
 };
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
   registerForPushNotificationsAsync();
+  requestCameraPermissionsAsync();
+  requestMediaLibraryPermissionsAsync();
   const printNavigationState = (state) => {
     if (state) {
       const routes = state.routes.map((route) => route.name);
