@@ -122,11 +122,11 @@ const ProfileEditScreen = ({ navigation, route }) => {
 
   const pickImage = async () => {
     // BUG: Android에 권한 부여 원할하지 않음
-    // const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    // if (permissionResult.granted === false) {
-    //   changePermission();
-    //   return;
-    // }
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (permissionResult.granted === false) {
+      changePermission();
+      return;
+    }
 
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -146,11 +146,11 @@ const ProfileEditScreen = ({ navigation, route }) => {
 
   const openCamera = async () => {
     // BUG: Android에 권한 부여 원할하지 않음
-    // const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
-    // if (permissionResult.granted === false) {
-    //   changePermission();
-    //   return;
-    // }
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+    if (permissionResult.granted === false) {
+      changePermission();
+      return;
+    }
 
     const result = await ImagePicker.launchCameraAsync({
       base64: true,

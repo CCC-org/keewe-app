@@ -70,7 +70,9 @@ function Login({ navigation, route }) {
         injectedJavaScript={INJECTED_JAVASCRIPT}
         javaScriptEnabled
         onMessage={(event) => {
+          console.log(event);
           const data = event.nativeEvent.url;
+          console.log(data);
           getCode(data);
         }}
       />
