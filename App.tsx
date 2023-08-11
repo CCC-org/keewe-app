@@ -81,7 +81,7 @@ const queryClient = new QueryClient({
 });
 
 const linking = {
-  prefixes: ['https://keewe.kr'],
+  prefixes: ['https://keewe.kr', 'keewe://'],
   config: {
     screens: {
       Tabs: 'link/:type/:id',
