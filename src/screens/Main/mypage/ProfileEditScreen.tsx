@@ -6,11 +6,7 @@ import ProfileList from './ProfileList';
 import { TOTAL_TAG } from '../../../constants/Interests';
 import TwoButtonModal from '../../../components/modal/TwoButtonModal';
 import ProfileImage from './ProfileImage';
-import {
-  BottomSheetBackdrop,
-  BottomSheetModal,
-  BottomSheetModalProvider,
-} from '@gorhom/bottom-sheet';
+import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import BottomSheetOption from '../../../components/bottomsheet/BottomSheetOption';
 import * as ImagePicker from 'expo-image-picker';
 import { getAccessToken } from '../../../utils/hooks/asyncStorage/Login';
@@ -126,7 +122,6 @@ const ProfileEditScreen = ({ navigation, route }) => {
   const pickImage = async () => {
     // BUG: Android에 권한 부여 원할하지 않음
     const permissionResult = await ImagePicker.getMediaLibraryPermissionsAsync();
-    console.log(permissionResult);
     if (permissionResult.granted === false) {
       changeLibraryPermission();
       return;
@@ -149,7 +144,6 @@ const ProfileEditScreen = ({ navigation, route }) => {
   };
 
   const openCamera = async () => {
-    // BUG: Android에 권한 부여 원할하지 않음
     const permissionResult = await ImagePicker.getCameraPermissionsAsync();
     if (permissionResult.granted === false) {
       changeCameraPermission();

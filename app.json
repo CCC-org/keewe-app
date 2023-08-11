@@ -21,7 +21,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.CCCorg.keewe",
-      "buildNumber": "5.1",
+      "buildNumber": "5.2",
       "associatedDomains": ["applinks:keewe.kr"]
     },
     "android": {
@@ -58,7 +58,7 @@
         "projectId": "05f9153d-ab7a-4208-a465-60a60c8c4ade"
       }
     },
-    "plugin": [
+    "plugins": [
       [
         "expo-image-picker",
         {

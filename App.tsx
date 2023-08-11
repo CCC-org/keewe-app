@@ -120,12 +120,20 @@ const registerForPushNotificationsAsync = async () => {
 };
 
 const requestMediaLibraryPermissionsAsync = async () => {
-  await ImagePicker.requestMediaLibraryPermissionsAsync();
+  const permissionResult = await ImagePicker.getMediaLibraryPermissionsAsync();
+  if (permissionResult.granted === false && permissionResult.canAskAgain) {
+    await ImagePicker.requestMediaLibraryPermissionsAsync();
+    return;
+  }
   return;
 };
 
 const requestCameraPermissionsAsync = async () => {
-  await ImagePicker.requestCameraPermissionsAsync();
+  const permissionResult = await ImagePicker.getCameraPermissionsAsync();
+  if (permissionResult.granted === false && permissionResult.canAskAgain) {
+    await ImagePicker.requestCameraPermissionsAsync();
+    return;
+  }
   return;
 };
 
