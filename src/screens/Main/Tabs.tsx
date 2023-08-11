@@ -28,7 +28,6 @@ const Tab = createBottomTabNavigator();
 const Tabs = ({ navigation, route }) => {
   const userId = useGetUserId();
 
-  console.log(route);
   if (route?.params?.type) {
     const { type, id } = route.params;
     if (type === 'insight') {
