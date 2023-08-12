@@ -13,18 +13,18 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@react-native-masked-view/masked-view": "^0.2.9",
-    "@react-navigation/stack": "^6.3.17",
     "@expo/vector-icons": "^13.0.0",
     "@flyerhq/react-native-link-preview": "^1.6.0",
     "@gorhom/bottom-sheet": "^4.4.5",
     "@miblanchard/react-native-slider": "^2.1.0",
     "@react-native-async-storage/async-storage": "1.17.11",
     "@react-native-clipboard/clipboard": "^1.11.1",
+    "@react-native-masked-view/masked-view": "^0.2.9",
     "@react-navigation/bottom-tabs": "^6.0.5",
     "@react-navigation/material-top-tabs": "^6.5.3",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
+    "@react-navigation/stack": "^6.3.17",
     "@tanstack/react-query": "^4.14.3",
     "axios": "^0.27.2",
     "expo": "^48.0.0",
@@ -32,6 +32,7 @@
     "expo-asset": "~8.9.1",
     "expo-clipboard": "~4.1.2",
     "expo-constants": "~14.2.1",
+    "expo-device": "~5.2.1",
     "expo-file-system": "~15.2.2",
     "expo-font": "~11.1.1",
     "expo-image-picker": "~14.1.1",
@@ -70,8 +71,7 @@
     "react-native-web": "~0.18.11",
     "react-native-webview": "11.26.0",
     "rn-faded-scrollview": "^1.0.13",
-    "unimodel-core": "^2.0.0",
-    "expo-device": "~5.2.1"
+    "unimodel-core": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

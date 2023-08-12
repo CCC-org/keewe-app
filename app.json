@@ -30,8 +30,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.CCCorg.keewe",
-      "versionCode": 10,
+      "package": "com.CCC.keewe",
+      "versionCode": 9,
       "intentFilters": [
         {
           "action": "VIEW",
