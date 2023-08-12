@@ -12,6 +12,7 @@ import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChal
 import MainLottie from '../../components/lotties/MainLottie';
 import MainTabHeader from '../../components/header/MainTabHeader';
 import { notificationKeys } from '../../utils/api/notification/notification';
+import Toast from 'react-native-toast-message';
 
 const FeedScreen = ({ navigation }) => {
   const scrollViewRef = useRef<any>(null);
@@ -57,7 +58,6 @@ const FeedScreen = ({ navigation }) => {
   if (feedListIsLoading) {
     return <MainLottie />;
   }
-
   return (
     <>
       <IOScrollView
