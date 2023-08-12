@@ -166,6 +166,7 @@ const SheetPostOptions = ({
         onPress={async () => {
           const challengeData = await InsightAPI.getChallengeRecord({ insightId });
           navigation.navigate('Share', {
+            insightId,
             name: nickname ?? '',
             title: title ?? '',
             image: image ?? '',
