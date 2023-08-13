@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import DividerBar from '../../components/bars/DividerBar';
 import StatisticsProfile from './StatisticsProfile';
@@ -35,7 +35,7 @@ const StatisticsScreen = ({ route }) => {
   );
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <View style={styles.main}>
           <StatisticsProfile insightId={insightId} />
@@ -69,7 +69,7 @@ const StatisticsScreen = ({ route }) => {
         <FollowCountCard count={followCount?.data?.count ?? 0} title={'나를 팔로우 한 사람'} />
         <FollowCountCard count={visitCount?.data?.count ?? 0} title={'내 프로필을 방문한 사람'} />
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 

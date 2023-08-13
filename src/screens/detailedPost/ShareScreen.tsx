@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useCallback, useRef, useState } from 'react';
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
@@ -72,7 +72,7 @@ const ShareScreen = ({ route }) => {
   );
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <View ref={viewRef} style={[styles.container, { backgroundColor: color }]}>
         <View style={styles.profileContainer}>
           <Text
@@ -163,7 +163,7 @@ const ShareScreen = ({ route }) => {
           message={`키위에서 '${name}' 님의 ${challenge}에 대한 ${recordText} 번째 인사이트 보기 '${insightText}'`}
         />
       </BottomSheetModal>
-    </>
+    </SafeAreaView>
   );
 };
 

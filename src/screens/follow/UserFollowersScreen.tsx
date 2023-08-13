@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import React from 'react';
 import FollowListSection from './FollowListSection';
 import { InfiniteData, useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -36,7 +36,13 @@ const UserFollowersScreen = ({ route }) => {
   });
 
   return (
-    <FollowListSection mutation={mutation} followList={followList} fetchNextPage={fetchNextPage} />
+    <SafeAreaView style={{ flex: 1 }}>
+      <FollowListSection
+        mutation={mutation}
+        followList={followList}
+        fetchNextPage={fetchNextPage}
+      />
+    </SafeAreaView>
   );
 };
 

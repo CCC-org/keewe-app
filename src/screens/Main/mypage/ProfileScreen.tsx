@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable, RefreshControl } from 'react-native';
+import { StyleSheet, Text, View, Pressable, RefreshControl, SafeAreaView } from 'react-native';
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import MypageProfile from '../../../components/profile/MypageProfile';
 import { useTheme } from 'react-native-paper';
@@ -204,141 +204,159 @@ const ProfileScreen = ({ navigation, route }) => {
   };
 
   return (
-    <IOScrollView
-      ref={scrollViewRef}
-      refreshControl={<RefreshControl refreshing={pageRefreshing} onRefresh={onRefresh} />}
-    >
-      <View style={styles.top}>
-        <View style={{ marginLeft: 16, marginBottom: 24 }}>
-          <MypageProfile
-            profileUserId={userId}
-            nickname={profile?.data?.nickname ?? ''}
-            title={profile?.data?.title ?? ''}
-            image={profileImage}
-            follower={profile?.data?.followerCount ?? 0}
-            following={profile?.data?.followingCount ?? 0}
-          />
-        </View>
-        <View
-          style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: 20, marginHorizontal: 14 }}
-        >
-          {selectedCategory.map((cur, idx) => (
-            <InterestIcon
-              key={idx}
-              title={cur}
-              textColor={iconColor[idx][0]}
-              backgroundColor={iconColor[idx][1]}
-            />
-          ))}
-        </View>
-        <View style={{ marginHorizontal: 16 }}>
-          <Text
-            style={{ ...theme.fonts.text.body1.regular, color: `${theme.colors.graphic.black}cc` }}
-          >
-            {profile?.data?.introduction ?? ''}
-          </Text>
-        </View>
-        <View style={{ alignItems: 'center' }}>
-          <Pressable
-            style={{
-              ...styles.btn,
-              backgroundColor: profile?.data?.follow ? '#e1e1d0' : theme.colors.graphic.black,
-            }}
-            onPress={() => {
-              followMutation?.mutate();
-            }}
-          >
-            {profile?.data?.follow ? (
-              <Text
-                style={{ ...theme.fonts.text.body1.bold, color: `${theme.colors.graphic.black}cc` }}
-              >
-                팔로잉
-              </Text>
-            ) : (
-              <Text style={{ ...theme.fonts.text.body1.bold, color: theme.colors.graphic.white }}>
-                팔로우
-              </Text>
-            )}
-          </Pressable>
-          {profile?.data?.challengeName ? (
-            <BottomFixButton
-              isActive={true}
-              text={`${profile?.data?.challengeName.slice(0, 9)}${
-                (profile?.data?.challengeName.length ?? 11) >= 10 ? '...' : ''
-              } 챌린지 중`}
-              width={343}
-              height={48}
-              chevron={true}
-              onPress={handleChallengeClicked}
-              buttonStyle={styles.button}
-              textStyle={styles.buttonText}
-            />
-          ) : (
-            <View style={{ marginBottom: 24 }}></View>
-          )}
-        </View>
-      </View>
-      <View style={styles.mid}>
-        <View style={styles.title}>
-          <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>
-            타이틀{' '}
-          </Text>
-          <Text style={{ ...theme.fonts.text.headline2, color: `${theme.colors.graphic.black}4d` }}>
-            {titleTotal}
-          </Text>
-        </View>
-        {representativeTitleList.map((cur, idx) => {
-          return (
-            <MypageTitle
-              titleId={cur['titleId']}
-              key={idx}
-              label={cur['name']}
-              condition={cur['introduction']}
-              date={cur['achievedDate']
-                .slice(0, cur['achievedDate'].indexOf('T'))
-                .replace(/-/g, '.')}
-            />
-          );
-        })}
-      </View>
-      {titleTotal > 3 ? (
-        <Pressable
-          onPress={() => navigation.navigate('Title', { userId })}
-          style={{ ...styles.viewAll, borderTopColor: `${theme.colors.graphic.black}1a` }}
-        >
-          <Text
-            style={{ ...theme.fonts.text.body1.regular, color: `${theme.colors.graphic.black}cc` }}
-          >
-            전체보기
-          </Text>
-          <Feather name="chevron-right" size={24} color={`${theme.colors.graphic.black}cc`} />
-        </Pressable>
-      ) : null}
-      <DividerBar style={styles.divider} />
-      <ProfilePageFolderSection
-        feedList={feedList}
-        userFolderList={userFolderList}
-        feedListQueryClient={feedListQueryClient}
-        fetchNextPage={fetchNextPage}
-        profile={profile}
-        touchBookMark={touchBookMark}
-        userId={userId}
-        handleFolderOption={handleFolderOption}
-        feedListIsLoading={feedListIsLoading}
-      />
-      <BottomSheetModal
-        ref={modalRef}
-        snapPoints={['25%', '25%']}
-        backdropComponent={renderBackdrop}
+    <SafeAreaView style={{ flex: 1 }}>
+      <IOScrollView
+        ref={scrollViewRef}
+        refreshControl={<RefreshControl refreshing={pageRefreshing} onRefresh={onRefresh} />}
       >
-        <ProfileOptions
-          modalRef={modalRef}
+        <View style={styles.top}>
+          <View style={{ marginLeft: 16, marginBottom: 24 }}>
+            <MypageProfile
+              profileUserId={userId}
+              nickname={profile?.data?.nickname ?? ''}
+              title={profile?.data?.title ?? ''}
+              image={profileImage}
+              follower={profile?.data?.followerCount ?? 0}
+              following={profile?.data?.followingCount ?? 0}
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              marginBottom: 20,
+              marginHorizontal: 14,
+            }}
+          >
+            {selectedCategory.map((cur, idx) => (
+              <InterestIcon
+                key={idx}
+                title={cur}
+                textColor={iconColor[idx][0]}
+                backgroundColor={iconColor[idx][1]}
+              />
+            ))}
+          </View>
+          <View style={{ marginHorizontal: 16 }}>
+            <Text
+              style={{
+                ...theme.fonts.text.body1.regular,
+                color: `${theme.colors.graphic.black}cc`,
+              }}
+            >
+              {profile?.data?.introduction ?? ''}
+            </Text>
+          </View>
+          <View style={{ alignItems: 'center' }}>
+            <Pressable
+              style={{
+                ...styles.btn,
+                backgroundColor: profile?.data?.follow ? '#e1e1d0' : theme.colors.graphic.black,
+              }}
+              onPress={() => {
+                followMutation?.mutate();
+              }}
+            >
+              {profile?.data?.follow ? (
+                <Text
+                  style={{
+                    ...theme.fonts.text.body1.bold,
+                    color: `${theme.colors.graphic.black}cc`,
+                  }}
+                >
+                  팔로잉
+                </Text>
+              ) : (
+                <Text style={{ ...theme.fonts.text.body1.bold, color: theme.colors.graphic.white }}>
+                  팔로우
+                </Text>
+              )}
+            </Pressable>
+            {profile?.data?.challengeName ? (
+              <BottomFixButton
+                isActive={true}
+                text={`${profile?.data?.challengeName.slice(0, 9)}${
+                  (profile?.data?.challengeName.length ?? 11) >= 10 ? '...' : ''
+                } 챌린지 중`}
+                width={343}
+                height={48}
+                chevron={true}
+                onPress={handleChallengeClicked}
+                buttonStyle={styles.button}
+                textStyle={styles.buttonText}
+              />
+            ) : (
+              <View style={{ marginBottom: 24 }}></View>
+            )}
+          </View>
+        </View>
+        <View style={styles.mid}>
+          <View style={styles.title}>
+            <Text style={{ ...theme.fonts.text.headline2, color: theme.colors.graphic.black }}>
+              타이틀{' '}
+            </Text>
+            <Text
+              style={{ ...theme.fonts.text.headline2, color: `${theme.colors.graphic.black}4d` }}
+            >
+              {titleTotal}
+            </Text>
+          </View>
+          {representativeTitleList.map((cur, idx) => {
+            return (
+              <MypageTitle
+                titleId={cur['titleId']}
+                key={idx}
+                label={cur['name']}
+                condition={cur['introduction']}
+                date={cur['achievedDate']
+                  .slice(0, cur['achievedDate'].indexOf('T'))
+                  .replace(/-/g, '.')}
+              />
+            );
+          })}
+        </View>
+        {titleTotal > 3 ? (
+          <Pressable
+            onPress={() => navigation.navigate('Title', { userId })}
+            style={{ ...styles.viewAll, borderTopColor: `${theme.colors.graphic.black}1a` }}
+          >
+            <Text
+              style={{
+                ...theme.fonts.text.body1.regular,
+                color: `${theme.colors.graphic.black}cc`,
+              }}
+            >
+              전체보기
+            </Text>
+            <Feather name="chevron-right" size={24} color={`${theme.colors.graphic.black}cc`} />
+          </Pressable>
+        ) : null}
+        <DividerBar style={styles.divider} />
+        <ProfilePageFolderSection
+          feedList={feedList}
+          userFolderList={userFolderList}
+          feedListQueryClient={feedListQueryClient}
+          fetchNextPage={fetchNextPage}
+          profile={profile}
+          touchBookMark={touchBookMark}
           userId={userId}
-          userName={profile?.data?.nickname ?? ''}
-          isSelf={false}
+          handleFolderOption={handleFolderOption}
+          feedListIsLoading={feedListIsLoading}
         />
-      </BottomSheetModal>
-    </IOScrollView>
+        <BottomSheetModal
+          ref={modalRef}
+          snapPoints={['25%', '25%']}
+          backdropComponent={renderBackdrop}
+        >
+          <ProfileOptions
+            modalRef={modalRef}
+            userId={userId}
+            userName={profile?.data?.nickname ?? ''}
+            isSelf={false}
+          />
+        </BottomSheetModal>
+      </IOScrollView>
+    </SafeAreaView>
   );
 };
 

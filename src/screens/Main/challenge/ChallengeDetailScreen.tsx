@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Pressable,
+  SafeAreaView,
 } from 'react-native';
 import ChallengeTitle from '../../../components/header/ChallengeTitle';
 import ChallengeReaction from './ChallengeReaction';
@@ -297,13 +298,15 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
   };
 
   return (
-    <FlatList
-      data={datas[tabIndex]}
-      renderItem={renderItem}
-      ListHeaderComponent={<Header />}
-      ListEmptyComponent={isFetching ? <MainLottie /> : null}
-      onEndReached={onEndReached}
-    />
+    <SafeAreaView style={{ flex: 1 }}>
+      <FlatList
+        data={datas[tabIndex]}
+        renderItem={renderItem}
+        ListHeaderComponent={<Header />}
+        ListEmptyComponent={isFetching ? <MainLottie /> : null}
+        onEndReached={onEndReached}
+      />
+    </SafeAreaView>
   );
 };
 

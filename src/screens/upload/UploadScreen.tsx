@@ -1,6 +1,6 @@
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import DividerBar from '../../components/bars/DividerBar';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
 import UploadLinkCard from '../../components/cards/LinkCardForUpload';
@@ -182,7 +182,7 @@ const UploadScreen = ({ navigation, route }) => {
     return <MainLottie />;
   }
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView scrollToOverflowEnabled={true} contentContainerStyle={styles.container}>
         {isValidSite ? (
           <View style={styles.linkCardContainer}>
@@ -259,7 +259,7 @@ const UploadScreen = ({ navigation, route }) => {
           rightButtonColor={theme.colors.graphic.black}
         />
       </ScrollView>
-    </>
+    </SafeAreaView>
   );
 };
 

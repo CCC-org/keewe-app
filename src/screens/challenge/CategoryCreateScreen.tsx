@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { useTheme } from 'react-native-paper';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import SmallTextInput from '../../components/texts/SmallTextInput';
-import { StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 
 const CategoryCreateScreen = ({ navigation, route }) => {
   const theme = useTheme();
@@ -61,19 +61,20 @@ const CategoryCreateScreen = ({ navigation, route }) => {
   }, [input, errorMessage]);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <SmallTextInput
         inputValue={input}
         setInputValue={setInput}
         placeholder={'관심사를 입력하세요'}
         errorMessage={errorMessage}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     paddingHorizontal: 17,
     paddingTop: 20,
   },

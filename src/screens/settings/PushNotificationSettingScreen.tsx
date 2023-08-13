@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { Switch, useTheme } from 'react-native-paper';
 
@@ -7,7 +7,7 @@ const PushNotificationSettingScreen = () => {
     fonts: { text },
   } = useTheme();
   return (
-    <View>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.settingTitle}>
         <Text style={[text.headline1, { height: 28 }]}> 챌린지</Text>
       </View>
@@ -41,7 +41,7 @@ const PushNotificationSettingScreen = () => {
         </View>
         <Switch />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

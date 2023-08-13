@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -70,7 +70,11 @@ const BlockedScreen = () => {
   if (isError) return <Text>Something went wrong</Text>;
   if (isLoading) return <Text>로딩중</Text>;
 
-  return <BlockListSection blockList={blockList} mutation={mutation} />;
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <BlockListSection blockList={blockList} mutation={mutation} />
+    </SafeAreaView>
+  );
 };
 
 export default BlockedScreen;

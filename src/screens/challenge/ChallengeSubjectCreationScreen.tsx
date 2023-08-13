@@ -1,6 +1,6 @@
-import { StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
 import HeaderText from '../../components/texts/HeaderText';
 import TextInputDetail from '../../components/texts/TextInputDetail';
@@ -113,7 +113,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={{ flex: 10 }}>
         <View style={{ marginHorizontal: 10, marginBottom: 24 }}>
           <HeaderText
@@ -146,7 +146,7 @@ const ChallengeSubjectCreationScreen = ({ navigation, route }) => {
         onPress={handleCompletePress}
         keyboardResponsive={true}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

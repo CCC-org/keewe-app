@@ -1,4 +1,4 @@
-import { Pressable, RefreshControl, StyleSheet, Text, View } from 'react-native';
+import { Pressable, RefreshControl, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import MypageProfile from '../../../components/profile/MypageProfile';
 import { useTheme } from 'react-native-paper';
@@ -152,7 +152,7 @@ const MyPageScreen = ({ navigation, route }) => {
   }
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <IOScrollView
         ref={scrollViewRef}
         refreshControl={<RefreshControl refreshing={pageRefreshing} onRefresh={onRefresh} />}
@@ -287,7 +287,7 @@ const MyPageScreen = ({ navigation, route }) => {
         </BottomSheetModal>
       </IOScrollView>
       <GoToUploadButton />
-    </>
+    </SafeAreaView>
   );
 };
 

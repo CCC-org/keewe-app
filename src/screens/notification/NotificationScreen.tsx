@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { notificationApi, notificationKeys } from '../../utils/api/notification/notification';
@@ -115,7 +115,11 @@ const NotificationScreen = ({ navigation }) => {
 
   if (isLoading) return <MainLottie />;
 
-  return <FlatList data={flatData} renderItem={renderItem} onEndReached={handleOnEndReached} />;
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <FlatList data={flatData} renderItem={renderItem} onEndReached={handleOnEndReached} />
+    </SafeAreaView>
+  );
 };
 
 export default NotificationScreen;

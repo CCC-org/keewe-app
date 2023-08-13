@@ -121,6 +121,7 @@ const registerForPushNotificationsAsync = async () => {
 
 const requestMediaLibraryPermissionsAsync = async () => {
   const permissionResult = await ImagePicker.getMediaLibraryPermissionsAsync();
+  console.log('request Media');
   if (permissionResult.granted === false && permissionResult.canAskAgain) {
     await ImagePicker.requestMediaLibraryPermissionsAsync();
     return;
@@ -130,6 +131,7 @@ const requestMediaLibraryPermissionsAsync = async () => {
 
 const requestCameraPermissionsAsync = async () => {
   const permissionResult = await ImagePicker.getCameraPermissionsAsync();
+  console.log('request Camera');
   if (permissionResult.granted === false && permissionResult.canAskAgain) {
     await ImagePicker.requestCameraPermissionsAsync();
     return;
@@ -139,9 +141,6 @@ const requestCameraPermissionsAsync = async () => {
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
-  registerForPushNotificationsAsync();
-  requestCameraPermissionsAsync();
-  requestMediaLibraryPermissionsAsync();
   const printNavigationState = (state) => {
     if (state) {
       const routes = state.routes.map((route) => route.name);
@@ -155,6 +154,9 @@ export default function App() {
   if (!isLoadingComplete) {
     return null;
   } else {
+    requestCameraPermissionsAsync();
+    requestMediaLibraryPermissionsAsync();
+    registerForPushNotificationsAsync();
     return (
       <NavigationContainer
         ref={navigationRef}

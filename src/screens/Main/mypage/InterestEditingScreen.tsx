@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, SafeAreaView } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import InterestChooseSection from '../../onboarding/InterestChooseSection';
 import { TOTAL_TAG } from '../../../constants/Interests';
@@ -67,7 +67,7 @@ const InterestEditingScreen = ({ navigation, route }) => {
   }, [route]);
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <View
         style={{
           height: 50,
@@ -109,7 +109,7 @@ const InterestEditingScreen = ({ navigation, route }) => {
           />
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -6,7 +6,7 @@ import { useScrollToTop } from '@react-navigation/native';
 import GoToUploadButton from '../../components/buttons/GoToUploadButton';
 import { useQueryClient } from '@tanstack/react-query';
 import { FeedQueryKeys } from '../../utils/api/FeedAPI';
-import { RefreshControl } from 'react-native';
+import { RefreshControl, SafeAreaView } from 'react-native';
 import { IOScrollView } from 'react-native-intersection-observer';
 import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChallenge';
 import MainLottie from '../../components/lotties/MainLottie';
@@ -59,7 +59,7 @@ const FeedScreen = ({ navigation }) => {
   }
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <IOScrollView
         ref={scrollViewRef}
         refreshControl={<RefreshControl refreshing={pageRefreshing} onRefresh={onRefresh} />}
@@ -81,7 +81,7 @@ const FeedScreen = ({ navigation }) => {
         />
       </IOScrollView>
       <GoToUploadButton />
-    </>
+    </SafeAreaView>
   );
 };
 
