@@ -98,6 +98,18 @@ declare global {
           fontSize: number;
           lineHeight: number;
         };
+        podkova: {
+          regular: {
+            fontFamily: string;
+            fontSize: number;
+            lineHeight: number;
+          };
+          bold: {
+            fontFamily: string;
+            fontSize: number;
+            lineHeight: number;
+          };
+        };
       };
     }
     interface Theme {
@@ -204,10 +216,15 @@ const TEXT = {
     lineHeight: 32,
   },
   podkova: {
+    regular: {
+      fontFamily: 'podkova',
+      fontSize: 17,
+      lineHeight: 24,
+    },
     bold: {
       fontFamily: 'podkovaBold',
-      fontSize: 14,
-      lineHeight: 16,
+      fontSize: 17,
+      lineHeight: 24,
     },
   },
 };

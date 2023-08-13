@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import FeedList from './FeedList';
 import { useInfiniteFeed } from '../../utils/hooks/feedInifiniteScroll/useInfiniteFeed';
 import FeedScreenChallenge from '../../components/challenge/FeedScreenChallenge';
@@ -6,16 +6,17 @@ import { useScrollToTop } from '@react-navigation/native';
 import GoToUploadButton from '../../components/buttons/GoToUploadButton';
 import { useQueryClient } from '@tanstack/react-query';
 import { FeedQueryKeys } from '../../utils/api/FeedAPI';
-import { RefreshControl } from 'react-native';
+import { View, Text, RefreshControl, Image } from 'react-native';
 import { IOScrollView } from 'react-native-intersection-observer';
 import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChallenge';
 import MainLottie from '../../components/lotties/MainLottie';
-import MainTabHeader from '../../components/header/MainTabHeader';
 import { notificationKeys } from '../../utils/api/notification/notification';
+import { useTheme } from 'react-native-paper';
 
 const FeedScreen = ({ navigation }) => {
   const scrollViewRef = useRef<any>(null);
   const queryClient = useQueryClient();
+  const theme = useTheme();
 
   useScrollToTop(scrollViewRef);
 
@@ -54,6 +55,22 @@ const FeedScreen = ({ navigation }) => {
     };
   }, [yPos]);
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => {
+        return (
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 11 }}>
+            <Image
+              source={require('../../../assets/images/icon.png')}
+              style={{ width: 40, height: 40, marginRight: 2 }}
+            />
+            <Text style={{ ...theme.fonts.text.podkova.bold, fontSize: 18 }}>Keewe</Text>
+          </View>
+        );
+      },
+    });
+  }, []);
+
   if (feedListIsLoading) {
     return <MainLottie />;
   }
@@ -68,7 +85,6 @@ const FeedScreen = ({ navigation }) => {
           setYPos(y);
         }}
       >
-        <MainTabHeader text="홈" />
         <FeedList
           scrollViewRef={scrollViewRef}
           upperComponent={<FeedScreenChallenge />}
