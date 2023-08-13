@@ -57,7 +57,6 @@ const FeedScreen = ({ navigation }) => {
   if (feedListIsLoading) {
     return <MainLottie />;
   }
-
   return (
     <>
       <IOScrollView

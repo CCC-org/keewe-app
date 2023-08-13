@@ -17,6 +17,7 @@ const FeedTextContent = ({ contents, insightId }: FeedTextContent) => {
     navigation.push('DetailedPost', {
       screen: 'DetailedPost',
       insightId,
+      initialInsight: contents,
     });
   };
 
