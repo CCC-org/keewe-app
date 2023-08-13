@@ -19,6 +19,11 @@ interface UserSpecificChallengeSectionProps {
 const UserSpecificChallengeSection = ({
   userSpecificChallenge: challenge,
 }: UserSpecificChallengeSectionProps) => {
+  const { data: myChallengeData } = useQuery<ChallengeGetResponse['data'] | undefined>(
+    ChallengeQueryKeys.getChallengeParticipation(),
+    () => ChallengeAPI.getChallengeParticipation(),
+  );
+
   if (!challenge) return null;
   const navigation = useNavigation();
   const theme = useTheme();
@@ -26,11 +31,6 @@ const UserSpecificChallengeSection = ({
   const { formattedWeekWithCheck, today } = useMemo(
     () => getFormattedDateArray(challenge.startDate as string, challenge.dayProgresses as []),
     [challenge],
-  );
-
-  const { data: myChallengeData } = useQuery<ChallengeGetResponse['data'] | undefined>(
-    ChallengeQueryKeys.getChallengeParticipation(),
-    () => ChallengeAPI.getChallengeParticipation(),
   );
 
   const thisWeekDoneCount = challenge.dayProgresses.filter((cur) => {
