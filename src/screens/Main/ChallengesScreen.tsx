@@ -1,12 +1,4 @@
-import {
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  RefreshControl,
-  SafeAreaView,
-} from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View, RefreshControl } from 'react-native';
 import React, { useCallback, useRef, useState } from 'react';
 import { IOScrollView } from 'react-native-intersection-observer';
 import { ChallengeAPI, ChallengeQueryKeys } from '../../utils/api/ChallengeAPI';
@@ -87,159 +79,155 @@ const ChallengesScreen = ({ navigation }) => {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <IOScrollView
-        ref={scrollViewRef}
-        refreshControl={<RefreshControl refreshing={pageRefreshing} onRefresh={onRefresh} />}
-      >
-        <MainTabHeader text="챌린지" />
-        <TwoButtonModal
-          dismissable={false}
-          mainTitle={'새로운 챌린지를 만들까요?'}
-          subTitle={
-            '한 번에 하나의 챌린지에만 참여할 수 있어요.\n 현재 참여 중인 챌린지는 자동 탈퇴됩니다.'
-          }
-          visible={modalVisible}
-          onDismiss={hideModal}
-          leftButtonText={'취소'}
-          rightButtonText={'만들러 가기'}
-          leftButtonPress={() => setModalVisible(false)}
-          rightButtonPress={() => {
-            setModalVisible(false);
-            navigation.navigate('CategorySelect');
-          }}
-        />
-        {participationCheck?.participation ? (
-          <View style={{ marginBottom: 8 }}>
-            <Text
-              style={{
-                ...theme.fonts.text.headline2,
-                marginHorizontal: 16,
-                marginTop: 24,
-                marginBottom: 10,
-              }}
-            >
-              참여중인 챌린지
-            </Text>
-            <View style={{ alignItems: 'center' }}>
-              <Image
-                style={{ width: 343, height: 140 }}
-                source={require('../../../assets/images/challenge/ChallengeHome.png')}
-              />
-            </View>
-            <ChallengeProfile
-              name={challengeParticipation?.name ?? ''}
-              challengeId={challengeParticipation?.challengeId ?? 0}
-              participatingUserNumber={count?.challengerCount}
-              interest={challengeParticipation?.interest ?? ''}
-              Date={timeConverter(challengeParticipation?.startDate ?? '')}
-              highlight={true}
-              participate={true}
-            />
-          </View>
-        ) : (
-          <View style={{ alignItems: 'center', marginBottom: 16 }}>
+    <IOScrollView
+      ref={scrollViewRef}
+      refreshControl={<RefreshControl refreshing={pageRefreshing} onRefresh={onRefresh} />}
+    >
+      <MainTabHeader text="챌린지" />
+      <TwoButtonModal
+        dismissable={false}
+        mainTitle={'새로운 챌린지를 만들까요?'}
+        subTitle={
+          '한 번에 하나의 챌린지에만 참여할 수 있어요.\n 현재 참여 중인 챌린지는 자동 탈퇴됩니다.'
+        }
+        visible={modalVisible}
+        onDismiss={hideModal}
+        leftButtonText={'취소'}
+        rightButtonText={'만들러 가기'}
+        leftButtonPress={() => setModalVisible(false)}
+        rightButtonPress={() => {
+          setModalVisible(false);
+          navigation.navigate('CategorySelect');
+        }}
+      />
+      {participationCheck?.participation ? (
+        <View style={{ marginBottom: 8 }}>
+          <Text
+            style={{
+              ...theme.fonts.text.headline2,
+              marginHorizontal: 16,
+              marginTop: 24,
+              marginBottom: 10,
+            }}
+          >
+            참여중인 챌린지
+          </Text>
+          <View style={{ alignItems: 'center' }}>
             <Image
               style={{ width: 343, height: 140 }}
-              // source={require('../../../assets/images/challenge/ChallengeEmpty.png')}
-              source={require('../../../assets/images/challenge/ChallengeEmpty.png')}
+              source={require('../../../assets/images/challenge/ChallengeHome.png')}
             />
+          </View>
+          <ChallengeProfile
+            name={challengeParticipation?.name ?? ''}
+            challengeId={challengeParticipation?.challengeId ?? 0}
+            participatingUserNumber={count?.challengerCount}
+            interest={challengeParticipation?.interest ?? ''}
+            Date={timeConverter(challengeParticipation?.startDate ?? '')}
+            highlight={true}
+            participate={true}
+          />
+        </View>
+      ) : (
+        <View style={{ alignItems: 'center', marginBottom: 16 }}>
+          <Image
+            style={{ width: 343, height: 140 }}
+            // source={require('../../../assets/images/challenge/ChallengeEmpty.png')}
+            source={require('../../../assets/images/challenge/ChallengeEmpty.png')}
+          />
+          <Text
+            style={{
+              ...theme.fonts.text.body1.regular,
+              marginTop: 20,
+              color: `${theme.colors.graphic.black}80`,
+            }}
+          >
+            챌린지에 참여해보세요.
+          </Text>
+        </View>
+      )}
+      <BottomFixButton
+        isActive={true}
+        text={'새로운 챌린지 만들기'}
+        width={100}
+        onPress={() => {
+          if (participationCheck?.participation) setModalVisible(true);
+          else navigation.navigate('CategorySelect');
+        }}
+        buttonStyle={styles.button}
+        textStyle={styles.buttonText}
+      />
+      {!isChallengeHIstoryCountLoading && challengeHistoryCount?.count !== 0 && (
+        <>
+          <View style={{ backgroundColor: theme.colors.brand.surface.main, ...styles.divider }} />
+          <View style={styles.title}>
+            <Text style={{ ...theme.fonts.text.body1.bold, marginBottom: 14 }}>종료된 챌린지</Text>
             <Text
               style={{
-                ...theme.fonts.text.body1.regular,
-                marginTop: 20,
-                color: `${theme.colors.graphic.black}80`,
+                ...theme.fonts.text.body1.bold,
+                color: `${theme.colors.graphic.black}4d`,
+                marginLeft: 6,
               }}
             >
-              챌린지에 참여해보세요.
+              {challengeHistoryCount?.count}
             </Text>
           </View>
-        )}
-        <BottomFixButton
-          isActive={true}
-          text={'새로운 챌린지 만들기'}
-          width={100}
-          onPress={() => {
-            if (participationCheck?.participation) setModalVisible(true);
-            else navigation.navigate('CategorySelect');
-          }}
-          buttonStyle={styles.button}
-          textStyle={styles.buttonText}
-        />
-        {!isChallengeHIstoryCountLoading && challengeHistoryCount?.count !== 0 && (
-          <>
-            <View style={{ backgroundColor: theme.colors.brand.surface.main, ...styles.divider }} />
-            <View style={styles.title}>
-              <Text style={{ ...theme.fonts.text.body1.bold, marginBottom: 14 }}>
-                종료된 챌린지
-              </Text>
-              <Text
-                style={{
-                  ...theme.fonts.text.body1.bold,
-                  color: `${theme.colors.graphic.black}4d`,
-                  marginLeft: 6,
-                }}
-              >
-                {challengeHistoryCount?.count}
-              </Text>
-            </View>
-            {!isChallengeHIstoryLoading &&
-              challengeHistory?.map((history, index) => (
-                <ChallengeProfile
-                  key={index}
-                  challengeId={history.challengeId}
-                  name={history.challengeName}
-                  interest={history.challengeCategory}
-                  Date={timeConverter(history.startDate + ' ~ ' + history.endDate)}
-                  participate={challengeParticipation?.challengeId === history.challengeId}
-                />
-              ))}
-            <Pressable
-              onPress={() =>
-                navigation.navigate('ChallengeHistory', {
-                  currentChallenge: challengeParticipation?.challengeId,
-                })
-              }
-              style={{ ...styles.borderContainer }}
-            >
-              <Text style={{ ...theme.fonts.text.body1.regular, marginRight: 4 }}>전체보기</Text>
-              <SvgXml xml={darkChevronRightSmallXml} />
-            </Pressable>
-          </>
-        )}
-        {!isChallengeCurrentLoading && challengeCurrent?.length !== 0 && (
-          <>
-            <View style={{ backgroundColor: theme.colors.brand.surface.main, ...styles.divider }} />
-            <View style={styles.title}>
-              <Text style={{ ...theme.fonts.text.body1.bold, marginBottom: 14 }}>모든 챌린지</Text>
-            </View>
-            {challengeCurrent?.map((current, index) => (
-              <CurrentChallengeProfile
+          {!isChallengeHIstoryLoading &&
+            challengeHistory?.map((history, index) => (
+              <ChallengeProfile
                 key={index}
-                challengeId={current.challengeId}
-                name={current.challengeName}
-                interest={current.challengeCategory}
-                challengeDescription={current.challengeIntroduction}
-                insightNumber={current.insightCount}
-                participate={challengeParticipation?.challengeId === current.challengeId}
+                challengeId={history.challengeId}
+                name={history.challengeName}
+                interest={history.challengeCategory}
+                Date={timeConverter(history.startDate + ' ~ ' + history.endDate)}
+                participate={challengeParticipation?.challengeId === history.challengeId}
               />
             ))}
-            <Pressable
-              onPress={() =>
-                navigation.navigate('ChallengeCurrent', {
-                  currentChallenge: challengeParticipation?.challengeId,
-                })
-              }
-              style={{ ...styles.borderContainer }}
-            >
-              <Text style={{ ...theme.fonts.text.body1.regular, marginRight: 4 }}>전체보기</Text>
-              <SvgXml xml={darkChevronRightSmallXml} />
-            </Pressable>
-          </>
-        )}
-        <View style={{ backgroundColor: theme.colors.brand.surface.main, ...styles.divider }} />
-      </IOScrollView>
-    </SafeAreaView>
+          <Pressable
+            onPress={() =>
+              navigation.navigate('ChallengeHistory', {
+                currentChallenge: challengeParticipation?.challengeId,
+              })
+            }
+            style={{ ...styles.borderContainer }}
+          >
+            <Text style={{ ...theme.fonts.text.body1.regular, marginRight: 4 }}>전체보기</Text>
+            <SvgXml xml={darkChevronRightSmallXml} />
+          </Pressable>
+        </>
+      )}
+      {!isChallengeCurrentLoading && challengeCurrent?.length !== 0 && (
+        <>
+          <View style={{ backgroundColor: theme.colors.brand.surface.main, ...styles.divider }} />
+          <View style={styles.title}>
+            <Text style={{ ...theme.fonts.text.body1.bold, marginBottom: 14 }}>모든 챌린지</Text>
+          </View>
+          {challengeCurrent?.map((current, index) => (
+            <CurrentChallengeProfile
+              key={index}
+              challengeId={current.challengeId}
+              name={current.challengeName}
+              interest={current.challengeCategory}
+              challengeDescription={current.challengeIntroduction}
+              insightNumber={current.insightCount}
+              participate={challengeParticipation?.challengeId === current.challengeId}
+            />
+          ))}
+          <Pressable
+            onPress={() =>
+              navigation.navigate('ChallengeCurrent', {
+                currentChallenge: challengeParticipation?.challengeId,
+              })
+            }
+            style={{ ...styles.borderContainer }}
+          >
+            <Text style={{ ...theme.fonts.text.body1.regular, marginRight: 4 }}>전체보기</Text>
+            <SvgXml xml={darkChevronRightSmallXml} />
+          </Pressable>
+        </>
+      )}
+      <View style={{ backgroundColor: theme.colors.brand.surface.main, ...styles.divider }} />
+    </IOScrollView>
   );
 };
 
