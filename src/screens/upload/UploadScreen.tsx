@@ -184,7 +184,6 @@ const UploadScreen = ({ navigation, route }) => {
     return <MainLottie />;
   }
 
-  console.log('text: ', insightText);
   return (
     <>
       <ScrollView scrollToOverflowEnabled={true} contentContainerStyle={styles.container}>
