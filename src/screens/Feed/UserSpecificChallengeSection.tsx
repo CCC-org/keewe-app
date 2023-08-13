@@ -62,7 +62,12 @@ const UserSpecificChallengeSection = ({
           <SvgXml xml={rightXml} width={28} />
         </Pressable>
       </View>
-      <ThisWeekRecord current={thisWeekDoneCount} goal={myChallengeData?.insightPerWeek} />
+      <ThisWeekRecord
+        title="이번 주 기록"
+        flexDirection="row"
+        current={thisWeekDoneCount}
+        goal={myChallengeData?.insightPerWeek}
+      />
       <View style={styles.weekProgress}>
         {formattedWeekWithCheck.map((challenge) => {
           return (

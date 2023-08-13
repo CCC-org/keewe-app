@@ -7,13 +7,19 @@ import ChallengeProfile from '../../components/profile/ChallengeProfile';
 import BottomFixButton from '../../components/buttons/BottomFixButton';
 import theme from '../../theme/light';
 import { SvgXml } from 'react-native-svg';
-import darkChevronRightSmallXml from '../../constants/Icons/Chevrons/darkChevronRightSmallXml';
 import CurrentChallengeProfile from '../../components/profile/ChallengeProfileCurrent';
 import { timeConverter } from './challenge/constant';
 import TwoButtonModal from '../../components/modal/TwoButtonModal';
 import { useFocusEffect } from '@react-navigation/native';
 import MainTabHeader from '../../components/header/MainTabHeader';
 import { notificationKeys } from '../../utils/api/notification/notification';
+import { rightXml } from '../../../assets/svgs/rightXml';
+import ChallengeParticipationView from '../../components/challenge/ChallengeParticipationView';
+import { UserSpecificChallenge } from '../../types/Feed/UserSpecificChallenge';
+import {
+  UserSpecificChallengeAPI,
+  UserSpecificChallengeQueryKeys,
+} from '../../utils/api/UserSpecificChallenge';
 
 const ChallengesScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -64,6 +70,11 @@ const ChallengesScreen = ({ navigation }) => {
     () => ChallengeAPI.getChallengeHistoryCount(),
   );
 
+  const { data: userSpecificChallenge } = useQuery<UserSpecificChallenge['data'] | undefined>({
+    queryKey: UserSpecificChallengeQueryKeys.getUserSpecificChallenge(),
+    queryFn: () => UserSpecificChallengeAPI.getUserSpecificChallenge(),
+  });
+
   const onRefresh = () => {
     setPageRefreshing(true);
     queryClient.invalidateQueries(notificationKeys.checkNotification());
@@ -77,6 +88,16 @@ const ChallengesScreen = ({ navigation }) => {
       queryClient.invalidateQueries(notificationKeys.checkNotification());
     }, []),
   );
+
+  const participatingChallengeName = challengeParticipation
+    ? challengeParticipation.name.length > 20
+      ? challengeParticipation.name + '...'
+      : challengeParticipation.name
+    : '';
+
+  const thisWeekDoneCount = userSpecificChallenge?.dayProgresses.filter((cur) => {
+    return cur.check;
+  }).length;
 
   return (
     <IOScrollView
@@ -101,38 +122,44 @@ const ChallengesScreen = ({ navigation }) => {
         }}
       />
       {participationCheck?.participation ? (
-        <View style={{ marginBottom: 8 }}>
+        <View style={{ marginHorizontal: 16 }}>
+          <View style={styles.headerCtn}>
+            <Text style={theme.fonts.text.headline2}>참여중인 챌린지</Text>
+            <Pressable
+              onPress={() =>
+                navigation.navigate('ChallengeDetail', {
+                  challengeId: challengeParticipation?.name ?? '',
+                  challengeName: challengeParticipation?.challengeId ?? 0,
+                })
+              }
+              hitSlop={{
+                left: 50,
+                right: 20,
+              }}
+            >
+              <SvgXml xml={rightXml} width={28} />
+            </Pressable>
+          </View>
           <Text
             style={{
-              ...theme.fonts.text.headline2,
-              marginHorizontal: 16,
-              marginTop: 24,
-              marginBottom: 10,
+              ...theme.fonts.text.body1.regular,
+              color: theme.colors.brand.onprimary.container,
             }}
           >
-            참여중인 챌린지
+            {participatingChallengeName}
           </Text>
-          <View style={{ alignItems: 'center' }}>
-            <Image
-              style={{ width: 343, height: 140 }}
-              source={require('../../../assets/images/challenge/ChallengeHome.png')}
-            />
-          </View>
-          <ChallengeProfile
-            name={challengeParticipation?.name ?? ''}
-            challengeId={challengeParticipation?.challengeId ?? 0}
-            participatingUserNumber={count?.challengerCount}
-            interest={challengeParticipation?.interest ?? ''}
-            Date={timeConverter(challengeParticipation?.startDate ?? '')}
-            highlight={true}
-            participate={true}
+          <ChallengeParticipationView
+            current={thisWeekDoneCount}
+            insightPerWeek={challengeParticipation?.insightPerWeek}
+            startDate={challengeParticipation?.startDate}
+            endDate={challengeParticipation?.endDate}
+            dayProgresses={userSpecificChallenge?.dayProgresses}
           />
         </View>
       ) : (
         <View style={{ alignItems: 'center', marginBottom: 16 }}>
           <Image
             style={{ width: 343, height: 140 }}
-            // source={require('../../../assets/images/challenge/ChallengeEmpty.png')}
             source={require('../../../assets/images/challenge/ChallengeEmpty.png')}
           />
           <Text
@@ -161,7 +188,9 @@ const ChallengesScreen = ({ navigation }) => {
         <>
           <View style={{ backgroundColor: theme.colors.brand.surface.main, ...styles.divider }} />
           <View style={styles.title}>
-            <Text style={{ ...theme.fonts.text.body1.bold, marginBottom: 14 }}>종료된 챌린지</Text>
+            <Text style={{ ...theme.fonts.text.body1.bold, marginBottom: 14 }}>
+              참여했던 챌린지
+            </Text>
             <Text
               style={{
                 ...theme.fonts.text.body1.bold,
@@ -192,7 +221,6 @@ const ChallengesScreen = ({ navigation }) => {
             style={{ ...styles.borderContainer }}
           >
             <Text style={{ ...theme.fonts.text.body1.regular, marginRight: 4 }}>전체보기</Text>
-            <SvgXml xml={darkChevronRightSmallXml} />
           </Pressable>
         </>
       )}
@@ -222,7 +250,6 @@ const ChallengesScreen = ({ navigation }) => {
             style={{ ...styles.borderContainer }}
           >
             <Text style={{ ...theme.fonts.text.body1.regular, marginRight: 4 }}>전체보기</Text>
-            <SvgXml xml={darkChevronRightSmallXml} />
           </Pressable>
         </>
       )}
@@ -234,15 +261,21 @@ const ChallengesScreen = ({ navigation }) => {
 export default ChallengesScreen;
 
 const styles = StyleSheet.create({
+  headerCtn: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
   button: {
     width: 'auto',
     borderRadius: 12,
-    backgroundColor: '#e0f6a2',
+    backgroundColor: '#FF9417',
     marginBottom: 16,
     marginHorizontal: 16,
   },
   buttonText: {
-    color: '#486006',
+    color: '#ffffff',
   },
   divider: {
     height: 12,
@@ -257,5 +290,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     justifyContent: 'center',
     flexDirection: 'row',
+    borderTopWidth: 1,
+    borderTopColor: '#1213141a',
   },
 });
