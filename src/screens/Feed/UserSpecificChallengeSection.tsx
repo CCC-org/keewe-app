@@ -1,15 +1,16 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
 import React, { useMemo } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { UserSpecificChallenge } from '../../types/Feed/UserSpecificChallenge';
 import { useTheme } from 'react-native-paper';
 import { getFormattedDateArray } from '../../utils/helper/UserSpecificChallengeDateFormatter/formatter';
 import CircularCheckbox from '../../components/checkbox/CircularCheckbox';
-import BottomFixButton from '../../components/buttons/BottomFixButton';
-import { formatChallengeText } from '../../utils/helper/UserSpecificChallengeDateFormatter/challengeTextFormatter';
 import TodayBubble from './TodayBubble';
 import { useNavigation } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
-import { arrowRightXml } from '../../../assets/svgs/arrowRightXml';
+import { rightXml } from '../../../assets/svgs/rightXml';
+import { useQuery } from '@tanstack/react-query';
+import { ChallengeAPI, ChallengeQueryKeys } from '../../utils/api/ChallengeAPI';
+import ThisWeekRecord from '../../components/challenge/ThisWeekRecord';
 
 interface UserSpecificChallengeSectionProps {
   userSpecificChallenge: UserSpecificChallenge['data'];
@@ -18,6 +19,11 @@ interface UserSpecificChallengeSectionProps {
 const UserSpecificChallengeSection = ({
   userSpecificChallenge: challenge,
 }: UserSpecificChallengeSectionProps) => {
+  const { data: myChallengeData } = useQuery<ChallengeGetResponse['data'] | undefined>(
+    ChallengeQueryKeys.getChallengeParticipation(),
+    () => ChallengeAPI.getChallengeParticipation(),
+  );
+
   if (!challenge) return null;
   const navigation = useNavigation();
   const theme = useTheme();
@@ -27,13 +33,20 @@ const UserSpecificChallengeSection = ({
     [challenge],
   );
 
-  const challengeHeaderText = formatChallengeText(challenge.remain, challenge.startDate);
+  const thisWeekDoneCount = challenge.dayProgresses.filter((cur) => {
+    return cur.check;
+  }).length;
+
+  const limitedChallengeName =
+    challenge.challengeName.length > 17
+      ? challenge.challengeName.slice(0, 18) + '...'
+      : challenge.challengeName;
 
   const firstDay = formattedWeekWithCheck[0].day;
   return (
     <View style={{ paddingBottom: 8 }}>
       <View style={styles.headerCtn}>
-        <Text style={theme.fonts.text.headline2}>{challengeHeaderText}</Text>
+        <Text style={theme.fonts.text.headline2}>{limitedChallengeName}</Text>
         <Pressable
           onPress={() =>
             navigation.navigate('ChallengeDetail', {
@@ -46,13 +59,15 @@ const UserSpecificChallengeSection = ({
             right: 20,
           }}
         >
-          <SvgXml xml={arrowRightXml} />
+          <SvgXml xml={rightXml} width={28} />
         </Pressable>
       </View>
-
-      <Text style={[theme.fonts.text.body2.regular, styles.challengeText]}>
-        {challenge.challengeName}
-      </Text>
+      <ThisWeekRecord
+        title="이번 주 기록"
+        flexDirection="row"
+        current={thisWeekDoneCount}
+        goal={myChallengeData?.insightPerWeek}
+      />
       <View style={styles.weekProgress}>
         {formattedWeekWithCheck.map((challenge) => {
           return (
@@ -64,14 +79,6 @@ const UserSpecificChallengeSection = ({
           );
         })}
       </View>
-      <BottomFixButton
-        isActive={true}
-        text={'챌린지에 인사이트 적기'}
-        width={100}
-        onPress={() => navigation.navigate('Upload')}
-        buttonStyle={styles.button}
-        textStyle={styles.buttonText}
-      />
     </View>
   );
 };

@@ -4,6 +4,7 @@ import { SvgXml } from 'react-native-svg';
 import theme from '../../theme/light';
 import { navigate } from '../../utils/hooks/navigaton/navigator';
 import { INTEREST_ICONS } from './constant';
+import { rightXml } from '../../../assets/svgs/rightXml';
 
 interface CurrentChallengeProfileProps {
   name: string;
@@ -23,6 +24,11 @@ const CurrentChallengeProfile = ({
   challengeId,
   participate,
 }: CurrentChallengeProfileProps) => {
+  const slicedDescription = challengeDescription
+    ? challengeDescription?.length > 20
+      ? challengeDescription?.slice(0, 21) + '...'
+      : challengeDescription
+    : '';
   return (
     <Pressable
       onPress={() =>
@@ -57,7 +63,7 @@ const CurrentChallengeProfile = ({
               marginBottom: 3,
             }}
           >
-            {challengeDescription}
+            {slicedDescription}
           </Text>
           <View style={{ flexDirection: 'row' }}>
             <Text
@@ -79,6 +85,9 @@ const CurrentChallengeProfile = ({
             </Text>
           </View>
         </View>
+      </View>
+      <View style={{ justifyContent: 'center' }}>
+        <SvgXml xml={rightXml} width={28} />
       </View>
     </Pressable>
   );

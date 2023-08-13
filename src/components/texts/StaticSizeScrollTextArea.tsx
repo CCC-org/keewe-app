@@ -31,6 +31,7 @@ const StaticSizeScrollTextArea = ({
     const { text } = event.nativeEvent;
     setInputValue(text);
   };
+
   return (
     <>
       <View style={styles.container}>

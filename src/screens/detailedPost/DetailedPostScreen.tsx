@@ -36,7 +36,7 @@ import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 import { IOScrollView } from 'react-native-intersection-observer';
 
 const DetailedPostScreen = ({ navigation, route }) => {
-  const { insightId } = route.params;
+  const { insightId, initialInsight } = route.params;
   const [views] = useIncreaseView(insightId);
   const [replyInfo, setReplyInfo] = useState<ReplyInfo | undefined>();
   const [yPos, setYPos] = useState(0);
@@ -226,7 +226,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
             url={insightResponse?.data?.link?.url ?? ''}
             currentChallenge={getChallengeRecordResponse?.data?.challengeName}
             challengeId={getChallengeRecordResponse?.data?.challengeId}
-            contents={insightResponse?.data?.contents}
+            contents={insightResponse?.data?.contents ?? initialInsight ?? ''}
             reaction={insightResponse?.data?.reaction}
             authorId={profile?.data?.authorId ?? -1}
             recordText={recordText}
@@ -239,7 +239,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
             isInsightLoading={isInsightLoading}
             insightId={insightId}
             insightText={''}
-            contents={''}
+            contents={initialInsight ?? ''}
             views={views}
             url={''}
             currentChallenge={''}

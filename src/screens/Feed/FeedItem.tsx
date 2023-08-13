@@ -20,6 +20,7 @@ const FeedItem = ({ insight, localId, onBookMarkClick }: FeedItemProps) => {
   const handleOnBookMarkPress = () => {
     onBookMarkClick(id);
   };
+
   const handleProfilePress = () => {
     if (localId === null || localId === undefined) {
       alert('잠시 후 다시 시도하세요.');
@@ -29,7 +30,6 @@ const FeedItem = ({ insight, localId, onBookMarkClick }: FeedItemProps) => {
       navigation.push('MyProfile', { userId: localId, enteredByTab: false });
     else navigation.push('Profile', { userId: writer?.writerId ?? 0 });
   };
-
   return (
     <View style={styles.Feed}>
       <View style={styles.Profilecontainer}>

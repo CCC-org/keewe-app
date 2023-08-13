@@ -26,6 +26,7 @@ import MainLottie from '../../components/lotties/MainLottie';
 import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChallenge';
 import { useTheme } from 'react-native-paper';
 import TwoButtonModal from '../../components/modal/TwoButtonModal';
+import isTextNotOnlySpace from '../../utils/helper/strings/isTextNotOnlySpace';
 
 const UploadScreen = ({ navigation, route }) => {
   const { isEdit, link, insightId } = route?.params ?? {};
@@ -70,7 +71,8 @@ const UploadScreen = ({ navigation, route }) => {
       !!linkText.length &&
       !!insightText.length &&
       !isLoading &&
-      insightText.length <= insightTextLimit
+      insightText.length <= insightTextLimit &&
+      isTextNotOnlySpace(insightText)
     );
   }, [isValidSite, linkText, insightText, isLoading]);
 
@@ -181,6 +183,7 @@ const UploadScreen = ({ navigation, route }) => {
   if (isChallengeProgressLoading && isEditLoading && insightId !== undefined) {
     return <MainLottie />;
   }
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView scrollToOverflowEnabled={true} contentContainerStyle={styles.container}>
