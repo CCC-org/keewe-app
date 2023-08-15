@@ -41,6 +41,7 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
+      title: challengeName,
       headerRight: () => {
         return (
           <View style={{ flexDirection: 'row' }}>
