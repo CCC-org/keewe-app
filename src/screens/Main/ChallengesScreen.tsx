@@ -115,8 +115,9 @@ const ChallengesScreen = ({ navigation }) => {
             <Pressable
               onPress={() =>
                 navigation.navigate('ChallengeDetail', {
-                  challengeId: challengeParticipation?.name ?? '',
-                  challengeName: challengeParticipation?.challengeId ?? 0,
+                  challengeId: challengeParticipation?.challengeId ?? 0,
+                  challengeName: challengeParticipation?.name ?? '',
+                  interest: challengeParticipation?.interest ?? '',
                 })
               }
               hitSlop={{
