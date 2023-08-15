@@ -36,23 +36,10 @@ const ChallengesScreen = ({ navigation }) => {
     { onSuccess: () => setParticipated(true) },
   );
 
-  const { data: challengeParticipation, isLoading: isChallengeParticipationLoading } = useQuery(
+  const { data: challengeParticipation } = useQuery(
     ChallengeQueryKeys.getChallengeParticipation(),
     ChallengeAPI.getChallengeParticipation,
     { enabled: participated },
-  );
-
-  const { data: count, isLoading: isCountLoading } = useQuery(
-    ChallengeQueryKeys.getChallengeFriendsCount({
-      challengeId: challengeParticipation?.challengeId ?? 0,
-    }),
-    () =>
-      ChallengeAPI.getChallengeFriendsCount({
-        challengeId: challengeParticipation?.challengeId ?? 0,
-      }),
-    {
-      enabled: participated && challengeParticipation?.challengeId !== undefined,
-    },
   );
 
   const { data: challengeCurrent, isLoading: isChallengeCurrentLoading } = useQuery(
@@ -89,7 +76,7 @@ const ChallengesScreen = ({ navigation }) => {
     }, []),
   );
 
-  const participatingChallengeName = challengeParticipation
+  const participatingChallengeName = challengeParticipation?.name
     ? challengeParticipation.name.length > 20
       ? challengeParticipation.name + '...'
       : challengeParticipation.name
