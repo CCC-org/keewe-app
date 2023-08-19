@@ -5,6 +5,7 @@ import { useTheme } from 'react-native-paper';
 import { getFormattedDateArray } from '../../utils/helper/UserSpecificChallengeDateFormatter/formatter';
 import TodayBubble from '../../screens/Feed/TodayBubble';
 import CircularCheckbox from '../checkbox/CircularCheckbox';
+import ChallengeEndDate from './ChallengeEndDate';
 
 interface ChallengeParticipationViewProps {
   current?: number;
@@ -37,18 +38,7 @@ const ChallengeParticipationView = ({
           current={current}
           goal={insightPerWeek}
         />
-        <View style={styles.endDate}>
-          <Text
-            style={{
-              ...theme.fonts.text.caption1,
-              color: `${theme.colors.graphic.black}cc`,
-              marginBottom: 8,
-            }}
-          >
-            종료일
-          </Text>
-          <Text style={theme.fonts.text.podkova.bold}>{endDate}</Text>
-        </View>
+        <ChallengeEndDate endDate={endDate} />
       </View>
       <View style={styles.divider} />
       <View style={styles.weekProgress}>
