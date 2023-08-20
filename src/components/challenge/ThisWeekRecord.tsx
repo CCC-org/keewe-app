@@ -36,7 +36,7 @@ const ThisWeekRecord = ({ title, current, goal, flexDirection }: ThisWeekRecordP
           style={{
             ...theme.fonts.text.podkova.bold,
             color: theme.colors.graphic.orange,
-            marginLeft: 10,
+            marginLeft: flexDirection === 'row' ? 10 : 0,
           }}
         >
           {current}
