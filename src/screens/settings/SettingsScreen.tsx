@@ -1,4 +1,4 @@
-import { Linking, Pressable, ScrollView, StyleSheet, Text } from 'react-native';
+import { Linking, Pressable, SafeAreaView, ScrollView, StyleSheet, Text } from 'react-native';
 import React, { useState } from 'react';
 import { useTheme } from 'react-native-paper';
 import DividerBar from '../../components/bars/DividerBar';
@@ -61,7 +61,7 @@ const SettingsScreen = () => {
   };
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
         <Pressable onPress={() => navigation.navigate('FolderEdit')} style={styles.settingOption}>
           <Text style={theme.fonts.text.body1.regular}>폴더 편집</Text>
@@ -120,7 +120,7 @@ const SettingsScreen = () => {
         leftButtonPress={() => setIsWithdrawalModalVisible(false)}
         rightButtonPress={handleWithdrawal}
       />
-    </>
+    </SafeAreaView>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { TOTAL_TAG } from '../../constants/Interests';
 import ChallengeCategorySelectSection from './ChallengeCategorySelectSection';
@@ -34,7 +34,7 @@ const CategorySelectScreen = ({ navigation, route }) => {
   }, [route.params]);
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.container}>
         <View>
           <View style={{ marginHorizontal: 10 }}>
@@ -62,7 +62,7 @@ const CategorySelectScreen = ({ navigation, route }) => {
           onPress={handleNextClick}
         />
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 

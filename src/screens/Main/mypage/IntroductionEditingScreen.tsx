@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import HeaderRightButton from '../../../components/header/HeaderRightButton';
 import { useTheme } from 'react-native-paper';
@@ -57,7 +57,7 @@ const IntroductionEditingScreen = ({ navigation, route }) => {
   }, [route]);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <CountingTextArea
         placeholder="자신을 자유롭게 표현해보세요."
         inputValue={input}
@@ -65,7 +65,7 @@ const IntroductionEditingScreen = ({ navigation, route }) => {
         height={214}
         autoFocus={true}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

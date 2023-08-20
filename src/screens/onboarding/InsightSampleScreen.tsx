@@ -1,6 +1,6 @@
 /* eslint-disable quotes */
 import React, { useState, useLayoutEffect } from 'react';
-import { Pressable, Text, View, StyleSheet, ScrollView } from 'react-native';
+import { Pressable, Text, View, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import HeaderText from '../../components/texts/HeaderText';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
@@ -39,7 +39,7 @@ const InsightSampleScreen = ({ navigation, route }) => {
   });
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={{ backgroundColor: theme.colors.brand.surface.main }}>
         <View style={styles.container}>
           <View
@@ -183,7 +183,7 @@ const InsightSampleScreen = ({ navigation, route }) => {
           </BezierAnimatedPopupView>
         </View>
       )}
-    </>
+    </SafeAreaView>
   );
 };
 

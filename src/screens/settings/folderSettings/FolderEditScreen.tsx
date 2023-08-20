@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { MypageAPI, MypageQueryKeys } from '../../../utils/api/mypageAPI';
@@ -75,7 +75,7 @@ const FolderEditScreen = ({ navigation }) => {
   if (!userFolderList) return <Text>FETCHING FOLDERS UNSUCCESSFUL</Text>;
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <FolderEditSection userFolderList={userFolderList} />
       <BottomSheetModal
         ref={modalRefAdd}
@@ -103,7 +103,7 @@ const FolderEditScreen = ({ navigation }) => {
           </View>
         </View>
       </BottomSheetModal>
-    </>
+    </SafeAreaView>
   );
 };
 

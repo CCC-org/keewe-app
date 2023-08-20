@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import ChallengeUserProfile from '../../../components/profile/ChallengeUserProfile';
 import HeaderText from '../../../components/texts/HeaderText';
 import theme from '../../../theme/light';
@@ -31,7 +31,7 @@ const ChallengeParticipationScreen = ({ route }) => {
   );
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.mainContainer}>
         {!isChallengeDetailLoading && (
           <>
@@ -151,7 +151,7 @@ const ChallengeParticipationScreen = ({ route }) => {
           setModalVisible(false);
         }}
       />
-    </>
+    </SafeAreaView>
   );
 };
 

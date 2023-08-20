@@ -1,11 +1,11 @@
 import React from 'react';
-import { Text, View, StyleSheet, Pressable } from 'react-native';
+import { Text, View, StyleSheet, Pressable, SafeAreaView } from 'react-native';
 import theme from '../../theme/light';
 
 const ErrorScreen = ({ navigation, route }) => {
   const { error } = route.params;
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View>
         <Text style={{ fontFamily: 'pretendardSemiBold', marginBottom: 150 }}>
           {error.response.data.message}
@@ -21,7 +21,7 @@ const ErrorScreen = ({ navigation, route }) => {
           홈으로 돌아가기
         </Text>
       </Pressable>
-    </View>
+    </SafeAreaView>
   );
 };
 

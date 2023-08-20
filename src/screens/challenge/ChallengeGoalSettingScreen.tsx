@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, SafeAreaView } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
 import Stepper from '../../components/stepper/Stepper';
@@ -29,36 +29,34 @@ const ChallengeGoalSettingScreen = ({ navigation, route }) => {
   };
 
   return (
-    <>
-      <View style={{ margin: 10 }}>
-        <View style={{ marginHorizontal: 10 }}>
-          <Text style={theme.fonts.text.display}>나만의 목표를 세우세요</Text>
-        </View>
-        <View style={{ marginHorizontal: 6 }}>
-          <Stepper totalStep={3} currentStep={3} />
-        </View>
-
-        <ChallengeGoalSettingSection
-          step={step}
-          recordPerWeek={recordPerWeek}
-          setRecordPerWeek={setRecordPerWeek}
-          participationPerWeek={participationPerWeek}
-          setParticipationPerWeek={setParticipationPerWeek}
-          isExpanded={isExpanded}
-          setIsExpanded={setIsExpanded}
-        />
-        <View style={{ marginTop: 24 }}>
-          <ConditionalButton
-            isActive={true}
-            text={isNext ? '다음' : '완료'}
-            color={isNext ? theme.colors.brand.primary.container : theme.colors.graphic.black}
-            textColor={isNext ? theme.colors.graphic.black : theme.colors.graphic.white}
-            width={150}
-            onPress={handleNextClick}
-          />
-        </View>
+    <SafeAreaView style={{ margin: 10 }}>
+      <View style={{ marginHorizontal: 10 }}>
+        <Text style={theme.fonts.text.display}>나만의 목표를 세우세요</Text>
       </View>
-    </>
+      <View style={{ marginHorizontal: 6 }}>
+        <Stepper totalStep={3} currentStep={3} />
+      </View>
+
+      <ChallengeGoalSettingSection
+        step={step}
+        recordPerWeek={recordPerWeek}
+        setRecordPerWeek={setRecordPerWeek}
+        participationPerWeek={participationPerWeek}
+        setParticipationPerWeek={setParticipationPerWeek}
+        isExpanded={isExpanded}
+        setIsExpanded={setIsExpanded}
+      />
+      <View style={{ marginTop: 24 }}>
+        <ConditionalButton
+          isActive={true}
+          text={isNext ? '다음' : '완료'}
+          color={isNext ? theme.colors.brand.primary.container : theme.colors.graphic.black}
+          textColor={isNext ? theme.colors.graphic.black : theme.colors.graphic.white}
+          width={150}
+          onPress={handleNextClick}
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 

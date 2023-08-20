@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import { SafeAreaView, Text, View } from 'react-native';
 import React, { useMemo, useState } from 'react';
 import Stepper from '../../components/stepper/Stepper';
 import ChallengeGoalSettingSection from './ChallengeGoalSettingSection';
@@ -57,7 +57,7 @@ const ChallengeJoinScreen = ({ navigation, route }) => {
   return (
     <>
       {!isCheckLoading && (
-        <>
+        <SafeAreaView style={{ flex: 1 }}>
           <View style={{ marginHorizontal: 10 }}>
             <Text style={theme.fonts.text.display}>나만의 목표를 세우세요</Text>
           </View>
@@ -83,9 +83,9 @@ const ChallengeJoinScreen = ({ navigation, route }) => {
               onPress={handleNextClick}
             />
           </View>
-        </>
+        </SafeAreaView>
       )}
-      <View style={{ margin: 10 }}>
+      <SafeAreaView style={{ margin: 10 }}>
         <TwoButtonModal
           dismissable={false}
           mainTitle={'챌린지는 1개만 참여할 수 있어요.'}
@@ -100,7 +100,7 @@ const ChallengeJoinScreen = ({ navigation, route }) => {
           }}
           rightButtonPress={() => setModalVisible(false)}
         />
-      </View>
+      </SafeAreaView>
     </>
   );
 };

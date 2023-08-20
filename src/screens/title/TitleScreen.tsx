@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, SafeAreaView } from 'react-native';
 import React, { useState } from 'react';
 import { useTitles } from '../../utils/hooks/title/useTitles';
 import TitleSticker from './TitleSticker';
@@ -28,43 +28,45 @@ const TitleScreen = ({ route, navigation }) => {
     toScreen: 'ProfileEdit',
   };
   return (
-    <ScrollView style={styles.mainContainer} contentContainerStyle={{ paddingBottom: 100 }}>
-      {Object.values(titleMap).map((titleContainer) => {
-        const filteredTitle = titleMetaArr.filter(
-          (titleMeta) => titleMeta.category_kor === titleContainer.name,
-        );
-        return (
-          <View key={titleContainer.name} style={styles.achievementContainer}>
-            <View style={{ flexDirection: 'row' }}>
-              <Text style={[theme.fonts.text.headline2]}>{titleContainer.name}</Text>
-              <Text
-                style={[
-                  theme.fonts.text.headline2,
-                  { marginLeft: 6, color: '#18192060', marginBottom: 12 },
-                ]}
-              >
-                {filteredTitle.length}
-              </Text>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView style={styles.mainContainer} contentContainerStyle={{ paddingBottom: 100 }}>
+        {Object.values(titleMap).map((titleContainer) => {
+          const filteredTitle = titleMetaArr.filter(
+            (titleMeta) => titleMeta.category_kor === titleContainer.name,
+          );
+          return (
+            <View key={titleContainer.name} style={styles.achievementContainer}>
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={[theme.fonts.text.headline2]}>{titleContainer.name}</Text>
+                <Text
+                  style={[
+                    theme.fonts.text.headline2,
+                    { marginLeft: 6, color: '#18192060', marginBottom: 12 },
+                  ]}
+                >
+                  {filteredTitle.length}
+                </Text>
+              </View>
+              <View style={styles.titlesContainer}>
+                {filteredTitle.map((titleMeta) => {
+                  return (
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    <TitleSticker
+                      isEnteredByProfileEdit={isEnteredByProfileEdit}
+                      key={titleMeta.id}
+                      achievedTitles={userTitles.achievedTitles}
+                      repTitleId={userTitles?.repTitleId}
+                      titleMeta={titleMeta}
+                      editObject={isEnteredByProfileEdit ? editObject : null}
+                    />
+                  );
+                })}
+              </View>
             </View>
-            <View style={styles.titlesContainer}>
-              {filteredTitle.map((titleMeta) => {
-                return (
-                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                  <TitleSticker
-                    isEnteredByProfileEdit={isEnteredByProfileEdit}
-                    key={titleMeta.id}
-                    achievedTitles={userTitles.achievedTitles}
-                    repTitleId={userTitles?.repTitleId}
-                    titleMeta={titleMeta}
-                    editObject={isEnteredByProfileEdit ? editObject : null}
-                  />
-                );
-              })}
-            </View>
-          </View>
-        );
-      })}
-    </ScrollView>
+          );
+        })}
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

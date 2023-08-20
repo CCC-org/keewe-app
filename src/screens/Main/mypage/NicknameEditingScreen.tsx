@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import HeaderRightButton from '../../../components/header/HeaderRightButton';
 import { useTheme } from 'react-native-paper';
@@ -66,14 +66,14 @@ const NicknameEditingScreen = ({ navigation, route }) => {
   }, [input]);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <SmallTextInput
         inputValue={input}
         setInputValue={setInput}
         placeholder="이름을 입력하세요."
         errorMessage={errorMessage}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

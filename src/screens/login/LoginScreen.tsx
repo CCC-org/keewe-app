@@ -1,6 +1,6 @@
 import React from 'react';
 import { WebView } from 'react-native-webview';
-import { View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { LoginQueryKeys, LoginAPI } from '../../utils/api/LoginAPI';
 import * as Notifications from 'expo-notifications';
@@ -58,7 +58,7 @@ function Login({ navigation, route }) {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <WebView
         userAgent="Chrome"
         sharedCookiesEnabled={true}
@@ -76,7 +76,7 @@ function Login({ navigation, route }) {
           getCode(data);
         }}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

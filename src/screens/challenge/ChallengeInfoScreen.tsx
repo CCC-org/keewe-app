@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect, useLayoutEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import HeaderRightButton from '../../components/header/HeaderRightButton';
 import Stepper from '../../components/stepper/Stepper';
@@ -52,23 +52,21 @@ const ChallengeInfoScreen = ({ navigation, route }) => {
   }, [isActive, hasError, challengeName, challengeInfo]);
 
   return (
-    <>
-      <View style={styles.container}>
-        <View style={{ marginHorizontal: 10 }}>
-          <Text style={theme.fonts.text.display}>챌린지에 대해 알려주세요</Text>
-        </View>
-        <View style={{ marginHorizontal: 6 }}>
-          <Stepper totalStep={3} currentStep={2} />
-        </View>
-        <ChallengeInfoSection
-          challengeName={challengeName}
-          setChallengeName={setChallengeName}
-          challengeInfo={challengeInfo}
-          setChallengeInfo={setChallengeInfo}
-          errorMessage={errorMessage}
-        />
+    <SafeAreaView style={styles.container}>
+      <View style={{ marginHorizontal: 10 }}>
+        <Text style={theme.fonts.text.display}>챌린지에 대해 알려주세요</Text>
       </View>
-    </>
+      <View style={{ marginHorizontal: 6 }}>
+        <Stepper totalStep={3} currentStep={2} />
+      </View>
+      <ChallengeInfoSection
+        challengeName={challengeName}
+        setChallengeName={setChallengeName}
+        challengeInfo={challengeInfo}
+        setChallengeInfo={setChallengeInfo}
+        errorMessage={errorMessage}
+      />
+    </SafeAreaView>
   );
 };
 

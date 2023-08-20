@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, SafeAreaView } from 'react-native';
 import React, { useCallback, useEffect, useRef } from 'react';
 import HeaderText from '../../components/texts/HeaderText';
 import { useTheme } from 'react-native-paper';
@@ -44,7 +44,7 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <HeaderText
         header={'챌린지를 만들었어요!'}
         subTitle={
@@ -139,7 +139,7 @@ const ChallengeCreationApprovedScreen = ({ navigation, route }) => {
           onCancel={onCancel}
         />
       </BottomSheetModal>
-    </View>
+    </SafeAreaView>
   );
 };
 

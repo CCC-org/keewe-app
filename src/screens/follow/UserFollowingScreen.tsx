@@ -5,6 +5,7 @@ import { FollowListApi, FollowListKeys } from '../../utils/api/followList/follow
 import FollowListSection from './FollowListSection';
 import { FollowAPI } from '../../utils/api/FollowAPI';
 import { Follows } from '../../types/followerList/followers';
+import { SafeAreaView } from 'react-native';
 
 const UserFolloweeScreen = ({ route }) => {
   const { userId } = route.params;
@@ -35,13 +36,13 @@ const UserFolloweeScreen = ({ route }) => {
     },
   });
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <FollowListSection
         mutation={mutation}
         followList={followList}
         fetchNextPage={fetchNextPage}
       />
-    </>
+    </SafeAreaView>
   );
 };
 
