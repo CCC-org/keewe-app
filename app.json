@@ -31,7 +31,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.CCC.keewe",
-      "versionCode": 10,
+      "versionCode": 13,
       "intentFilters": [
         {
           "action": "VIEW",
