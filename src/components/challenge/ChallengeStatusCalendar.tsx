@@ -26,7 +26,7 @@ const ChallengeStatusCalendar = ({
         <View style={styles.days}>
           {daysOfWeek.map((day, index) => (
             <Text
-              key={index}
+              key={day}
               style={{
                 ...theme.fonts.text.caption1,
                 color: `${theme.colors.graphic.black}80`,

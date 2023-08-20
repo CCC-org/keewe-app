@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useMemo } from 'react';
 import ThisWeekRecord from './ThisWeekRecord';
-import { useTheme } from 'react-native-paper';
 import { getFormattedDateArray } from '../../utils/helper/UserSpecificChallengeDateFormatter/formatter';
 import TodayBubble from '../../screens/Feed/TodayBubble';
 import CircularCheckbox from '../checkbox/CircularCheckbox';
@@ -22,8 +21,6 @@ const ChallengeParticipationView = ({
   endDate,
   dayProgresses,
 }: ChallengeParticipationViewProps) => {
-  const theme = useTheme();
-
   const { formattedWeekWithCheck, today } = useMemo(
     () => getFormattedDateArray(startDate as string, dayProgresses as []),
     [current, insightPerWeek, startDate, endDate, dayProgresses],
