@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import { useTheme } from 'react-native-paper';
 import { useQuery } from '@tanstack/react-query';
@@ -9,6 +9,7 @@ import {
 import { ChallengeStatusData } from '../../../types/Feed/UserSpecificChallenge';
 import ThisWeekRecord from '../../../components/challenge/ThisWeekRecord';
 import ChallengeEndDate from '../../../components/challenge/ChallengeEndDate';
+import ChallengeStatusCalendar from '../../../components/challenge/ChallengeStatusCalendar';
 
 const ChallengeStatusSection = () => {
   const theme = useTheme();
@@ -28,6 +29,12 @@ const ChallengeStatusSection = () => {
         />
         <ChallengeEndDate endDate={data?.endDate} />
       </View>
+      <View style={styles.divider} />
+      <ChallengeStatusCalendar
+        duration={data?.duration}
+        recordedDates={data?.recordedDates}
+        startDate={data?.startDate}
+      />
     </View>
   );
 };
@@ -36,14 +43,23 @@ export default ChallengeStatusSection;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 12,
+    marginTop: 24,
     borderWidth: 1,
     borderColor: '#1213141a',
     borderRadius: 12,
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    paddingBottom: 20,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#1213141a',
+    marginTop: 10,
+    marginBottom: 16,
+    marginHorizontal: 8,
   },
 });

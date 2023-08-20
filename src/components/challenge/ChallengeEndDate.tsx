@@ -8,6 +8,8 @@ interface ChallengeEndDateProps {
 
 const ChallengeEndDate = ({ endDate }: ChallengeEndDateProps) => {
   const theme = useTheme();
+  const parts = endDate ? endDate.split('-') : '';
+  const convertedEndDate = parts.length === 3 ? `${parts[0]}.${parts[1]}.${parts[2]}` : endDate;
   return (
     <View style={styles.endDate}>
       <Text
@@ -19,7 +21,7 @@ const ChallengeEndDate = ({ endDate }: ChallengeEndDateProps) => {
       >
         종료일
       </Text>
-      <Text style={theme.fonts.text.podkova.bold}>{endDate}</Text>
+      <Text style={theme.fonts.text.podkova.bold}>{convertedEndDate}</Text>
     </View>
   );
 };
