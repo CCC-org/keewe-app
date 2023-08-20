@@ -27,6 +27,8 @@ import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChal
 import { useTheme } from 'react-native-paper';
 import TwoButtonModal from '../../components/modal/TwoButtonModal';
 import isTextNotOnlySpace from '../../utils/helper/strings/isTextNotOnlySpace';
+import { useFocusEffect } from '@react-navigation/native';
+import * as Clipboard from 'expo-clipboard';
 
 const UploadScreen = ({ navigation, route }) => {
   const { isEdit, link, insightId } = route?.params ?? {};
@@ -183,6 +185,37 @@ const UploadScreen = ({ navigation, route }) => {
   if (isChallengeProgressLoading && isEditLoading && insightId !== undefined) {
     return <MainLottie />;
   }
+
+  useFocusEffect(
+    useCallback(() => {
+      const getClipboard = async () => {
+        const clipboard = await Clipboard.getStringAsync();
+        if (clipboard.startsWith('http')) {
+          try {
+            await fetch(clipboard, {
+              method: 'HEAD',
+            }); // 메타데이터 불러오기
+            Toast.show({
+              type: 'copySnackbar',
+              text1: '복사한 링크가 있어요',
+              text2: '붙여넣기',
+              onPress: () => {
+                console.log(clipboard);
+                setLinkText(clipboard);
+                setIsValidSite(true);
+                Toast.hide();
+              },
+              position: 'bottom',
+            });
+            return;
+          } catch (error) {
+            return;
+          }
+        }
+      };
+      getClipboard();
+    }, []),
+  );
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

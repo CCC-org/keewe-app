@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { Dispatch, forwardRef, SetStateAction, useState } from 'react';
 import { Text, View, TextInput, StyleSheet, Pressable, Platform } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import theme from '../../theme/light';
@@ -8,37 +8,51 @@ import AnimatedHeightView from '../views/AnimatedHeightView';
 import ClearSmallXml from '../../constants/Icons/Clear/ClearSmallXml';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InsightAPI } from '../../utils/api/InsightAPI';
+import { useGetUserId } from '../../utils/hooks/useGetUserId';
 
 interface CommentInputProps {
   insightId: number;
   replyInfo?: ReplyInfo;
   onCancelReply: () => void;
   onCreate: (response: CommentCreateResponse) => void;
+  setComment: Dispatch<SetStateAction<Comment[]>>;
 }
 
 export type ReplyInfo = {
   id: number;
   nickname: string;
 };
+
 const bottom = Platform.OS === 'ios' ? 80 : 0;
 
 const CommentInput = forwardRef(
   (
-    { insightId, replyInfo, onCancelReply, onCreate }: CommentInputProps,
+    { insightId, replyInfo, onCancelReply, onCreate, setComment }: CommentInputProps,
     ref: React.LegacyRef<TextInput>,
   ) => {
     const [input, setInput] = useState<string>('');
-    const queryClient = useQueryClient();
     const { mutate: createComment } = useMutation(InsightAPI.createComment, {
       onSuccess: (response) => {
-        queryClient.invalidateQueries(['comment']);
         onCreate(response);
+        setComment((prev) => {
+          if (replyInfo) {
+            const index = prev.findIndex((comment) => comment.id === replyInfo.id);
+            const updatedReply = {
+              ...prev[index],
+              replies: [response.data as Reply, ...(prev[index].replies ?? [])],
+            };
+
+            return [...prev.slice(0, index), updatedReply, ...prev.slice(index + 1)];
+          }
+          return [response.data, ...prev] as Comment[];
+        });
       },
     });
 
     const handleCancelReply = () => {
       onCancelReply();
     };
+
     return (
       <View style={[styles.Container, { bottom }]}>
         {replyInfo && (

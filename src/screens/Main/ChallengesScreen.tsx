@@ -98,7 +98,7 @@ const ChallengesScreen = ({ navigation }) => {
   );
 
   const participatingChallengeName = challengeParticipation
-    ? challengeParticipation.name.length > 20
+    ? challengeParticipation.name?.length > 20
       ? challengeParticipation.name + '...'
       : challengeParticipation.name
     : '';
@@ -159,9 +159,9 @@ const ChallengesScreen = ({ navigation }) => {
             </Text>
             <ChallengeParticipationView
               current={thisWeekDoneCount}
-              insightPerWeek={challengeParticipation?.insightPerWeek}
-              startDate={challengeParticipation?.startDate}
-              endDate={challengeParticipation?.endDate}
+              insightPerWeek={challengeParticipation?.insightPerWeek ?? 0}
+              startDate={challengeParticipation?.startDate ?? ''}
+              endDate={challengeParticipation?.endDate ?? ''}
               dayProgresses={userSpecificChallenge?.dayProgresses}
             />
           </View>

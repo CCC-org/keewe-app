@@ -45,9 +45,7 @@ interface CommentCreateRequest {
 interface CommentCreateResponse {
   message: string;
   code: number;
-  data: {
-    commentId: Comment['id'];
-  };
+  data: Comment | Reply;
 }
 
 interface Comment {
