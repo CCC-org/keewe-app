@@ -15,3 +15,20 @@ export interface Data {
 export interface DayProgress {
   check: boolean;
 }
+
+export interface UserChallengeStatus {
+  message: string;
+  code: number;
+  data: ChallengeStatusData;
+}
+
+export interface ChallengeStatusData {
+  challengeName: string;
+  challengeIntroduction: string;
+  current: number;
+  total: number;
+  duration: number;
+  startDate: string;
+  endDate: string;
+  recordedDates: string[];
+}

@@ -52,6 +52,7 @@ const UserSpecificChallengeSection = ({
             navigation.navigate('ChallengeDetail', {
               challengeId: challenge.challengeId,
               challengeName: challenge.challengeName,
+              interest: myChallengeData?.interest,
             })
           }
           hitSlop={{
