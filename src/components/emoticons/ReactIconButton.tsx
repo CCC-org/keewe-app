@@ -97,7 +97,6 @@ const ReactIconButton = ({ xml, color, taps, name, insightId }: ReactIconButtonP
                   inputRange: [0, 1],
                   outputRange: [theme.colors.graphic.black, theme.colors.graphic.white],
                 }),
-                ...theme.fonts.text.podkova.bold,
                 marginLeft: 4,
                 fontFamily: 'podkovaBold',
                 fontSize: 14,
