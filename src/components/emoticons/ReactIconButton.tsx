@@ -99,6 +99,9 @@ const ReactIconButton = ({ xml, color, taps, name, insightId }: ReactIconButtonP
                 }),
                 ...theme.fonts.text.podkova.bold,
                 marginLeft: 4,
+                fontFamily: 'podkovaBold',
+                fontSize: 14,
+                lineHeight: 16,
               }}
             >
               <Text>{text}</Text>
