@@ -63,14 +63,8 @@ const ReactIconButton = ({ xml, color, taps, name, insightId }: ReactIconButtonP
         duration: 1200,
         easing: Easing.bezier(0.5, 1.0, 0.5, 1.0),
       },
-      show: {
-        fromValue: 1,
-        toValue: 1,
-      },
-      hide: {
-        fromValue: 1,
-        toValue: 0,
-      },
+      show: {},
+      hide: {},
     }),
     [object],
   );
