@@ -54,7 +54,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "^0.71.7",
-    "react-native-flying-objects": "^1.1.6",
+    "react-native-flying-objects": "^1.1.8",
     "react-native-gesture-handler": "~2.9.0",
     "react-native-intersection-observer": "^0.0.9",
     "react-native-pager-view": "6.1.2",

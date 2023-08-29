@@ -46,6 +46,7 @@ const ReactIconButton = ({ xml, color, taps, name, insightId }: ReactIconButtonP
 
   const objectConfig = useMemo(
     () => ({
+      object: <SvgXml xml={xml} height={20} width={20} />,
       right: {
         fromValue: 15,
         toValue: Math.floor(Math.random() * 30),
@@ -104,9 +105,7 @@ const ReactIconButton = ({ xml, color, taps, name, insightId }: ReactIconButtonP
         <FlyingView
           object={object}
           containerProps={{ style: { position: 'absolute', bottom: 20 } }}
-        >
-          <SvgXml xml={xml} height={20} width={20} />
-        </FlyingView>
+        />
       </Pressable>
     </>
   );
