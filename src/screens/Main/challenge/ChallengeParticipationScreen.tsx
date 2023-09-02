@@ -3,17 +3,21 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import ChallengeUserProfile from '../../../components/profile/ChallengeUserProfile';
 import HeaderText from '../../../components/texts/HeaderText';
-import theme from '../../../theme/light';
 import { ChallengeAPI, ChallengeQueryKeys } from '../../../utils/api/ChallengeAPI';
-import { timeConverter } from './constant';
 import ConditionalButton from '../../../components/buttons/ConditionalButton';
 import { navigate } from '../../../utils/hooks/navigaton/navigator';
 import TwoButtonModal from '../../../components/modal/TwoButtonModal';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useGetUserId } from '../../../utils/hooks/useGetUserId';
+import { useTheme } from 'react-native-paper';
+import StatisticsReactionCountInfo from '../../statistics/StatisticsReactionCountInfo';
+import reaction from '../../../../assets/svgs/StatisticIcon/reaction';
+import comment from '../../../../assets/svgs/StatisticIcon/comment';
+import bookmark from '../../../../assets/svgs/StatisticIcon/bookmark';
+import insights from '../../../../assets/svgs/StatisticIcon/insights';
 
 const ChallengeParticipationScreen = ({ route }) => {
-  const { challengeId } = route.params;
+  const theme = useTheme();
+  const { challengeId, interest } = route.params;
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   const { data: challengeDetail, isLoading: isChallengeDetailLoading } = useQuery(
@@ -38,45 +42,36 @@ const ChallengeParticipationScreen = ({ route }) => {
             <HeaderText
               header={challengeDetail?.challengeName}
               subTitle={challengeDetail?.challengeIntroduction}
+              interest={interest}
             />
-            <Text
-              style={{
-                ...theme.fonts.text.body1.regular,
-                color: `${theme.colors.graphic.black}80`,
-                marginTop: 16,
-              }}
-            >
-              {timeConverter(challengeDetail?.createdAt ?? '')} 생성됨
-            </Text>
-            <View style={{ flexDirection: 'row', marginTop: 8 }}>
-              <Text
-                style={{
-                  ...theme.fonts.text.body1.regular,
-                  color: `${theme.colors.graphic.black}80`,
-                  marginRight: 4,
-                }}
-              >
-                지금까지 모인 인사이트
-              </Text>
-              <Text
-                style={{
-                  ...theme.fonts.text.body1.bold,
-                  color: `${theme.colors.brand.onprimary.container}`,
-                }}
-              >
-                {challengeDetail?.insightCount}개
-              </Text>
-            </View>
           </>
         )}
+        <View
+          style={{
+            backgroundColor: theme.colors.brand.surface.main,
+            ...styles.statisticsContainer,
+          }}
+        >
+          <Text style={{ ...theme.fonts.text.caption1, color: `${theme.colors.graphic.black}cc` }}>
+            누적 챌린지 통계
+          </Text>
+          <View style={styles.statisticsIconsArea}>
+            <StatisticsReactionCountInfo
+              xml={insights}
+              count={challengeDetail?.insightCount ?? 0}
+            />
+            <StatisticsReactionCountInfo xml={reaction} count={0} />
+            <StatisticsReactionCountInfo xml={comment} count={0} />
+            <StatisticsReactionCountInfo xml={bookmark} count={0} />
+          </View>
+        </View>
         {!isCountLoading && !isCountLoading && (
-          <View>
+          <>
             <View style={styles.listHeader}>
               <Text
                 style={{
                   ...theme.fonts.text.headline2,
                   color: theme.colors.graphic.black,
-                  marginTop: 24,
                   marginBottom: 10,
                 }}
               >
@@ -86,7 +81,6 @@ const ChallengeParticipationScreen = ({ route }) => {
                 style={{
                   ...theme.fonts.text.headline2,
                   color: `${theme.colors.graphic.black}4d`,
-                  marginTop: 24,
                   marginBottom: 10,
                   marginLeft: 6,
                 }}
@@ -109,7 +103,7 @@ const ChallengeParticipationScreen = ({ route }) => {
                 );
               })}
             </View>
-          </View>
+          </>
         )}
       </ScrollView>
 
@@ -123,18 +117,18 @@ const ChallengeParticipationScreen = ({ route }) => {
         }}
       >
         <ConditionalButton
-          text={'참여하기'}
+          text={'둘러보기'}
           color={theme.colors.brand.primary.container}
           width={180}
           textColor={theme.colors.brand.onprimary.container}
-          onPress={() => setModalVisible(true)}
+          onPress={() => navigate('Challenges', {})}
         />
         <ConditionalButton
-          text={'둘러보기'}
+          text={'참여하기'}
           color={theme.colors.graphic.black}
           width={180}
           textColor={theme.colors.graphic.white}
-          onPress={() => navigate('Challenges', {})}
+          onPress={() => setModalVisible(true)}
         />
       </View>
       <TwoButtonModal
@@ -162,8 +156,22 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginVertical: 10,
   },
+  statisticsContainer: {
+    alignItems: 'center',
+    marginVertical: 24,
+    borderWidth: 1,
+    borderColor: '#1213141a',
+    borderRadius: 12,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+  },
+  statisticsIconsArea: {
+    width: '75%',
+    marginTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   listHeader: {
-    marginTop: 32,
     flexDirection: 'row',
   },
   gradient: {

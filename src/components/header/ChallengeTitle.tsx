@@ -28,7 +28,9 @@ const ChallengeTitle = ({ title, category, startDate, challengeIntroduction }: C
           <SvgXml xml={INTEREST_ICONS[category] ?? INTEREST_ICONS['기본']} />
         </View>
       </View>
-      <Text style={{ ...theme.fonts.text.body2.regular, width: 280 }}>{challengeIntroduction}</Text>
+      <Text style={{ ...theme.fonts.text.body2.regular, width: '80%' }}>
+        {challengeIntroduction}
+      </Text>
     </View>
   );
 };
