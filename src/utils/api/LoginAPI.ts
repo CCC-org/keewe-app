@@ -3,6 +3,7 @@ import httpClient from './BaseHttpClient';
 
 export const LoginQueryKeys = {
   login: (request: LoginRequest) => ['login', request],
+  getAccount: () => ['login', 'account'],
 };
 
 export const LoginAPI = {
@@ -36,6 +37,16 @@ export const LoginAPI = {
       return data;
     } catch (e) {
       throw new Error('탈퇴 실패');
+    }
+  },
+  getAccountInfo: async () => {
+    try {
+      const { data } = await httpClient.get<AccountResponse>(
+        'https://api-keewe.com/api/v1/user/profile/account',
+      );
+      return data;
+    } catch {
+      throw new Error('계정 불러오기 실패');
     }
   },
 };
