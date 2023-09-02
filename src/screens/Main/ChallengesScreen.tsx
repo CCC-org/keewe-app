@@ -169,17 +169,7 @@ const ChallengesScreen = ({ navigation }) => {
             </Text>
           </View>
         )}
-        <BottomFixButton
-          isActive={true}
-          text={'새로운 챌린지 만들기'}
-          width={100}
-          onPress={() => {
-            if (participationCheck?.participation) setModalVisible(true);
-            else navigation.navigate('CategorySelect');
-          }}
-          buttonStyle={styles.button}
-          textStyle={styles.buttonText}
-        />
+
         {!isChallengeHIstoryCountLoading && challengeHistoryCount?.count !== 0 && (
           <>
             <View style={{ backgroundColor: theme.colors.brand.surface.main, ...styles.divider }} />
@@ -268,16 +258,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-  button: {
-    width: 'auto',
-    borderRadius: 12,
-    backgroundColor: '#FF9417',
-    marginBottom: 16,
-    marginHorizontal: 16,
-  },
-  buttonText: {
-    color: '#ffffff',
   },
   divider: {
     height: 12,
