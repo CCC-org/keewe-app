@@ -75,7 +75,7 @@ const UserSpecificChallengeSection = ({
             <View key={challenge.day} style={styles.day}>
               {today === challenge.day && <TodayBubble isFirst={today === firstDay} />}
               <CircularCheckbox isChecked={challenge.progress.check} />
-              <Text style={{ color: '#000000cc' }}>{challenge.day}</Text>
+              <Text style={{ color: `${theme.colors.graphic.black}80` }}>{challenge.day}</Text>
             </View>
           );
         })}

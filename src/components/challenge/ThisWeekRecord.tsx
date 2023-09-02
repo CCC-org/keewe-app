@@ -69,7 +69,6 @@ export default ThisWeekRecord;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 10,
-    marginBottom: 2,
+    marginVertical: 2,
   },
 });

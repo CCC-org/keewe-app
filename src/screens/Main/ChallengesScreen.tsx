@@ -120,7 +120,6 @@ const ChallengesScreen = ({ navigation }) => {
         {participationCheck?.participation ? (
           <View style={{ marginHorizontal: 16 }}>
             <View style={styles.headerCtn}>
-              <Text style={theme.fonts.text.headline2}>참여중인 챌린지</Text>
               <Pressable
                 onPress={() =>
                   navigation.navigate('ChallengeDetail', {
@@ -129,22 +128,22 @@ const ChallengesScreen = ({ navigation }) => {
                     interest: challengeParticipation?.interest ?? '',
                   })
                 }
-                hitSlop={{
-                  left: 50,
-                  right: 20,
-                }}
+                style={{ flex: 1 }}
               >
-                <SvgXml xml={rightXml} width={28} />
+                <View style={styles.participatingChallenge}>
+                  <Text style={theme.fonts.text.headline2}>참여중인 챌린지</Text>
+                  <SvgXml xml={rightXml} width={28} />
+                </View>
+                <Text
+                  style={{
+                    ...theme.fonts.text.body1.regular,
+                    color: theme.colors.brand.onprimary.container,
+                  }}
+                >
+                  {participatingChallengeName}
+                </Text>
               </Pressable>
             </View>
-            <Text
-              style={{
-                ...theme.fonts.text.body1.regular,
-                color: theme.colors.brand.onprimary.container,
-              }}
-            >
-              {participatingChallengeName}
-            </Text>
             <ChallengeParticipationView
               current={thisWeekDoneCount}
               insightPerWeek={challengeParticipation?.insightPerWeek ?? 0}
@@ -264,6 +263,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 8,
+  },
+  participatingChallenge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   button: {
     width: 'auto',

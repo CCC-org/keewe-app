@@ -5,6 +5,7 @@ import { getFormattedDateArray } from '../../utils/helper/UserSpecificChallengeD
 import TodayBubble from '../../screens/Feed/TodayBubble';
 import CircularCheckbox from '../checkbox/CircularCheckbox';
 import ChallengeEndDate from './ChallengeEndDate';
+import { useTheme } from 'react-native-paper';
 
 interface ChallengeParticipationViewProps {
   current?: number;
@@ -21,6 +22,7 @@ const ChallengeParticipationView = ({
   endDate,
   dayProgresses,
 }: ChallengeParticipationViewProps) => {
+  const theme = useTheme();
   const { formattedWeekWithCheck, today } = useMemo(
     () => getFormattedDateArray(startDate as string, dayProgresses as []),
     [current, insightPerWeek, startDate, endDate, dayProgresses],
@@ -44,7 +46,7 @@ const ChallengeParticipationView = ({
             <View key={challenge.day} style={styles.day}>
               {today === challenge.day && <TodayBubble isFirst={today === firstDay} />}
               <CircularCheckbox isChecked={challenge.progress.check} />
-              <Text style={{ color: '#000000cc' }}>{challenge.day}</Text>
+              <Text style={{ color: `${theme.colors.graphic.black}80` }}>{challenge.day}</Text>
             </View>
           );
         })}
@@ -57,9 +59,9 @@ export default ChallengeParticipationView;
 
 const styles = StyleSheet.create({
   container: {
-    height: 184,
     marginTop: 16,
     marginBottom: 32,
+    paddingVertical: 22,
     backgroundColor: '#F8F8F4',
     borderWidth: 1,
     borderColor: '#1213141a',
@@ -79,7 +81,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 48,
-    marginBottom: 24,
     paddingHorizontal: 24,
   },
   day: {

@@ -30,8 +30,7 @@ export default ChallengeEndDate;
 
 const styles = StyleSheet.create({
   endDate: {
-    marginTop: 10,
-    marginBottom: 2,
+    marginVertical: 2,
     alignItems: 'center',
   },
 });

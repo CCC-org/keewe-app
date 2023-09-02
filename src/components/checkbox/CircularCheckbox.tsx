@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     height: 24,
     borderRadius: 12,
     backgroundColor: '#f1f1e9',
-    marginBottom: 4,
+    marginBottom: 8,
   },
   validContainer: {
     width: 24,
@@ -34,6 +34,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#ff9417',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 4,
+    marginBottom: 8,
   },
 });
