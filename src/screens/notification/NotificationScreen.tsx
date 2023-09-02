@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import { FlatList, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { notificationApi, notificationKeys } from '../../utils/api/notification/notification';
 import { SvgXml } from 'react-native-svg';
@@ -13,7 +13,17 @@ const NotificationScreen = ({ navigation }) => {
   const queryClient = useQueryClient();
   const { fonts } = useTheme();
 
-  const { data, isLoading, isError, fetchNextPage } = useInfiniteQuery({
+  useEffect(() => {
+    const unsubscribeBlur = navigation.addListener('blur', () => {
+      notificationApi.patchReadAll();
+      queryClient.invalidateQueries(notificationKeys.getNotificationList());
+      queryClient.invalidateQueries(notificationKeys.checkNotification());
+    });
+
+    return unsubscribeBlur;
+  }, [navigation]);
+
+  const { data, isLoading, fetchNextPage } = useInfiniteQuery({
     queryKey: notificationKeys.getNotificationList(),
     queryFn: ({ pageParam = null }) => {
       return notificationApi.getNotificationList(pageParam);
@@ -83,6 +93,8 @@ const NotificationScreen = ({ navigation }) => {
 
   const handleOnEndReached = () => {
     if (isLoading) return;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     if (data.pages[data.pages.length - 1]?.nextCursor === null) return;
     fetchNextPage();
   };

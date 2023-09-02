@@ -328,6 +328,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
   const onRefresh = () => {
     setComment([]);
     setPageRefreshing(true);
+    setCommentCursor(undefined);
     queryClient.invalidateQueries(['insight']);
     queryClient.invalidateQueries(['comment']).then(() => setPageRefreshing(false));
   };
