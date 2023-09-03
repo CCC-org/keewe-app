@@ -1,4 +1,3 @@
-import { queryClient } from '../../../App';
 import { InsightPatchRequest, UploadRequest } from '../../types/upload';
 import httpClient from './BaseHttpClient';
 

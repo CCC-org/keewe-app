@@ -46,7 +46,7 @@ const InterestChooseScreen = ({ navigation, route }) => {
   const handleNextScreen = () => {
     //create ID
     makeProfile();
-    navigation.navigate('InsightSample', { category: selectedCategory });
+    navigation.navigate('InsightSample', { nickname: nicknameState, category: selectedCategory });
   };
 
   useEffect(() => {
