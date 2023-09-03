@@ -1,9 +1,13 @@
 import React from 'react';
-import { navigate } from '../../utils/hooks/navigaton/navigator';
+import { reset, navigate } from '../../utils/hooks/navigaton/navigator';
 import HeaderRightButton from '../header/HeaderRightButton';
 
 const OnboardingIntroHeaderButton = () => {
   function handlePress() {
+    reset({
+      index: 0,
+      routes: [{ name: 'Tabs' }],
+    });
     navigate('Feed', {});
   }
   return (
