@@ -17,7 +17,7 @@ httpClient.interceptors.request.use(
     return config;
   },
   (error) => {
-    return Promise.reject(error);
+    return Promise.reject(error.message);
   },
 );
 
@@ -26,11 +26,7 @@ httpClient.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (
-      error.response.data.code === 401 ||
-      error.response.data.code === 402 ||
-      error.response.data.code == 411
-    ) {
+    if (error.response.data.code === 402 || error.response.data.code == 411) {
       navigate('SignUp', undefined);
     } else if (error.response.data.code === 406) {
       navigate('NicknameCreation', undefined);

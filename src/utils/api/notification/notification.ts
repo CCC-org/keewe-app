@@ -21,7 +21,7 @@ export const notificationApi = {
       return data;
     } catch (e) {
       if (e instanceof Error) {
-        console.error(e.message);
+        console.log(e.message);
       }
       return null;
     }
@@ -35,7 +35,7 @@ export const notificationApi = {
       return data;
     } catch (e) {
       if (e instanceof Error) {
-        console.error(e.message);
+        console.log(e.message);
       }
       return null;
     }
@@ -51,7 +51,7 @@ export const notificationApi = {
       return true;
     } catch (e) {
       if (e instanceof Error) {
-        console.error(e.message);
+        console.log(e.message);
       }
       return false;
     }
@@ -65,7 +65,7 @@ export const notificationApi = {
       return true;
     } catch (e) {
       if (e instanceof Error) {
-        console.error(e.message);
+        console.log(e.message);
       }
       return false;
     }

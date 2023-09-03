@@ -200,7 +200,6 @@ const UploadScreen = ({ navigation, route }) => {
               text1: '복사한 링크가 있어요',
               text2: '붙여넣기',
               onPress: () => {
-                console.log(clipboard);
                 setLinkText(clipboard);
                 setIsValidSite(true);
                 Toast.hide();
