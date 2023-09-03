@@ -121,7 +121,6 @@ const registerForPushNotificationsAsync = async () => {
 
 const requestMediaLibraryPermissionsAsync = async () => {
   const permissionResult = await ImagePicker.getMediaLibraryPermissionsAsync();
-  console.log('request Media');
   if (permissionResult.granted === false && permissionResult.canAskAgain) {
     await ImagePicker.requestMediaLibraryPermissionsAsync();
     return;
@@ -131,7 +130,6 @@ const requestMediaLibraryPermissionsAsync = async () => {
 
 const requestCameraPermissionsAsync = async () => {
   const permissionResult = await ImagePicker.getCameraPermissionsAsync();
-  console.log('request Camera');
   if (permissionResult.granted === false && permissionResult.canAskAgain) {
     await ImagePicker.requestCameraPermissionsAsync();
     return;
@@ -144,10 +142,6 @@ export default function App() {
   const printNavigationState = (state) => {
     if (state) {
       const routes = state.routes.map((route) => route.name);
-      console.log('Current stack:', routes);
-      // if you want to print params as well, you could do:
-      // const routesWithParams = state.routes.map(route => ({name: route.name, params: route.params}));
-      // console.log('Current stack:', routesWithParams);
     }
   };
 

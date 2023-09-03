@@ -28,7 +28,7 @@ export const LoginAPI = {
       );
       return data;
     } catch (e) {
-      throw new Error('탈퇴 실패');
+      throw new Error('알람 토큰 푸쉬 실패');
     }
   },
   withdraw: async () => {

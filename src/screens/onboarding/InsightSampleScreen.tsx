@@ -50,7 +50,7 @@ const InsightSampleScreen = ({ navigation, route }) => {
             }}
           >
             <HeaderText
-              header={`키위새님,\n이 인사이트 어때요?`}
+              header={`${route.params.nickname}님,\n이 인사이트 어때요?`}
               subTitle={'인사이트를 읽고 반응을 눌러보세요!'}
             />
           </View>
