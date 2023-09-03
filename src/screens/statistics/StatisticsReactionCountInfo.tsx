@@ -17,6 +17,7 @@ const StatisticsReactionCountInfo = ({ xml, count }: Props) => {
           fontSize: 18,
           color: theme.colors.graphic.black,
           opacity: count === 0 ? 0.3 : 1,
+          marginTop: 4,
         }}
       >
         {count}

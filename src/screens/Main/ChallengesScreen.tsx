@@ -120,7 +120,6 @@ const ChallengesScreen = ({ navigation }) => {
         {participationCheck?.participation ? (
           <View style={{ marginHorizontal: 16 }}>
             <View style={styles.headerCtn}>
-              <Text style={theme.fonts.text.headline2}>참여중인 챌린지</Text>
               <Pressable
                 onPress={() =>
                   navigation.navigate('ChallengeDetail', {
@@ -129,22 +128,22 @@ const ChallengesScreen = ({ navigation }) => {
                     interest: challengeParticipation?.interest ?? '',
                   })
                 }
-                hitSlop={{
-                  left: 50,
-                  right: 20,
-                }}
+                style={{ flex: 1 }}
               >
-                <SvgXml xml={rightXml} width={28} />
+                <View style={styles.participatingChallenge}>
+                  <Text style={theme.fonts.text.headline2}>참여중인 챌린지</Text>
+                  <SvgXml xml={rightXml} width={28} />
+                </View>
+                <Text
+                  style={{
+                    ...theme.fonts.text.body1.regular,
+                    color: theme.colors.brand.onprimary.container,
+                  }}
+                >
+                  {participatingChallengeName}
+                </Text>
               </Pressable>
             </View>
-            <Text
-              style={{
-                ...theme.fonts.text.body1.regular,
-                color: theme.colors.brand.onprimary.container,
-              }}
-            >
-              {participatingChallengeName}
-            </Text>
             <ChallengeParticipationView
               current={thisWeekDoneCount}
               insightPerWeek={challengeParticipation?.insightPerWeek ?? 0}
@@ -170,17 +169,7 @@ const ChallengesScreen = ({ navigation }) => {
             </Text>
           </View>
         )}
-        <BottomFixButton
-          isActive={true}
-          text={'새로운 챌린지 만들기'}
-          width={100}
-          onPress={() => {
-            if (participationCheck?.participation) setModalVisible(true);
-            else navigation.navigate('CategorySelect');
-          }}
-          buttonStyle={styles.button}
-          textStyle={styles.buttonText}
-        />
+
         {!isChallengeHIstoryCountLoading && challengeHistoryCount?.count !== 0 && (
           <>
             <View style={{ backgroundColor: theme.colors.brand.surface.main, ...styles.divider }} />
@@ -265,15 +254,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 8,
   },
-  button: {
-    width: 'auto',
-    borderRadius: 12,
-    backgroundColor: '#FF9417',
-    marginBottom: 16,
-    marginHorizontal: 16,
-  },
-  buttonText: {
-    color: '#ffffff',
+  participatingChallenge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   divider: {
     height: 12,

@@ -19,7 +19,7 @@ const ChallengeStatusSection = () => {
     () => UserSpecificChallengeAPI.getUserChallengeStatus(),
   );
   return (
-    <View style={{ backgroundColor: theme.colors.brand.surface.container1, ...styles.container }}>
+    <View style={{ backgroundColor: theme.colors.brand.surface.main, ...styles.container }}>
       <View style={styles.header}>
         <ThisWeekRecord
           flexDirection="column"
@@ -44,6 +44,7 @@ export default ChallengeStatusSection;
 const styles = StyleSheet.create({
   container: {
     marginTop: 24,
+    marginBottom: 12,
     borderWidth: 1,
     borderColor: '#1213141a',
     borderRadius: 12,
@@ -54,6 +55,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+    paddingTop: 8,
   },
   divider: {
     height: 1,

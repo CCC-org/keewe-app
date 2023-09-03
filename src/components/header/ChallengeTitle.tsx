@@ -14,10 +14,6 @@ interface ChallengeTitle {
 const ChallengeTitle = ({ title, category, startDate, challengeIntroduction }: ChallengeTitle) => {
   const theme = useTheme();
   const slicedTitle = title.length > 14 ? title.slice(0, 14) + '...' : title;
-  const slicedIntroduction =
-    challengeIntroduction.length > 27
-      ? challengeIntroduction.slice(0, 27) + '...'
-      : challengeIntroduction;
 
   return (
     <View>
@@ -32,14 +28,17 @@ const ChallengeTitle = ({ title, category, startDate, challengeIntroduction }: C
           <SvgXml xml={INTEREST_ICONS[category] ?? INTEREST_ICONS['기본']} />
         </View>
       </View>
-      <Text style={{ ...theme.fonts.text.body2.regular }}>{slicedIntroduction}</Text>
+      <Text style={{ ...theme.fonts.text.body2.regular, width: '80%' }}>
+        {challengeIntroduction}
+      </Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 12,
+    paddingTop: 12,
+    paddingBottom: 6,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
