@@ -110,7 +110,7 @@ const ChallengeParticipationScreen = ({ route }) => {
       <View
         style={{
           flexDirection: 'row',
-          justifyContent: 'center',
+          justifyContent: 'space-evenly',
           bottom: 0,
           backgroundColor: theme.colors.graphic.white,
           paddingVertical: 10,
