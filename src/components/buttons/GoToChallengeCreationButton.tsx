@@ -1,23 +1,21 @@
 import { Pressable, StyleSheet } from 'react-native';
 import React from 'react';
-import { pencil } from '../../constants/Icons/home/pencil';
 import { SvgXml } from 'react-native-svg';
-import { useNavigation } from '@react-navigation/native';
+import { plusXml } from '../../../assets/svgs/plusXml';
 
-const GoToUploadButton = () => {
-  const navigation = useNavigation();
+interface GoToChallengeCreationButtonProps {
+  onPress: () => void;
+}
 
-  const handleNavigateToUpload = () => {
-    navigation.navigate('Upload');
-  };
+const GoToChallengeCreationButton = ({ onPress }: GoToChallengeCreationButtonProps) => {
   return (
-    <Pressable style={styles.pencil} onPress={handleNavigateToUpload}>
-      <SvgXml xml={pencil} />
+    <Pressable style={styles.pencil} onPress={onPress}>
+      <SvgXml xml={plusXml} />
     </Pressable>
   );
 };
 
-export default GoToUploadButton;
+export default GoToChallengeCreationButton;
 
 const styles = StyleSheet.create({
   pencil: {
