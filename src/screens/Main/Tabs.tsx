@@ -37,7 +37,7 @@ const Tabs = ({ navigation, route }) => {
       });
     }
     if (type === 'profile') {
-      if (userId === id) {
+      if (userId === Number(id)) {
         navigation.navigate('MyPage', {
           screen: 'MyPage',
           userId: id,
