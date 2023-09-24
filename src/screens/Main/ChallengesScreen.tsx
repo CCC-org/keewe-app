@@ -28,6 +28,7 @@ import {
   UserSpecificChallengeAPI,
   UserSpecificChallengeQueryKeys,
 } from '../../utils/api/UserSpecificChallenge';
+import GoToChallengeCreationButton from '../../components/buttons/GoToChallengeCreationButton';
 
 const ChallengesScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -37,7 +38,6 @@ const ChallengesScreen = ({ navigation }) => {
   const queryClient = useQueryClient();
 
   const scrollViewRef = useRef<any>(null);
-  console.log('pleassße');
   const { data: participationCheck } = useQuery(
     ChallengeQueryKeys.getParticipationCheck(),
     () => ChallengeAPI.getParticipationCheck(),
@@ -93,6 +93,11 @@ const ChallengesScreen = ({ navigation }) => {
   const thisWeekDoneCount = userSpecificChallenge?.dayProgresses.filter((cur) => {
     return cur.check;
   }).length;
+
+  const handleGoToChallengeCreationButtonPress = () => {
+    if (participationCheck?.participation) setModalVisible(true);
+    else navigation.navigate('CategorySelect');
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -169,17 +174,6 @@ const ChallengesScreen = ({ navigation }) => {
             </Text>
           </View>
         )}
-        <BottomFixButton
-          isActive={true}
-          text={'새로운 챌린지 만들기'}
-          width={100}
-          onPress={() => {
-            if (participationCheck?.participation) setModalVisible(true);
-            else navigation.navigate('CategorySelect');
-          }}
-          buttonStyle={styles.button}
-          textStyle={styles.buttonText}
-        />
         {!isChallengeHIstoryCountLoading && challengeHistoryCount?.count !== 0 && (
           <>
             <View style={{ backgroundColor: theme.colors.brand.surface.main, ...styles.divider }} />
@@ -251,6 +245,7 @@ const ChallengesScreen = ({ navigation }) => {
         )}
         <View style={{ backgroundColor: theme.colors.brand.surface.main, ...styles.divider }} />
       </IOScrollView>
+      <GoToChallengeCreationButton onPress={handleGoToChallengeCreationButtonPress} />
     </SafeAreaView>
   );
 };
@@ -284,15 +279,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderTopWidth: 1,
     borderTopColor: '#1213141a',
-  },
-  button: {
-    width: 'auto',
-    borderRadius: 12,
-    backgroundColor: '#000',
-    marginBottom: 16,
-    marginHorizontal: 16,
-  },
-  buttonText: {
-    color: '#ffffff',
   },
 });
