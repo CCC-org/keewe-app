@@ -64,9 +64,6 @@ import ChallengeEditScreen from './src/screens/Main/challenge/ChallengeEditScree
 import SubjectEditScreen from './src/screens/Main/challenge/SubjectEditScreen';
 import GoalEditScreen from './src/screens/Main/challenge/GoalEditScreen';
 import { getExpoToken, setExpoToken } from './src/utils/hooks/asyncStorage/Login';
-import { vexo } from 'vexo-analytics';
-
-vexo('0d177384-b89e-4b64-97ca-ad26355cf562');
 
 const Stack = createStackNavigator<RootStackParamList>();
 
