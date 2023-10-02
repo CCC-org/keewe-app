@@ -8,9 +8,9 @@ import {
   TouchableOpacity,
   Dimensions,
   Pressable,
+  SafeAreaView,
 } from 'react-native';
 import ChallengeTitle from '../../../components/header/ChallengeTitle';
-import ChallengeReaction from './ChallengeReaction';
 import { useGetUserId } from '../../../utils/hooks/useGetUserId';
 import { InsightAPI, InsightQueryKeys } from '../../../utils/api/InsightAPI';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -25,6 +25,7 @@ import ChallengeInvite from './ChallengeInvite';
 import { SvgXml } from 'react-native-svg';
 import MainLottie from '../../../components/lotties/MainLottie';
 import { settingsIcon } from '../../../../assets/svgs/settingsIcon';
+import ChallengeStatusSection from './ChallengeStatusSection';
 
 const { width } = Dimensions.get('window');
 
@@ -41,6 +42,7 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
+      title: challengeName,
       headerRight: () => {
         return (
           <View style={{ flexDirection: 'row' }}>
@@ -211,7 +213,7 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
             startDate={challengeResponse?.createdAt ?? ''}
             challengeIntroduction={challengeResponse?.challengeIntroduction ?? ''}
           />
-          <ChallengeReaction challengeId={challengeId} />
+          <ChallengeStatusSection />
         </View>
         <>
           <View style={{ ...styles.tabContainer, borderColor: `${theme.colors.graphic.black}10` }}>
@@ -297,13 +299,15 @@ const ChallengeDetailScreen = ({ navigation, route }) => {
   };
 
   return (
-    <FlatList
-      data={datas[tabIndex]}
-      renderItem={renderItem}
-      ListHeaderComponent={<Header />}
-      ListEmptyComponent={isFetching ? <MainLottie /> : null}
-      onEndReached={onEndReached}
-    />
+    <SafeAreaView style={{ flex: 1 }}>
+      <FlatList
+        data={datas[tabIndex]}
+        renderItem={renderItem}
+        ListHeaderComponent={<Header />}
+        ListEmptyComponent={isFetching ? <MainLottie /> : null}
+        onEndReached={onEndReached}
+      />
+    </SafeAreaView>
   );
 };
 

@@ -139,22 +139,18 @@ const requestCameraPermissionsAsync = async () => {
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
-  registerForPushNotificationsAsync();
-  requestCameraPermissionsAsync();
-  requestMediaLibraryPermissionsAsync();
   const printNavigationState = (state) => {
     if (state) {
       const routes = state.routes.map((route) => route.name);
-      console.log('Current stack:', routes);
-      // if you want to print params as well, you could do:
-      // const routesWithParams = state.routes.map(route => ({name: route.name, params: route.params}));
-      // console.log('Current stack:', routesWithParams);
     }
   };
 
   if (!isLoadingComplete) {
     return null;
   } else {
+    requestCameraPermissionsAsync();
+    requestMediaLibraryPermissionsAsync();
+    registerForPushNotificationsAsync();
     return (
       <NavigationContainer
         ref={navigationRef}

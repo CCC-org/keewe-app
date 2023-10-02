@@ -7,6 +7,7 @@ import {
   TextInput,
   Dimensions,
   View,
+  SafeAreaView,
 } from 'react-native';
 import React, { useRef, useState } from 'react';
 import Comment from '../../components/comments/Comment';
@@ -155,36 +156,38 @@ const CommentsScreen = ({ navigation, route }) => {
   const viewabilityConfigCallbackPairs = useRef([{ onViewableItemsChanged }]);
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.select({ ios: 'position' })} // position || padding
-      keyboardVerticalOffset={Platform.select({ ios: 90 })}
-      style={{ height: '100%' }}
-    >
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        onEndReached={onEndReached}
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
-        style={{ height: '100%', marginBottom: 80 }}
-        ListFooterComponent={() => <View style={{ height: 80 }} />}
-      />
-      <CommentInput
-        ref={ref}
-        insightId={insightId}
-        replyInfo={replyInfo}
-        onCancelReply={() => {
-          setReplyInfo(undefined);
-          ref.current?.blur();
-        }}
-        onCreate={(response: CommentCreateResponse) => {
-          onEndReached();
-          setRefreshIndex(response.data.commentId);
-          setReplyInfo(undefined);
-        }}
-      />
-    </KeyboardAvoidingView>
+    <SafeAreaView style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        behavior={Platform.select({ ios: 'position' })} // position || padding
+        keyboardVerticalOffset={Platform.select({ ios: 90 })}
+        style={{ height: '100%' }}
+      >
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          onEndReached={onEndReached}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
+          style={{ height: '100%', marginBottom: 80 }}
+          ListFooterComponent={() => <View style={{ height: 80 }} />}
+        />
+        <CommentInput
+          ref={ref}
+          insightId={insightId}
+          replyInfo={replyInfo}
+          onCancelReply={() => {
+            setReplyInfo(undefined);
+            ref.current?.blur();
+          }}
+          onCreate={(response: CommentCreateResponse) => {
+            onEndReached();
+            setRefreshIndex(response.data.commentId);
+            setReplyInfo(undefined);
+          }}
+        />
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 

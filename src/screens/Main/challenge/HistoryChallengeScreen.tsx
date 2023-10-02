@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, SafeAreaView } from 'react-native';
 import { ChallengeAPI } from '../../../utils/api/ChallengeAPI';
 import ChallengeProfile from '../../../components/profile/ChallengeProfile';
 
@@ -36,14 +36,16 @@ const HistoryChallengeScreen = ({ route }) => {
   };
 
   return (
-    <FlatList
-      data={data}
-      renderItem={renderItem}
-      onEndReached={onEndReached}
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      style={{ paddingBottom: '100%', marginBottom: 80 }}
-    />
+    <SafeAreaView style={{ flex: 1 }}>
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        onEndReached={onEndReached}
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        style={{ paddingBottom: '100%', marginBottom: 80 }}
+      />
+    </SafeAreaView>
   );
 };
 

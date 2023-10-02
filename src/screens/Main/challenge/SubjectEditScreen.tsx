@@ -1,5 +1,5 @@
 import React, { useState, useLayoutEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, SafeAreaView } from 'react-native';
 import HeaderRightButton from '../../../components/header/HeaderRightButton';
 import SmallTextInput from '../../../components/texts/SmallTextInput';
 import theme from '../../../theme/light';
@@ -29,14 +29,14 @@ const SubjectEditScreen = ({ navigation, route }) => {
   }, [input, currentSubject, setSubject, handleComplete]);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <SmallTextInput
         inputValue={input}
         setInputValue={setInput}
         placeholder={'나의 주제를 추가해주세요'}
         errorMessage={''}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

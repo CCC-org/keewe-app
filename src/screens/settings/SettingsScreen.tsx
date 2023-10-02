@@ -1,12 +1,12 @@
-import { Linking, Pressable, ScrollView, StyleSheet, Text } from 'react-native';
+import { Linking, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import { useTheme } from 'react-native-paper';
 import DividerBar from '../../components/bars/DividerBar';
 import TwoButtonModal from '../../components/modal/TwoButtonModal';
 import MultiTapButton from '../../components/buttons/MultipleTapButton';
 import { clearStorage } from '../../utils/hooks/asyncStorage/Logout';
-import { LoginAPI } from '../../utils/api/LoginAPI';
-import { useMutation } from '@tanstack/react-query';
+import { LoginAPI, LoginQueryKeys } from '../../utils/api/LoginAPI';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigation } from '@react-navigation/native';
 
 const SettingsScreen = () => {
@@ -25,6 +25,8 @@ const SettingsScreen = () => {
       });
     },
   });
+
+  const { data } = useQuery(LoginQueryKeys.getAccount(), () => LoginAPI.getAccountInfo());
 
   const handleLogOut = () => {
     setIsLogoutModalVisible(false);
@@ -61,8 +63,19 @@ const SettingsScreen = () => {
   };
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
+        <View style={styles.settingOption}>
+          <Text style={theme.fonts.text.body1.regular}>연결된 계정</Text>
+          <View style={{ flexDirection: 'column', alignItems: 'flex-end' }}>
+            <Text style={[theme.fonts.text.body1.regular, { color: '#486006' }]}>
+              {data?.data.vendorType} 로그인
+            </Text>
+            <Text style={[theme.fonts.text.body1.regular, { color: '#486006' }]}>
+              {data?.data.identifier}
+            </Text>
+          </View>
+        </View>
         <Pressable onPress={() => navigation.navigate('FolderEdit')} style={styles.settingOption}>
           <Text style={theme.fonts.text.body1.regular}>폴더 편집</Text>
         </Pressable>
@@ -120,7 +133,7 @@ const SettingsScreen = () => {
         leftButtonPress={() => setIsWithdrawalModalVisible(false)}
         rightButtonPress={handleWithdrawal}
       />
-    </>
+    </SafeAreaView>
   );
 };
 

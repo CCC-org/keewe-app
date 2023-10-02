@@ -1,4 +1,4 @@
-import { StyleSheet, View, Dimensions, ScrollView, Image } from 'react-native';
+import { StyleSheet, View, Dimensions, ScrollView, Image, SafeAreaView } from 'react-native';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import HeaderText from '../../components/texts/HeaderText';
 import Stepper from '../../components/stepper/Stepper';
@@ -42,79 +42,81 @@ const ServiceIntroScreen = ({ navigation }) => {
   }, [step]);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Carousel
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-        ref={carouselRef}
-        width={fullScreenWidth}
-        height={fullScreenHeight - 100}
-        loop={false}
-        onSnapToItem={(idx) => handleStep(idx)}
-        data={[
-          <>
-            <Image
-              source={require('../../../assets/images/onboarding_01.png')}
-              style={styles.image}
-            />
-            <View key={1} style={styles.carouselItemCtn}>
-              <HeaderText key={1} header={'기억하고 싶은 콘텐츠, \n지나치지 말고 기록하세요'} />
-            </View>
-          </>,
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Carousel
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          ref={carouselRef}
+          width={fullScreenWidth}
+          height={fullScreenHeight - 100}
+          loop={false}
+          onSnapToItem={(idx) => handleStep(idx)}
+          data={[
+            <>
+              <Image
+                source={require('../../../assets/images/onboarding_01.png')}
+                style={styles.image}
+              />
+              <View key={1} style={styles.carouselItemCtn}>
+                <HeaderText key={1} header={'기억하고 싶은 콘텐츠, \n지나치지 말고 기록하세요'} />
+              </View>
+            </>,
 
-          <>
-            <Image
-              source={require('../../../assets/images/onboarding_02.png')}
-              style={styles.image}
-            />
-            <View key={2} style={styles.carouselItemCtn}>
-              <HeaderText key={1} header={'꾸준하기 어렵다면, \n친구들과 함께 도전해요'} />
-            </View>
-          </>,
+            <>
+              <Image
+                source={require('../../../assets/images/onboarding_02.png')}
+                style={styles.image}
+              />
+              <View key={2} style={styles.carouselItemCtn}>
+                <HeaderText key={1} header={'꾸준하기 어렵다면, \n친구들과 함께 도전해요'} />
+              </View>
+            </>,
 
-          <>
-            <Image
-              source={require('../../../assets/images/onboarding_03.png')}
-              style={styles.image}
-            />
-            <View key={3} style={styles.carouselItemCtn}>
-              <HeaderText key={1} header={'함께할수록 쉬워지는 기록, \n키위가 도와줄게요!'} />
-            </View>
-          </>,
-        ]}
-        renderItem={({ item }) => item}
-      />
-      {/* </View> */}
-      <View style={styles.nextButtonWithStepper}>
-        <Stepper totalStep={3} currentStep={step + 1} />
-        <View style={styles.nextButton}>
-          {step === 2 ? (
-            <ConditionalButton
-              isActive={true}
-              text={'시작하기'}
-              color="#b0e817"
-              textColor="black"
-              width={343}
-              onPress={handlePress}
-            />
-          ) : (
-            <ConditionalButton
-              isActive={true}
-              text={'다음'}
-              color="#e0f6a2"
-              textColor="#486006"
-              width={343}
-              onPress={handlePress}
-            />
-          )}
+            <>
+              <Image
+                source={require('../../../assets/images/onboarding_03.png')}
+                style={styles.image}
+              />
+              <View key={3} style={styles.carouselItemCtn}>
+                <HeaderText key={1} header={'함께할수록 쉬워지는 기록, \n키위가 도와줄게요!'} />
+              </View>
+            </>,
+          ]}
+          renderItem={({ item }) => item}
+        />
+        {/* </View> */}
+        <View style={styles.nextButtonWithStepper}>
+          <Stepper totalStep={3} currentStep={step + 1} />
+          <View style={styles.nextButton}>
+            {step === 2 ? (
+              <ConditionalButton
+                isActive={true}
+                text={'시작하기'}
+                color="#b0e817"
+                textColor="black"
+                width={343}
+                onPress={handlePress}
+              />
+            ) : (
+              <ConditionalButton
+                isActive={true}
+                text={'다음'}
+                color="#e0f6a2"
+                textColor="#486006"
+                width={343}
+                onPress={handlePress}
+              />
+            )}
+          </View>
         </View>
-      </View>
-      {/* </View> */}
-    </ScrollView>
+        {/* </View> */}
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

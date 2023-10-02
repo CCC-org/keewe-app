@@ -1,10 +1,12 @@
 /* eslint-disable quotes */
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Pressable } from 'react-native';
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import TextInputDetail from '../../components/texts/TextInputDetail';
 import HeaderText from '../../components/texts/HeaderText';
 import Stepper from '../../components/stepper/Stepper';
 import ConditionalButton from '../../components/buttons/ConditionalButton';
+import { SvgXml } from 'react-native-svg';
+import { arrowLeft } from '../../constants/Icons/Navigation/ArrowLeftXml';
 
 const NicknameCreationScreen = ({ navigation }) => {
   const [nickname, setNickname] = useState<string>('');
@@ -26,7 +28,19 @@ const NicknameCreationScreen = ({ navigation }) => {
   }
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerLeft: () => null,
+      headerLeft: () => (
+        <Pressable
+          style={{ marginLeft: 18 }}
+          onPress={() =>
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'SignUp' }],
+            })
+          }
+        >
+          <SvgXml xml={arrowLeft} />
+        </Pressable>
+      ),
     });
   });
 

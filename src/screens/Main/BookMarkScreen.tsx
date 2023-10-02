@@ -1,4 +1,4 @@
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, SafeAreaView } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTheme } from 'react-native-paper';
 import FeedList from '../Feed/FeedList';
@@ -51,7 +51,7 @@ const BookMarkScreen = ({ navigation }) => {
   }, [yPos, feedList]);
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <IOScrollView
         ref={scrollViewRef}
         refreshControl={<RefreshControl refreshing={pageRefreshing} onRefresh={onRefresh} />}
@@ -84,7 +84,7 @@ const BookMarkScreen = ({ navigation }) => {
           </Text>
         )}
       </IOScrollView>
-    </>
+    </SafeAreaView>
   );
 };
 

@@ -1,6 +1,6 @@
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import DividerBar from '../../components/bars/DividerBar';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
 import UploadLinkCard from '../../components/cards/LinkCardForUpload';
@@ -27,6 +27,8 @@ import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChal
 import { useTheme } from 'react-native-paper';
 import TwoButtonModal from '../../components/modal/TwoButtonModal';
 import isTextNotOnlySpace from '../../utils/helper/strings/isTextNotOnlySpace';
+import { useFocusEffect } from '@react-navigation/native';
+import * as Clipboard from 'expo-clipboard';
 
 const UploadScreen = ({ navigation, route }) => {
   const { isEdit, link, insightId } = route?.params ?? {};
@@ -184,8 +186,38 @@ const UploadScreen = ({ navigation, route }) => {
     return <MainLottie />;
   }
 
+  useFocusEffect(
+    useCallback(() => {
+      const getClipboard = async () => {
+        const clipboard = await Clipboard.getStringAsync();
+        if (clipboard.startsWith('http')) {
+          try {
+            await fetch(clipboard, {
+              method: 'HEAD',
+            }); // 메타데이터 불러오기
+            Toast.show({
+              type: 'copySnackbar',
+              text1: '복사한 링크가 있어요',
+              text2: '붙여넣기',
+              onPress: () => {
+                setLinkText(clipboard);
+                setIsValidSite(true);
+                Toast.hide();
+              },
+              position: 'bottom',
+            });
+            return;
+          } catch (error) {
+            return;
+          }
+        }
+      };
+      getClipboard();
+    }, []),
+  );
+
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView scrollToOverflowEnabled={true} contentContainerStyle={styles.container}>
         {isValidSite ? (
           <View style={styles.linkCardContainer}>
@@ -262,7 +294,7 @@ const UploadScreen = ({ navigation, route }) => {
           rightButtonColor={theme.colors.graphic.black}
         />
       </ScrollView>
-    </>
+    </SafeAreaView>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useMemo, useState } from 'react';
-import { View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import HeaderRightButton from '../../../components/header/HeaderRightButton';
 import theme from '../../../theme/light';
 import ChallengeGoalSettingSection from '../../challenge/ChallengeGoalSettingSection';
@@ -45,19 +45,17 @@ const GoalEditScreen = ({ navigation, route }) => {
   }, [step, participationPerWeek, recordPerWeek, navigation, handleComplete]);
 
   return (
-    <>
-      <View style={{ margin: 10 }}>
-        <ChallengeGoalSettingSection
-          step={step}
-          recordPerWeek={recordPerWeek}
-          setRecordPerWeek={setRecordPerWeek}
-          participationPerWeek={participationPerWeek}
-          setParticipationPerWeek={setParticipationPerWeek}
-          isExpanded={isExpanded}
-          setIsExpanded={setIsExpanded}
-        />
-      </View>
-    </>
+    <SafeAreaView style={{ margin: 10 }}>
+      <ChallengeGoalSettingSection
+        step={step}
+        recordPerWeek={recordPerWeek}
+        setRecordPerWeek={setRecordPerWeek}
+        participationPerWeek={participationPerWeek}
+        setParticipationPerWeek={setParticipationPerWeek}
+        isExpanded={isExpanded}
+        setIsExpanded={setIsExpanded}
+      />
+    </SafeAreaView>
   );
 };
 

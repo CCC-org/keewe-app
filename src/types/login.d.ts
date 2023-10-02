@@ -17,3 +17,12 @@ interface LoginResponse {
     alreadySignedUp: boolean;
   };
 }
+
+interface AccountResponse {
+  message: string;
+  code: number;
+  data: {
+    vendorType: string;
+    identifier: string;
+  };
+}

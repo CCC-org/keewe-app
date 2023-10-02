@@ -21,7 +21,7 @@ export const notificationApi = {
       return data;
     } catch (e) {
       if (e instanceof Error) {
-        console.error(e.message);
+        console.log(e.message);
       }
       return null;
     }
@@ -35,7 +35,7 @@ export const notificationApi = {
       return data;
     } catch (e) {
       if (e instanceof Error) {
-        console.error(e.message);
+        console.log(e.message);
       }
       return null;
     }
@@ -51,7 +51,21 @@ export const notificationApi = {
       return true;
     } catch (e) {
       if (e instanceof Error) {
-        console.error(e.message);
+        console.log(e.message);
+      }
+      return false;
+    }
+  },
+  patchReadAll: async () => {
+    try {
+      const response = await httpClient.patch('https://api-keewe.com/api/v1/notification/read');
+      if (response.data.code !== 200) {
+        throw new Error('patch mark as read error');
+      }
+      return true;
+    } catch (e) {
+      if (e instanceof Error) {
+        console.log(e.message);
       }
       return false;
     }

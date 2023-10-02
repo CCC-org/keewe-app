@@ -1,4 +1,4 @@
-import { Linking, StyleSheet, View } from 'react-native';
+import { Linking, SafeAreaView, StyleSheet, View } from 'react-native';
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import HeaderRightButton from '../../../components/header/HeaderRightButton';
 import { useTheme } from 'react-native-paper';
@@ -140,6 +140,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
+    queryClient.invalidateQueries(['profile']);
     bottomSheetModalRef.current?.dismiss();
   };
 
@@ -158,6 +159,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
+    queryClient.invalidateQueries(['profile']);
     bottomSheetModalRef.current?.dismiss();
   };
 
@@ -206,7 +208,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
   };
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <TwoButtonModal
         dismissable={false}
         mainTitle={'수정한 내용을 저장할까요?'}
@@ -296,7 +298,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
           handlePress={handleInterests}
         />
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 

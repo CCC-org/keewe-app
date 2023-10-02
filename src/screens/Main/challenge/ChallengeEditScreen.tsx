@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState, useMemo } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import MainLottie from '../../../components/lotties/MainLottie';
 import theme from '../../../theme/light';
 import { ChallengeAPI, ChallengeQueryKeys } from '../../../utils/api/ChallengeAPI';
@@ -33,7 +33,7 @@ const ChallengeEditScreen = ({ navigation }) => {
     return <MainLottie />;
   }
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.Header}>
         <Text style={theme.fonts.text.headline2}>{challengeParticipation?.name}</Text>
       </View>
@@ -61,7 +61,7 @@ const ChallengeEditScreen = ({ navigation }) => {
         value={timeConverter(challengeParticipation?.startDate ?? '')}
       />
       <ChallengeEditOption option="챌린지 종료일" value={`${timeConverter(end)} 까지`} />
-    </>
+    </SafeAreaView>
   );
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { WebView } from 'react-native-webview';
-import { View } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { LoginQueryKeys, LoginAPI } from '../../utils/api/LoginAPI';
 import * as Notifications from 'expo-notifications';
@@ -24,12 +24,13 @@ function Login({ navigation, route }) {
         token = (await Notifications.getExpoPushTokenAsync()).data;
       }
       tokenPush({ pushToken: token ?? '' });
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Tabs' }],
-      });
-      if (response?.data.alreadySignedUp) navigation.navigate('Feed');
-      else navigation.navigate('NicknameCreation');
+      if (response?.data.alreadySignedUp) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Tabs' }],
+        });
+        navigation.navigate('Feed');
+      } else navigation.navigate('NicknameCreation');
     },
     onError: (e) => {
       alert('인증에 실패했습니다.');
@@ -58,7 +59,7 @@ function Login({ navigation, route }) {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <WebView
         userAgent="Chrome"
         sharedCookiesEnabled={true}
@@ -76,7 +77,7 @@ function Login({ navigation, route }) {
           getCode(data);
         }}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -22,7 +22,8 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.CCCorg.keewe",
       "buildNumber": "5.3",
-      "associatedDomains": ["applinks:keewe.kr"]
+      "associatedDomains": ["applinks:keewe.kr"],
+      "infoPlist": { "developmentRegion": "ko" }
     },
     "android": {
       "jsEngine": "hermes",

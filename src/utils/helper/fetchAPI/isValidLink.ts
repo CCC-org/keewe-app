@@ -22,8 +22,6 @@ const handleSheetLinkComplete = async (
         : `http://${linkText}`;
     const response = await axios.get(URL);
 
-    console.log('response.statusCode', response.status);
-
     const finalUrl = response.request.responseURL || null;
     if (finalUrl) {
       setLinkText(finalUrl);

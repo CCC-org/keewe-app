@@ -27,3 +27,9 @@ export function stackOptions() {
     return nav.routes[nav.index].params;
   }
 }
+
+export function reset(state) {
+  if (navigationRef.isReady()) {
+    const nav = navigationRef.reset(state);
+  }
+}
