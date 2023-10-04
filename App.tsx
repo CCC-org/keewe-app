@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import HeaderBackButton from './src/components/header/HeaderBackButton';
 import CategoryCreateScreen from './src/screens/challenge/CategoryCreateScreen';
@@ -144,6 +144,13 @@ export default function App() {
       const routes = state.routes.map((route) => route.name);
     }
   };
+
+  useEffect(() => {
+    const subscription = Notifications.addNotificationReceivedListener((notification) => {
+      alert(notification);
+    });
+    return () => subscription.remove();
+  }, []);
 
   if (!isLoadingComplete) {
     return null;

@@ -134,7 +134,6 @@ const ProfileEditScreen = ({ navigation, route }) => {
       quality: 1,
     });
 
-    console.log('🚀 ~ file: ProfileEditScreen.tsx:139 ~ pickImage ~ result', result);
     // "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540akdlsz21%252Fkeewe/ImagePicker/29c5936e-b619-4667-9aa0-292686e75bb6.jpg"
 
     if (!result.canceled) {
@@ -154,7 +153,6 @@ const ProfileEditScreen = ({ navigation, route }) => {
     const result = await ImagePicker.launchCameraAsync({
       base64: true,
     });
-    console.log('🚀 ~ file: ProfileEditScreen.tsx:156 ~ openCamera ~ result', result);
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
@@ -197,9 +195,9 @@ const ProfileEditScreen = ({ navigation, route }) => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('🚀 ~ file: ProfileEditScreen.tsx:193 ~ patchProfileEditInfo ~ res', res);
 
-      queryClient.invalidateQueries(['profile']);
+      await queryClient.invalidateQueries(['profile']);
+      await queryClient.invalidateQueries(['mypage']);
 
       return res.data;
     } catch (err) {
@@ -220,7 +218,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
         rightButtonPress={() => {
           handleSaveProfileInfo();
           setModalVisible(false);
-          navigation.navigate('MyPage');
+          navigation.goBack();
         }}
       />
       <TwoButtonModal
