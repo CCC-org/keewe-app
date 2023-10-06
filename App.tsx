@@ -15,6 +15,7 @@ import SignUpScreen from './src/screens/onboarding/SignUpScreen';
 import useCachedResources from './src/utils/hooks/useCachedResources';
 import * as Notifications from 'expo-notifications';
 import * as ImagePicker from 'expo-image-picker';
+import * as Clipboard from 'expo-clipboard';
 
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -148,6 +149,7 @@ export default function App() {
   useEffect(() => {
     const subscription = Notifications.addNotificationReceivedListener((notification) => {
       alert(notification);
+      await Clipboard.setStringAsync(notification);
     });
     return () => subscription.remove();
   }, []);
