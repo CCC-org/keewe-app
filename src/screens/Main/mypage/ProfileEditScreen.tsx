@@ -26,9 +26,10 @@ const ProfileEditScreen = ({ navigation, route }) => {
   const hideLibraryPermissionModal = () => setLibraryPermissionModal(false);
   const hideDeleteModal = () => setDeleteModal(false);
   const [btnAbled, setBtnAbled] = useState<boolean>(true);
-  const [nickname, setNickname] = useState<string>('');
-  const [title, setTitle] = useState<string>('');
-  const [introduction, setIntroduction] = useState<string>('');
+  const [nickname, setNickname] = useState<string>(route?.params?.nickname ?? '');
+  const [title, setTitle] = useState<string>(route?.params?.title ?? '');
+  const [repTitleId, setRepTitleId] = useState<number>(route?.params?.repTitleId);
+  const [introduction, setIntroduction] = useState<string>(route?.params?.introduction ?? '');
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [customCategory, setCustomCategory] = useState<string[]>([]);
   const [image, setImage] = useState<string>('');
@@ -41,6 +42,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
     nickname,
     image,
     title,
+    repTitleId,
     introduction,
     selectedCategory,
     customCategory,
@@ -90,11 +92,14 @@ const ProfileEditScreen = ({ navigation, route }) => {
   }, [route]);
 
   useEffect(() => {
-    const { nickname, image, title, introduction, selectedCategory, userId } = route.params;
+    const res = navigation.getState().routes.filter((route) => route.name === 'ProfileEdit')[0];
+    const { nickname, image, title, introduction, selectedCategory, userId, repTitleId } =
+      res.params;
     setUserId(userId);
     setNickname(nickname);
     setImage(image);
     setTitle(title);
+    setRepTitleId(repTitleId);
     setSelectedCategory(selectedCategory);
     setIntroduction(introduction);
     setCustomCategory(
@@ -102,7 +107,7 @@ const ProfileEditScreen = ({ navigation, route }) => {
         return !TOTAL_TAG.includes(cur);
       }),
     );
-  }, [route]);
+  }, [navigation, route.params]);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
@@ -133,8 +138,6 @@ const ProfileEditScreen = ({ navigation, route }) => {
       aspect: [4, 3],
       quality: 1,
     });
-
-    // "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540akdlsz21%252Fkeewe/ImagePicker/29c5936e-b619-4667-9aa0-292686e75bb6.jpg"
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
@@ -169,10 +172,11 @@ const ProfileEditScreen = ({ navigation, route }) => {
   const queryClient = useQueryClient();
 
   const handleSaveProfileInfo = async () => {
-    // if (!image) return;
     const formData = new FormData();
     if (image) {
       formData.append('profileImage', {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         uri: image,
         type: mime.getType(image),
         name: 'image.jpg',
@@ -183,7 +187,6 @@ const ProfileEditScreen = ({ navigation, route }) => {
       formData.append('interests', inter);
     }
     formData.append('repTitleId', titleNameToId[title] ?? '');
-    // formData.append('repTitleId', '');
     formData.append('introduction', introduction);
     formData.append('updatePhoto', 'true');
 
