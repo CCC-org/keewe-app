@@ -4,23 +4,23 @@ import Toast from 'react-native-toast-message';
 import theme from '../../theme/light';
 import { SvgXml } from 'react-native-svg';
 import copyLinkXml from '../../../assets/svgs/copyLinkXml';
-
+import { BlurView } from 'expo-blur';
 const toastConfig = {
   snackbar: (props) => (
     <View
       style={{
-        backgroundColor: 'white',
+        borderRadius: 8,
+        overflow: 'hidden',
       }}
     >
-      <View
+      <BlurView
+        intensity={16}
         style={{
           width: 343,
           paddingHorizontal: 16,
           paddingVertical: 8,
-          borderRadius: 8,
           backgroundColor: `${theme.colors.graphic.black}cc`,
           alignContent: 'center',
-          opacity: 1,
         }}
       >
         <Text
@@ -32,20 +32,21 @@ const toastConfig = {
         >
           {props.text1}
         </Text>
-      </View>
+      </BlurView>
     </View>
   ),
   copySnackbar: (props) => (
     <View
       style={{
-        backgroundColor: 'white',
+        borderRadius: 8,
+        overflow: 'hidden',
       }}
     >
-      <View
+      <BlurView
+        intensity={16}
         style={{
           width: 343,
           marginHorizontal: 16,
-          borderRadius: 8,
           backgroundColor: `${theme.colors.graphic.black}cc`,
           alignContent: 'center',
         }}
@@ -93,7 +94,7 @@ const toastConfig = {
             </Text>
           </Pressable>
         </View>
-      </View>
+      </BlurView>
     </View>
   ),
 };
