@@ -39,7 +39,7 @@ const Profile = ({
           <View style={styles.Description}>
             <Text style={theme.fonts.text.body2.bold}>{nickname}</Text>
             <Text
-              style={{ ...theme.fonts.text.caption1, color: `${theme.colors.graphic.black}50` }}
+              style={{ ...theme.fonts.text.caption1, color: `${theme.colors.graphic.black}80` }}
             >
               {title} ∙ {getTimeInterval(new Date().getTime() - new Date(createdAt).getTime())}
             </Text>

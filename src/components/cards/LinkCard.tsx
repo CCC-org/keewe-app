@@ -43,8 +43,6 @@ function createStyles(props: customProps) {
   const styles = StyleSheet.create({
     container: {
       width: props.width,
-      borderWidth: 1,
-      borderColor: '#12131420',
       borderRadius: 8,
       flexDirection: 'row',
     },
