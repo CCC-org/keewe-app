@@ -78,5 +78,7 @@ dist/
 
 #builds
 android
-
 .env
+akdlsz21_playstore_key.pem
+@akdlsz21__keewe.jsk
+credentials.json

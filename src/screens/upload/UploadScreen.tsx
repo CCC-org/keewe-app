@@ -45,7 +45,6 @@ const UploadScreen = ({ navigation, route }) => {
 
   const queryClient = useQueryClient();
   const theme = useTheme();
-
   const { isLoading: isEditLoading } = useQuery(
     InsightQueryKeys.getInsight({ insightId }),
     () => InsightAPI.getInsight({ insightId }),
