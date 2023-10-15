@@ -29,6 +29,8 @@ import TwoButtonModal from '../../components/modal/TwoButtonModal';
 import isTextNotOnlySpace from '../../utils/helper/strings/isTextNotOnlySpace';
 import { useFocusEffect } from '@react-navigation/native';
 import * as Clipboard from 'expo-clipboard';
+import isDarkMode from '../../utils/helper/display/isDarkMode';
+import { Feather } from '@expo/vector-icons';
 
 const UploadScreen = ({ navigation, route }) => {
   const { isEdit, link, insightId } = route?.params ?? {};
@@ -45,7 +47,6 @@ const UploadScreen = ({ navigation, route }) => {
 
   const queryClient = useQueryClient();
   const theme = useTheme();
-
   const { isLoading: isEditLoading } = useQuery(
     InsightQueryKeys.getInsight({ insightId }),
     () => InsightAPI.getInsight({ insightId }),
@@ -190,6 +191,7 @@ const UploadScreen = ({ navigation, route }) => {
     useCallback(() => {
       const getClipboard = async () => {
         const clipboard = await Clipboard.getStringAsync();
+        console.log(`darkmode: ${isDarkMode()}`);
         if (clipboard.startsWith('http')) {
           try {
             await fetch(clipboard, {

@@ -2,9 +2,9 @@ import { Pressable, Text, View } from 'react-native';
 import React from 'react';
 import Toast from 'react-native-toast-message';
 import theme from '../../theme/light';
-import { SvgXml } from 'react-native-svg';
-import copyLinkXml from '../../../assets/svgs/copyLinkXml';
 import { BlurView } from 'expo-blur';
+import isDarkMode from '../../utils/helper/display/isDarkMode';
+import { Feather } from '@expo/vector-icons';
 const toastConfig = {
   snackbar: (props) => (
     <View
@@ -66,7 +66,11 @@ const toastConfig = {
               alignSelf: 'center',
             }}
           >
-            <SvgXml xml={copyLinkXml} />
+            {isDarkMode() ? (
+              <Feather name="link-2" size={24} color="white" />
+            ) : (
+              <Feather name="link-2" size={24} color="black" />
+            )}
             <Text
               style={{
                 ...theme.fonts.text.body2.regular,

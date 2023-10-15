@@ -31,8 +31,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.CCC.keewe",
-      "versionCode": 9,
+      "package": "com.akdlsz21.keewe",
+      "versionCode": 18,
       "intentFilters": [
         {
           "action": "VIEW",
@@ -56,7 +56,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "05f9153d-ab7a-4208-a465-60a60c8c4ade"
+        "projectId": "662b6040-56c8-42ea-9623-ec66e4cfd04f"
       }
     },
     "plugins": [
