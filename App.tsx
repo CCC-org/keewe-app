@@ -146,14 +146,14 @@ export default function App() {
     }
   };
 
-  useEffect(() => {
-    const subscription = Notifications.addNotificationReceivedListener(async (notification) => {
-      alert(notification.request.content.data);
-      console.log(notification.request.content.data);
-      await Clipboard.setStringAsync(String(notification.request.content.data));
-    });
-    return () => subscription.remove();
-  }, []);
+  // useEffect(() => {
+  //   const subscription = Notifications.addNotificationReceivedListener(async (notification) => {
+  //     alert(notification.request.content.data);
+  //     console.log(notification.request.content.data);
+  //     await Clipboard.setStringAsync(String(notification.request.content.data));
+  //   });
+  //   return () => subscription.remove();
+  // }, []);
 
   if (!isLoadingComplete) {
     return null;
