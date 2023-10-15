@@ -111,7 +111,7 @@ const registerForPushNotificationsAsync = async () => {
   Notifications.setNotificationHandler({
     handleNotification: async () => {
       return {
-        shouldShowAlert: true,
+        shouldShowAlert: false,
         shouldPlaySound: false,
         shouldSetBadge: false,
       };
