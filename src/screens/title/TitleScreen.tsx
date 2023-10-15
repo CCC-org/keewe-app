@@ -8,6 +8,8 @@ import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import HeaderBackButton from '../../components/header/HeaderBackButton';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import filter from '../../../assets/svgs/filter';
+import { SvgXml } from 'react-native-svg';
 
 const TitleScreen = ({ route, navigation }) => {
   const userId = route.params?.userId ?? getUserId().then((id) => id);
@@ -21,9 +23,11 @@ const TitleScreen = ({ route, navigation }) => {
   const [selectedCategory] = useState(route?.params?.selectedCategory);
   const [customCategory] = useState(route?.params?.customCategory);
   const [selectedTitle, setSelectedTitle] = useState<AchievedTitle | undefined>();
+  const [filterMode, setFilterMode] = useState<string>('total');
   const theme = useTheme();
 
   const modalRef = useRef<BottomSheetModal>(null);
+  const filterModalRef = useRef<BottomSheetModal>(null);
 
   const renderBackdrop = useCallback(
     (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
@@ -64,7 +68,17 @@ const TitleScreen = ({ route, navigation }) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => <></>,
+      headerRight: () => (
+        <Pressable
+          onPress={() => {
+            filterModalRef.current?.present();
+            return;
+          }}
+          style={{ padding: 12 }}
+        >
+          <SvgXml xml={filter} />
+        </Pressable>
+      ),
       headerLeft: () => <HeaderBackButton onPress={handleBackPress} />,
     });
   }, [route, repTitleId, selectedTitle, title]);
@@ -73,9 +87,15 @@ const TitleScreen = ({ route, navigation }) => {
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.mainContainer} contentContainerStyle={{ paddingBottom: 100 }}>
         {Object.values(titleMap).map((titleContainer) => {
-          const filteredTitle = titleMetaArr.filter(
+          let filteredTitle = titleMetaArr.filter(
             (titleMeta) => titleMeta.category_kor === titleContainer.name,
           );
+          if (filterMode === 'aquire') {
+            filteredTitle = filteredTitle.filter((titleMeta) =>
+              userTitles.achievedTitles?.find((title) => title.titleId === titleMeta.id),
+            );
+          }
+          if (filteredTitle.length == 0) return;
           return (
             <View key={titleContainer.name} style={styles.achievementContainer}>
               <View style={{ flexDirection: 'row' }}>
@@ -110,7 +130,11 @@ const TitleScreen = ({ route, navigation }) => {
                           return;
                         }
                         if (!source) {
-                          alert('아직 획득하지 못한 타이틀은 등록할 수 없습니다.');
+                          Toast.show({
+                            type: 'snackbar',
+                            text1: '아직 획득하지 못한 타이틀은 등록할 수 없어요.',
+                            position: 'bottom',
+                          });
                           return;
                         }
                         setSelectedTitle(source);
@@ -128,6 +152,40 @@ const TitleScreen = ({ route, navigation }) => {
       <BottomSheetModal ref={modalRef} snapPoints={['15%']} backdropComponent={renderBackdrop}>
         <Pressable style={styles.option} onPress={handleTitleApply}>
           <Text style={[theme.fonts.text.body1.regular]}>대표 타이틀 설정</Text>
+        </Pressable>
+      </BottomSheetModal>
+      <BottomSheetModal
+        ref={filterModalRef}
+        snapPoints={['22%']}
+        backdropComponent={renderBackdrop}
+      >
+        <Pressable
+          style={styles.option}
+          onPress={() => {
+            setFilterMode('total');
+            Toast.show({
+              type: 'snackbar',
+              text1: '전체 타이틀이 보여요.',
+              position: 'bottom',
+            });
+            filterModalRef.current?.dismiss();
+          }}
+        >
+          <Text style={[theme.fonts.text.body1.regular]}>전체 타이틀 보기</Text>
+        </Pressable>
+        <Pressable
+          style={styles.option}
+          onPress={() => {
+            setFilterMode('aquire');
+            Toast.show({
+              type: 'snackbar',
+              text1: '획득한 타이틀만 보여요.',
+              position: 'bottom',
+            });
+            filterModalRef.current?.dismiss();
+          }}
+        >
+          <Text style={[theme.fonts.text.body1.regular]}>획득한 타이틀만 보기</Text>
         </Pressable>
       </BottomSheetModal>
     </SafeAreaView>
