@@ -12,6 +12,7 @@ const BlandTextInput = ({ setTextVal, placeHolder }: BlandTextInputProps) => {
     <TextInput
       style={styles.textInput}
       placeholder={placeHolder ?? '새 폴더의 이름을 적어주세요.'}
+      placeholderTextColor={'#12131450'}
       onChangeText={(text) => setTextVal(text)}
       autoFocus={true}
     />
@@ -25,7 +26,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     width: '100%',
     height: 50,
-
     borderRadius: 12,
     borderWidth: 1,
     borderColor: '#12131410',
