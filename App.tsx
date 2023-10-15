@@ -148,8 +148,9 @@ export default function App() {
 
   useEffect(() => {
     const subscription = Notifications.addNotificationReceivedListener((notification) => {
-      alert(notification);
-      Clipboard.setStringAsync(String(notification));
+      alert(notification.request.content.data);
+      console.log(notification.request.content.data);
+      await Clipboard.setStringAsync(notification);
     });
     return () => subscription.remove();
   }, []);
