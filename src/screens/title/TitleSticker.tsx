@@ -10,6 +10,8 @@ interface TitleStickerProp {
   titleMeta: TitleMeta;
   repTitleId: number | null;
   isEnteredByProfileEdit: boolean;
+  source?: AchievedTitle;
+  handleChangeTitle: () => void;
   editObject?: {
     nickname: string;
     image: string;
@@ -20,34 +22,9 @@ interface TitleStickerProp {
   } | null;
 }
 
-const TitleSticker = ({
-  achievedTitles,
-  titleMeta,
-  repTitleId,
-  isEnteredByProfileEdit,
-  editObject,
-}: TitleStickerProp) => {
+const TitleSticker = ({ source, titleMeta, repTitleId, handleChangeTitle }: TitleStickerProp) => {
   const { fonts } = useTheme();
-  const navigation = useNavigation();
   // source is t-+he matching title. if undefined, the sticker will be an empty box.
-  const source = achievedTitles?.find((title) => {
-    if (title.titleId === titleMeta.id) {
-      return true;
-    }
-  });
-
-  const handleChangeTitle = () => {
-    if (!isEnteredByProfileEdit) {
-      return;
-    }
-    if (!source) {
-      alert('아직 획득하지 못한 타이틀은 등록할 수 없습니다.');
-      return;
-    }
-    const res = navigation.getState().routes.filter((route) => route.name === 'ProfileEdit')[0];
-    const mergedRouteParams = { ...res.params, ...editObject, title: titleMeta.name };
-    navigation.navigate('ProfileEdit', mergedRouteParams);
-  };
 
   return (
     <View style={styles.mainContainer}>

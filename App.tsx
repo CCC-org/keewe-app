@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import HeaderBackButton from './src/components/header/HeaderBackButton';
 import CategoryCreateScreen from './src/screens/challenge/CategoryCreateScreen';
@@ -15,6 +15,7 @@ import SignUpScreen from './src/screens/onboarding/SignUpScreen';
 import useCachedResources from './src/utils/hooks/useCachedResources';
 import * as Notifications from 'expo-notifications';
 import * as ImagePicker from 'expo-image-picker';
+import * as Clipboard from 'expo-clipboard';
 
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -110,7 +111,7 @@ const registerForPushNotificationsAsync = async () => {
   Notifications.setNotificationHandler({
     handleNotification: async () => {
       return {
-        shouldShowAlert: true,
+        shouldShowAlert: false,
         shouldPlaySound: false,
         shouldSetBadge: false,
       };
@@ -144,6 +145,15 @@ export default function App() {
       const routes = state.routes.map((route) => route.name);
     }
   };
+
+  // useEffect(() => {
+  //   const subscription = Notifications.addNotificationReceivedListener(async (notification) => {
+  //     alert(notification.request.content.data);
+  //     console.log(notification.request.content.data);
+  //     await Clipboard.setStringAsync(String(notification.request.content.data));
+  //   });
+  //   return () => subscription.remove();
+  // }, []);
 
   if (!isLoadingComplete) {
     return null;

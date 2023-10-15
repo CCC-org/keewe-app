@@ -12,7 +12,6 @@ import { IOScrollView } from 'react-native-intersection-observer';
 import { ChallengeAPI, ChallengeQueryKeys } from '../../utils/api/ChallengeAPI';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import ChallengeProfile from '../../components/profile/ChallengeProfile';
-import BottomFixButton from '../../components/buttons/BottomFixButton';
 import theme from '../../theme/light';
 import { SvgXml } from 'react-native-svg';
 import CurrentChallengeProfile from '../../components/profile/ChallengeProfileCurrent';

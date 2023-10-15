@@ -3,12 +3,26 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 import { arrowLeft } from '../../constants/Icons/Navigation/ArrowLeftXml';
-const HeaderBackButton = () => {
+
+interface HeaderBackButtonProps {
+  onPress?: () => void;
+}
+
+const HeaderBackButton = ({ onPress }: HeaderBackButtonProps) => {
   const navigation = useNavigation();
 
   return (
     <>
-      <Pressable style={{ marginLeft: 18 }} onPress={() => navigation.goBack()}>
+      <Pressable
+        style={{ marginLeft: 18 }}
+        onPress={() => {
+          if (onPress) {
+            onPress();
+          } else {
+            navigation.goBack();
+          }
+        }}
+      >
         <SvgXml xml={arrowLeft} />
       </Pressable>
     </>

@@ -17,6 +17,7 @@ import { ChallengeAPI } from '../../../utils/api/ChallengeAPI';
 import ProfilePageFolderSection from './ProfilePageFolderSection';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import ProfileOptions from '../../../components/bottomsheet/ProfileOptions';
+import { useFocusEffect } from '@react-navigation/native';
 //import RNFadedScrollView from 'rn-faded-scrollview';
 
 const ProfileScreen = ({ navigation, route }) => {
@@ -177,6 +178,12 @@ const ProfileScreen = ({ navigation, route }) => {
       },
     });
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      queryClient.invalidateQueries(['profile']);
+    }, []),
+  );
 
   const renderBackdrop = useCallback(
     (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
