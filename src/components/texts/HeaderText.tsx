@@ -19,14 +19,16 @@ const HeaderText = ({ header, subTitle, interest }: HeaderTextProps) => {
     <View>
       <View style={styles.mainTitle}>
         <Text style={styles.header}>{header}</Text>
-        <View
-          style={{
-            ...styles.profile,
-            backgroundColor: theme.colors.brand.surface.container1,
-          }}
-        >
-          <SvgXml xml={INTEREST_ICONS[interest ?? ''] ?? INTEREST_ICONS['기본']} />
-        </View>
+        {interest && (
+          <View
+            style={{
+              ...styles.profile,
+              backgroundColor: theme.colors.brand.surface.container1,
+            }}
+          >
+            <SvgXml xml={INTEREST_ICONS[interest ?? ''] ?? INTEREST_ICONS['기본']} />
+          </View>
+        )}
       </View>
       {subTitle && <Text style={styles.subTitle}>{subTitle}</Text>}
     </View>
