@@ -65,6 +65,7 @@ import ChallengeEditScreen from './src/screens/Main/challenge/ChallengeEditScree
 import SubjectEditScreen from './src/screens/Main/challenge/SubjectEditScreen';
 import GoalEditScreen from './src/screens/Main/challenge/GoalEditScreen';
 import { getExpoToken, setExpoToken } from './src/utils/hooks/asyncStorage/Login';
+import SearchScreen from './src/screens/search/SearchScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -226,6 +227,14 @@ export default function App() {
                       options={{
                         ...headerOptions,
                         title: '알림',
+                        cardStyle: { backgroundColor: 'white' },
+                      }}
+                    />
+                    <Stack.Screen
+                      name={'Search'}
+                      component={SearchScreen}
+                      options={{
+                        ...headerOptions,
                         cardStyle: { backgroundColor: 'white' },
                       }}
                     />

@@ -15,6 +15,7 @@ const TitleScreen = ({ route, navigation }) => {
   const userId = route.params?.userId ?? getUserId().then((id) => id);
   const isEnteredByProfileEdit: boolean = route.params?.isEnteredByProfileEdit ?? false;
   const [userTitles] = useTitles(userId);
+  console.log(userTitles);
   const [repTitleId, setRepTitleId] = useState<number | undefined>(route?.params?.repTitleId);
   const [nickname] = useState<string>(route?.params?.nickname);
   const [image] = useState(route?.params?.image);
@@ -111,6 +112,7 @@ const TitleScreen = ({ route, navigation }) => {
               </View>
               <View style={styles.titlesContainer}>
                 {filteredTitle.map((titleMeta) => {
+                  console.log('titleMeta', titleMeta);
                   const source = userTitles.achievedTitles?.find((title) => {
                     if (title.titleId === titleMeta.id) {
                       return true;
