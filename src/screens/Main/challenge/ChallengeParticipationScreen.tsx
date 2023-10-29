@@ -110,10 +110,12 @@ const ChallengeParticipationScreen = ({ route }) => {
       <View
         style={{
           flexDirection: 'row',
-          justifyContent: 'space-evenly',
+          justifyContent: 'center',
+          gap: 8,
           bottom: 0,
           backgroundColor: theme.colors.graphic.white,
-          paddingVertical: 10,
+          paddingVertical: 12,
+          paddingHorizontal: 16,
         }}
       >
         <ConditionalButton
