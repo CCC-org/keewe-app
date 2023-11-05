@@ -56,7 +56,7 @@ const SearchInsightScreen = () => {
     queryFn: ({ pageParam = 0 }) => fetchSearchInsights({ searchText, page: pageParam, limit: 10 }),
   });
 
-  const scrollViewRef = useRef<any>(null);
+  const scrollViewRef = useRef(null);
 
   if (feedListIsLoading) {
     return (
@@ -74,7 +74,7 @@ const SearchInsightScreen = () => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <IOScrollView ref={scrollViewRef}>
         <FeedList
           scrollViewRef={scrollViewRef}

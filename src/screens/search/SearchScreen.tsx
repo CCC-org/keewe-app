@@ -7,6 +7,7 @@ import {
 import SearchInsightScreen from './SearchInsightScreen';
 import SearchUserScreen from './SearchUserScreen';
 import SearchChallengeScreen from './SearchChallengeScreen';
+import { useTheme } from 'react-native-paper';
 // type SearchType = 'INSIGHT' | 'USER' | 'CHALLENGE';
 
 const Tab = createMaterialTopTabNavigator();
@@ -16,7 +17,7 @@ export const SearchContext = createContext({ searchText: '', setSearchText: (tex
 
 const SearchScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState('');
-
+  const theme = useTheme();
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
@@ -28,16 +29,17 @@ const SearchScreen = ({ navigation }) => {
   return (
     <SearchContext.Provider value={{ searchText, setSearchText }}>
       <Tab.Navigator
-        initialRouteName="Insight"
+        initialRouteName="게시물"
         screenOptions={{
-          tabBarActiveTintColor: '#e91e63',
-          tabBarLabelStyle: { fontSize: 12 },
-          tabBarStyle: { backgroundColor: 'powderblue' },
+          tabBarActiveTintColor: 'black',
+          tabBarIndicatorStyle: { backgroundColor: theme.colors.brand.primary.main },
+          tabBarLabelStyle: { fontSize: 14, fontWeight: 'bold' },
+          tabBarStyle: { backgroundColor: 'white' },
         }}
       >
-        <Tab.Screen name="Insight" component={SearchInsightScreen} />
-        <Tab.Screen name="Challenge" component={SearchChallengeScreen} />
-        <Tab.Screen name="User" component={SearchUserScreen} />
+        <Tab.Screen name="게시물" component={SearchInsightScreen} />
+        <Tab.Screen name="챌린지" component={SearchChallengeScreen} />
+        <Tab.Screen name="사용자" component={SearchUserScreen} />
       </Tab.Navigator>
     </SearchContext.Provider>
   );
