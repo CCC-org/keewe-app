@@ -15,6 +15,8 @@ export const FeedAPI = {
         limit,
       )}&follow=${follow}`;
     }
+    console.log('URL', URL);
+
     const response = await httpClient.get<FeedInsight>(URL);
     return response.data.data;
   },

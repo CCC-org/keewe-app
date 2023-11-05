@@ -11,14 +11,16 @@ import { StackNavigationProp } from '@react-navigation/stack';
 interface FeedItemProps {
   insight: InsightData;
   localId?: string;
-  onBookMarkClick: (id: number) => void;
+  onBookMarkClick?: (id: number) => void;
 }
 
 const FeedItem = ({ insight, localId, onBookMarkClick }: FeedItemProps) => {
   const { id, contents, createdAt, link, reaction, writer, bookmark } = insight;
   const navigation = useNavigation<StackNavigationProp<any>>();
   const handleOnBookMarkPress = () => {
-    onBookMarkClick(id);
+    if (onBookMarkClick) {
+      onBookMarkClick(id);
+    }
   };
 
   const handleProfilePress = () => {

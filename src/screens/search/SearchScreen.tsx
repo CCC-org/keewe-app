@@ -1,28 +1,45 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { createContext, useLayoutEffect, useState } from 'react';
 import { ScrollView, Text, TextInput } from 'react-native';
-import { View } from '../../components/Themed';
-import { AntDesign } from '@expo/vector-icons';
-import BlandTextInput from '../../components/texts/BlandTextInput';
-import SmallTextInput from '../../components/texts/SmallTextInput';
-import Tabs from '../Main/Tabs';
-import Tab from '../../components/tabs/Tab';
-type SearchType = 'INSIGHT' | 'USER' | 'CHALLENGE';
+import {
+  MaterialTopTabView,
+  createMaterialTopTabNavigator,
+} from '@react-navigation/material-top-tabs';
+import SearchInsightScreen from './SearchInsightScreen';
+import SearchUserScreen from './SearchUserScreen';
+import SearchChallengeScreen from './SearchChallengeScreen';
+// type SearchType = 'INSIGHT' | 'USER' | 'CHALLENGE';
+
+const Tab = createMaterialTopTabNavigator();
+
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+export const SearchContext = createContext({ searchText: '', setSearchText: (text: string) => {} });
+
 const SearchScreen = ({ navigation }) => {
-  //    need a search bar component that appends to the title section,
-  // and the search bar should return a text input that allows the user to type in a search query
-  // the search bar should also have a cancel button that resets the search bar to its original state
   const [searchText, setSearchText] = useState('');
-  const [currentTab, setCurrentTab] = useState<SearchType>('INSIGHT');
-  navigation.setOptions({
-    headerTitle: () => (
-      <TextInput value={searchText} onChangeText={setSearchText} placeholder="Search" />
-    ),
-  });
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: () => (
+        <TextInput value={searchText} onChangeText={setSearchText} placeholder="Search" />
+      ),
+    });
+  }, []);
 
   return (
-    <ScrollView>
-      <Tab selectedTab={currentTab} prevTab={currentTab} />
-    </ScrollView>
+    <SearchContext.Provider value={{ searchText, setSearchText }}>
+      <Tab.Navigator
+        initialRouteName="Insight"
+        screenOptions={{
+          tabBarActiveTintColor: '#e91e63',
+          tabBarLabelStyle: { fontSize: 12 },
+          tabBarStyle: { backgroundColor: 'powderblue' },
+        }}
+      >
+        <Tab.Screen name="Insight" component={SearchInsightScreen} />
+        <Tab.Screen name="Challenge" component={SearchChallengeScreen} />
+        <Tab.Screen name="User" component={SearchUserScreen} />
+      </Tab.Navigator>
+    </SearchContext.Provider>
   );
 };
 
