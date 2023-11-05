@@ -29,6 +29,8 @@ const CurrentChallengeProfile = ({
       ? challengeDescription?.slice(0, 21) + '...'
       : challengeDescription
     : '';
+  console.log('insightNumber', insightNumber);
+
   return (
     <Pressable
       onPress={() =>
