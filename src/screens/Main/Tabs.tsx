@@ -22,6 +22,8 @@ import alarmExist from '../../constants/Icons/alarm/alarmExist';
 import { useQuery } from '@tanstack/react-query';
 import { notificationApi, notificationKeys } from '../../utils/api/notification/notification';
 import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
+import { View } from '../../components/Themed';
+import SearchIconXml from '../../constants/Icons/search/SearchIconXml';
 
 const Tab = createBottomTabNavigator();
 
@@ -84,9 +86,19 @@ const Tabs = ({ navigation, route }) => {
         headerShadowVisible: false,
         headerTitle: '',
         headerRight: () => (
-          <Pressable onPress={() => navigation.navigate('Notification')}>
-            <SvgXml style={{ marginRight: 16 }} xml={data?.exist ? alarmExist : alarmEmpty} />
-          </Pressable>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            <Pressable onPress={() => navigation.navigate('Notification')}>
+              <SvgXml style={{ marginRight: 16 }} xml={data?.exist ? alarmExist : alarmEmpty} />
+            </Pressable>
+            <Pressable onPress={() => navigation.navigate('Search')}>
+              <SvgXml style={{ marginRight: 16 }} xml={SearchIconXml} />
+            </Pressable>
+          </View>
         ),
       }}
       sceneContainerStyle={{ backgroundColor: 'white' }}

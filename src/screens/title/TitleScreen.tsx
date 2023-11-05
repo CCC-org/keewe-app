@@ -121,6 +121,7 @@ const TitleScreen = ({ route, navigation }) => {
               </View>
               <View style={styles.titlesContainer}>
                 {filteredTitle.map((titleMeta) => {
+                  console.log('titleMeta', titleMeta);
                   const source = userTitles.achievedTitles?.find((title) => {
                     if (title.titleId === titleMeta.id) {
                       return true;

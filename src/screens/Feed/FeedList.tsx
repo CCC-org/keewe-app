@@ -9,7 +9,7 @@ import { useGetUserId } from '../../utils/hooks/useGetUserId';
 interface FeedListProps {
   feedList: InfiniteData<InsightData[] | undefined> | undefined;
   fetchNextPage: () => void;
-  touchBookMark: UseMutateFunction<void, unknown, number, unknown>;
+  touchBookMark?: UseMutateFunction<void, unknown, number, unknown>;
   upperComponent?: React.ReactNode;
   feedListQueryClient?: QueryClient;
   feedListIsLoading: boolean;
