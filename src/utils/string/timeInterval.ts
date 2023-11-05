@@ -2,7 +2,10 @@ export const getTimeInterval = (interval: number) => {
   const minutes = Math.floor(interval / 1000 / 60);
   const hours = Math.floor(interval / 1000 / 60 / 60);
   const days = Math.floor(interval / 1000 / 60 / 60 / 24);
-  const months = Math.floor(interval / 1000 / 60 / 60 / 24 / 12);
+  const months = Math.floor(interval / 1000 / 60 / 60 / 24 / 30);
+  if (minutes < 10) {
+    return '방금 전';
+  }
   if (minutes < 60) {
     return `${minutes}분 전`;
   }

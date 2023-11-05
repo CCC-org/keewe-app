@@ -122,16 +122,19 @@ const SettingsScreen = () => {
         rightButtonText="확인"
         leftButtonPress={() => setIsLogoutModalVisible(false)}
         rightButtonPress={handleLogOut}
+        rightButtonColor={theme.colors.system.error}
       />
       <TwoButtonModal
         dismissable={true}
         visible={isWithdrawalModalVisible}
         onDismiss={() => setIsWithdrawalModalVisible(false)}
         mainTitle="탈퇴하시겠습니까?"
+        subTitle="탈퇴하면 키위 서비스에서 탈퇴되고, 모든 기록이 사라져요."
         leftButtonText="취소"
         rightButtonText="확인"
         leftButtonPress={() => setIsWithdrawalModalVisible(false)}
         rightButtonPress={handleWithdrawal}
+        rightButtonColor={theme.colors.system.error}
       />
     </SafeAreaView>
   );
