@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ScrollView, SafeAreaView, Pressable } from 'react-native';
-import React, { useState, useRef, useCallback, useLayoutEffect, useMemo } from 'react';
+import React, { useState, useRef, useCallback, useLayoutEffect, useMemo, useEffect } from 'react';
 import { useTitles } from '../../utils/hooks/title/useTitles';
 import TitleSticker from './TitleSticker';
 import { useTheme } from 'react-native-paper';
@@ -12,9 +12,10 @@ import filter from '../../../assets/svgs/filter';
 import { SvgXml } from 'react-native-svg';
 
 const TitleScreen = ({ route, navigation }) => {
-  const userId = route.params?.userId ?? getUserId().then((id) => id);
+  const paramsId = route.params?.userId;
+  const [isSelf, setIsSelf] = useState<boolean>(false);
   const isEnteredByProfileEdit: boolean = route.params?.isEnteredByProfileEdit ?? false;
-  const [userTitles] = useTitles(userId);
+  const [userTitles] = useTitles(paramsId);
   const [repTitleId, setRepTitleId] = useState<number | undefined>(route?.params?.repTitleId);
   const [nickname] = useState<string>(route?.params?.nickname);
   const [image] = useState(route?.params?.image);
@@ -56,6 +57,10 @@ const TitleScreen = ({ route, navigation }) => {
   };
 
   const handleBackPress = () => {
+    if (!isEnteredByProfileEdit || isSelf) {
+      navigation.goBack();
+      return;
+    }
     const res = navigation.getState().routes.filter((route) => route.name === 'ProfileEdit')[0];
     const mergedRouteParams = {
       ...res.params,
@@ -82,6 +87,11 @@ const TitleScreen = ({ route, navigation }) => {
       headerLeft: () => <HeaderBackButton onPress={handleBackPress} />,
     });
   }, [route, repTitleId, selectedTitle, title]);
+
+  useEffect(() => {
+    const userId = getUserId();
+    setIsSelf(paramsId == userId);
+  }, [paramsId, getUserId]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -123,7 +133,7 @@ const TitleScreen = ({ route, navigation }) => {
                       isEnteredByProfileEdit={isEnteredByProfileEdit}
                       key={titleMeta.id}
                       achievedTitles={userTitles.achievedTitles}
-                      repTitleId={repTitleId ?? userTitles.repTitleId}
+                      repTitleId={isSelf ? repTitleId ?? userTitles.repTitleId : undefined}
                       titleMeta={titleMeta}
                       handleChangeTitle={() => {
                         if (!isEnteredByProfileEdit) {

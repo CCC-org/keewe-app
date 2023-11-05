@@ -2,13 +2,12 @@ import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { Title, TitleMeta } from '../../types/title/title';
 import { useTheme } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
 import { modifyDateForTitleSticker } from '../../utils/helper/title/modifyDate';
 
 interface TitleStickerProp {
   achievedTitles: Title['data']['achievedTitles'];
   titleMeta: TitleMeta;
-  repTitleId: number | null;
+  repTitleId?: number | null;
   isEnteredByProfileEdit: boolean;
   source?: AchievedTitle;
   handleChangeTitle: () => void;
