@@ -122,14 +122,14 @@ const MyPageScreen = ({ navigation, route }) => {
       headerRight: () => {
         return (
           <View style={styles.headerRight}>
-            <Pressable style={{ marginRight: 12 }} onPress={() => modalRef.current?.present()}>
-              <SvgXml xml={ShareIconXml} />
+            <Pressable onPress={() => navigation.navigate('Settings')}>
+              <SvgXml xml={settingsIcon} />
             </Pressable>
             <Pressable
-              style={{ marginHorizontal: 18 }}
-              onPress={() => navigation.navigate('Settings')}
+              style={{ marginRight: 18, marginLeft: 15 }}
+              onPress={() => modalRef.current?.present()}
             >
-              <SvgXml xml={settingsIcon} />
+              <SvgXml xml={ShareIconXml} />
             </Pressable>
           </View>
         );
@@ -296,7 +296,7 @@ export default MyPageScreen;
 const styles = StyleSheet.create({
   headerRight: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     width: 100,
   },

@@ -153,7 +153,7 @@ const ChallengesScreen = ({ navigation }) => {
               insightPerWeek={challengeParticipation?.insightPerWeek ?? 0}
               startDate={challengeParticipation?.startDate ?? ''}
               endDate={challengeParticipation?.endDate ?? ''}
-              dayProgresses={userSpecificChallenge?.dayProgresses}
+              dayProgresses={userSpecificChallenge?.dayProgresses ?? []}
             />
           </View>
         ) : (

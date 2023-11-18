@@ -45,7 +45,7 @@ function createStyles(theme) {
       justifyContent: 'center',
     },
     header: {
-      width: '80%',
+      width: '100%',
       marginTop: 4,
       fontSize: 26,
       fontWeight: '600',

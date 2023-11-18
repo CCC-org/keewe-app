@@ -62,12 +62,14 @@ const CategoryCreateScreen = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <SmallTextInput
-        inputValue={input}
-        setInputValue={setInput}
-        placeholder={'관심사를 입력하세요'}
-        errorMessage={errorMessage}
-      />
+      <View style={{ paddingTop: 20, paddingHorizontal: 17 }}>
+        <SmallTextInput
+          inputValue={input}
+          setInputValue={setInput}
+          placeholder={'관심사를 입력하세요'}
+          errorMessage={errorMessage}
+        />
+      </View>
     </SafeAreaView>
   );
 };
@@ -75,8 +77,6 @@ const CategoryCreateScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 17,
-    paddingTop: 20,
   },
 });
 
