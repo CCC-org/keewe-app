@@ -58,38 +58,43 @@ const ServiceIntroScreen = ({ navigation }) => {
           onSnapToItem={(idx) => handleStep(idx)}
           data={[
             <>
-              <Image
-                source={require('../../../assets/images/onboarding_01.png')}
-                style={styles.image}
-              />
-              <View key={1} style={styles.carouselItemCtn}>
-                <HeaderText key={1} header={'기억하고 싶은 콘텐츠, \n지나치지 말고 기록하세요'} />
+              <View key={1} style={{ paddingTop: 32 }}>
+                <Image
+                  source={require('../../../assets/images/onboarding_01.png')}
+                  style={styles.image}
+                />
+                <View style={styles.carouselItemCtn}>
+                  <HeaderText header={'기억하고 싶은 콘텐츠, \n지나치지 말고 기록하세요'} />
+                </View>
               </View>
             </>,
 
             <>
-              <Image
-                source={require('../../../assets/images/onboarding_02.png')}
-                style={styles.image}
-              />
-              <View key={2} style={styles.carouselItemCtn}>
-                <HeaderText key={1} header={'꾸준하기 어렵다면, \n친구들과 함께 도전해요'} />
+              <View key={2} style={{ paddingTop: 32 }}>
+                <Image
+                  source={require('../../../assets/images/onboarding_02.png')}
+                  style={styles.image}
+                />
+                <View style={styles.carouselItemCtn}>
+                  <HeaderText header={'꾸준하기 어렵다면 \n친구들과 함께 도전해요'} />
+                </View>
               </View>
             </>,
 
             <>
-              <Image
-                source={require('../../../assets/images/onboarding_03.png')}
-                style={styles.image}
-              />
-              <View key={3} style={styles.carouselItemCtn}>
-                <HeaderText key={1} header={'함께할수록 쉬워지는 기록, \n키위가 도와줄게요!'} />
+              <View key={3} style={{ paddingTop: 32 }}>
+                <Image
+                  source={require('../../../assets/images/onboarding_03.png')}
+                  style={styles.image}
+                />
+                <View style={styles.carouselItemCtn}>
+                  <HeaderText header={'함께할수록 쉬워지는 기록 \n키위가 도와줄게요!'} />
+                </View>
               </View>
             </>,
           ]}
           renderItem={({ item }) => item}
         />
-        {/* </View> */}
         <View style={styles.nextButtonWithStepper}>
           <Stepper totalStep={3} currentStep={step + 1} />
           <View style={styles.nextButton}>

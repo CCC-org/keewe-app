@@ -92,7 +92,7 @@ const OneWeekRow = ({ order = 1, recordedDates, startDate }: OneWeekRowProps) =>
           const targetDate = startDate ? addDaysToDate(startDate, daysAfterStartDate) : '';
           const isRecordedDay = recordedDates?.includes(targetDate);
           return isRecordedDay ? (
-            <View style={styles.recordedCircle}>
+            <View key={index} style={styles.recordedCircle}>
               <Text style={{ ...theme.fonts.text.podkova.bold, color: theme.colors.graphic.white }}>
                 {recordedDates ? recordedDates.indexOf(targetDate) + 1 : 1}
               </Text>

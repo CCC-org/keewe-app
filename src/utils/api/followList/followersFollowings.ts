@@ -14,7 +14,7 @@ export const FollowersFollowingsApi = {
     try {
       if (!searchValue) {
         const response = await httpClient.get<FollowersFollowings>(
-          URL + '?' + `cursor=${getTime()}&limit=30`,
+          URL + '?' + `cursor=${getTime()}&limit=40`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -27,7 +27,7 @@ export const FollowersFollowingsApi = {
         return response.data.data;
       } else {
         const response = await httpClient.get<FollowersFollowings>(
-          `${URL}/search?searchWord=${searchValue}&limit=20`,
+          `${URL}/search?searchWord=${searchValue}&limit=30`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
