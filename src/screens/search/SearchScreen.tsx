@@ -1,21 +1,14 @@
 import React, { createContext, useLayoutEffect, useRef, useState } from 'react';
-import { NativeSyntheticEvent, Pressable, ScrollView, StyleSheet, Text } from 'react-native';
+import { NativeSyntheticEvent, StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
-import {
-  MaterialTopTabView,
-  createMaterialTopTabNavigator,
-} from '@react-navigation/material-top-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import SearchInsightScreen from './SearchInsightScreen';
 import SearchUserScreen from './SearchUserScreen';
 import SearchChallengeScreen from './SearchChallengeScreen';
 import { useTheme } from 'react-native-paper';
 import { TextInputSubmitEditingEventData } from 'react-native';
-import { View } from '../../components/Themed';
 import RecentSearchScreen, { RecentSearchItem } from './RecentSearchScreen';
-import { AntDesign } from '@expo/vector-icons';
-import SmallTextInput from '../../components/texts/SmallTextInput';
-// type SearchType = 'INSIGHT' | 'USER' | 'CHALLENGE';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -50,25 +43,6 @@ const SearchScreen = ({ navigation }) => {
           dense={true}
         />
       ),
-      // headerTitle: () => (
-      //   <View style={[styles.searchBar, isFocused && styles.focused]}>
-      //     <TextInput
-      //       ref={searchRef}
-      //       placeholder="Search"
-      //       value={searchText}
-      //       style={styles.textInput}
-      //       onSubmitEditing={handleSubmit}
-      //       onFocus={() => setIsFocused(true)}
-      //       onBlur={() => setIsFocused(false)}
-      //       onChangeText={setSearchText}
-      //     />
-      //     {searchText ? (
-      //       <Pressable onPress={() => setSearchText('')} style={styles.clearButton}>
-      //         <AntDesign name="closecircleo" size={24} color="black" />
-      //       </Pressable>
-      //     ) : null}
-      //   </View>
-      // ),
     });
   }, [searchText]);
 

@@ -40,15 +40,14 @@ const fetchSearchChallenges = async ({ searchText = 'test', page, limit }) => {
 
 const SearchChallengeScreen = () => {
   const { searchText } = useContext(SearchContext);
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status, isLoading } =
-    useInfiniteQuery({
-      queryKey: ['searchScreen', 'challenge', searchText],
-      queryFn: ({ pageParam = 0 }) =>
-        fetchSearchChallenges({ searchText, page: pageParam, limit: 10 }),
-      getNextPageParam: (lastPage) => {
-        return lastPage[lastPage.length - 1]?.id;
-      },
-    });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useInfiniteQuery({
+    queryKey: ['searchScreen', 'challenge', searchText],
+    queryFn: ({ pageParam = 0 }) =>
+      fetchSearchChallenges({ searchText, page: pageParam, limit: 10 }),
+    getNextPageParam: (lastPage) => {
+      return lastPage[lastPage.length - 1]?.id;
+    },
+  });
 
   const onEndReached = () => {
     if (hasNextPage) {

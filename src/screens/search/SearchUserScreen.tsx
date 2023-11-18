@@ -1,9 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import React, { useMemo } from 'react';
-import FollowListSection from '../follow/FollowListSection';
 import { InfiniteData, useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import httpClient from '../../utils/api/BaseHttpClient';
-import { FollowListKeys } from '../../utils/api/followList/followList';
 import { FollowAPI } from '../../utils/api/FollowAPI';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
 import { SearchContext } from './SearchScreen'; // Import SearchContext
