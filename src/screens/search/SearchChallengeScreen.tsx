@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatList } from 'react-native-gesture-handler';
 import CurrentChallengeProfile from '../../components/profile/ChallengeProfileCurrent';
 import { ActivityIndicator } from 'react-native-paper';
+import NoResultScreen from '../../components/misc/NoResultScreen';
 
 export interface SearchChallenge {
   id: number;
@@ -27,7 +28,6 @@ const fetchSearchChallenges = async ({ searchText = 'test', page, limit }) => {
 
   const queryString = urlSearchParams.toString();
   const requestUrl = `https://api-keewe.com/api/v1/search?${queryString}`;
-  console.log('Request URL:', requestUrl); // Debugging: Log the full request URL
 
   try {
     const response = await httpClient.get<SearchChallenge[]>(requestUrl);
@@ -40,7 +40,6 @@ const fetchSearchChallenges = async ({ searchText = 'test', page, limit }) => {
 
 const SearchChallengeScreen = () => {
   const { searchText } = useContext(SearchContext);
-
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useInfiniteQuery({
     queryKey: ['searchScreen', 'challenge', searchText],
     queryFn: ({ pageParam = 0 }) =>
@@ -57,7 +56,6 @@ const SearchChallengeScreen = () => {
   };
 
   const renderItem = ({ item, index }: ListRenderItemInfo<SearchChallenge>) => {
-    console.log('renderItem', item);
     return (
       <CurrentChallengeProfile
         key={index}
@@ -88,6 +86,10 @@ const SearchChallengeScreen = () => {
   }
 
   const flatListData = data?.pages.flatMap((page) => page) || [];
+
+  if (flatListData.length === 0) {
+    return <NoResultScreen />;
+  }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>

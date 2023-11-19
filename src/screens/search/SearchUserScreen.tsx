@@ -1,9 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import React, { useMemo } from 'react';
-import FollowListSection from '../follow/FollowListSection';
 import { InfiniteData, useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import httpClient from '../../utils/api/BaseHttpClient';
-import { FollowListKeys } from '../../utils/api/followList/followList';
 import { FollowAPI } from '../../utils/api/FollowAPI';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
 import { SearchContext } from './SearchScreen'; // Import SearchContext
@@ -12,6 +10,7 @@ import { useTheme } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import FollowListFollowButton from '../follow/FollowListFollowButton';
 import ProfileAvatar from '../../components/profile/ProfileAvatar';
+import NoResultScreen from '../../components/misc/NoResultScreen';
 
 export interface SearchUser {
   id: number;
@@ -32,10 +31,10 @@ const fetchSearchUser = async (searchText: string, page: number) => {
 
   const queryString = urlSearchParams.toString();
   const requestUrl = `https://api-keewe.com/api/v1/search?${queryString}`;
-  console.log('Request URL:', requestUrl); // Debugging: Log the full request URL
 
   try {
     const response = await httpClient.get<SearchUser[]>(requestUrl);
+
     return response.data;
   } catch (error) {
     console.error('search user screen', error);
@@ -44,14 +43,22 @@ const fetchSearchUser = async (searchText: string, page: number) => {
 };
 
 const SearchUserScreen = () => {
-  const { searchText } = React.useContext(SearchContext); // Use SearchContext to get the searchText
+  const { searchText } = React.useContext(SearchContext);
   const userId = useGetUserId();
   const queryClient = useQueryClient();
 
   const userInfiniteQueryResult = useInfiniteQuery({
-    queryKey: ['search', 'user', searchText], // Include searchText in the query key
+    queryKey: ['search', 'user', searchText],
     queryFn: ({ pageParam = 0 }) => fetchSearchUser(searchText, pageParam),
     getNextPageParam: (lastPage, allPages) => {
+      const lastPageId = lastPage[lastPage.length - 1]?.id;
+      if (lastPageId === undefined || lastPageId === null) return undefined;
+      const previousPage = allPages[allPages.length - 1];
+      const previousPageId = previousPage[previousPage.length - 1]?.id;
+      if (lastPageId === previousPageId) {
+        return undefined;
+      }
+
       return lastPage[lastPage.length - 1]?.id;
     },
   });
@@ -59,20 +66,30 @@ const SearchUserScreen = () => {
   const mutation = useMutation({
     mutationFn: FollowAPI.follow,
     onMutate: async (followId: string | number) => {
-      await queryClient.cancelQueries(FollowListKeys.getFolloweeListKeys(Number(userId)));
+      await queryClient.cancelQueries(['search', 'user', searchText]);
 
-      const previousPages = queryClient.getQueryData<InfiniteData<SearchUser[]>>(
-        FollowListKeys.getFolloweeListKeys(Number(userId)),
-      );
+      const previousData = queryClient.getQueryData<InfiniteData<SearchUser[]>>([
+        'search',
+        'user',
+        searchText,
+      ]);
 
-      return { previousPages };
+      if (previousData) {
+        const updatedPages = previousData.pages.map((page) =>
+          page.map((user) => (user.id === followId ? { ...user, follow: !user.follow } : user)),
+        );
+
+        queryClient.setQueryData(['search', 'user', searchText], {
+          ...previousData,
+          pages: updatedPages,
+        });
+      }
+
+      return { previousData };
     },
     onError: (err, newFollowId, context) => {
-      if (context?.previousPages) {
-        queryClient.setQueryData(
-          FollowListKeys.getFolloweeListKeys(Number(userId)),
-          context.previousPages,
-        );
+      if (context?.previousData) {
+        queryClient.setQueryData(['search', 'user', searchText], context.previousData);
       }
     },
   });
@@ -110,23 +127,24 @@ const SearchUserScreen = () => {
     );
   };
 
-  const handlePressForFollow = (id) => {
-    // Call the mutation to follow/unfollow the user
+  const handlePressForFollow = (id: string | number) => {
     mutation.mutate(id);
   };
 
   const handleGoToProfileOnImagePress = (userId) => {
-    // Navigate to the user's profile
-    navigation.navigate('UserProfile', { userId });
+    navigation.navigate('Profile', { userId } as any);
   };
 
   const theme = useTheme();
   const navigation = useNavigation();
 
-  // Flatten the pages of data into a single array
   const flatData = useMemo(() => {
-    return userInfiniteQueryResult.data?.pages.flatMap((page) => page) || [];
+    return userInfiniteQueryResult.data?.pages?.flatMap((page) => page) || [];
   }, [userInfiniteQueryResult.data]);
+
+  if (!flatData.length) {
+    return <NoResultScreen />;
+  }
 
   return (
     <FlatList
