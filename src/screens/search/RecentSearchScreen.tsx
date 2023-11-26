@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
-import { View } from '../../components/Themed';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SearchContext } from './SearchScreen';
 import { Entypo } from '@expo/vector-icons';

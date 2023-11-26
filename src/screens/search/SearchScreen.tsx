@@ -1,5 +1,5 @@
 import React, { createContext, useLayoutEffect, useRef, useState } from 'react';
-import { NativeSyntheticEvent, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -7,7 +7,6 @@ import SearchInsightScreen from './SearchInsightScreen';
 import SearchUserScreen from './SearchUserScreen';
 import SearchChallengeScreen from './SearchChallengeScreen';
 import { useTheme } from 'react-native-paper';
-import { TextInputSubmitEditingEventData } from 'react-native';
 import RecentSearchScreen, { RecentSearchItem } from './RecentSearchScreen';
 
 const Tab = createMaterialTopTabNavigator();
@@ -18,22 +17,30 @@ export const SearchContext = createContext({ searchText: '', setSearchText: (tex
 const SearchScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState('');
   const [isFocused, setIsFocused] = useState(true);
-  const searchRef = useRef(null);
-
+  const [count, setCount] = useState(0);
+  const searchRef = useRef('');
+  const textInputRef = useRef(null);
   const theme = useTheme();
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
         <TextInput
+          ref={textInputRef}
           right={
             <TextInput.Icon
-              style={{ opacity: searchText.length ? 0.2 : 0, marginLeft: 24 }}
-              onPress={() => setSearchText('')}
+              style={{ opacity: searchRef.current.length ? 0.2 : 0, marginLeft: 24 }}
+              onPress={() => {
+                setCount((prev) => prev + 1);
+                searchRef.current = '';
+                if (textInputRef.current) (textInputRef.current as any).clear();
+              }}
               name="close-circle"
             />
           }
-          value={searchText}
-          onChangeText={setSearchText}
+          onChangeText={(text) => {
+            setCount((prev) => prev + 1);
+            searchRef.current = text;
+          }}
           placeholder="검색어를 입력해주세요"
           activeUnderlineColor="rgba(18, 19, 20, 0.1)"
           style={styles.textInput}
@@ -44,13 +51,14 @@ const SearchScreen = ({ navigation }) => {
         />
       ),
     });
-  }, [searchText]);
+  }, [count]);
 
-  const handleSubmit = (e: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => {
-    if (!e.nativeEvent.text) return;
+  const handleSubmit = () => {
     if (!searchRef.current) return;
-    RecentSearchItem.set(e.nativeEvent.text);
-    setSearchText(e.nativeEvent.text);
+    const inputText = searchRef.current;
+    if (!inputText) return;
+    RecentSearchItem.set(inputText);
+    setSearchText(inputText);
     setIsFocused(false);
   };
 
@@ -94,7 +102,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 2,
     marginLeft: 24,
     fontFamily: 'pretendard',
-    width: 300,
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: 280,
   },
   clearButton: {
     marginLeft: 10,

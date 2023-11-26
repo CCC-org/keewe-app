@@ -40,6 +40,7 @@ const toastConfig = {
       style={{
         borderRadius: 8,
         overflow: 'hidden',
+        backgroundColor: `${theme.colors.graphic.black}cc`,
       }}
     >
       <BlurView
@@ -47,7 +48,6 @@ const toastConfig = {
         style={{
           width: 343,
           marginHorizontal: 16,
-          backgroundColor: `${theme.colors.graphic.black}cc`,
           alignContent: 'center',
         }}
       >
@@ -66,11 +66,7 @@ const toastConfig = {
               alignSelf: 'center',
             }}
           >
-            {isDarkMode() ? (
-              <Feather name="link-2" size={24} color="white" />
-            ) : (
-              <Feather name="link-2" size={24} color="black" />
-            )}
+            <Feather name="link-2" size={24} color="white" />
             <Text
               style={{
                 ...theme.fonts.text.body2.regular,
