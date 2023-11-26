@@ -18,16 +18,22 @@ const SearchScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState('');
   const [isFocused, setIsFocused] = useState(true);
   const [count, setCount] = useState(0);
-  const searchRef = useRef('null');
+  const searchRef = useRef('');
+  const textInputRef = useRef(null);
   const theme = useTheme();
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
         <TextInput
+          ref={textInputRef}
           right={
             <TextInput.Icon
-              style={{ opacity: searchText.length ? 0.2 : 0, marginLeft: 24 }}
-              onPress={() => setSearchText('')}
+              style={{ opacity: searchRef.current.length ? 0.2 : 0, marginLeft: 24 }}
+              onPress={() => {
+                setCount((prev) => prev + 1);
+                searchRef.current = '';
+                if (textInputRef.current) (textInputRef.current as any).clear();
+              }}
               name="close-circle"
             />
           }
