@@ -1,7 +1,8 @@
+/* eslint-disable indent */
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { Animated, Easing } from 'react-native';
 import { SvgXml } from 'react-native-svg';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Pressable, Text, StyleSheet } from 'react-native';
 import { InsightAPI } from '../../utils/api/InsightAPI';
 import { FlyingView, ObjectConfig } from 'react-native-flying-objects';
@@ -12,16 +13,20 @@ interface ReactIconButtonProps {
   color: string;
   taps?: number;
   name: string;
+  clicked: boolean;
   insightId: number;
 }
 
-const ReactIconButton = ({ xml, color, taps, name, insightId }: ReactIconButtonProps) => {
+const ReactIconButton = ({ xml, color, taps, name, clicked, insightId }: ReactIconButtonProps) => {
   const opacityValue = useRef(new Animated.Value(0)).current;
   const [object, setObject] = useState<ObjectConfig[]>([]);
   const [text, setText] = useState<number>();
+  const [tab, setTab] = useState<boolean>(false);
+
   const { mutate: insightReact } = useMutation(InsightAPI.react, {
     onSuccess: (response) => {
       setText(response?.data.count);
+      setTab(true);
     },
   });
 
@@ -75,10 +80,13 @@ const ReactIconButton = ({ xml, color, taps, name, insightId }: ReactIconButtonP
       <Pressable onPress={handleClick}>
         <Animated.View
           style={{
-            backgroundColor: opacityValue.interpolate({
-              inputRange: [0, 1],
-              outputRange: [theme.colors.graphic.white, color],
-            }),
+            backgroundColor:
+              clicked || tab
+                ? color
+                : opacityValue.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [theme.colors.graphic.white, color],
+                  }),
             padding: 8,
             marginTop: 12,
             ...styles.Button,

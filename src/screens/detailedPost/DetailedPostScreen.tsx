@@ -34,7 +34,7 @@ import removeEscapeSequences from '../../utils/helper/strings/removeEscapeSequen
 import { getUserId } from '../../utils/hooks/asyncStorage/Login';
 import CommentList from './CommentList';
 
-const COMMENT_LIMIT = 5;
+const COMMENT_LIMIT = 10;
 
 const DetailedPostScreen = ({ navigation, route }) => {
   const { insightId, initialInsight } = route.params;
@@ -191,6 +191,12 @@ const DetailedPostScreen = ({ navigation, route }) => {
     heart: 33,
     sad: 78,
     surprise: 45,
+    isClapClicked: false,
+    isHeartClicked: false,
+    isSadClicked: false,
+    isSurpriseClicked: false,
+    isFireClicked: false,
+    isEyesClicked: false,
   };
 
   if (isInsightError || isCountError || isChallengeRecordError) {

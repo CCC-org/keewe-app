@@ -28,6 +28,12 @@ interface Reaction {
   surprise: number;
   fire: number;
   eyes: number;
+  isClapClicked: boolean;
+  isHeartClicked: boolean;
+  isSadClicked: boolean;
+  isSurpriseClicked: boolean;
+  isFireClicked: boolean;
+  isEyesClicked: boolean;
 }
 
 interface InsightWriter {
