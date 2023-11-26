@@ -1,4 +1,4 @@
-import { Pressable } from 'react-native';
+import { Pressable, View } from 'react-native';
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BookMarkScreen from './BookMarkScreen';
@@ -22,7 +22,6 @@ import alarmExist from '../../constants/Icons/alarm/alarmExist';
 import { useQuery } from '@tanstack/react-query';
 import { notificationApi, notificationKeys } from '../../utils/api/notification/notification';
 import { ChallengeAPI } from '../../utils/api/ChallengeAPI';
-import { View } from '../../components/Themed';
 import SearchIconXml from '../../constants/Icons/search/SearchIconXml';
 
 const Tab = createBottomTabNavigator();
