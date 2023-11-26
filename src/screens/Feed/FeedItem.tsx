@@ -4,7 +4,7 @@ import MiniProfile from '../../components/profile/MiniProfile';
 import FeedLinkWithBookMark from './FeedLinkCard';
 import FeedVerticalDots from './FeedVerticalDots';
 import FeedTextContent from './FeedTextContent';
-import { REACTIONS } from './constant';
+import { REACTIONS } from '../detailedPost/constant';
 import ReactIconButton from '../../components/emoticons/ReactIconButton';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -71,6 +71,7 @@ const FeedItem = ({ insight, localId, onBookMarkClick }: FeedItemProps) => {
               xml={react.xml}
               color={react.color}
               taps={reaction[react.reaction]}
+              clicked={reaction[react.clicked]}
               name={react.name}
               insightId={id}
             />

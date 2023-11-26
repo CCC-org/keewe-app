@@ -10,6 +10,7 @@ export const REACTIONS: Record<string, any>[] = [
   {
     name: 'CLAP',
     reaction: 'clap',
+    clicked: 'isClapClicked',
     xml: ClapRoundOffSmallXml,
     bezier: [0.5, 1.8, 0.4, 1.0],
     color: theme.colors.graphic.sky,
@@ -17,6 +18,7 @@ export const REACTIONS: Record<string, any>[] = [
   {
     name: 'HEART',
     reaction: 'heart',
+    clicked: 'isHeartClicked',
     xml: HeartRoundOffSmallXml,
     bezier: [0.5, 1.8, 0.4, 1.12],
     color: theme.colors.graphic.green,
@@ -24,6 +26,7 @@ export const REACTIONS: Record<string, any>[] = [
   {
     name: 'SAD',
     reaction: 'sad',
+    clicked: 'isSadClicked',
     xml: SadRoundOffSmallXml,
     bezier: [0.5, 1.8, 0.4, 1.24],
     color: theme.colors.graphic.purple,
@@ -31,6 +34,7 @@ export const REACTIONS: Record<string, any>[] = [
   {
     name: 'SURPRISE',
     reaction: 'surprise',
+    clicked: 'isSurpriseClicked',
     xml: SurpriseRoundOffSmallXml,
     bezier: [0.5, 1.8, 0.4, 1.36],
     color: theme.colors.graphic.coral,
@@ -38,6 +42,7 @@ export const REACTIONS: Record<string, any>[] = [
   {
     name: 'EYES',
     reaction: 'eyes',
+    clicked: 'isEyesClicked',
     xml: EyesRoundOffSmallXml,
     bezier: [0.5, 1.8, 0.4, 1.48],
     color: theme.colors.graphic.marine,
@@ -45,6 +50,7 @@ export const REACTIONS: Record<string, any>[] = [
   {
     name: 'FIRE',
     reaction: 'fire',
+    clicked: 'isFireClicked',
     xml: FireRoundOffSmallXml,
     bezier: [0.5, 1.8, 0.4, 1.6],
     color: theme.colors.graphic.orange,

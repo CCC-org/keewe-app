@@ -150,6 +150,7 @@ const DetailedPostSection = ({
                 xml={react.xml}
                 color={react.color}
                 taps={reaction[react.reaction]}
+                clicked={reaction[react.clicked]}
                 name={react.name}
                 insightId={insightId}
               />
