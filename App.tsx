@@ -34,7 +34,6 @@ import InsightSampleScreen from './src/screens/onboarding/InsightSampleScreen';
 import Tabs from './src/screens/Main/Tabs';
 import ChallengeParticipationScreen from './src/screens/Main/challenge/ChallengeParticipationScreen';
 import ShareScreen from './src/screens/detailedPost/ShareScreen';
-import CommentsScreen from './src/screens/detailedPost/CommentsScreen';
 import ProfileEditScreen from './src/screens/Main/mypage/ProfileEditScreen';
 import NicknameEditingScreen from './src/screens/Main/mypage/NicknameEditingScreen';
 import IntroductionEditingScreen from './src/screens/Main/mypage/IntroductionEditingScreen';
@@ -464,15 +463,6 @@ export default function App() {
                         options={{
                           ...headerOptions,
                           headerStyle: { backgroundColor: '#F1F1E9' },
-                        }}
-                      />
-                      <Stack.Screen
-                        name={'Comments'}
-                        component={CommentsScreen}
-                        options={{
-                          ...headerOptions,
-                          cardStyle: { backgroundColor: 'white' },
-                          title: '댓글',
                         }}
                       />
                       <Stack.Screen

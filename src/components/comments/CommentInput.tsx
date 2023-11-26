@@ -15,7 +15,6 @@ interface CommentInputProps {
   replyInfo?: ReplyInfo;
   onCancelReply: () => void;
   onCreate: (response: CommentCreateResponse) => void;
-  setComment: Dispatch<SetStateAction<Comment[]>>;
 }
 
 export type ReplyInfo = {
@@ -27,25 +26,13 @@ const bottom = Platform.OS === 'ios' ? 80 : 0;
 
 const CommentInput = forwardRef(
   (
-    { insightId, replyInfo, onCancelReply, onCreate, setComment }: CommentInputProps,
+    { insightId, replyInfo, onCancelReply, onCreate }: CommentInputProps,
     ref: React.LegacyRef<TextInput>,
   ) => {
     const [input, setInput] = useState<string>('');
     const { mutate: createComment } = useMutation(InsightAPI.createComment, {
       onSuccess: (response) => {
         onCreate(response);
-        setComment((prev) => {
-          if (replyInfo) {
-            const index = prev.findIndex((comment) => comment.id === replyInfo.id);
-            const updatedReply = {
-              ...prev[index],
-              replies: [response.data as Reply, ...(prev[index].replies ?? [])],
-            };
-
-            return [...prev.slice(0, index), updatedReply, ...prev.slice(index + 1)];
-          }
-          return [response.data, ...prev] as Comment[];
-        });
       },
     });
 

@@ -15,18 +15,8 @@ export const InsightQueryKeys = {
     'count',
     request.insightId,
   ],
-  getCommentList: (request: CommentGetListRequest) => [
-    'comment',
-    request.insightId,
-    request.cursor,
-    request.limit,
-  ],
-  getReplies: (request: ReplyGetListRequest) => [
-    'comment',
-    request.parentId,
-    request.cursor,
-    request.limit,
-  ],
+  getCommentList: (request: CommentGetListRequest) => ['comment', request.insightId],
+  getReplies: (request: ReplyGetListRequest) => ['comment', request.parentId],
   getChallengeRecord: (request: ChallengeRecordRequest) => ['insight', request.insightId],
   getChallengeInsight: (request: ChallengeInsightGetRequest) => [
     'insight',
@@ -114,14 +104,13 @@ export const InsightAPI = {
           params,
         },
       );
-      return data;
+      return data.data;
     } catch (err) {
       console.error('api error: ', err);
     }
   },
   getReplies: async (request: ReplyGetListRequest) => {
     const { parentId, ...params } = request;
-
     try {
       const { data } = await httpClient.get<ReplyGetListResponse>(
         `https://api-keewe.com/api/v1/comments/${parentId}/replies`,
@@ -129,7 +118,7 @@ export const InsightAPI = {
           params,
         },
       );
-      return data;
+      return data.data;
     } catch (err) {
       console.error('api error: ', err);
     }

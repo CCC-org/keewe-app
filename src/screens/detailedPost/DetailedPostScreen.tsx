@@ -20,8 +20,7 @@ import { InsightAPI, InsightQueryKeys } from '../../utils/api/InsightAPI';
 import Profile from '../../components/profile/Profile';
 import CommentInput from '../../components/comments/CommentInput';
 import { ReplyInfo } from '../../components/comments/CommentInput';
-import Comment from '../../components/comments/Comment';
-import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
+import { useMutation, useQueryClient, useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import { FollowAPI } from '../../utils/api/FollowAPI';
 import { SvgXml } from 'react-native-svg';
 import { DetailedPostApi } from '../../utils/api/DetailedPostAPI';
@@ -33,30 +32,15 @@ import FeedVerticalDots from '../Feed/FeedVerticalDots';
 import Toast from 'react-native-toast-message';
 import removeEscapeSequences from '../../utils/helper/strings/removeEscapeSequence';
 import { getUserId } from '../../utils/hooks/asyncStorage/Login';
-import CommentXml from '../../constants/Icons/Comment/CommentXml';
+import CommentList from './CommentList';
 
 const COMMENT_LIMIT = 5;
-
-type ReplyCursor = {
-  parentId?: number;
-  cursor?: number;
-  index: number;
-};
-
-type HighlightCursor = {
-  parentId?: number;
-  index: number;
-};
 
 const DetailedPostScreen = ({ navigation, route }) => {
   const { insightId, initialInsight } = route.params;
   const [views] = useIncreaseView(insightId);
   const [replyInfo, setReplyInfo] = useState<ReplyInfo | undefined>();
   const [pageRefreshing, setPageRefreshing] = useState(false);
-  const [comment, setComment] = useState<Comment[]>([]);
-  const [commentCursor, setCommentCursor] = useState<number | undefined>(undefined);
-  const [replyCursor, setReplyCursor] = useState<ReplyCursor | undefined>(undefined);
-  const [highlightCursor, setHighlightCursor] = useState<HighlightCursor | undefined>(undefined);
 
   const ref = useRef<TextInput>(null);
   const scrollViewRef = useRef<any>(null);
@@ -67,61 +51,6 @@ const DetailedPostScreen = ({ navigation, route }) => {
   const { data: profile, isLoading: isProfileLoading } = useQuery(
     InsightQueryKeys.getProfile({ insightId }),
     () => InsightAPI.getProfile({ insightId }),
-  );
-
-  useQuery(
-    InsightQueryKeys.getCommentList({
-      insightId,
-      cursor: commentCursor,
-      limit: COMMENT_LIMIT,
-    }),
-    () => InsightAPI.getCommentList({ insightId, cursor: commentCursor, limit: COMMENT_LIMIT }),
-    {
-      onSuccess: (response: CommentGetListResponse) => {
-        const dataMap = [...comment, ...response.data].reduce((acc, currentItem) => {
-          acc[currentItem.id] = currentItem;
-          return acc;
-        }, {});
-
-        const uniqueData: Comment[] = Object.values(dataMap);
-        setComment(uniqueData);
-      },
-    },
-  );
-
-  useQuery(
-    InsightQueryKeys.getReplies({
-      parentId: replyCursor?.parentId,
-      insightId,
-      cursor: replyCursor?.cursor,
-      limit: COMMENT_LIMIT,
-    }),
-    () =>
-      InsightAPI.getReplies({
-        parentId: replyCursor?.parentId,
-        insightId,
-        cursor: replyCursor?.cursor,
-        limit: COMMENT_LIMIT,
-      }),
-    {
-      enabled: replyCursor?.parentId !== undefined,
-      onSuccess: async (response: ReplyGetListResponse) => {
-        const idx = comment.findIndex((item) => item.id === replyCursor?.parentId);
-        const dataMap = [...(comment[idx]?.replies ?? []), ...response.data].reduce(
-          (acc, currentItem) => {
-            acc[currentItem.id] = currentItem;
-            return acc;
-          },
-          {},
-        );
-        const uniqueData: Comment[] = [
-          ...comment.slice(0, replyCursor?.index),
-          { ...comment[replyCursor?.index ?? 0], replies: Object.values(dataMap) },
-          ...comment.slice((replyCursor?.index ?? 0) + 1),
-        ];
-        setComment(uniqueData);
-      },
-    },
   );
 
   const followMutation = useMutation({
@@ -169,69 +98,20 @@ const DetailedPostScreen = ({ navigation, route }) => {
       });
   };
 
-  const onEndReached = () => {
-    if (comment.length === 0) return;
-    if (comment[comment.length - 1]?.id !== undefined)
-      setCommentCursor(comment[comment.length - 1].id);
-  };
+  const { data: commentList, fetchNextPage } = useInfiniteQuery({
+    queryKey: InsightQueryKeys.getCommentList({
+      insightId,
+      limit: COMMENT_LIMIT,
+    }),
+    queryFn: ({ pageParam = undefined }) =>
+      InsightAPI.getCommentList({ insightId, cursor: pageParam, limit: COMMENT_LIMIT }),
+    getNextPageParam: (lastPage) => {
+      return lastPage?.[lastPage?.length - 1]?.id;
+    },
+  });
 
-  const renderItem = ({ item, index }) => {
-    const comments = [
-      <Comment
-        key={`${item.id} ${index}`}
-        content={item.content}
-        nickname={item.writer?.name}
-        title={item.writer?.title}
-        createdAt={item.createdAt}
-        isInsightWriter={item.writer?.id === profile?.data?.authorId}
-        commentWriterId={item.writer?.id}
-        image={item.writer?.image}
-        isReply={false}
-        onReply={() => handleReplyClick({ id: item.id, nickname: item.writer?.name })}
-        commentId={item.id}
-        highlight={
-          highlightCursor !== undefined && highlightCursor?.parentId === undefined && index === 0
-        }
-      />,
-    ];
-    const repies = item.replies.map((reply, replyIndex) => (
-      <Comment
-        commentId={reply.id}
-        key={`${item.id} reply ${reply.id} ${index}`}
-        content={reply.content}
-        commentWriterId={reply.writer?.id}
-        image={reply.writer?.image}
-        isInsightWriter={reply.writer?.id === profile?.data?.authorId}
-        nickname={reply.writer?.name}
-        createdAt={reply.createdAt}
-        title={reply.writer?.title}
-        isReply={true}
-        highlight={
-          highlightCursor !== undefined && highlightCursor?.parentId === item.id && replyIndex === 0
-        }
-      />
-    ));
-    return (
-      <>
-        {comments.concat(repies)}
-        {item.totalReply > item.replies.length && (
-          <Pressable
-            style={{ marginLeft: 100, flexDirection: 'row', alignItems: 'center' }}
-            onPress={() => {
-              const parentData = comment.find((comment) => comment.id === item.id)?.replies ?? [];
-              setReplyCursor({
-                parentId: item.id,
-                cursor: parentData[parentData?.length - 1].id,
-                index,
-              });
-            }}
-          >
-            <SvgXml xml={CommentXml} />
-            <Text>답글 {item.totalReply - item.replies.length}개 더보기</Text>
-          </Pressable>
-        )}
-      </>
-    );
+  const onEndReached = () => {
+    fetchNextPage();
   };
 
   const {
@@ -240,14 +120,6 @@ const DetailedPostScreen = ({ navigation, route }) => {
     isError: isInsightError,
   } = useQuery(InsightQueryKeys.getInsight({ insightId }), () =>
     InsightAPI.getInsight({ insightId }),
-  );
-
-  const {
-    data: getCommentResponse,
-    isLoading: isCommentLoading,
-    isError: isCommentError,
-  } = useQuery(InsightQueryKeys.getCommentPreviewList({ insightId }), () =>
-    InsightAPI.getCommentPreviewList({ insightId }),
   );
 
   const {
@@ -321,14 +193,12 @@ const DetailedPostScreen = ({ navigation, route }) => {
     surprise: 45,
   };
 
-  if (isInsightError || isCommentError || isCountError || isChallengeRecordError) {
+  if (isInsightError || isCountError || isChallengeRecordError) {
     return null;
   }
 
   const onRefresh = () => {
-    setComment([]);
     setPageRefreshing(true);
-    setCommentCursor(undefined);
     queryClient.invalidateQueries(['insight']);
     queryClient.invalidateQueries(['comment']).then(() => setPageRefreshing(false));
   };
@@ -341,7 +211,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
         style={{ height: '100%' }}
       >
         <FlatList
-          data={comment}
+          data={commentList?.pages[0]?.length === 0 ? undefined : commentList?.pages}
           ListEmptyComponent={
             <View
               style={{
@@ -362,7 +232,15 @@ const DetailedPostScreen = ({ navigation, route }) => {
               </Text>
             </View>
           }
-          renderItem={renderItem}
+          renderItem={({ item, index }) => (
+            <CommentList
+              key={index}
+              insightId={insightId}
+              authorId={profile?.data?.authorId ?? 0}
+              handleReplyClick={handleReplyClick}
+              commentList={item}
+            />
+          )}
           onEndReached={onEndReached}
           ref={scrollViewRef}
           refreshControl={<RefreshControl refreshing={pageRefreshing} onRefresh={onRefresh} />}
@@ -446,7 +324,7 @@ const DetailedPostScreen = ({ navigation, route }) => {
                   backgroundColor: theme.colors.brand.surface.main,
                 }}
               />
-              {!isCommentLoading && !isCountLoading && (
+              {!isCountLoading && (
                 <>
                   <View style={styles.commentsHeader}>
                     <Text
@@ -480,20 +358,11 @@ const DetailedPostScreen = ({ navigation, route }) => {
             ref.current?.blur();
           }}
           onCreate={() => {
-            setHighlightCursor({
-              parentId: replyInfo?.id,
-              index: 0,
-            });
             setReplyInfo(undefined);
             ref.current?.blur();
-            setTimeout(() => {
-              scrollViewRef.current?.scrollToIndex({
-                animated: true,
-                index: replyCursor ? replyCursor.index : 0,
-              });
-            }, 100);
+            queryClient.invalidateQueries(['insight']);
+            queryClient.invalidateQueries(['comment']).then(() => setPageRefreshing(false));
           }}
-          setComment={setComment}
         />
       </KeyboardAvoidingView>
     </SafeAreaView>
