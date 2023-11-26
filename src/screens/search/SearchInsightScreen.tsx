@@ -3,13 +3,13 @@ import { SearchContext } from './SearchScreen';
 import { InfiniteData, useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import httpClient from '../../utils/api/BaseHttpClient';
 import { FlatList, RefreshControl } from 'react-native-gesture-handler';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import MainLottie from '../../components/lotties/MainLottie';
 import NoResultScreen from '../../components/misc/NoResultScreen';
 import FeedItem from '../Feed/FeedItem';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
 import { postFeedBookMark } from '../../utils/api/FeedBookMark';
 import Toast from 'react-native-toast-message';
+import { View } from 'react-native';
 interface fetchSearchInsightsParams {
   searchText: string;
   page: number;
@@ -99,7 +99,7 @@ const SearchInsightScreen = () => {
   if (flatMap.length === 0) return <NoResultScreen />;
 
   return (
-    <SafeAreaView ref={scrollViewRef} style={{ flex: 1, backgroundColor: 'white', padding: 16 }}>
+    <View ref={scrollViewRef} style={{ flex: 1, backgroundColor: 'white', padding: 16 }}>
       <FlatList
         data={flatMap}
         renderItem={({ item }) => {
@@ -126,7 +126,7 @@ const SearchInsightScreen = () => {
         onEndReached={onEndReached}
         style={{ backgroundColor: 'white' }}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

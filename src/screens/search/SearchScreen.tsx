@@ -94,7 +94,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 2,
     marginLeft: 24,
     fontFamily: 'pretendard',
-    width: 300,
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: 280,
   },
   clearButton: {
     marginLeft: 10,
