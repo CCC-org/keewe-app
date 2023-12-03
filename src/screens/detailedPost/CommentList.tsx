@@ -28,7 +28,12 @@ const CommentList = ({ insightId, authorId, handleReplyClick, commentList }: Com
             onReply={() => handleReplyClick({ id: item.id, nickname: item.writer?.name ?? '' })}
             commentId={item.id}
           />
-          <ReplyList insightId={insightId} parentId={item.id} authorId={authorId} />
+          <ReplyList
+            insightId={insightId}
+            parentId={item.id}
+            authorId={authorId}
+            totalReply={item.totalReply ?? 0}
+          />
         </>
       ))}
     </>

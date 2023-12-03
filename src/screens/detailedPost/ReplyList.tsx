@@ -6,16 +6,17 @@ import { Pressable, View, Text } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import CommentXml from '../../constants/Icons/Comment/CommentXml';
 
-const REPLY_LIMIT = 10;
+const REPLY_LIMIT = 5;
 
 interface ReplyListProps {
   insightId: number;
   parentId: number;
   authorId: number;
+  totalReply: number;
 }
 
-const ReplyList = ({ insightId, parentId, authorId }: ReplyListProps) => {
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
+const ReplyList = ({ insightId, parentId, authorId, totalReply }: ReplyListProps) => {
+  const { data, fetchNextPage } = useInfiniteQuery({
     queryKey: InsightQueryKeys.getReplies({
       insightId,
       parentId,
@@ -27,6 +28,10 @@ const ReplyList = ({ insightId, parentId, authorId }: ReplyListProps) => {
       return lastPage?.[lastPage?.length - 1]?.id;
     },
   });
+
+  const totalCount = data?.pages.reduce((accumulator, currentArray) => {
+    return accumulator + (currentArray?.length ?? 0);
+  }, 0);
 
   return (
     <View style={{ marginLeft: 8 }}>
@@ -46,7 +51,7 @@ const ReplyList = ({ insightId, parentId, authorId }: ReplyListProps) => {
           />
         )),
       )}
-      {hasNextPage && (
+      {totalCount !== totalReply && (
         <Pressable
           style={{ marginLeft: 100, flexDirection: 'row', alignItems: 'center' }}
           onPress={() => fetchNextPage()}
