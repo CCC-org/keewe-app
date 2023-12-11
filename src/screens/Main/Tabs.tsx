@@ -31,7 +31,6 @@ const Tabs = ({ navigation, route }) => {
 
   if (route?.params?.type) {
     const { type, id } = route.params;
-    alert(`${type}  ${id}`);
     if (type === 'insight') {
       navigation.navigate('DetailedPost', {
         screen: 'DetailedPost',
