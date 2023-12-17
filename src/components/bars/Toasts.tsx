@@ -47,7 +47,6 @@ const toastConfig = {
         intensity={16}
         style={{
           width: 343,
-          marginHorizontal: 16,
           alignContent: 'center',
         }}
       >
