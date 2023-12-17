@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useRef } from 'react';
 import { LinkPreview } from '@flyerhq/react-native-link-preview';
 import FeedBookMarkIcon from './FeedBookMarkIcon';
 import { Entypo } from '@expo/vector-icons';
@@ -21,6 +21,16 @@ const FeedLinkWithBookMark = ({
   const handleOnPress = () => {
     onBookmarkPress();
   };
+  const [cachedTitle, setCachedTitle] = React.useState('');
+
+  React.useEffect(() => {
+    // Reset the cached title when the text prop changes
+    setCachedTitle('');
+
+    // Optionally, you can fetch the title here if it's not provided
+    // by the LinkPreview component, or if you want to implement your own
+    // fetching logic.
+  }, [text]);
 
   return (
     <View style={styles.FeedLinkCardContainer}>
@@ -29,6 +39,9 @@ const FeedLinkWithBookMark = ({
         renderLinkPreview={(pre) => {
           const title = pre.previewData?.title;
           // make the link only to contain the domain name
+          if (title && title !== cachedTitle) {
+            setCachedTitle(title);
+          }
 
           const description =
             pre.previewData?.link?.replace(/(^\w+:|^)\/\//, '').split('/')[0] ||
@@ -37,7 +50,9 @@ const FeedLinkWithBookMark = ({
             <View style={[styles.container]}>
               <View>
                 <Text style={{ ...styles.title, color: `${theme.colors.graphic.black}80` }}>
-                  {title ? title.slice(0, 20) + (title.length > 20 ? '...' : '') : 'No title'}
+                  {cachedTitle
+                    ? cachedTitle.slice(0, 20) + (cachedTitle.length > 20 ? '...' : '')
+                    : 'No title'}
                   <Entypo
                     name="chevron-right"
                     size={12}
