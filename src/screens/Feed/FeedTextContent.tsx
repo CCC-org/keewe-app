@@ -37,7 +37,7 @@ const FeedTextContent = ({ contents, insightId }: FeedTextContent) => {
           <Text
             style={[theme.fonts.text.body1.regular, { color: `${theme.colors.graphic.black}80` }]}
           >
-            ... 더보기
+            더보기
           </Text>
         ) : null}
       </Text>
