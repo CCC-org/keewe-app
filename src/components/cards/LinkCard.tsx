@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, DimensionValue } from 'react-native';
 import React from 'react';
 import { LinkPreview, LinkPreviewProps } from '@flyerhq/react-native-link-preview';
+import * as Clipboard from 'expo-clipboard';
+import Toast from 'react-native-toast-message';
+
 interface customProps extends LinkPreviewProps {
   width?: number | string;
   setTitle?: React.Dispatch<React.SetStateAction<string>>;
@@ -12,6 +15,27 @@ const LinkCard: React.FC<customProps> = (props) => {
   const styles = createStyles(props);
   return (
     <LinkPreview
+      touchableWithoutFeedbackProps={{
+        onLongPress: () => {
+          const link = props.text;
+          if (link) {
+            Clipboard.setStringAsync(link).then(() => {
+              Toast.show({
+                type: 'copySnackbar',
+                text1: '링크를 복사했어요.',
+                position: 'bottom',
+              });
+            });
+          } else {
+            Toast.show({
+              type: 'copySnackbar',
+              text1: '링크가 없어요.',
+              position: 'bottom',
+            });
+          }
+        },
+        delayLongPress: 1000,
+      }}
       {...props}
       renderLinkPreview={(pre) => {
         const title = pre.previewData?.title;
@@ -42,7 +66,7 @@ export default LinkCard;
 function createStyles(props: customProps) {
   const styles = StyleSheet.create({
     container: {
-      width: props.width,
+      width: props.width as DimensionValue | undefined,
       borderRadius: 8,
       flexDirection: 'row',
     },
