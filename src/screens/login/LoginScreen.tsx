@@ -40,6 +40,7 @@ function Login({ navigation, route }) {
   });
 
   function getCode(target: string) {
+    alert(target);
     const codeExp = 'code=';
     const codeCondition = target.indexOf(codeExp);
     const stateExp = 'state=';
