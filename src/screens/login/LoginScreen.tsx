@@ -17,6 +17,7 @@ function Login({ navigation, route }) {
   const { mutate: tokenPush } = useMutation(LoginAPI.tokenPush);
   const { refetch } = useQuery(LoginQueryKeys.login(params), () => LoginAPI.login(params), {
     onSuccess: async (response) => {
+      alert('try to login');
       setAccessToken(response?.data?.accessToken ?? '');
       setUserId(response?.data?.userId ?? 0);
       let token = await getExpoToken();
@@ -24,6 +25,7 @@ function Login({ navigation, route }) {
         token = (await Notifications.getExpoPushTokenAsync()).data;
       }
       tokenPush({ pushToken: token ?? '' });
+      alert('token push');
       if (response?.data.alreadySignedUp) {
         navigation.reset({
           index: 0,
@@ -40,7 +42,6 @@ function Login({ navigation, route }) {
   });
 
   function getCode(target: string) {
-    alert(target);
     const codeExp = 'code=';
     const codeCondition = target.indexOf(codeExp);
     const stateExp = 'state=';
@@ -55,6 +56,7 @@ function Login({ navigation, route }) {
         const requestState = target.substring(stateCondition + stateExp.length);
         params.state = requestState;
       }
+      alert(target);
       refetch();
     }
   }
