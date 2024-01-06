@@ -200,8 +200,8 @@ function createStyles(fonts: ReactNativePaper.ThemeFonts) {
       padding: 16,
     },
     reportOptionContainer: {
-      backgroundColor: 'white',
       padding: 16,
+      backgroundColor: 'white',
       height: 470,
     },
     option: {
