@@ -62,7 +62,6 @@ export default DetailReportSheetContent;
 const styles = StyleSheet.create({
   contentContainer: {
     width: '100%',
-    height: '80%',
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
