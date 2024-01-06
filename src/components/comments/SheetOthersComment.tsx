@@ -191,7 +191,7 @@ function createStyles(fonts: ReactNativePaper.ThemeFonts) {
   const styles = StyleSheet.create({
     contentContainer: {
       width: '100%',
-      height: 730,
+      height: 732,
       flexDirection: 'column',
       justifyContent: 'flex-start',
     },
