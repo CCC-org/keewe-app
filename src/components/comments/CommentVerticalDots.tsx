@@ -45,7 +45,7 @@ const CommentVerticalDots = ({ userId, userName, commentId }: FeedVerticalDotsPr
       </Pressable>
       <BottomSheetModal
         ref={modalRef}
-        snapPoints={[contentHeight, contentHeight, contentHeight + 200]}
+        snapPoints={[contentHeight, contentHeight, contentHeight]}
         backdropComponent={renderBackdrop}
       >
         <View onLayout={handleLayout}>
