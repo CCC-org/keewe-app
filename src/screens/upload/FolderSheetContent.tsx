@@ -83,20 +83,17 @@ const FolderSheetContent = ({
               />
             );
           })}
+          <Pressable onPress={handleNewFolder} style={{ ...styles.folderContainer }}>
+            <Text
+              style={{
+                ...theme.fonts.text.body1.regular,
+                color: theme.colors.brand.onprimary.container,
+              }}
+            >
+              새 폴더 만들기
+            </Text>
+          </Pressable>
         </>
-      )}
-
-      {!createFolder && (
-        <Pressable onPress={handleNewFolder} style={{ ...styles.folderContainer }}>
-          <Text
-            style={{
-              ...theme.fonts.text.body1.regular,
-              color: theme.colors.brand.onprimary.container,
-            }}
-          >
-            새 폴더 만들기
-          </Text>
-        </Pressable>
       )}
     </BottomSheetScrollView>
   );
