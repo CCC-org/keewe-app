@@ -1,10 +1,10 @@
 import React from 'react';
+import { expo } from '../../../app.json';
 import { WebView } from 'react-native-webview';
 import { SafeAreaView } from 'react-native';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { LoginQueryKeys, LoginAPI } from '../../utils/api/LoginAPI';
 import * as Notifications from 'expo-notifications';
-import { applicationId } from 'expo-application';
 import { getExpoToken, setAccessToken, setUserId } from '../../utils/hooks/asyncStorage/Login';
 // eslint-disable-next-line quotes
 const INJECTED_JAVASCRIPT = "window.ReactNativeWebView.postMessage('login start')";
@@ -32,12 +32,8 @@ function Login({ navigation, route }) {
       let token = await getExpoToken();
       if (token === null) {
         alert('if token === null');
-        token = (
-          await Notifications.getExpoPushTokenAsync({
-            development: false,
-            applicationId: applicationId || undefined,
-          })
-        ).data;
+        token = (await Notifications.getExpoPushTokenAsync({ projectId: expo.extra.eas.projectId }))
+          .data;
       }
       alert('token push');
       tokenPush({ pushToken: token ?? '' });
