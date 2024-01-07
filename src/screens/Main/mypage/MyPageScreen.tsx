@@ -31,6 +31,12 @@ const MyPageScreen = ({ navigation, route }) => {
   const [selectedCategory, setSelectedCategory] = useState<Record<string, string>[]>([]);
   const [representativeTitleList, setRepresentativeTitleList] = useState<AchievedTitle[]>([]);
   const [titleTotal, setTitleTotal] = useState<number>(0);
+  const [bottomSheetContentHeight, setBottomSheetContentHeight] = useState<number>(300);
+
+  const handleLayout = (event) => {
+    const height = event.nativeEvent.layout.height;
+    setBottomSheetContentHeight(height + 50);
+  };
 
   const [iconColor, setIconColor] = useState([
     [theme.colors.graphic.purple, `${theme.colors.graphic.purple}1a`],
@@ -275,15 +281,17 @@ const MyPageScreen = ({ navigation, route }) => {
         />
         <BottomSheetModal
           ref={modalRef}
-          snapPoints={['20%', '25%']}
+          snapPoints={[bottomSheetContentHeight, bottomSheetContentHeight]}
           backdropComponent={renderBackdrop}
         >
-          <ProfileOptions
-            modalRef={modalRef}
-            userId={userId}
-            userName={profile?.data?.nickname ?? ''}
-            isSelf={true}
-          />
+          <View onLayout={handleLayout}>
+            <ProfileOptions
+              modalRef={modalRef}
+              userId={userId}
+              userName={profile?.data?.nickname ?? ''}
+              isSelf={true}
+            />
+          </View>
         </BottomSheetModal>
       </IOScrollView>
       <GoToUploadButton />

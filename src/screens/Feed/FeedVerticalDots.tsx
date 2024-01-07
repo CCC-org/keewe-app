@@ -1,5 +1,5 @@
-import { Pressable, StyleSheet } from 'react-native';
-import React, { useCallback, useRef } from 'react';
+import { Pressable, View } from 'react-native';
+import React, { useCallback, useRef, useState } from 'react';
 import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
 import SheetMyPostOptions from '../../components/bottomsheet/SheetMyPostOptions';
@@ -35,6 +35,13 @@ const FeedVerticalDots = ({
   const isMyPost = myUserId === userId;
   const modalRef = useRef<BottomSheetModal>(null);
 
+  const [contentHeight, setContentHeight] = useState<number>(300);
+
+  const handleLayout = (event) => {
+    const height = event.nativeEvent.layout.height;
+    setContentHeight(height + 50);
+  };
+
   const renderBackdrop = useCallback(
     (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
     [],
@@ -50,39 +57,39 @@ const FeedVerticalDots = ({
       </Pressable>
       <BottomSheetModal
         ref={modalRef}
-        snapPoints={isMyPost ? ['25%', '63%'] : ['33%', '65%', '90%']}
+        snapPoints={[contentHeight, contentHeight, contentHeight]}
         backdropComponent={renderBackdrop}
       >
-        {isMyPost ? (
-          <SheetMyPostOptions
-            modalRef={modalRef}
-            userName={userName}
-            userId={userId}
-            insightId={insightId}
-            nickname={nickname}
-            title={title}
-            image={image}
-            contents={contents}
-            link={link}
-            feedListQueryClient={feedListQueryClient}
-          />
-        ) : (
-          <SheetPostOptions
-            modalRef={modalRef}
-            userName={userName}
-            userId={userId}
-            insightId={insightId}
-            nickname={nickname}
-            title={title}
-            image={image}
-            contents={contents}
-          />
-        )}
+        <View onLayout={handleLayout}>
+          {isMyPost ? (
+            <SheetMyPostOptions
+              modalRef={modalRef}
+              userName={userName}
+              userId={userId}
+              insightId={insightId}
+              nickname={nickname}
+              title={title}
+              image={image}
+              contents={contents}
+              link={link}
+              feedListQueryClient={feedListQueryClient}
+            />
+          ) : (
+            <SheetPostOptions
+              modalRef={modalRef}
+              userName={userName}
+              userId={userId}
+              insightId={insightId}
+              nickname={nickname}
+              title={title}
+              image={image}
+              contents={contents}
+            />
+          )}
+        </View>
       </BottomSheetModal>
     </>
   );
 };
 
 export default FeedVerticalDots;
-
-const styles = StyleSheet.create({});

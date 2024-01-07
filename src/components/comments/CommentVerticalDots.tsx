@@ -1,5 +1,5 @@
-import { Pressable, StyleSheet } from 'react-native';
-import React, { useCallback, useRef } from 'react';
+import { Pressable, View } from 'react-native';
+import React, { useCallback, useRef, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { useGetUserId } from '../../utils/hooks/useGetUserId';
@@ -16,6 +16,13 @@ const CommentVerticalDots = ({ userId, userName, commentId }: FeedVerticalDotsPr
   const myUserId = useGetUserId();
   const isMyComment = myUserId === userId;
   const modalRef = useRef<BottomSheetModal>(null);
+
+  const [contentHeight, setContentHeight] = useState<number>(300);
+
+  const handleLayout = (event) => {
+    const height = event.nativeEvent.layout.height;
+    setContentHeight(height + 50);
+  };
 
   const renderBackdrop = useCallback(
     (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
@@ -38,24 +45,24 @@ const CommentVerticalDots = ({ userId, userName, commentId }: FeedVerticalDotsPr
       </Pressable>
       <BottomSheetModal
         ref={modalRef}
-        snapPoints={isMyComment ? ['19%', '30%'] : ['25%', '64%', '90%']}
+        snapPoints={[contentHeight, contentHeight, contentHeight]}
         backdropComponent={renderBackdrop}
       >
-        {isMyComment ? (
-          <SheetMyComment modalRef={modalRef} commentId={commentId} />
-        ) : (
-          <SheetOthersComment
-            modalRef={modalRef}
-            userName={userName}
-            userId={userId}
-            commentId={commentId}
-          />
-        )}
+        <View onLayout={handleLayout}>
+          {isMyComment ? (
+            <SheetMyComment modalRef={modalRef} commentId={commentId} />
+          ) : (
+            <SheetOthersComment
+              modalRef={modalRef}
+              userName={userName}
+              userId={userId}
+              commentId={commentId}
+            />
+          )}
+        </View>
       </BottomSheetModal>
     </>
   );
 };
 
 export default CommentVerticalDots;
-
-const styles = StyleSheet.create({});

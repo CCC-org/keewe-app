@@ -50,7 +50,6 @@ const DetailReportSheetContent = ({
         autoFocus={true}
         limit={limit}
         limitTextStyle={{ color: `${theme.colors.graphic.black}50` }}
-        style={{ height: 500 }}
         height={350}
       />
     </View>
@@ -62,7 +61,7 @@ export default DetailReportSheetContent;
 const styles = StyleSheet.create({
   contentContainer: {
     width: '100%',
-    height: '80%',
+    height: 730,
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },

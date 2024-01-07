@@ -30,7 +30,6 @@ import isTextNotOnlySpace from '../../utils/helper/strings/isTextNotOnlySpace';
 import { useFocusEffect } from '@react-navigation/native';
 import * as Clipboard from 'expo-clipboard';
 import isDarkMode from '../../utils/helper/display/isDarkMode';
-import { Feather } from '@expo/vector-icons';
 
 const UploadScreen = ({ navigation, route }) => {
   const { isEdit, link, insightId } = route?.params ?? {};

@@ -125,7 +125,7 @@ const SheetOthersComment = ({ modalRef, userId, userName, commentId }: BSPostOpt
 
   if (isReport) {
     return (
-      <ScrollView style={styles.optionContainer}>
+      <ScrollView style={styles.reportOptionContainer}>
         <Text style={styles.header}>무엇이 문제인지 알려주세요</Text>
         {reportOptions.map((option) => (
           <Pressable
@@ -191,13 +191,18 @@ function createStyles(fonts: ReactNativePaper.ThemeFonts) {
   const styles = StyleSheet.create({
     contentContainer: {
       width: '100%',
-      height: '80%',
+      height: 732,
       flexDirection: 'column',
       justifyContent: 'flex-start',
     },
     optionContainer: {
       backgroundColor: 'white',
       padding: 16,
+    },
+    reportOptionContainer: {
+      padding: 16,
+      backgroundColor: 'white',
+      height: 470,
     },
     option: {
       paddingVertical: 18,

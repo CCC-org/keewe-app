@@ -123,7 +123,7 @@ const SheetPostOptions = ({
 
   if (isReport) {
     return (
-      <ScrollView style={styles.optionContainer}>
+      <ScrollView style={styles.reportOptionsContainer}>
         <Text style={styles.header}>무엇이 문제인지 알려주세요</Text>
         {reportOptions.map((option) => (
           <Pressable
@@ -147,7 +147,7 @@ const SheetPostOptions = ({
             <Text>기타 신고 사유</Text>
           </Text>
         </Pressable>
-        <Pressable onPress={handleReportSubmit} style={{ marginTop: 72 }}>
+        <Pressable onPress={handleReportSubmit}>
           <ConditionalButton
             isActive={selectedReport !== null}
             width={screenWidth - 32}
@@ -209,13 +209,12 @@ const SheetPostOptions = ({
 export default SheetPostOptions;
 function createStyles(fonts: ReactNativePaper.ThemeFonts) {
   const styles = StyleSheet.create({
-    contentContainer: {
-      width: '100%',
-      height: '80%',
-      flexDirection: 'column',
-      justifyContent: 'flex-start',
-    },
     optionContainer: {
+      backgroundColor: 'white',
+      padding: 16,
+    },
+    reportOptionsContainer: {
+      height: 470,
       backgroundColor: 'white',
       padding: 16,
     },
@@ -224,6 +223,7 @@ function createStyles(fonts: ReactNativePaper.ThemeFonts) {
     },
     clickableOption: {
       paddingVertical: 18,
+      marginBottom: 30,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
