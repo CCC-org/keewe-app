@@ -15,27 +15,17 @@ function Login({ navigation, route }) {
     code: undefined,
     state: undefined,
   };
-  const { mutate: tokenPush } = useMutation(LoginAPI.tokenPush, {
-    onSuccess: async () => {
-      alert('토큰 푸쉬 성공');
-    },
-    onError: (e) => {
-      alert('토큰 push 실패');
-    },
-  });
+  const { mutate: tokenPush } = useMutation(LoginAPI.tokenPush);
   const { refetch } = useQuery(LoginQueryKeys.login(params), () => LoginAPI.login(params), {
     onSuccess: async (response) => {
-      alert('try to login');
       setAccessToken(response?.data?.accessToken ?? '');
       setUserId(response?.data?.userId ?? 0);
-      alert('getExpoToken');
       let token = await getExpoToken();
       if (token === null) {
         alert('if token === null');
         token = (await Notifications.getExpoPushTokenAsync({ projectId: expo.extra.eas.projectId }))
           .data;
       }
-      alert('token push');
       tokenPush({ pushToken: token ?? '' });
       if (response?.data.alreadySignedUp) {
         navigation.reset({
@@ -67,7 +57,6 @@ function Login({ navigation, route }) {
         const requestState = target.substring(stateCondition + stateExp.length);
         params.state = requestState;
       }
-      alert(target);
       refetch();
     }
   }

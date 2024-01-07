@@ -21,7 +21,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.CCCorg.keewe",
-      "buildNumber": "6.8",
+      "buildNumber": "6.9",
       "associatedDomains": ["applinks:keewe.kr"],
       "infoPlist": { "developmentRegion": "ko" }
     },
