@@ -27,12 +27,14 @@ function Login({ navigation, route }) {
       alert('try to login');
       setAccessToken(response?.data?.accessToken ?? '');
       setUserId(response?.data?.userId ?? 0);
+      alert('getExpoToken');
       let token = await getExpoToken();
       if (token === null) {
+        alert('if token === null');
         token = (await Notifications.getExpoPushTokenAsync()).data;
       }
-      tokenPush({ pushToken: token ?? '' });
       alert('token push');
+      tokenPush({ pushToken: token ?? '' });
       if (response?.data.alreadySignedUp) {
         navigation.reset({
           index: 0,
