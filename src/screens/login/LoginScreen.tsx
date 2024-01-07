@@ -14,7 +14,14 @@ function Login({ navigation, route }) {
     code: undefined,
     state: undefined,
   };
-  const { mutate: tokenPush } = useMutation(LoginAPI.tokenPush);
+  const { mutate: tokenPush } = useMutation(LoginAPI.tokenPush, {
+    onSuccess: async () => {
+      alert('토큰 푸쉬 성공');
+    },
+    onError: (e) => {
+      alert('토큰 push 실패');
+    },
+  });
   const { refetch } = useQuery(LoginQueryKeys.login(params), () => LoginAPI.login(params), {
     onSuccess: async (response) => {
       alert('try to login');
