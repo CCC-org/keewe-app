@@ -281,11 +281,11 @@ const UploadScreen = ({ navigation, route }) => {
         </BottomSheetModal>
         <TwoButtonModal
           dismissable={false}
-          mainTitle={'인사이트 작성을 그만할까요?'}
-          subTitle={'작성한 인사이트가 사라져요.'}
+          mainTitle={isEdit ? '인사이트 수정을 취소할까요?' : '인사이트 작성을 그만할까요?'}
+          subTitle={isEdit ? '' : '작성한 인사이트가 사라져요.'}
           visible={isModalVisible}
           onDismiss={() => setIsModalVisible(false)}
-          leftButtonText="뒤로가기"
+          leftButtonText={isEdit ? '취소하기' : '뒤로가기'}
           rightButtonText="계속 작성하기"
           leftButtonPress={() => {
             setIsModalVisible(false);
