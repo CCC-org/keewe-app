@@ -29,7 +29,6 @@ import TwoButtonModal from '../../components/modal/TwoButtonModal';
 import isTextNotOnlySpace from '../../utils/helper/strings/isTextNotOnlySpace';
 import { useFocusEffect } from '@react-navigation/native';
 import * as Clipboard from 'expo-clipboard';
-import isDarkMode from '../../utils/helper/display/isDarkMode';
 
 const UploadScreen = ({ navigation, route }) => {
   const { isEdit, link, insightId } = route?.params ?? {};
@@ -173,14 +172,13 @@ const UploadScreen = ({ navigation, route }) => {
 
   const handleLinkSheetLayout = (event) => {
     const height = event.nativeEvent.layout.height;
-    const additinalHeight = keyboardHeight || 400;
+    const additinalHeight = keyboardHeight || 350;
     setLinkSheetContentHeight(height + additinalHeight);
   };
 
   const handleFolderSheetLayout = (event) => {
     const height = event.nativeEvent.layout.height;
-    console.log(height);
-    const additinalHeight = keyboardHeight || 400;
+    const additinalHeight = keyboardHeight || 350;
     setFolderSheetContentHeight(height + additinalHeight);
   };
 
