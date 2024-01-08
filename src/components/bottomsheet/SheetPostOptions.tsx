@@ -147,7 +147,7 @@ const SheetPostOptions = ({
             <Text>기타 신고 사유</Text>
           </Text>
         </Pressable>
-        <Pressable onPress={handleReportSubmit}>
+        <Pressable onPress={handleReportSubmit} style={styles.reportSubmitButton}>
           <ConditionalButton
             isActive={selectedReport !== null}
             width={screenWidth - 32}
@@ -223,10 +223,12 @@ function createStyles(fonts: ReactNativePaper.ThemeFonts) {
     },
     clickableOption: {
       paddingVertical: 18,
-      marginBottom: 30,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
+    },
+    reportSubmitButton: {
+      marginTop: 30,
     },
     header: {
       ...fonts.text.headline1,
