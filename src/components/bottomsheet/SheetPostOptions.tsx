@@ -5,12 +5,13 @@ import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/typ
 import { Feather } from '@expo/vector-icons';
 import ConditionalButton from '../buttons/ConditionalButton';
 import TwoButtonModal from '../modal/TwoButtonModal';
-import { reportInsight, reportType } from '../../utils/api/report/insight/insightReport';
+import { reportInsight } from '../../utils/api/report/insight/insightReport';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import DetailReportSheetContent from '../../screens/detailedPost/DetailReportSheetContent';
 import { blockApi } from '../../utils/api/block/block';
 import { useNavigation } from '@react-navigation/native';
 import { InsightAPI } from '../../utils/api/InsightAPI';
+import { reportType } from '../../utils/api/report/comment/commentReport';
 
 interface BSPostOptionsProps {
   modalRef: React.RefObject<BottomSheetModalMethods>;
@@ -39,7 +40,6 @@ const SheetPostOptions = ({
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedReport, setSelectedReport] = useState<number | null>(null);
   const [reportText, setReportText] = useState('');
-  const [isSnackBarVisible, setIsSnackBarVisible] = useState(false);
   const screenWidth = Dimensions.get('window').width;
 
   const navigation = useNavigation();
