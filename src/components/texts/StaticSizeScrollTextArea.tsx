@@ -24,6 +24,7 @@ const StaticSizeScrollTextArea = ({
   placeholder,
   setInputValue,
   limit,
+  autoFocus,
 }: AutoGrowScrollTextAreaProps) => {
   const theme = useTheme();
 
@@ -44,6 +45,7 @@ const StaticSizeScrollTextArea = ({
           numberOfLines={16}
           scrollEnabled={true}
           textAlignVertical="top"
+          autoFocus={autoFocus}
         />
         <View style={styles.letterNumberContainer}>
           <View style={styles.limitContainer}>

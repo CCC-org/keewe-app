@@ -26,7 +26,6 @@ const SheetOthersComment = ({ modalRef, userId, userName, commentId }: BSPostOpt
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedReport, setSelectedReport] = useState<number | null>(null);
   const [reportText, setReportText] = useState('');
-  const [isSnackBarVisible, setIsSnackBarVisible] = useState(false);
   const screenWidth = Dimensions.get('window').width;
 
   const handlePress = () => {

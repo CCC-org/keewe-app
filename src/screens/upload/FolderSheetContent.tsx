@@ -44,7 +44,6 @@ const FolderSheetContent = ({
       <View style={{ height: 132 }}>
         <BottomSheetHeader
           onLeftButtonPress={onHeaderLeftPress}
-          onPress={handleSheetComplete}
           title="새폴더 만들기"
           headerRightButton={() => (
             <HeaderRightButton
@@ -79,7 +78,7 @@ const FolderSheetContent = ({
         setSelectedFolder={setSelectedFolder}
         selectedFolder={selectedFolder}
       />
-      {folders.map((folder, index) => {
+      {folders.map((folder) => {
         return (
           <Folder
             style={styles.folderContainer}
@@ -90,7 +89,7 @@ const FolderSheetContent = ({
           />
         );
       })}
-      <Pressable onPress={handleNewFolder} style={{ ...styles.folderContainer, marginBottom: 60 }}>
+      <Pressable onPress={handleNewFolder} style={{ ...styles.folderContainer, marginBottom: 50 }}>
         <Text
           style={{
             ...theme.fonts.text.body1.regular,

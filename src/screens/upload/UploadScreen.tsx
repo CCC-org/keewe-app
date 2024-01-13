@@ -42,8 +42,8 @@ const UploadScreen = ({ navigation, route }) => {
   const folderSheetRef = useRef<BottomSheetModal>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [linkSheetContentHeight, setLinkSheetContentHeight] = useState<number>(300);
-  const [folderSheetContentHeight, setFolderSheetContentHeight] = useState<number>(300);
+  const [linkSheetContentHeight, setLinkSheetContentHeight] = useState<number>(400);
+  const [folderSheetContentHeight, setFolderSheetContentHeight] = useState<number>(400);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   const queryClient = useQueryClient();
@@ -261,7 +261,7 @@ const UploadScreen = ({ navigation, route }) => {
             placeholder="인사이트를 입력해주세요."
             limit={insightTextLimit}
             height={280}
-            autoFocus={false}
+            autoFocus={true}
           />
         </View>
         <DividerBar style={{ marginTop: 12 }} />
