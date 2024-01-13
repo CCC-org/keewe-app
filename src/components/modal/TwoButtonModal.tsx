@@ -43,8 +43,8 @@ const TwoButtonModal = ({
           <BottomFixButton
             isActive={true}
             text={leftButtonText}
-            width={148}
-            height={48}
+            width={152}
+            height={52}
             color={`${theme.colors.graphic.black}1a`}
             textColor={`${theme.colors.graphic.black}cc`}
             buttonStyle={styles.modalButton}
@@ -53,8 +53,8 @@ const TwoButtonModal = ({
           <BottomFixButton
             isActive={true}
             text={rightButtonText}
-            width={148}
-            height={48}
+            width={152}
+            height={52}
             color={rightButtonColor ?? theme.colors.graphic.black}
             textColor={theme.colors.graphic.white}
             buttonStyle={styles.modalButton}
@@ -83,6 +83,6 @@ const styles = StyleSheet.create({
   },
   modalButton: {
     borderRadius: 12,
-    marginHorizontal: 4,
+    marginHorizontal: 12,
   },
 });

@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { SvgXml } from 'react-native-svg';
 import { roundedMinus } from '../../../../assets/images/user/settings/folder/rounded_minus';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -8,19 +8,20 @@ import BottomSheetHeader from '../../../components/header/BottomSheetHeader';
 import HeaderRightButton from '../../../components/header/HeaderRightButton';
 import BlandTextInput from '../../../components/texts/BlandTextInput';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
-import { UploadApis } from '../../../utils/api/UploadAPIs';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { MypageQueryKeys } from '../../../utils/api/mypageAPI';
-import { Updater, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { drawerApi } from '../../../utils/api/drawer/drawerApi';
 import { getUserId } from '../../../utils/hooks/asyncStorage/Login';
 import { useGetUserId } from '../../../utils/hooks/useGetUserId';
+import { useTheme } from 'react-native-paper';
 
 interface FolderEditSectionProps {
   userFolderList: FolderData[];
 }
 
 const FolderEditSection = ({ userFolderList }: FolderEditSectionProps) => {
+  const theme = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [pressedFolderId, setPressedFolderId] = useState<number | null>(null);
   const [folderName, setFolderName] = useState<string>('');
@@ -130,7 +131,7 @@ const FolderEditSection = ({ userFolderList }: FolderEditSectionProps) => {
             </Pressable>
             <BottomSheetModal
               ref={modalRefEdit}
-              snapPoints={['52%', '60%']}
+              snapPoints={['52%', '62%']}
               backdropComponent={renderBackdrop}
             >
               <View>
@@ -161,11 +162,12 @@ const FolderEditSection = ({ userFolderList }: FolderEditSectionProps) => {
         dismissable={true}
         visible={isModalVisible}
         onDismiss={() => setIsModalVisible(false)}
-        mainTitle="폴더 삭제"
+        mainTitle="폴더를 삭제할까요?"
         leftButtonText="취소"
         rightButtonText="삭제하기"
         leftButtonPress={() => setIsModalVisible(false)}
         rightButtonPress={handleDeleteFolder}
+        rightButtonColor={theme.colors.graphic.red}
       />
     </ScrollView>
   );
