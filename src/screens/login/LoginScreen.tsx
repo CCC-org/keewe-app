@@ -22,7 +22,6 @@ function Login({ navigation, route }) {
       setUserId(response?.data?.userId ?? 0);
       let token = await getExpoToken();
       if (token === null) {
-        alert('if token === null');
         token = (await Notifications.getExpoPushTokenAsync({ projectId: expo.extra.eas.projectId }))
           .data;
       }
