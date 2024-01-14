@@ -12,7 +12,6 @@ import {
   RefreshControl,
   Image,
   SafeAreaView,
-  ScrollView,
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from 'react-native';
