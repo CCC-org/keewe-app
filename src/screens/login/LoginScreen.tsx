@@ -1,4 +1,5 @@
 import React from 'react';
+import { expo } from '../../../app.json';
 import { WebView } from 'react-native-webview';
 import { SafeAreaView } from 'react-native';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -21,7 +22,8 @@ function Login({ navigation, route }) {
       setUserId(response?.data?.userId ?? 0);
       let token = await getExpoToken();
       if (token === null) {
-        token = (await Notifications.getExpoPushTokenAsync()).data;
+        token = (await Notifications.getExpoPushTokenAsync({ projectId: expo.extra.eas.projectId }))
+          .data;
       }
       tokenPush({ pushToken: token ?? '' });
       if (response?.data.alreadySignedUp) {
