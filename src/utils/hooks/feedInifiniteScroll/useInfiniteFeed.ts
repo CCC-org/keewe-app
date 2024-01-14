@@ -25,6 +25,7 @@ export function useInfiniteFeed(fetchUrl: string) {
   const {
     data: feedList,
     isLoading: feedListIsLoading,
+    isFetchingNextPage,
     fetchNextPage: temp,
   } = useInfiniteQuery<FeedInsight['data'] | undefined>({
     queryKey: key,
@@ -70,7 +71,7 @@ export function useInfiniteFeed(fetchUrl: string) {
       feedListQueryClient.invalidateQueries(key);
     },
   });
-
+  console.log(isFetchingNextPage);
   return {
     feedList,
     feedListIsLoading,

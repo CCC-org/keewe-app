@@ -148,7 +148,7 @@ export const titleMetaArr = [
     category_kor: '반응',
     url: require('../../../assets/images/titles/4002.png'),
     name: '키위새들의 픽',
-    introduction: '한 게시물에서 10명에 반응 얻을 시',
+    introduction: '한 게시물에서 10명의 반응 얻을 시',
   },
   {
     id: 5000,
@@ -163,7 +163,7 @@ export const titleMetaArr = [
     category: 'CHALLENGE',
     category_kor: '챌린지',
     url: require('../../../assets/images/titles/5001.png'),
-    name: '중요한 건 꺽이지 않는 마음',
+    name: '중요한 건 꺾이지 않는 마음',
     introduction: '재도전 챌린지 완료',
   },
   {

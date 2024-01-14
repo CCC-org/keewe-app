@@ -1,5 +1,5 @@
 import React, { createContext, useLayoutEffect, useRef, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -24,31 +24,41 @@ const SearchScreen = ({ navigation }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
-        <TextInput
-          ref={textInputRef}
-          right={
-            <TextInput.Icon
-              style={{ opacity: searchRef.current.length ? 0.2 : 0, marginLeft: 24 }}
-              onPress={() => {
-                setCount((prev) => prev + 1);
-                searchRef.current = '';
-                if (textInputRef.current) (textInputRef.current as any).clear();
-              }}
-              name="close-circle"
-            />
-          }
-          onChangeText={(text) => {
-            setCount((prev) => prev + 1);
-            searchRef.current = text;
+        <View
+          style={{
+            flex: 1,
+            width: '100%',
+            borderRadius: 8,
+            flexDirection: 'row',
+            alignItems: 'flex-end',
           }}
-          placeholder="검색어를 입력해주세요"
-          activeUnderlineColor="rgba(18, 19, 20, 0.1)"
-          style={styles.textInput}
-          onSubmitEditing={handleSubmit}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          dense={true}
-        />
+        >
+          <TextInput
+            ref={textInputRef}
+            right={
+              <TextInput.Icon
+                style={{ opacity: searchRef.current.length ? 0.2 : 0, marginLeft: 24 }}
+                onPress={() => {
+                  setCount((prev) => prev + 1);
+                  searchRef.current = '';
+                  if (textInputRef.current) (textInputRef.current as any).clear();
+                }}
+                name="close-circle"
+              />
+            }
+            onChangeText={(text) => {
+              setCount((prev) => prev + 1);
+              searchRef.current = text;
+            }}
+            placeholder="검색어를 입력해주세요"
+            activeUnderlineColor="rgba(18, 19, 20, 0.1)"
+            style={styles.textInput}
+            onSubmitEditing={handleSubmit}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            dense={true}
+          />
+        </View>
       ),
     });
   }, [count]);

@@ -6,12 +6,20 @@ import { useScrollToTop } from '@react-navigation/native';
 import GoToUploadButton from '../../components/buttons/GoToUploadButton';
 import { useQueryClient } from '@tanstack/react-query';
 import { FeedQueryKeys } from '../../utils/api/FeedAPI';
-import { View, Text, RefreshControl, Image, SafeAreaView } from 'react-native';
-import { IOScrollView } from 'react-native-intersection-observer';
+import {
+  View,
+  Text,
+  RefreshControl,
+  Image,
+  SafeAreaView,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from 'react-native';
 import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChallenge';
 import MainLottie from '../../components/lotties/MainLottie';
 import { notificationKeys } from '../../utils/api/notification/notification';
 import { useTheme } from 'react-native-paper';
+import { IOScrollView } from 'react-native-intersection-observer';
 
 const FeedScreen = ({ navigation }) => {
   const scrollViewRef = useRef<any>(null);
@@ -43,17 +51,24 @@ const FeedScreen = ({ navigation }) => {
   };
 
   const [yPos, setYPos] = useState(0);
+  const savedScrollPosition = useRef(0);
 
   useEffect(() => {
-    const te = setInterval(() => {
-      if (!scrollViewRef?.current) return;
-      scrollViewRef.current.scrollTo({ y: yPos });
-    }, 1000);
+    const unsubscribeFocus = navigation.addListener('focus', () => {
+      if (scrollViewRef.current) {
+        scrollViewRef.current.scrollTo({ y: savedScrollPosition.current, animated: true });
+      }
+    });
+
+    const unsubscribeBlur = navigation.addListener('blur', () => {
+      savedScrollPosition.current = yPos;
+    });
 
     return () => {
-      clearInterval(te);
+      unsubscribeFocus();
+      unsubscribeBlur();
     };
-  }, [yPos]);
+  }, [navigation, yPos]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -71,6 +86,12 @@ const FeedScreen = ({ navigation }) => {
     });
   }, []);
 
+  const handleScrollPosition = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const { y } = e.nativeEvent.contentOffset;
+    console.log(y);
+    setYPos(y);
+  };
+
   if (feedListIsLoading) {
     return <MainLottie />;
   }
@@ -79,11 +100,8 @@ const FeedScreen = ({ navigation }) => {
       <IOScrollView
         ref={scrollViewRef}
         refreshControl={<RefreshControl refreshing={pageRefreshing} onRefresh={onRefresh} />}
-        onScroll={(e) => {
-          const { y } = e.nativeEvent.contentOffset;
-          if (y === 0) return;
-          setYPos(y);
-        }}
+        onScroll={handleScrollPosition}
+        onMomentumScrollEnd={handleScrollPosition}
       >
         <FeedList
           scrollViewRef={scrollViewRef}
