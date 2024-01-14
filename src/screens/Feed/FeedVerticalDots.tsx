@@ -39,7 +39,7 @@ const FeedVerticalDots = ({
 
   const handleLayout = (event) => {
     const height = event.nativeEvent.layout.height;
-    setContentHeight(height + 50);
+    setContentHeight(height + 72);
   };
 
   const renderBackdrop = useCallback(

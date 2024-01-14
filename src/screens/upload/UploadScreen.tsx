@@ -1,6 +1,6 @@
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { Keyboard, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import DividerBar from '../../components/bars/DividerBar';
 import InsightLinkTriggerButton from '../../components/buttons/InsightLinkTriggerButton';
 import UploadLinkCard from '../../components/cards/LinkCardForUpload';
@@ -29,7 +29,6 @@ import TwoButtonModal from '../../components/modal/TwoButtonModal';
 import isTextNotOnlySpace from '../../utils/helper/strings/isTextNotOnlySpace';
 import { useFocusEffect } from '@react-navigation/native';
 import * as Clipboard from 'expo-clipboard';
-import isDarkMode from '../../utils/helper/display/isDarkMode';
 
 const UploadScreen = ({ navigation, route }) => {
   const { isEdit, link, insightId } = route?.params ?? {};
@@ -43,6 +42,9 @@ const UploadScreen = ({ navigation, route }) => {
   const folderSheetRef = useRef<BottomSheetModal>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [linkSheetContentHeight, setLinkSheetContentHeight] = useState<number>(400);
+  const [folderSheetContentHeight, setFolderSheetContentHeight] = useState<number>(400);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   const queryClient = useQueryClient();
   const theme = useTheme();
@@ -63,7 +65,9 @@ const UploadScreen = ({ navigation, route }) => {
     ChallengeAPI.getChallengeProgress,
   );
 
-  const snapPoints = useMemo(() => ['50%', '80%'], []);
+  const linkSheetSnapPoints = [linkSheetContentHeight];
+
+  const folderSheetSnapPoints = [folderSheetContentHeight];
 
   const insightTextLimit = 400;
 
@@ -99,6 +103,14 @@ const UploadScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     UploadApis.getFolderList().then(setFolders);
+
+    const keyboardShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
+      setKeyboardHeight(e.endCoordinates.height);
+    });
+
+    return () => {
+      keyboardShowListener.remove();
+    };
   }, []);
 
   const handleSubmit = async () => {
@@ -158,6 +170,18 @@ const UploadScreen = ({ navigation, route }) => {
     );
   };
 
+  const handleLinkSheetLayout = (event) => {
+    const height = event.nativeEvent.layout.height;
+    const additinalHeight = keyboardHeight || 350;
+    setLinkSheetContentHeight(height + additinalHeight);
+  };
+
+  const handleFolderSheetLayout = (event) => {
+    const height = event.nativeEvent.layout.height;
+    const additinalHeight = keyboardHeight || 350;
+    setFolderSheetContentHeight(height + additinalHeight);
+  };
+
   const handleEditPress = () => {
     setIsValidSite(false);
     handleSheetPresent(linkSheetRef);
@@ -190,7 +214,6 @@ const UploadScreen = ({ navigation, route }) => {
     useCallback(() => {
       const getClipboard = async () => {
         const clipboard = await Clipboard.getStringAsync();
-        console.log(`darkmode: ${isDarkMode()}`);
         if (clipboard.startsWith('http')) {
           try {
             await fetch(clipboard, {
@@ -238,7 +261,7 @@ const UploadScreen = ({ navigation, route }) => {
             placeholder="인사이트를 입력해주세요."
             limit={insightTextLimit}
             height={280}
-            autoFocus={false}
+            autoFocus={true}
           />
         </View>
         <DividerBar style={{ marginTop: 12 }} />
@@ -253,39 +276,45 @@ const UploadScreen = ({ navigation, route }) => {
 
         <BottomSheetModal
           ref={linkSheetRef}
-          index={1}
-          snapPoints={snapPoints}
+          index={0}
+          snapPoints={linkSheetSnapPoints}
           backdropComponent={renderBackdrop}
         >
-          <LinkSheetContent
-            linkText={linkText}
-            setLinkText={setLinkText}
-            handleSheetComplete={checkIsValidSite}
-            onHeaderLeftPress={() => handleSheetClose(linkSheetRef)}
-          />
+          <View onLayout={handleLinkSheetLayout}>
+            <LinkSheetContent
+              linkText={linkText}
+              setLinkText={setLinkText}
+              handleSheetComplete={checkIsValidSite}
+              onHeaderLeftPress={() => handleSheetClose(linkSheetRef)}
+            />
+          </View>
         </BottomSheetModal>
         <BottomSheetModal
           ref={folderSheetRef}
           index={0}
-          snapPoints={snapPoints}
+          snapPoints={folderSheetSnapPoints}
           backdropComponent={renderBackdrop}
         >
           <FolderSheetContent
+            scrollViewHeight={folderSheetContentHeight}
             handleSheetComplete={handleFolderSheetComplete}
-            onHeaderLeftPress={() => handleSheetClose(folderSheetRef)}
+            onHeaderLeftPress={() => {
+              handleSheetClose(folderSheetRef);
+            }}
             folders={folders}
             setFolder={setFolders}
             selectedFolder={selectedFolder}
             setSelectedFolder={setSelectedFolder}
+            onLayout={handleFolderSheetLayout}
           />
         </BottomSheetModal>
         <TwoButtonModal
           dismissable={false}
-          mainTitle={'인사이트 작성을 그만할까요?'}
-          subTitle={'작성한 인사이트가 사라져요.'}
+          mainTitle={isEdit ? '인사이트 수정을 취소할까요?' : '인사이트 작성을 그만할까요?'}
+          subTitle={isEdit ? '' : '작성한 인사이트가 사라져요.'}
           visible={isModalVisible}
           onDismiss={() => setIsModalVisible(false)}
-          leftButtonText="뒤로가기"
+          leftButtonText={isEdit ? '취소하기' : '뒤로가기'}
           rightButtonText="계속 작성하기"
           leftButtonPress={() => {
             setIsModalVisible(false);

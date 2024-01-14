@@ -27,7 +27,7 @@ const ChallengeParticipationView = ({
     () => getFormattedDateArray(startDate as string, dayProgresses as []),
     [current, insightPerWeek, startDate, endDate, dayProgresses],
   );
-  const firstDay = formattedWeekWithCheck[0].day;
+  const firstDay = formattedWeekWithCheck[0]?.day ?? '';
   return (
     <View style={styles.container}>
       <View style={styles.upperSection}>
@@ -45,7 +45,7 @@ const ChallengeParticipationView = ({
           return (
             <View key={challenge.day} style={styles.day}>
               {today === challenge.day && <TodayBubble isFirst={today === firstDay} />}
-              <CircularCheckbox isChecked={challenge.progress.check} />
+              <CircularCheckbox isChecked={challenge.progress?.check ?? false} />
               <Text style={{ color: `${theme.colors.graphic.black}80` }}>{challenge.day}</Text>
             </View>
           );

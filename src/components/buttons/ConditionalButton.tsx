@@ -54,13 +54,12 @@ const ConditionalButton = ({
               ...styles.btn,
               width: width,
               borderRadius: borderRadius ?? 50,
-              backgroundColor: color || theme.colors.graphic.black,
-              opacity: isActive ? 1 : 0.2,
+              backgroundColor: isActive ? color || theme.colors.graphic.black : '#d3d3d3',
             },
             styleProp,
           ]}
         >
-          <Text style={{ ...styles.text, color: textColor ? textColor : 'white' }}>{text}</Text>
+          <Text style={{ ...styles.text, color: textColor || 'white' }}>{text}</Text>
         </View>
       </Pressable>
     </KeyboardAvoidingView>
@@ -83,6 +82,5 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: '600',
     fontSize: 18,
-    color: 'white',
   },
 });

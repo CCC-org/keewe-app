@@ -21,7 +21,7 @@ const CommentVerticalDots = ({ userId, userName, commentId }: FeedVerticalDotsPr
 
   const handleLayout = (event) => {
     const height = event.nativeEvent.layout.height;
-    setContentHeight(height + 50);
+    setContentHeight(height + 76);
   };
 
   const renderBackdrop = useCallback(
