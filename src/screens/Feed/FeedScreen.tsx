@@ -20,6 +20,7 @@ import { UserSpecificChallengeQueryKeys } from '../../utils/api/UserSpecificChal
 import MainLottie from '../../components/lotties/MainLottie';
 import { notificationKeys } from '../../utils/api/notification/notification';
 import { useTheme } from 'react-native-paper';
+import { IOScrollView } from 'react-native-intersection-observer';
 
 const FeedScreen = ({ navigation }) => {
   const scrollViewRef = useRef<any>(null);
@@ -68,7 +69,7 @@ const FeedScreen = ({ navigation }) => {
       unsubscribeFocus();
       unsubscribeBlur();
     };
-  }, [navigation]);
+  }, [navigation, yPos]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -88,7 +89,7 @@ const FeedScreen = ({ navigation }) => {
 
   const handleScrollPosition = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const { y } = e.nativeEvent.contentOffset;
-    console.log('y: ', y);
+    console.log(y);
     setYPos(y);
   };
 
@@ -97,7 +98,7 @@ const FeedScreen = ({ navigation }) => {
   }
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView
+      <IOScrollView
         ref={scrollViewRef}
         refreshControl={<RefreshControl refreshing={pageRefreshing} onRefresh={onRefresh} />}
         onScroll={handleScrollPosition}
@@ -112,7 +113,7 @@ const FeedScreen = ({ navigation }) => {
           touchBookMark={touchBookMark}
           feedListIsLoading={feedListIsLoading}
         />
-      </ScrollView>
+      </IOScrollView>
       <GoToUploadButton />
     </SafeAreaView>
   );
